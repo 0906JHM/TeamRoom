@@ -53,7 +53,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	    
 	    //검색 팝업2
 		function openWindow2(search, inputId) {
-			var url = "${pageContext.request.contextPath}/performance/whsearch?type=" + search + "&input=" + inputId;
+			var url = "${pageContext.request.contextPath}/requirement/whsearch?type=" + search + "&input=" + inputId;
 			var popup = window.open(url, "", popupOpt2);
 		} //openWindow()
 		
@@ -124,7 +124,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				$('#modify').attr("disabled", true);
 				
 				$.ajax({
-  				  url: "${pageContext.request.contextPath}/performance/reqCode",
+  				  url: "${pageContext.request.contextPath}requirement/reqCode",
   				  method: "GET",
   				  dataType: "text",
   				  success: function(data) {
@@ -157,13 +157,13 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
                 var row = '<tr>' +
                 	
                 	'<td><span class="delete-button" onclick="deleteRow(this)">X</span></td>' + 
-                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" required>' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required class="input-fieldb"></td>' +
-                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'">' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'"); class="input-fielda"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'"); class="input-fielda"></td>' +
-                    '<td><input type="number" name="reqs[' + counter + '].req_dan" required class="input-fieldb"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_note" class="input-fieldb"></td>' +
+                	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' +
+                    '<td><input type="text" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-fieldb"></td>' +
+                    '<input type="hidden" name="reqs[' + counter + '].prodCode" id= "prodCode'+counter+'">' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prodName" id = "prodName'+counter+'" readonly onclick=serchProd("prodCode'+counter+'"); class="input-fielda"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.rawName" id="rawName'+counter+'" readonly onclick=serchRaw("rawCode'+counter+'"); class="input-fielda"></td>' +
+                    '<td><input type="number" name="reqs[' + counter + '].reqAmount" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].reqMemo" class="input-fieldb"></td>' +
                     
                     '</tr>';
                     
@@ -261,7 +261,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 							  
 						  
 							$.ajax({
-		 						url: "${pageContext.request.contextPath}/performance/requirementDelete",
+		 						url: "${pageContext.request.contextPath}/requirementDelete",
 		 						type: "POST",
 		 						data: {checked : checked},
 		 						dataType: "text",	
@@ -322,7 +322,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 // 						  if (result.isConfirmed) {
 							  
 // 							  $.ajax({
-// 									url: "/performance/rawMaterialDelete",
+// 									url: "/requirement/rawMaterialDelete",
 // 									type: "post",
 // 									data: {checked:checked},
 // 									dataType: "text",
@@ -383,13 +383,13 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 						console.log(updateCode);
 		
 						var jsonData = {
-							req_code : updateCode
+							reqCode : updateCode
 						};
 		
 						var self = $(this);
 		
 						$.ajax({
-							url : "${pageContext.request.contextPath}/performance/reqOne",
+							url : "${pageContext.request.contextPath}/requirement/reqOne",
 							type : "post",
 							contentType : "application/json; charset=UTF-8",
 							dataType : "json",
@@ -399,25 +399,25 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 								var sum = 0;
 								
 								var preVOs = [
-										data.req_code,
-										data.prod_code,
-										data.prod.prod_name,
-										data.raw.raw_name,
-										data.req_dan,
-										data.req_note,
-										data.raw_code
+										data.reqCode,
+										data.prodCode,
+										data.prod.prodName,
+										data.raw.rawName,
+										data.reqAmount,
+										data.reqMemo,
+										data.rawCode
 										];
 								
 							
 		
 								var names = [
-										"req_code",
-										"prod_code",
-										"prod_name",
-										"raw_name",
-										"req_dan",
-										"req_note",
-										"raw_code"
+										"reqCode",
+										"prodCode",
+										"prodName",
+										"rawName",
+										"reqAmount",
+										"reqMemo",
+										"rawCode"
 										];
 		
 								//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
@@ -427,7 +427,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
 // 									
 										if(idx==4){
-											var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="raw_code">'
+											var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="rawCode">'
 											$(".selected").append(row);
 										}
 
@@ -439,12 +439,12 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 								
 		
 								//품번 검색 
-								$('#prod_code').click(function() {
-									openWindow("prod","prod_code");
+								$('#prodCode').click(function() {
+									openWindow("prod","prodCode");
 								}); //prodCode click
 								
 								//품번 검색 팝업(raw)
-								$('#raw_name').click(function() {
+								$('#rawName').click(function() {
 									openWindow2("raw", "search_raw");
 								}); //rawCode click
 		
@@ -457,7 +457,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 						//저장버튼 -> form 제출
 						$('#save').click(function() {
 		
-							$('#fr').attr("action","${pageContext.request.contextPath}/performance/reqModify");
+							$('#fr').attr("action","${pageContext.request.contextPath}/requirement/reqModify");
 							$('#fr').attr("method","post");
 							$('#fr').submit();
 		
@@ -515,13 +515,13 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		<form method="get">
 			<fieldset>
 				<label>소요코드&nbsp;</label> 
-				<input type="text" name="req_code" id="searchCode" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
+				<input type="text" name="reqCode" id="searchCode" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
 				<label>완제품&nbsp;</label> 
-				<input type="hidden"name="prod_code" id="prod_code9999"> 
-				<input type="text"name="prod_name" id="prod_name9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prod_code9999')" class="input-fieldc"> &nbsp;&nbsp;
+				<input type="hidden"name="prodCode" id="prodCode9999"> 
+				<input type="text"name="prodName" id="prodName9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prodCode9999')" class="input-fieldc"> &nbsp;&nbsp;
 				<label>원자재&nbsp;</label>
-				<input type="hidden" name="raw_code" id="raw_code9999"> 
-				<input type="text" name="raw_name" id="raw_name9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('raw_code9999')" class="input-fieldc"> &nbsp;&nbsp;
+				<input type="hidden" name="rawCode" id="rawCode9999"> 
+				<input type="text" name="rawName" id="rawName9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('rawCode9999')" class="input-fieldc"> &nbsp;&nbsp;
 				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
@@ -539,10 +539,10 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 					
 					<div style="float: left;  margin-top: 1.5px;">
 						<c:if test="${empty param.input }">
-							<button onclick="location.href='${pageContext.request.contextPath}/performance/requirement'" class="B2 B2-info">↻</button>
+							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'" class="B2 B2-info">↻</button>
 						</c:if>
 						<c:if test="${!empty param.input }">
-							<button onclick="location.href='${pageContext.request.contextPath}/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail?input=${param.input }'" class="B2 B-info">↻</button>
 						</c:if>
 					</div>
 										
@@ -599,15 +599,15 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 							</tr>
 						</thead>
 							<tr type='hidden' style='display: none;'></tr>
-						<c:forEach var="vo" items="${reqList}">
+						<c:forEach var="dto" items="${reqList}">
 							<tr>
 								<td></td>
-								<td id="reqCode">${vo.req_code }</td>
-								<td type='hidden' style='display: none;'>${vo.prod_code }</td>
-								<td id="prodName">${vo.prod.prod_name }</td>
-								<td>${vo.raw.raw_name }</td>
-								<td>${vo.req_dan }</td>
-								<td>${vo.req_note }</td>
+								<td id="reqCode">${dto.reqCode }</td>
+								<td type='hidden' style='display: none;'>${dto.prodCode }</td>
+								<%-- <td id="prodName">${dto.prod.prodName }</td> --%>
+								<%-- <td>${dto.raw.rawName }</td> --%>
+								<td>${dto.reqAmount }</td>
+								<td>${dto.reqMemo }</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -620,17 +620,17 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				<ul class="pagination">
 					<li class="paginate_button previous disabled">
 						<c:if test="${paging.startPage != 1 }">
-							<a href="${pageContext.request.contextPath}/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Previous</a>
+							<a href="${pageContext.request.contextPath}/requirement/reqDetail?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&reqCode=${dto.reqCode }&prodCode=${dto.prodCode }&rawCode=${dto.rawCode }">Previous</a>
 						</c:if>
 					</li>
 					<li class="paginate_button previous disabled">
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a href="${pageContext.request.contextPath}/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
+							<a href="${pageContext.request.contextPath}/requirement/reqDetail?nowPage=${p }&cntPerPage=${paging.cntPerPage}&reqCode=${dto.reqCode }&prodCode=${dto.prodCode }&rawCode=${dto.rawCode }">${p }</a>
 						</c:forEach>
 					</li>
 					<li class="paginate_button previous disabled">
 						<c:if test="${paging.endPage != paging.lastPage}">
-							<a href="${pageContext.request.contextPath}/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Next</a>
+							<a href="${pageContext.request.contextPath}/requirement/reqDetail?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&reqCode=${dto.reqCode }&prodCode=${dto.prodCode }&rawCode=${dto.rawCode }">Next</a>
 						</c:if>
 					</li>
 				</ul>
