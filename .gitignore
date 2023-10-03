@@ -1,3 +1,9 @@
+lecture
+target
+pom.properties
+.classpath
+MANIFEST.MF
+
 ### Eclipse ###
 .metadata
 bin/
@@ -12,10 +18,3 @@ local.properties
 .recommenders
 .target/
 .project
-
-# manifest.mf
-MANIFEST.MF
-
-# ignore properties file
-
-pom.properties
