@@ -10,8 +10,415 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- sweetalert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/requirement.js"></script>
+<%-- <script src="${pageContext.request.contextPath }/resources/js/requirement.js"></script> --%>
+<script type="text/javascript">
+//input으로 바꾸기 
+function inputCng(obj, type, name, value) {
+	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+	obj.html(inputBox);
+} //inputCng	
 
+// 팝업 옵션
+const popupOpt = "top=60,left=140,width=977,height=677";/* 
+const popupOpt2 = "top=60,left=140,width=977,height=677"; */
+
+//검색 팝업
+	function openWindow(type, inputId) {
+	 	var url = "${pageContext.request.contextPath}/requirement/search?type=" + type + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt);
+} //openWindow()
+
+/* //검색 팝업2
+function openWindow2(search, inputId) {
+	var url = "${pageContext.request.contextPath}/requirement/search?type=" + search + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt2);
+} //openWindow() */
+
+//추가 시 품번 검색 
+function searchItem(type, inputId){
+	openWindow(type , inputId);
+}
+
+	/* //추가 시 원자재 검색 
+function serchRaw(inputId){
+	openWindow2("raw",inputId);
+} */
+	
+function submitForm() {
+	  var isValid = true;
+
+	  // 유효성 검사
+	  $('#reqTable input[required]').each(function() {
+	    if ($(this).val().trim() === '') {
+	      isValid = false;
+	      return false; // 유효성 검사 실패 시 반복문 종료
+	    }
+	  });
+
+	  if (isValid) {
+	    $('#fr').submit();
+	  } else {
+		 	 Swal.fire({
+			title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+			icon: 'info',
+			width: '300px',
+		 });
+	  }
+	}
+var counter = 0;
+var addcounter = 0;
+var num3 = 0;
+
+function deleteRow() {
+	var table = document.getElementById('reqTable');
+    var lastRowIndex = table.rows.length - 1; // 마지막 행의 인덱스
+    
+    if (counter > 0) {
+        table.deleteRow(lastRowIndex); // 마지막 행 삭제
+    } else {
+        console.log("더 이상 삭제할 행이 없습니다.");
+    }
+	  counter--;
+	}	
+	
+	
+$(document).ready(function() {
+	
+	
+	//테이블 항목들 인덱스 부여
+	$('table tr').each(function(index){
+		var num = "<c:out value='${paging.nowPage}'/>";
+		var num2 = "<c:out value='${paging.cntPerPage}'/>";
+		$(this).find('td:first').text(((num-1)*num2) + index-1);
+		num3 = ((num-1)*num2) + index;
+	});
+	
+	// 추가 시 필요한 변수들
+
+   
+    var codeNum = 0;
+	var reqCode = 0;
+    
+    // 추가 버튼 클릭 시 row 생성
+   
+    
+
+    // 버튼 클릭시 addRow() 기능 불러오기
+    $('#addButton').click(function() {
+    	 
+    	event.preventDefault();
+    	$('#delete').attr("disabled", true);
+		$('#modify').attr("disabled", true);
+		
+		$.ajax({
+			  url: "${pageContext.request.contextPath}/requirement/reqCode",
+			  method: "GET",
+			  dataType: "text",
+			  success: function(data) {
+			    // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+			    codeNum = data;
+			    console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+			    
+			    // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+			    someFunction(codeNum);
+			  }
+			}); // ajax 끝
+
+			function someFunction(data) {
+				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+					 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+					 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+					 reqCode = codeNum.charAt(0) + codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+		             addRow();
+		             counter++;
+			} // someFunction(data)
+			
+			$('#save').click(function() {
+				submitForm();
+		}); //save
+		
+    });
+    
+    function addRow() {
+    	addcounter = num3 + counter;
+    	
+        var row = '<tr class="contents">' +
+        	'<td><span class="input-row" style="color:red" onclick="deleteRow()">'+addcounter+'</span></td>' + 
+        	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' +
+            '<td><input type="text" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-row"></td>' +
+            '<input type="hidden" name="reqs[' + counter + '].prodCode" id= "prodCode'+counter+'">' +
+            '<td><input type="text" name="reqs[' + counter + '].prod.prodName" id = "prodName'+counter+'" readonly onclick=searchItem("prod","prodCode'+counter+'"); placeholder="제품명을 선택하세요." class="input-row"></td>' +
+            '<td><input type="text" name="reqs[' + counter + '].raw.rawName" id="rawName'+counter+'" readonly onclick=searchItem("raw","rawCode'+counter+'"); placeholder="원자재를 선택하세요." class="input-row"></td>' +
+            '<td><input type="number" name="reqs[' + counter + '].reqAmount" required class="input-row" placeholder="소요량을 선택하세요."></td>' +
+            '<td><input type="text" name="reqs[' + counter + '].reqMemo" class="input-row" placeholder="비고를 입력하세요."></td>' +
+            
+            '</tr>';
+            
+        $('#reqTable').append(row);
+        
+    	 // 테이블이 많이 생성되면 스크롤바 생성
+        var table = document.getElementById('reqTable');
+        table.scrollTop = table.scrollHeight;
+		
+    }
+    
+    
+    
+    function padNumber(number, length) {
+        var paddedNumber = number.toString();
+        while (paddedNumber.length < length) {
+            paddedNumber = "0" + paddedNumber;
+        }
+        return paddedNumber;
+		 } // padNumber(number, length)
+    
+    // =============================================================================================================
+
+
+/* 	//취소버튼 -> 리셋
+	$('#cancle').click(function(){
+		$('#fr').each(function(){
+			this.reset();
+			//removeRow();
+			
+		});
+	}); //cacle click */
+	
+	
+	
+	
+	
+	
+	// 삭제 기능
+	$('#delete').click(function(event){
+		event.preventDefault();
+		$('#addButton').attr("disabled", true);
+		$('#modify').attr("disabled", true);
+		
+		// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
+		$('table tr').each(function(){
+			var code = $(this).find('td:nth-child(2)').text();
+			
+			var tbl = "<input type='checkbox' name='selected' value='";
+			tbl += code;
+			tbl += "'>";
+			
+			$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
+			$(this).find('td:first').html(tbl);
+		});
+		
+		$('#selectAll').click(function() {
+			var checkAll = $(this).is(":checked");
+			
+			if(checkAll) {
+				$('input:checkbox').prop('checked', true);
+			} else {
+				$('input:checkbox').prop('checked', false);
+			}
+		});
+		
+		
+		//저장 -> 삭제
+		$('#save').click(function() {
+			
+			var checked = [];
+			
+			$('input[name=selected]:checked').each(function(){
+				checked.push($(this).val());
+			});
+			
+//				alert(checked);
+			
+			if(checked.length > 0) {
+				Swal.fire({
+					  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+							  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+					  icon: 'info', // 아이콘! 느낌표 색? 표시?
+					  showDenyButton: true,
+					  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
+					  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
+					  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
+//						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+					  width : '300px', // alert창 크기 조절
+					  
+					}).then((result) => {
+				
+				 /* confirm => 예 눌렀을 때  */
+				  if (result.isConfirmed) {
+					  
+				  
+					$.ajax({
+ 						url: "${pageContext.request.contextPath}/requirement/requirementDelete",
+ 						type: "POST",
+ 						data: {checked : checked},
+ 						dataType: "text",	
+ 						success: function () {
+ 							Swal.fire({
+								  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+								  icon: 'success',
+								  width : '300px',
+								}).then((result) => {
+								  if (result.isConfirmed) {
+								    location.reload();
+								  }
+								});
+						},
+						error: function () {
+							Swal.fire({
+								title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+								icon : 'question',
+								width: '300px',
+								});
+							
+						}
+					});//ajax
+					  } else if (result.isDenied) {
+							Swal.fire({
+							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+							icon : 'error',
+							width: '300px',
+							});
+				}// if(confirm)
+			});		
+					
+			}// 체크OOO
+			else{
+				Swal.fire({
+					title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+					icon : 'warning',
+					width: '300px',
+					});
+			}// 체크 XXX
+
+		}); // save
+	
+		//취소 -> 리셋
+		$('#cancle').click(function(){
+			$('input:checkbox').prop('checked', false);
+		});
+		
+	}); //delete click
+	
+	/////////////// 수정 //////////////////////////////
+	var isExecuted = false;
+	
+	//수정버튼 클릭
+	$('#modify').click(function() {
+		event.preventDefault();
+		$('#addButton').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+
+		//행 하나 클릭했을 때	
+		$('table tr:not(:first-child)').click(function() {
+			
+			//하나씩만 선택 가능
+			if(!isExecuted) {
+				isExecuted = true;
+						
+				$(this).addClass('selected');
+				//품목코드 저장
+				let updateCode = $(this).find('#reqCode').text().trim();
+				console.log(updateCode);
+
+				var jsonData = {
+					req_code : updateCode
+				};
+
+				var self = $(this);
+
+				$.ajax({
+					url : "${pageContext.request.contextPath}/requirement/reqOne",
+					type : "post",
+					contentType : "application/json; charset=UTF-8",
+					dataType : "json",
+					data : JSON.stringify(jsonData),
+					success : function(data) {
+						// alert("*** 아작스 성공 ***");
+						var sum = 0;
+						
+						var preVOs = [
+								data.reqCode,
+								data.prodCode,
+								data.prod.prodName,
+								data.raw.rawName,
+								data.reqAmount,
+								data.reqMemo,
+								data.rawCode
+								];
+						
+					
+
+						var names = [
+								"reqCode",
+								"prodCode",
+								"prodName",
+								"rawName",
+								"reqAmount",
+								"reqMeme",
+								"rawCode"
+								];
+
+						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+						
+						self.find('td').each(function(idx,item) {
+							if (idx > 0) {
+								inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+//								
+								if(idx==4){
+									var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="rawCode">'
+									$(".selected").append(row);
+								}
+
+
+							} //라인코드부터 다 수정 가능하게
+
+						}); // self.find(~~)
+						
+						
+
+						//품번 검색 
+						$('#prod_code').click(function() {
+							openWindow("prod","prodCode");
+						}); //prodCode click
+						
+						//품번 검색 팝업(raw)
+						$('#raw_name').click(function() {
+							openWindow2("raw", "searchRaw");
+						}); //rawCode click
+
+					},
+					error : function(data) {
+						alert("아작스 실패 ~~");
+					}
+				}); //ajax
+
+				//저장버튼 -> form 제출
+				$('#save').click(function() {
+
+					$('#fr').attr("action","${pageContext.request.contextPath}/requirement/reqModify");
+					$('#fr').attr("method","post");
+					$('#fr').submit();
+
+				}); //save
+
+			} //하나씩만 선택 가능
+				
+				
+			//취소버튼 -> 리셋
+			$('#cancle').click(function() {
+				$('#fr').each(function() {
+					this.reset();
+				});
+			}); //cancle click
+
+		}); //tr click
+
+	}); //modify click
+
+    
+});
+
+</script>
 <%-- <c:if test="${empty sessionScope.id}">
     <c:redirect url="/smmain/smMain" />
 </c:if> --%>
@@ -36,13 +443,13 @@
 		<form method="get">
 			<fieldset>
 				<label>소요코드&nbsp;</label> 
-				<input class="input_box" type="text" name="reqCode" id="searchCode" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
+				<input class="input_box" type="text" name="reqCode" onfocus="this.value='RQ'" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
 				<label>제품명&nbsp;</label> 
-				<input type="hidden"name="prodCode" id="prodCode9999"> 
-				<input class="input_box" type="text"name="prodName" id="prodName9999" placeholder="제품명을 선택하세요." readonly onclick="serchProd('prodCode9999')" class="input-fieldc"> &nbsp;&nbsp;
+				<input type="hidden"name="prodCode" id="prodCode9999">
+				<input class="input_box" type="text"name="prodName" placeholder="제품명을 선택하세요." readonly onclick="searchItem('prod','prodCode9999')" class="input-fieldc"> &nbsp;&nbsp;
 				<label>원자재&nbsp;</label>
-				<input type="hidden" name="rawCode" id="rawCode9999"> 
-				<input class="input_box" type="text" name="rawName" id="rawName9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('rawCode9999')" class="input-fieldc"> &nbsp;&nbsp;
+				<input type="hidden" name="rawCode" id="rawCode9999">
+				<input class="input_box" type="text" name="rawName"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')" class="input-fieldc"> &nbsp;&nbsp;
 				<input class="button" type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
@@ -55,18 +462,24 @@
 					
 					<div class="x_total">
 					<h2><small>총 ${paging.total} 건</small></h2>
-						<c:if test="${empty param.input }">
+						<%-- <c:if test="${empty param.input }">
 							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'" class="button" style="width:40px;">↻</button>
 						</c:if>
 						<c:if test="${!empty param.input }">
 							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail?input=${param.input }'" class="button" style="width:40px;">↻</button>
-						</c:if>
+						</c:if> --%>
 					</div>
 					<div>
 						<button class="button" id="addButton" >추가</button>
 						<button class="button" id="modify" >수정</button>
 						<button class="button" id="delete" >삭제</button>
-						<button class="button" type="reset" id="cancle" >취소</button>
+						<c:if test="${empty param.input }">
+							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'" class="button">취소</button>
+						</c:if>
+						<c:if test="${!empty param.input }">
+							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail?input=${param.input }'" class="button">취소</button>
+						</c:if>
+						<!-- <button class="button" type="reset" id="cancle" >취소</button> -->
 						<input class="button" type="submit" value="저장" id="save">
 					</div>						
 				</div>
@@ -116,8 +529,8 @@
 								<td></td>
 								<td id="reqCode">${dto.reqCode }</td>
 								<td type='hidden' style='display: none;'>${dto.prodCode }</td>
-								<%-- <td id="prodName">${dto.prod.prodName }</td> --%>
-								<%-- <td>${dto.raw.rawName }</td> --%>
+								<td id="prodName"><%-- ${dto.prod.prodName } --%>제품명값</td>
+								<td><%-- ${dto.raw.rawName } --%>원자재값</td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
 							</tr>

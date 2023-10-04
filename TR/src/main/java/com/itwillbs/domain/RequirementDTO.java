@@ -8,6 +8,12 @@
 	  private String rawCode;
 	  private String reqAmount;
 	  private String reqMemo; 
+	  
+	  @Override
+		public String toString() {
+			return "RequirementDTO [reqCode=" + reqCode + ", prodCode=" + prodCode + ", rawCode=" + rawCode + ", reqAmount="
+					+ reqAmount + ", reqMemo=" + reqMemo+"]";
+		}
 
 	  
 		/*

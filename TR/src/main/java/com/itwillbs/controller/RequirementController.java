@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.service.RequirementService;
 import com.itwillbs.domain.RequirementList;
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.mysql.cj.Session;
@@ -55,48 +56,56 @@ public class RequirementController {
 	 * }
 	 */
 
-	/*
-	 * // http://localhost:8088/requirement/product
-	 * 
-	 * @RequestMapping(value = "/product", method = RequestMethod.GET) public void
-	 * productGET(Model model, ProductDTO dto, RequirementPageDTO pdto, //
-	 * HttpServletRequest request,HttpServletResponse response,
-	 * 
-	 * @RequestParam(value = "nowPage", required = false) String nowPage,
-	 * 
-	 * @RequestParam(value = "cntPerPage", required = false) String cntPerPage,
-	 * 
-	 * @RequestParam(value = "input", required = false) String input) throws
-	 * Exception {
-	 * 
-	 * // HttpSession session = request.getSession(false); // if (session == null) {
-	 * // response.sendRedirect("/smmain/smMain"); // return; // }
-	 * 
-	 * logger.debug("productGET() 호출"); List<ProductDTO> products = new
-	 * ArrayList<ProductDTO>(); model.addAttribute("products", products);
-	 * logger.debug("DTO : " + dto); logger.debug(" @@@@@@@@@@ input: " + input +
-	 * "@@@@@@@@@@@@@@@");
-	 * 
-	 * if (DTO.getProdCode() != null || dto.getProd_name() != null ||
-	 * dto.getProd_category() != null || dto.getProd_unit() != null) { int total =
-	 * service.countProd(DTO); pdto = new RequirementPageDTO(total,
-	 * pdto.getNowPage(), pdto.getCntPerPage()); List<ProductDTO> list =
-	 * service.getProdList(DTO, pdto); model.addAttribute("prodList", list);
-	 * model.addAttribute("paging", pdto); model.addAttribute("DTO", dto);
-	 * logger.debug("pdto : " + pdto); logger.debug("DTO : " + dto);
-	 * 
-	 * logger.debug("검색 리스트 가져감");
-	 * 
-	 * if (input != null && !input.equals("")) { model.addAttribute("input", input);
-	 * logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@"); }
-	 * 
-	 * } else { int total = service.countProd(); pdto = new
-	 * RequirementPageDTO(total); logger.debug("pdto : " + pdto); List<ProductDTO>
-	 * list = service.getProdList(pdto); model.addAttribute("prodList", list);
-	 * model.addAttribute("paging", pdto); logger.debug(" 모든 리스트 가져감"); }
-	 * 
-	 * }
-	 */
+	
+	  // http://localhost:8088/requirement/product
+	  
+	  @RequestMapping(value = "/product", method = RequestMethod.GET)
+	  public String productGET(Model model, ProdDTO dto, RequirementPageDTO pdto, 
+			  //  HttpServletRequest request,HttpServletResponse response,
+	  
+	  @RequestParam(value = "nowPage", required = false) String nowPage,
+	  
+	  @RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+	  
+	  @RequestParam(value = "input", required = false) String input) throws
+	  Exception {
+	
+	  
+	  logger.debug("productGET() 호출");
+	  List<ProdDTO> products = new ArrayList<ProdDTO>();
+	  model.addAttribute("products", products);
+	  logger.debug("DTO : " + dto);
+	  logger.debug(" @@@@@@@@@@ input: " + input +  "@@@@@@@@@@@@@@@");
+	  
+	  if (dto.getProdCode() != null || dto.getProdName() != null ||
+	  dto.getProdPerfume() != null || dto.getProdUnit() != null) {
+		  int total = service.countProd(dto);
+	  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
+	  List<ProdDTO> list = service.getProdList(dto, pdto);
+	  model.addAttribute("prodList", list);
+	  model.addAttribute("paging", pdto);
+	  model.addAttribute("DTO", dto);
+	  logger.debug("pdto : " + pdto);
+	  logger.debug("DTO : " + dto);
+	  logger.debug("검색 리스트 가져감");
+	  
+	  if (input != null && !input.equals("")) {
+		  model.addAttribute("input", input);
+	  logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@"); }
+	  
+	  } else {
+		  int total = service.countProd();
+		  pdto = new RequirementPageDTO(total);
+		  logger.debug("pdto : " + pdto);
+		  List<ProdDTO> list = service.getProdList(pdto);
+		  model.addAttribute("prodList", list);
+	  model.addAttribute("paging", pdto);
+	  logger.debug(" 모든 리스트 가져감"); }
+	  
+	  return "product/list";
+	  
+	  }
+	 
 
 	/*
 	 * // 품목관리 추가 시 code 값 가져가기
@@ -140,11 +149,11 @@ public class RequirementController {
 	 * @ResponseBody
 	 * 
 	 * @RequestMapping(value = "/prodOne", method = RequestMethod.POST) public
-	 * ProductDTO getProd(@RequestBody ProductDTO dto) throws Exception {
+	 * ProdDTO getProd(@RequestBody ProdDTO dto) throws Exception {
 	 * logger.debug("@@@@@ CONTROLLER: getProd() 호출");
 	 * logger.debug("@@@@@ CONTROLLER: prod_Code = " + dto.getProdCode());
 	 * 
-	 * //서비스 - 품목관리 정보 가져오기 ProductDTO preDTO = service.getProd(DTO.getProdCode());
+	 * //서비스 - 품목관리 정보 가져오기 ProdDTO preDTO = service.getProd(DTO.getProdCode());
 	 * logger.debug("@@@@@ CONTROLLER: preDTO = " + preDTO);
 	 * 
 	 * return preDTO; } //getProd()
@@ -152,7 +161,7 @@ public class RequirementController {
 	// 품목관리 수정
 	/*
 	 * @RequestMapping(value = "/prodModify", method = RequestMethod.POST) public
-	 * String modifyProd(@RequestBody ProductDTO uDTO) throws Exception {
+	 * String modifyProd(@RequestBody ProdDTO uDTO) throws Exception {
 	 * logger.debug("@@@@@ CONTROLLER: modifyProd() 호출");
 	 * logger.debug("@@@@@ CONTROLLER: uDTO = " + uDTO);
 	 * 
@@ -326,11 +335,10 @@ public class RequirementController {
 	// 소요량관리 정보 추가
 	
 	  @RequestMapping(value = "/reqDetail", method = RequestMethod.POST) public
-	  String requirementPOST(RequirementList reqs) throws Exception {
-	  
+	  String requirementPOST(List<RequirementDTO> reqs) throws Exception {
 	  logger.debug("requirementPOST() 호출");
-	  logger.debug("reqs : " + reqs.getReqs());
-	  service.insertReq(reqs.getReqs()); 
+	  logger.debug("reqs : " + reqs);
+	  service.insertReq(reqs); 
 	  
 	  return "redirect:/requirement/reqDetail";
 	  }
@@ -372,7 +380,26 @@ public class RequirementController {
 		service.modifyReq(uDTO);
 
 		return "redirect:/requirement/reDetail";
-	} // modifyWorkOrder()
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String popUpGET(@RequestParam("input") String input, @RequestParam("type") String type) throws Exception {
+
+		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
+		logger.debug("@#@#@# C : type = " + type);
+
+		if (type.equals("prod")) { 
+			return "redirect:/requirement/product?input="+input; }
+		
+
+		else if (type.equals("raw")) {
+			return "redirect:/requirement/rawMaterial?input=" + input;
+		}
+
+		return "";
+
+	}
+	// modifyWorkOrder()
 
 	// =====================================================================================
 
@@ -579,23 +606,7 @@ public class RequirementController {
 	 */
 
 	// 담당자(사원) 팝업 검색
-	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
-	public String popUpGET(@RequestParam("input") String input, @RequestParam("type") String type) throws Exception {
-
-		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
-		logger.debug("@#@#@# C : type = " + type);
-
-		if (type.equals("emp")) {
-			return "redirect:/person/empinfo?input=" + input;
-		}
-
-		if (type.equals("raw")) {
-			return "redirect:/requirement/rawMaterial?input=" + input;
-		}
-
-		return "redirect:/requirement/warehouse?input=" + input;
-
-	}
+	
 
 	// 창고 추가
 	/*
@@ -718,24 +729,19 @@ public class RequirementController {
 	 */ // RequirementList()
 
 	// 작업지시, 라인, 품번 팝업
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String workOrderGET(Model model, @RequestParam("type") String type, @RequestParam("input") String input,
-			RequirementPageDTO pdto) throws Exception {
-		logger.debug("@@@@@ CONTROLLER: workOrderGET() 호출");
-		logger.debug("@@@@@ CONTROLLER: type = " + type);
-
-		if (type.equals("work")) {
-			String state = URLEncoder.encode("마감", "UTF-8");
-			return "redirect:/workorder/workOrderList?input=" + input + "&search_place=" + state;
-		}
-		if (type.equals("line")) {
-			return "redirect:/requirement/line?input=" + input;
-		}
-		if (type.equals("prod")) {
-			return "redirect:/requirement/product?input=" + input;
-		}
-		return "";
-	} // workOrderGET()
+	/*
+	 * @RequestMapping(value = "/search", method = RequestMethod.GET) public String
+	 * workOrderGET(Model model, @RequestParam("type") String
+	 * type, @RequestParam("input") String input, RequirementPageDTO pdto) throws
+	 * Exception { logger.debug("@@@@@ CONTROLLER: workOrderGET() 호출");
+	 * logger.debug("@@@@@ CONTROLLER: type = " + type);
+	 * 
+	 * if (type.equals("work")) { String state = URLEncoder.encode("마감", "UTF-8");
+	 * return "redirect:/workorder/workOrderList?input=" + input + "&search_place="
+	 * + state; } if (type.equals("line")) { return
+	 * "redirect:/requirement/line?input=" + input; } if (type.equals("prod")) {
+	 * return "redirect:/requirement/product?input=" + input; } return ""; }
+	 */ // workOrderGET()
 
 	/*
 	 * // 생산실적 등록
