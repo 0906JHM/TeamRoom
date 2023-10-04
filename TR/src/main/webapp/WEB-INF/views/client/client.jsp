@@ -112,7 +112,7 @@
 	<input type="text" id="clientPhone" name="clientPhone" value="담당자번호"><br>
 	<input type="text" id="clientFax" name="clientFax" value="거래처코드"><br>
 	<input type="text" id="clientEmail" name="clientEmail" value="거래처메일"><br>
-	<input type="text" id="clientMemo" name="lientMemo" value="비고">
+	<input type="text" id="clientMemo" name="clientMemo" value="비고">
 	 
 	 <input type="submit" value="제출">
 	</form>

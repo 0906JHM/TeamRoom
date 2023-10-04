@@ -20,7 +20,7 @@ public class ClientDAO {
 
 		public void insertClient(ClientDTO clientDTO) {
 			
-			sqlsession.insert(namespace+".insertClient");
+			sqlsession.insert(namespace+".insertClient", clientDTO);
 			
 			
 			
