@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.itwillbs.mappers.calendarMapper">
+<!-- 	달력 -->
+	<select id="getCalendarList" resultType="com.itwillbs.domain.CalendarDTO">
+		select *
+		from calendar
+	</select>
+<!-- 	매출 차트 -->
+	<select id="getSalesList" resultType="com.itwillbs.domain.ChartDTO">
+		select company as label, value as data
+		from pie_chart
+	</select>
+<!-- 	재고 완재품 차트 -->
+	<select id="getStockList" resultType="com.itwillbs.domain.ChartDTO">
+		select stock_name as label, count as data
+		from stock_chart
+	</select>
+<!-- 	실적 차트 -->
+	<select id="getPerfList" resultType="com.itwillbs.domain.ChartDTO">
+		select  date_format(perfdate, '%Y-%m-%d') as label, count as data
+		from perf_chart
+		order by perfdate asc
+	</select>
+	
+</mapper>
