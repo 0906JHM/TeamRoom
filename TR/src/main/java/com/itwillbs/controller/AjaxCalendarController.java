@@ -37,7 +37,7 @@ public class AjaxCalendarController {
 	        // 각 캘린더 이벤트에 대한 JSON 객체를 생성합니다.
 	        for (CalendarDTO calendarDTO : calendarList) {
 	            CalendarEventDTO event = new CalendarEventDTO();
-
+ 
 	            // JSON 객체에 캘린더 이벤트의 속성들을 설정합니다.
 	            event.setId(calendarDTO.getCalendar_num()); // ID 설정
 	            event.setTitle(calendarDTO.getCalendar_title()); // 제목 설정
