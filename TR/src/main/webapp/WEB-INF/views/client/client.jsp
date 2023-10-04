@@ -61,30 +61,35 @@
 				<th class="tg-0pky">업태</th>
 				<th class="tg-0pky">대표자</th>
 				<th class="tg-0pky">담당자</th>
+				<th class="tg-0pky" >거래처주소</th>
 				<th class="tg-0pky" colspan="2">상세주소</th>
-				<th class="tg-0pky">전화번호</th>
+				<th class="tg-0pky">거래처번호</th>
 				<th class="tg-0pky">휴대폰번호</th>
 				<th class="tg-0pky">팩스번호</th>
 				<th class="tg-0pky">이메일</th>
 				<th class="tg-0lax">비고</th>
 			</tr>
 		</thead>
+		
 		<tbody>
+		<c:forEach var="clientDTO" items="${clientList}">
 			<tr>
-				<td class="tg-0pky">1</td>
-				<td class="tg-0pky">a</td>
-				<td class="tg-0pky">b</td>
-				<td class="tg-0pky">c</td>
-				<td class="tg-0pky">d</td>
-				<td class="tg-0pky">e</td>
-				<td class="tg-0pky">f</td>
-				<td class="tg-0pky" colspan="2">g</td>
-				<td class="tg-0pky">h</td>
-				<td class="tg-0pky">i</td>
-				<td class="tg-0pky">j</td>
-				<td class="tg-0pky">k</td>
-				<td class="tg-0lax">l</td>
+				<td class="tg-0pky">${clientDTO.clientType}</td>
+				<td class="tg-0pky">${clientDTO.clientCode}</td>
+				<td class="tg-0pky">${clientDTO.clientCompany}</td>
+				<td class="tg-0pky">${clientDTO.clientNumber}</td>
+				<td class="tg-0pky">${clientDTO.clientDetail}</td>
+				<td class="tg-0pky">${clientDTO.clientCeo}</td>
+				<td class="tg-0pky">${clientDTO.clientName}</td>
+				<td class="tg-0pky">${clientDTO.clientAddr1}</td>
+				<td class="tg-0pky" colspan="2">${clientDTO.clientAddr2}</td>
+				<td class="tg-0pky">${clientDTO.clientTel}</td>
+				<td class="tg-0pky">${clientDTO.clientPhone}</td>
+				<td class="tg-0pky">${clientDTO.clientFax}</td>
+				<td class="tg-0lax">${clientDTO.clientEmail}</td>
+				<td class="tg-0lax">${clientDTO.clientMemo}</td>
 			</tr>
+			</c:forEach>
 		</tbody>
 
 		<div style="float: right;">

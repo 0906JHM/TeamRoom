@@ -589,7 +589,8 @@ input[type="text"] {
 <!---------------------------------------------------- 상단 조회 및 버튼 ----------------------------------------------------->
 
 <div class="outer-container">
-    <jsp:include page="../inc/sidebar.jsp"></jsp:include>
+     <jsp:include page="../inc/side.jsp"></jsp:include> 
+    
 	<div class="main-content">
 	    <h2>수주 관리</h2>
 	    <div class="horizontal-line"></div>

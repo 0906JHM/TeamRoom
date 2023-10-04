@@ -11,5 +11,11 @@
          #{clientName} , #{clientAddr1}   ,#{clientAddr2}, #{clientTel}, #{clientPhone}, #{clientFax}, #{clientEmail},#{clientMemo})
   </insert>
   
+  <select id="getclientList" resultType="com.itwillbs.domain.ClientDTO">
+    select * from clients
+  
+  </select>
+
+  
   
   </mapper>

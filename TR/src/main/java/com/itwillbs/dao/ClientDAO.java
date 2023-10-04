@@ -1,5 +1,7 @@
 package com.itwillbs.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -23,6 +25,12 @@ public class ClientDAO {
 			sqlsession.insert(namespace+".insertClient", clientDTO);
 			
 			
+			
+		}
+
+		public List<ClientDTO> getclientList() {
+			
+			return sqlsession.selectList(namespace+".getclientList");
 			
 		}
 
