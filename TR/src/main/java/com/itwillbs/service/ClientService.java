@@ -14,7 +14,8 @@ public class ClientService {
 	private ClientDAO clientDAO;
 
 	public void insertClient(ClientDTO clientDTO) {
-	
+		
+		System.out.println("ClientService insertController@@@@@@@@@@" + clientDTO);
 		clientDAO.insertClient(clientDTO);
 		
 		
