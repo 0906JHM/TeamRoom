@@ -1,18 +1,14 @@
 package com.itwillbs.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class ChartDTO {
 	private String label;
     private int data;
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	public int getData() {
-		return data;
-	}
-	public void setData(int data) {
-		this.data = data;
-	}
+
 }
