@@ -57,7 +57,7 @@
 						<ul class="submenu">
 							<li><a href="#" class="sidea">수주관리</a></li>
 							<li><a href="#" class="sidea">발주관리</a></li>
-							<li><a href="#" class="sidea">거래처관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/client/client" class="sidea">거래처관리</a></li>
 						</ul>
 						<div class="sidelink">
 							<i class="fa-solid fa-pen"></i>인사관리
