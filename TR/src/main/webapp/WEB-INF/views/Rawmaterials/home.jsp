@@ -101,9 +101,9 @@ $(document).ready(function() {
 
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/list" method="get">
-원자재코드	<input type="text" name="a1" placeholder="원자재코드">
-원자재명	<input type="text" name="a2" placeholder="원자재명">
-종류		<select name="a3">
+원자재코드	<input type="text" name="rawCode" placeholder="원자재코드">
+원자재명	<input type="text" name="rawName" placeholder="원자재명">
+종류		<select name="rawType">
 		<option value="">선택</option>
 		<option value="향기">향기</option>
 		<option value="용기">용기</option>
@@ -111,7 +111,7 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처		<input type="text" name="a6" placeholder="거래처">
+거래처		<input type="text" name="clientCode" placeholder="거래처">
 <input type="submit" value="검색">
 </form>
 
@@ -133,16 +133,16 @@ $(document).ready(function() {
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
 <tr>
 <td></td>
-<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/Rawmaterials/detail?a1=${rawmaterialsDTO.a1}')">${rawmaterialsDTO.a1}</a></td>
-<%-- <td><a href="${pageContext.request.contextPath}/Rawmaterials/detail?a1=${rawmaterialsDTO.a1}">${rawmaterialsDTO.a1}</a></td> --%>
-<td>${rawmaterialsDTO.a2}</td>
-<td>${rawmaterialsDTO.a3}</td>
-<td>${rawmaterialsDTO.a4}</td>
-<td>${rawmaterialsDTO.a5}</td>
-<td>${rawmaterialsDTO.a6}</td>
-<td>${rawmaterialsDTO.a7}</td>
-<td>${rawmaterialsDTO.a8}</td>
-<td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.a1}"></td>
+<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}')">${rawmaterialsDTO.rawCode}</a></td>
+<%-- <td><a href="${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}">${rawmaterialsDTO.rawCode}</a></td> --%>
+<td>${rawmaterialsDTO.rawName}</td>
+<td>${rawmaterialsDTO.rawType}</td>
+<td>${rawmaterialsDTO.rawUnit}</td>
+<td>${rawmaterialsDTO.rawPrice}</td>
+<td>${rawmaterialsDTO.clientCode}</td>
+<td>${rawmaterialsDTO.whseCode}</td>
+<td>${rawmaterialsDTO.rawMemo}</td>
+<td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
 </tr>
 </c:forEach>
 </table>
