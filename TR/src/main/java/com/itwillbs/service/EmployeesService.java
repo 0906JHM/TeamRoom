@@ -28,4 +28,12 @@ public class EmployeesService {
     	employeesDAO.delete(empId);
     }
 
+	public EmployeesDTO getMember(String empId) {
+		return employeesDAO.getMember(empId);
+	}
+
+	public void updateEmployees(EmployeesDTO employeesDTO) {
+		employeesDAO.updateEmployees(employeesDTO);	
+	}
+
 }

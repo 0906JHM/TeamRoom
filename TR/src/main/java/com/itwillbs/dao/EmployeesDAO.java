@@ -30,4 +30,14 @@ public class EmployeesDAO {
        sqlSession.delete(namespace + ".delete", empId); 
        }
 
+
+	public EmployeesDTO getMember(String empId) {
+		return sqlSession.selectOne(namespace+".getMember", empId);
+	}
+
+
+	public void updateEmployees(EmployeesDTO employeesDTO) {
+		sqlSession.update(namespace+".updateEmployees", employeesDTO);
+	}
+
 }

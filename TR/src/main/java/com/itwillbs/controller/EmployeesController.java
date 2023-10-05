@@ -5,12 +5,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.service.EmployeesService;
@@ -43,16 +43,30 @@ public class EmployeesController {
 	// 게시물 선택삭제
     @RequestMapping(value = "/delete")
     public String ajaxTest(HttpServletRequest request) throws Exception {
-
         String[] ajaxMsg = request.getParameterValues("valueArr");
         int size = ajaxMsg.length;
         for(int i=0; i<size; i++) {
         	employeesService.delete(ajaxMsg[i]);
         }
         return "redirect:/employees/employees";
-    }
+    }//delete
+    
+    // 인사수정
+	@GetMapping("/update")
+	public String update(HttpServletRequest request,Model model) {
+		String empId = request.getParameter("empId");
+		EmployeesDTO employeesDTO = employeesService.getMember(empId);
+		model.addAttribute("employeesDTO", employeesDTO);
+		return "employees/employees3";
+	}//update
 	
-	
+	@PostMapping("/updatePro")
+	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr) {
+	    employeesService.updateEmployees(employeesDTO);
+	    rttr.addFlashAttribute("refreshAndClose", true);
+	    return "redirect:/employees/employees";
+	}
+
 	
 	
 	

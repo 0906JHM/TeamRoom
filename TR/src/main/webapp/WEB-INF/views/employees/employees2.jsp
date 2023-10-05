@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>인사등록</title>
 </head>
 <body>
+<h1>인사등록</h1>
 <form action="${pageContext.request.contextPath}/employees/insertPro" id="join" method="post">
 
 사원번호:<input type="number" name="empId" class="empId"><br>

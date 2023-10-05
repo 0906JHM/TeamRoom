@@ -5,18 +5,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>인사관리</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
 
 <style>
-    table, th, td {
-        border: 1px solid black;
+    /* 테이블 스타일 */
+    #employeeTable {
+        border-collapse: collapse;
+        width: 50%;
+    }
+
+    #employeeTable th,
+    #employeeTable td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    #employeeTable th {
+        background-color: #f2f2f2;
+    }
+
+    /* 행 선택 스타일 */
+    #employeeTable tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    /* 체크박스 스타일 */
+    input[type="checkbox"] {
+        transform: scale(1.5); /* 체크박스 크기 조정 */
+    }
+
+    /* 테이블 바깥 여백 조정 */
+    .table-container {
+        margin: 20px;
     }
 </style>
 
-
 <!-- javascript -->
 <script type="text/javascript">
+//체크박스 선택/해제
 $(function(){
    var chkObj = document.getElementsByName("RowCheck");
    var rowCnt = chkObj.length;
@@ -37,7 +66,8 @@ $(function(){
       }
    });
 });
-      
+
+//삭제기능  
 function deleteValue(){
    var url = "delete";    // Controller로 보내고자 하는 URL (.dh부분은 자신이 설정한 값으로 변경해야됨)
    var valueArr = new Array();
@@ -67,13 +97,50 @@ function deleteValue(){
             });
 
          }   
-}
+}//deleteValue
+
+//검색기능
+function myFunction() {
+	  var input, filter, table, tr, td, i, j, txtValue;
+	  input = document.getElementById("myInput");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("employeeTable");
+	  tr = table.getElementsByTagName("tr");
+
+	  for (i = 0; i < tr.length; i++) {
+	    td = tr[i].getElementsByTagName("td");
+	    for (j = 0; j < td.length; j++) {
+	      if (td[j]) {
+	        txtValue = td[j].textContent || td[j].innerText;
+	        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	          tr[i].style.display = "";
+	          break;
+	        } else {
+	          tr[i].style.display = "none";
+	        }
+	      } 
+	    }
+	  }
+	}//myFunction
+
+	
+	// 페이지 로드 후 스크립트 실행
+	$(document).ready(function() {
+	    var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+
+	    if (refreshAndClose) {
+	        window.opener.location.reload(); // 부모창 새로 고침
+	        window.close(); // 현재 창 닫기
+	    }
+	});
 </script>
 
 
 
 </head>
 <body>
+<jsp:include page="../inc/side.jsp"></jsp:include>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="검색어를 입력하세요..">
     <table id="employeeTable">
         <tr>
             <th>사원번호</th>
@@ -87,22 +154,21 @@ function deleteValue(){
             <th>재직구분</th>
         </tr>
 <c:forEach var="employeesDTO" items="${employeesList }">
-<tr><td>${employeesDTO.empId}</td>
-<td>${employeesDTO.empPass}</td>
-<td>${employeesDTO.empName}</td>
-<td>${employeesDTO.empDepartment}</td>
-<td>${employeesDTO.empPosition}</td>
-<td>${employeesDTO.empEmail}</td>
-<td>${employeesDTO.empTel}</td>
-<td>${employeesDTO.empHiredate}</td>
-<td>${employeesDTO.empState}</td>
-<td><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td></tr>
-</c:forEach>  
+<tr onclick="window.open('update?empId=${employeesDTO.empId}', '_blank', 'width=800,height=600')">
+    <td>${employeesDTO.empId}</td>
+    <td>${employeesDTO.empPass}</td>
+    <td>${employeesDTO.empName}</td>
+    <td>${employeesDTO.empDepartment}</td>
+    <td>${employeesDTO.empPosition}</td>
+    <td>${employeesDTO.empEmail}</td>
+    <td>${employeesDTO.empTel}</td>
+    <td>${employeesDTO.empHiredate}</td>
+    <td>${employeesDTO.empState}</td>
+    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
+</tr>
+</c:forEach>    
     </table>
     <input type="button" value="삭제" onclick="deleteValue();">
-    <button onclick="window.location.href='employees2';">추가하기</button>
-    <button onclick="saveRow()">저장</button>
-    <button onclick="cancelRow()">취소하기</button>
-    <button onclick="deleteRow()">삭제하기</button>
+    <button onclick="window.open('employees2', '_blank', 'width=800,height=600')">등록</button>
 </body>
 </html>

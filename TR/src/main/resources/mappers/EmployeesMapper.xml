@@ -14,11 +14,19 @@
   </select>
   
   <!--  회원 삭제  -->
-    <delete id="delete">
+  <delete id="delete">
         delete from employees
         where empId = #{empId}
-    </delete>
+  </delete>
   
+  <select id="getMember" resultType="com.itwillbs.domain.EmployeesDTO">
+  	select * from employees where empId = #{empId}
+  </select>
+  
+  <update id="updateEmployees">
+  	update employees set empId = #{empId}, empPass = #{empPass}, empName = #{empName}, empDepartment = #{empDepartment}, empPosition = #{empPosition}, empEmail = #{empEmail}, empTel = #{empTel}, empHiredate = #{empHiredate}, empState = #{empState}
+  	where empId = #{empId}
+  </update>
   
   
   
