@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.itwillbs.dao.RawmaterialsDAO;
 import com.itwillbs.domain.RawmaterialsDTO;
 
-@Service
+@Service 
 public interface RawmaterialsService2 {
 
 	public void delete(String a1);//삭제

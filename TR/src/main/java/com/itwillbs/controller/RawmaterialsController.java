@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.service.RawmaterialsService;
 
-@Controller
+@Controller 
 @RequestMapping("/Rawmaterials/*")
 public class RawmaterialsController {
 	

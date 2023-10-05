@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.RawmaterialsDTO;
 
-@Repository
+@Repository 
 public interface RawmaterialsDAO2 {
 	
 	public void delete(String a1);//삭제

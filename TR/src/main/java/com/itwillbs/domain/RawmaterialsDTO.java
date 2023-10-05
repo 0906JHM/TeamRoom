@@ -1,7 +1,7 @@
 package com.itwillbs.domain;
 
 public class RawmaterialsDTO {
-
+ 
 	private String a1;
 	private String a2;
 	private String a3;

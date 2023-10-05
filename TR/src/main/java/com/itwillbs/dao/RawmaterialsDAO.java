@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.RawmaterialsDTO;
 
-@Repository
+@Repository 
 public class RawmaterialsDAO implements RawmaterialsDAO2 {
 	
 	// mybatis 객체생성

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.itwillbs.mappers.RawmaterialsMapper"> 
+
+	<insert id="insertRawmaterials">
+		insert into Rawmaterials(a1,a2,a3,a4,a5,a6,a7,a8)
+		values(#{a1},#{a2},#{a3},#{a4},#{a5},#{a6},#{a7},#{a8})
+	</insert>
+	
+	<select id="getRawmaterialsList" resultType="com.itwillbs.domain.RawmaterialsDTO">
+		select *
+		from Rawmaterials
+	</select>
+	
+	<select id="getRawmaterialsSearchList" resultType="com.itwillbs.domain.RawmaterialsDTO" parameterType="com.itwillbs.domain.RawmaterialsDTO">
+    	select *
+    	from Rawmaterials
+    	where 1=1
+   		<if test="a1 != null and a1 != ''">
+        	and a1 like concat('%', #{a1}, '%')
+    	</if>
+    	<if test="a2 != null and a2 != ''">
+        	and a2 like concat('%', #{a2}, '%')
+    	</if>
+   		<if test="a3 != null and a3 != ''">
+       		and a3 = #{a3}
+    	</if>
+    	<if test="a6 != null and a6 != ''">
+    		and a6 like concat('%', #{a6}, '%')
+    	</if>
+	</select>
+	
+	<!-- 체크박스로 선택삭제 -->
+    <delete id="delete">
+        delete from Rawmaterials
+        where a1 = #{a1}
+    </delete>
+    
+    <select id="getDetail" resultType="com.itwillbs.domain.RawmaterialsDTO">
+		select *
+		from Rawmaterials
+		where a1 = #{a1}
+	</select>
+	
+	<update id="updateRawmaterials">
+		update Rawmaterials
+		set a2=#{a2}, a3=#{a3}, a4=#{a4}, a5=#{a5}, a6=#{a6}, a7=#{a7}, a8=#{a8}
+		where a1 = #{a1}
+	</update>
+  
+</mapper>
