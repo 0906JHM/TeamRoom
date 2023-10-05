@@ -99,7 +99,7 @@
 			
 			function loadCalendar() {
 				$.ajax({
-					url : '${pageContext.request.contextPath}/calendarList',
+					url : '${pageContext.request.contextPath}/main/calendarList',
 					type : 'POST',
 					dataType : 'json',
 					success : function(result) {
@@ -122,7 +122,7 @@
 
 	        function loadSalesChart() {
 	            $.ajax({
-	                url: '${pageContext.request.contextPath}/salesList',
+	                url: '${pageContext.request.contextPath}/main/salesList',
 	                type: 'POST',
 	                dataType: 'json',
 	                success: function(result) {
@@ -144,7 +144,7 @@
 	        
 	        function loadStockChart() {
 	            $.ajax({
-	                url: '${pageContext.request.contextPath}/stockList',
+	                url: '${pageContext.request.contextPath}/main/stockList',
 	                type: 'POST',
 	                dataType: 'json',
 	                success: function(result) {
@@ -166,7 +166,7 @@
 	        
 	        function loadPerfChart() {
 	            $.ajax({
-	                url: '${pageContext.request.contextPath}/perfList',
+	                url: '${pageContext.request.contextPath}/main/perfList',
 	                type: 'POST',
 	                dataType: 'json',
 	                success: function(result) {
