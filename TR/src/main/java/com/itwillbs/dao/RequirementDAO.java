@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.controller.RequirementController;
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.service.RequirementService;
@@ -37,33 +39,32 @@ public class RequirementDAO {
 		return sqlSession.selectOne(NAMESPACE + ".countProd");
 	}
 
-	/*
-	 * // 품목 리스트 불러오기
-	 * 
-	 *   public List<ProductDTO> readProdList(RequirementPageDTO pdto) throws
-	 * Exception { logger.debug(" 품목관리 전체리스트 DAO "); return
-	 * sqlSession.selectList(NAMESPACE + ".readProd", pdto); }
-	 * 
-	 * // 품목관리 검색 리스트 총 갯수
-	 * 
-	 *   public int countProd(ProductDTO dto) { return
-	 * sqlSession.selectOne(NAMESPACE + ".countSearchProd", dto); }
-	 * 
-	 * // 품목 검색리스트 불러오기
-	 * 
-	 *   public List<ProductDTO> readProdList(ProductDTO dto, RequirementPageDTO
-	 * pdto) throws Exception { // logger.debug(" 품목관리 검색리스트 DAO "); // RowBounds
-	 * row = new RowBounds(pdto.getStart(), pdto.getCntPerPage()); // return
-	 * sqlSession.selectList(NAMESPACE+".readSearchProd",dto,row); HashMap<String,
-	 * Object> data = new HashMap<String, Object>();
-	 * 
-	 * data.put("start", pdto.getStart()); data.put("cntPerPage",
-	 * pdto.getCntPerPage()); data.put("prodCode", dto.getProdCode());
-	 * data.put("prod_name", dto.getProd_name()); data.put("prod_category",
-	 * dto.getProd_category()); data.put("client_code", dto.getClient_code());
-	 * 
-	 * return sqlSession.selectList(NAMESPACE + ".readSearchProd", data); }
-	 */
+	
+	  // 품목 리스트 불러오기
+	  
+	    public List<ProdDTO> readProdList(RequirementPageDTO pdto) throws
+	  Exception { logger.debug(" 품목관리 전체리스트 DAO "); return
+	  sqlSession.selectList(NAMESPACE + ".readProd", pdto); }
+	  
+	  // 품목관리 검색 리스트 총 갯수
+	  
+	    public int countProd(ProdDTO dto) { return
+	  sqlSession.selectOne(NAMESPACE + ".countSearchProd", dto); }
+	  
+	
+	  // 품목 검색리스트 불러오기
+	  
+	  public List<ProdDTO> readProdList(ProdDTO dto, RequirementPageDTO pdto)
+	  throws Exception {
+	  HashMap<String,Object> data = new HashMap<String, Object>();
+	  data.put("start", pdto.getStart()); data.put("cntPerPage",
+	  pdto.getCntPerPage()); data.put("prodCode", dto.getProdCode());
+	  data.put("prodName", dto.getProdName()); data.put("prodPerfume",
+	  dto.getProdPerfume()); data.put("clientCode", dto.getClientCode());
+	  
+	  return sqlSession.selectList(NAMESPACE + ".readSearchProd", data); }
+	 
+	 
 	
 	
 	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
@@ -81,7 +82,7 @@ public class RequirementDAO {
 
 	// 품목관리 정보 다중 저장
 	/*
-	 *   public void insertProdList(ProductDTO product) {
+	 *   public void insertProdList(ProdDTO product) {
 	 * sqlSession.insert(NAMESPACE + ".prodIn", product); }
 	 */
 	// 품목관리 삭제
@@ -102,13 +103,13 @@ public class RequirementDAO {
 	
 	// 품목관리 수정 시 기존데이터 가져가기
 	/*
-	 *   public ProductDTO getProd(String prodCode) throws Exception {
+	 *   public ProdDTO getProd(String prodCode) throws Exception {
 	 * return sqlSession.selectOne(NAMESPACE+".readProdOne", prodCode); }
 	 */
 	
 	// 품목관리 수정
 	/*
-	 *   public void updateProd(ProductDTO udto) throws Exception {
+	 *   public void updateProd(ProdDTO udto) throws Exception {
 	 * sqlSession.update(NAMESPACE+".updateProd", udto); }
 	 */
 	
@@ -245,7 +246,7 @@ public class RequirementDAO {
 	 
 	public String readReqCode() {
 		
-		String code = "RQ000 ";
+		String code = "RQ000";
 		
 		if (sqlSession.selectOne(NAMESPACE + ".readReqCode") == null) {
 			return code;

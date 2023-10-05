@@ -1,6 +1,7 @@
 package com.itwillbs.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,6 +19,7 @@ public class ProdDAO {
 //	---------------------------------------------------------------------------
 	
 	public List<ProdDTO> getProdList() {
+		System.out.println("3");
 		System.out.println("ProdDAO getProdList()");
 		
 		return sqlSession.selectList(namespace+".getProdList");
@@ -29,9 +31,10 @@ public class ProdDAO {
 		sqlSession.insert(namespace+".insert", prodDTO);
 	}//insertBoard()
 	
-//	public List<ProdDTO> getProdSearch(ProdDTO prodDTO) {
-//		return sqlSession.selectList(namespace+".getProdSearch", prodDTO);
-//	}
+	public List<ProdDTO> getSearch(ProdDTO prodDTO) {
+		System.out.println("ProdDAO getSearch()");
+		return sqlSession.selectList(namespace+".getSearch", prodDTO);
+	}
 //	
 //	//품목관리 리스트 불러오기
 //	public List<ProdDTO> getProdList(ProdDTO prodDTO) {

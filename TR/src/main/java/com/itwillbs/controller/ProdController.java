@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,6 +24,7 @@ public class ProdController {
 	
 	@GetMapping("/list")
 	public String list(Model model) {
+		System.out.println("1");
 		List<ProdDTO> prodList= prodService.getProdList();
 				
 		model.addAttribute("prodList", prodList);
@@ -33,13 +35,14 @@ public class ProdController {
 	}//
 	
 	
-	@RequestMapping(value = "/product/write", method = RequestMethod.GET)
+	@GetMapping("/write")
 	public String write() {
 		return "product/write";
 	}//
 	
-	@RequestMapping(value = "/product/writePro", method = RequestMethod.POST)
+	@PostMapping("/writePro")
 	public String writePro(ProdDTO prodDTO) {
+		
 		System.out.println("ProdController writePro()");
 		System.out.println(prodDTO);
 		//디비에 글쓰기
@@ -48,6 +51,15 @@ public class ProdController {
 		// 글목록 주소변경하면서 이동 /board/list
 		return "redirect:/product/list";
 	}//
+	
+	@GetMapping("/search")
+	public String search(ProdDTO prodDTO, Model model) {
+		System.out.println(prodDTO);
+	    List<ProdDTO> prodList = prodService.getSearch(prodDTO);
+	    System.out.println("controller search");
+	    model.addAttribute("prodList", prodList);
+		return "product/list";
+	}
 	
 	
 //	@GetMapping("/list")

@@ -5,56 +5,62 @@
   
   <mapper namespace="com.itwillbs.mappers.RequirementMapper">
   
-<!-- 품목관리 리절트 맵
+<!-- 품목관리 리절트 맵 -->
 	<resultMap id="prod"
-		type="com.itwillbs.domain.ProductDTO">
+		type="com.itwillbs.domain.ProdDTO">
 
 		<id property="prodCode" column="prodCode" />
 		<result property="prodName" column="prodName" />
-		<result property="prod_category" column="prod_category" />
-		<result property="prod_unit" column="prod_unit" />
-		<result property="prod_color" column="prod_color" />
-		<result property="prod_size" column="prod_size" />
-		<result property="client_code" column="client_code" />
-		<result property="prod_price" column="prod_price" />
-		<result property="prod_note" column="prod_note" />
-		<result property="wh_code" column="wh_code" />
-
-		<collection property="clients"
-			ofType="com.itwillbs.domain.ClientsDTO">
-			<result property="client_actname" column="client_actname" />
-		</collection>
+		<result property="prodPerfume" column="prodPerfume" />
+		<result property="prodUnit" column="prodUnit" />
 		
-		<collection property="wh"
+		<result property="prodSize" column="prodSize" />
+		<result property="clientCode" column="clientCode" />
+		<result property="prodPrice" column="prodPrice" />
+		<result property="prodMemo" column="prodMemo" />
+		<!-- <result property="whseCode" column="whseCode" /> -->
+
+		<!-- <collection property="clients"
+			ofType="com.itwillbs.domain.ClientDTO">
+			<result property="clientCompany" column="clientCompany" />
+		</collection> -->
+		
+		<!-- <collection property="wh"
 			ofType="com.itwillbs.domain.Wh_prodDTO">
-			<result property="wh_name" column="wh_name" />
-		</collection>
+			<result property="whseName" column="whseName" />
+		</collection> -->
 
 	</resultMap>
-	품목관리 리절트 맵
+	<!-- 품목관리 리절트 맵
 
-	품목관리 총 게시글 갯수 출력
+	품목관리 총 게시글 갯수 출력 -->
 	<select id="countProd" resultType="int">
 		SELECT COUNT(*) FROM product
 	</select>
-	품목관리 총 게시글 갯수 출력
+	<!-- 품목관리 총 게시글 갯수 출력
 
-	품목관리 목록 불러오기
-	<select id="readProd" resultType="ProductDTO" resultMap="prod">
-		SELECT p.*, c.client_actname,w.wh_name  from product p
-		join warehouse w ON p.wh_code =w.wh_code
-		JOIN clients c on p.client_code =c.client_code
+	품목관리 목록 불러오기 -->
+	<select id="readProd" resultType="ProdDTO" resultMap="prod">
+		SELECT *
+		from product
 		order by 1 desc
 		limit #{start}, #{cntPerPage}
 	</select>
-	품목관리 목록 불러오기
+	<!-- <select id="readProd" resultType="ProdDTO" resultMap="prod">
+		SELECT p.*, c.clientCompany,w.whseName  from product p
+		join warehouse w ON p.whseCode =w.whseCode
+		JOIN clients c on p.clientCode =c.clientCode
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select> -->
+	<!-- 품목관리 목록 불러오기
 
-	품목관리 검색 게시글 갯수 출력
+	품목관리 검색 게시글 갯수 출력 -->
 	<select id="countSearchProd" resultType="int">
 		<bind name="prodCode" value="'%'+ prodCode +'%'" />
 		<bind name="prodName" value="'%'+ prodName +'%'" />
-		<bind name="prod_category" value="'%'+ prod_category +'%'" />
-		<bind name="client_code" value="'%'+ client_code +'%'" />
+		<bind name="prodPerfume" value="'%'+ prodPerfume +'%'" />
+		<bind name="clientCode" value="'%'+ clientCode +'%'" />
 		SELECT COUNT(*) FROM product
 		<where>
 			<if test="prodCode != ''">
@@ -63,29 +69,55 @@
 			<if test="prodName != ''">
 				and prodName like #{prodName}
 			</if>
-			<if test="prod_category != ''">
-				and prod_category like #{prod_category}
+			<if test="prodPerfume != ''">
+				and prodPerfume like #{prodPerfume}
 			</if>
-			<if test="prod_unit != ''">
-				and client_code like #{client_code}
-			</if>
+			<!-- <if test="prodUnit != ''">
+				and clientCode like #{clientCode}
+			</if> -->
 		</where>
 	</select>
-	품목관리 검색 게시글 갯수 출력
+	<!-- 품목관리 검색 게시글 갯수 출력
 
-	품목관리 검색리스트 불러오기
+	품목관리 검색리스트 불러오기 -->
 	<select id="readSearchProd" parameterType="hashMap"
-		resultType="ProductDTO" resultMap="prod">
+		resultType="ProdDTO" resultMap="prod">
 		<bind name="prodCode" value="'%'+ prodCode +'%'" />
 		<bind name="prodName" value="'%'+ prodName +'%'" />
-		<bind name="prod_category" value="'%'+ prod_category +'%'" />
-		<bind name="client_code" value="'%'+ client_code +'%'" />
-		SELECT p.*, c.client_actname,w.wh_name  from product p
-		join warehouse w ON p.wh_code =w.wh_code
-		JOIN clients c on p.client_code =c.client_code
+		<bind name="prodPerfume" value="'%'+ prodPerfume +'%'" />
+		<!-- <bind name="clientCode" value="'%'+ clientCode +'%'" /> -->
+		SELECT * from product
+		
+		<where>
+			<if test="prodCode != ''">
+				prodCode like #{prodCode}
+			</if>
+			<if test="prodName != ''">
+				and prodName like #{prodName}
+			</if>
+			<if test="prodPerfume != ''">
+				and prodPerfume like #{prodPerfume}
+			</if>
+			<!-- <if test="prodUnit != ''">
+				and p.clientCode like #{clientCode}
+			</if> -->
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	<!-- <select id="readSearchProd" parameterType="hashMap"
+		resultType="ProdDTO" resultMap="prod">
+		<bind name="prodCode" value="'%'+ prodCode +'%'" />
+		<bind name="prodName" value="'%'+ prodName +'%'" />
+		<bind name="prodPerfume" value="'%'+ prodPerfume +'%'" />
+		<bind name="clientCode" value="'%'+ clientCode +'%'" />
+		SELECT p.*, c.clientCompany, w.whseName  from product p
+		 join warehouse w ON p.whseCode =w.whseCode 
+		JOIN clients c on p.clientCode =c.clientCode
 		
 		
-		SELECT l.*, w.woCode from line l
+		SELECT l.* , w.woCode from line l
 		join workOrder w ON l.lineCode = w. linCode
 		ORDER BY l.lineCode DESC;
 		<where>
@@ -95,61 +127,67 @@
 			<if test="prodName != ''">
 				and p.prodName like #{prodName}
 			</if>
-			<if test="prod_category != ''">
-				and p.prod_category like #{prod_category}
+			<if test="prodPerfume != ''">
+				and p.prodPerfume like #{prodPerfume}
 			</if>
-			<if test="prod_unit != ''">
-				and p.client_code like #{client_code}
+			<if test="prodUnit != ''">
+				and p.clientCode like #{clientCode}
 			</if>
 		</where>
 		order by 1 desc
 		limit #{start},#{cntPerPage}
 
-	</select>
-	품목관리 검색리스트 불러오기
+	</select> -->
+	<!-- 품목관리 검색리스트 불러오기
 	
-	품목관리 추가버튼 클릭 시 품목코드 가져가기
+	품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
 	<select id="readProdCode" resultType="String">
 		select prodCode from product order by prodCode desc limit 1;
 	</select>
-	품목관리 추가버튼 클릭 시 품목코드 가져가기
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기
 
-	품목관리 정보 다중 입력
+	품목관리 정보 다중 입력 -->
 	<insert id="prodIn">
 		insert into product
 		values
-		(#{prodCode},#{prodName},#{prod_category},#{prod_unit},#{prod_size},
-		#{prod_color},#{client_code},#{wh_code},#{prod_price},#{prod_note})
+		(#{prodCode},#{prodName},#{prodPerfume},#{prodUnit},#{prodSize},
+		#{prod_color},#{prodPrice},#{prodMemo})
 	</insert>
-	품목관리 정보 다중 입력
+	<!-- <insert id="prodIn">
+		insert into product
+		values
+		(#{prodCode},#{prodName},#{prodPerfume},#{prodUnit},#{prodSize},
+		#{prod_color},#{clientCode},#{whseCode},#{prodPrice},#{prodMemo})
+	</insert> -->
+	<!-- 품목관리 정보 다중 입력
 
-	품목관리 삭제
+	품목관리 삭제 -->
 	<delete id="deleteProd">
 		DELETE FROM product
 		WHERE prodCode=#{prodCode}
 	</delete>
-	품목관리 삭제
+	<!-- 품목관리 삭제
 
-	품목관리 수정 시 조회
-	<select id="readProdOne" resultType="ProductDTO" resultMap="prod">
-		SELECT p.*, c.client_actname,w.wh_name  from product p
-		join warehouse w ON p.wh_code =w.wh_code
-		JOIN clients c on p.client_code =c.client_code
-		WHERE p.prodCode=#{prodCode}
-	</select>
-	품목관리 수정 시 조회
+	품목관리 수정 시 조회 -->
+	<!-- <select id="readProdOne" resultType="ProdDTO" resultMap="prod">
+		SELECT p.*, c.clientCompany,w.whseName  from product p
+		join warehouse w ON p.whseCode =w.whseCode
+		JOIN clients c on p.clientCode =c.clientCode
+		 WHERE p.prodCode=#{prodCode}
+	</select> -->
+<!-- 	품목관리 수정 시 조회
 
-	품목관리 수정
-	<update id="updateProd">
+	 품목관리 수정 -->
+	<!-- <update id="updateProd">
 		UPDATE product
-		SET prodCode=#{prodCode},prodName=#{prodName},prod_category=#{prod_category},prod_unit=#{prod_unit},
-		prod_size=#{prod_size},prod_color=#{prod_color},client_code=#{client_code},prod_price=#{prod_price},prod_note=#{prod_note},
-		wh_code=#{wh_code}
+		SET prodCode=#{prodCode},prodName=#{prodName},prodPerfume=#{prodPerfume},prodUnit=#{prodUnit},
+		prodSize=#{prodSize},prod_color=#{prod_color},clientCode=#{clientCode},prodPrice=#{prodPrice},prodMemo=#{prodMemo},
+		whseCode=#{whseCode}
 		WHERE prodCode=#{prodCode}
-	</update>
-	품목관리 수정
+	</update> -->
+	<!-- 품목관리 수정 -->
 
-	////////////////////////////////////////////////////////////////
+	<!-- ////////////////////////////////////////////////////////////////
 
 	원자재관리 총 게시글 갯수 출력
 	<select id="countRaw" resultType="int">
@@ -170,28 +208,28 @@
 		<result property="raw_unit" column="raw_unit" />
 		<result property="raw_size" column="raw_size" />
 		<result property="raw_note" column="raw_note" />
-		<result property="client_code" column="client_code" />
-		<result property="wh_code" column="wh_code" />
+		<result property="clientCode" column="clientCode" />
+		<result property="whseCode" column="whseCode" />
 
 		<collection property="clients"
-			ofType="com.itwillbs.domain.ClientsDTO">
-			<result property="client_actname" column="client_actname" />
+			ofType="com.itwillbs.domain.ClientDTO">
+			<result property="clientCompany" column="clientCompany" />
 		</collection>
 		
 		<collection property="wh"
 			ofType="com.itwillbs.domain.Wh_prodDTO">
-			<result property="wh_name" column="wh_name" />
+			<result property="whseName" column="whseName" />
 		</collection>
 
 	</resultMap>
 
 	<select id="readRaw" resultMap="rawMaterial"
 		resultType="RawMaterialDTO">
-		SELECT r.*, c.client_actname, w.wh_name
+		SELECT r.*, c.clientCompany, w.whseName
 		from rawMaterial r
 		join clients c
-		on r.client_code = c.client_code
-		join warehouse w ON r.wh_code =w.wh_code
+		on r.clientCode = c.clientCode
+		join warehouse w ON r.whseCode =w.whseCode
 		order by 1 desc
 		limit #{start}, #{cntPerPage}
 	</select>
@@ -201,8 +239,8 @@
 	<select id="countSearchRaw" parameterType="hashMap"
 		resultType="int">
 		SELECT COUNT(*) FROM rawMaterial r
-		join clients c on r.client_code = c.client_code
-		join warehouse w ON r.wh_code =w.wh_code
+		join clients c on r.clientCode = c.clientCode
+		join warehouse w ON r.whseCode =w.whseCode
 		<where>
 			<if test="rawCode != ''">
 				r.rawCode like concat ('%', #{rawCode}, '%')
@@ -210,8 +248,8 @@
 			<if test="rawName != ''">
 				and r.rawCode like concat ('%', #{rawCode}, '%')
 			</if>
-			<if test="client_actname != null">
-				and c.client_actname like concat ('%', #{client_actname},
+			<if test="clientCompany != null">
+				and c.clientCompany like concat ('%', #{clientCompany},
 				'%')
 			</if>
 		</where>
@@ -221,11 +259,11 @@
 	원자재관리 검색리스트 불러오기
 	<select id="readSearchRaw" parameterType="hashMap"
 		resultMap="rawMaterial" resultType="RawMaterialDTO">
-		SELECT r.*, c.client_actname, w.wh_name
+		SELECT r.*, c.clientCompany, w.whseName
 		from rawMaterial r
 		join clients c
-		on r.client_code = c.client_code
-		join warehouse w ON r.wh_code =w.wh_code
+		on r.clientCode = c.clientCode
+		join warehouse w ON r.whseCode =w.whseCode
 		<where>
 			<if test="rawCode != ''">
 				r.rawCode like concat ('%', #{rawCode}, '%')
@@ -233,8 +271,8 @@
 			<if test="rawName != ''">
 				and r.rawCode like concat ('%', #{rawCode}, '%')
 			</if>
-			<if test="client_actname != ''">
-				and c.client_actname like concat ('%', #{client_actname},
+			<if test="clientCompany != ''">
+				and c.clientCompany like concat ('%', #{clientCompany},
 				'%')
 			</if>
 		</where>
@@ -254,7 +292,7 @@
 	<insert id="rawIn">
 		insert into rawMaterial
 		values
-		(#{rawCode},#{rawName},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{wh_code},#{raw_note})
+		(#{rawCode},#{rawName},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{clientCode},#{whseCode},#{raw_note})
 	</insert>
 	원자재관리 정보 다중 입력
 
@@ -267,11 +305,11 @@
 	
 	원자재관리 수정 시 조회
 	<select id="readRawOne" resultMap="rawMaterial" resultType="RawMaterialDTO">
-		SELECT r.*, c.client_actname, w.wh_name
+		SELECT r.*, c.clientCompany, w.whseName
 		from rawMaterial r
 		join clients c
-		on r.client_code = c.client_code
-		join warehouse w ON r.wh_code =w.wh_code
+		on r.clientCode = c.clientCode
+		join warehouse w ON r.whseCode =w.whseCode
 		WHERE r.rawCode=#{rawCode}
 	</select>
 	원자재관리 수정 시 조회
@@ -280,8 +318,8 @@
 	<update id="updateRaw">
 		UPDATE rawMaterial
 		SET rawCode=#{rawCode},rawName=#{rawName},raw_color=#{raw_color},raw_unit=#{raw_unit},
-		raw_size=#{raw_size},raw_price=#{raw_price},client_code=#{client_code},raw_note=#{raw_note},
-		wh_code=#{wh_code}
+		raw_size=#{raw_size},raw_price=#{raw_price},clientCode=#{clientCode},raw_note=#{raw_note},
+		whseCode=#{whseCode}
 		WHERE rawCode=#{rawCode}
 	</update>
 	원자재관리 수정 -->
@@ -305,12 +343,11 @@
 		<result property="reqAmount" column="reqAmount" />
 		<result property="reqMemo" column="reqMemo" />
 
-		<!-- <collection property="prod"
-			ofType="com.itwillbs.domain.ProductDTO">
+		 <collection property="prod" ofType="com.itwillbs.domain.ProdDTO">
 			<result property="prodName" column="prodName" />
 		</collection>
 
-		<collection property="raw"
+		<!-- <collection property="raw"
 			ofType="com.itwillbs.domain.RawMaterialDTO">
 			<result property="rawName" column="rawName" />
 		</collection> -->
@@ -329,8 +366,10 @@
 	</select> -->
 	<select id="readReq" resultMap="requirements"
 		resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT *
-		FROM requirement
+		SELECT r.*, p.prodName
+		FROM requirement r
+		left join
+		product p on p.prodCode = r.prodCode
 		order by 1 desc 
 		limit #{start}, #{cntPerPage}
 	</select>
@@ -442,6 +481,14 @@
 	
 	소요량관리 수정 시 조회 -->
 	<select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT r.*,p.prodName
+		FROM requirement r
+		join
+		product p on p.prodCode = r.prodCode
+		WHERE
+		reqCode=#{reqCode}
+	</select>
+	<!-- <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
 		SELECT r.*,p.prodName ,rm.rawName
 		FROM requirement r
 		join
@@ -450,7 +497,7 @@
 		r.rawCode = rm.rawCode
 		WHERE
 		reqCode=#{reqCode}
-	</select>
+	</select> -->
 	<!-- 소요량관리 수정 시 조회
 
 	소요량관리 수정 -->
@@ -610,8 +657,8 @@
 
 	창고 조회 + 페이징처리
 	<resultMap id="whm_listPage" type="com.itwillbs.domain.Wh_prodDTO">
-		<result property="wh_code" column="wh_code" />
-		<result property="wh_name" column="wh_name" />
+		<result property="whseCode" column="whseCode" />
+		<result property="whseName" column="whseName" />
 		<result property="wh_dv" column="wh_dv" />
 		<result property="wh_addr" column="wh_addr" />
 		<result property="wh_tel" column="wh_tel" />
@@ -625,12 +672,12 @@
 
 	<select id="whlistPage" resultMap="whm_listPage">
 
-		SELECT w.wh_code, w.wh_name, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
+		SELECT w.whseCode, w.whseName, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
 			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
 		FROM warehouse w
 		LEFT JOIN employees e on
 				  e.emp_id = w.emp_id
-		ORDER BY wh_code desc
+		ORDER BY whseCode desc
 		limit #{startPage}, #{pageSize}
 	</select>
 	창고 조회 + 페이징처리
@@ -646,8 +693,8 @@
 	<resultMap id="whm_SearchPage" type="com.itwillbs.domain.Wh_prodDTO">
 		<result property="rawCode" column="rawCode" />
 		<result property="prodCode" column="prodCode" />
-		<result property="wh_code" column="wh_code" />
-		<result property="wh_name" column="wh_name" />
+		<result property="whseCode" column="whseCode" />
+		<result property="whseName" column="whseName" />
 		<result property="wh_dv" column="wh_dv" />
 		<result property="wh_addr" column="wh_addr" />
 		<result property="wh_tel" column="wh_tel" />
@@ -662,15 +709,15 @@
 	<select id="searchWareHouse" resultType="WarehouseDTO" 
 					resultMap="whm_SearchPage"  >
 		
-		SELECT w.wh_code, w.wh_name, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
+		SELECT w.whseCode, w.whseName, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
 			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
 		FROM warehouse w
 		LEFT JOIN employees e on
 				  e.emp_id = w.emp_id
 		
 		<where>
-			<if test="wh_code != '' and wh_code != null">
-				w.wh_code LIKE concat('%', #{wh_code}, '%')
+			<if test="whseCode != '' and whseCode != null">
+				w.whseCode LIKE concat('%', #{whseCode}, '%')
 			</if>
 			<if test="wh_addr != '' and wh_addr != nuull">
 				AND w.wh_addr LIKE concat('%', #{wh_addr}, '%')
@@ -685,7 +732,7 @@
 				AND w.wh_dv LIKE concat('%', #{wh_dv}, '%')
 			</if>
 		</where>
-		ORDER BY wh_code desc
+		ORDER BY whseCode desc
 		limit #{startPage}, #{pageSize}
 	</select>
 
@@ -698,8 +745,8 @@
 		parameterType="hashMap">
 		SELECT count(*) FROM warehouse
 		<where>
-			<if test="wh_code != null and wh_code != ''">
-				wh_code LIKE concat('%', #{wh_code}, '%')
+			<if test="whseCode != null and whseCode != ''">
+				whseCode LIKE concat('%', #{whseCode}, '%')
 
 			</if>
 			<if test="wh_addr != null and wh_addr != ''">
@@ -720,8 +767,8 @@
 		
 	창고 등록(추가)
 	<insert id="registWh">
-		INSERT INTO warehouse (wh_code, wh_name, wh_dv, wh_use, wh_addr, wh_tel, wh_note, emp_id)
-		VALUES (#{wh_code}, #{wh_name}, #{wh_dv}, #{wh_use}, #{wh_addr}, #{wh_tel}, 
+		INSERT INTO warehouse (whseCode, whseName, wh_dv, wh_use, wh_addr, wh_tel, wh_note, emp_id)
+		VALUES (#{whseCode}, #{whseName}, #{wh_dv}, #{wh_use}, #{wh_addr}, #{wh_tel}, 
 				#{wh_note}, #{emp_id})
 		
 	</insert>
@@ -731,38 +778,38 @@
 	창고 삭제
 	<delete id="deleteWh" >
 		DELETE FROM warehouse
-		WHERE wh_code = #{wh_code}
+		WHERE whseCode = #{whseCode}
 	</delete>
 	창고 삭제
 
 	창고 수정
 	<update id="updateWh">
 		UPDATE warehouse
-		SET  wh_name = #{wh_name}, wh_use = #{wh_use}, wh_dv = #{wh_dv},
+		SET  whseName = #{whseName}, wh_use = #{wh_use}, wh_dv = #{wh_dv},
 			 wh_addr = #{wh_addr}, wh_tel = #{wh_tel}, wh_note = #{wh_note}, 
 			 emp_id = #{emp_id}
-		where wh_code = #{wh_code}
+		where whseCode = #{whseCode}
 	</update>
 	창고 수정
 
-	창고 조회(String wh_code)
+	창고 조회(String whseCode)
 	<select id="readWhList">
 		
-		SELECT w.wh_code, w.wh_name, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
+		SELECT w.whseCode, w.whseName, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
 			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
 		FROM warehouse w
 		LEFT JOIN employees e on
 				  e.emp_id = w.emp_id
-		WHERE wh_code = #{wh_code}
-		ORDER BY wh_code desc
+		WHERE whseCode = #{whseCode}
+		ORDER BY whseCode desc
 	</select>
-	창고 조회(String wh_code)
+	창고 조회(String whseCode)
 	
 	창고 추가 시 코드값 가져가기
 	<select id="getWhCode" resultType="String">
-		SELECT wh_code 
+		SELECT whseCode 
 		FROM warehouse 
-		ORDER BY wh_code desc limit 1
+		ORDER BY whseCode desc limit 1
 	</select>
 	창고 추가 시 코드값 가져가기
 	
@@ -792,7 +839,7 @@
 	<resultMap id="stock" type="StockDTO">
 		<result property="stock_num" column="stock_num"/>
 		<result property="rawCode" column="rawCode"/>
-		<result property="wh_code" column="wh_code"/>
+		<result property="whseCode" column="whseCode"/>
 		<result property="stock_text" column="stock_text"/>
 		<result property="prodCode" column="prodCode"/>
 		<result property="in_num" column="in_num"/>
@@ -955,7 +1002,7 @@
 		WHERE work_code=#{work_code})
 	</sql>
 	<sql id="wareSub">
-		(SELECT DISTINCT p.wh_code 
+		(SELECT DISTINCT p.whseCode 
 		FROM product p 
 		JOIN performance pf ON pf.prodCode = p.prodCode 
 		WHERE pf.work_code=#{work_code} 
@@ -963,7 +1010,7 @@
 	</sql>
 	
 	<insert id="insertStock">
-		INSERT INTO stock (stock_count, prodCode, wh_code) 
+		INSERT INTO stock (stock_count, prodCode, whseCode) 
 		VALUES (#{perform_fair}, <include refid="prodSub"/>, <include refid="wareSub"/>)
 	</insert>
 	양품수만큼 재고등록 - 해당 품목 재고에 새로 등록

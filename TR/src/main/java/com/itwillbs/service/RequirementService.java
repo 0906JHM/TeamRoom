@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.RequirementDAO;
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 
@@ -29,28 +30,28 @@ public class RequirementService {
 		return pdao.countProd();
 	}
 
-	/*
-	 * // 품목관리 리스트 불러오기
-	 * 
-	 *  public List<ProductDTO> getProdList(RequirementPageDTO pdto) throws
-	 * Exception { return pdao.readProdList(pdto); }
-	 */
+	
+	  // 품목관리 리스트 불러오기
+	  
+	  public List<ProdDTO> getProdList(RequirementPageDTO pdto) throws Exception {
+	  return pdao.readProdList(pdto); }
+	 
 
-	/*
-	 * // 품목관리 검색리스트 갯수 불러오기
-	 * 
-	 *  public int countProd(ProductDTO dto) { return pdao.countProd(dto);
-	 * }
-	 */
+	
+	  // 품목관리 검색리스트 갯수 불러오기
+	  
+	   public int countProd(ProdDTO dto) { return pdao.countProd(dto);
+	  }
+	 
 
-	/*
-	 * // 품목관리 검색리스트 불러오기
-	 * 
-	 *  public List<ProductDTO> getProdList(ProductDTO dto, RequirementPageDTO pdto)
-	 * throws Exception {
-	 * 
-	 * return pdao.readProdList(dto, pdto); }
-	 */
+	
+	  // 품목관리 검색리스트 불러오기
+	  
+	   public List<ProdDTO> getProdList(ProdDTO dto, RequirementPageDTO pdto)
+	  throws Exception {
+	  
+	  return pdao.readProdList(dto, pdto); }
+	 
 
 	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
 	
@@ -61,7 +62,7 @@ public class RequirementService {
 	/*
 	 * // 품목관리 정보 다중
 	 * 
-	 *  public void insertProd(List<ProductDTO> products) { for (ProductDTO
+	 *  public void insertProd(List<ProdDTO> products) { for (ProdDTO
 	 * product : products) { pdao.insertProdList(product); } }
 	 */
 
@@ -74,14 +75,14 @@ public class RequirementService {
 	/*
 	 * // 품목관리 수정 시 기존 데이터 가져가기
 	 * 
-	 *  public ProductDTO getProd(String prod_code) throws Exception {
+	 *  public ProdDTO getProd(String prod_code) throws Exception {
 	 * return pdao.getProd(prod_code); }
 	 */
 
 	/*
 	 * // 품목관리 수정
 	 * 
-	 *  public void modifyProd(ProductDTO udto) throws Exception {
+	 *  public void modifyProd(ProdDTO udto) throws Exception {
 	 * pdao.updateProd(udto); }
 	 */
 
