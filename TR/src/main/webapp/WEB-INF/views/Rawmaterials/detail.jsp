@@ -28,7 +28,7 @@
 </table>
 
 <!-- button -->
-<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/update?a1=${rawmaterialsDTO.a1}'">
+<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/update?rawCode=${rawmaterialsDTO.rawCode}'">
 <input type="button" value="목록" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/home'">
 
 </body>
