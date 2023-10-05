@@ -63,7 +63,7 @@
 							<i class="fa-solid fa-pen"></i>인사관리
 						</div>
 						<ul class="submenu">
-							<li><a href="#" class="sidea">사원관리</a></li>
+							<li><a href="${pageContext.request.contextPath }/employees/employees" class="sidea">사원관리</a></li>
 						</ul>
 					</li>
 				</ul>
