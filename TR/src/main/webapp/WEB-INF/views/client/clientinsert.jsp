@@ -284,11 +284,11 @@ var currentDate = new Date();
     		return false;
     	}
     	
-    	 // 다입력되었다면 AJAX 폼태그 데이터 제출시작
-    	 event.preventDefault(); // 기본 폼 제출 동작을 막음 
+    	  // 다입력되었다면 AJAX 폼태그 데이터 제출시작
+    	 event.preventDefault(); // 기본 폼 제출 동작을 막음  
     		
     	 // 폼 데이터 객체생성
-    	 var formData = new FormData(this);
+    	  var formData = new FormData(this);
          
          $.ajax({
              type: "POST",
@@ -300,7 +300,7 @@ var currentDate = new Date();
             	 
             	 const result = $.trim(response);
             	 
-                 if (result == "true") {
+                 if (result === "true") {
                 	 Swal.fire('정보 입력이 완료되었습니다.', '성공', 'success').then(result => {
 					 	if(result.isConfirmed)
 						// 완료 창을 닫으면 부모창 새로고침
@@ -316,7 +316,10 @@ var currentDate = new Date();
              }
          });
     	
+    
     });//submit기능 제어 끝
+    
+    
 });
 
 </script>
