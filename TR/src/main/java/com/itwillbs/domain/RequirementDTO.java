@@ -9,24 +9,24 @@
 	  private String reqAmount;
 	  private String reqMemo; 
 	  
-	  @Override
-		public String toString() {
-			return "RequirementDTO [reqCode=" + reqCode + ", prodCode=" + prodCode + ", rawCode=" + rawCode + ", reqAmount="
-					+ reqAmount + ", reqMemo=" + reqMemo+"]";
-		}
+		/*
+		 * @Override public String toString() { return "RequirementDTO [reqCode=" +
+		 * reqCode + ", prodCode=" + prodCode + ", rawCode=" + rawCode + ", reqAmount="
+		 * + reqAmount + ", reqMemo=" + reqMemo+"]"; }
+		 */
 
 	  
-		/*
-		 * private ProductDTO prod; private RawMaterialDTO raw;
-		 */
+		
+		 private ProdDTO prod;
+			/* private RawMaterialDTO raw; */
+		 
   
-		/*
-		 * public RequirementDTO() {
-		 * prod = new ProductDTO();
-		 * raw = new
-		 * RawMaterialDTO(); 
-		 * }
-		 */
+		
+		 public RequirementDTO() {
+		 prod = new ProdDTO();
+			/* raw = new RawMaterialDTO(); */
+		 }
+		
   
   
   } //Requirements

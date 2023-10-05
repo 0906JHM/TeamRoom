@@ -13,17 +13,17 @@
 		<result property="prodName" column="prodName" />
 		<result property="prodPerfume" column="prodPerfume" />
 		<result property="prodUnit" column="prodUnit" />
-		<!-- <result property="prod_color" column="prod_color" /> -->
+		
 		<result property="prodSize" column="prodSize" />
 		<result property="clientCode" column="clientCode" />
 		<result property="prodPrice" column="prodPrice" />
 		<result property="prodMemo" column="prodMemo" />
 		<!-- <result property="whseCode" column="whseCode" /> -->
 
-		<collection property="clients"
+		<!-- <collection property="clients"
 			ofType="com.itwillbs.domain.ClientDTO">
-			<result property="client_actname" column="client_actname" />
-		</collection>
+			<result property="clientCompany" column="clientCompany" />
+		</collection> -->
 		
 		<!-- <collection property="wh"
 			ofType="com.itwillbs.domain.Wh_prodDTO">
@@ -41,12 +41,18 @@
 
 	품목관리 목록 불러오기 -->
 	<select id="readProd" resultType="ProdDTO" resultMap="prod">
-		SELECT p.*, c.client_actname,<!-- w.whseName -->  from product p
-		<!-- join warehouse w ON p.whseCode =w.whseCode -->
-		JOIN clients c on p.clientCode =c.clientCode
+		SELECT *
+		from product
 		order by 1 desc
 		limit #{start}, #{cntPerPage}
 	</select>
+	<!-- <select id="readProd" resultType="ProdDTO" resultMap="prod">
+		SELECT p.*, c.clientCompany,w.whseName  from product p
+		join warehouse w ON p.whseCode =w.whseCode
+		JOIN clients c on p.clientCode =c.clientCode
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select> -->
 	<!-- 품목관리 목록 불러오기
 
 	품목관리 검색 게시글 갯수 출력 -->
@@ -66,9 +72,9 @@
 			<if test="prodPerfume != ''">
 				and prodPerfume like #{prodPerfume}
 			</if>
-			<if test="prodUnit != ''">
+			<!-- <if test="prodUnit != ''">
 				and clientCode like #{clientCode}
-			</if>
+			</if> -->
 		</where>
 	</select>
 	<!-- 품목관리 검색 게시글 갯수 출력
@@ -79,14 +85,40 @@
 		<bind name="prodCode" value="'%'+ prodCode +'%'" />
 		<bind name="prodName" value="'%'+ prodName +'%'" />
 		<bind name="prodPerfume" value="'%'+ prodPerfume +'%'" />
+		<!-- <bind name="clientCode" value="'%'+ clientCode +'%'" /> -->
+		SELECT * from product
+		
+		<where>
+			<if test="prodCode != ''">
+				prodCode like #{prodCode}
+			</if>
+			<if test="prodName != ''">
+				and prodName like #{prodName}
+			</if>
+			<if test="prodPerfume != ''">
+				and prodPerfume like #{prodPerfume}
+			</if>
+			<!-- <if test="prodUnit != ''">
+				and p.clientCode like #{clientCode}
+			</if> -->
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	<!-- <select id="readSearchProd" parameterType="hashMap"
+		resultType="ProdDTO" resultMap="prod">
+		<bind name="prodCode" value="'%'+ prodCode +'%'" />
+		<bind name="prodName" value="'%'+ prodName +'%'" />
+		<bind name="prodPerfume" value="'%'+ prodPerfume +'%'" />
 		<bind name="clientCode" value="'%'+ clientCode +'%'" />
-		SELECT p.*, c.client_actname,<!-- w.whseName -->  from product p
-		<!-- join warehouse w ON p.whseCode =w.whseCode -->
+		SELECT p.*, c.clientCompany, w.whseName  from product p
+		 join warehouse w ON p.whseCode =w.whseCode 
 		JOIN clients c on p.clientCode =c.clientCode
 		
 		
-		SELECT l.*<!-- , w.woCode --> from line l
-		<!-- join workOrder w ON l.lineCode = w. linCode -->
+		SELECT l.* , w.woCode from line l
+		join workOrder w ON l.lineCode = w. linCode
 		ORDER BY l.lineCode DESC;
 		<where>
 			<if test="prodCode != ''">
@@ -105,7 +137,7 @@
 		order by 1 desc
 		limit #{start},#{cntPerPage}
 
-	</select>
+	</select> -->
 	<!-- 품목관리 검색리스트 불러오기
 	
 	품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
@@ -115,6 +147,12 @@
 	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기
 
 	품목관리 정보 다중 입력 -->
+	<insert id="prodIn">
+		insert into product
+		values
+		(#{prodCode},#{prodName},#{prodPerfume},#{prodUnit},#{prodSize},
+		#{prod_color},#{prodPrice},#{prodMemo})
+	</insert>
 	<!-- <insert id="prodIn">
 		insert into product
 		values
@@ -131,12 +169,12 @@
 	<!-- 품목관리 삭제
 
 	품목관리 수정 시 조회 -->
-	<select id="readProdOne" resultType="ProdDTO" resultMap="prod">
-		SELECT p.*, c.client_actname<!-- ,w.whseName -->  from product p
-		<!-- join warehouse w ON p.whseCode =w.whseCode -->
+	<!-- <select id="readProdOne" resultType="ProdDTO" resultMap="prod">
+		SELECT p.*, c.clientCompany,w.whseName  from product p
+		join warehouse w ON p.whseCode =w.whseCode
 		JOIN clients c on p.clientCode =c.clientCode
-		<!-- WHERE p.prodCode=#{prodCode} -->
-	</select>
+		 WHERE p.prodCode=#{prodCode}
+	</select> -->
 <!-- 	품목관리 수정 시 조회
 
 	 품목관리 수정 -->
@@ -175,7 +213,7 @@
 
 		<collection property="clients"
 			ofType="com.itwillbs.domain.ClientDTO">
-			<result property="client_actname" column="client_actname" />
+			<result property="clientCompany" column="clientCompany" />
 		</collection>
 		
 		<collection property="wh"
@@ -187,7 +225,7 @@
 
 	<select id="readRaw" resultMap="rawMaterial"
 		resultType="RawMaterialDTO">
-		SELECT r.*, c.client_actname, w.whseName
+		SELECT r.*, c.clientCompany, w.whseName
 		from rawMaterial r
 		join clients c
 		on r.clientCode = c.clientCode
@@ -210,8 +248,8 @@
 			<if test="rawName != ''">
 				and r.rawCode like concat ('%', #{rawCode}, '%')
 			</if>
-			<if test="client_actname != null">
-				and c.client_actname like concat ('%', #{client_actname},
+			<if test="clientCompany != null">
+				and c.clientCompany like concat ('%', #{clientCompany},
 				'%')
 			</if>
 		</where>
@@ -221,7 +259,7 @@
 	원자재관리 검색리스트 불러오기
 	<select id="readSearchRaw" parameterType="hashMap"
 		resultMap="rawMaterial" resultType="RawMaterialDTO">
-		SELECT r.*, c.client_actname, w.whseName
+		SELECT r.*, c.clientCompany, w.whseName
 		from rawMaterial r
 		join clients c
 		on r.clientCode = c.clientCode
@@ -233,8 +271,8 @@
 			<if test="rawName != ''">
 				and r.rawCode like concat ('%', #{rawCode}, '%')
 			</if>
-			<if test="client_actname != ''">
-				and c.client_actname like concat ('%', #{client_actname},
+			<if test="clientCompany != ''">
+				and c.clientCompany like concat ('%', #{clientCompany},
 				'%')
 			</if>
 		</where>
@@ -267,7 +305,7 @@
 	
 	원자재관리 수정 시 조회
 	<select id="readRawOne" resultMap="rawMaterial" resultType="RawMaterialDTO">
-		SELECT r.*, c.client_actname, w.whseName
+		SELECT r.*, c.clientCompany, w.whseName
 		from rawMaterial r
 		join clients c
 		on r.clientCode = c.clientCode
@@ -305,12 +343,11 @@
 		<result property="reqAmount" column="reqAmount" />
 		<result property="reqMemo" column="reqMemo" />
 
-		<!-- <collection property="prod"
-			ofType="com.itwillbs.domain.ProdDTO">
+		 <collection property="prod" ofType="com.itwillbs.domain.ProdDTO">
 			<result property="prodName" column="prodName" />
 		</collection>
 
-		<collection property="raw"
+		<!-- <collection property="raw"
 			ofType="com.itwillbs.domain.RawMaterialDTO">
 			<result property="rawName" column="rawName" />
 		</collection> -->
@@ -329,8 +366,10 @@
 	</select> -->
 	<select id="readReq" resultMap="requirements"
 		resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT *
-		FROM requirement
+		SELECT r.*, p.prodName
+		FROM requirement r
+		left join
+		product p on p.prodCode = r.prodCode
 		order by 1 desc 
 		limit #{start}, #{cntPerPage}
 	</select>
@@ -442,6 +481,14 @@
 	
 	소요량관리 수정 시 조회 -->
 	<select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT r.*,p.prodName
+		FROM requirement r
+		join
+		product p on p.prodCode = r.prodCode
+		WHERE
+		reqCode=#{reqCode}
+	</select>
+	<!-- <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
 		SELECT r.*,p.prodName ,rm.rawName
 		FROM requirement r
 		join
@@ -450,7 +497,7 @@
 		r.rawCode = rm.rawCode
 		WHERE
 		reqCode=#{reqCode}
-	</select>
+	</select> -->
 	<!-- 소요량관리 수정 시 조회
 
 	소요량관리 수정 -->

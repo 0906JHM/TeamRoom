@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.service.RequirementService;
-import com.itwillbs.domain.RequirementList;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RequirementDTO;
+import com.itwillbs.domain.RequirementList;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.mysql.cj.Session;
 
@@ -72,7 +72,8 @@ public class RequirementController {
 	
 	  
 	  logger.debug("productGET() 호출");
-	  List<ProdDTO> products = new ArrayList<ProdDTO>();
+		/* List<ProdDTO> products = new ArrayList<ProdDTO>(); */
+	  List<ProdDTO> products = service.getProdList(pdto);
 	  model.addAttribute("products", products);
 	  logger.debug("DTO : " + dto);
 	  logger.debug(" @@@@@@@@@@ input: " + input +  "@@@@@@@@@@@@@@@");
@@ -102,7 +103,7 @@ public class RequirementController {
 	  model.addAttribute("paging", pdto);
 	  logger.debug(" 모든 리스트 가져감"); }
 	  
-	  return "product/list";
+	  return "requirement/productlist";
 	  
 	  }
 	 
@@ -335,10 +336,11 @@ public class RequirementController {
 	// 소요량관리 정보 추가
 	
 	  @RequestMapping(value = "/reqDetail", method = RequestMethod.POST) public
-	  String requirementPOST(List<RequirementDTO> reqs) throws Exception {
+	  String requirementPOST(RequirementList reqs) throws Exception {
+		  
 	  logger.debug("requirementPOST() 호출");
-	  logger.debug("reqs : " + reqs);
-	  service.insertReq(reqs); 
+	  logger.debug("reqs : " + reqs.getReqs());
+	  service.insertReq(reqs.getReqs()); 
 	  
 	  return "redirect:/requirement/reqDetail";
 	  }

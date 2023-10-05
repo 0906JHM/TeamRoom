@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,7 @@ function inputCng(obj, type, name, value) {
 } //inputCng	
 
 // 팝업 옵션
-const popupOpt = "top=60,left=140,width=977,height=677";/* 
+const popupOpt = "top=60,left=140,width=1300,height=677";/* 
 const popupOpt2 = "top=60,left=140,width=977,height=677"; */
 
 //검색 팝업
@@ -47,13 +48,13 @@ function serchRaw(inputId){
 function submitForm() {
 	  var isValid = true;
 
-	  // 유효성 검사
+	  /* // 유효성 검사
 	  $('#reqTable input[required]').each(function() {
 	    if ($(this).val().trim() === '') {
 	      isValid = false;
 	      return false; // 유효성 검사 실패 시 반복문 종료
 	    }
-	  });
+	  }); */
 
 	  if (isValid) {
 	    $('#fr').submit();
@@ -144,11 +145,12 @@ $(document).ready(function() {
     	
         var row = '<tr class="contents">' +
         	'<td><span class="input-row" style="color:red" onclick="deleteRow()">'+addcounter+'</span></td>' + 
-        	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' +
+        	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' + 
             '<td><input type="text" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-row"></td>' +
             '<input type="hidden" name="reqs[' + counter + '].prodCode" id= "prodCode'+counter+'">' +
             '<td><input type="text" name="reqs[' + counter + '].prod.prodName" id = "prodName'+counter+'" readonly onclick=searchItem("prod","prodCode'+counter+'"); placeholder="제품명을 선택하세요." class="input-row"></td>' +
-            '<td><input type="text" name="reqs[' + counter + '].raw.rawName" id="rawName'+counter+'" readonly onclick=searchItem("raw","rawCode'+counter+'"); placeholder="원자재를 선택하세요." class="input-row"></td>' +
+            '<td><input type="text" name="reqs[' + counter + '].raw.rawName" id="rawName'+counter+'" readonly onclick=searchItem("raw","rawCode'+counter+'"); placeholder="원자재를 선택하세요." class="input-row"></td>' + 
+            
             '<td><input type="number" name="reqs[' + counter + '].reqAmount" required class="input-row" placeholder="소요량을 선택하세요."></td>' +
             '<td><input type="text" name="reqs[' + counter + '].reqMemo" class="input-row" placeholder="비고를 입력하세요."></td>' +
             
@@ -321,7 +323,7 @@ $(document).ready(function() {
 				console.log(updateCode);
 
 				var jsonData = {
-					req_code : updateCode
+					reqCode : updateCode
 				};
 
 				var self = $(this);
@@ -333,14 +335,13 @@ $(document).ready(function() {
 					dataType : "json",
 					data : JSON.stringify(jsonData),
 					success : function(data) {
-						// alert("*** 아작스 성공 ***");
 						var sum = 0;
 						
 						var preVOs = [
 								data.reqCode,
 								data.prodCode,
 								data.prod.prodName,
-								data.raw.rawName,
+								/* data.raw.rawName, */
 								data.reqAmount,
 								data.reqMemo,
 								data.rawCode
@@ -352,10 +353,10 @@ $(document).ready(function() {
 								"reqCode",
 								"prodCode",
 								"prodName",
-								"rawName",
+								/*  "rawName",  */
 								"reqAmount",
-								"reqMeme",
-								"rawCode"
+								"reqMemo",
+								"rawCode" 
 								];
 
 						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
@@ -376,15 +377,15 @@ $(document).ready(function() {
 						
 						
 
-						//품번 검색 
-						$('#prod_code').click(function() {
+						 //품번 검색 
+						$('#prodCode').click(function() {
 							openWindow("prod","prodCode");
 						}); //prodCode click
 						
 						//품번 검색 팝업(raw)
-						$('#raw_name').click(function() {
-							openWindow2("raw", "searchRaw");
-						}); //rawCode click
+						$('#rawName').click(function() {
+							openWindow("raw", "searchRaw");
+						}); //rawCode click */
 
 					},
 					error : function(data) {
@@ -404,12 +405,12 @@ $(document).ready(function() {
 			} //하나씩만 선택 가능
 				
 				
-			//취소버튼 -> 리셋
+			/* //취소버튼 -> 리셋
 			$('#cancle').click(function() {
 				$('#fr').each(function() {
 					this.reset();
 				});
-			}); //cancle click
+			}); //cancle click */
 
 		}); //tr click
 
@@ -437,7 +438,7 @@ $(document).ready(function() {
 <!-- page content -->
 <div class="right_col">
 
-	<h2 style="margin-left: 1%;">소요량 관리</h2>
+	<h2 style="margin-left: 1%;" onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'">소요량 관리</h2>
 	<hr>
 	<div class="input_value" style="margin: 1% 1%;">	
 		<form method="get">
@@ -446,11 +447,11 @@ $(document).ready(function() {
 				<input class="input_box" type="text" name="reqCode" onfocus="this.value='RQ'" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
 				<label>제품명&nbsp;</label> 
 				<input type="hidden"name="prodCode" id="prodCode9999">
-				<input class="input_box" type="text"name="prodName" placeholder="제품명을 선택하세요." readonly onclick="searchItem('prod','prodCode9999')" class="input-fieldc"> &nbsp;&nbsp;
+				<input class="input_box" type="text" name="prodName" id="prodName9999" placeholder="제품명을 선택하세요." readonly onclick="searchItem('prod','prodCode9999')"> &nbsp;&nbsp;
 				<label>원자재&nbsp;</label>
 				<input type="hidden" name="rawCode" id="rawCode9999">
-				<input class="input_box" type="text" name="rawName"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')" class="input-fieldc"> &nbsp;&nbsp;
-				<input class="button" type="submit" class="B B-info" value="조회">
+				<input class="input_box" type="text" name="rawName"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')"> &nbsp;&nbsp;
+				<input class="button" type="submit" value="조회">
 			</fieldset>
 		</form>
 	</div>
@@ -529,8 +530,8 @@ $(document).ready(function() {
 								<td></td>
 								<td id="reqCode">${dto.reqCode }</td>
 								<td type='hidden' style='display: none;'>${dto.prodCode }</td>
-								<td id="prodName"><%-- ${dto.prod.prodName } --%>제품명값</td>
-								<td><%-- ${dto.raw.rawName } --%>원자재값</td>
+								<td id="prodName"> ${dto.prod.prodName }</td>
+								<td><%-- ${dto.raw.rawName } --%>원자재명</td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
 							</tr>
