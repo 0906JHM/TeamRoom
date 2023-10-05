@@ -33,6 +33,14 @@ public class ClientController {
 		
 	}
 	
+	@GetMapping("/clientinsert")
+	public String client() {
+		
+		
+		return "client/clientinsert";
+		
+	}
+	
 
 	
 	@PostMapping("/insertPro")

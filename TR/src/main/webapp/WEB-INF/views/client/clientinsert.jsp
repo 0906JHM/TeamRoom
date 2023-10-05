@@ -9,14 +9,13 @@
 <body>
 <body class="sb-nav-fixed">
 				<!-- 내용들어가는곳 -->
-	<form action="${pageContext.request.contextPath }/client/clientinsertPro" method="POST">
+	<form action="${pageContext.request.contextPath }/client/insertPro" method="POST">
 		<h1>
 			<b>거래처 등록</b>
 		</h1>
 
 		<br>
-
-		<!-- 거래처구분 -->
+<!-- 거래처구분 -->
 		<label for="clientType_label"><b>구분</b> </label>
 		<input type="text" name="clientType" id="clientType">
 		<br>
@@ -52,23 +51,23 @@
 		
 
 		<!-- 거래처 대표자명 -->
-		<label for="clientCeo"><b>대표자</b></label>
+		<label for="clientCeo_label"><b>대표자</b></label>
 		<input type="text" name="clientCeo" id="clientCeo">
 		<br>
 		<span id="clientCeo_msg"></span>
 		<br>
 		
-		<!-- 담당자이름-->
-		<label for="clientName_label"><b>담당자</b></label> 
+		<!-- 거래처담당자이름-->
+		<label for="clientName_label"><b>거래담당자</b></label> 
 		<input type="text" name="clientName" id="clientName">
 		<br> 
 		<span id="clientName_msg"></span>
 		<br>
 		
 		<!-- 주소 -->
-		주소 : <input type="text" id="sample4_postcode" placeholder="우편번호" name="clientAddr1"  readonly required>
+		<label for="clientAddress_label"><b>도로명주소</b></label> <input type="text" id="sample4_roadAddress" placeholder="도로명주소" name="clientAddr1"  readonly required>
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" required><br>
-<input type="text" id="sample4_roadAddress" placeholder="도로명주소" name="clientAddr2" size="60"  readonly required><br>
+<input type="text" id="sample4_extraAddress" placeholder="상세주소" name="clientAddr2" size="60" required><br>
 		
 		
 		
@@ -79,7 +78,7 @@
 		<span id="clientTel_msg"></span>
 		<br>
 		
-		<!-- 담당자 번호 -->
+		<!-- 거래담당자 번호 -->
 		<label for="clientPhone"><b>담당자번호</b></label>
 		<input type="text" name="clientPhone" id="clientPhone">
 		<br>
@@ -106,6 +105,11 @@
 		<br>
 		<span id="clientMemo_msg"></span>
 		<br>
+
+		<!-- 등록 버튼 -->
+		<div id="btn">
+			<input type="submit" id="btn" value="등록">
+		</div>
 
 		<!-- 등록 버튼 -->
 		<div id="btn">
@@ -139,15 +143,13 @@ function sample4_execDaumPostcode() {
             if(extraRoadAddr !== ''){
                 extraRoadAddr = ' (' + extraRoadAddr + ')';
             }
-            
-           
-
+                   
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('sample4_postcode').value = data.zonecode;
+            /* document.getElementById('sample4_postcode').value = data.zonecode; */
             document.getElementById("sample4_roadAddress").value = roadAddr;
-            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+            /* document.getElementById("sample4_jibunAddress").value = data.jibunAddress; */
      
-            document.getElementById("sample4_engAddress").value = data.addressEnglish;
+           /*  document.getElementById("sample4_engAddress").value = data.addressEnglish; */
            
             if(roadAddr !== ''){
                 document.getElementById("sample4_extraAddress").value = extraRoadAddr;
@@ -163,11 +165,11 @@ function sample4_execDaumPostcode() {
                 guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
                 guideTextBox.style.display = 'block';
 
-            } else if(data.autoJibunAddress) {
+            } /* else if(data.autoJibunAddress) {
                 var expJibunAddr = data.autoJibunAddress;
                 guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
                 guideTextBox.style.display = 'block';
-            } else {
+            }  */ else {
                 guideTextBox.innerHTML = '';
                 guideTextBox.style.display = 'none';
             }
@@ -285,7 +287,7 @@ var currentDate = new Date();
          
          $.ajax({
              type: "POST",
-             url: "${pageContext.request.contextPath}/client/clientinsertPro",
+             url: "${pageContext.request.contextPath}/client/insertPro",
              data: formData,
              contentType: false, // 멀티파트를 처리하기위해 객체를 직렬화하지 않고 직접 AJAX 통신할 수 있도록 설정
              processData: false, 

@@ -93,7 +93,7 @@
 		</tbody>
 
 		<div style="float: right;">
-			<input type="button" value="추가" id="addButton" >
+			<input type="button" value="추가" id="addButton" onclick="clientInsert()">
 			<input type="button" value="수정" id="updateButton" >
 			<input type="button" value="삭제" id="deleteButton"> 
 			<input type="button" value="취소" id="cancelButton"> 
@@ -121,8 +121,12 @@
 	 
 	 <input type="submit" value="제출">
 	</form>
-
-
+	
+	<script>
+function clientInsert(){
+    window.open('${pageContext.request.contextPath}/client/clientinsert', '_blank', 'width=600px, height=1000px, left=600px, top=300px');
+    }
+</script>
 
 
 </body>
