@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -19,6 +20,7 @@ public class ProdService {
 //-----------------------------------------------------------------
 	
 	public List<ProdDTO> getProdList() {
+		System.out.println("2");
 		System.out.println("ProdService getProdList()");
 		
 		return prodDAO.getProdList();
@@ -30,6 +32,11 @@ public class ProdService {
 		
 		prodDAO.insert(prodDTO);
 	}//insertBoard()
+
+	public List<ProdDTO> getSearch(ProdDTO prodDTO) {
+	System.out.println("ProService getSearch()");
+	return prodDAO.getSearch(prodDTO);
+}
 	
 //	@Inject
 //	private ProdDAO prodDAO;

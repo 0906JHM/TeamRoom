@@ -29,26 +29,26 @@
 <div class="container"> 
     <h2>제품 추가</h2>
     
-    <form action="${pageContext.request.contextPath}/product/writePro" method="post">
+    <form action="${pageContext.request.contextPath}/product/updatePro" method="post">
     
     <p>제품코드</p>
-    <input type="text" name="prodCode">
+    <input type="text" name="prodCode" value="${prodDTO.prodCode}">
     <p>제품명</p>
-    <input type="text" name="prodName">
+    <input type="text" name="prodName" value="${prodDTO.prodName}">
     <p>제품단위</p>
-    <input type="text" name="prodUnit">
+    <input type="text" name="prodUnit" value="${prodDTO.prodUnit}">
     <p>용량</p>
-    <input type="text" name="prodSize">
+    <input type="text" name="prodSize" value="${prodDTO.prodSize}">
     <p>향기</p>
-    <input type="text" name="prodPerfume">
+    <input type="text" name="prodPerfume" value="${prodDTO.prodPerfume}">
     <p>거래처명</p>
-    <input type="text" name="clientCode">
+    <input type="text" name="clientCode" value="${prodDTO.clientCode}">
     <p>창고명</p>
-    <input type="text" name="whseCode">
+    <input type="text" name="whseCode" value="${prodDTO.whseCode}">
     <p>매출단가</p>
-    <input type="number" step="0.01" name="prodPrice">
+    <input type="number" step="0.01" name="prodPrice" value="${prodDTO.prodPrice}">
     <p>비고</p>
-    <input type="text" name="prodMemo">
+    <input type="text" name="prodMemo" value="${prodDTO.prodMemo}">
     
     <input type="submit" value="확인">
     
