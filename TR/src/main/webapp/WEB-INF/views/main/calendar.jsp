@@ -72,6 +72,25 @@
 			var stock_compare = null; // 재고 차트와 비교할 변수
 			var perf_compare = null; // 실적 차트와 비교할 변수
 			
+			var currentDate = new Date(); // 초기 currentDate 설정
+			
+			document.addEventListener('click', function(event) {
+			    // 이벤트가 발생한 요소가 .fc-prev-button 클래스를 가지고 있는지 확인합니다.
+			    if (event.target.classList.contains('fc-prev-button') || event.target.classList.contains('fc-icon-chevron-left')) {
+			        currentDate.setMonth(currentDate.getMonth() - 1); // 이전 달로 이동
+			        console.log(currentDate);
+			    }
+			    if (event.target.classList.contains('fc-next-button') || event.target.classList.contains('fc-icon-chevron-right')) {
+			    	currentDate.setMonth(currentDate.getMonth() + 1); // 다음 달로 이동
+			        console.log(currentDate);
+			    }
+			    if (event.target.classList.contains('fc-today-button')) {
+			    	currentDate = new Date(); // 현재 날짜로 설정
+			        console.log(currentDate);
+			    }
+			});
+			
+			
 			// 캘린더정보 처음 로드될 때 데이터를 가져옴
 			loadCalendar();
 			
@@ -80,7 +99,7 @@
 			
 			function loadCalendar() {
 				$.ajax({
-					url : '${pageContext.request.contextPath}/main/calendarList',
+					url : '${pageContext.request.contextPath}/calendarList',
 					type : 'POST',
 					dataType : 'json',
 					success : function(result) {
@@ -88,12 +107,11 @@
 							
 							calendar_compare = result;
 							
-							initializeCalendar(result);
+							initializeCalendar(result, currentDate);
 						}
 					}
 				});
 			}
-			
 			
 			
 			// 매출 차트 초기 로드
@@ -104,7 +122,7 @@
 
 	        function loadSalesChart() {
 	            $.ajax({
-	                url: '${pageContext.request.contextPath}/main/salesList',
+	                url: '${pageContext.request.contextPath}/salesList',
 	                type: 'POST',
 	                dataType: 'json',
 	                success: function(result) {
@@ -126,7 +144,7 @@
 	        
 	        function loadStockChart() {
 	            $.ajax({
-	                url: '${pageContext.request.contextPath}/main/stockList',
+	                url: '${pageContext.request.contextPath}/stockList',
 	                type: 'POST',
 	                dataType: 'json',
 	                success: function(result) {
@@ -148,7 +166,7 @@
 	        
 	        function loadPerfChart() {
 	            $.ajax({
-	                url: '${pageContext.request.contextPath}/main/perfList',
+	                url: '${pageContext.request.contextPath}/perfList',
 	                type: 'POST',
 	                dataType: 'json',
 	                success: function(result) {

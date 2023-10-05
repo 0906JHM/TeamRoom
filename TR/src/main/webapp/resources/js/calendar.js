@@ -29,8 +29,9 @@ function jsonObjectsAreEqual(obj1, obj2) {
 }
 
 // 캘린더를 그리는 함수 
-function initializeCalendar(calendarEvents) {
+function initializeCalendar(calendarEvents, currentDate) {
 	console.log(calendarEvents);
+	console.log(currentDate);
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -42,6 +43,7 @@ function initializeCalendar(calendarEvents) {
         titleFormat: function(date) {
             return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
         },
+        initialDate: new Date(currentDate),
         droppable: true,
         editable: true,
         nowIndicator: true,
