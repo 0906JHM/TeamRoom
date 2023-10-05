@@ -80,10 +80,10 @@ public class RawmaterialsController {
     	System.out.println("RawmaterialsController detail()");
  		
  		// 원자재코드 잘 들고왔는지 확인
- 		System.out.println(rawmaterialsDTO.getA1());
+ 		System.out.println(rawmaterialsDTO.getRawCode());
  		
  		// 1) rawmaterialsService, rawmaterialsDAO에 getDetail 메서드를 만들어, 들고온 a1에 해당하는 다른 내용 a2, a3 등을 가져오게 하고 => rawmaterialsDTO 변수에 담기
- 		rawmaterialsDTO = rawmaterialsService.getDetail(rawmaterialsDTO.getA1());
+ 		rawmaterialsDTO = rawmaterialsService.getDetail(rawmaterialsDTO.getRawCode());
  		// 2) Model을 사용해서 rawmaterialsDTO에 넣은 모든 내용을 보여주기
  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
  		
@@ -95,10 +95,10 @@ public class RawmaterialsController {
  		System.out.println("RawmaterialsController update()");
  		
  		// 원자재코드 잘 들고왔는지 확인
- 	 	System.out.println(rawmaterialsDTO.getA1());
+ 	 	System.out.println(rawmaterialsDTO.getRawCode());
  	 	
  	 	// detail 코드내용 재활용
- 		rawmaterialsDTO = rawmaterialsService.getDetail(rawmaterialsDTO.getA1());
+ 		rawmaterialsDTO = rawmaterialsService.getDetail(rawmaterialsDTO.getRawCode());
  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
  		
  		return "Rawmaterials/update";

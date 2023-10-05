@@ -33,13 +33,13 @@ public class RawmaterialsService implements RawmaterialsService2 {
 
 	// 체크박스로 선택삭제
 	@Override
-	public void delete(String a1){
-		rawmaterialsDAO.delete(a1);
+	public void delete(String rawCode){
+		rawmaterialsDAO.delete(rawCode);
 	}
 
-	public RawmaterialsDTO getDetail(String a1) {
+	public RawmaterialsDTO getDetail(String rawCode) {
 		System.out.println("RawmaterialsService getDetail()");
-		return rawmaterialsDAO.getDetail(a1);
+		return rawmaterialsDAO.getDetail(rawCode);
 	}
 
 	public void updateRawmaterials(RawmaterialsDTO rawmaterialsDTO) {

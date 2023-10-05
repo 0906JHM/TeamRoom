@@ -7,49 +7,49 @@
 <mapper namespace="com.itwillbs.mappers.RawmaterialsMapper"> 
 
 	<insert id="insertRawmaterials">
-		insert into Rawmaterials(a1,a2,a3,a4,a5,a6,a7,a8)
-		values(#{a1},#{a2},#{a3},#{a4},#{a5},#{a6},#{a7},#{a8})
+		insert into rawMaterial(rawCode,rawName,rawType,rawUnit,rawPrice,clientCode,whseCode,rawMemo)
+		values(#{rawCode},#{rawName},#{rawType},#{rawUnit},#{rawPrice},#{clientCode},#{whseCode},#{rawMemo})
 	</insert>
 	
 	<select id="getRawmaterialsList" resultType="com.itwillbs.domain.RawmaterialsDTO">
 		select *
-		from Rawmaterials
+		from rawMaterial
 	</select>
 	
 	<select id="getRawmaterialsSearchList" resultType="com.itwillbs.domain.RawmaterialsDTO" parameterType="com.itwillbs.domain.RawmaterialsDTO">
     	select *
-    	from Rawmaterials
+    	from rawMaterial
     	where 1=1
-   		<if test="a1 != null and a1 != ''">
-        	and a1 like concat('%', #{a1}, '%')
+   		<if test="rawCode != null and rawCode != ''">
+        	and rawCode like concat('%', #{rawCode}, '%')
     	</if>
-    	<if test="a2 != null and a2 != ''">
-        	and a2 like concat('%', #{a2}, '%')
+    	<if test="rawName != null and rawName != ''">
+        	and rawName like concat('%', #{rawName}, '%')
     	</if>
-   		<if test="a3 != null and a3 != ''">
-       		and a3 = #{a3}
+   		<if test="rawType != null and rawType != ''">
+       		and rawType = #{rawType}
     	</if>
-    	<if test="a6 != null and a6 != ''">
-    		and a6 like concat('%', #{a6}, '%')
+    	<if test="clientCode != null and clientCode != ''">
+    		and clientCode like concat('%', #{clientCode}, '%')
     	</if>
 	</select>
 	
 	<!-- 체크박스로 선택삭제 -->
     <delete id="delete">
-        delete from Rawmaterials
-        where a1 = #{a1}
+        delete from rawMaterial
+        where rawCode = #{rawCode}
     </delete>
     
     <select id="getDetail" resultType="com.itwillbs.domain.RawmaterialsDTO">
 		select *
-		from Rawmaterials
-		where a1 = #{a1}
+		from rawMaterial
+		where rawCode = #{rawCode}
 	</select>
 	
 	<update id="updateRawmaterials">
-		update Rawmaterials
-		set a2=#{a2}, a3=#{a3}, a4=#{a4}, a5=#{a5}, a6=#{a6}, a7=#{a7}, a8=#{a8}
-		where a1 = #{a1}
+		update rawMaterial
+		set rawName=#{rawName}, rawType=#{rawType}, rawUnit=#{rawUnit}, rawPrice=#{rawPrice}, clientCode=#{clientCode}, whseCode=#{whseCode}, rawMemo=#{rawMemo}
+		where rawCode = #{rawCode}
 	</update>
   
 </mapper>

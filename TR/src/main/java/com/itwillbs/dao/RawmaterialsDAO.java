@@ -35,13 +35,13 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 
 	// 체크박스로 선택삭제
 	@Override
-	public void delete(String a1){
-		sqlSession.delete(namespace + ".delete", a1); 
+	public void delete(String rawCode){
+		sqlSession.delete(namespace + ".delete", rawCode); 
 	}
 
-	public RawmaterialsDTO getDetail(String a1) {
+	public RawmaterialsDTO getDetail(String rawCode) {
 		System.out.println("RawmaterialsDAO getDetail()");
-		return sqlSession.selectOne(namespace+".getDetail", a1);
+		return sqlSession.selectOne(namespace+".getDetail", rawCode);
 	}
 
 	public void updateRawmaterials(RawmaterialsDTO rawmaterialsDTO) {

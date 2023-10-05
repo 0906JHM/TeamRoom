@@ -12,6 +12,6 @@ import com.itwillbs.domain.RawmaterialsDTO;
 @Repository 
 public interface RawmaterialsDAO2 {
 	
-	public void delete(String a1);//삭제
+	public void delete(String rawCode);//삭제
 	
 }
