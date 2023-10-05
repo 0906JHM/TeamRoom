@@ -5,11 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- sweetalert2 API 호출 -->
+<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+		
 </head>
 <body>
 <body class="sb-nav-fixed">
 				<!-- 내용들어가는곳 -->
-	<form action="${pageContext.request.contextPath }/client/insertPro" method="POST">
+	<form action="${pageContext.request.contextPath}/client/insertPro" id="clientInsert" name="clientInsert" method="POST">
 		<h1>
 			<b>거래처 등록</b>
 		</h1>
@@ -19,7 +24,7 @@
 		<label for="clientType_label"><b>구분</b> </label>
 		<input type="text" name="clientType" id="clientType">
 		<br>
-		<span id="buy_name_msg"></span>
+		<span id="clientType_msg"></span>
 		<br>
 		<!-- 거래처 코드 -->
 		<label for="clientCode_label"><b>거래처코드</b></label> 
@@ -110,11 +115,7 @@
 		<div id="btn">
 			<input type="submit" id="btn" value="등록">
 		</div>
-
-		<!-- 등록 버튼 -->
-		<div id="btn">
-			<input type="submit" id="btn" value="등록">
-		</div>
+		
 	</form>
 
 
@@ -142,8 +143,7 @@ function sample4_execDaumPostcode() {
             // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
             if(extraRoadAddr !== ''){
                 extraRoadAddr = ' (' + extraRoadAddr + ')';
-            }
-                   
+            }                
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             /* document.getElementById('sample4_postcode').value = data.zonecode; */
             document.getElementById("sample4_roadAddress").value = roadAddr;
@@ -155,119 +155,124 @@ function sample4_execDaumPostcode() {
                 document.getElementById("sample4_extraAddress").value = extraRoadAddr;
                 
             } else {
-                document.getElementById("sample4_extraAddress").value = '';
+                document.getElementById("clientAddr2").value = '';
             }
 
-            var guideTextBox = document.getElementById("guide");
-            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+         /*    var guideTextBox = document.getElementById("guide");
+            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다. */
             if(data.autoRoadAddress) {
                 var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                guideTextBox.style.display = 'block';
+              /*   guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                guideTextBox.style.display = 'block'; */
 
             } /* else if(data.autoJibunAddress) {
                 var expJibunAddr = data.autoJibunAddress;
                 guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
                 guideTextBox.style.display = 'block';
-            }  */ else {
+            }  */ /* else {
                 guideTextBox.innerHTML = '';
                 guideTextBox.style.display = 'none';
-            }
-            document.getElementById("sample4_detailAddress").focus(); 
+            } */
+            
+            document.getElementById("sample4_extraAddress").focus(); 
           
         }
     }).open();
 }   
 </script>
-
 <!-- sweetalert2 API 호출 -->
-<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-	<script
-src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	
+	
+<!-- sweetalert2 API 호출 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script>
+$(document).ready(function() {
+	
+	alert("동작체크");
+	
 //전역변수 선언
 var selectedDept = '';
 var currentDate = new Date();
 
   	//서브밋 제어
-    $('#registration').submit(function(event) {
+    $('#clientInsert').submit(function(event) {
     	
-       	if($('#clientType').val() == ""){
+        	if($('#clientType').val() == ""){
     		$('#clientType_msg').css('color','red');
-    		$('#clientType_msg').text("거래처구분을 선택하십시오."); 
+    		$('#clientType_msg').html("거래처구분을 선택하십시오."); 
     		$('#clientType').focus();
     		return false;
     	}
     	
     	if($('#clientCode').val() == ""){
     		$('#clientCode').css('color','red');
-    		$('#clientCode_msg').text("거래처코드를 입력하세요.");
+    		$('#clientCode_msg').html("거래처코드를 입력하세요.");
     		$('#clientCode').focus();
     		return false;
     	}
     	
     	if($('#clientCompany').val() == ""){
     		$('#clientCompany_msg').css('color','red');
-    		$('#clientCompany_msg').text("거래처명을 입력하세요.");  
+    		$('#clientCompany_msg').html("거래처명을 입력하세요.");  
     		$('#clientCompany').focus();
     		return false;
     	}
     	
     	if($('#clientNumber').val() == ""){
     		$('#clientNumber_msg').css('color','red');
-    		$('#clientNumber_msg').text("사업자번호를 입력하십시오.");
+    		$('#clientNumber_msg').html("사업자번호를 입력하십시오.");
     		$('#clientNumber').focus();
     		return false;
     	}
     	
     	if($('#clientDetail').val() == ""){
     		$('#clientDetail_msg').css('color','red');
-    		$('#clientDetail_msg').text("업태를 입력하세요.");
+    		$('#clientDetail_msg').html("업태를 입력하세요.");
     		$('#clientDetail').focus();
     		return false;
     	}
     	
     	if($('#clientCeo').val() == ""){
     		$('#clientCeo_msg').css('color','red');
-    		$('#clientCeo_msg').text("대표자명을 입력하세요.");
+    		$('#clientCeo_msg').html("대표자명을 입력하세요.");
     		$('#clientCeo').focus();
     		return false;
     	}
     	
     	if($('#clientName').val() == ""){
     		$('#clientName_msg').css('color','red');
-    		$('#clientName_msg').text("전화번호를 입력하세요.");
+    		$('#clientName_msg').html("전화번호를 입력하세요.");
     		$('#clientName').focus();
     		return false;
     	}
     	
 
     	
-    	if($('#clientName').val() == "" || $('#addr1').val() == ""){
-    		$('#buy_add_msg').css('color','red');
-    		$('#buy_add_msg').text("주소를 입력하십시오.");
+    	/* if($('#clientName').val() == "" || $('#clientAddr1').val() == ""){
+    		$('#clientName_msg').css('color','red');
+    		$('#clientName_msg').text("주소를 입력하십시오.");
     		return false;
-    	}
+    	} */
     	
     	if($('#clientTel').val() == ""){
     		$('#clientTel_msg').css('color','red');
-    		$('#clientTel_msg').text("거래처 전화번호를 입력하세요."); 
+    		$('#clientTel_msg').html("거래처 전화번호를 입력하세요."); 
     		$('#clientTel').focus();
     		return false;
     	}
     	
     	if($('#clientPhone').val() == ""){
     		$('#clientPhone_msg').css('color','red');
-    		$('#clientPhone_msg').text("거래처 담당 직원 번호를 입력하세요."); 
+    		$('#clientPhone_msg').html("거래처 담당 직원 번호를 입력하세요."); 
     		$('#clientPhone').focus();
     		return false;
     	}
     	
     	if($('#clientFax').val() == ""){
     		$('#clientFax_msg').css('color','red');
-    		$('#clientFax_msg').text("거래처 팩스번호를 입력하세요."); 
+    		$('#clientFax_msg').html("거래처 팩스번호를 입력하세요."); 
     		$('#clientFax').focus();
     		return false;
     	}
@@ -275,12 +280,12 @@ var currentDate = new Date();
     	
     	if($('#clientEmail').val() == ""){
     		$('#clientEmail_msg').css('color','red');
-    		$('#clientEmail_msg').text("거래처 이메일을 입력하세요.");
+    		$('#clientEmail_msg').html("거래처 이메일을 입력하세요.");
     		return false;
     	}
     	
     	 // 다입력되었다면 AJAX 폼태그 데이터 제출시작
-    	 event.preventDefault(); // 기본 폼 제출 동작을 막음
+    	 event.preventDefault(); // 기본 폼 제출 동작을 막음 
     		
     	 // 폼 데이터 객체생성
     	 var formData = new FormData(this);
@@ -313,10 +318,10 @@ var currentDate = new Date();
     	
     });//submit기능 제어 끝
 });
+
 </script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
-	<script src="../resources/js/scripts.js"></script>
 </body>
 </html>
