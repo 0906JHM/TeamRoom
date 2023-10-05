@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.service.ClientService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 @RequestMapping("/client/*")
 public class ClientController {
 	
@@ -24,6 +27,7 @@ public class ClientController {
 	public String client(Model model) {
 		
 		System.out.println("ClientController client");
+		log.debug("거래처리스트출력");
 		
 	    List<ClientDTO> clientList = clientService.getclientList();
 		
@@ -36,6 +40,7 @@ public class ClientController {
 	@GetMapping("/clientinsert")
 	public String client() {
 		
+		log.debug("거래처추가 새창 ");
 		
 		return "client/clientinsert";
 		
@@ -47,6 +52,7 @@ public class ClientController {
 	public String insert(ClientDTO clientDTO) {
 		
 		System.out.println("ClientController insertPro요청");
+		log.debug("거래처추가로직");
 		System.out.println(clientDTO);
 		clientService.insertClient(clientDTO);
 		

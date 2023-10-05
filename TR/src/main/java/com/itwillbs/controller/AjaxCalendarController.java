@@ -20,6 +20,8 @@ import com.itwillbs.domain.CalendarEventDTO;
 import com.itwillbs.domain.ChartDTO;
 import com.itwillbs.service.CalendarService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 public class AjaxCalendarController {
 
