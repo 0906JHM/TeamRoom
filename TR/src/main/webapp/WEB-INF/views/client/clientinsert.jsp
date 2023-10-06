@@ -20,7 +20,7 @@
 <body class="sb-nav-fixed">
 	<!-- 내용들어가는곳 -->
 	<form action="${pageContext.request.contextPath}/client/insertPro"
-		id="clientInsert" name="clientInsert" method="POST">
+		id="clientInsert" name="clientInsert" method="POST" enctype="multipart/form-data" >
 		<h1>
 			<b>거래처 등록</b>
 		</h1>
@@ -28,7 +28,7 @@
 		<br>
 		<!-- 거래처구분 -->
 		<label for="clientType_label"><b>구분</b> </label> 
-		<select id="clientType">
+		<select id="clientType" name="clientType">
 			<option value="수주처">수주처</option>
 			<option value="발주처">발주처</option>
 		</select> <br> <span id="clientType_msg"></span> <br>
@@ -311,7 +311,7 @@ $(document).ready(function() {
          
          $.ajax({
              type: "POST",
-             url: "${pageContext.request.contextPath}/client/insertPro",
+             url: "${pageContext.request.contextPath}/client_ajax/insertPro",
              data: formData,
              contentType: false, // 멀티파트를 처리하기위해 객체를 직렬화하지 않고 직접 AJAX 통신할 수 있도록 설정
              processData: false, 
