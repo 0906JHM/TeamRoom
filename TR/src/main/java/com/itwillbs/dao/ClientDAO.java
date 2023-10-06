@@ -9,7 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
+@Slf4j
 public class ClientDAO {
 		// 멤버변수 
 	
@@ -32,6 +35,20 @@ public class ClientDAO {
 			
 			return sqlsession.selectList(namespace+".getclientList");
 			
+		}
+
+		public String getclientCode(String clientType) {
+			        log.debug("ClientDAO getclientCode 요청");
+			        
+			        System.out.println(clientType);
+			        String clientCode="";
+			        if("수주처".equals(clientType)) {
+			            clientCode = "CL000";
+			        } else {
+			            clientCode = "OR000";
+			        }
+			
+			return sqlsession.selectOne(namespace+".getclientCode",clientType);
 		}
 
 }

@@ -1,5 +1,6 @@
 package com.itwillbs.service;
 
+import java.io.Console;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,6 +26,12 @@ public class ClientService {
 
 	public List<ClientDTO> getclientList() {
 		return clientDAO.getclientList();
+	}
+
+	public String  getclientCode(String clientType) {
+		
+		return clientDAO.getclientCode(clientType);
+		
 	}
 	
 }

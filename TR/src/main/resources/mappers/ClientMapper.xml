@@ -15,6 +15,10 @@
     select * from clients
   
   </select>
+  
+  <select id="getclientCode" resultType="java.lang.String">
+  select clientCode from clients where clientType=#{clientType} order by clientCode desc limit 1;
+  </select>
 
   
   
