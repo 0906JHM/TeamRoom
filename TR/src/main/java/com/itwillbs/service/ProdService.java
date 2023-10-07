@@ -36,7 +36,11 @@ public class ProdService {
 	public List<ProdDTO> getSearch(ProdDTO prodDTO) {
 	System.out.println("ProService getSearch()");
 	return prodDAO.getSearch(prodDTO);
+	
+	
 }
+
+
 	
 //	@Inject
 //	private ProdDAO prodDAO;

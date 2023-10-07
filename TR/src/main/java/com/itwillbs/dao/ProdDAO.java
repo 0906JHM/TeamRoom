@@ -41,4 +41,7 @@ public class ProdDAO {
 //		return sqlSession.selectList(namespace+".getProdList", prodDTO);
 //	}
 
+
 }
+
+

@@ -58,6 +58,15 @@
 
 
 
+    <delete id="productDelete" parameterType="java.util.List">
+    DELETE FROM product
+    WHERE prodCode IN
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item.code}
+    </foreach>
+</delete>
+    
+    
 </mapper>
 
 
