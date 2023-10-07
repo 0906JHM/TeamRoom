@@ -1,19 +1,22 @@
 package com.itwillbs.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.ProdService;
+import com.itwillbs.service.ProdServiceImpl;
 
 @Controller
 @RequestMapping("/product/*")
@@ -21,6 +24,8 @@ public class ProdController {
 
 	@Inject
 	private ProdService prodService;
+	
+
 	
 	@GetMapping("/list")
 	public String list(Model model) {
@@ -61,6 +66,7 @@ public class ProdController {
 		return "product/list";
 	}
 	
+
 	
 //	@GetMapping("/list")
 //	public String roomair(ProdDTO prodDTO, Model model) {
