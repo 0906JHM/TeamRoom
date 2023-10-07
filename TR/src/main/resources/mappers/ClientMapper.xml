@@ -20,6 +20,17 @@
   select clientCode from clients where clientType=#{clientType} order by clientCode desc limit 1;
   </select>
 
+<select id="clientdetail" resultType="com.itwillbs.domain.ClientDTO">
+ select * from clients where clientCompany=#{clientCompany}
+</select>
+
+<select id="rawmaterialsdetail" resultType="com.itwillbs.domain.RawmaterialsDTO">
+SELECT * FROM rawMaterial WHERE clientCode = #{clientCode};
+</select>
+
+<select id="selldetail" resultType="com.itwillbs.domain.ProdDTO">
+SELECT * FROM product WHERE clientCode = #{clientCode};
+</select>
   
   
   </mapper>

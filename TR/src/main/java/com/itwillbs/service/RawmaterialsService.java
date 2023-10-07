@@ -46,5 +46,6 @@ public class RawmaterialsService implements RawmaterialsService2 {
 		System.out.println("RawmaterialsService updateRawmaterials()");
 		rawmaterialsDAO.updateRawmaterials(rawmaterialsDTO);
 	}
+
 	
 }

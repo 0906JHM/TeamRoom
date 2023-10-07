@@ -313,21 +313,21 @@ $(document).ready(function() {
              type: "POST",
              url: "${pageContext.request.contextPath}/client_ajax/insertPro",
              data: formData,
-             contentType: false, // 멀티파트를 처리하기위해 객체를 직렬화하지 않고 직접 AJAX 통신할 수 있도록 설정
+             contentType: false, // 멀티파트를 처리하기위해 객체를 직렬화하지 않고 직접 AJAX 통신할 수 있도록 설정하기 위해 form 타입을 멀티파트폼 설정
              processData: false, 
              success: function (response) {
             	 
             	 const result = $.trim(response);
             	 
                  if (result === "true") {
-                	 Swal.fire('정보 입력이 완료되었습니다.', '성공', 'success').then(result => {
+                	 Swal.fire('거래처가 추가 되었습니다.', '성공', 'success').then(result => {
 					 	if(result.isConfirmed)
 						// 완료 창을 닫으면 부모창 새로고침
 						window.opener.location.reload();
 						window.close(); // 성공 시 창 닫기
 					 });
                  } else {
-                	 Swal.fire('정보 입력에 실패했습니다.', '실패', 'error');
+                	 Swal.fire('거래처 추가를 실패했습니다.', '실패', 'error');
                  }
              },
              error: function () {

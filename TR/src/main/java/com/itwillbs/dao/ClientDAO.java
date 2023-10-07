@@ -8,6 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.SellDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,6 +52,21 @@ public class ClientDAO {
 			        }
 			
 			return sqlsession.selectOne(namespace+".getclientCode",clientType);
+		}
+
+		public ClientDTO clientdetail(String clientCompany) {
+			
+			return sqlsession.selectOne(namespace+".clientdetail", clientCompany);
+		}
+
+		public RawmaterialsDTO rawmaterialsdetail(String clientCode) {
+			
+			return sqlsession.selectOne(namespace+".rawmaterialsdetail", clientCode);
+		}
+
+		public ProdDTO selldetail(String clientCode) {
+			
+			return sqlsession.selectOne(namespace+".selldetail", clientCode);
 		}
 
 }

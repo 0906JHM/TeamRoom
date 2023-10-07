@@ -76,7 +76,8 @@
 			<tr>
 				<td class="tg-0pky">${clientDTO.clientType}</td>
 				<td class="tg-0pky">${clientDTO.clientCode}</td>
-				<td class="tg-0pky">${clientDTO.clientCompany}</td>
+				<td class="tg-0pky" onclick="location.href='${pageContext.request.contextPath}/client/clientdetail?clientCompany=${clientDTO.clientCompany}&clientCode=${clientDTO.clientCode}'">${clientDTO.clientCompany}</td>
+				
 				<td class="tg-0pky">${clientDTO.clientNumber}</td>
 				<td class="tg-0pky">${clientDTO.clientDetail}</td>
 				<td class="tg-0pky">${clientDTO.clientCeo}</td>

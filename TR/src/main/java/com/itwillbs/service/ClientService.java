@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.ClientDAO;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.SellDTO;
 
 @Service
 public class ClientService {
@@ -32,6 +35,21 @@ public class ClientService {
 		
 		return clientDAO.getclientCode(clientType);
 		
+	}
+
+	public ClientDTO clientdetail(String clientCompany) {
+		
+		return clientDAO.clientdetail(clientCompany);
+	}
+
+	public RawmaterialsDTO rawmaterialsdetail(String clientCode) {
+		
+		return clientDAO.rawmaterialsdetail(clientCode);
+	}
+
+	public ProdDTO selldetail(String clientCode) {
+		
+		return clientDAO.selldetail(clientCode);
 	}
 	
 }
