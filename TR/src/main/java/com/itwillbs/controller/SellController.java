@@ -5,10 +5,16 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
@@ -22,21 +28,13 @@ public class SellController {
 	
 	@Inject
 	private SellService sellService;
-
-	//	가상주소 http://localhost:8080/FunWeb/board/write
-//	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	@GetMapping("/sellMain")
-	public String sellMain() {
-		
-		// main/main.jsp
-		// WEB-INF/views/main/main.jsp
-		return "sell/sellMain";
-	}//
 	
-//----------------------------------------------------- sellList ---------------------------------------
-@GetMapping("/sellList")
+
+
+//----------------------------------------------------- sellMain---------------------------------------
+@GetMapping("/sellMain")
 public String sellList(HttpServletRequest request,Model model) {
-	System.out.println("SellController sellList()");
+	System.out.println("SellController sellMain()");
 	//한 화면에 보여줄 글개수 설정
 	int pageSize = 10;
 	// 현 페이지 번호 가져오기
@@ -49,13 +47,13 @@ public String sellList(HttpServletRequest request,Model model) {
 	// 페이지 번호 => 정수형 변경
 	int currentPage = Integer.parseInt(pageNum);
 	
-	SellPageDTO sellPageDTO =new SellPageDTO();
+	SellPageDTO sellPageDTO = new SellPageDTO();
 	sellPageDTO.setPageSize(pageSize);
 	sellPageDTO.setPageNum(pageNum);
 	sellPageDTO.setCurrentPage(currentPage);
 	
 List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
-
+System.out.println(sellList);
 	// 전체 글개수 가져오기
 	int count = sellService.getSellCount();
 	// 한화면에 보여줄 페이지 개수 설정
@@ -87,21 +85,96 @@ List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
 	return "sell/sellMain";
 }//
 	
+
+//----------------------------------------------------- sellAdd ---------------------------------------
+@GetMapping("/sellAdd")
+public String sellAdd(HttpServletRequest request, Model model) {
+	System.out.println("SellController sellAdd()");
+
+//	List<String> clientCodes = jdbcTemplate.queryForList("SELECT clientCode FROM clients", String.class);
+//	model.addAttribute("clientCodes", clientCodes);
+
+	return "sell/sellAdd";
+}//sellAdd
+
+@PostMapping("/sellAddPro")
+public void sellAddPro(SellDTO sellDTO) {
+	System.out.println(sellDTO);
+	System.out.println("SellController sellAddPro()");
+	
+	sellService.insertSell(sellDTO);	
+}//sellAddPro
+
+
+//----------------------------------------------------- sellMemo ---------------------------------------
+@GetMapping("/sellMemo")
+public String sellMemo(HttpServletRequest request, Model model) {
+	System.out.println("SellController sellMemo()");
+	
+	String sellCode = request.getParameter("sellCode");
+	
+	// sellMemo 가져오기
+	SellDTO sellDTO = sellService.getSellMemo(sellCode);
+	System.out.println("sellDTO" + sellDTO);
+	model.addAttribute("sellDTO",sellDTO);
+	
+	return "sell/sellMemo";
+	
+}//sellMemo
+
+//----------------------------------------------------- updateSellMemo ---------------------------------------
+//	가상주소 http://localhost:8080/Test/sell/sellMemoUpdate?num=
+//@RequestMapping(value = "/sellMemoUpdate", method = RequestMethod.GET)
+@GetMapping("/sellMemoUpdate")
+public String updateSellMemo(HttpServletRequest request,Model model) {
+	System.out.println("SellController sellMemoUpdate()");
+	
+	String sellCode = request.getParameter("sellCode");
+	
+	//글가져오기
+	SellDTO sellDTO = sellService.getSellMemo(sellCode);
+
+	model.addAttribute("sellDTO", sellDTO);
+
+	// center/update.jsp
+	// WEB-INF/views/center/update.jsp
+	return "sell/updateSellMemo";
+}//sellMemoUpdate
+	
+@PostMapping("/sellMemoUpdatePro")
+public void sellMemoUpdatePro(SellDTO sellDTO) {
+	System.out.println("SellController sellMemoUpdatePro()");
+	
+	// sellMemo 수정
+	sellService.updateSellMemo(sellDTO);
+
+}//sellMemoUpdatePro
+
+//----------------------------------------------------- sellMemotype ---------------------------------------
+@GetMapping("/sellMemotype")
+public String sellMemoAdd(HttpServletRequest request, Model model) {
+	System.out.println("SellController sellMemotype()");
+	String sellCode = request.getParameter("sellCode");
+	SellDTO sellDTO = sellService.getSellMemo(sellCode);
+	String memotype = request.getParameter("memotype");
+	System.out.println(sellDTO);
+	
+	model.addAttribute("sellDTO", sellDTO);
+	model.addAttribute("memotype", memotype);
+
+	return "sell/sellMemotype";
+}//sellMemotype
+
+@PostMapping("/sellMemotypePro")
+public void sellMemoAddPro(SellDTO sellDTO) {
+	System.out.println("SellController sellMemotypePro()");
+	System.out.println(sellDTO);
+	sellService.insertSellMemo(sellDTO);	
 	
 	
+}//sellMemotypePro	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

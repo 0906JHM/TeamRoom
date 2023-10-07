@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.itwillbs.mappers.sellMapper">
+
+
+ <select id="getSellList" resultType="com.itwillbs.domain.SellDTO">
+		select * from sellTest
+		order by sellDate desc
+		limit #{startRow}, #{pageSize}
+	</select> 
+
+	<select id="getSellCount" resultType="java.lang.Integer">
+		select count(*) 
+		from sellTest
+	</select>
+	
+	<insert id="insertSell">
+		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellFile,sellMemo,sellState,clientCode,sellNum)
+		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
+				#{sellFile},#{sellMemo},#{sellState},#{clientCode},#{sellNum})
+	</insert>
+	
+	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">
+		select *
+		from sellTest
+		where sellCode = #{sellCode}
+	</select>
+  
+  	<update id="updateSellMemo">
+		update sellTest
+		set sellMemo = #{sellMemo}
+		where sellCode = #{sellCode}
+	</update>
+	
+	<update id="insertSellMemo">
+		update sellTest 
+		set sellMemo=#{sellMemo}
+		where sellCode = #{sellCode}
+	</update>
+</mapper>
+
+
+
+

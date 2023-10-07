@@ -15,15 +15,17 @@ public class SellDTO {
 	private String sellMemo; //수주 비고
 	private String sellState; //수주상태
 	private String clientCode; //거래처코드
+	private int sellNum; //수주번호
 	
+
+
 	@Override
 	public String toString() {
-		return "SellDTO [sellCode=" + sellCode + ", sellDate=" + sellDate + ", sellDuedate=" + sellDuedate 
-						+ ", sellEmpId=" + sellEmpId + ", sellCount=" + sellCount + ", prodCode=" + prodCode 
-						+ ", prodName=" + prodName + "+ \", sellFile=\" + sellFile + \", sellMemo=\" + sellMemo + \","
-						+ "sellState=\" + sellState " + "+ \", clientCode=\" + clientCode + \"]";
+		return "SellDTO [sellCode=" + sellCode + ", sellDate=" + sellDate + ", sellDuedate=" + sellDuedate
+				+ ", sellEmpId=" + sellEmpId + ", sellCount=" + sellCount + ", prodCode=" + prodCode + ", prodName="
+				+ prodName + ", sellFile=" + sellFile + ", sellMemo=" + sellMemo + ", sellState=" + sellState
+				+ ", clientCode=" + clientCode + ", sellNum=" + sellNum + "]";
 	}
-
 	// get, set 메서드
 	public String getSellCode() {
 		return sellCode;
@@ -92,7 +94,13 @@ public class SellDTO {
 	public void setClientCode(String clientCode) {
 		this.clientCode = clientCode;
 	}
-	
+	public int getSellNum() {
+		return sellNum;
+	}
+
+	public void setSellNum(int sellNum) {
+		this.sellNum = sellNum;
+	}
 	
 	
 	

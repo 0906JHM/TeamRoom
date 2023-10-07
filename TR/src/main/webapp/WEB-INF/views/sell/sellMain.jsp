@@ -1,586 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%--     <jsp:include page="test4.jsp"></jsp:include> --%>
-    <title>Sell/sellMain.jsp</title>
-    <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
-<%--     <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"> --%>
-<%--  <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css"> --%>
+<title>Sell/sellMain.jsp</title>
+<%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
+<link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"><!-- 수주일자 기간선택 -->
+ 
 
-
-<!----------------------------------------------------- daterange.css-------------------------------------------------->
-<style type="text/css">
-
-.daterangepicker {
-  position: absolute;
-  color: inherit;
-  background-color: #fff;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  width: 278px;
-  max-width: none;
-  padding: 0;
-  margin-top: 7px;
-  top: 100px;
-  left: 20px;
-  z-index: 3001;
-  display: none;
-  font-family: arial;
-  font-size: 15px;
-  line-height: 1em;
-}
-
-.daterangepicker:before, .daterangepicker:after {
-  position: absolute;
-  display: inline-block;
-  border-bottom-color: rgba(0, 0, 0, 0.2);
-  content: '';
-}
-
-.daterangepicker:before {
-  top: -7px;
-  border-right: 7px solid transparent;
-  border-left: 7px solid transparent;
-  border-bottom: 7px solid #ccc;
-}
-
-.daterangepicker:after {
-  top: -6px;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid #fff;
-  border-left: 6px solid transparent;
-}
-
-.daterangepicker.opensleft:before {
-  right: 9px;
-}
-
-.daterangepicker.opensleft:after {
-  right: 10px;
-}
-
-.daterangepicker.openscenter:before {
-  left: 0;
-  right: 0;
-  width: 0;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.daterangepicker.openscenter:after {
-  left: 0;
-  right: 0;
-  width: 0;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.daterangepicker.opensright:before {
-  left: 9px;
-}
-
-.daterangepicker.opensright:after {
-  left: 10px;
-}
-
-.daterangepicker.drop-up {
-  margin-top: -7px;
-}
-
-.daterangepicker.drop-up:before {
-  top: initial;
-  bottom: -7px;
-  border-bottom: initial;
-  border-top: 7px solid #ccc;
-}
-
-.daterangepicker.drop-up:after {
-  top: initial;
-  bottom: -6px;
-  border-bottom: initial;
-  border-top: 6px solid #fff;
-}
-
-.daterangepicker.single .daterangepicker .ranges, .daterangepicker.single .drp-calendar {
-  float: none;
-}
-
-.daterangepicker.single .drp-selected {
-  display: none;
-}
-
-.daterangepicker.show-calendar .drp-calendar {
-  display: block;
-}
-
-.daterangepicker.show-calendar .drp-buttons {
-  display: block;
-}
-
-.daterangepicker.auto-apply .drp-buttons {
-  display: none;
-}
-
-.daterangepicker .drp-calendar {
-  display: none;
-  max-width: 270px;
-}
-
-.daterangepicker .drp-calendar.left {
-  padding: 8px 0 8px 8px;
-}
-
-.daterangepicker .drp-calendar.right {
-  padding: 8px;
-}
-
-.daterangepicker .drp-calendar.single .calendar-table {
-  border: none;
-}
-
-.daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
-  color: #fff;
-  border: solid black;
-  border-width: 0 2px 2px 0;
-  border-radius: 0;
-  display: inline-block;
-  padding: 3px;
-}
-
-.daterangepicker .calendar-table .next span {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
-
-.daterangepicker .calendar-table .prev span {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-
-.daterangepicker .calendar-table th, .daterangepicker .calendar-table td {
-  white-space: nowrap;
-  text-align: center;
-  vertical-align: middle;
-  min-width: 32px;
-  width: 32px;
-  height: 24px;
-  line-height: 24px;
-  font-size: 12px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.daterangepicker .calendar-table {
-  border: 1px solid #fff;
-  border-radius: 4px;
-  background-color: #fff;
-}
-
-.daterangepicker .calendar-table table {
-  width: 100%;
-  margin: 0;
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.daterangepicker td.available:hover, .daterangepicker th.available:hover {
-  background-color: #eee;
-  border-color: transparent;
-  color: inherit;
-}
-
-.daterangepicker td.week, .daterangepicker th.week {
-  font-size: 80%;
-  color: #ccc;
-}
-
-.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
-  background-color: #fff;
-  border-color: transparent;
-  color: #999;
-}
-
-.daterangepicker td.in-range {
-  background-color: #ebf4f8;
-  border-color: transparent;
-  color: #000;
-  border-radius: 0;
-}
-
-.daterangepicker td.start-date {
-  border-radius: 4px 0 0 4px;
-}
-
-.daterangepicker td.end-date {
-  border-radius: 0 4px 4px 0;
-}
-
-.daterangepicker td.start-date.end-date {
-  border-radius: 4px;
-}
-
-.daterangepicker td.active, .daterangepicker td.active:hover {
-  background-color: #5EC397;
-  border-color: transparent;
-  color: #fff;
-}
-
-.daterangepicker th.month {
-  width: auto;
-}
-
-.daterangepicker td.disabled, .daterangepicker option.disabled {
-  color: #999;
-  cursor: not-allowed;
-  text-decoration: line-through;
-}
-
-.daterangepicker select.monthselect, .daterangepicker select.yearselect {
-  font-size: 12px;
-  padding: 1px;
-  height: auto;
-  margin: 0;
-  cursor: default;
-}
-
-.daterangepicker select.monthselect {
-  margin-right: 2%;
-  width: 56%;
-}
-
-.daterangepicker select.yearselect {
-  width: 40%;
-}
-
-.daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
-  width: 50px;
-  margin: 0 auto;
-  background: #eee;
-  border: 1px solid #eee;
-  padding: 2px;
-  outline: 0;
-  font-size: 12px;
-}
-
-.daterangepicker .calendar-time {
-  text-align: center;
-  margin: 4px auto 0 auto;
-  line-height: 30px;
-  position: relative;
-}
-
-.daterangepicker .calendar-time select.disabled {
-  color: #ccc;
-  cursor: not-allowed;
-}
-
-.daterangepicker .drp-buttons {
-  clear: both;
-  text-align: right;
-  padding: 8px;
-  border-top: 1px solid #ddd;
-  display: none;
-  line-height: 12px;
-  vertical-align: middle;
-}
-
-.daterangepicker .drp-selected {
-  display: inline-block;
-  font-size: 12px;
-  padding-right: 8px;
-}
-
-.daterangepicker .drp-buttons .btn {
-  margin-left: 8px;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 4px 8px;
-}
-
-.daterangepicker.show-ranges.single.rtl .drp-calendar.left {
-  border-right: 1px solid #ddd;
-}
-
-.daterangepicker.show-ranges.single.ltr .drp-calendar.left {
-  border-left: 1px solid #ddd;
-}
-
-.daterangepicker.show-ranges.rtl .drp-calendar.right {
-  border-right: 1px solid #ddd;
-}
-
-.daterangepicker.show-ranges.ltr .drp-calendar.left {
-  border-left: 1px solid #ddd;
-}
-
-.daterangepicker .ranges {
-  float: none;
-  text-align: left;
-  margin: 0;
-}
-
-.daterangepicker.show-calendar .ranges {
-  margin-top: 8px;
-}
-
-.daterangepicker .ranges ul {
-  list-style: none;
-  margin: 0 auto;
-  padding: 0;
-  width: 100%;
-}
-
-.daterangepicker .ranges li {
-  font-size: 12px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.daterangepicker .ranges li:hover {
-  background-color: #eee;
-}
-
-.daterangepicker .ranges li.active {
-  background-color: #08c;
-  color: #fff;
-}
-
-/*  Larger Screen Styling */
-@media (min-width: 564px) {
-  .daterangepicker {
-    width: auto;
-  }
-
-  .daterangepicker .ranges ul {
-    width: 140px;
-  }
-
-  .daterangepicker.single .ranges ul {
-    width: 100%;
-  }
-
-  .daterangepicker.single .drp-calendar.left {
-    clear: none;
-  }
-
-  .daterangepicker.single .ranges, .daterangepicker.single .drp-calendar {
-    float: left;
-  }
-
-  .daterangepicker {
-    direction: ltr;
-    text-align: left;
-  }
-
-  .daterangepicker .drp-calendar.left {
-    clear: left;
-    margin-right: 0;
-  }
-
-  .daterangepicker .drp-calendar.left .calendar-table {
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .daterangepicker .drp-calendar.right {
-    margin-left: 0;
-  }
-
-  .daterangepicker .drp-calendar.right .calendar-table {
-    border-left: none;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .daterangepicker .drp-calendar.left .calendar-table {
-    padding-right: 8px;
-  }
-
-  .daterangepicker .ranges, .daterangepicker .drp-calendar {
-    float: left;
-  }
-}
-
-@media (min-width: 730px) {
-  .daterangepicker .ranges {
-    width: auto;
-  }
-
-  .daterangepicker .ranges {
-    float: left;
-  }
-
-  .daterangepicker.rtl .ranges {
-    float: right;
-  }
-
-  .daterangepicker .drp-calendar.left {
-    clear: none !important;
-  }
-}
-<!----------------------------------------------------- sell.css -------------------------------------------------->
-
-
-/* .container {
-    margin-left: 260px;
-} */
-
-body{
-	background-color: #F5F6FA;
-	}
-.horizontal-line {
-    width: 1000px;
-    height: 1px;
-    background-color: #B8B8B8;
-     margin-bottom: 20px;
-}
-
-h2 {
-    font-size: 30px;
-    font-weight: bold;
-}
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-zrve{background-color:#0949f7;border-color:#3531ff;text-align:center;vertical-align:top}
-.tg .tg-llyw{background-color:#D9D9D9;border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-llyw2{background-color:#ffffff;border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-
-/* 버튼 */
-
-#search {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#add {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#update {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#delete {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#cancel {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#memo {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#save {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#exel {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-#file {
-	width : 40px;
-	height : 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-
-
-/* 테이블 */
-#sellTable {
-    border-collapse: collapse;
-    width : 1220px;
-}
-
-#sellTable tr {
-    border-bottom: 1px solid #EAEBEA;
-}
-
-#sellTable th, #sellTable td {
-    border: none;
-}
-
-input[type="text"] {
-	border: 1px solid #A6A6A6; /* 테두리 색 설정 */
-	background-color: #FFFFFF; /* 배경색 설정 */
-	border-radius: 3px;
-	 margin-bottom: 10px;
-}
-
-
-.outer-container {
-	display: flex;
-}
-
-.main-content {
-	flex: 1;
-	padding: 20px;
-}
-
-
-</style>
 
 </head>
 
@@ -589,8 +20,7 @@ input[type="text"] {
 <!---------------------------------------------------- 상단 조회 및 버튼 ----------------------------------------------------->
 
 <div class="outer-container">
-     <jsp:include page="../inc/side.jsp"></jsp:include> 
-    
+    <jsp:include page="../inc/sidebar.jsp"></jsp:include>
 	<div class="main-content">
 	    <h2>수주 관리</h2>
 	    <div class="horizontal-line"></div>
@@ -609,15 +39,12 @@ input[type="text"] {
 			<label for="startDate">납기일자</label> 
 				<input type="text" name="daterange" value="" >
 	        
-	        <button id="search" type="submit" onclick="location.href='${pageContext.request.contextPath}/sell/sellSearch'">조회</button>
-	        <button id="add">추가</button>
-	  		<button id="update">수정</button>
-	   		<button id="delete">삭제</button>
-	    	<button id="cancel">취소</button>
-	    	<button id="memo">비고</button>
-	    	<button id="save">저장</button>
-	    	<button id="exel">Excel</button>
-	    	<button id="file">File</button>
+	        <button id="btnSell" type="submit" onclick="location.href='${pageContext.request.contextPath}/sell/sellSearch'">조회</button>
+	        <button id="btnSell" onclick="openSellAdd()">추가</button>
+	  		<button id="btnSell">수정</button>
+	   		<button id="btnSell">삭제</button>
+	    	<button type="reset" id="btnSell">취소</button>
+	    	<button id="btnSell">Excel</button>
 	    	
 	    </form>
 	
@@ -646,9 +73,9 @@ input[type="text"] {
 	            
 	            <c:forEach var="sellDTO" items="${sellList}">
 	            <tr>
-	            <td class="tg-llyw2"><input type="checkbox" class="item-checkbox"></td>
+	            	<td class="tg-llyw2"><input type="checkbox" class="item-checkbox"></td>
 	            
-	                <td class="tg-llyw2">${sellDTO.num}</td><!-- 목록번호 -->
+	        	    <td class="tg-llyw2">${sellDTO.sellNum}</td><!-- 목록번호 --> 
 	                <td class="tg-llyw2">${sellDTO.sellState}</td><!-- 처리(출고)상태 -->
 	                <td class="tg-llyw2">${sellDTO.sellCode}</td><!-- 수주코드 -->
 	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 거래처코드 -->
@@ -657,10 +84,34 @@ input[type="text"] {
 	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 수주단가 -->
 	                <td class="tg-llyw2">${sellDTO.sellCount}</td><!-- 수주수량-->
 	                <td class="tg-llyw2"><fmt:formatDate value="${sellDTO.sellDate}" pattern="yyyy.MM.dd"/></td><!-- 수주일자 -->
-	                <td class="tg-llyw2"><fmt:formatDate value="${sellDTO.sellDuedate}" pattern="yyyy.MM.dd"/></td><!-- 납기일자  -->
-	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 비고 -->
-	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 비고 -->
-	                <td class="tg-llyw2">${sellDTO.sellFile}</td><!-- 파일 -->
+	                <td class="tg-llyw2"><fmt:formatDate value="${sellDTO.sellDuedate}" pattern="yyyy.MM.dd"/></td><!-- 납기일자  --> 
+	                <td class="tg-llyw2">${sellDTO.sellEmpId}</td><!-- 수주담당직원 -->
+						
+						<c:choose>
+							<c:when test="${not empty sellDTO.sellMemo}">
+								<td class="tg-llyw2"><a href="#"
+									onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color: red;">[보기]</a>
+								</td>
+							</c:when>
+							<c:otherwise>
+							
+								<td class="tg-llyw2"><a href="#"
+									onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color:#384855;">[입력]</a></td>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${not empty sellDTO.sellFile}">
+								<td class="tg-llyw2"><a href="#"
+									onclick="downSellFile('${sellDTO.sellCode}')" style="color: red;">[다운]</a>
+									
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td class="tg-llyw2"><input type="file" id="sellFile" name="sellFile"></td>
+							</c:otherwise>
+						</c:choose>
+
+						<td class="tg-llyw2">${sellDTO.sellFile}</td><!-- 파일 -->
 	            </tr>
 	             </c:forEach>
 	        </tbody>
@@ -730,7 +181,7 @@ function saveData() {
 }
 </script>
 
-<!-------------------------- 목록 전체선택 -------------------------->
+<!--------------------------------------------------- 목록 전체 선택 ----------------------------------------->
 <script>
 	// 전체선택
 	document.getElementById("selectAllCheckbox").addEventListener(
@@ -755,7 +206,7 @@ function saveData() {
 			});//selectAllCheckbox
 </script>
 
-<!-------------------------- 수주일자, 납기일자 기간선택 ----------------->
+<!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
 <script>
 
 	$(function() {
@@ -781,9 +232,76 @@ function saveData() {
 	});
 </script>
 
+<!--------------------------------------------------- 수주 추가 ----------------------------------------->
+<script type="text/javascript">
+// 팝업 창을 열기 위한 JavaScript 함수를 정의합니다.
+function openSellAdd() {
+
+    // 팝업 창의 속성을 설정합니다.
+    var popupWidth = 450;
+    var popupHeight = 500;
+    var left = (window.innerWidth - popupWidth) / 2;
+    var top = (window.innerHeight - popupHeight) / 2;
+    var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
+                        ',left=' + left + ',top=' + top +
+                        ',resizable=yes,scrollbars=yes';
+
+    // selladd.jsp 파일을 팝업 창으로 엽니다.
+    window.open( '${pageContext.request.contextPath}/sell/sellAdd','popupUrl', popupFeatures);
+    
+    function submitClose() {
+        // 여기에 수주 등록 폼을 서버에 제출하는 코드를 추가하세요.
+        
+        // 폼을 제출한 후 창을 닫기 위해 아래 코드를 사용합니다.
+        window.close();
+    }
+}
+</script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!--------------------------------------------------- 비고 보기 ----------------------------------------->
+<script>
+    function openSellMemo(sellCode) {
+        // 팝업 창의 속성을 설정합니다.
+        var popupWidth = 450;
+        var popupHeight = 500;
+        var left = (window.innerWidth - popupWidth) / 2;
+        var top = (window.innerHeight - popupHeight) / 2;
+        var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
+                            ',left=' + left + ',top=' + top +
+                            ',resizable=yes,scrollbars=yes';
+
+        // 새 창을 열기 위한 URL 설정
+        var url = '${pageContext.request.contextPath}/sell/sellMemo?sellCode=' + sellCode;
+
+        // 팝업 창을 열고 속성 설정
+        var newWindow = window.open(url, '_blank', popupFeatures);       
+    }
+</script>
+
+<!--------------------------------------------------- 비고 추가 ----------------------------------------->
+<script>
+    function addSellMemo(sellCode) {
+        // 팝업 창의 속성을 설정합니다.
+        var popupWidth = 450;
+        var popupHeight = 500;
+        var left = (window.innerWidth - popupWidth) / 2;
+        var top = (window.innerHeight - popupHeight) / 2;
+        var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
+                            ',left=' + left + ',top=' + top +
+                            ',resizable=yes,scrollbars=yes';
+
+        // 새 창을 열기 위한 URL 설정
+        var url = '${pageContext.request.contextPath}/sell/sellMemotype?sellCode=' + sellCode+'?memotype=add';
+        // 팝업 창을 열고 속성 설정
+        var newWindow = window.open(url, '_blank', popupFeatures); 
+    }
+    
+  
+   
+</script>
 
 </body>
 </html>
