@@ -12,6 +12,7 @@
 <!-- sweetalert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
+//
 //input으로 바꾸기 
 function inputCng(obj, type, name, value) {
 	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
