@@ -33,6 +33,8 @@ public class ClientService {
 
 	public String  getclientCode(String clientType) {
 		
+		System.out.println("ClientService getClientCode=============" + clientType);
+		
 		return clientDAO.getclientCode(clientType);
 		
 	}
