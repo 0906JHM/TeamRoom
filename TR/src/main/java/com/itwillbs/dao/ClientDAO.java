@@ -44,15 +44,12 @@ public class ClientDAO {
 			        log.debug("ClientDAO getclientCode 요청");
 			        
 			        System.out.println(clientType);
-			        String clientCode="";
-			        if("수주처".equals(clientType)) {
-			            clientCode = "CL000";
-			        } else {
-			            clientCode = "OR000";
-			        }
+			        
+			   
 			
 			return sqlsession.selectOne(namespace+".getclientCode",clientType);
 		}
+		
 
 		public ClientDTO clientdetail(String clientCompany) {
 			
