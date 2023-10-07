@@ -51,5 +51,17 @@ public class ClientService {
 		
 		return clientDAO.selldetail(clientCode);
 	}
+
+	public void clientupdate(ClientDTO clientDTO) {
+		
+		clientDAO.clientupdate(clientDTO);
+		
+	}
+
+	public void clientdelete(String clientCompany) {
+		
+		clientDAO.clientdelete(clientCompany);
+		
+	}
 	
 }

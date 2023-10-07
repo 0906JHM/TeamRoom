@@ -27,6 +27,11 @@
 <tr><td>비고</td><td>${clientDTO.clientMemo}</td></tr>  
 </table>
 
+<div class="btngroup">
+        <input type="button" value="수정" id="updateButton" >
+ <button type="button" class="deletebtn" onclick="clientdelete('${clientDTO.clientCompany}')">삭제</button>
+</div>
+
 <c:choose>
     <c:when test="${clientDTO.clientType eq '발주처'}">
         <!-- 발주처인 경우 rawDetail 테이블 출력 -->
@@ -52,8 +57,23 @@
     </c:otherwise>
 </c:choose>
 
+<script>
+document.getElementById("updateButton").addEventListener("click", function() {
+    var clientCompany = '${clientDTO.clientCompany}'; // 서버에서 받은 clientCompany 값
+    var updateUrl = '${pageContext.request.contextPath}/client/clientupdate?clientCompany=' + clientCompany;
+    window.open(updateUrl, '_blank', 'width=600px, height=1000px, left=600px, top=300px');
+});
+
+function clientdelete(clientCompany) {
+    if (confirm("정말로 삭제하시겠습니까?")) {
+        // 확인을 선택한 경우 삭제 요청을 보냅니다.
+        location.href = '${pageContext.request.contextPath}/client/delete?clientCompany=' + clientCompany;
+         console.log(clientCompany);
+    }
+}
 
 
+</script>
 
 
 

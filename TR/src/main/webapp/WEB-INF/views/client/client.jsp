@@ -62,7 +62,6 @@
 				<th class="tg-0pky">대표자</th>
 				<th class="tg-0pky">담당자</th>
 				<th class="tg-0pky" >거래처주소</th>
-				<th class="tg-0pky" colspan="2">상세주소</th>
 				<th class="tg-0pky">거래처번호</th>
 				<th class="tg-0pky">휴대폰번호</th>
 				<th class="tg-0pky">팩스번호</th>
@@ -83,7 +82,6 @@
 				<td class="tg-0pky">${clientDTO.clientCeo}</td>
 				<td class="tg-0pky">${clientDTO.clientName}</td>
 				<td class="tg-0pky">${clientDTO.clientAddr1}</td>
-				<td class="tg-0pky" colspan="2">${clientDTO.clientAddr2}</td>
 				<td class="tg-0pky">${clientDTO.clientTel}</td>
 				<td class="tg-0pky">${clientDTO.clientPhone}</td>
 				<td class="tg-0pky">${clientDTO.clientFax}</td>

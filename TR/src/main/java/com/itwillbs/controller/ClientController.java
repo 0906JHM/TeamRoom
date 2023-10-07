@@ -107,6 +107,37 @@ public class ClientController {
 		return "client/clientdetail";
 	}
 	
+	@GetMapping("/clientupdate")
+	public String clientupdate(HttpServletRequest req , Model model) {
+		
+		String clientCompany = req.getParameter("clientCompany");
+		
+		ClientDTO clientDTO = clientService.clientdetail(clientCompany);
+		
+		model.addAttribute("clientDTO",clientDTO);
+		
+		return "client/clientupdate";
+		
+	}
+	
+	@PostMapping("/clientupdatePro")
+	public void clinetupdatePro(ClientDTO clientDTO) {
+		
+		System.out.println("ClientController updatePro요청");
+		log.debug("거래처추가로직");
+		System.out.println(clientDTO);
+		clientService.clientupdate(clientDTO);
+		
+	}
+	
+	@GetMapping("/delete")
+	public String clientdelete(String clientCompany) {
+		System.out.println("ClientController delete요청");
+		clientService.clientdelete(clientCompany);
+		
+		return "redirect:/client/client";
+	}
+	
 	
 
 }

@@ -31,6 +31,21 @@ SELECT * FROM rawMaterial WHERE clientCode = #{clientCode};
 <select id="selldetail" resultType="com.itwillbs.domain.ProdDTO">
 SELECT * FROM product WHERE clientCode = #{clientCode};
 </select>
+
+<update id="clientupdate"> 
+UPDATE  clients 
+SET clientCompany=#{clientCompany} ,clientNumber=#{clientNumber}, clientDetail=#{clientDetail},clientCeo=#{clientCeo},clientName=#{clientName},
+    clientAddr1=#{clientAddr1}, clientAddr2=#{clientAddr2}, clientTel=#{clientTel},clientPhone=#{clientPhone},clientFax=#{clientFax},
+    clientEmail=#{clientEmail},clientMemo=#{clientMemo}
+    
+    where clientCompany=#{clientCompany}
+    
+</update>
+
+<delete id="clientdelete">
+DELETE FROM clients WHERE clientCompany=#{clientCompany}
+
+</delete>
   
   
   </mapper>

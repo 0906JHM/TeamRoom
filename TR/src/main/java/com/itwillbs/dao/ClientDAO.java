@@ -69,4 +69,15 @@ public class ClientDAO {
 			return sqlsession.selectOne(namespace+".selldetail", clientCode);
 		}
 
+		public void clientupdate(ClientDTO clientDTO) {
+			
+			sqlsession.update(namespace+".clientupdate",clientDTO);
+		}
+
+		public void clientdelete(String clientCompany) {
+			
+			sqlsession.delete(namespace+".clientdelete",clientCompany);
+			
+		}
+
 }
