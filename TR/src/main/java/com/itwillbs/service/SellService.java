@@ -17,6 +17,7 @@ public class SellService {
 	@Inject
 	private SellDAO sellDAO;
 
+//----------------------------------------------------- getSellList --------------------------------------------------------	
 	public List<SellDTO> getSellList(SellPageDTO sellPageDTO) {
 		System.out.println("SellService getSellList()");
 		// 10개씩 가져올때 현페이지에 대한 시작하는 행번호 구하기
@@ -29,14 +30,50 @@ public class SellService {
 		sellPageDTO.setEndRow(endRow);
 		
 		return sellDAO.getSellList(sellPageDTO);
-	}
-
+	}//getSellList
+	
+//----------------------------------------------------- getSellCount --------------------------------------------------------
 	public int getSellCount() {
 		System.out.println("SellService getSellCount()");
 		
 		return sellDAO.getSellCount();
-	}
+	}//getSellCount
 	
+//----------------------------------------------------- insertSell --------------------------------------------------------
+	public void insertSell(SellDTO sellDTO) {
+		System.out.println("SellService insertSell()");
+
+		sellDAO.insertSell(sellDTO);	
+	}//insertSell
+	
+	//----------------------------------------------------- getSellMemo --------------------------------------------------------
+		public SellDTO getSellMemo(String sellCode) {
+		System.out.println("SellService getSellMemo()");
+			
+			return sellDAO.getSellMemo(sellCode);
+		}//getSellMemo
+
+	//----------------------------------------------------- updateSellMemo ---------------------------------------
+		public void updateSellMemo(SellDTO sellDTO) {
+			System.out.println("SellService updateSellMemo");
+
+			sellDAO.updateSellMemo(sellDTO);
+		}//updateSellMemo
+
+		
+		//----------------------------------------------------- insertSellMemo --------------------------------------------------------
+		public void insertSellMemo(SellDTO sellDTO) {
+			System.out.println("SellService insertSellMemo()");
+
+			sellDAO.insertSellMemo(sellDTO);	
+		}//insertSellMemo
+		
+
+
+
+
+
+
 	
 
 }//class

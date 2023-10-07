@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+
+/* 
+body{
+	background-color: #F5F6FA;
+}
+
+
+h1 {
+    display: flex;
+    justify-content: center; 수평 가운데 정렬
+
+}
+
+#popup{
+	margin-left : 20px;
+}
+ */
+ body{
+  background-color: #F5F6FA;
+ }
+ .popupContainer {
+
+
+ /* 중앙 정렬을 위한 변환 */
+    padding: 20px; /* 내용과 외부 간격 설정 */
+
+}
+
+form.popup {
+    margin-left: 20px; /* form 태그 왼쪽 마진 설정 */
+}
+
+.horizontal-line {
+	width: 400px;
+	height: 1px;
+	background-color: #B8B8B8;
+	margin-bottom: 20px;
+}
+
+.popupLabel {
+    margin-bottom: 10px;
+}
+
+
+
+/*---------------------------------------------- 버튼 ----------------------------------------------*/
+button[type="submit"] {
+	width: 40px;
+	height: 25px;
+	background-color: #5EC397;
+	color: #FFFFFF;
+	border: none;
+	border-radius: 3px;
+	margin-bottom: 10px;
+}
+
+button[type="reset"] {
+	width: 40px;
+	height: 25px;
+	background-color: #5EC397;
+	color: #FFFFFF;
+	border: none;
+	border-radius: 3px;
+	margin-bottom: 10px;
+}
+
+button {
+	width: 40px;
+	height: 25px;
+	background-color: #5EC397;
+	color: #FFFFFF;
+	border: none;
+	border-radius: 3px;
+	margin-bottom: 10px;
+}
+
+/* "등록" 버튼에 대한 스타일 */
+button[type="submit"]:hover {
+    background-color: #31433B;
+    color: white; /* 텍스트 색상 변경 (선택 사항) */
+}
+
+/* "취소" 버튼에 대한 스타일 */
+button[type="reset"]:hover {
+    background-color: #31433B;
+    color: white; /* 텍스트 색상 변경 (선택 사항) */
+}
+
+
+/* 수정 버튼에 대한 스타일 */
+button:hover {
+    background-color: #31433B;
+    color: white; /* 텍스트 색상 변경 (선택 사항) */
+}
