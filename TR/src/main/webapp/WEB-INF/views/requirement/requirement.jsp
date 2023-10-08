@@ -11,8 +11,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- sweetalert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<%-- <script src="${pageContext.request.contextPath }/resources/js/requirement.js"></script> --%>
 <script type="text/javascript">
+//
 //input으로 바꾸기 
 function inputCng(obj, type, name, value) {
 	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
@@ -20,31 +20,15 @@ function inputCng(obj, type, name, value) {
 } //inputCng	
 
 // 팝업 옵션
-const popupOpt = "top=60,left=140,width=1300,height=677";/* 
-const popupOpt2 = "top=60,left=140,width=977,height=677"; */
+const popupOpt = "top=60,left=140,width=720,height=600";
 
 //검색 팝업
-	function openWindow(type, inputId) {
-	 	var url = "${pageContext.request.contextPath}/requirement/search?type=" + type + "&input=" + inputId;
+	function searchItem(type, inputId) {
+	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 
-/* //검색 팝업2
-function openWindow2(search, inputId) {
-	var url = "${pageContext.request.contextPath}/requirement/search?type=" + search + "&input=" + inputId;
-	var popup = window.open(url, "", popupOpt2);
-} //openWindow() */
 
-//추가 시 품번 검색 
-function searchItem(type, inputId){
-	openWindow(type , inputId);
-}
-
-	/* //추가 시 원자재 검색 
-function serchRaw(inputId){
-	openWindow2("raw",inputId);
-} */
-	
 function submitForm() {
 	  var isValid = true;
 
@@ -341,7 +325,7 @@ $(document).ready(function() {
 								data.reqCode,
 								data.prodCode,
 								data.prod.prodName,
-								/* data.raw.rawName, */
+								data.raw.rawName,
 								data.reqAmount,
 								data.reqMemo,
 								data.rawCode
@@ -353,7 +337,7 @@ $(document).ready(function() {
 								"reqCode",
 								"prodCode",
 								"prodName",
-								/*  "rawName",  */
+								"rawName",
 								"reqAmount",
 								"reqMemo",
 								"rawCode" 
@@ -404,13 +388,6 @@ $(document).ready(function() {
 
 			} //하나씩만 선택 가능
 				
-				
-			/* //취소버튼 -> 리셋
-			$('#cancle').click(function() {
-				$('#fr').each(function() {
-					this.reset();
-				});
-			}); //cancle click */
 
 		}); //tr click
 
@@ -445,12 +422,12 @@ $(document).ready(function() {
 			<fieldset>
 				<label>소요코드&nbsp;</label> 
 				<input class="input_box" type="text" name="reqCode" onfocus="this.value='RQ'" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
-				<label>제품명&nbsp;</label> 
+				<label>제품&nbsp;</label> 
 				<input type="hidden"name="prodCode" id="prodCode9999">
 				<input class="input_box" type="text" name="prodName" id="prodName9999" placeholder="제품명을 선택하세요." readonly onclick="searchItem('prod','prodCode9999')"> &nbsp;&nbsp;
 				<label>원자재&nbsp;</label>
 				<input type="hidden" name="rawCode" id="rawCode9999">
-				<input class="input_box" type="text" name="rawName"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')"> &nbsp;&nbsp;
+				<input class="input_box" type="text" name="rawName" id="rawName9999"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')"> &nbsp;&nbsp;
 				<input class="button" type="submit" value="조회">
 			</fieldset>
 		</form>
@@ -463,12 +440,7 @@ $(document).ready(function() {
 					
 					<div class="x_total">
 					<h2><small>총 ${paging.total} 건</small></h2>
-						<%-- <c:if test="${empty param.input }">
-							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'" class="button" style="width:40px;">↻</button>
-						</c:if>
-						<c:if test="${!empty param.input }">
-							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail?input=${param.input }'" class="button" style="width:40px;">↻</button>
-						</c:if> --%>
+						
 					</div>
 					<div>
 						<button class="button" id="addButton" >추가</button>
@@ -480,7 +452,6 @@ $(document).ready(function() {
 						<c:if test="${!empty param.input }">
 							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail?input=${param.input }'" class="button">취소</button>
 						</c:if>
-						<!-- <button class="button" type="reset" id="cancle" >취소</button> -->
 						<input class="button" type="submit" value="저장" id="save">
 					</div>						
 				</div>
@@ -512,13 +483,13 @@ $(document).ready(function() {
 		<div class="x_content">
 			<div class="table-responsive">
 				<div class="table-wrapper" >
-					<table id="reqTable" style="text-align-last: center;">
+					<table id="reqTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 						<thead>
 							<tr class="headings">
 								<th>번호</th>
 								<th>소요코드</th>
 								<th type='hidden' style='display: none;'>품번</th>
-								<th>제품명</th>
+								<th>제품</th>
 								<th>원자재</th>
 								<th>소요량</th>
 								<th>비고</th>
@@ -531,7 +502,7 @@ $(document).ready(function() {
 								<td id="reqCode">${dto.reqCode }</td>
 								<td type='hidden' style='display: none;'>${dto.prodCode }</td>
 								<td id="prodName"> ${dto.prod.prodName }</td>
-								<td><%-- ${dto.raw.rawName } --%>원자재명</td>
+								<td> ${dto.raw.rawName }</td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
 							</tr>

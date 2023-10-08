@@ -18,13 +18,13 @@
 	  
 		
 		 private ProdDTO prod;
-			/* private RawMaterialDTO raw; */
+		 private RawmaterialsDTO raw; 
 		 
   
 		
 		 public RequirementDTO() {
 		 prod = new ProdDTO();
-			/* raw = new RawMaterialDTO(); */
+		 raw = new RawmaterialsDTO(); 
 		 }
 		
   

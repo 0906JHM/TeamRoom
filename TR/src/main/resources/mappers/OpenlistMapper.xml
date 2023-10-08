@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.itwillbs.mappers.OpenlistMapper">
+  
+<!-- 품목관리 리절트 맵 -->
+	<resultMap id="prod"
+		type="com.itwillbs.domain.ProdDTO">
+
+		<id property="prodCode" column="prodCode" />
+		<result property="prodName" column="prodName" />
+	</resultMap>
+	<!-- 품목관리 리절트 맵
+
+	품목관리 총 게시글 갯수 출력 -->
+	<select id="countProd" resultType="int">
+		SELECT COUNT(*) FROM product
+	</select>
+	<!-- 품목관리 총 게시글 갯수 출력
+
+	품목관리 목록 불러오기 -->
+	<select id="readProd" resultType="ProdDTO" resultMap="prod">
+		SELECT *
+		from product
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select>
+	<!-- 품목관리 목록 불러오기
+
+	품목관리 검색 게시글 갯수 출력 -->
+	<select id="countSearchProd" resultType="int">
+		<bind name="prodCode" value="'%'+ prodCode +'%'" />
+		<bind name="prodName" value="'%'+ prodName +'%'" />
+		SELECT COUNT(*) FROM product
+		<where>
+			<if test="prodCode != ''">
+				prodCode like #{prodCode}
+			</if>
+			<if test="prodName != ''">
+				and prodName like #{prodName}
+			</if>
+		</where>
+	</select>
+	<!-- 품목관리 검색 게시글 갯수 출력
+
+	품목관리 검색리스트 불러오기 -->
+	<select id="readSearchProd" parameterType="hashMap"
+		resultType="ProdDTO" resultMap="prod">
+		<bind name="prodCode" value="'%'+ prodCode +'%'" />
+		<bind name="prodName" value="'%'+ prodName +'%'" />
+		SELECT * from product
+		
+		<where>
+			<if test="prodCode != ''">
+				prodCode like #{prodCode}
+			</if>
+			<if test="prodName != ''">
+				and prodName like #{prodName}
+			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>	
+
+	<!-- ////////////////////////////////////////////////////////////////
+
+	원자재관리 총 게시글 갯수 출력 -->
+	<select id="countRaw" resultType="int">
+		SELECT COUNT(*) FROM
+		rawMaterial
+	</select>
+	<!-- 원자재관리 총 게시글 갯수 출력
+
+	원자재관리 목록 불러오기 -->
+	<resultMap id="rawMaterial"
+		type="com.itwillbs.domain.RawmaterialsDTO">
+
+		<id property="rawName" column="rawName" />
+		<result property="rawCode" column="rawCode" />
+
+	</resultMap>
+
+	<select id="readRaw" resultMap="rawMaterial"
+		resultType="RawmaterialsDTO">
+		SELECT *
+		from rawMaterial
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select>
+	<!-- 원자재관리 목록 불러오기
+
+	원자재관리 검색 게시글 갯수 출력 -->
+	<select id="countSearchRaw" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM rawMaterial
+		<where>
+			<if test="rawCode != ''">
+				rawCode like concat ('%', #{rawCode}, '%')
+			</if>
+			<if test="rawName != ''">
+				and rawName like concat ('%', #{rawName}, '%')
+			</if>
+		</where>
+	</select>
+	<!-- 원자재관리 검색 게시글 갯수 출력
+
+	원자재관리 검색리스트 불러오기 -->
+	<select id="readSearchRaw" parameterType="hashMap"
+		resultMap="rawMaterial" resultType="RawmaterialsDTO">
+		SELECT *
+		from rawMaterial
+		<where>
+			<if test="rawCode != ''">
+				rawCode like concat ('%', #{rawCode}, '%')
+			</if>
+			<if test="rawName != ''">
+				and rawName like concat ('%', #{rawName}, '%')
+			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	
+	<!-- ////////////////////////////////////////////////////////////////
+
+	거래처 총 게시글 갯수 출력 -->
+	<select id="countClient" resultType="int">
+		SELECT COUNT(*) FROM
+		clients
+	</select>
+	<!-- 원자재관리 총 게시글 갯수 출력
+
+	거래처 목록 불러오기 -->
+	<resultMap id="clients"
+		type="com.itwillbs.domain.ClientDTO">
+
+		<id property="clientCompany" column="clientCompany" />
+		<result property="clientCode" column="clientCode" />
+
+	</resultMap>
+
+	<select id="readClient" resultMap="clients"
+		resultType="ClientDTO">
+		SELECT *
+		from clients
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select>
+	<!-- 거래처 목록 불러오기
+
+	거래처 검색 게시글 갯수 출력 -->
+	<select id="countSearchClient" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM clients
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+			<if test="rawName != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+		</where>
+	</select>
+	<!-- 거래처 검색 게시글 갯수 출력
+
+	거래처 검색리스트 불러오기 -->
+	<select id="readSearchClient" parameterType="hashMap"
+		resultMap="clients" resultType="ClientDTO">
+		SELECT *
+		from clients
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+			<if test="rawName != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	
+
+	<!-- //////////////////////////////////////////////////////////////// -->
+
+	<!-- 소요량관리 총 게시글 갯수 출력 -->
+	<select id="countReq" resultType="int">
+		SELECT COUNT(*)
+		FROM requirement
+	</select>
+	<!-- 소요량관리 총 게시글 갯수 출력
+
+	소요량관리 목록 불러오기 -->
+	<resultMap id="requirements"
+		type="com.itwillbs.domain.RequirementDTO">
+
+		<id property="reqCode" column="reqCode" />
+		<result property="prodCode" column="prodCode" />
+		<result property="rawCode" column="rawCode" />
+		<result property="reqAmount" column="reqAmount" />
+		<result property="reqMemo" column="reqMemo" />
+
+		 <collection property="prod" ofType="com.itwillbs.domain.ProdDTO">
+			<result property="prodName" column="prodName" />
+		</collection>
+
+		<!-- <collection property="raw"
+			ofType="com.itwillbs.domain.RawmaterialsDTO">
+			<result property="rawName" column="rawName" />
+		</collection> -->
+
+	</resultMap>
+
+	<!-- <select id="readReq" resultMap="requirements"
+		resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT r.* p.prodName ,rm.rawName
+		FROM requirement r
+		join
+		product p on p.prodCode = r.prodCode
+		JOIN rawMaterial rm on r.rawCode = rm.rawCode
+		order by 1 desc 
+		limit #{start}, #{cntPerPage}
+	</select> -->
+	<select id="readReq" resultMap="requirements"
+		resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT r.*, p.prodName
+		FROM requirement r
+		left join
+		product p on p.prodCode = r.prodCode
+		order by 1 desc 
+		limit #{start}, #{cntPerPage}
+	</select>
+	<!-- 소요량관리 목록 불러오기
+
+	소요량관리 검색 게시글 갯수 출력 -->
+	<!-- <select id="countSearchReq" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM requirement r
+		join product p on p.prodCode =
+		r.prodCode
+		JOIN rawMaterial rm on r.rawCode = rm.rawCode
+		<where>
+			<if test="reqCode != ''">
+				r.reqCode like concat ('%', #{reqCode}, '%')
+			</if>
+			<if test="prodCode != ''">
+				and r.prodCode = #{prodCode}
+			</if>
+			<if test="rawCode != ''">
+				and r.rawCode = #{rawCode}
+			</if>
+		</where>
+	</select> -->
+	<select id="countSearchReq" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM requirement				
+		<where>
+			<if test="reqCode != ''">
+				reqCode like concat ('%', #{reqCode}, '%')
+			</if>
+			<if test="prodCode != ''">
+				and prodCode = #{prodCode}
+			</if>
+			<if test="rawCode != ''">
+				and rawCode = #{rawCode}
+			</if>
+		</where>
+	</select>
+	<!-- 소요량관리 검색 게시글 갯수 출력
+
+	소요량관리 검색리스트 불러오기 -->
+	<!-- <select id="readSearchReq" parameterType="hashMap"
+		resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT r.*,p.prodName ,rm.rawName
+		FROM requirement r
+		join product p on
+		p.prodCode = r.prodCode
+		JOIN rawMaterial rm on r.rawCode =
+		rm.rawCode
+		<where>
+			<if test="reqCode != ''">
+				r.reqCode like concat ('%', #{reqCode}, '%')
+			</if>
+			<if test="prodCode != ''">
+				and r.prodCode = #{prodCode}
+			</if>
+			<if test="rawCode != ''">
+				and r.rawCode = #{rawCode}
+			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+	</select> -->
+	<select id="readSearchReq" parameterType="hashMap"
+		resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT *
+		FROM requirement
+		
+		<where>
+			<if test="reqCode != ''">
+				reqCode like concat ('%', #{reqCode}, '%')
+			</if>
+			<if test="prodCode != ''">
+				and prodCode = #{prodCode}
+			</if>
+			<if test="rawCode != ''">
+				and rawCode = #{rawCode}
+			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+	</select>
+	<!-- 소요량관리 검색리스트 불러오기
+	
+	소요량관리 추가버튼 클릭 시 품목코드 가져가기 -->
+	<select id="readReqCode" resultType="String">
+		select reqCode from requirement order by reqCode desc limit 1;
+	</select>
+	<!-- 소요량관리 추가버튼 클릭 시 품목코드 가져가기
+
+	소요량관리 정보 다중 입력 -->
+	<insert id="reqIn">
+	
+		insert into requirement
+		values
+		(#{reqCode},#{prodCode},#{rawCode},#{reqAmount},#{reqMemo})
+		
+	</insert>
+	<!-- 소요량관리 정보 다중 입력
+
+	소요량관리 삭제 -->
+	<delete id="deleteReq">
+		DELETE FROM requirement
+		WHERE reqCode=#{reqCode}
+	</delete>
+	<!-- 소요량관리 삭제
+	
+	소요량관리 수정 시 조회 -->
+	<select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT r.*,p.prodName
+		FROM requirement r
+		join
+		product p on p.prodCode = r.prodCode
+		WHERE
+		reqCode=#{reqCode}
+	</select>
+	<!-- <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
+		SELECT r.*,p.prodName ,rm.rawName
+		FROM requirement r
+		join
+		product p on p.prodCode = r.prodCode
+		JOIN rawMaterial rm on
+		r.rawCode = rm.rawCode
+		WHERE
+		reqCode=#{reqCode}
+	</select> -->
+	<!-- 소요량관리 수정 시 조회
+
+	소요량관리 수정 -->
+	<update id="updateReq">
+		UPDATE requirement
+		SET reqCode=#{reqCode},prodCode=#{prodCode},rawCode=#{rawCode},reqAmount=#{reqAmount},
+		reqMemo=#{reqMemo}
+		WHERE reqCode=#{reqCode}
+	</update>
+	<!-- 소요량관리 수정
+
+	//////////////////////////////////////////////////////////////// -->
+
+	<!-- 라인 목록 조회
+	<resultMap type="LineDTO" id="lineEmp">
+		<result property="line_code" column="line_code"/>
+		<result property="line_name" column="line_name"/>
+		<result property="line_use" column="line_use"/>
+		<result property="emp_id" column="emp_id"/>
+		<result property="insert_date" column="insert_date"/>
+		<result property="line_note" column="line_note"/>
+		<result property="line_place" column="line_place"/>
+	
+	<collection property="emp" ofType="EmployeesDTO">
+		<result property="emp_name" column="emp_name"/>
+	</collection>
+		
+	</resultMap>
+	
+	<select id="lineList" resultType="com.itwillbs.domain.LineDTO" resultMap="lineEmp">
+		select l.* , e.emp_name
+		from line l
+		Left join employees e on l.emp_id = e.emp_id 
+		ORDER BY CASE
+			WHEN line_place = '1차공정' THEN 1
+			WHEN line_place = '2차공정' THEN 2
+			WHEN line_place = '3차공정' THEN 3
+			END, 1 desc
+	</select>
+	라인 목록 조회
+
+	라인 목록 조회 (페이징처리)
+	<select id="lineListPage" resultType="LineDTO" resultMap="lineEmp">
+		<![CDATA[
+			select l.* , e.emp_name
+			from line l
+			Left join employees e on l.emp_id = e.emp_id 
+ 			ORDER BY CASE
+			WHEN line_place = '1차공정' THEN 1
+			WHEN line_place = '2차공정' THEN 2
+			WHEN line_place = '3차공정' THEN 3
+			END, 1 desc
+			limit #{startPage}, #{pageSize}
+		]]>
+	</select>
+	라인 목록 조회 (페이징처리)
+
+	라인 전체 글개수 계산
+	<select id="totalCnt" resultType="int">
+		SELECT count(*) FROM line
+	</select>
+	라인 전체 글개수 계산
+
+	라인 전체 글개수 계산 (서치)
+	<select id="searchTotalCnt" resultType="int" >
+		SELECT count(*) FROM line
+		<where>
+			<if test="line_code != ''">
+				line_code LIKE concat('%', #{line_code},'%')
+			</if>
+			<if test="line_name != ''">
+				AND line_name LIKE concat('%', #{line_name},'%')
+			</if>
+			<if test="line_place != '' and line_place !='전체'">
+				AND line_place LIKE concat('%', #{line_place},'%')
+			</if>
+			<if test="line_use != 3">
+				AND line_use= #{line_use}
+			</if>
+		</where>
+	</select>
+	라인 전체 글개수 계산 (서치)
+
+	라인 검색(페이징처리)
+
+	<select id="searchLinePage" resultType="com.itwillbs.domain.LineDTO"
+		parameterType="hashMap" resultMap="lineEmp">
+		SELECT * , e.emp_name FROM line l
+		Left join employees e on l.emp_id = e.emp_id
+		<where>
+			<if test="line_code != ''">
+				AND line_code LIKE CONCAT('%', #{line_code}, '%')
+			</if>
+			<if test="line_name != ''">
+				AND line_name LIKE CONCAT('%', #{line_name}, '%')
+			</if>
+			<if test="line_place != '' and line_place !='전체'">
+				AND line_place LIKE CONCAT('%', #{line_place}, '%')
+			</if>
+			<if test="line_use != 3"> 개중요했음!!!
+				AND line_use = #{line_use}
+			</if>
+		</where>
+		ORDER BY CASE
+			WHEN line_place = '1차공정' THEN 1
+			WHEN line_place = '2차공정' THEN 2
+			WHEN line_place = '3차공정' THEN 3
+			END, 1 desc
+		limit #{startPage}, #{pageSize}
+	</select>
+
+	라인 검색(페이징처리)
+	
+	라인 등록
+	<insert id="registLine">
+		INSERT INTO line (line_code, line_name, line_use, emp_id, insert_date, line_note, line_place)
+		VALUES (#{line_code}, #{line_name}, #{line_use}, #{emp_id}, now(), #{line_note}, #{line_place})
+	</insert>
+	라인 등록
+	 
+	라인 삭제
+	<delete id="deleteLine">
+		DELETE FROM line
+		WHERE line_code = #{line_code}
+	</delete>
+	라인 삭제
+	
+	라인 수정
+	<update id="updateLine">
+		UPDATE line
+		SET line_code = #{line_code}, line_name = #{line_name}, line_use = #{line_use}, emp_id = #{emp_id}, 
+			insert_date = now(), line_note = #{line_note}, line_place = #{line_place}
+ 		WHERE line_code = #{line_code} 
+	</update>
+	라인 수정 
+	
+	라인 조회(String line_code)
+	<select id="readLineList" resultType="LineDTO" resultMap="lineEmp"> 
+		select l.* , e.emp_name
+		from line l
+		Left join employees e on l.emp_id = e.emp_id 
+		where l.line_code = #{line_code}
+	</select>
+	라인 조회(String line_code)
+	
+	라인 추가 시 코드값 가져가기
+	<select id="getLiCode" resultType="String">
+		SELECT line_code 
+		FROM line 
+		WHERE line_place = #{line_place} 
+		ORDER BY line_code desc limit 1
+	</select>
+	라인 추가 시 코드값 가져가기 2
+	
+
+	/////////////////////////////////////////////////////////
+
+	창고 조회 + 페이징처리
+	<resultMap id="whm_listPage" type="com.itwillbs.domain.Wh_prodDTO">
+		<result property="whseCode" column="whseCode" />
+		<result property="whseName" column="whseName" />
+		<result property="wh_dv" column="wh_dv" />
+		<result property="wh_addr" column="wh_addr" />
+		<result property="wh_tel" column="wh_tel" />
+		<result property="wh_use" column="wh_use" />
+		<result property="wh_note" column="wh_note" />
+		<result property="emp_id" column="emp_id"/>
+		<collection property="emp" ofType="com.itwillbs.domain.EmployeesDTO">
+			<result property="emp_name" column="emp_name"/>
+		</collection>
+	</resultMap>
+
+	<select id="whlistPage" resultMap="whm_listPage">
+
+		SELECT w.whseCode, w.whseName, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
+			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
+		FROM warehouse w
+		LEFT JOIN employees e on
+				  e.emp_id = w.emp_id
+		ORDER BY whseCode desc
+		limit #{startPage}, #{pageSize}
+	</select>
+	창고 조회 + 페이징처리
+
+	창고 조회 (전체 글개수 계산)
+	<select id="whTotalCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM warehouse
+	</select>
+	창고 조회 (전체 글개수 계산)
+
+	창고 검색 + 페이징처리
+	<resultMap id="whm_SearchPage" type="com.itwillbs.domain.Wh_prodDTO">
+		<result property="rawCode" column="rawCode" />
+		<result property="prodCode" column="prodCode" />
+		<result property="whseCode" column="whseCode" />
+		<result property="whseName" column="whseName" />
+		<result property="wh_dv" column="wh_dv" />
+		<result property="wh_addr" column="wh_addr" />
+		<result property="wh_tel" column="wh_tel" />
+		<result property="wh_use" column="wh_use" />
+		<result property="wh_note" column="wh_note" />
+		<result property="emp_id" column="emp_id"/>
+		<collection property="emp" ofType="EmployeesDTO">
+			<result property="emp_name" column="emp_name"/>
+		</collection>
+	</resultMap>
+	
+	<select id="searchWareHouse" resultType="WarehouseDTO" 
+					resultMap="whm_SearchPage"  >
+		
+		SELECT w.whseCode, w.whseName, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
+			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
+		FROM warehouse w
+		LEFT JOIN employees e on
+				  e.emp_id = w.emp_id
+		
+		<where>
+			<if test="whseCode != '' and whseCode != null">
+				w.whseCode LIKE concat('%', #{whseCode}, '%')
+			</if>
+			<if test="wh_addr != '' and wh_addr != nuull">
+				AND w.wh_addr LIKE concat('%', #{wh_addr}, '%')
+			</if>
+			<if test="wh_use != 3">
+				AND w.wh_use = #{wh_use}
+			</if>
+			<if test="emp_id != null and emp_id != ''">
+				AND w.emp_id LIKE concat('%', #{emp_id}, '%')
+			</if>
+			<if test="wh_dv != null and wh_dv != '' and wh_dv !='전체'">
+				AND w.wh_dv LIKE concat('%', #{wh_dv}, '%')
+			</if>
+		</where>
+		ORDER BY whseCode desc
+		limit #{startPage}, #{pageSize}
+	</select>
+
+	창고 검색 + 페이징처리
+
+
+	창고 검색시 총 글 개수
+
+	<select id="searchWhTotalCnt" resultType="int"
+		parameterType="hashMap">
+		SELECT count(*) FROM warehouse
+		<where>
+			<if test="whseCode != null and whseCode != ''">
+				whseCode LIKE concat('%', #{whseCode}, '%')
+
+			</if>
+			<if test="wh_addr != null and wh_addr != ''">
+				AND wh_addr LIKE concat('%', #{wh_addr}, '%')
+			</if>
+			<if test="wh_use != 3">
+				AND wh_use = #{wh_use}
+			</if>
+			<if test="emp_id != null and emp_id != ''">
+				AND emp_id LIKE concat('%', #{emp_id}, '%')
+			</if>
+			<if test="wh_dv != null and wh_dv != '' and wh_dv !='전체'">
+				AND wh_dv LIKE concat('%', #{wh_dv}, '%')
+			</if>
+		</where>
+	</select>
+	창고 검색시 총 글 개수
+		
+	창고 등록(추가)
+	<insert id="registWh">
+		INSERT INTO warehouse (whseCode, whseName, wh_dv, wh_use, wh_addr, wh_tel, wh_note, emp_id)
+		VALUES (#{whseCode}, #{whseName}, #{wh_dv}, #{wh_use}, #{wh_addr}, #{wh_tel}, 
+				#{wh_note}, #{emp_id})
+		
+	</insert>
+
+	창고 등록(추가)
+
+	창고 삭제
+	<delete id="deleteWh" >
+		DELETE FROM warehouse
+		WHERE whseCode = #{whseCode}
+	</delete>
+	창고 삭제
+
+	창고 수정
+	<update id="updateWh">
+		UPDATE warehouse
+		SET  whseName = #{whseName}, wh_use = #{wh_use}, wh_dv = #{wh_dv},
+			 wh_addr = #{wh_addr}, wh_tel = #{wh_tel}, wh_note = #{wh_note}, 
+			 emp_id = #{emp_id}
+		where whseCode = #{whseCode}
+	</update>
+	창고 수정
+
+	창고 조회(String whseCode)
+	<select id="readWhList">
+		
+		SELECT w.whseCode, w.whseName, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
+			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
+		FROM warehouse w
+		LEFT JOIN employees e on
+				  e.emp_id = w.emp_id
+		WHERE whseCode = #{whseCode}
+		ORDER BY whseCode desc
+	</select>
+	창고 조회(String whseCode)
+	
+	창고 추가 시 코드값 가져가기
+	<select id="getWhCode" resultType="String">
+		SELECT whseCode 
+		FROM warehouse 
+		ORDER BY whseCode desc limit 1
+	</select>
+	창고 추가 시 코드값 가져가기
+	
+	/////////////////////////////////////////////////////////
+
+	생산실적 목록
+	<resultMap id="perfList" type="PerformanceDTO">
+		<result property="perform_code" column="perform_code" />
+		<result property="work_code" column="work_code" />
+		<result property="prodCode" column="prodCode" />
+		<result property="perform_date" column="perform_date" />
+		<result property="perform_qt" column="perform_qt" />
+		<result property="emp_id" column="emp_id" />
+		<result property="change_id" column="change_id" />
+		<result property="change_date" column="change_date" />
+		<result property="perform_fair" column="perform_fair" />
+		<result property="perform_defect" column="perform_defect" />
+		<result property="defect_note" column="defect_note" />
+		<result property="perform_status" column="perform_status" />
+		<result property="perform_note" column="perform_note" />
+
+		<collection property="workOrder" ofType="WorkOrderDTO">
+			<result property="line_code" column="line_code" />
+		</collection>
+	</resultMap>
+	
+	<resultMap id="stock" type="StockDTO">
+		<result property="stock_num" column="stock_num"/>
+		<result property="rawCode" column="rawCode"/>
+		<result property="whseCode" column="whseCode"/>
+		<result property="stock_text" column="stock_text"/>
+		<result property="prodCode" column="prodCode"/>
+		<result property="in_num" column="in_num"/>
+		<result property="stock_count" column="stock_count"/>
+		
+		<collection property="workOrder" ofType="WorkOrderDTO">
+			<result property="work_code" column="work_code"/>
+			<result property="prodCode" column="prodCode"/>
+		</collection>
+		
+		<collection property="performance" ofType="PerformanceDTO">
+			<result property="work_code" column="work_code"/>
+			<result property="perform_fair" column="perform_fair"/>
+		</collection>
+	</resultMap>
+	
+	
+	<select id="performList" resultMap="perfList"
+		resultType="PerformanceDTO">
+		SELECT p.perform_code, p.work_code, w.line_code,
+		p.prodCode, p.perform_date,
+		p.perform_qt, p.perform_fair, p.perform_defect, 
+		p.defect_note, p.perform_status, p.perform_note
+		FROM performance p JOIN
+		work_order w
+		ON p.work_code = w.work_code
+		ORDER BY p.perform_code DESC
+		LIMIT #{startPage},#{pageSize} 
+	</select>
+	생산실적 목록
+
+	생산실적 전체 수
+	<select id="getTotalPerf" resultType="int">
+		SELECT count(*) FROM
+		performance
+	</select>
+	생산실적 전체 수
+
+	생산실적 검색
+	<select id="performSearchList" resultMap="perfList" parameterType="hashMap">
+		SELECT p.perform_code, p.work_code, w.line_code, p.prodCode, 
+		p.perform_date,
+		p.perform_qt, p.perform_fair, p.perform_defect, 
+		p.defect_note, p.perform_status, p.perform_note 
+		FROM performance p JOIN
+		work_order w ON p.work_code = w.work_code 
+		<where>
+			<if test="search_work_code!=null and !search_work_code.isEmpty()">
+				p.work_code=#{search_work_code}
+			</if>
+			<if
+				test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
+				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date
+				&lt;= #{search_toDate})
+			</if>
+			<if test="search_line_code!=null and !search_line_code.isEmpty()">
+				AND w.line_code=#{search_line_code}
+			</if>
+			<if test="search_prodCode!=null and !search_prodCode.isEmpty()">
+				AND p.prodCode=#{search_prodCode}
+			</if>
+			<if test="search_perform_status!=null and !search_perform_status.isEmpty() and !search_perform_status.equals('전체')">
+				AND p.perform_status=#{search_perform_status}
+			</if>
+		</where>
+		ORDER BY p.perform_code DESC 
+		LIMIT #{startPage},#{pageSize}
+	</select>
+	생산실적 검색
+
+	생산실적 검색 수
+	<select id="getSearchPerf" parameterType="hashMap" resultType="int">
+		SELECT count(*)
+		FROM performance p JOIN work_order w
+		ON p.work_code = w.work_code
+		<where>
+			<if test="search_work_code!=null and !search_work_code.isEmpty()">
+				p.work_code=#{search_work_code}
+			</if>
+			<if
+				test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
+				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date
+				&lt;= #{search_toDate})
+			</if>
+			<if test="search_line_code!=null and !search_line_code.isEmpty()">
+				AND w.line_code=#{search_line_code}
+			</if>
+			<if test="search_prodCode!=null and !search_prodCode.isEmpty()">
+				AND p.prodCode=#{search_prodCode}
+			</if>
+			<if test="search_perform_status!=null and !search_perform_status.isEmpty() and !search_perform_status.equals('전체')">
+				AND p.perform_status=#{search_perform_status}
+			</if>
+		</where>
+	</select>
+	생산실적 검색 수
+
+
+	**** 생산실적 등록 + 자동마감 + 재고등록 ****
+	
+	생산실적 등록
+	<insert id="insertPerform">
+		INSERT INTO performance
+		(perform_code,work_code,prodCode,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note, emp_id) 
+		VALUES 
+		(#{perform_code},#{work_code},#{prodCode},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note},#{emp_id});
+	</insert>
+	생산실적 등록
+	
+	
+	작업지시코드에 해당하는 양품 수 합
+	<select id="sumFair" resultType="int">
+		SELECT sum(perform_fair) 
+		FROM performance 
+		WHERE work_code=#{work_code}
+	</select>
+	작업지시코드에 해당하는 양품 수 합
+	
+	양품수와 작업지시 수량 비교
+	<select id="compare" resultType="String">
+		SELECT 
+			(SELECT sum(perform_fair) FROM performance WHERE work_code=#{work_code}) 'perform_fair',
+			(SELECT work_qt FROM work_order WHERE work_code=#{work_code}) 'work_qt' 
+		FROM dual 
+		HAVING perform_fair &gt;= work_qt
+	</select>
+	양품수와 작업지시 수량 비교
+
+	생산현황 마감으로 변경
+	<update id="updateStatus">
+		UPDATE performance 
+		SET perform_status='마감' 
+		WHERE work_code=#{work_code}
+	</update>
+	생산현황 마감으로 변경
+	
+	재고에 해당 품목 있는지 확인
+
+	<select id="searchStock" resultMap="stock">
+		SELECT DISTINCT s.prodCode 
+		FROM stock s 
+		JOIN performance p ON p.prodCode = s.prodCode 
+		WHERE p.work_code=#{work_code}
+	</select>
+	재고에 해당 품목 있는지 확인
+	
+	
+	양품수만큼 재고등록 - 해당 품목 재고에 있을 때
+	<update id="updateStock">
+		UPDATE stock 
+		SET stock_count = stock_count + #{stock_count} 
+		WHERE prodCode = #{prodCode}
+	</update>
+	양품수만큼 재고등록 - 해당 품목 재고에 있을 때
+	
+	양품수만큼 재고등록 - 해당 품목 재고에 새로 등록
+	<sql id="prodSub">
+		(SELECT DISTINCT prodCode 
+		FROM performance 
+		WHERE work_code=#{work_code})
+	</sql>
+	<sql id="wareSub">
+		(SELECT DISTINCT p.whseCode 
+		FROM product p 
+		JOIN performance pf ON pf.prodCode = p.prodCode 
+		WHERE pf.work_code=#{work_code} 
+		AND pf.prodCode = p.prodCode)
+	</sql>
+	
+	<insert id="insertStock">
+		INSERT INTO stock (stock_count, prodCode, whseCode) 
+		VALUES (#{perform_fair}, <include refid="prodSub"/>, <include refid="wareSub"/>)
+	</insert>
+	양품수만큼 재고등록 - 해당 품목 재고에 새로 등록
+	
+	**** 생산실적 등록 + 자동마감 + 재고등록 ****
+
+	생산실적 삭제
+	<delete id="deletePerformance">
+		DELETE FROM performance  
+		WHERE perform_code=#{perform_code}
+	</delete>
+	생산실적 삭제
+
+
+	생산실적 조회
+	<select id="performInfo" resultMap="perfList">
+		SELECT p.perform_code, p.work_code, w.line_code,
+		p.prodCode, p.perform_date, p.perform_qt, p.perform_fair, p.perform_defect, 
+		p.defect_note, p.perform_status, p.emp_id, p.change_id, p.change_date, p.perform_note 
+		FROM performance p JOIN work_order w 
+		ON p.work_code = w.work_code 
+		WHERE p.perform_code=#{perform_code}
+	</select>
+	생산실적 조회
+
+	생산실적 수정
+	<update id="updatePerform">
+		UPDATE performance 
+		SET work_code=#{work_code}, prodCode=#{prodCode}, perform_qt=#{perform_qt},
+		change_id=#{emp_id}, change_date=now(),
+		perform_fair=#{perform_fair}, perform_defect=#{perform_defect},
+		defect_note=#{defect_note}, perform_status=#{perform_status},  
+		perform_note=#{perform_note} 
+		WHERE perform_code=#{perform_code}
+	</update>
+	생산실적 수정
+
+	생산실적 양불 현황: 라인별
+	<select id="statusLine" resultMap="perfList">
+		SELECT w.line_code, sum(p.perform_qt) perform_qt, sum(p.perform_fair) perform_fair, sum(p.perform_defect) perform_defect 
+		FROM performance p 
+		JOIN work_order w ON p.work_code = w.work_code 
+		GROUP BY w.line_code
+	</select>
+	생산실적 양불 현황: 라인별
+
+	생산실적 양불 현황: 품목별
+	<select id="statusProd" resultType="PerformanceDTO">
+		SELECT prodCode, sum(perform_qt) perform_qt, sum(perform_fair) perform_fair, sum(perform_defect) perform_defect 
+		FROM performance  
+		GROUP BY prodCode
+	</select>
+	생산실적 양불 현황: 품목별
+	
+	생산실적 양불 현황: 일자별
+	<select id="statusDate" resultType="PerformanceDTO">
+		SELECT perform_date, sum(perform_qt) perform_qt, sum(perform_fair) perform_fair, sum(perform_defect) perform_defect 
+		FROM performance 
+		GROUP BY perform_date
+	</select>
+	생산실적 양불 현황: 일자별 -->
+  
+  </mapper>
