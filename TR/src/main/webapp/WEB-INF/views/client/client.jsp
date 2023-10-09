@@ -30,16 +30,29 @@
 	</div>
 <!--  본문 내용  -->
 	<div class="clientbody1">
-	<p class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</p>
-	<div style="float: right;">
+	
+	<div class="tableform"> 
+			
+			<div class="clienttotal">
+			 <h2> 거래처 목록: 총 x 건</h2><p class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</p>
+			
+			<div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"
 					onclick="clientInsert()">
 			</div>
+			
+			
+			</div>
+			
+			
+			
+			
 			
 		<table class="ct" id="ct">
 			
 			<thead>
 				<tr class="cthead">
+				    <th class="ctth">번호</th>
 					<th class="ctth">구분</th>
 					<th class="ctth">거래처코드</th>
 					<th class="ctth">거래처명</th>
@@ -58,6 +71,7 @@
 			<tbody>
 				<c:forEach var="clientDTO" items="${clientList}">
 					<tr class="ctcontents">
+					    <td class="cttg">아직없음.</td>
 						<td class="cttg">${clientDTO.clientType}</td>
 						<td class="cttg">${clientDTO.clientCode}</td>
 						<td class="cttg"
@@ -77,7 +91,7 @@
 			</tbody>
 
 		</table>
-		
+		</div>
 		<!-- <div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"
 					onclick="clientInsert()">

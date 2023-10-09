@@ -14,6 +14,7 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	
+	
 }
 
 .toptitle{
@@ -23,6 +24,21 @@ body{
     text-align: left;
     
 	
+}
+
+.tableform{
+	background-color: white;
+
+	
+}
+
+.clienttotal{
+	width: 1500px;
+	display:flex;
+	margin-top : 15px;
+	box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .cthead{
