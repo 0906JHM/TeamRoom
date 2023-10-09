@@ -25,16 +25,17 @@
 	<div class="search">
 		<label for="search-box"> <strong>검색</strong>
 		</label> <input type="search" id="search-box">
+		</div>
 <hr>		
 
-	</div>
+	
 <!--  본문 내용  -->
 	<div class="clientbody1">
 	
 	<div class="tableform"> 
 			
 			<div class="clienttotal">
-			 <h2> 거래처 목록: 총 x 건</h2><p class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</p>
+			 <h2> 거래처 목록: 총 x 건</h2><span class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</span>
 			
 			<div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"

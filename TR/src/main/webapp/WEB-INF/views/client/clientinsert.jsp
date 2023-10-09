@@ -125,11 +125,15 @@ $(document).ready(function() {
         data: { clientType : selectedType },
         success: function(data) {
         	console.log("반환된 거래처코드: " + data);
-        	var codeNum = data.substring(0, 2); // 서버로부터 받은 값의 첫 번째 두 글자를 유지
-        	var num = parseInt(data.substring(2)); // 서버로부터 받은 값의 세 번째 글자 이후를 숫자로 변환하고 1을 더함
-        	var paddedNum = num.toString().padStart(3, '0'); // 숫자를 세 자리로 패딩
-        	var clientCode = codeNum + paddedNum; // 거래처 코드 생성          
-            document.getElementById("clientCode").value = clientCode;
+        	var typeCode = data.substring(0, 2);
+            var num = parseInt(data.substring(2));
+            // 번호에 1을 더하고 세 자리로 패딩
+            var paddedNum = (num + 1).toString().padStart(3, '0');
+            // 타입 식별자와 번호 합치기
+            var clientCode = typeCode + paddedNum;
+
+            document.getElementById("clientCode").value = clientCode;      
+              document.getElementById("clientCode").value = clientCode;
         },
         error: function(xhr, status, error) {
             console.error("Ajax 요청 에러:", error);
