@@ -29,12 +29,13 @@
 		<!-- 거래처구분 -->
 		<label for="clientType_label"><b>구분</b> </label> 
 		<select id="clientType" name="clientType">
+		    <option value="선택">선택</option>
 			<option value="수주처">수주처</option>
 			<option value="발주처">발주처</option>
 		</select> <br> <span id="clientType_msg"></span> <br>
 		<!-- 거래처 코드 -->
 		<label for="clientCode_label"><b>거래처코드</b></label> <input type="text"
-			name="clientCode" id="clientCode"> <br> <span
+			name="clientCode" id="clientCode" readonly> <br> <span
 			id="clientCode_msg"></span> <br>
 
 		<!-- 거래처명 -->
@@ -132,8 +133,7 @@ $(document).ready(function() {
             // 타입 식별자와 번호 합치기
             var clientCode = typeCode + paddedNum;
 
-            document.getElementById("clientCode").value = clientCode;      
-              document.getElementById("clientCode").value = clientCode;
+            document.getElementById("clientCode").value = clientCode;
         },
         error: function(xhr, status, error) {
             console.error("Ajax 요청 에러:", error);
@@ -196,13 +196,6 @@ $(document).ready(function() {
     		return false;
     	}
     	
-
-    	
-    	/* if($('#clientName').val() == "" || $('#clientAddr1').val() == ""){
-    		$('#clientName_msg').css('color','red');
-    		$('#clientName_msg').text("주소를 입력하십시오.");
-    		return false;
-    	} */
     	
     	if($('#clientTel').val() == ""){
     		$('#clientTel_msg').css('color','red');

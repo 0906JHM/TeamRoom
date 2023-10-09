@@ -18,7 +18,6 @@
 
 <!--  여기서부터 시작  -->
 <div class="clientBody">
-
 		<h1 class="toptitle">거래처 관리</h1>
 
 <hr>
@@ -31,11 +30,9 @@
 	
 <!--  본문 내용  -->
 	<div class="clientbody1">
-	
 	<div class="tableform"> 
-			
 			<div class="clienttotal">
-			 <h2> 거래처 목록: 총 x 건</h2><span class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</span>
+			 <h2> 거래처 목록: 총 x 건 &nbsp;&nbsp;<span class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</span></h2>
 			
 			<div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"
