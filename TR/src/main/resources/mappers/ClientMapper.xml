@@ -22,11 +22,7 @@
 	</select>
 
 	<select id="getclientCode" resultType="java.lang.String">
-	  SELECT IFNULL(CONCAT('OR', LPAD(CAST(SUBSTR(clientCode, 3) AS UNSIGNED) + 1, 3, '0')), 'OR001') AS newClientCode
-FROM clients
-WHERE clientType = #{clientType}
-ORDER BY clientCode DESC
-LIMIT 1;
+	  select clientCode from clients where clientType=#{clientType} order by clientCode desc limit 1;
 	</select>
 
 	<select id="clientdetail"

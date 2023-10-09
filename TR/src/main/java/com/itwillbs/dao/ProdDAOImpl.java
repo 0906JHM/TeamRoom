@@ -23,6 +23,7 @@ public class ProdDAOImpl implements ProdDAO2 {
 		
 		return sqlSession.delete(namespace+"productDelete", codeAndTypeList) > 0;
 	}
+ 
 }
 
 

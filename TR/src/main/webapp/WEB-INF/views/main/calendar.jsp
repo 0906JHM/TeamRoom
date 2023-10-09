@@ -34,9 +34,8 @@
 
 </head>
 <body>
-
 	<!-- 사이드바 -->
-	<jsp:include page="../inc/side.jsp"></jsp:include>
+	<jsp:include page="../inc/sidebar.jsp"></jsp:include>
 	<!-- 사이드바 -->
 
 	<div id="con">

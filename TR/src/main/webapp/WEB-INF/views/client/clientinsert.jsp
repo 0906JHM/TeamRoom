@@ -29,12 +29,13 @@
 		<!-- 거래처구분 -->
 		<label for="clientType_label"><b>구분</b> </label> 
 		<select id="clientType" name="clientType">
+		    <option value="선택">선택</option>
 			<option value="수주처">수주처</option>
 			<option value="발주처">발주처</option>
 		</select> <br> <span id="clientType_msg"></span> <br>
 		<!-- 거래처 코드 -->
 		<label for="clientCode_label"><b>거래처코드</b></label> <input type="text"
-			name="clientCode" id="clientCode"> <br> <span
+			name="clientCode" id="clientCode" readonly> <br> <span
 			id="clientCode_msg"></span> <br>
 
 		<!-- 거래처명 -->
@@ -125,10 +126,13 @@ $(document).ready(function() {
         data: { clientType : selectedType },
         success: function(data) {
         	console.log("반환된 거래처코드: " + data);
-        	var codeNum = data.substring(0, 2); // 서버로부터 받은 값의 첫 번째 두 글자를 유지
-        	var num = parseInt(data.substring(2)); // 서버로부터 받은 값의 세 번째 글자 이후를 숫자로 변환하고 1을 더함
-        	var paddedNum = num.toString().padStart(3, '0'); // 숫자를 세 자리로 패딩
-        	var clientCode = codeNum + paddedNum; // 거래처 코드 생성          
+        	var typeCode = data.substring(0, 2);
+            var num = parseInt(data.substring(2));
+            // 번호에 1을 더하고 세 자리로 패딩
+            var paddedNum = (num + 1).toString().padStart(3, '0');
+            // 타입 식별자와 번호 합치기
+            var clientCode = typeCode + paddedNum;
+
             document.getElementById("clientCode").value = clientCode;
         },
         error: function(xhr, status, error) {
@@ -192,13 +196,6 @@ $(document).ready(function() {
     		return false;
     	}
     	
-
-    	
-    	/* if($('#clientName').val() == "" || $('#clientAddr1').val() == ""){
-    		$('#clientName_msg').css('color','red');
-    		$('#clientName_msg').text("주소를 입력하십시오.");
-    		return false;
-    	} */
     	
     	if($('#clientTel').val() == ""){
     		$('#clientTel_msg').css('color','red');

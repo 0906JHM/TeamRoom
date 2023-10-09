@@ -23,40 +23,17 @@
 <h1>수주 등록</h1>
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellAddPro" id="popup" class="popup"  method="post" onsubmit="checkForm()">
+        
         <label class="popupLabel">수주 코드 : </label>
       		<input type="text" id="sellCode" required="required" name="selCode"><br>
 
         <label class="popupLabel">거래처 코드 : </label>
-        	<select class="popupSelect" required="required" name="clientCode">
-        		<option value="선택">선택</option> 
-        		<option value="선택">kyobo042</option> 
-        		<option value="선택">kyobo054</option> 
-        		<option value="선택">	olive051</option> 
-        		<option value="선택">olive042</option> 
-        		
-         <%-- <c:forEach items="${clientCodes}" var="clientCode">
-            <option value="${clientCode}">${clientCode}</option>
-        </c:forEach> --%>
-    		</select><br>
+        <input type="text" required="required" readonly="readonly" onclick="location.href='${pageContext.request.contextPath}/search/client'">
         
-
         <label class="popupLabel">제품 코드 : </label>
-      		<select class="popupSelect" required="required" name="prodCode">
-      			<option value="선택">선택</option>
-        		<option value="선택">rose250</option> 
-        		<option value="선택">woody250</option> 
-        		<option value="선택">woody500</option> 
-        		<option value="선택">	orange500</option>
-        	</select><br>
-
-        <label class="popupLabel">제품명 : </label>
-       		<select class="popupSelect" required="required" name="prodName">
-       			<option value="선택">선택</option>
-        		<option value="선택">rose250ml</option> 
-        		<option value="선택">woody250ml</option> 
-        		<option value="선택">woody500ml</option> 
-        		<option value="선택">	orange500ml</option>
-        	</select><br>
+			<input type="text" required="required" readonly="readonly" onclick="location.href='${pageContext.request.contextPath}/search/product'"><br>
+		
+		<label class="popupLabel">제품명 : </label>
 
        <!--  <label class="popupLabel">수주 단가 : </label>
         <input type="number" id="sellPrice" min="1" required="required" >원<br> -->
@@ -78,7 +55,8 @@
 
         <label class="popupLabel">첨부파일 : </label>
         <input type="file" id="sellFile" name="sellFile"><br>
-
+		
+		<br>
         <button type="submit" >등록</button>
         <button type="reset">취소</button>
         <button type="button" onclick="dbclose()">닫기</button>

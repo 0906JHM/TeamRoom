@@ -28,6 +28,8 @@ public class ClientDAO {
 
 		public void insertClient(ClientDTO clientDTO) {
 			
+			System.out.println("ClientDAO insertClient요청  요청값====" + clientDTO);
+			
 			sqlsession.insert(namespace+".insertClient", clientDTO);
 			
 			
@@ -36,12 +38,14 @@ public class ClientDAO {
 
 		public List<ClientDTO> getclientList() {
 			
+			
 			return sqlsession.selectList(namespace+".getclientList");
 			
 		}
 
 		public String getclientCode(String clientType) {
 			        log.debug("ClientDAO getclientCode 요청");
+			        System.out.println("ClientDAO getClient요청  요청값====" + clientType);
 			        
 			        System.out.println(clientType);
 			        
@@ -52,7 +56,7 @@ public class ClientDAO {
 		
 
 		public ClientDTO clientdetail(String clientCompany) {
-			
+			System.out.println("ClientDAO clientdetail요청  요청값====" + clientCompany);
 			return sqlsession.selectOne(namespace+".clientdetail", clientCompany);
 		}
 
@@ -63,10 +67,14 @@ public class ClientDAO {
 
 		public ProdDTO selldetail(String clientCode) {
 			
+			System.out.println("ClientDAO clientDTO의 수주처요청  요청값====" + clientCode);
+			
 			return sqlsession.selectOne(namespace+".selldetail", clientCode);
 		}
 
 		public void clientupdate(ClientDTO clientDTO) {
+			
+			System.out.println("ClientDAO clientUpdate요청  요청값====" + clientDTO);
 			
 			sqlsession.update(namespace+".clientupdate",clientDTO);
 		}
