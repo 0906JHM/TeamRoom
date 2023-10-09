@@ -239,7 +239,7 @@ function openSellAdd() {
 
     // 팝업 창의 속성을 설정합니다.
     var popupWidth = 450;
-    var popupHeight = 500;
+    var popupHeight = 700;
     var left = (window.innerWidth - popupWidth) / 2;
     var top = (window.innerHeight - popupHeight) / 2;
     var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
