@@ -128,6 +128,16 @@ h1 .sidea {
 
 .loginhi{
 text-align: center;
+color: #384855;
+
+}
+.logout{
+  text-align: center;
+    color: #929FA8;
+    text-decoration: none;
+    display: block; /* 가운데 정렬을 위해 블록 레벨 요소로 설정 */
+    margin-top: 600px;
+     
 
 }
 
@@ -158,7 +168,7 @@ text-align: center;
   <div class="sidebar">
     <div class="sidebody">
         <div class="logininfo">
-            <p class="loginhi"> 관리자님 안녕하세요</p>
+        	<p class="loginhi">${sessionScope.empId}님 안녕하세요</p>
         </div>
 
         <div class="sidebar">
@@ -205,11 +215,16 @@ text-align: center;
         </li>
         
       </ul>
-    </div>
+      
+      </div>
+      <div class="logininfo">
+           <a href="${pageContext.request.contextPath}/login/logout" class="logout">로그아웃</a>
+        </div>
     
     </div>
-
-
+      
+   
+   
     </div>
 
 
