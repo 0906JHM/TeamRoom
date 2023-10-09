@@ -40,6 +40,7 @@ h2 {
 display: flex;
 flex-direction: column;
 }
+
 hr{
   background: #adb5bb;
   width: 1570px;
@@ -49,12 +50,14 @@ hr{
   transform-origin: 0 0;
   transform: rotate(0deg) scale(1, -1);
 }
+
 label{
  color: #000000;
   text-align: center;
   font: 500 24px/24px "Inter", sans-serif;
   position: relative;
 }
+
 .input_box {
 box-sizing: border-box;
  border-radius: 5px;

@@ -39,13 +39,7 @@ ul { list-style-type: none; }
  ===========================*/
 
 
-h1 {
-  color: #FFF;
-  font-size: 24px;
-  font-weight: 400;
-  text-align: center;
-  margin-top: 80px;
-}
+
 
 h1 .sidea {
   color: #c12c42;
