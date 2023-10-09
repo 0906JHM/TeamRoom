@@ -34,7 +34,6 @@
 
 </head>
 <body>
-
 	<!-- 사이드바 -->
 	<jsp:include page="../inc/side.jsp"></jsp:include>
 	<!-- 사이드바 -->
