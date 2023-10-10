@@ -44,6 +44,19 @@ public class ProdService {
 	
 }
 
+	public ProdDTO getProd(String prodCode) {
+
+		return prodDAO.getProd(prodCode);
+	}
+
+	public void updateProd(ProdDTO prodDTO) {
+		prodDAO.updateProd(prodDTO);
+		
+	}
+
+
+
+
 
 	
 //	@Inject

@@ -56,6 +56,15 @@ public class ProdDAO {
 //		return sqlSession.selectList(namespace+".getProdList", prodDTO);
 //	}
 
+	public ProdDTO getProd(String prodCode) {
+		
+		return sqlSession.selectOne(namespace+".getProd", prodCode);
+	}
+
+	public void updateProd(ProdDTO prodDTO) {
+		sqlSession.update(namespace+".updateProd",prodDTO);
+	}
+
 
 }
 

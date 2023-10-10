@@ -91,7 +91,10 @@
             <tr>
              <td><input type="checkbox" id="select-list" value ="${prodDTO.prodCode}" name="selectedProId" data-group="select-list"></td>
                 <!-- 체크박스 열 -->
-                <td id="prodCode">${prodDTO.prodCode}</td>
+                <td id="prodCode">
+                <a href="#" onclick="openPopup2('${pageContext.request.contextPath}/product/update?prodCode=${prodDTO.prodCode}')">${prodDTO.prodCode}</a>
+<%--                 ${prodDTO.prodCode} --%>
+                </td>
                 <td id="prodName">${prodDTO.prodName}</td>
                 <td id="prodUnit">${prodDTO.prodUnit}</td>
                 <td id="prodSize">${prodDTO.prodSize}</td>
@@ -213,10 +216,22 @@ $('#delete').click(function(event){
 });// end function
 
 
+//update 페이지 팝업창
+function openPopup2(url) {
+	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
+	myWindow.moveTo(0, 0);
+	myWindow.focus();
+	}
 
 
-
-
+//팝업창에서 작업 완료후 닫고 새로고침
+$(document).ready(function() {
+	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+    if (refreshAndClose) {
+        window.opener.location.reload(); // 부모창 새로고침
+        window.close(); // 현재창 닫기
+    }
+});
 
 </script>
 

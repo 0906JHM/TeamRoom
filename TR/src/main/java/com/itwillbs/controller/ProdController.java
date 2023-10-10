@@ -3,6 +3,7 @@ package com.itwillbs.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.service.ProdService;
 
 @Controller
@@ -80,6 +82,28 @@ public class ProdController {
 	}
 	
 
+	
+	@GetMapping("/update")
+ 	public String update(HttpServletRequest request, Model model) {
+ 		System.out.println("prodController update()");
+ 	 	String prodCode = request.getParameter("prodCode");
+ 	 	
+ 	 	//내용가져오기
+ 	 	ProdDTO prodDTO = prodService.getProd(prodCode);
+ 	 	
+ 	 	model.addAttribute("prodDTO", prodDTO);
+ 		
+ 		return "product/update";
+ 	}
+	
+	@PostMapping("/updatePro")
+	public String updatePro(ProdDTO prodDTO) {
+		System.out.println("ProdController updatePro()");
+		//수정
+		prodService.updateProd(prodDTO);
+		
+		return "redirect:/product/list";
+	}//
 	
 //	@GetMapping("/list")
 //	public String roomair(ProdDTO prodDTO, Model model) {

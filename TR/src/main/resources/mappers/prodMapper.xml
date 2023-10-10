@@ -83,8 +83,22 @@
                 DELETE FROM product WHERE prodCode = #{prodCode}
     
     
-</delete>    
+</delete> 
+
+   <select id="getProd" resultType="com.itwillbs.domain.ProdDTO">
+		select * from product
+		where prodCode = #{prodCode}
+   </select>
     
+    <update id="updateProd">
+		update product
+		set 
+		prodName = #{prodName}, prodUnit = #{prodUnit},
+		prodSize = #{prodSize}, prodPerfume = #{prodPerfume},
+		clientCode = #{clientCode}, whseCode = #{whseCode},
+		prodPrice = #{prodPrice}, prodMemo = #{prodMemo}
+		where prodCode = #{prodCode}
+	</update>
 </mapper>
 
 
