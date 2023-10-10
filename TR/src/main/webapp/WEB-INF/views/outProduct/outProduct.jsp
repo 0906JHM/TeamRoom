@@ -53,7 +53,7 @@
 						<th>출고날짜</th>
 						<th>담당자</th>
 						<th>출고여부</th>
-						<th>출고처리</th>
+						<th>상세정보</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -201,6 +201,7 @@
 	
 	        // 데이터를 반복하여 새로운 행을 생성합니다.
 	        for (var i = 0; i < data.length; i++) {
+	        	
 	            var row = $("<tr>");
 	            row.append("<td>" + (data[i].outCode ? data[i].outCode : '') + "</td>");
 	            row.append("<td>" + (data[i].sellCode ? data[i].sellCode : '') + "</td>");
@@ -216,19 +217,24 @@
 	            row.append("<td>" + (data[i].outEmpId ? data[i].outEmpId : '') + "</td>");
 	            row.append("<td>" + (data[i].sellState ? data[i].sellState : '') + "</td>");
 
-	            // 출고처리 버튼 추가 (미출고 또는 중간납품인 경우에만 버튼 생성)
-	            if (data[i].sellState == '미출고' || data[i].sellState == '중간납품') {
-	                var button = $("<input type='button' value='출고처리'>");
-	                button.click(function () {
-	                    // 버튼 클릭 시 처리할 동작을 여기에 추가
-	                });
+	            
+	            
+	            // 상세정보 버튼 추가 
+	            var contextPath = "${pageContext.request.contextPath}";
+  				var outCode = data[i].outCode;
+               
+  				(function(outCode) {
+  			        var button = $("<input type='button' value='상세정보'>");
+  			        button.click(function () {
+  			            // 버튼 클릭 시 처리할 동작을 여기에 추가
+  			            window.open(contextPath + "/outProduct/outProductContent?outCode=" + outCode, "출고 상세정보", "width=500,height=800,toolbar=no,location=no,resizable=yes");
+  			        });
 
-	                // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
-	                var buttonCell = $("<td>").append(button);
-	                row.append(buttonCell);
-	            } else {
-	                row.append("<td></td>"); // 출고처리 버튼을 추가하지 않음
-	            }
+  			        // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
+  			        var buttonCell = $("<td>").append(button);
+  			        row.append(buttonCell);
+  			    })(data[i].outCode);
+	            
 
 	            // tbody에 행을 추가합니다.
 	            tbody.append(row);

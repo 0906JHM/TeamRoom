@@ -19,4 +19,8 @@ public class OutProductService {
 		return outProductDAO.getOutProductList(outProductDTO);
 	}
 
+	public OutProductDTO outProductContent(String outCode) {
+		return outProductDAO.outProductContent(outCode);
+	}
+
 }

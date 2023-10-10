@@ -153,5 +153,34 @@
 		</choose>
 
 	</select>
+	
+	
+	<select id="outProductContent"
+		resultType="com.itwillbs.domain.OutProductDTO">
+		SELECT o.outCode outCode, o.prodCode prodCode, o.outDate
+		outDate, o.outEmpId
+		outEmpId, o.outMemo outMemo,
+		o.outRedate outRedate,
+		o.outCount outCount, o.outPrice outPrice,
+		o.sellCode sellCode,
+		s.sellCount sellCount, s.sellDuedate sellDuedate,
+		s.sellState
+		sellState,
+		s.clientCode clientCode, c.clientCompany clientCompany,
+		p.prodName prodName, p.prodPrice prodPrice,
+		stockTestTest.whseCount
+		whseCount
+		FROM outProduct o JOIN sellTestTest s
+		ON o.sellCode =
+		s.sellCode
+		JOIN clients c
+		ON s.clientCode = c.clientCode
+		JOIN product p
+		ON o.prodCode = p.prodCode
+		JOIN stockTestTest
+		ON o.prodCode =
+		stockTestTest.prodCode
+		WHERE outCode = #{outCode}
+	</select>
 
 </mapper>

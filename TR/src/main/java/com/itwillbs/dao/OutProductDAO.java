@@ -27,6 +27,10 @@ public class OutProductDAO {
 			return sqlSession.selectList(namespace+"getOutProductListSearch", outProductDTO);
 		}
 	}
+
+	public OutProductDTO outProductContent(String outCode) {
+		return sqlSession.selectOne(namespace + "outProductContent",outCode);
+	}
 	
 	
 }

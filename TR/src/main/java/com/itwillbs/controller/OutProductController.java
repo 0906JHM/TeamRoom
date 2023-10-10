@@ -3,6 +3,7 @@ package com.itwillbs.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,5 +27,17 @@ public class OutProductController {
 //		model.addAttribute("outProductList", outProductList);
 		
 		return "outProduct/outProduct";
+	}
+	
+	@GetMapping("/outProductContent")
+	public String outProductContent(HttpServletRequest request, Model model) {
+		
+		String outCode = request.getParameter("outCode");
+		
+		OutProductDTO outProductDTO = outProductService.outProductContent(outCode);
+		
+		model.addAttribute("outProductDTO",outProductDTO);
+		
+		return "outProduct/outProductContent";
 	}
 }
