@@ -55,6 +55,29 @@
     </form>
 </div>
 
+<script type="text/javascript">
+//------------- 제품코드 인풋박스 클릭 시 에이젝스 실행 --------------------------
 
+$('#prodCode9999').click(function(){
+   $.ajax({
+       url: "${pageContext.request.contextPath}/product/prodCode",
+       method: "GET",
+       dataType: "text",
+       success: function(data) {
+           // Ajax 요청에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+           codeNum = data;
+           console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+
+           // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+           someFunction(codeNum);
+       }
+   }); // ajax 끝 */
+
+   document.getElementById("prodCode").textContent = prodCode;
+
+
+
+});
+</script>
 </body>
 </html>
