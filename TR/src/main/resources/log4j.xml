@@ -16,6 +16,32 @@
 	<logger name="com.itwillbs.tr">
 		<level value="info" />
 	</logger>
+	
+	<logger name="com.itwillbs.home">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.controller">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.dao">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.dto">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.service">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.handler">
+		<level value="debug" />
+	</logger>
+	
+	
 
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
@@ -35,6 +61,13 @@
 	</logger>
 
 	<!-- SQL Logger -->
+	
+	<logger name="jdbc.connection" additivity="false">
+		<level value="warn" />
+		<appender-ref ref="console"/> 
+	</logger>
+	
+	
 	<logger name="jdbc.sqltiming" additivity="false">
 		<level value="warn" />
 		<appender-ref ref="console" />

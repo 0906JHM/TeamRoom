@@ -28,6 +28,9 @@ body{
 
 .tableform{
 	background-color: white;
+	padding-bottom:15px;
+	padding:5px;
+	
 
 	
 }
@@ -101,7 +104,7 @@ ct{
 
 hr{
 	 background: #adb5bb;
-  width: 1000px;
+  width: 1500px;
   height: 2px;
   border: 0;
   position: relative;
@@ -132,5 +135,6 @@ hr{
     border: 0;
     text-align: center;
     font: 500 24px/24px "Inter", sans-serif;
+    margin-right: 15px;
 }
 

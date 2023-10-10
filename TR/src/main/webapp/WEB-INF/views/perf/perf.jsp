@@ -103,7 +103,7 @@ $(document).ready(function() {
         window.open(
             '${pageContext.request.contextPath}/perf/perfinsert',
             '_blank',
-            'width=1000px, height=800px, left=500px, top=100px'
+            'width=1200px, height=800px, left=500px, top=100px'
         );
     });
     

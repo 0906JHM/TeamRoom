@@ -30,7 +30,7 @@ body{
 
 .tableform{
 	background-color: white;
-
+padding-bottom: 50px;
 	
 }
 
@@ -135,6 +135,7 @@ hr{
     border: 0;
     text-align: center;
     font: 500 24px/24px "Inter", sans-serif;
+    margin-right: 15px;
 }
 
 .perfcd{

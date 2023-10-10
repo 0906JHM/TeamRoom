@@ -174,7 +174,7 @@ public void sellMemoAddPro(SellDTO sellDTO) {
 	
 //-------------------------------------------------- sellDelete ---------------------------------------------
 @GetMapping("/sellDelete")
-public String sellDeletePro(SellDTO sellDTO) {
+public void sellDeletePro(SellDTO sellDTO) {
 	System.out.println("SellController sellDelete()");
 	System.out.println(sellDTO);
 	
