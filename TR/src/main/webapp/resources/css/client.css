@@ -80,8 +80,7 @@ ct{
 	overflow: hidden;
 	padding: 10px 5px;
 	word-break: normal;
-	width:1500px;
-	text
+	width:800px;
 }
 
 .ct .cttg {
@@ -102,7 +101,7 @@ ct{
 
 hr{
 	 background: #adb5bb;
-  width: 1500px;
+  width: 1000px;
   height: 2px;
   border: 0;
   position: relative;

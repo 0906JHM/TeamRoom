@@ -57,7 +57,10 @@ public class ClientDAO {
 
 		public ClientDTO clientdetail(String clientCompany) {
 			System.out.println("ClientDAO clientdetail요청  요청값====" + clientCompany);
+			
 			return sqlsession.selectOne(namespace+".clientdetail", clientCompany);
+			
+			
 		}
 
 		public RawmaterialsDTO rawmaterialsdetail(String clientCode) {

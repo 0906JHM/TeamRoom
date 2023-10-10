@@ -40,6 +40,7 @@ public class ClientController {
 		log.debug("거래처리스트출력");
 		
 	    List<ClientDTO> clientList = clientService.getclientList();
+	    
 		
 		model.addAttribute("clientList",clientList);
 		
