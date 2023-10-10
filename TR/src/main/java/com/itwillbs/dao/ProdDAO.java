@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,20 @@ public class ProdDAO {
 		return sqlSession.selectList(namespace+".getProdList");
 	}
 	
+	 public void productDelete(List<String> checked) throws Exception {
+			
+
+			Iterator<String> it = checked.iterator();
+			int result = 0;
+
+			while (it.hasNext()) {
+				String prodCode = it.next();
+				result += sqlSession.delete(namespace + ".productDelete", prodCode);
+			}
+
+
+		}
+	
 	public void insert(ProdDTO prodDTO) {
 		System.out.println("ProdDAO insert()");
 		
@@ -40,6 +55,15 @@ public class ProdDAO {
 //	public List<ProdDTO> getProdList(ProdDTO prodDTO) {
 //		return sqlSession.selectList(namespace+".getProdList", prodDTO);
 //	}
+
+	public ProdDTO getProd(String prodCode) {
+		
+		return sqlSession.selectOne(namespace+".getProd", prodCode);
+	}
+
+	public void updateProd(ProdDTO prodDTO) {
+		sqlSession.update(namespace+".updateProd",prodDTO);
+	}
 
 
 }

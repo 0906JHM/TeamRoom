@@ -10,7 +10,20 @@
   </insert>
   
   <select id="getEmployeesList" resultType="com.itwillbs.domain.EmployeesDTO">
-  	select * from employees
+  	select * from employees 
+  	where 1=1
+  	<if test="search != null and search != ''">
+            and (empName like concat('%', #{search}, '%') or empId like concat('%', #{search}, '%') or empPass like concat('%', #{search}, '%') or empDepartment like concat('%', #{search}, '%') or empPosition like concat('%', #{search}, '%') or empEmail like concat('%', #{search}, '%') or empTel like concat('%', #{search}, '%') or empState like concat('%', #{search}, '%') or empHiredate like concat('%', #{search}, '%'))
+        </if>
+  	order by empId desc limit #{startRow}, #{pageSize}
+  </select>
+  
+  <select id="getEmployeesCount" resultType="java.lang.Integer">
+  	select count(*) from employees
+  	where 1=1
+  	<if test="search != null and search != ''">
+            and (empName like concat('%', #{search}, '%') or empId like concat('%', #{search}, '%') or empPass like concat('%', #{search}, '%') or empDepartment like concat('%', #{search}, '%') or empPosition like concat('%', #{search}, '%') or empEmail like concat('%', #{search}, '%') or empTel like concat('%', #{search}, '%') or empState like concat('%', #{search}, '%') or empHiredate like concat('%', #{search}, '%'))
+        </if>
   </select>
   
   <!--  회원 삭제  -->
@@ -28,6 +41,10 @@
   	where empId = #{empId}
   </update>
   
+
+
+
+
   
   
   
