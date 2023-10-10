@@ -98,31 +98,6 @@ function deleteValue(){
 
          }   
 }//deleteValue
-
-//검색기능
-function myFunction() {
-	  var input, filter, table, tr, td, i, j, txtValue;
-	  input = document.getElementById("myInput");
-	  filter = input.value.toUpperCase();
-	  table = document.getElementById("employeeTable");
-	  tr = table.getElementsByTagName("tr");
-
-	  for (i = 0; i < tr.length; i++) {
-	    td = tr[i].getElementsByTagName("td");
-	    for (j = 0; j < td.length; j++) {
-	      if (td[j]) {
-	        txtValue = td[j].textContent || td[j].innerText;
-	        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-	          tr[i].style.display = "";
-	          break;
-	        } else {
-	          tr[i].style.display = "none";
-	        }
-	      } 
-	    }
-	  }
-	}//myFunction
-
 	
 	// 페이지 로드 후 스크립트 실행
 	$(document).ready(function() {
@@ -140,7 +115,10 @@ function myFunction() {
 </head>
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="검색어를 입력하세요..">
+<form action="${pageContext.request.contextPath}/employees/employees" method="get">
+search    <input type="text" name="search" placeholder="search">
+<input type="submit" value="검색">
+</form>
     <table id="employeeTable">
         <tr>
             <th>사원번호</th>
@@ -168,7 +146,16 @@ function myFunction() {
 </tr>
 </c:forEach>    
     </table>
+    
     <input type="button" value="삭제" onclick="deleteValue();">
     <button onclick="window.open('employees2', '_blank', 'width=800,height=600')">등록</button>
+
+<c:forEach var="i" begin="${pageDTO.startPage}" 
+                   end="${pageDTO.endPage}" step="1">
+<a href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+</c:forEach>
+
+
 </body>
+
 </html>

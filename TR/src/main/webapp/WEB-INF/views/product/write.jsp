@@ -42,7 +42,8 @@
     <p>향기</p>
     <input type="text" name="prodPerfume">
     <p>거래처명</p>
-    <input type="text" name="clientCode">
+    <input type="text" name="clientCompany" id="clientCompany9999"  readonly
+    	onclick="searchItem('client','clientCode9999')">
     <p>창고명</p>
     <input type="text" name="whseCode">
     <p>매출단가</p>
@@ -104,7 +105,23 @@ $(document).ready(function() {
            } // someFunction(data)
 
            document.getElementById("prodCode").textContent = prodCode;
-});
+	});
+    
+    
+	
+});//ready
+
+//--------------------------------------------------------------------------
+// 팝업 옵션
+const popupOpt = "top=60,left=140,width=720,height=600";
+
+//검색 팝업
+	function searchItem(type, inputId) {
+	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt);
+} //openWindow()
+//--------------------------------------------------------------------------
+
 </script>
 </body>
 </html>

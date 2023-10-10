@@ -6,7 +6,7 @@
 <mapper namespace="com.itwillbs.mappers.sellMapper">
 
 
- <select id="getSellList" resultType="com.itwillbs.domain.SellDTO">
+ 	<select id="getSellList" resultType="com.itwillbs.domain.SellDTO">
 		select * from sellTest
 		order by sellDate desc
 		limit #{startRow}, #{pageSize}
@@ -18,9 +18,9 @@
 	</select>
 	
 	<insert id="insertSell">
-		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellFile,sellMemo,sellState,clientCode,sellNum)
-		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-				#{sellFile},#{sellMemo},#{sellState},#{clientCode},#{sellNum})
+		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellFile,sellMemo,sellState,clientCode,sellNum,sellPrice)
+		values(CONCAT('CL', DATE_FORMAT(NOW(), '%y%m%d%H%i%s')),#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
+				#{sellFile},#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode})
 	</insert>
 	
 	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">
@@ -40,6 +40,25 @@
 		set sellMemo=#{sellMemo}
 		where sellCode = #{sellCode}
 	</update>
+
+	<delete id="deleteSell">
+		delete from sellTest
+		WHERE sellCode = #{sellCode}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
 
 
