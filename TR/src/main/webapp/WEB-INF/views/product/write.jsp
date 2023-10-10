@@ -120,7 +120,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
-
+//--------------------------------------------------------------------------
 
 </script>
 </body>

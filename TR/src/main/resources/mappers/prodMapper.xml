@@ -16,9 +16,13 @@
 
 	<select id="getProdList"
 		resultType="com.itwillbs.domain.ProdDTO">
-		select prodCode, prodName,
-		prodUnit,prodSize,prodPerfume,clientCode,whseCode,prodPrice,prodMemo
-		from product
+		select p.prodCode, p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
+		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		from product p
+		left join clients c
+		on c.clientCode = p.clientCode
+		left join warehouse w
+		on p.whseCode = w.whseCode
 	</select>
 
 <!--     SELECT r.*,p.prodName ,rm.rawName -->
@@ -42,42 +46,67 @@
         <!-- limit #{start},#{cntPerPage} -->
 
 
-	<select id="getSearch" resultType="com.itwillbs.domain.ProdDTO">
-    SELECT *
-    FROM product
-    WHERE
-    <choose>
-        <when test="prodCode != '' and prodName != '' and clientCode != '거래처'">
-            prodCode LIKE CONCAT('%', #{prodCode}, '%') 
-            AND prodName LIKE CONCAT('%', #{prodName}, '%') 
-            AND clientCode LIKE CONCAT('%', #{clientCode}, '%')
-        </when>
-        <when test="prodCode != '' and prodName != ''">
-            prodCode LIKE CONCAT('%', #{prodCode}, '%') 
-            AND prodName LIKE CONCAT('%', #{prodName}, '%')
-        </when>
-        <when test="prodCode != '' and clientCode != '거래처'">
-            prodCode LIKE CONCAT('%', #{prodCode}, '%') 
-            AND clientCode LIKE CONCAT('%', #{clientCode}, '%')
-        </when>
-        <when test="prodName != '' and clientCode != '거래처'">
-            prodName LIKE CONCAT('%', #{prodName}, '%') 
-            AND clientCode LIKE CONCAT('%', #{clientCode}, '%')
-        </when>
-        <when test="prodCode != ''">
-            prodCode LIKE CONCAT('%', #{prodCode}, '%')
-        </when>
-        <when test="prodName != ''">
-            prodName LIKE CONCAT('%', #{prodName}, '%')
-        </when>
-        <when test="clientCode != '거래처'">
-            clientCode LIKE CONCAT('%', #{clientCode}, '%')
-        </when>
-        <otherwise>
-            1=1
-        </otherwise>
-    </choose>
-</select>
+<!-- 	<select id="getSearch" resultType="com.itwillbs.domain.ProdDTO"> -->
+<!--     SELECT * -->
+<!--     FROM product -->
+<!--     WHERE -->
+<!--     <choose> -->
+<!--         <when test="prodCode != '' and prodName != '' and clientCode != ''"> -->
+<!--             prodCode LIKE CONCAT('%', #{prodCode}, '%')  -->
+<!--             AND prodName LIKE CONCAT('%', #{prodName}, '%')  -->
+<!--             AND clientCode LIKE CONCAT('%', #{clientCode}, '%') -->
+<!--         </when> -->
+<!--         <when test="prodCode != '' and prodName != ''"> -->
+<!--             prodCode LIKE CONCAT('%', #{prodCode}, '%')  -->
+<!--             AND prodName LIKE CONCAT('%', #{prodName}, '%') -->
+<!--         </when> -->
+<!--         <when test="prodCode != '' and clientCode != ''"> -->
+<!--             prodCode LIKE CONCAT('%', #{prodCode}, '%')  -->
+<!--             AND clientCode LIKE CONCAT('%', #{clientCode}, '%') -->
+<!--         </when> -->
+<!--         <when test="prodName != '' and clientCode != ''"> -->
+<!--             prodName LIKE CONCAT('%', #{prodName}, '%')  -->
+<!--             AND clientCode LIKE CONCAT('%', #{clientCode}, '%') -->
+<!--         </when> -->
+<!--         <when test="prodCode != ''"> -->
+<!--             prodCode LIKE CONCAT('%', #{prodCode}, '%') -->
+<!--         </when> -->
+<!--         <when test="prodName != ''"> -->
+<!--             prodName LIKE CONCAT('%', #{prodName}, '%') -->
+<!--         </when> -->
+<!--         <when test="clientCode != ''"> -->
+<!--             clientCode LIKE CONCAT('%', #{clientCode}, '%') -->
+<!--         </when> -->
+<!--         <otherwise> -->
+<!--             1=1 -->
+<!--         </otherwise> -->
+<!--     </choose> -->
+<!-- </select> -->
+
+<select id="getSearch" resultType="com.itwillbs.domain.ProdDTO">
+  select p.prodCode, p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
+		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		FROM product p
+		left join clients c
+		on c.clientCode = p.clientCode
+		left join warehouse w
+		on p.whseCode = w.whseCode
+		<where>
+			<if test="prodCode != ''">
+				p.prodCode like concat ('%', #{prodCode}, '%')
+			</if>
+			
+			<if test="prodName != ''">
+				and p.prodName like concat ('%', #{prodName}, '%')
+			</if>
+			
+			<if test="clientCompany != ''">
+				and c.clientCompany = #{clientCompany}
+			</if>
+		</where>
+<!-- 		order by 1 desc -->
+		<!-- limit #{start},#{cntPerPage} -->
+		</select>
 
     <delete id="productDelete">
                 DELETE FROM product WHERE prodCode = #{prodCode}

@@ -49,18 +49,15 @@
         <label>제품코드</label>  <input type="text" placeholder="제품코드를 입력하세요." name="prodCode">
         <label>제품명</label> <input type="text" placeholder="제품명을 입력하세요." name="prodName">
         <label>거래처명</label> 
-        <select id="cusType" name="clientCode" class="form-control search-input">
-        	<option value="거래처">거래처</option>
-	        <option value="거래처1">거래처1</option>
-	        <option value="거래처2">거래처2</option>
-	        <option value="거래처3">거래처3</option>
-		</select>
+		<input type="text" name="clientCompany" id="clientCompany9999"  readonly
+		placeholder="거래처를 선택하세요."
+    	onclick="searchItem('client','clientCode9999')">
 <!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
         <button type="submit">조회</button>
     </form>
     
 <%--     <form action="${pageContext.request.contextPath}/product/write" method="post"> --%>
-    <button id="add"  onclick="openAdd()" >추가</button>
+    <button id="add"  onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
     <button id="modify">수정</button>
 <!--     <button id="delete" onclick="deleteSelectedProducts()">삭제</button> -->
 	<button id="delete">삭제</button>
@@ -99,8 +96,8 @@
                 <td id="prodUnit">${prodDTO.prodUnit}</td>
                 <td id="prodSize">${prodDTO.prodSize}</td>
                 <td id="prodPerfume">${prodDTO.prodPerfume}</td>
-                <td id="clientCode">${prodDTO.clientCode}</td>
-                <td id="whseCode">${prodDTO.whseCode}</td>
+                <td id="clientCompany">${prodDTO.clientCompany}</td>
+                <td id="whseName">${prodDTO.whseName}</td>
                 <td id="prodPrice"><fmt:formatNumber>${prodDTO.prodPrice}</fmt:formatNumber></td>
                 <td id="prodMemo">${prodDTO.prodMemo}</td>
             </tr>
@@ -113,11 +110,7 @@
 <script>
 
 var contextPath = "${pageContext.request.contextPath}";
-  function openAdd() {
-    var url = "${pageContext.request.contextPath}/product/write";
-    var newWindow = window.open(url, "_blank");
-    newWindow.focus();
-  }
+
 
 <!-------------------------- 목록 전체선택 -------------------------->
 
@@ -216,13 +209,24 @@ $('#delete').click(function(event){
 });// end function
 
 
+
+// function openAdd() {
+//     var url = "${pageContext.request.contextPath}/product/write";
+//     var newWindow = window.open(url, "_blank");
+//     newWindow.focus();
+//   }
 //update 페이지 팝업창
 function openPopup2(url) {
 	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
 	myWindow.moveTo(0, 0);
 	myWindow.focus();
 	}
-
+//추가 페이지 팝업창
+function openPopup1(url) {
+	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
+	myWindow.moveTo(0, 0);
+	myWindow.focus();
+}
 
 //팝업창에서 작업 완료후 닫고 새로고침
 $(document).ready(function() {
@@ -232,6 +236,19 @@ $(document).ready(function() {
         window.close(); // 현재창 닫기
     }
 });
+
+
+
+//--------------------------------------------------------------------------
+//팝업 옵션
+const popupOpt = "top=60,left=140,width=720,height=600";
+
+//검색 팝업
+	function searchItem(type, inputId) {
+	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt);
+} //openWindow()
+//--------------------------------------------------------------------------
 
 </script>
 
