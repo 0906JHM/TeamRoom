@@ -36,7 +36,7 @@
 			
 			<div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"
-					onclick="clientInsert()">
+					onclick="perfInsert()">
 			</div>
 			
 			

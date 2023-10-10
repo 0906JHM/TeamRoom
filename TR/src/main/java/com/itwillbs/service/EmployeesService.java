@@ -45,8 +45,6 @@ public class EmployeesService {
 		return employeesDAO.getEmployeesCount(pageDTO);
 	}
 
-	public List<EmployeesDTO> getEmployeesSearchList(EmployeesDTO employeesDTO) {
-		return employeesDAO.getEmployeesSearchList(employeesDTO);
-	}
+
 
 }

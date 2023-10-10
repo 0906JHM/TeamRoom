@@ -34,7 +34,8 @@ public class LoginController {
 		loginDTO = loginService.userCheck(loginDTO);
 		
 		if(loginDTO != null) {
-			session.setAttribute("EmpId", loginDTO.getEmpId());
+			session.setAttribute("empId", loginDTO.getEmpId());
+			System.out.println("성공");
 			return "redirect:/sell/sellMain";
 		}else {
 			return "redirect:/main/calendar";

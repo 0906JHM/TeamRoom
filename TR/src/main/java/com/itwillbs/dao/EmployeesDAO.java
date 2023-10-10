@@ -47,8 +47,4 @@ public class EmployeesDAO {
 	}
 
 
-	public List<EmployeesDTO> getEmployeesSearchList(EmployeesDTO employeesDTO) {
-		return sqlSession.selectList(namespace+".getEmployeesSearchList", employeesDTO);
-	}
-
 }
