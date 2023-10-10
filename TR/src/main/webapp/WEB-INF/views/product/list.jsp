@@ -103,7 +103,24 @@
             </tr>
         </c:forEach>
     </tbody>
+    
 </table>
+
+<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
+	<a href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&search=${pageDTO.search}">Prev</a>
+</c:if>
+
+<c:forEach var="i" begin="${pageDTO.startPage}" 
+                   end="${pageDTO.endPage}" step="1">
+<a href="${pageContext.request.contextPath}/product/list?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+</c:forEach>
+
+
+<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
+	<a href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&search=${pageDTO.search}">Next</a>
+</c:if>
+
+
 </form>
 </div>
 

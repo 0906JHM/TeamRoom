@@ -8,41 +8,48 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.ProdDAO;
+import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.ProdDTO;
-	
-	
+
 @Service
 public class ProdService {
-	
+
 	@Inject
 	private ProdDAO prodDAO;
-	
+
 //-----------------------------------------------------------------
-	
-	public List<ProdDTO> getProdList() {
+
+	public List<ProdDTO> getProdList(PageDTO pageDTO) {
 		System.out.println("2");
 		System.out.println("ProdService getProdList()");
-		
-		return prodDAO.getProdList();
+
+		// 10개씩 가져올때 현페이지에 대한 시작하는 행번호 구하기
+		int startRow = (pageDTO.getCurrentPage() - 1) * pageDTO.getPageSize() + 1;
+		// 끝나는 행번호 구하기
+		int endRow = startRow + pageDTO.getPageSize() - 1;
+
+		// 디비 startRow - 1
+		pageDTO.setStartRow(startRow - 1);
+		pageDTO.setEndRow(endRow);
+
+		return prodDAO.getProdList(pageDTO);
 	}
-	
+
 	public void productDelete(List<String> checked) throws Exception {
 		prodDAO.productDelete(checked);
 	}
 
-	
 	public void insert(ProdDTO prodDTO) {
 		System.out.println("ProdDAO insert()");
-		
+
 		prodDAO.insert(prodDTO);
-	}//insertBoard()
+	}// insertBoard()
 
 	public List<ProdDTO> getSearch(ProdDTO prodDTO) {
-	System.out.println("ProService getSearch()");
-	return prodDAO.getSearch(prodDTO);
-	
-	
-}
+		System.out.println("ProService getSearch()");
+		return prodDAO.getSearch(prodDTO);
+
+	}
 
 	public ProdDTO getProd(String prodCode) {
 
@@ -51,14 +58,19 @@ public class ProdService {
 
 	public void updateProd(ProdDTO prodDTO) {
 		prodDAO.updateProd(prodDTO);
-		
+
+	}
+	
+	public int getSearchcount(ProdDTO prodDTO) {
+		return prodDAO.getSearchcount(prodDTO);
 	}
 
-
-
-
-
+	public int getProdCount(PageDTO pageDTO) {
+		return prodDAO.getProdCount(pageDTO);
+	}
 	
+	
+
 //	@Inject
 //	private ProdDAO prodDAO;
 //
