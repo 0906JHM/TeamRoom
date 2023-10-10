@@ -11,7 +11,14 @@
 
 <%--     <jsp:include page="test4.jsp"></jsp:include> --%>
     <title>roomair</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<!-- J쿼리 호출 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="../resources/js/scripts.js"></script>
+	
+	<script src="../resources/js/productList_im.js"></script>
 <!-- 		추가안되면 사이드바에 있는 이거^때문임 -->
 
 <style type="text/css">
@@ -61,11 +68,13 @@
     <button id="save">저장</button>
    
     <p>총 ${prodList.size()}건</p>
+    
+    <form id="productList">
     <table class="tg" id="productTable">
     <thead>
         <tr>
             <!-- 체크박스 열 추가 -->
-            <th><input type="checkbox" id="select-list-all" name="select-list" data-group="select-list"></th>
+            <th><input type="checkbox" id="select-list-all" name="select-list-all" data-group="select-list"></th>
             <th>제품코드</th>
             <th>제품명</th>
             <th>제품단위</th>
@@ -80,7 +89,7 @@
     <tbody>
         <c:forEach var="prodDTO" items="${prodList}">
             <tr>
-             <td><input type="checkbox" id="select-list" name="selectedProId" data-group="select-list"></td>
+             <td><input type="checkbox" id="select-list" value ="${prodDTO.prodCode}" name="selectedProId" data-group="select-list"></td>
                 <!-- 체크박스 열 -->
                 <td id="prodCode">${prodDTO.prodCode}</td>
                 <td id="prodName">${prodDTO.prodName}</td>
@@ -95,6 +104,7 @@
         </c:forEach>
     </tbody>
 </table>
+</form>
 </div>
 
 <script>
@@ -107,110 +117,107 @@ var contextPath = "${pageContext.request.contextPath}";
   }
 
 <!-------------------------- 목록 전체선택 -------------------------->
-//체크박스 전체선택
-// var selectAllCheckbox = document.getElementById("select-list-all");
-// var checkboxes = document.querySelectorAll('[data-group="select-list"]');
-// selectAllCheckbox.addEventListener("change", function () {
-//     checkboxes.forEach(function (checkbox) {
-//         checkbox.checked = selectAllCheckbox.checked;
-//     });
-// });
-// checkboxes.forEach(function (checkbox) {
-//     checkbox.addEventListener("change", function () {
-//         if (!this.checked) {
-//             selectAllCheckbox.checked = false;
-//         } else {
-//             // 모든 체크박스가 선택되었는지 확인
-//             var allChecked = true;
-//             checkboxes.forEach(function (c) {
-//                 if (!c.checked) {
-//                     allChecked = false;
-//                 }
-//             });
-//             selectAllCheckbox.checked = allChecked;
-//         }
-//     });
-// });
+
 
 // thead의 체크박스를 클릭했을때 전체체크가되게끔 이벤트를 발생시킨다
-$('input[name="selectedAllProId"]').click(function() {
-    // 모든 selectedProId 체크박스의 상태를 selectedAllProId와 동일하게 설정한다
-    // $this로 AllProId의 상태를 가져온다
-    $('input[name="selectedProId"]').prop('checked', $(this).prop('checked'));
+
+$(document).ready(function() {
+$('#select-list-all').click(function() {
+			var checkAll = $(this).is(":checked");
+			
+			if(checkAll) {
+				$('input:checkbox').prop('checked', true);
+			} else {
+				$('input:checkbox').prop('checked', false);
+			}
+		});
+		
+//삭제 버튼 누를 시 실행되는 함수
+$('#delete').click(function(event){	
+	
+		
+		var checked = [];
+		
+		$('input[name=selectedProId]:checked').each(function(){
+			checked.push($(this).val());
+		});
+		
+//			alert(checked);
+		
+		if(checked.length > 0) {
+			Swal.fire({
+				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+						  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+				  icon: 'info', // 아이콘! 느낌표 색? 표시?
+				  showDenyButton: true,
+				  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
+				  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
+				  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
+//					  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+				  width : '300px', // alert창 크기 조절
+				  
+				}).then((result) => {
+			
+			 /* confirm => 예 눌렀을 때  */
+			  if (result.isConfirmed) {
+				  
+			  
+				$.ajax({
+						url: "${pageContext.request.contextPath}/product/delete",
+						type: "POST",
+						data: {checked : checked},
+						dataType: "text",	
+						success: function () {
+							Swal.fire({
+							  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+							  icon: 'success',
+							  width : '300px',
+							}).then((result) => {
+							  if (result.isConfirmed) {
+							    location.reload();
+							  }
+							});
+					},
+					error: function () {
+						Swal.fire({
+							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+							icon : 'question',
+							width: '300px',
+							});
+						
+					}
+				});//ajax
+				  } else if (result.isDenied) {
+						Swal.fire({
+						title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+						icon : 'error',
+						width: '300px',
+						});
+			}// if(confirm)
+		});		
+				
+		}// 체크OOO
+		else{
+			Swal.fire({
+				title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+				icon : 'warning',
+				width: '300px',
+				});
+		}
+		
+		// endAJAX(물품 삭제)
+	 // end 정규식검사
+
+}); 
+//
 });// end function
 
 
-//----------------------------------------------------------------------------------------------
-
-// function deleteSelectedProducts() {
-//   // 체크된 체크박스 수집
-//   var selectedCheckboxes = document.querySelectorAll('[data-group="select-list"]:checked');
-
-//   // 체크된 체크박스들의 prodCode 값을 배열에 저장
-//   var selectedProdCodes = [];
-//   selectedCheckboxes.forEach(function (checkbox) {
-//     var row = checkbox.closest("tr");
-//     var prodCode = row.querySelector("#prodCode").textContent;
-//     selectedProdCodes.push(prodCode);
-//   });
-
-//   // 배열을 JSON 형태로 변환
-//   var jsonData = JSON.stringify(selectedProdCodes);
-
-//   // AJAX 요청 보내기
-// var xhr = new XMLHttpRequest();
-// xhr.open('POST', contextPath + '/product/delete', true);
-
-//   xhr.setRequestHeader('Content-Type', 'application/json');
-//   xhr.onreadystatechange = function () {
-//     if (xhr.readyState === 4 && xhr.status === 200) {
-//       // 서버로부터 응답을 받았을 때 처리할 작업
-//       // 예: 페이지 새로고침 또는 결과 메시지 표시
-//       location.reload(); // 페이지 새로고침 예시
-//     }
-//   };
-//   xhr.send(jsonData);
-// }
 
 
 
-// 삭제 버튼 누를 시 실행되는 함수
-$("#delete").click(function() {
-	
-	// 체크박스가 체크된 여부를 확인하기위한 변수선언
-	var selectedCheckbox = $("input[name='select-list']:checked");
-	
-// 체크박스가 선택되어 있지 않다면 에러 메시지를 표시하고 함수 종료
-if (selectedCheckbox.length === 0) {
-    Swal.fire('삭제할 행을 선택해 주십시오.', '실패', 'error');
-    return;
-}
 
-// 선택된 체크박스의 값을 가져와서 사용할 수 있도록 처리
-var selectedProductCodes = selectedCheckbox.map(function() {
-    return $(this).closest('tr').find('#prodCode').text(); // 예제 코드에서는 각 행의 제품 코드를 가져옴
-}).get();
 
-// 필요한 데이터를 정리하여 AJAX를 실행
-var formData = {
-    selectedProId: selectedProductCodes
-};
-
-$.ajax({
-    type: "POST",
-    url: "${pageContext.request.contextPath}/product/delete",
-    data: formData,
-    // AJAX 통신 결과 처리
-    success: function(response) {
-        // 성공 또는 실패에 따른 처리를 진행하세요.
-    },
-    error: function() {
-        Swal.fire('서버 통신에 문제가 발생했습니다.', '실패', 'error');
-    }
-});
-
-});
-//
 </script>
 
 </body>

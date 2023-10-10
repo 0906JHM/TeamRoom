@@ -6,6 +6,8 @@
 <mapper namespace="com.itwillbs.mappers.proMapper">
 
 
+
+
 	<insert id="insert">
 		insert into product
 		values (#{prodCode}, #{prodName}, #{prodUnit},#{prodSize},#{prodPerfume},
@@ -19,27 +21,32 @@
 		from product
 	</select>
 
-	<select id="getSearch" resultType="com.itwillbs.domain.ProdDTO">
-    SELECT r.*,p.prodName ,rm.rawName
-        FROM product p
-        join clients c on
-        c.clientCode = p.clientCode
-        JOIN warehouse w on w.whseCode = p.whseCode
-        <where>
-            <if test="prodCode != ''">
-                p.prodCode like concat ('%', #{prodCode}, '%')
-            </if>
-            <if test="clientCode != ''">
-                and p.clientCode = #{clientCode}
-            </if>
-            <if test="whseCode != ''">
-                and p.whseCode = #{whseCode}
-            </if>
-        </where>
-        order by 1 desc
+<!--     SELECT r.*,p.prodName ,rm.rawName -->
+<!--         FROM product p -->
+<!--         join clients c on -->
+<!--         c.clientCode = p.clientCode -->
+<!--         JOIN warehouse w on w.whseCode = p.whseCode -->
+<!--         <where> -->
+<!--             <if test="prodCode != ''"> -->
+<!--                 p.prodCode like concat ('%', #{prodCode}, '%') -->
+<!--             </if> -->
+<!--             <if test="clientCode != ''"> -->
+<!--                 and p.clientCode = #{clientCode} -->
+<!--             </if> -->
+<!--             <if test="whseCode != ''"> -->
+<!--                 and p.whseCode = #{whseCode} -->
+<!--             </if> -->
+<!--         </where> -->
+<!--         order by 1 desc -->
+
         <!-- limit #{start},#{cntPerPage} -->
 
-    <!-- <choose>
+
+	<select id="getSearch" resultType="com.itwillbs.domain.ProdDTO">
+    SELECT *
+    FROM product
+    WHERE
+    <choose>
         <when test="prodCode != '' and prodName != '' and clientCode != '거래처'">
             prodCode LIKE CONCAT('%', #{prodCode}, '%') 
             AND prodName LIKE CONCAT('%', #{prodName}, '%') 
@@ -69,19 +76,14 @@
         <otherwise>
             1=1
         </otherwise>
-    </choose> -->
+    </choose>
 </select>
 
-
-
-    <delete id="productDelete" parameterType="java.util.List">
-    DELETE FROM product
-    WHERE prodCode IN
-    <foreach collection="list" item="item" open="(" separator="," close=")">
-        #{item.code}
-    </foreach>
-</delete>
+    <delete id="productDelete">
+                DELETE FROM product WHERE prodCode = #{prodCode}
     
+    
+</delete>    
     
 </mapper>
 
