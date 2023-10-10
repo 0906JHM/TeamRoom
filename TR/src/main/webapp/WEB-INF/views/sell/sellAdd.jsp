@@ -25,23 +25,27 @@
 <h1>수주 등록</h1>
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellAddPro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
-        
+
         <label class="popupLabel">수주 코드 : </label>
       	<input type="text" id="sellCode" name="selCode" placeholder="수주 코드" readonly ><br>
       	
+      	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
-        <input type="text" id="clientCode" name="clientCode" placeholder="거래처 코드" readonly >
-        <input type="text" id="clientName" placeholder="거래처명" readonly ><br>
-
+        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
+        <input type="text" id="clientCompany9999" placeholder="거래처명" onclick=searchItem('client','clientCode9999'); readonly ><br>
+		</div>
+		
+		<div class="popupSerch">
  		<label class="popupLabel">제품 : </label>
- 		<input type="text" id="prodCode" name="prodCode" placeholder="제품 코드" readonly>
-		<input type="text" id="prodName" placeholder="제품명" readonly><br>
-
+ 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
+		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')"><br>
+		</div>
+		
         <label class="popupLabel">수주 수량 : </label>
         <input type="number" id="sellCount" name="sellCount" placeholder="수주수량"  min="0" max="10000" step="5"><br>
 	
-  <!--  <label class="popupLabel">수주 단가 : </label>
-        <input type="text" id="sellPrice" placeholder="수주금액" readonly>원<br> -->
+ 	    <label class="popupLabel">수주 단가 : </label>
+        <input type="text" id="sellPrice" placeholder="수주 단가" readonly>원<br> 
         
         <label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" placeholder="수주 일자" readonly><br>
@@ -52,8 +56,8 @@
         <label class="popupLabel">담당자 : </label>
         <input type="search" id="sellEmpId" name="sellEmpId" value="${sessionScope.sellEmpId}" readonly="readonly" ><br>
 
-        <label class="popupLabel">비고 : </label>
-        <textarea id="sellMemo" name="sellMemo" style="width: 350px; height: 250px;"></textarea><br>
+        <label class="popupLabel">비고 : </label><br>
+        <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
 
         <label class="popupLabel">첨부파일 : </label>
         <input type="file" id="sellFile" name="sellFile"><br>
@@ -71,6 +75,17 @@
 <!----------------------------------------------- 등록버튼 ---------------------------------------------->
 
 <script type="text/javascript">
+
+//팝업 옵션
+const popupOpt = "top=60,left=140,width=720,height=600";
+
+//검색 팝업
+	function searchItem(type, inputId) {
+	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt);
+} //openWindow()
+
+
 //팝업 창을 열어주는 함수
 function openPopup(url) {
     var width = 500;
@@ -81,21 +96,7 @@ function openPopup(url) {
     popupWindow.focus();
 }
 $(document).ready(function() {
-    // 거래처 검색 팝업 열기
-    $("#clientCode, #clientName").click(function() {
-        var url = '${pageContext.request.contextPath}/search/clientlist';
-        openPopup(url);
-    });
-    // 제품 검색 팝업 열기
-    $("#prodCode, #prodName").click(function() {
-        var url = '${pageContext.request.contextPath}/search/productlist';
-        openPopup(url);
-    });
-/*  // 담당자 검색 팝업 열기
-    $("#empId, #empName").click(function() {
-        var url = '${pageContext.request.contextPath}/workOrder/workEmpList';
-        openPopup(url);
-    }); */
+   
 });
 
 // 수주일자 클릭시 현재날짜로 변경
