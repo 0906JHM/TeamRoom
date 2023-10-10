@@ -153,5 +153,63 @@
 		</choose>
 
 	</select>
-
+	
+	
+	<select id="outProductContent"
+		resultType="com.itwillbs.domain.OutProductDTO">
+		SELECT o.outCode outCode, o.prodCode prodCode, o.outDate
+		outDate, o.outEmpId
+		outEmpId, o.outMemo outMemo,
+		o.outRedate outRedate,
+		o.outCount outCount, o.outPrice outPrice,
+		o.sellCode sellCode,
+		s.sellCount sellCount, s.sellDuedate sellDuedate,
+		s.sellState
+		sellState,
+		s.clientCode clientCode, c.clientCompany clientCompany,
+		p.prodName prodName, p.prodPrice prodPrice,
+		stockTestTest.whseCount
+		whseCount
+		FROM outProduct o JOIN sellTestTest s
+		ON o.sellCode =
+		s.sellCode
+		JOIN clients c
+		ON s.clientCode = c.clientCode
+		JOIN product p
+		ON o.prodCode = p.prodCode
+		JOIN stockTestTest
+		ON o.prodCode =
+		stockTestTest.prodCode
+		WHERE outCode = #{outCode}
+	</select>
+	
+	<update id="updateSellState">
+		UPDATE sellTestTest
+		SET sellState = #{sellState}
+		WHERE sellCode = #{sellCode}
+	</update>
+	
+	<update id="updateOutDate">
+		UPDATE outProduct
+		SET outDate = #{outDate}
+		WHERE outCode = #{outCode}
+	</update>
+	
+	<update id="updateOutRedate">
+		UPDATE outProduct
+		SET outRedate = #{outRedate}
+		WHERE outCode = #{outCode}
+	</update>
+	
+	<update id="updateWhseCount">
+		UPDATE stockTestTest
+		SET whseCount = #{whseCount} - #{outCount}
+		WHERE prodCode = #{prodCode}
+	</update>
+	
+	<update id="updateOutProductContent">
+		UPDATE outProduct
+		SET outCount = #{outCount}, outMemo = #{outMemo}
+		WHERE outCode = #{outCode}
+	</update>
 </mapper>

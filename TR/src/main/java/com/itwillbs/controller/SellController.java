@@ -103,6 +103,7 @@ public void sellAddPro(SellDTO sellDTO) {
 	System.out.println("SellController sellAddPro()");
 	
 	sellService.insertSell(sellDTO);	
+	
 }//sellAddPro
 
 

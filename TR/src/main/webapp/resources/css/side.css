@@ -23,7 +23,8 @@ ul {
 }
 
 .sidea {
-	color: #b63b4d;
+/* 	color: #b63b4d; */
+	color: #5EC397;
 	text-decoration: none;
 }
 
@@ -82,11 +83,11 @@ h1 .sidea {
 }
 
 .sideaccordion li.open .sidelink {
-	color: #b63b4d;
+	color: #5EC397;
 }
 
 .sideaccordion li.open i {
-	color: #b63b4d;
+	color: #5EC397;
 }
 
 .sideaccordion li.open i.fa-chevron-down {
@@ -120,7 +121,8 @@ h1 .sidea {
 }
 
 .submenu .sidea:hover {
-	background: #b63b4d;
+/* 	background: #b63b4d; */
+	background: #5EC397;
 	color: #FFF;
 }
 
