@@ -1,0 +1,105 @@
+@charset "UTF-8";
+body {
+	background-color: #F5F6FA;
+}
+
+hr {
+	background: #adb5bb;
+	width: 1570px;
+	height: 2px;
+	border: 0;
+	position: relative;
+	transform-origin: 0 0;
+	transform: rotate(0deg) scale(1, -1);
+}
+
+h2 {
+	font-size: 30px;
+	font-weight: bold;
+	padding-left: 1%;
+}
+
+label {
+	font: 500 18px/18px "Inter", sans-serif;
+}
+
+input[type="text"] {
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 300px;
+	height: 40px;
+	font: 500 18px/18px "Inter", sans-serif;
+	padding-left: 10px;
+}
+input[type="button"]{
+background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	width:100px;
+	height:40px;
+	border-radius:5px;
+	color: #FFFFFF;
+	border: 0;
+	text-align: center;
+	font: 500 20px/20px "Inter", sans-serif;
+}
+
+input[type="button"]:hover {
+    cursor: pointer; /* pointer 커서는 일반적으로 손가락 모양입니다 */
+}
+#outProductList {
+	overflow-x: auto; /* 가로 스크롤바를 활성화 */ 
+	width:98%;
+	margin : 0 auto;
+}
+table {
+ 	border: 1px solid rgba(221, 221, 221, 0.78); 
+	margin : 0 auto;
+  	color: #000000; 
+  	max-width:1570px;
+  	font: 500 18px/18px "Inter", sans-serif;
+  	text-align: center;
+  	
+}
+table th, table td {
+	min-width: 100px;
+    white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+    padding: 0 15px;
+}
+
+table thead tr {
+  	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width:1570px;
+	height:45px;
+	font: 500 20px/20px "Inter", sans-serif;
+}
+table td {
+	height: 45px;
+}
+
+#con {
+	display: flex;
+	flex-direction: column;
+}
+
+#searchForm {
+	display: flex;
+	align-items: center;
+	padding-left: 1%;
+	gap: 1%;
+	height: 40px;
+	margin: 25px 0;
+}
+
+#buttons {
+	margin-top: 15px;
+	margin-bottom: 5px;
+	padding-left: 1%;
+	gap: 1%;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* 짝수 행의 백그라운드 색상 설정 */
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
+}
