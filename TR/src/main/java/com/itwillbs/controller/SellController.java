@@ -88,21 +88,19 @@ System.out.println(sellList);
 
 //----------------------------------------------------- sellAdd ---------------------------------------
 @GetMapping("/sellAdd")
-public String sellAdd(HttpServletRequest request, Model model) {
+public String sellAdd() {
 	System.out.println("SellController sellAdd()");
-
-//	List<String> clientCodes = jdbcTemplate.queryForList("SELECT clientCode FROM clients", String.class);
-//	model.addAttribute("clientCodes", clientCodes);
-
+	
 	return "sell/sellAdd";
 }//sellAdd
 
 @PostMapping("/sellAddPro")
 public void sellAddPro(SellDTO sellDTO) {
-	System.out.println(sellDTO);
 	System.out.println("SellController sellAddPro()");
+	System.out.println(sellDTO);
 	
 	sellService.insertSell(sellDTO);	
+	
 }//sellAddPro
 
 
@@ -174,8 +172,14 @@ public void sellMemoAddPro(SellDTO sellDTO) {
 	
 }//sellMemotypePro	
 	
-
+//-------------------------------------------------- sellDelete ---------------------------------------------
+@GetMapping("/sellDelete")
+public String sellDeletePro(SellDTO sellDTO) {
+	System.out.println("SellController sellDelete()");
+	System.out.println(sellDTO);
 	
+	sellService.sellDelete(sellDTO);
+}// sellDelete
 	
 	
 	

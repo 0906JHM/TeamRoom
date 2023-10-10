@@ -182,5 +182,34 @@
 		stockTestTest.prodCode
 		WHERE outCode = #{outCode}
 	</select>
-
+	
+	<update id="updateSellState">
+		UPDATE sellTestTest
+		SET sellState = #{sellState}
+		WHERE sellCode = #{sellCode}
+	</update>
+	
+	<update id="updateOutDate">
+		UPDATE outProduct
+		SET outDate = #{outDate}
+		WHERE outCode = #{outCode}
+	</update>
+	
+	<update id="updateOutRedate">
+		UPDATE outProduct
+		SET outRedate = #{outRedate}
+		WHERE outCode = #{outCode}
+	</update>
+	
+	<update id="updateWhseCount">
+		UPDATE stockTestTest
+		SET whseCount = #{whseCount} - #{outCount}
+		WHERE prodCode = #{prodCode}
+	</update>
+	
+	<update id="updateOutProductContent">
+		UPDATE outProduct
+		SET outCount = #{outCount}, outMemo = #{outMemo}
+		WHERE outCode = #{outCode}
+	</update>
 </mapper>

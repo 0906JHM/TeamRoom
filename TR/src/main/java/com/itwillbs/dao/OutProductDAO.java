@@ -31,6 +31,26 @@ public class OutProductDAO {
 	public OutProductDTO outProductContent(String outCode) {
 		return sqlSession.selectOne(namespace + "outProductContent",outCode);
 	}
+
+	public void updateSellState(OutProductDTO outProductDTO) {
+		sqlSession.update(namespace + "updateSellState",outProductDTO);
+	}
+
+	public void updateOutDate(OutProductDTO outProductDTO) {
+		sqlSession.update(namespace + "updateOutDate",outProductDTO);		
+	}
+
+	public void updateOutRedate(OutProductDTO outProductDTO) {
+		sqlSession.update(namespace + "updateOutRedate",outProductDTO);		
+	}
+
+	public void updateWhseCount(OutProductDTO outProductDTO) {
+		sqlSession.update(namespace + "updateWhseCount",outProductDTO);		
+	}
+
+	public void updateOutProductContent(OutProductDTO outProductDTO) {
+		sqlSession.update(namespace + "updateOutProductContent",outProductDTO);		
+	}
 	
 	
 }

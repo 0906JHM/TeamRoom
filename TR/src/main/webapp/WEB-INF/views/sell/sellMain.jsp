@@ -8,9 +8,10 @@
 <%--     <jsp:include page="test4.jsp"></jsp:include> --%>
 <title>Sell/sellMain.jsp</title>
 <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
+<link href="${pageContext.request.contextPath }/resources/css/side.css"	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"><!-- 수주일자 기간선택 -->
- 
+
 
 
 </head>
@@ -19,9 +20,10 @@
 
 <!---------------------------------------------------- 상단 조회 및 버튼 ----------------------------------------------------->
 
-<div class="outer-container">
-    <jsp:include page="../inc/sidebar.jsp"></jsp:include>
-	<div class="main-content">
+<!-- <div class="outer-container"> -->
+<body>
+    <jsp:include page="../inc/side.jsp"></jsp:include>
+	<div class="main-content" >
 	    <h2>수주 관리</h2>
 	    <div class="horizontal-line"></div>
 	    <form>
@@ -117,7 +119,8 @@
 	        </tbody>
 	    </table>
 	</div>
-</div>
+<!-- </div> -->
+</body>
 
 <!---------------------------------------------- javascript ---------------------------------------------->
 <script type="text/javascript">
@@ -238,7 +241,7 @@ function saveData() {
 function openSellAdd() {
 
     // 팝업 창의 속성을 설정합니다.
-    var popupWidth = 450;
+    var popupWidth = 500;
     var popupHeight = 700;
     var left = (window.innerWidth - popupWidth) / 2;
     var top = (window.innerHeight - popupHeight) / 2;
@@ -303,5 +306,4 @@ function openSellAdd() {
    
 </script>
 
-</body>
 </html>

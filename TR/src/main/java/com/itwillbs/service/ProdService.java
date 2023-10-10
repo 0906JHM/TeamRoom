@@ -25,6 +25,10 @@ public class ProdService {
 		
 		return prodDAO.getProdList();
 	}
+	
+	public void productDelete(List<String> checked) throws Exception {
+		prodDAO.productDelete(checked);
+	}
 
 	
 	public void insert(ProdDTO prodDTO) {
@@ -39,6 +43,19 @@ public class ProdService {
 	
 	
 }
+
+	public ProdDTO getProd(String prodCode) {
+
+		return prodDAO.getProd(prodCode);
+	}
+
+	public void updateProd(ProdDTO prodDTO) {
+		prodDAO.updateProd(prodDTO);
+		
+	}
+
+
+
 
 
 	

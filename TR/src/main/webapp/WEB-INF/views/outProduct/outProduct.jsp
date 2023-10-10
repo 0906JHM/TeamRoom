@@ -47,6 +47,7 @@
 						<th>제품코드</th>
 						<th>제품이름</th>
 						<th>주문수량</th>
+						<th>출고수량</th>
 						<th>재고수량</th>
 						<th>납품가</th>
 						<th>납품예정일</th>
@@ -210,6 +211,7 @@
 	            row.append("<td>" + (data[i].prodCode ? data[i].prodCode : '') + "</td>");
 	            row.append("<td>" + (data[i].prodName ? data[i].prodName : '') + "</td>");
 	            row.append("<td>" + (data[i].sellCount ? data[i].sellCount : '') + "</td>");
+	            row.append("<td>" + (data[i].outCount ? data[i].outCount : '') + "</td>");
 	            row.append("<td>" + (data[i].whseCount ? data[i].whseCount : '') + "</td>");
 	            row.append("<td>" + (data[i].outPrice ? data[i].outPrice : '') + "</td>");
 	            row.append("<td>" + (data[i].sellDuedate ? data[i].sellDuedate : '') + "</td>");
