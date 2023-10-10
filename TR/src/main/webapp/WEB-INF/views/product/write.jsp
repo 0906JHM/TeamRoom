@@ -58,25 +58,52 @@
 <script type="text/javascript">
 //------------- 제품코드 인풋박스 클릭 시 에이젝스 실행 --------------------------
 
-$('#prodCode9999').click(function(){
-   $.ajax({
-       url: "${pageContext.request.contextPath}/product/prodCode",
-       method: "GET",
-       dataType: "text",
-       success: function(data) {
-           // Ajax 요청에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
-           codeNum = data;
-           console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+// $('#prodCode9999').click(function(){
+//    $.ajax({
+//        url: "${pageContext.request.contextPath}/product/prodCode",
+//        method: "GET",
+//        dataType: "text",
+//        success: function(data) {
+//            // Ajax 요청에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+//            codeNum = data;
+//            console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
 
-           // 변수에 할당된 데이터를 기반으로 추가 작업 수행
-           someFunction(codeNum);
-       }
-   }); // ajax 끝 */
+//            // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+//            someFunction(codeNum);
+//        }
+//    }); // ajax 끝 */
 
-   document.getElementById("prodCode").textContent = prodCode;
+//    document.getElementById("prodCode").textContent = prodCode;
 
 
 
+// });
+
+$(document).ready(function() {
+    $('#prodCode9999').click(function(){
+           $.ajax({
+               url: "${pageContext.request.contextPath}/product/prodCode",
+               method: "GET",
+               dataType: "text",
+               success: function(data) {
+                   // Ajax 요청에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+                   codeNum = data;
+                   console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+
+                   // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+                   someFunction(codeNum);
+               }
+           }); // ajax 끝 */
+
+           function someFunction(data) {
+                codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+                    var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+                    var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+                    prodCode = codeNum.charAt(0) + codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+                    counter++;
+           } // someFunction(data)
+
+           document.getElementById("prodCode").textContent = prodCode;
 });
 </script>
 </body>
