@@ -41,13 +41,6 @@
   	where empId = #{empId}
   </update>
   
-  <select id="getEmployeesSearchList" resultType="com.itwillbs.domain.EmployeesDTO">
-  	select * from employees
-  	where 1=1
-        <if test="empName != null and empName != ''">
-            and (empName like concat('%', #{empName}, '%') or empId like concat('%', #{empName}, '%') or empPass like concat('%', #{empName}, '%') or empDepartment like concat('%', #{empName}, '%') or empPosition like concat('%', #{empName}, '%') or empEmail like concat('%', #{empName}, '%') or empTel like concat('%', #{empName}, '%') or empState like concat('%', #{empName}, '%') or empHiredate like concat('%', #{empName}, '%'))
-        </if>
-</select>
 
 
 
