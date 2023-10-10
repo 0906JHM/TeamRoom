@@ -20,10 +20,26 @@
 	</select>
 
 	<select id="getSearch" resultType="com.itwillbs.domain.ProdDTO">
-    SELECT *
-    FROM product
-    WHERE
-    <choose>
+    SELECT r.*,p.prodName ,rm.rawName
+        FROM product p
+        join clients c on
+        c.clientCode = p.clientCode
+        JOIN warehouse w on w.whseCode = p.whseCode
+        <where>
+            <if test="prodCode != ''">
+                p.prodCode like concat ('%', #{prodCode}, '%')
+            </if>
+            <if test="clientCode != ''">
+                and p.clientCode = #{clientCode}
+            </if>
+            <if test="whseCode != ''">
+                and p.whseCode = #{whseCode}
+            </if>
+        </where>
+        order by 1 desc
+        <!-- limit #{start},#{cntPerPage} -->
+
+    <!-- <choose>
         <when test="prodCode != '' and prodName != '' and clientCode != '거래처'">
             prodCode LIKE CONCAT('%', #{prodCode}, '%') 
             AND prodName LIKE CONCAT('%', #{prodName}, '%') 
@@ -53,7 +69,7 @@
         <otherwise>
             1=1
         </otherwise>
-    </choose>
+    </choose> -->
 </select>
 
 
