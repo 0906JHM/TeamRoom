@@ -49,6 +49,10 @@ public class EmployeesService {
 		return employeesDAO.existsById(empId);
 	}
 
+	public List<EmployeesDTO> getEmployeesList2() {
+		return employeesDAO.getEmployeesList2();
+	}
+
 
 
 }

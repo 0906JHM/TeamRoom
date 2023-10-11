@@ -26,16 +26,20 @@
 <hr>
 <div class="perfcd">
 <div class="perfcd1">
-라인코드: <input type="text" id="lineCode" name="lineCode" onclick="" class="cdbox">
+라인코드: <input type="text" id="lineCode" name="lineCode" onclick="" class="cdbox" readonly>
 </div>
 
 <div class="perfcd1">
-제품코드: <input type="text" id="prodCode" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="">
+제품코드: <input type="text" id="prodCode" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly>
 </div>
 
 
 <div class="perfcd1">
- 지시일자: <input type="text" id="workdate1" name="workdate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="workdate2	" class="form-control" placeholder="날짜 선택" readonly>
+ 실적일: <input type="text" id="workdate1" name="workdate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="workdate2	" class="form-control" placeholder="날짜 선택" readonly>
+</div>
+
+<div class="perfcd1">
+ 작업지시코드: <input type="text" id="workCode" name="workCode" class="cdbox" placeholder="작업지시코드" readonly>
 </div>
 
 

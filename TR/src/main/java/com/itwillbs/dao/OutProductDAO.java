@@ -16,9 +16,10 @@ public class OutProductDAO {
 	@Inject
 	private SqlSession sqlSession;
 
-	private static final String namespace = "com.itwillbs.mappers.outProductMapper.";
+	private static final String namespace ="com.itwillbs.mappers.outProductMapper.";
 
 	public List<OutProductDTO> getOutProductList(OutProductDTO outProductDTO) {
+		
 		if("전체".equals(outProductDTO.getSellState())) {
 			System.out.println("전체용");
 			return sqlSession.selectList(namespace+"getOutProductList", outProductDTO);
