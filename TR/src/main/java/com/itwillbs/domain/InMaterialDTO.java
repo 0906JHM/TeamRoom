@@ -13,9 +13,11 @@ public class InMaterialDTO {
 	private String inNum;
 	private Date inDate;
 	private int inCount;
-	private String inMaterial;
+	private String rawCode;
 	private String buyNum;
 	private String inEmpId;
 	private String clientCode;
+//	비고 필요없나
 	private String inMemo;
+	
 }

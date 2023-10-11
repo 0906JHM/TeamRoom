@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+body {
+	background-color: #F5F6FA;
+}
+
+.container{
+	display: flex;
+	flex-direction: column;
+}
+
+h2{
+	font-size: 30px;
+	font-weight: bold;
+	padding-left: 1%;
+}
+
+label {
+	font: 500 18px/18px "Inter", sans-serif;
+}
+
+hr{
+	background: #adb5bb;
+	width: 1570px;
+	height: 2px;
+	border: 0;
+	position: relative;
+}
+
+#selectedProId input{
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 300px;
+	height: 40px;
+	font: 500 18px/18px "Inter", sans-serif;
+	padding-left: 10px;
+}
+
+#con{
+	display: flex;
+	flex-direction: column;
+}
+
+button{
+	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	width: 100px;
+	height: 40px;
+	border-radius: 5px;
+	color: #FFFFFF;
+	border: 0;
+	text-align: center;
+	font: 500 20px/20px "Inter", sans-serif
+}
+
+table {
+ 	border: 1px solid rgba(221, 221, 221, 0.78); 
+	margin : 0 auto;
+  	color: #000000; 
+  	max-width:1570px;
+  	font: 500 18px/18px "Inter", sans-serif;
+  	text-align: center;
+  	
+}
+
+table th, table td {
+	min-width: 100px;
+    white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+    padding: 0 15px;
+}
+
+table thead tr {
+  	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width:1570px;
+	height:45px;
+	font: 500 20px/20px "Inter", sans-serif;
+}
+table td {
+	height: 45px;
+}
+
+.buttons{
+	display: flex;
+	justify-content: flex-end;
+	gap: 1%;
+}

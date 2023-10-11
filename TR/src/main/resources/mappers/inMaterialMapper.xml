@@ -5,6 +5,13 @@
 
 <mapper namespace="com.itwillbs.mappers.inMaterialMapper">
 
-
+	<select id="getInMaterialList" resultType="com.itwillbs.domain.InMaterialDTO">
+		select i.inNum, i.byNum, i.whseCoed, i.clientCompany
+			i.rawCode, r.rawName, i.inCount
+			i.rawPrice
+			i.inDate, i.inEmpId
+		from inMaterial i join rawMaterial r
+		on i.rawCode = r.rawCode
+	</select>
 
 </mapper>
