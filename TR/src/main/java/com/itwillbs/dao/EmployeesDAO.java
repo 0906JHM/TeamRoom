@@ -51,5 +51,10 @@ public class EmployeesDAO {
 	}
 
 
+	public List<EmployeesDTO> getEmployeesList2() {
+		return sqlSession.selectList(namespace+".getEmployeesList2");
+	}
+
+
 
 }

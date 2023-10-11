@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,7 +96,11 @@
 			</tbody>
 		</table>
 		<div id="buttons">
-			<input type="submit" value="출고">
+		<c:if test="${outProductDTO.sellState != '출고완료' }">
+			<c:if test="${outProductDTO.sellCount <= outProductDTO.whseCount && outProductDTO.outCount <= outProductDTO.whseCount}">
+				<input type="submit" value="출고">
+			</c:if>
+		</c:if>
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
 	</form>
