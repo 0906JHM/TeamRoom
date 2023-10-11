@@ -64,7 +64,7 @@
     <button id="cancel">취소</button>
     <button id="save">저장</button>
    
-    <p>총 ${prodList.size()}건</p>
+    <p>총 ${pageDTO.count}건</p>
     
     <form id="productList">
     <table class="tg" id="productTable">
