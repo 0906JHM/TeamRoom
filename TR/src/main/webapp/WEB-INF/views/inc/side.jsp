@@ -13,7 +13,7 @@
 	<aside class="sidebar">
 		<div class="sidebody">
 			<div class="logininfo">
-				<p class="loginhi">________님 안녕하세요</p>
+				<p class="loginhi">${sessionScope.empId}님 안녕하세요</p>
 			</div>
 
 			<div class="sidebar">
@@ -35,7 +35,7 @@
 						<ul class="submenu">
 							<li><a href="#" class="sidea">라인관리</a></li>
 							<li><a href="#" class="sidea">작업지시관리</a></li>
-							<li><a href="#" class="sidea">생산실적관리</a></li>
+							<li><a href="${pageContext.request.contextPath }/perf/perf" class="sidea">생산실적관리</a></li>
 						</ul>
 					</li>
 					<li>
@@ -45,7 +45,7 @@
 						</div>
 						<ul class="submenu">
 							<li><a href="${pageContext.request.contextPath }/stock/list" class="sidea">재고관리</a></li>
-							<li><a href="#" class="sidea">입고관리</a></li>
+							<li><a href="${pageContext.request.contextPath }/inMaterial/list" class="sidea">입고관리</a></li>
 							<li><a href="${pageContext.request.contextPath }/outProduct/list" class="sidea">출고관리</a></li>
 							<li><a href="#" class="sidea">창고관리</a></li>
 						</ul>
@@ -68,9 +68,14 @@
 					</li>
 				</ul>
 			</div>
-
+			
+			<div class="logininfo" style="text-align: center; margin-top: 600px;">
+				<p><a a href="${pageContext.request.contextPath}/login/login" style="color: #929FA8; text-decoration: none;">로그아웃</a><p>
+			</div>
 		</div>
-
+		
+		
+		
 
 	</aside>
 

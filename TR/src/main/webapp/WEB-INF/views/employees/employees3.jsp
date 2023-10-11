@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>인사수정</title>
 </head>
 <body>
 <h1>인사수정</h1>
 <form action="${pageContext.request.contextPath}/employees/updatePro" id="join" method="post">
 
-사원번호:<input type="number" name="empId" class="empId" value="${employeesDTO.empId}"><br>
+사원번호:<input type="text" name="empId" class="empId" value="${employeesDTO.empId}"><br>
 비밀번호:<input type="password" name="empPass" class="empPass" value="${employeesDTO.empPass}"><br>
 사원명:<input type="text" name="empName" class="empName" value="${employeesDTO.empName}"><br>
 부서:<input type="text" name="empDepartment" class="empDepartment" value="${employeesDTO.empDepartment}"><br>

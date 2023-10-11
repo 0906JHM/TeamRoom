@@ -50,7 +50,7 @@
     <p>비고</p>
     <input type="text" name="prodMemo" value="${prodDTO.prodMemo}">
     
-    <input type="submit" value="확인">
+    <input type="submit" value="수정">
     
     </form>
 </div>

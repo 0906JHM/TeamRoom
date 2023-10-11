@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.EmployeesDTO;
+import com.itwillbs.domain.PageDTO;
 @Repository
 public class EmployeesDAO {
 	@Inject
@@ -17,12 +18,11 @@ public class EmployeesDAO {
 
 	public void insertEmployees(EmployeesDTO employeesDTO) {
 		sqlSession.insert(namespace+".insertEmployees", employeesDTO);
-		
 	}
 
 
-	public List<EmployeesDTO> getEmployeesList() {
-		return sqlSession.selectList(namespace+".getEmployeesList");
+	public List<EmployeesDTO> getEmployeesList(PageDTO pageDTO) {
+		return sqlSession.selectList(namespace+".getEmployeesList", pageDTO);
 	}
 	
 	// 삭제 하기
@@ -39,5 +39,17 @@ public class EmployeesDAO {
 	public void updateEmployees(EmployeesDTO employeesDTO) {
 		sqlSession.update(namespace+".updateEmployees", employeesDTO);
 	}
+
+
+	public int getEmployeesCount(PageDTO pageDTO) {
+		return sqlSession.selectOne(namespace+".getEmployeesCount",pageDTO);
+	}
+
+
+	public boolean existsById(String empId) {
+		return sqlSession.selectOne(namespace+".existsById", empId);
+	}
+
+
 
 }

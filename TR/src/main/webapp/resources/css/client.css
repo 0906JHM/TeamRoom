@@ -28,6 +28,9 @@ body{
 
 .tableform{
 	background-color: white;
+	padding-bottom:15px;
+	padding:5px;
+	
 
 	
 }
@@ -80,8 +83,7 @@ ct{
 	overflow: hidden;
 	padding: 10px 5px;
 	word-break: normal;
-	width:1500px;
-	text
+	width:800px;
 }
 
 .ct .cttg {
@@ -133,5 +135,6 @@ hr{
     border: 0;
     text-align: center;
     font: 500 24px/24px "Inter", sans-serif;
+    margin-right: 15px;
 }
 

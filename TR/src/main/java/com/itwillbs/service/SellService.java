@@ -42,7 +42,9 @@ public class SellService {
 //----------------------------------------------------- insertSell --------------------------------------------------------
 	public void insertSell(SellDTO sellDTO) {
 		System.out.println("SellService insertSell()");
-
+		
+		sellDTO.setSellDuedate(null);
+		
 		sellDAO.insertSell(sellDTO);	
 	}//insertSell
 	
@@ -67,6 +69,13 @@ public class SellService {
 
 			sellDAO.insertSellMemo(sellDTO);	
 		}//insertSellMemo
+
+		//----------------------------------------------------- sellDelete --------------------------------------------------------
+		public void sellDelete(SellDTO sellDTO) {
+			System.out.println("SellService sellDelete()");
+			
+			sellDAO.deleteSell(sellDTO);
+		}//sellDelete
 		
 
 

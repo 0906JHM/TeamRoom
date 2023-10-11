@@ -5,25 +5,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>인사관리</title>
+<title>라인관리</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
-
 <style>
-    #employeeTable {
+    #lineTable {
         border-collapse: collapse;
         width: 50%;
     }
-    #employeeTable th,
-    #employeeTable td {
+    #lineTable th,
+    #lineTable td {
         border: 1px solid #ddd;
         padding: 8px;
         text-align: left;
     }
-    #employeeTable th {
+    #lineTable th {
         background-color: #f2f2f2;
     }
-    #employeeTable tr:hover {
+    #lineTable tr:hover {
         background-color: #f5f5f5;
     }
     input[type="checkbox"] {
@@ -82,7 +81,7 @@ function deleteValue(){
                     valueArr : valueArr
                 },
                 success: function(){
-                    location.replace("employees");
+                    location.replace("line");
                 }
             });
 
@@ -100,52 +99,43 @@ function deleteValue(){
 	});
 </script>
 
-
-
 </head>
+
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<form action="${pageContext.request.contextPath}/employees/employees" method="get">
+<form action="${pageContext.request.contextPath}/line/line" method="get">
 search    <input type="text" name="search" placeholder="search">
 <input type="submit" value="검색">
 </form>
-    <table id="employeeTable">
-        <tr>
-            <th>사원번호</th>
-            <th>비밀번호</th>
-            <th>사원명</th>
-            <th>부서</th>
-            <th>직책</th>
-            <th>이메일</th>
-            <th>전화번호</th>
-            <th>입사일자</th>
-            <th>재직구분</th>
-        </tr>
-<c:forEach var="employeesDTO" items="${employeesList }">
-<tr onclick="window.open('update?empId=${employeesDTO.empId}', '_blank', 'width=800,height=600')">
-    <td>${employeesDTO.empId}</td>
-    <td>${employeesDTO.empPass}</td>
-    <td>${employeesDTO.empName}</td>
-    <td>${employeesDTO.empDepartment}</td>
-    <td>${employeesDTO.empPosition}</td>
-    <td>${employeesDTO.empEmail}</td>
-    <td>${employeesDTO.empTel}</td>
-    <td>${employeesDTO.empHiredate}</td>
-    <td>${employeesDTO.empState}</td>
-    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
+<table id="lineTable">
+<tr>
+<th>라인코드</th>
+<th>라인명</th>
+<th>사용여부</th>
+<th>등록자</th>
+<th>등록일</th>
+<th>공정</th>
 </tr>
-</c:forEach>    
-    </table>
-    
-    <input type="button" value="삭제" onclick="deleteValue();">
-    <button onclick="window.open('employees2', '_blank', 'width=800,height=600')">등록</button>
+<c:forEach var="lineDTO" items="${lineList }">
+<tr onclick="window.open('update?lineCode=${lineDTO.lineCode}', '_blank', 'width=800,height=600')">
+    <td>${lineDTO.lineCode}</td>
+    <td>${lineDTO.lineName}</td>
+    <td>${lineDTO.lineUse}</td>
+    <td>${lineDTO.lineEmpId}</td>
+    <td>${lineDTO.lineInsertDate}</td>
+    <td>${lineDTO.lineProcess}</td>
+    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${lineDTO.lineCode}"></td>
+</tr>
+</c:forEach>
+</table>
+
+<input type="button" value="삭제" onclick="deleteValue();">
+<button onclick="window.open('line2', '_blank', 'width=800,height=600')">등록</button>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+<a href="${pageContext.request.contextPath}/line/line?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
 </c:forEach>
 
-
 </body>
-
 </html>

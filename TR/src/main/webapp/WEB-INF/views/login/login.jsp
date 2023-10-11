@@ -67,19 +67,82 @@ button:hover {
 <body>
 	<div class="login-container">
 		<h2>로그인</h2>
-		<form action="${pageContext.request.contextPath}/login/loginPro"
-			id="login" method="post">
+		<form action="${pageContext.request.contextPath}/login/loginPro" id="login" method="post">
+			
 			<div class="input-group">
-				<input type="text" id="empId" name="empId" placeholder="아이디"
-					required>
+				<input type="text" id="empId" name="empId" placeholder="아이디" required>
 			</div>
+	
 			<div class="input-group">
 				<input type="password" id="empPass" name="empPass" placeholder="비밀번호" required> 
-				<input type="hidden" name="empName" value="${loginDTO.empName}" />
+				<%-- <input type="hidden" name="empName" value="${loginDTO.empName}" /> --%>
 			</div>
+			
+			<div class="input-group">
+				<input type="checkbox" ${empty cookie.id.value ? "":"checked" }
+					class="custom-control-input" id="customCheck"> <label
+					class="custom-control-label" for="customCheck">아이디 기억하기</label>
+			</div>
+			
 			<button type="submit">로그인</button>
 		</form>
 	</div>
 </body>
 </html>
 
+<script type="text/javascript">
+// 아이디기억하기
+$(document).ready(function(){
+  
+     
+    var key = getCookie("key");
+    $("#InputempNum").val(key); 
+      
+    if($("#InputempNum").val() != ""){
+        $("#customCheck").attr("checked", true); 
+    }
+      
+    $("#customCheck").change(function(){ 
+        if($("#customCheck").is(":checked")){ 
+            setCookie("key", $("#InputempNum").val(), 7); 
+        }else{ 
+            deleteCookie("key");
+        }
+    });
+      
+    
+    $("#InputempNum").keyup(function(){ 
+        if($("#customCheck").is(":checked")){ 
+            setCookie("key", $("#InputempNum").val(), 7); 
+        }
+    });
+});
+  
+function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+}
+  
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+  
+function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+    if(start != -1){
+        start += cookieName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
+}
+
+</script>
