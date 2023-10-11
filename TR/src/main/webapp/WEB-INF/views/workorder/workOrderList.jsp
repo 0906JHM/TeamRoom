@@ -337,8 +337,6 @@
 			$('#add').attr("disabled", true);
 			$('#modify').attr("disabled", true);
 	
-			if($(this).hasClass('true')) {
-				
 				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 				$('table tr').each(function() {
 					var code = $(this).find('td:nth-child(2)').text().substring(0,16).trim();
@@ -440,8 +438,6 @@
 		
 				}); // save
 				
-				$(this).removeClass('true');
-			}// if(삭제 버튼 true class O)
 
 			//취소 -> 리셋
 			$('#cancle').click(function() {
