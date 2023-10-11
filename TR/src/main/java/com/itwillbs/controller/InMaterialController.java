@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itwillbs.domain.InMaterialDTO;
+import com.itwillbs.domain.OutProductDTO;
 import com.itwillbs.service.InMaterialService;
 
 @Controller
@@ -21,13 +22,14 @@ public class InMaterialController {
 	private InMaterialService inMaterialService;
 //--------------------------------------------------------------
 	
+//	출고 페이지 이동 -> ajaxOutProductController에서 ajax로 리스트 불러오게 할려고 
 	@GetMapping("/list")
-	public String list(Model model, HttpServletRequest request) {
-		
-		List<InMaterialDTO> inMaterialList = inMaterialService.getInMaterialList();
-		
-		model.addAttribute("inMaterialList", inMaterialList);
-		
-		return "inMaterial/list";
+	public String outProductList(Model model) {
+//		List<OutProductDTO> outProductList = outProductService.getOutProductList();
+//		
+//		model.addAttribute("outProductList", outProductList);
+
+		return "inMaterial/inMaterial";
 	}
+	
 }
