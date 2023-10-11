@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.LineDTO;
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.EmployeesService;
 import com.itwillbs.service.PerformanceService;
 import com.itwillbs.service.ProdService;
@@ -69,6 +72,41 @@ public class PerformanceController {
 		
 		
 	}
+	
+	@GetMapping("/linelist")
+	public String linelist(Model model) {
+		
+		
+		log.debug("팝업창 linelist 요청 ");
+        List<LineDTO> linelist = perfService.getlinelist();
+		
+        model.addAttribute("linelist",linelist);
+        System.out.println(linelist);
+		
+		return "perf/linelist";
+		
+		
+	}
+	
+	@GetMapping("/prodlist")
+	public String prodlist(Model model) {
+		
+
+		log.debug("팝업창 prodlist 요청 ");
+		
+        List<ProdDTO> prodlist = perfService.getprodList();
+		model.addAttribute("prodlist",prodlist);
+		System.out.println(prodlist);
+		
+		return "perf/prodlist";
+		
+		
+	}
+	
+
+	
+	
+
 	
 	
 	

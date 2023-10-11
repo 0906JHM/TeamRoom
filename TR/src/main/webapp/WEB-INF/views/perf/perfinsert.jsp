@@ -216,6 +216,54 @@ width: 10px;
             });
         }); // datepicker2 끝 
         
+        $(document).ready(function() {
+        	 // lineCode input box 클릭 이벤트 처리
+            $('#lineCode').click(function() {
+                openLinePopup(); // 라인 팝업 열기
+            });
+
+            // prodCode input box 클릭 이벤트 처리
+            $('#prodCode').click(function() {
+                openProductPopup(); // 제품 팝업 열기
+            });
+        });
+        
+     // workCode input box 클릭 이벤트 처리
+        $('#workCode').click(function() {
+            openProductPopup(); // 제품 팝업 열기
+        });
+    });
+
+        function openLinePopup() {
+            var popupUrl = '${pageContext.request.contextPath}/perf/linelist';
+            window.open(
+                popupUrl,
+                '_blank',
+                'width=800px, height=800px, left=900px, top=100px'
+            );
+        }
+
+        function openProductPopup() {
+            var popupUrl = '${pageContext.request.contextPath}/perf/prodlist';
+            window.open(
+                popupUrl,
+                '_blank',
+                'width=800px, height=800px, left=900px, top=100px'
+            );
+        }
+        
+        function selectLineCode(lineCode) {
+            window.opener.setLineCodeAndClosePopup(lineCode);
+        }
+
+        function selectProdCode(prodCode) {
+            window.opener.setProdCodeAndClosePopup(prodCode);
+        }
+        
+        function selectProdCode(prodCode) {
+            window.opener.setProdCodeAndClosePopup(workCode);
+        }
+        
     </script>
 </body>
 </html>

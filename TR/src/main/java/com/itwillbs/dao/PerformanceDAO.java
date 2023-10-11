@@ -1,9 +1,14 @@
 package com.itwillbs.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import com.itwillbs.domain.LineDTO;
+import com.itwillbs.domain.ProdDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +21,23 @@ public class PerformanceDAO {
 	
 	
 	//MemberMapper 전체 이름 변수에 저장
-	private static final String namespace="com.itwillbs.mappers.PerfMapper";
+	private static final String namespace="com.itwillbs.mappers.PerformanceMapper";
+
+
+
+
+	public List<LineDTO> getlinelist() {
+
+		return sqlsession.selectList(namespace+".getlinelist");
+	}
+
+
+
+
+	public List<ProdDTO> getprodlist() {
+	
+		return sqlsession.selectList(namespace+".getprodlist");
+	}
 	
 	
 	
