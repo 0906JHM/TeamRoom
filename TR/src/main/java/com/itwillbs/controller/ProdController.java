@@ -21,7 +21,10 @@ import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.ProdService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 @RequestMapping("/product/*")
 public class ProdController {
 
@@ -39,15 +42,10 @@ public class ProdController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model, HttpServletRequest request) {
+	public String list(ProdDTO prodDTO, Model model, HttpServletRequest request) {
 		System.out.println("1");
 
 		//검색어 가져오기
-		/*
-		 * String prodCode = request.getParameter("prodCode"); String prodName =
-		 * request.getParameter("prodName"); String clientCompany =
-		 * request.getParameter("clientCompany");
-		 */
 		// 페이징-------------------------------------------
 		// 한 화면에 보여줄 글개수 설정
 		int pageSize = 2;
@@ -65,18 +63,24 @@ public class ProdController {
 		pageDTO.setPageSize(pageSize);
 		pageDTO.setPageNum(pageNum);
 		pageDTO.setCurrentPage(currentPage);
-		//검색어 저장
-		/*
-		 * ProdDTO prodDTO = new ProdDTO(); prodDTO.setProdCode(prodCode);
-		 * prodDTO.setProdName(prodName); prodDTO.setClientCompany(clientCompany);
-		 */
 		
-		
-		List<ProdDTO> prodList = prodService.getProdList(pageDTO);
+		List<ProdDTO> prodList;
+		int count;
+		if (prodDTO.getProdCode() != null || prodDTO.getProdName() != null || prodDTO.getClientCompany() != null) {
+		prodList = prodService.getSearch(prodDTO, pageDTO);
+		count = prodService.getSearchcount(prodDTO);
+	
+		}
+		else {
+			prodList = prodService.getProdList(pageDTO);
+			count = prodService.getProdCount(pageDTO);
+		}
 
 		// 전체 글개수 가져오기
 		
-		int count = prodService.getProdCount(pageDTO);
+		
+		
+		
 		
 		// 한화면에 보여줄 페이지 개수 설정
 		int pageBlock = 10;
@@ -123,16 +127,40 @@ public class ProdController {
 		return "redirect:/product/list";
 	}//
 
-	@GetMapping("/search")
-	public String search(ProdDTO prodDTO, Model model) {
-		System.out.println(prodDTO);
-		List<ProdDTO> prodList = prodService.getSearch(prodDTO);
-		int searchcount = prodService.getSearchcount(prodDTO);
-		System.out.println("controller search");
-		model.addAttribute("prodList", prodList);
-		model.addAttribute("searchcount", searchcount);
-		return "product/list";
-	}
+	/*
+	 * @GetMapping("/search") public String search(ProdDTO prodDTO, Model
+	 * model,HttpServletRequest request) {
+	 * 
+	 * 
+	 * 
+	 * int pageSize = 1; // 현 페이지 번호 가져오기 String pageNum =
+	 * request.getParameter("pageNum"); // 페이지 번호가 없을 경우 => "1"로 설정 if (pageNum ==
+	 * null) { pageNum = "1"; }
+	 * 
+	 * // 페이지 번호 => 정수형 변경 int currentPage = Integer.parseInt(pageNum);
+	 * 
+	 * PageDTO pageDTO = new PageDTO(); pageDTO.setPageSize(pageSize);
+	 * pageDTO.setPageNum(pageNum); pageDTO.setCurrentPage(currentPage); // 전체 글개수
+	 * 가져오기
+	 * 
+	 * int count = prodService.getSearchcount(prodDTO); List<ProdDTO> prodList =
+	 * prodService.getSearch(prodDTO, pageDTO); model.addAttribute("prodList",
+	 * prodList);
+	 * 
+	 * 
+	 * // 한화면에 보여줄 페이지 개수 설정 int pageBlock = 10; // 시작하는 페이지 번호 int startPage =
+	 * (currentPage - 1) / pageBlock * pageBlock + 1; // 끝나는 페이지 번호 int endPage =
+	 * startPage + pageBlock - 1; // 전체페이지 개수 int pageCount = count / pageSize +
+	 * (count % pageSize == 0 ? 0 : 1); // 끝나는 페이지 번호 전체페이지 개수 비교 // => 끝나는 페이지 번호가
+	 * 크면 전체페이지 개수로 변경 if (endPage > pageCount) { endPage = pageCount; }
+	 * 
+	 * pageDTO.setCount(count); pageDTO.setPageBlock(pageBlock);
+	 * pageDTO.setStartPage(startPage); pageDTO.setEndPage(endPage);
+	 * pageDTO.setPageCount(pageCount);
+	 * 
+	 * model.addAttribute("prodList", prodList); model.addAttribute("pageDTO",
+	 * pageDTO); return "product/list"; }
+	 */
 
 	@GetMapping("/update")
 	public String update(HttpServletRequest request, Model model) {

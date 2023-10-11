@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +48,17 @@ public class ProdDAO {
 		sqlSession.insert(namespace+".insert", prodDTO);
 	}//insertBoard()
 	
-	public List<ProdDTO> getSearch(ProdDTO prodDTO) {
+	public List<ProdDTO> getSearch(ProdDTO prodDTO, PageDTO pageDTO) {
+		HashMap<String, Object> data = new HashMap<String, Object>();
 		System.out.println("ProdDAO getSearch()");
-		return sqlSession.selectList(namespace+".getSearch", prodDTO);
+		
+		data.put("startRow", pageDTO.getStartRow());
+		data.put("pageSize", pageDTO.getPageSize());
+		data.put("prodCode", prodDTO.getProdCode());
+		data.put("prodName", prodDTO.getProdName());
+		data.put("clientCompany", prodDTO.getClientCompany());
+
+		return sqlSession.selectList(namespace+".getSearch", data);
 	}
 //	
 //	//품목관리 리스트 불러오기

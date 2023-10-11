@@ -45,9 +45,16 @@ public class ProdService {
 		prodDAO.insert(prodDTO);
 	}// insertBoard()
 
-	public List<ProdDTO> getSearch(ProdDTO prodDTO) {
+	public List<ProdDTO> getSearch(ProdDTO prodDTO, PageDTO pageDTO) {
 		System.out.println("ProService getSearch()");
-		return prodDAO.getSearch(prodDTO);
+		int startRow = (pageDTO.getCurrentPage() - 1) * pageDTO.getPageSize() + 1;
+		// 끝나는 행번호 구하기
+		int endRow = startRow + pageDTO.getPageSize() - 1;
+
+		// 디비 startRow - 1
+		pageDTO.setStartRow(startRow - 1);
+		pageDTO.setEndRow(endRow);
+		return prodDAO.getSearch(prodDTO, pageDTO);
 
 	}
 
