@@ -45,6 +45,10 @@ public class EmployeesService {
 		return employeesDAO.getEmployeesCount(pageDTO);
 	}
 
+	public boolean existsById(String empId) {
+		return employeesDAO.existsById(empId);
+	}
+
 
 
 }

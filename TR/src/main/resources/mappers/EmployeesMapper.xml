@@ -41,14 +41,15 @@
   	where empId = #{empId}
   </update>
   
-
+  <select id="existsById" resultType="boolean">
+  	select count(*) > 0 from employees where empId = #{empId}
+  </select>
 
 
 
   
   
-  
-  
+   
   
   
   

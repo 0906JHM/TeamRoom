@@ -18,7 +18,6 @@ public class EmployeesDAO {
 
 	public void insertEmployees(EmployeesDTO employeesDTO) {
 		sqlSession.insert(namespace+".insertEmployees", employeesDTO);
-		
 	}
 
 
@@ -45,6 +44,12 @@ public class EmployeesDAO {
 	public int getEmployeesCount(PageDTO pageDTO) {
 		return sqlSession.selectOne(namespace+".getEmployeesCount",pageDTO);
 	}
+
+
+	public boolean existsById(String empId) {
+		return sqlSession.selectOne(namespace+".existsById", empId);
+	}
+
 
 
 }
