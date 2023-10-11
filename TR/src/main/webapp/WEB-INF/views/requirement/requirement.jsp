@@ -129,7 +129,7 @@ $(document).ready(function() {
     function addRow() {
     	addcounter = num3 + counter;
     	
-        var row = '<tr class="contents">' +
+        var row = '<tr>' +
         	'<td><span class="input-row" style="color:red" onclick="deleteRow()">'+addcounter+'</span></td>' + 
         	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' + 
             '<td><input type="text" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-row"></td>' +
@@ -499,7 +499,7 @@ $(document).ready(function() {
 						</thead>
 							<tr type='hidden' style='display: none;'></tr>
 						<c:forEach var="dto" items="${reqList}">
-							<tr class="contents">
+							<tr>
 								<td></td>
 								<td id="reqCode">${dto.reqCode }</td>
 								<td type='hidden' style='display: none;'>${dto.prodCode }</td>

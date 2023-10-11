@@ -44,12 +44,13 @@
   <select id="existsById" resultType="boolean">
   	select count(*) > 0 from employees where empId = #{empId}
   </select>
-
-
-
+  
+  <select id="getEmployeesList2" resultType="com.itwillbs.domain.EmployeesDTO">
+  	select * from employees
+  </select>  
   
   
-   
+  
   
   
   

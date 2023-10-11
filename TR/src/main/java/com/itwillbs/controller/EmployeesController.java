@@ -104,5 +104,13 @@ public class EmployeesController {
 	    return new ResponseEntity<>(exists, HttpStatus.OK);
 	}
 	
+	@GetMapping("/empdropdown")
+    public ResponseEntity<List<EmployeesDTO>> empdropdown() {
+		List<EmployeesDTO> employeesList = employeesService.getEmployeesList2();
+		ResponseEntity<List<EmployeesDTO>> entity = new 
+		ResponseEntity<List<EmployeesDTO>>(employeesList, HttpStatus.OK);
+		System.out.println(employeesList);
+        return entity;
+	}
 	
 }
