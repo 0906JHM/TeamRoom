@@ -33,7 +33,7 @@
 							<i class="fa-solid fa-bars"></i>생산관리
 						</div>
 						<ul class="submenu">
-							<li><a href="#" class="sidea">라인관리</a></li>
+							<li><a href="${pageContext.request.contextPath }/line/line" class="sidea">라인관리</a></li>
 							<li><a href="#" class="sidea">작업지시관리</a></li>
 							<li><a href="${pageContext.request.contextPath }/perf/perf" class="sidea">생산실적관리</a></li>
 						</ul>
