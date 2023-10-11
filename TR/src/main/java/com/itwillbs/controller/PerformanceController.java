@@ -31,12 +31,14 @@ public class PerformanceController {
 	@Inject
 	private EmployeesService empService;
 	
+	private String cont="PerformanceController";
+	
 	
 	@GetMapping("/perf")
 	public String perf(Model model) {
 		
 		System.out.println("PerformanceController perf메인페이지요청");
-		log.debug("PerformanceController perf메인페이지요청 ");
+		log.debug(cont+"메인페이지요청");
 		
 		/*
 		 * List<ClientDTO> clientList = clientService.getclientList();
@@ -60,12 +62,15 @@ public class PerformanceController {
 		 * 
 		 * 
 		 * model.addAttribute("clientList",clientList);
+		 * 
 		 */
 		
 		return "perf/perfinsert";
 		
 		
 	}
+	
+	
 	
 	
 	
