@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwillbs.domain.InMaterialDTO;
-import com.itwillbs.domain.OutProductDTO;
+
 import com.itwillbs.service.InMaterialService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/inMaterial/*")
 public class AjaxInMaterialController {
@@ -33,6 +36,7 @@ public class AjaxInMaterialController {
 		System.out.println("원자재 품명"+inMaterialDTO.getRawName());
 		System.out.println("거래처명"+inMaterialDTO.getClientCompany());
 		System.out.println("입고 상태 "+inMaterialDTO.getInState());
+		log.debug("호출한 곳");
 		
 		if("".equals(inMaterialDTO.getInNum()) || "null".equals(inMaterialDTO.getInNum()) || inMaterialDTO.getInNum() == null) {
 			System.out.println("입고 번호 변경");

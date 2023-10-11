@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.LineDTO;
+import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,15 @@ public class PerformanceDAO {
 	public List<ProdDTO> getprodlist() {
 	
 		return sqlsession.selectList(namespace+".getprodlist");
+	}
+
+
+
+
+	public List<PerformanceDTO> getperflist() {
+		
+		return  sqlsession.selectList(namespace+".getperflist");
+		
 	}
 	
 	

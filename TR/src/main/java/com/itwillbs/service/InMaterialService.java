@@ -11,6 +11,7 @@ import com.itwillbs.domain.InMaterialDTO;
 
 @Service
 public class InMaterialService {
+	
 	@Inject
 	private InMaterialDAO inMaterialDAO;
 

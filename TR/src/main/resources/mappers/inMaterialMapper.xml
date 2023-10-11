@@ -5,13 +5,12 @@
 
 <mapper namespace="com.itwillbs.mappers.inMaterialMapper">
 
-
-	<select id="getInMaterialList"
-		resultType="com.itwillbs.domain.InMaterialDTO">
-	select i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+	 <select id="getInMaterialList" resultType="com.itwillbs.domain.InMaterialDTO">
+	 
+	SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
 	i.rawCode, r.rawName, i.inCount, s.stockCount,
 	r.rawPrice, i.inPrice, i.inDate, i.inEmpId, i.inState
-	from inMaterial i join rawMaterial r
+	FROM inMaterial i join rawMaterial r
 	on i.rawCode = r.rawCode
 	join stock s
 	on i.rawCode = s.rawCode
@@ -19,6 +18,7 @@
 	on i.clientCode = c.clientCode
 	order by i.inNum desc
 	limit #{startRow}, #{pageSize}
+	
 	</select>
 	
 

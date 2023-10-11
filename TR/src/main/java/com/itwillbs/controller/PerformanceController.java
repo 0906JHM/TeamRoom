@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.LineDTO;
+import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.EmployeesService;
 import com.itwillbs.service.PerformanceService;
@@ -41,14 +42,14 @@ public class PerformanceController {
 	public String perf(Model model) {
 		
 		System.out.println("PerformanceController perf메인페이지요청");
-		log.debug(cont+"메인페이지요청");
+		log.debug("메인페이지  실적코드 요청");
+		 List<PerformanceDTO> perflist = perfService.perflist();
+			
+	        model.addAttribute("perflist",perflist);
+	       log.debug("반환값"+perflist);
 		
-		/*
-		 * List<ClientDTO> clientList = clientService.getclientList();
-		 * 
-		 * 
-		 * model.addAttribute("clientList",clientList);
-		 */
+		
+		
 		
 		return "perf/perf";
 		

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.PerformanceDAO;
 import com.itwillbs.domain.LineDTO;
+import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,11 @@ public class PerformanceService {
 	
 	@Inject
 	private PerformanceDAO perfDAO;
+	
+	public List<PerformanceDTO> perflist() {
+		
+		return perfDAO.getperflist();
+	}
 
 	public List<LineDTO> getlinelist() {
 		
@@ -28,6 +34,8 @@ public class PerformanceService {
 		
 		return perfDAO.getprodlist();
 	}
+
+	
 
 
 
