@@ -7,7 +7,15 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<link href="${pageContext.request.contextPath }/resources/css/side.css"
+	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/resources/css/product.css"
+	rel="stylesheet" type="text/css">
+
+
 <head>
+
+	
 
 <%--     <jsp:include page="test4.jsp"></jsp:include> --%>
     <title>roomair</title>
@@ -21,30 +29,19 @@
 	<script src="../resources/js/productList_im.js"></script>
 <!-- 		추가안되면 사이드바에 있는 이거^때문임 -->
 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-zrve{background-color:#0949f7;border-color:#3531ff;text-align:center;vertical-align:top}
-.tg .tg-llyw{background-color:#c0c0c0;border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-
-</style>
 
 </head>
 
 
-
-
-
-
 <body>
+
+<!-- 사이드바 -->
+	<jsp:include page="../inc/side.jsp"></jsp:include>
+<!-- 사이드바 -->
 
 <div class="container"> 
     <h2>제품 관리</h2>
-    
+    <hr>
     <form action="${pageContext.request.contextPath}/product/list" method="get" id="selectedProId">
         <label>제품코드</label>  <input type="text" placeholder="제품코드를 입력하세요." name="prodCode">
         <label>제품명</label> <input type="text" placeholder="제품명을 입력하세요." name="prodName">
@@ -55,15 +52,16 @@
 <!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
         <button type="submit">조회</button>
     </form>
-    
+    <hr>
 <%--     <form action="${pageContext.request.contextPath}/product/write" method="post"> --%>
+<div class="buttons">
     <button id="add"  onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
     <button id="modify">수정</button>
 <!--     <button id="delete" onclick="deleteSelectedProducts()">삭제</button> -->
 	<button id="delete">삭제</button>
     <button id="cancel">취소</button>
     <button id="save">저장</button>
-   
+ </div>  
     <p>총 ${pageDTO.count}건</p>
     
     <form id="productList">
