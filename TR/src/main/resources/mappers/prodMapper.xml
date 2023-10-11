@@ -80,6 +80,8 @@
 		left join warehouse w
 		on
 		p.whseCode = w.whseCode
+		
+		
 		<where>
 			<if test="prodCode != ''">
 				p.prodCode like concat ('%', #{prodCode}, '%')
@@ -94,11 +96,11 @@
 			</if>
 		</where>
 		<!-- order by 1 desc -->
-		<!-- limit #{start},#{cntPerPage} -->
+		limit #{startRow}, #{pageSize}
 	</select>
 	
-	<select id="getSearchcount" resultType="com.itwillbs.domain.ProdDTO">
-		select count(*)
+	<select id="getSearchcount" resultType="java.lang.Integer">
+		select count(p.prodCode)
 		FROM product p
 		left
 		join clients c

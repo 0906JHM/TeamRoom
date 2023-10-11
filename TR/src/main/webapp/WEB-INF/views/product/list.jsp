@@ -45,7 +45,7 @@
 <div class="container"> 
     <h2>제품 관리</h2>
     
-    <form action="${pageContext.request.contextPath}/product/search" method="get" id="selectedProId">
+    <form action="${pageContext.request.contextPath}/product/list" method="get" id="selectedProId">
         <label>제품코드</label>  <input type="text" placeholder="제품코드를 입력하세요." name="prodCode">
         <label>제품명</label> <input type="text" placeholder="제품명을 입력하세요." name="prodName">
         <label>거래처명</label> 
@@ -64,7 +64,7 @@
     <button id="cancel">취소</button>
     <button id="save">저장</button>
    
-    <p>총 ${prodList.size()}건</p>
+    <p>총 ${pageDTO.count}건</p>
     
     <form id="productList">
     <table class="tg" id="productTable">
@@ -107,17 +107,17 @@
 </table>
 
 <c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
-	<a href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&search=${pageDTO.search}">Prev</a>
+	<a href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Prev</a>
 </c:if>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/product/list?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+<a href="${pageContext.request.contextPath}/product/list?pageNum=${i}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">${i}</a> 
 </c:forEach>
 
 
 <c:if test="${pageDTO.endPage < pageDTO.pageCount}">
-	<a href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&search=${pageDTO.search}">Next</a>
+	<a href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Next</a>
 </c:if>
 
 

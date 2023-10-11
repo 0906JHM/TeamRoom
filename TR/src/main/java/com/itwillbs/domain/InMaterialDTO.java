@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class inMaterialDTO {
+public class InMaterialDTO {
 	private String inNum;
 	private Date inDate;
 	private int inCount;

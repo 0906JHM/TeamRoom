@@ -45,7 +45,7 @@
 						</div>
 						<ul class="submenu">
 							<li><a href="${pageContext.request.contextPath }/stock/list" class="sidea">재고관리</a></li>
-							<li><a href="#" class="sidea">입고관리</a></li>
+							<li><a href="${pageContext.request.contextPath }/inMaterial/list" class="sidea">입고관리</a></li>
 							<li><a href="${pageContext.request.contextPath }/outProduct/list" class="sidea">출고관리</a></li>
 							<li><a href="#" class="sidea">창고관리</a></li>
 						</ul>
