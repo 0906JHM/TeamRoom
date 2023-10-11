@@ -98,6 +98,12 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
 
 }
 
+.workCode{
+
+width: 10px;
+
+}
+
 
 </style>
 </head>
@@ -115,10 +121,10 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
 제품코드: <input type="text" id="prodCode" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="">
 </div>
 
-
 <div class="perfcd1">
  지시일자: <input type="text" id="workdate1" name="workdate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="workdate2	" class="form-control" placeholder="날짜 선택" readonly>
 </div>
+
 </div> <!--  perfcd -->
 <hr> <!--  경계선 -->
 <form action="${pageContext.request.contextPath}/perf/perfinsertPro">
@@ -140,8 +146,8 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
 			</thead> 
 			<tbody>
 					<tr class="ctcontents">
-					    <td >WO20231010112112</td>
-						<td >WO20231010112112</td>
+					    <td >WO2023101111095</td>
+						<td ><input type="text" id="workCode" name="workCode" onclick=""></td>
 						<td >1</td>
 						<td >1</td>
 						<td >1</td>
@@ -186,7 +192,7 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
               console.log("선택한 날짜: " + selectedDate);
           }
       });
-  });
+  }); // datekpicker1 끝
         
         
         $(function() {
@@ -208,7 +214,8 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
                     console.log("선택한 날짜: " + selectedDate);
                 }
             });
-        });
+        }); // datepicker2 끝 
+        
     </script>
 </body>
 </html>

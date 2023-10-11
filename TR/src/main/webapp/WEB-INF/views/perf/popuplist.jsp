@@ -9,7 +9,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-검색리스트 
+
+<c:if test="${not empty lineDTO}">
+        <h1>라인 정보</h1>
+        <p>라인 코드: ${lineDTO.lineCode}</p>
+        <p>라인 이름: ${lineDTO.lineName}</p>
+        <%-- 라인DTO의 필드에 따라 필요한 정보 출력 --%>
+    </c:if>
+
+    <%-- 제품 코드에 대한 정보 출력 --%>
+    <c:if test="${not empty prodDTO}">
+        <h1>제품 정보</h1>
+        <p>제품 코드: ${prodDTO.prodCode}</p>
+        <p>제품 이름: ${prodDTO.prodName}</p>
+        <%-- ProdDTO의 필드에 따라 필요한 정보 출력 --%>
+    </c:if>
+
 
 
 </body>

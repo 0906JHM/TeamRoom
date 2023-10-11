@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,12 +53,20 @@
 					<td><input type="number" name="whseCount" value="${outProductDTO.whseCount }" readonly="readonly"></td>
 				</tr>
 				<tr>
+					<fmt:formatNumber var="prodPrice" value="${outProductDTO.prodPrice }" pattern="###,###.##"></fmt:formatNumber>
 					<td>납품가</td>
-					<td><input type="number" step="0.01" name="prodPrice" value="${outProductDTO.prodPrice }" readonly="readonly"></td>
+					<td>
+						<input type="hidden" name="prodPrice" value="${outProductDTO.prodPrice }">
+						<input type="text" name="prodPriceFormat" value="${prodPrice }원" readonly="readonly">
+					</td>
 				</tr>
 				<tr>
+					<fmt:formatNumber var="outPrice" value="${outProductDTO.outPrice }" pattern="###,###"></fmt:formatNumber>
 					<td>출고가격</td>
-					<td><input type="number" name="outPrice" value="${outProductDTO.outPrice }" readonly="readonly"></td>
+					<td>
+						<input type="hidden" name="outPrice" value="${outProductDTO.outPrice }">
+						<input type="text" name="outPriceFormat" value="${outPrice }원" readonly="readonly">
+					</td>
 				</tr>
 				<tr>
 					<td>납품예정일</td>

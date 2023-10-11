@@ -1,5 +1,7 @@
 package com.itwillbs.domain;
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +15,7 @@ public class LineDTO {
 	private String lineName;
 	private int lineUse;
 	private String lineEmpId;
-	private String lineInsertDate;
+	private Date lineInsertDate;
 	private String lineProcess;
 	
 	

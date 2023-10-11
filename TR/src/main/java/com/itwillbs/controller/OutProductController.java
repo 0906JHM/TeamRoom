@@ -27,6 +27,8 @@ public class OutProductController {
 	@Inject
 	private OutProductService outProductService;
 	
+	
+//	출고 페이지 이동 -> ajaxOutProductController에서 ajax로 리스트 불러오게 할려고 
 	@GetMapping("/list")
 	public String outProductList(Model model) {
 //		List<OutProductDTO> outProductList = outProductService.getOutProductList();
@@ -36,6 +38,7 @@ public class OutProductController {
 		return "outProduct/outProduct";
 	}
 	
+//	페이지 세부정보 
 	@GetMapping("/outProductContent")
 	public String outProductContent(HttpServletRequest request, Model model) {
 		
@@ -48,19 +51,20 @@ public class OutProductController {
 		return "outProduct/outProductContent";
 	}
 	
+//	페이지 세부정보 에서 출고처리 버튼
 	@PostMapping("/outProductUpdate")
 	public void outProductUpdate(OutProductDTO outProductDTO, HttpServletResponse response){
 //		디비에 저장된 outProductDTO2 		업데이트된 내용이 들어있는 outProductDTO
 		OutProductDTO outProductDTO2 = outProductService.outProductContent(outProductDTO.getOutCode());
 
 //		sellState 변경
-		if(outProductDTO.getOutCount() < outProductDTO.getWhseCount()) {
+		if(outProductDTO.getOutCount() < outProductDTO.getSellCount()) {
 			if(outProductDTO.getOutCount() == 0) {
 				outProductDTO.setSellState("미출고");
 			}else {
 				outProductDTO.setSellState("중간납품");
 			}
-		}else if(outProductDTO.getOutCount() == outProductDTO.getWhseCount()) {
+		}else if(outProductDTO.getOutCount() == outProductDTO.getSellCount()) {
 			outProductDTO.setSellState("출고완료");
 		}
 

@@ -29,6 +29,8 @@
 		JOIN stockTestTest
 		ON o.prodCode =
 		stockTestTest.prodCode
+		ORDER BY o.prodCode DESC
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 
 	<select id="getOutProductListSearch"
@@ -59,7 +61,7 @@
 		<choose>
 			<!-- 1. 모든 컬럼을 고려한 경우 -->
 			<when
-				test="outCode != null and prodName != null and clientCompany != null and sellState != null">
+				test="outCode != '' and prodName != '' and clientCompany != '' and sellState != ''">
 				o.outCode LIKE CONCAT('%', #{outCode}, '%')
 				AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
 				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
@@ -68,7 +70,7 @@
 
 			<!-- 2. outCode, prodName, clientCompany 컬럼을 고려한 경우 -->
 			<when
-				test="outCode != null and prodName != null and clientCompany != null">
+				test="outCode != '' and prodName != '' and clientCompany != ''">
 				o.outCode LIKE CONCAT('%', #{outCode}, '%')
 				AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
 				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
@@ -76,7 +78,7 @@
 
 			<!-- 3. outCode, prodName, sellState 컬럼을 고려한 경우 -->
 			<when
-				test="outCode != null and prodName != null and sellState != null">
+				test="outCode != '' and prodName != '' and sellState != ''">
 				o.outCode LIKE CONCAT('%', #{outCode}, '%')
 				AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
 				AND s.sellState = #{sellState}
@@ -84,65 +86,65 @@
 
 			<!-- 4. prodName, clientCompany, sellState 컬럼을 고려한 경우 -->
 			<when
-				test="prodName != null and clientCompany != null and sellState != null">
+				test="prodName != '' and clientCompany != '' and sellState != ''">
 				p.prodName LIKE CONCAT('%', #{prodName}, '%')
 				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
 				AND s.sellState = #{sellState}
 			</when>
 
 			<!-- 5. outCode, prodName 컬럼을 고려한 경우 -->
-			<when test="outCode != null and prodName != null">
+			<when test="outCode != '' and prodName != ''">
 				o.outCode LIKE CONCAT('%', #{outCode}, '%')
 				AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
 			</when>
 
 			<!-- 6. outCode, clientCompany 컬럼을 고려한 경우 -->
-			<when test="outCode != null and clientCompany != null">
+			<when test="outCode != '' and clientCompany != ''">
 				o.outCode LIKE CONCAT('%', #{outCode}, '%')
 				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
 			</when>
 
 			<!-- 7. outCode, sellState 컬럼을 고려한 경우 -->
-			<when test="outCode != null and sellState != null">
+			<when test="outCode != '' and sellState != ''">
 				o.outCode LIKE CONCAT('%', #{outCode}, '%')
 				AND s.sellState = #{sellState}
 			</when>
 
 			<!-- 8. prodName, clientCompany 컬럼을 고려한 경우 -->
-			<when test="prodName != null and clientCompany != null">
+			<when test="prodName != '' and clientCompany != ''">
 				p.prodName LIKE CONCAT('%', #{prodName}, '%')
 				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
 			</when>
 
 			<!-- 9. prodName, sellState 컬럼을 고려한 경우 -->
-			<when test="prodName != null and sellState != null">
+			<when test="prodName != '' and sellState != ''">
 				p.prodName LIKE CONCAT('%', #{prodName}, '%')
 				AND s.sellState = #{sellState}
 			</when>
 
 			<!-- 10. clientCompany, sellState 컬럼을 고려한 경우 -->
-			<when test="clientCompany != null and sellState != null">
+			<when test="clientCompany != '' and sellState != ''">
 				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
 				AND s.sellState = #{sellState}
 			</when>
 
 			<!-- 11. outCode 컬럼을 고려한 경우 -->
-			<when test="outCode != null">
+			<when test="outCode != ''">
 				o.outCode LIKE CONCAT('%', #{outCode}, '%')
 			</when>
 
 			<!-- 12. prodName 컬럼을 고려한 경우 -->
-			<when test="prodName != null">
+			<when test="prodName != ''">
 				p.prodName LIKE CONCAT('%', #{prodName}, '%')
 			</when>
 
 			<!-- 13. clientCompany 컬럼을 고려한 경우 -->
-			<when test="clientCompany != null">
+			<when test="clientCompany != ''">
 				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
 			</when>
 
 			<!-- 14. sellState 컬럼을 고려한 경우 -->
-			<when test="sellState != null">
+			<when test="sellState != ''">
 				s.sellState = #{sellState}
 			</when>
 
@@ -151,8 +153,148 @@
 				1=1
 			</otherwise>
 		</choose>
-
+		ORDER BY o.prodCode DESC
+		LIMIT #{startRow}, #{pageSize}
 	</select>
+	
+	<select id="getOutProductListCount"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT o.outCode outCode, o.prodCode prodCode, DATE_FORMAT(o.outDate, '%Y-%m-d') outDate, o.outEmpId outEmpId, o.outMemo outMemo,
+		    DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate, o.outCount outCount, o.outPrice outPrice, 
+		    o.sellCode sellCode, s.sellCount sellCount, DATE_FORMAT(s.sellDuedate, '%Y-%m-%d') sellDuedate, s.sellState sellState,
+		    s.clientCode clientCode, c.clientCompany clientCompany,
+		    p.prodName prodName, p.prodPrice prodPrice,
+		    stockTestTest.whseCount whseCount
+		    FROM outProduct o JOIN sellTestTest s
+		    ON o.sellCode = s.sellCode
+		    JOIN clients c
+		    ON s.clientCode = c.clientCode
+		    JOIN product p 
+		    ON o.prodCode = p.prodCode
+		    JOIN stockTestTest
+		    ON o.prodCode = stockTestTest.prodCode
+		) AS subquery;
+	</select>
+	
+	<select id="getOutProductListSearchCount"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT o.outCode outCode, o.prodCode prodCode, DATE_FORMAT(o.outDate, '%Y-%m-d') outDate, o.outEmpId outEmpId, o.outMemo outMemo,
+		    DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate, o.outCount outCount, o.outPrice outPrice, 
+		    o.sellCode sellCode, s.sellCount sellCount, DATE_FORMAT(s.sellDuedate, '%Y-%m-%d') sellDuedate, s.sellState sellState,
+		    s.clientCode clientCode, c.clientCompany clientCompany,
+		    p.prodName prodName, p.prodPrice prodPrice,
+		    stockTestTest.whseCount whseCount
+		    FROM outProduct o JOIN sellTestTest s
+		    ON o.sellCode = s.sellCode
+		    JOIN clients c
+		    ON s.clientCode = c.clientCode
+		    JOIN product p 
+		    ON o.prodCode = p.prodCode
+		    JOIN stockTestTest
+		    ON o.prodCode = stockTestTest.prodCode
+			WHERE
+			<choose>
+				<!-- 1. 모든 컬럼을 고려한 경우 -->
+				<when
+					test="outCode != '' and prodName != '' and clientCompany != '' and sellState != ''">
+					o.outCode LIKE CONCAT('%', #{outCode}, '%')
+					AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+					AND s.sellState = #{sellState}
+				</when>
+	
+				<!-- 2. outCode, prodName, clientCompany 컬럼을 고려한 경우 -->
+				<when
+					test="outCode != '' and prodName != '' and clientCompany != ''">
+					o.outCode LIKE CONCAT('%', #{outCode}, '%')
+					AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				</when>
+	
+				<!-- 3. outCode, prodName, sellState 컬럼을 고려한 경우 -->
+				<when
+					test="outCode != '' and prodName != '' and sellState != ''">
+					o.outCode LIKE CONCAT('%', #{outCode}, '%')
+					AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
+					AND s.sellState = #{sellState}
+				</when>
+	
+				<!-- 4. prodName, clientCompany, sellState 컬럼을 고려한 경우 -->
+				<when
+					test="prodName != '' and clientCompany != '' and sellState != ''">
+					p.prodName LIKE CONCAT('%', #{prodName}, '%')
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+					AND s.sellState = #{sellState}
+				</when>
+	
+				<!-- 5. outCode, prodName 컬럼을 고려한 경우 -->
+				<when test="outCode != '' and prodName != ''">
+					o.outCode LIKE CONCAT('%', #{outCode}, '%')
+					AND p.prodName LIKE CONCAT('%', #{prodName}, '%')
+				</when>
+	
+				<!-- 6. outCode, clientCompany 컬럼을 고려한 경우 -->
+				<when test="outCode != '' and clientCompany != ''">
+					o.outCode LIKE CONCAT('%', #{outCode}, '%')
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				</when>
+	
+				<!-- 7. outCode, sellState 컬럼을 고려한 경우 -->
+				<when test="outCode != '' and sellState != ''">
+					o.outCode LIKE CONCAT('%', #{outCode}, '%')
+					AND s.sellState = #{sellState}
+				</when>
+	
+				<!-- 8. prodName, clientCompany 컬럼을 고려한 경우 -->
+				<when test="prodName != '' and clientCompany != ''">
+					p.prodName LIKE CONCAT('%', #{prodName}, '%')
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				</when>
+	
+				<!-- 9. prodName, sellState 컬럼을 고려한 경우 -->
+				<when test="prodName != '' and sellState != ''">
+					p.prodName LIKE CONCAT('%', #{prodName}, '%')
+					AND s.sellState = #{sellState}
+				</when>
+	
+				<!-- 10. clientCompany, sellState 컬럼을 고려한 경우 -->
+				<when test="clientCompany != '' and sellState != ''">
+					c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+					AND s.sellState = #{sellState}
+				</when>
+	
+				<!-- 11. outCode 컬럼을 고려한 경우 -->
+				<when test="outCode != ''">
+					o.outCode LIKE CONCAT('%', #{outCode}, '%')
+				</when>
+	
+				<!-- 12. prodName 컬럼을 고려한 경우 -->
+				<when test="prodName != ''">
+					p.prodName LIKE CONCAT('%', #{prodName}, '%')
+				</when>
+	
+				<!-- 13. clientCompany 컬럼을 고려한 경우 -->
+				<when test="clientCompany != ''">
+					c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				</when>
+	
+				<!-- 14. sellState 컬럼을 고려한 경우 -->
+				<when test="sellState != ''">
+					s.sellState = #{sellState}
+				</when>
+	
+				<!-- 15. 어떠한 조건도 없는 경우 -->
+				<otherwise>
+					1=1
+				</otherwise>
+			</choose>
+		) AS subquery;
+	</select>
+	
 	
 	
 	<select id="outProductContent"
