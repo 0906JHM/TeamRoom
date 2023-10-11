@@ -25,18 +25,18 @@
 		<hr>
 		<div id="searchForm">
 				<label>출고 번호</label><input type="text" name="outCode" id="outCode" placeholder="출고 번호를 입력하세요">
-				<label>제품명</label><input type="text" name="prodName" id="prodName" placeholder="제품명을 입력하세요">
-				<label>거래처명</label><input type="text" name="clientCompany" id="clientCompany" placeholder="거래처명을 입력하세요">
+				<label>제품명</label><input type="text" name="prodName" id="prodName9999" placeholder="제품명을 입력하세요" onclick="searchItem('prod','prodCode9999')">
+				<label>거래처명</label><input type="text" name="clientCompany" id="clientCompany9999" placeholder="거래처명을 입력하세요" onclick="searchItem('client','clientCode9999')">
 				<input type="button" value="검색" id="searchButton">
 		</div>
 		<hr>
 		<div id="buttons">
-			<input type="button" value="전체" id="allButton">
-    		<input type="button" value="미출고" id="non_deliveryButton">
-    		<input type="button" value="중간납품" id="interim_deliveryButton">
-    		<input type="button" value="출고완료" id="deliveryButton">
+			<input type="button" class="buttons highlighted" value="전체" id="allButton">
+    		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
+    		<input type="button" class="buttons " value="중간납품" id="interim_deliveryButton">
+    		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
 		</div>
-		<h3 style="padding-left:1%;">출고 목록 <small>총 3건</small></h3>
+		<h3 style="padding-left:1%;">목록 <small id="listCount">총 3건</small></h3>
 		<div id="outProductList">
 			<table>
 				<thead>
@@ -82,30 +82,40 @@
 		        	// 검색 조건을 가져오기 (이 부분을 필요에 따라 구현)
 			        var searchParams = {
 			            outCode: $("#outCode").val(),
-			            prodName: $("#prodName").val(),
-			            clientCompany: $("#clientCompany").val(),
+			            prodName: $("#prodName9999").val(),
+			            clientCompany: $("#clientCompany9999").val(),
 			        };
 					console.log(searchParams);
 		            loadOutProductList(searchParams);
 		        });
 				
 		    	// Enter 키 이벤트를 감지할 input 요소에 이벤트 리스너 등록
-		        $("#outCode, #prodName, #clientCompany").on('keydown', function (e) {
+		        $("#outCode, #prodName9999, #clientCompany9999").on('keydown', function (e) {
 		            if (e.key === 'Enter') {
 		                e.preventDefault(); // 엔터 키 기본 동작을 막음 (폼 제출 방지)
 		                $("#searchButton").click(); // 검색 버튼 클릭
 		            }
 		        });
 		        
+		    	
+		     // 버튼 클릭 시 클래스를 관리
+		        $(".buttons").click(function () {
+		          // 모든 버튼의 "highlighted" 클래스 제거
+		          $(".buttons").removeClass("highlighted");
+
+		          // 클릭한 버튼에 "highlighted" 클래스 추가
+		          $(this).addClass("highlighted");
+		        });
 		        
 		     	// 전체 버튼 클릭 시
 		        $("#allButton").click(function () {
 		            // 전체 버튼에 대한 동작을 추가하고,
 		        	sellStateButton2 = "전체";
 		        	sellStateButton1 = sellStateButton2;
+		        	
 		        	$("#outCode").val('');
-	                $("#prodName").val('');
-	                $("#clientCompany").val('');
+	                $("#prodName9999").val('');
+	                $("#clientCompany9999").val('');
 		            // 검색 조건을 설정하고 전체 목록을 가져오도록 수정
 		            var searchParams = {
 		                sellState: sellStateButton2 // 전체 조건 추가
@@ -120,8 +130,8 @@
 		            // 검색 조건을 설정하고 미출고 목록을 가져오도록 수정
 		            var searchParams = {
 		                outCode: $("#outCode").val(),
-		                prodName: $("#prodName").val(),
-		                clientCompany: $("#clientCompany").val(),
+		                prodName: $("#prodName9999").val(),
+		                clientCompany: $("#clientCompany9999").val(),
 		                sellState: sellStateButton2 // 미출고 조건 추가
 		            };
 		            loadOutProductList(searchParams);
@@ -134,8 +144,8 @@
 		            // 검색 조건을 설정하고 중간납품 목록을 가져오도록 수정
 		            var searchParams = {
 		                outCode: $("#outCode").val(),
-		                prodName: $("#prodName").val(),
-		                clientCompany: $("#clientCompany").val(),
+		                prodName: $("#prodName9999").val(),
+		                clientCompany: $("#clientCompany9999").val(),
 		                sellState: sellStateButton2 // 중간납품 조건 추가
 		            };
 		            loadOutProductList(searchParams);
@@ -148,8 +158,8 @@
 		            // 검색 조건을 설정하고 출고완료 목록을 가져오도록 수정
 		            var searchParams = {
 		                outCode: $("#outCode").val(),
-		                prodName: $("#prodName").val(),
-		                clientCompany: $("#clientCompany").val(),
+		                prodName: $("#prodName9999").val(),
+		                clientCompany: $("#clientCompany9999").val(),
 		                sellState: sellStateButton2 // 출고완료 조건 추가
 		            };
 		            loadOutProductList(searchParams);
@@ -160,8 +170,8 @@
 		    function firstLoadOutProductList() {
 		    	 var searchParams = {
 	                outCode: $("#outCode").val(),
-	                prodName: $("#prodName").val(),
-	                clientCompany: $("#clientCompany").val(),
+	                prodName: $("#prodName9999").val(),
+	                clientCompany: $("#clientCompany9999").val(),
 	                sellState: "전체"
 	            };
 				
@@ -259,6 +269,8 @@
 		        		var prev = data[i].startPage - data[i].pageBlock;
 		        		var next = data[i].startPage + data[i].pageBlock;
 		        		
+		        		var listCountElement = document.getElementById("listCount");
+		        		listCountElement.textContent = "총 " + data[i].count + "건"; // 내용을 원하는 형식으로 변경
 		        		
 		        		var pagingUL = $("#paging_ul");
 		        		pagingUL.empty(); // 기존 페이징 데이터를 비웁니다.
@@ -318,6 +330,15 @@
 		    function formatCurrency(number) {
 		        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
 		    }
+		 	
+		 // 팝업 옵션
+		    const popupOpt = "top=60,left=140,width=720,height=600";
+
+		    //검색 팝업
+		    	function searchItem(type, inputId) {
+		    	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
+		    	var popup = window.open(url, "", popupOpt);
+		    } //openWindow()
 		 	
 	</script>
 
