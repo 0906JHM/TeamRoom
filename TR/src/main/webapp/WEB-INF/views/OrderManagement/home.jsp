@@ -9,6 +9,7 @@
 <meta charset="UTF-8">  
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
 
 <!-- javascript -->
 <script type="text/javascript">
@@ -77,14 +78,14 @@ function openPopup1() {
     window.open('${pageContext.request.contextPath}/OrderManagement/insert', '_blank', 'height=400,width=600');
 }
 
-//detail 페이지 팝업창
+// detail 페이지 팝업창
 function openPopup2(url) {
 	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
 	myWindow.moveTo(0, 0);
 	myWindow.focus();
 }
 
-//selectclient 페이지 팝업창
+// selectclient 페이지 팝업창
 function openPopup3() {
     var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
     // 팝업 창닫기 버튼 클릭시 창닫기
@@ -106,12 +107,13 @@ $(document).ready(function() {
 
 <!-- body -->
 <body>
+<jsp:include page="../inc/side.jsp"></jsp:include>
 <h1>발주관리</h1>
 
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/OrderManagement/home" method="get">
 발주번호	<input type="text" name="search1" placeholder="발주번호">
-품번	<input type="text" name="search2" placeholder="품번">
+품번		<input type="text" name="search2" placeholder="품번">
 종류		<select name="search3">
 		<option value="">전체</option>
 		<option value="향기">향기</option>
@@ -120,7 +122,7 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처		<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()">
+거래처		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
 <input type="submit" value="검색">
 </form>
 

@@ -14,6 +14,18 @@
 <body>
 <h1>거래처</h1>
 
+<!-- button -->
+거래처 <input type="text" placeholder="등록할 거래처" id="cInput"> <input type="button" value="등록" onclick="setParentText()">
+
+<!-- javascript -->
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript">
+function setParentText(){
+	opener.document.getElementById("pInput").value = document.getElementById("cInput").value
+	window.close();
+}
+</script>
+
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/selectclient" method="get">
 거래처코드	<input type="text" name="search1" placeholder="거래처코드">
@@ -47,7 +59,7 @@
 </tr>
 
 <c:forEach var="clientDTO" items="${clientList}">
-<tr>
+<tr onclick="document.getElementById('cInput').value='${clientDTO.clientCode}'; setParentText();">
 <td>${clientDTO.clientType}</td>
 <td>${clientDTO.clientCode}</td>
 <td>${clientDTO.clientCompany}</td>

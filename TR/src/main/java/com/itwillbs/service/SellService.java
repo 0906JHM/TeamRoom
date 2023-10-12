@@ -1,5 +1,6 @@
 package com.itwillbs.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,7 +44,7 @@ public class SellService {
 	public void insertSell(SellDTO sellDTO) {
 		System.out.println("SellService insertSell()");
 		
-		sellDTO.setSellDuedate(null);
+		/* sellDTO.setSellDuedate(null); */
 		
 		sellDAO.insertSell(sellDTO);	
 	}//insertSell
@@ -81,7 +82,7 @@ public class SellService {
 
 
 
-
+ 
 
 	
 

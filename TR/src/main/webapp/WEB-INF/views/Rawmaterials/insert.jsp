@@ -28,7 +28,7 @@
 단위 : 		<input type="text" name="rawUnit" value="EA"><br>
 매입단가 : 		<input type="text" name="rawPrice"><br>
 거래처 :		<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup1()"><br>
-창고명 : 		<input type="text" name="whseCode"> <input type="button" value="창고목록" onclick="openPopup2()"><br>
+창고명 : 		<input type="text" name="whseCode" id="pInput2"> <input type="button" value="창고목록" onclick="openPopup2()"><br>
 비고 : 		<input type="text" name="rawMemo"><br>
 <input type="submit" value="품목추가">
 </form>
@@ -42,13 +42,18 @@
 // 98-%EA%B0%92-%EC%A0%84%EB%8B%AC#%EC%9E%90%EC%8B%9D%EC%B0%BD%EC%97%90%EC%84%9C_%EB%B6%80%EB%AA%A8%EC%B0%BD%EC%9C%BC%EB%A1
 // %9C_%EA%B0%92_%EC%A0%84%EB%8B%AC%ED%95%98%EA%B8%B0
 
-// openPopup1 페이지 팝업창
 let openWin;
+
 function openPopup1() {
 	// window.name = "부모창 이름";
 	window.name = "insert";
 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-	openWin = window.open("selectclient2.html", "selectclient2", "height=600,width=1300");    
+	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
+}
+
+function openPopup2() {
+	window.name = "insert";
+	openWin = window.open("selectwarehouse.html", "selectwarehouse", "height=600,width=1300");    
 }
 </script>
 </body>
