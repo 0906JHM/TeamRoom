@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.WarehouseDTO;
 import com.itwillbs.service.RawmaterialsService;
 
 @Controller   
@@ -219,9 +220,9 @@ public class RawmaterialsController {
         return "Rawmaterials/selectclient";
     }
  	
- 	// selectclient2 페이징처리, 검색기능
-  	@GetMapping("/selectclient2")
-     public String selectclient2(HttpServletRequest request,Model model) {
+ 	// selectwarehouse 페이징처리, 검색기능
+  	@GetMapping("/selectwarehouse")
+     public String selectwarehouse(HttpServletRequest request,Model model) {
          
   		String search1 = request.getParameter("search1");
  		System.out.println("search1 : " + search1);
@@ -248,10 +249,10 @@ public class RawmaterialsController {
  	    pageDTO.setSearch3(search3);
  	    pageDTO.setSearch4(search4);
          
-        // 거래처 내용 뿌려주기
-        List<ClientDTO> clientList= rawmaterialsService.getClientList(pageDTO);
+        // 창고 내용 뿌려주기
+        List<WarehouseDTO> warehouseList= rawmaterialsService.getWarehouseList(pageDTO);
          
-        int count = rawmaterialsService.getClientCount(pageDTO);
+        int count = rawmaterialsService.getWarehouseCount(pageDTO);
         int pageBlock = 10;
         int startPage=(currentPage-1)/pageBlock*pageBlock+1;
         int endPage = startPage + pageBlock -1;
@@ -266,11 +267,11 @@ public class RawmaterialsController {
         pageDTO.setPageCount(pageCount);
         model.addAttribute("pageDTO", pageDTO);
          
-        // 거래처 내용 뿌려주기
-        model.addAttribute("clientList", clientList);
+        // 창고 내용 뿌려주기
+        model.addAttribute("warehouseList", warehouseList);
         model.addAttribute("pageDTO", pageDTO);
          
-        return "Rawmaterials/selectclient2";
+        return "Rawmaterials/selectwarehouse";
     }
  	
 }

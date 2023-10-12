@@ -10,6 +10,7 @@ import com.itwillbs.dao.RawmaterialsDAO;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.WarehouseDTO;
 
 @Service 
 public class RawmaterialsService implements RawmaterialsService2 {
@@ -77,5 +78,22 @@ public class RawmaterialsService implements RawmaterialsService2 {
 		System.out.println("RawmaterialsService getClientCount()");
 		return rawmaterialsDAO.getClientCount(pageDTO);
 	}
+	
+	// selectwarehouse 페이징처리, 검색기능
+	public List<WarehouseDTO> getWarehouseList(PageDTO pageDTO) {
+		System.out.println("RawmaterialsService getWarehouseList()");
+		int startRow = (pageDTO.getCurrentPage()-1)*pageDTO.getPageSize() + 1;
+        int endRow = startRow + pageDTO.getPageSize() - 1;
+        pageDTO.setStartRow(startRow - 1);
+        pageDTO.setEndRow(endRow);
+		return rawmaterialsDAO.getWarehouseList(pageDTO);
+	}
 
+	// selectwarehouse 페이징처리, 검색기능
+	public int getWarehouseCount(PageDTO pageDTO) {
+		System.out.println("RawmaterialsService getWarehouseCount()");
+		return rawmaterialsDAO.getWarehouseCount(pageDTO);
+	}
+	
+	
 }
