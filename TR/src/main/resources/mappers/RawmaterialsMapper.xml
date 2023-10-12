@@ -112,6 +112,7 @@
     	</if>
  	</select>
  	
+<<<<<<< HEAD
  	<select id="getSellMemo" resultType="com.itwillbs.domain.RawmaterialsDTO">
 		select *
 		from rawMaterial
@@ -129,5 +130,45 @@
 		set rawMemo=#{rawMemo}
 		where rawCode = #{rawCode}
 	</update>
+=======
+ 	<!-- selectwarehouse 페이징처리, 검색기능 -->
+	<select id="getWarehouseList" resultType="com.itwillbs.domain.WarehouseDTO">
+		select *
+		from warehouse
+		where 1=1
+   		<if test="search1 != null and search1 != ''">
+        	and whseCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and whseName like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and whseType = #{search3}
+    	</if>
+    	<if test="search4 != null and search4 != ''">
+       		and whseAddr = #{search4}
+    	</if>
+     	order by whseCode desc limit #{startRow}, #{pageSize}
+	</select>
+>>>>>>> branch 'master' of https://github.com/0906JHM/TeamRoom.git
 	
+	<!-- selectwarehouse 페이징처리, 검색기능 -->
+	<select id="getWarehouseCount" resultType="java.lang.Integer">
+      	select count(*)
+      	from warehouse
+      	where 1=1
+   		<if test="search1 != null and search1 != ''">
+        	and whseCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and whseName like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and whseType = #{search3}
+    	</if>
+    	<if test="search4 != null and search4 != ''">
+       		and whseAddr = #{search4}
+    	</if>
+ 	</select>
+ 	
 </mapper>
