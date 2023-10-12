@@ -9,6 +9,7 @@
 <meta charset="UTF-8">  
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
 
 <!-- javascript -->
 <script type="text/javascript">
@@ -106,6 +107,7 @@ $(document).ready(function() {
 
 <!-- body -->
 <body>
+<jsp:include page="../inc/side.jsp"></jsp:include>
 <h1>발주관리</h1>
 
 <!-- form(검색) -->
