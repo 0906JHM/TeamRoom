@@ -100,7 +100,23 @@ public void sellAddPro(SellDTO sellDTO) {
 	System.out.println(sellDTO);
 	
 	sellService.insertSell(sellDTO);	
-	
+
+	/*
+	 sellCode 수주코드, 
+	 sellDate 수주일자, 
+	 sellDuedate납기일자, 
+	 sellEmpId 수주담당직원, 
+	 sellCount 수주수량, 
+	 prodCode 제품코드, 
+	 prodName 제품명,
+	 sellFile 수주파일, 
+	 sellMemo 수주비고, 
+	 sellState 수주상태(현황), 
+	 clientCode 거래처코드, 
+	 sellPrice 수주단가
+	 */
+
+	 
 }//sellAddPro
 
 
