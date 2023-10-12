@@ -12,7 +12,7 @@
 
 <!-- body -->
 <body>
-<h1>거래처</h1>
+<h1>거래처</h1> 
 
 <!-- button -->
 <input id="cInput" type="hidden">

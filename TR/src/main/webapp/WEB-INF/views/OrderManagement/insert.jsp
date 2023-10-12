@@ -15,7 +15,6 @@
 
 <!-- form -->
 <form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post">
-<!-- 발주번호 : 		<input type="text" name="buyNum"><br> -->
 품번 : 		<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
 품명 : 		<input type="text" name="rawName" id="rNInput"><br>
 종류 : 		<input type="text" name="rawType" id="rTInput"><br>
@@ -26,13 +25,14 @@
 발주신청일 : 	<input type="date" name="buyDate"><br>
 담당자 : 		<input type="text" name="buyEmpId"><br>
 입고상태 : 		<input type="radio" name="buyInstate" value="발주완료" checked>발주완료<br>
-
 <input type="submit" value="발주등록">
 </form>
 
+<!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
-// openPopup1 페이지 팝업창
+
+// 원자재목록 페이지 팝업창
 let openWin;
 function openPopup1() {
 	// window.name = "부모창 이름";
@@ -40,14 +40,12 @@ function openPopup1() {
 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
 	openWin = window.open("selectrawmaterials.html", "selectrawmaterials", "height=600,width=1300");    
 }
-//openPopup2 페이지 팝업창
+
+// 거래처목록 페이지 팝업창
 function openPopup2() {
-	// window.name = "부모창 이름";
 	window.name = "insert";
-	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
 }
 </script>
-
 </body>
 </html>

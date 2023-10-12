@@ -78,14 +78,14 @@ function openPopup1() {
     window.open('${pageContext.request.contextPath}/OrderManagement/insert', '_blank', 'height=400,width=600');
 }
 
-//detail 페이지 팝업창
+// detail 페이지 팝업창
 function openPopup2(url) {
 	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
 	myWindow.moveTo(0, 0);
 	myWindow.focus();
 }
 
-//selectclient 페이지 팝업창
+// selectclient 페이지 팝업창
 function openPopup3() {
     var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
     // 팝업 창닫기 버튼 클릭시 창닫기
@@ -113,7 +113,7 @@ $(document).ready(function() {
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/OrderManagement/home" method="get">
 발주번호	<input type="text" name="search1" placeholder="발주번호">
-품번	<input type="text" name="search2" placeholder="품번">
+품번		<input type="text" name="search2" placeholder="품번">
 종류		<select name="search3">
 		<option value="">전체</option>
 		<option value="향기">향기</option>
