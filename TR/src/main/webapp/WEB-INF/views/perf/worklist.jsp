@@ -47,7 +47,8 @@
 	    $('.ctcontents').click(function() {
 	        var selectedRow = $(this);
 	        var rowData = {
-	        		  workCode: selectedRow.find('td:eq(0)').text(),
+	        		    workCode: selectedRow.find('td:eq(0)').text(),
+	        		    lineCode:selectedRow.find('td:eq(1)').text(),
 	        		    prodCode: selectedRow.find('td:eq(3)').text(),
 	        		    workAmount: selectedRow.find('td:eq(5)').text(),
 	        		    lineProcess: selectedRow.find('td:eq(6)').text()

@@ -3,6 +3,7 @@ package com.itwillbs.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,11 +124,18 @@ public class PerformanceController {
 	}
 	
 @PostMapping("/perfinsertPro")
-public String perfinsert(PerformanceDTO perfDTO) {
+public String perfinsert(PerformanceDTO perfDTO, HttpServletRequest req) {
 	
 	log.debug("insertPro요청");
+	log.debug("받은 값:"+perfDTO);
+
+	String perfDefect = req.getParameter("perfDefect");
+	System.out.println("+++++++++++++++++++++++:"+perfDefect);
 	
+
 	perfService.perfinsert(perfDTO);
+	
+	
 	
 	
 	return "redirect:/perf/perfinsert";

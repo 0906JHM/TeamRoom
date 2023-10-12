@@ -21,13 +21,12 @@ SELECT * FROM product
  </select>
  
  <insert id="perfinsert">
- INSERT INTO performance(perfCode,workCode,prodCode,perfDate,perfAmount,perfEmpId,perfDateadd,
+ INSERT INTO performance(perfCode,workCode,prodCode,perfDate,perfEmpId,perfAmount,
                                      perfFair, perfDefect,perfDefectreason,perfDefectmemo,perfMemo,perfStatus)
- 
- VALUES(#{perfCode},#{workCode},#{prodCode},#{perfDate},#{perfAmount},#{perfEmpId},#{perfDateadd},
-                                     #{perfFair}, #{perfDefect},#{perfDefectreason},#{perfDefectmemo},#{perfMemo},#{perfStatus})
-                                     
-                   
+                                                                                             
+ VALUES(#{perfCode},#{workCode},#{prodCode},#{perfDate},#{perfEmpId},#{perfAmount},
+                                     #{perfFair}, COALESCE(#{perfDefect}, 0),#{perfDefectreason},#{perfDefectmemo},#{perfMemo},#{perfStatus})
+                                    
  
  </insert>
  
