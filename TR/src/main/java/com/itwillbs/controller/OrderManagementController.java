@@ -15,6 +15,7 @@ import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.OrderManagementDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.service.InMaterialService;
 import com.itwillbs.service.OrderManagementService;
 import com.itwillbs.service.RawmaterialsService;
 
@@ -27,6 +28,8 @@ public class OrderManagementController {
 	private OrderManagementService ordermanagementService;
 	@Inject
 	private RawmaterialsService rawmaterialsService;
+	@Inject
+	private InMaterialService inMaterialService;
 	
 	// 가상주소 http://localhost:8080/leeweb/OrderManagement/home
 	// home 페이징처리, 검색기능
@@ -91,13 +94,16 @@ public class OrderManagementController {
 	}
 	
 	// 가상주소 http://localhost:8080/leeweb/OrderManagement/insertPro
-	@PostMapping("/insertPro")
-	public String insertPro(OrderManagementDTO ordermanagementDTO) {
-		System.out.println("OrderManagementController insertPro()");
-		System.out.println(ordermanagementDTO);
-		ordermanagementService.insertOrderManagement(ordermanagementDTO);
-		return "redirect:/OrderManagement/home";
-	}
+		@PostMapping("/insertPro")
+		public String insertPro(OrderManagementDTO ordermanagementDTO) {
+			System.out.println("OrderManagementController insertPro()");
+			System.out.println(ordermanagementDTO);
+			
+			inMaterialService.insertList(ordermanagementDTO);
+			ordermanagementService.insertOrderManagement(ordermanagementDTO);
+			return "redirect:/OrderManagement/home";
+		}
+	
 	
 	// 체크박스로 선택삭제
     @RequestMapping(value = "/delete")
