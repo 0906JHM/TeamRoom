@@ -5,6 +5,22 @@
   
  <mapper namespace="com.itwillbs.mappers.PerformanceMapper">
  
+ 
+  <insert id="perfinsert">
+ INSERT INTO performance(perfCode,workCode,prodCode,lineCode,perfDate,perfEmpId,perfAmount,
+                                     perfFair, perfDefect,perfDefectreason,perfDefectmemo,perfMemo,perfStatus)
+                                                                                             
+ VALUES(#{perfCode},#{workCode},#{prodCode},#{lineCode},#{perfDate},#{perfEmpId},#{perfAmount},
+                                     #{perfFair}, COALESCE(#{perfDefect}, 0),#{perfDefectreason},#{perfDefectmemo},#{perfMemo},#{perfStatus})
+ </insert>
+ 
+ 
+ 
+ <select id="getperflist" resultType="PerformanceDTO">
+ select * from performance
+ 
+ </select>
+ 
  <select id="getlinelist" resultType="com.itwillbs.domain.LineDTO">
  
  select * from line
@@ -20,17 +36,10 @@ SELECT * FROM product
  SELECT * FROM workOrder
  </select>
  
- <insert id="perfinsert">
- INSERT INTO performance(perfCode,workCode,prodCode,perfDate,perfEmpId,perfAmount,
-                                     perfFair, perfDefect,perfDefectreason,perfDefectmemo,perfMemo,perfStatus)
-                                                                                             
- VALUES(#{perfCode},#{workCode},#{prodCode},#{perfDate},#{perfEmpId},#{perfAmount},
-                                     #{perfFair}, COALESCE(#{perfDefect}, 0),#{perfDefectreason},#{perfDefectmemo},#{perfMemo},#{perfStatus})
-                                    
+ <select id="getdetail" resultType="PerformanceDTO">
+ select * from performance where perfCode=#{perfCode}
  
- </insert>
- 
- 
+ </select>
  
  
  </mapper>

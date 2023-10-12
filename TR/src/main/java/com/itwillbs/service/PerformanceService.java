@@ -47,6 +47,11 @@ public class PerformanceService {
 		
 	}
 
+	public PerformanceDTO getdetail(String perfCode) {
+		
+		return perfDAO.getdetail(perfCode);
+	}
+
 	
 
 

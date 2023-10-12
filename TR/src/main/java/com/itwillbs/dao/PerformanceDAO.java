@@ -67,6 +67,14 @@ public class PerformanceDAO {
 		
 		
 	}
+
+
+
+
+	public PerformanceDTO getdetail(String perfCode) {
+		
+		return sqlsession.selectOne(namespace+".getdetail", perfCode);
+	}
 	
 	
 	

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +11,19 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/perf.css">
+
 	
 	
 	<link href="${pageContext.request.contextPath }/resources/css/side.css"
 	rel="stylesheet" type="text/css">
+	
+	<script src="https://kit.fontawesome.com/25ef23e806.js"
+	crossorigin="anonymous"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	
 </head>
 <body>
@@ -63,7 +73,7 @@
 		 <table class="ct" id="ct">	
 			<thead>
 				<tr class="cthead">
-				<th class="ctth">번호</th>
+				
 				    <th class="ctth">생산실적코드</th>
 					<th class="ctth">작업지시코드</th>
 					<th class="ctth">라인코드</th>
@@ -79,10 +89,9 @@
 				</tr>
 			</thead> 
 		 <tbody>
-				<c:forEach var="perfDTO" items="${worklist}">
-					<tr class="ctcontents">
-					    <td class="cttg">1</td>
-						<td class="cttg">${perfDTO.perfCode}</td>
+				<c:forEach var="perfDTO" items="${perflist}">
+					<tr class="ctcontents">	    
+						<td class="cttg">${perfDTO.perfCode} <i class="fa-solid fa-magnifying-glass"></i></td>
 						<td class="cttg">${perfDTO.workCode}</td>
 						<td class="cttg">${perfDTO.lineCode}</td>
 						<td class="cttg">${perfDTO.prodCode}</td>
@@ -104,6 +113,8 @@
 
 			
 			</div> <!--  CLIENTBODY -->
+			
+
 
 </body>
 <script> 
@@ -118,6 +129,8 @@ $(document).ready(function() {
     });
        
 });
+
+
 
 </script>			
 			

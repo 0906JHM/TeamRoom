@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.LineDTO;
@@ -44,17 +46,15 @@ public class PerformanceController {
 	@GetMapping("/perf")
 	public String perf(Model model) {
 		
-		/*
-		 * System.out.println("PerformanceController perf메인페이지요청");
-		 * log.debug("메인페이지  실적코드 요청"); List<PerformanceDTO> perflist =
-		 * perfService.perflist();
-		 * 
-		 * model.addAttribute("perflist",perflist); log.debug("반환값"+perflist);
-		 */
 		
-		
-		
-		
+		  System.out.println("PerformanceController perf메인페이지요청");
+		  log.debug("메인페이지  실적코드 요청"); 
+		  List<PerformanceDTO> perflist =perfService.perflist();
+		  
+		  
+		  log.debug("반환값"+perflist);
+		  model.addAttribute("perflist",perflist); 
+
 		return "perf/perf";
 		
 	}
@@ -142,6 +142,19 @@ public String perfinsert(PerformanceDTO perfDTO, HttpServletRequest req) {
 	
 	
 }
+
+@PostMapping("/detail")
+@ResponseBody
+public PerformanceDTO perfdetail (@RequestBody PerformanceDTO perfDTO) {
+	
+
+	log.debug("호출된 실적코드: " + perfDTO.getPerfCode());
+	PerformanceDTO perfDTO2 = perfService.getdetail(perfDTO.getPerfCode());
+
+	return perfDTO2;
+	
+}
+
 	
 
 	
