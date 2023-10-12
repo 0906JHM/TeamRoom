@@ -39,7 +39,7 @@ public class SellController {
 public String sellList(HttpServletRequest request,Model model) {
 	System.out.println("SellController sellMain()");
 	//한 화면에 보여줄 글개수 설정
-	int pageSize = 5;
+	int pageSize = 8;
 	// 현 페이지 번호 가져오기
 	String pageNum=request.getParameter("pageNum");
 	// 페이지 번호가 없을 경우 => "1"로 설정
@@ -61,7 +61,7 @@ public String sellList(HttpServletRequest request,Model model) {
 	// 전체 글개수 가져오기
 	int count = sellService.getSellCount();
 	// 한화면에 보여줄 페이지 개수 설정
-	int pageBlock = 5;
+	int pageBlock = 8;
 	// 시작하는 페이지 번호
 	int startPage=(currentPage-1)/pageBlock*pageBlock+1;
 	// 끝나는 페이지 번호
