@@ -23,6 +23,7 @@ public class SellDTO {
 	private String sellState; //수주상태
 	private String clientCode; //거래처코드
 	private int sellNum; //수주번호
+	private String sellPrice;
 	
 	
 	

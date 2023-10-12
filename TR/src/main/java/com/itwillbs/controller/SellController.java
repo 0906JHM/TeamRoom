@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
 import com.itwillbs.service.SellService;
-
+ 
 
 
 @Controller
@@ -95,10 +95,12 @@ public String sellAdd() {
 }//sellAdd
 
 @PostMapping("/sellAddPro")
-public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
-	System.out.println("SellController ()");
+public void sellAddPro(SellDTO sellDTO) {
+	System.out.println("SellController sellAddPro()");
+	System.out.println(sellDTO);
+	
 	sellService.insertSell(sellDTO);	
-	return ResponseEntity.ok("<script>window.close();</script>");
+
 	/*
 	 sellCode 수주코드, 
 	 sellDate 수주일자, 
@@ -153,30 +155,20 @@ public String updateSellMemo(HttpServletRequest request,Model model) {
 	return "sell/updateSellMemo";
 }//sellMemoUpdate
 	
-//@PostMapping("/sellMemoUpdatePro")
-//public void sellMemoUpdatePro(SellDTO sellDTO) {
-//	System.out.println("SellController sellMemoUpdatePro()");
-//	
-//	// sellMemo 수정
-//	sellService.updateSellMemo(sellDTO);
-//
-//}//sellMemoUpdatePro
 @PostMapping("/sellMemoUpdatePro")
-public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
+public void sellMemoUpdatePro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemoUpdatePro()");
-	System.out.println(sellDTO);
-	sellService.updateSellMemo(sellDTO);
 	
-	// 창을 닫기 위한 스크립트를 반환합니다.
-	return ResponseEntity.ok("<script>window.close();</script>");
-}
+	// sellMemo 수정
+	sellService.updateSellMemo(sellDTO);
+
+}//sellMemoUpdatePro
 
 //----------------------------------------------------- sellMemotype ---------------------------------------
 @GetMapping("/sellMemotype")
 public String sellMemoAdd(HttpServletRequest request, Model model) {
 	System.out.println("SellController sellMemotype()");
 	String sellCode = request.getParameter("sellCode");
-	System.out.println(sellCode);
 	SellDTO sellDTO = sellService.getSellMemo(sellCode);
 	String memotype = request.getParameter("memotype");
 	System.out.println(sellDTO);
@@ -188,11 +180,11 @@ public String sellMemoAdd(HttpServletRequest request, Model model) {
 }//sellMemotype
 
 @PostMapping("/sellMemotypePro")
-public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
+public void sellMemoAddPro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemotypePro()");
 	System.out.println(sellDTO);
 	sellService.insertSellMemo(sellDTO);	
-	return ResponseEntity.ok("<script>window.close();</script>");
+	
 	
 }//sellMemotypePro	
 	

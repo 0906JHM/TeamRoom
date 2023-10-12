@@ -96,7 +96,9 @@
 	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 거래처코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodCode}</td><!-- 제품코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodName}</td><!-- 제품명 -->
-	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 수주단가 -->
+	                <td class="tg-llyw2">
+    					<fmt:formatNumber value="${sellDTO.sellPrice}" pattern="###,### 원" />
+					</td><!-- 수주단가 -->
 	                <td class="tg-llyw2">${sellDTO.sellCount}</td><!-- 수주수량-->
 	                <td class="tg-llyw2">${sellDTO.sellDate}</td><!-- 수주일자 -->
 	                <td class="tg-llyw2">${sellDTO.sellDuedate}</td><!-- 납기일자  --> 
@@ -231,6 +233,11 @@ function saveData() {
 					itemCheckboxes[i].checked = !areAllSelected;
 				}
 			});//selectAllCheckbox
+			
+			// 숫자를 ###,### 원 형식으로 포맷하는 함수
+		    function formatCurrency(number) {
+		        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
+		    }
 </script>
 
 <!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
