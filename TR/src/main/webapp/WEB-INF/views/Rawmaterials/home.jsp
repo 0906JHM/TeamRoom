@@ -87,11 +87,10 @@ function openPopup2(url) {
 
 // selectclient 페이지 팝업창
 function openPopup3() {
-    var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
-    // 팝업 창닫기 버튼 클릭시 창닫기
-    popupWindow.onbeforeunload = function() {
-        popupWindow.close();
-    };
+	// window.name = "부모창 이름";
+	window.name = "home";
+	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
+	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
 }
 
 // 팝업창에서 작업 완료후 닫고 새로고침
@@ -122,7 +121,7 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처		<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()">
+거래처		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
 <input type="submit" value="검색">
 </form>
 
