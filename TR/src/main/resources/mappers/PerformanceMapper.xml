@@ -13,8 +13,23 @@
  
  <select id="getprodlist" resultType="com.itwillbs.domain.ProdDTO">
  
-select * from product
+SELECT * FROM product
  </select>
+ 
+ <select id="getworklist" resultType="WorkOrderDTO">
+ SELECT * FROM workOrder
+ </select>
+ 
+ <insert id="perfinsert">
+ INSERT INTO performance(perfCode,workCode,prodCode,perfDate,perfAmount,perfEmpId,perfDateadd,
+                                     perfFair, perfDefect,perfDefectreason,perfDefectmemo,perfMemo,perfStatus)
+ 
+ VALUES(#{perfCode},#{workCode},#{prodCode},#{perfDate},#{perfAmount},#{perfEmpId},#{perfDateadd},
+                                     #{perfFair}, #{perfDefect},#{perfDefectreason},#{perfDefectmemo},#{perfMemo},#{perfStatus})
+                                     
+                   
+ 
+ </insert>
  
  
  

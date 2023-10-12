@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,6 +15,7 @@ import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.EmployeesService;
 import com.itwillbs.service.PerformanceService;
 import com.itwillbs.service.ProdService;
@@ -41,12 +43,13 @@ public class PerformanceController {
 	@GetMapping("/perf")
 	public String perf(Model model) {
 		
-		System.out.println("PerformanceController perf메인페이지요청");
-		log.debug("메인페이지  실적코드 요청");
-		 List<PerformanceDTO> perflist = perfService.perflist();
-			
-	        model.addAttribute("perflist",perflist);
-	       log.debug("반환값"+perflist);
+		/*
+		 * System.out.println("PerformanceController perf메인페이지요청");
+		 * log.debug("메인페이지  실적코드 요청"); List<PerformanceDTO> perflist =
+		 * perfService.perflist();
+		 * 
+		 * model.addAttribute("perflist",perflist); log.debug("반환값"+perflist);
+		 */
 		
 		
 		
@@ -103,6 +106,34 @@ public class PerformanceController {
 		
 		
 	}
+	
+	@GetMapping("/worklist")
+	public String worklist(Model model) {
+		
+
+		log.debug("팝업창 prodlist 요청 ");
+		
+        List<WorkOrderDTO> worklist = perfService.getworkList();
+		model.addAttribute("worklist",worklist);
+		System.out.println(worklist);
+		
+		return "perf/worklist";
+		
+		
+	}
+	
+@PostMapping("/perfinsertPro")
+public String perfinsert(PerformanceDTO perfDTO) {
+	
+	log.debug("insertPro요청");
+	
+	perfService.perfinsert(perfDTO);
+	
+	
+	return "redirect:/perf/perfinsert";
+	
+	
+}
 	
 
 	
