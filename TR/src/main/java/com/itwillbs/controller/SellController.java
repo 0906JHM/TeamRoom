@@ -95,12 +95,10 @@ public String sellAdd() {
 }//sellAdd
 
 @PostMapping("/sellAddPro")
-public void sellAddPro(SellDTO sellDTO) {
-	System.out.println("SellController sellAddPro()");
-	System.out.println(sellDTO);
-	
+public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
+	System.out.println("SellController ()");
 	sellService.insertSell(sellDTO);	
-
+	return ResponseEntity.ok("<script>window.close();</script>");
 	/*
 	 sellCode 수주코드, 
 	 sellDate 수주일자, 
@@ -155,20 +153,30 @@ public String updateSellMemo(HttpServletRequest request,Model model) {
 	return "sell/updateSellMemo";
 }//sellMemoUpdate
 	
+//@PostMapping("/sellMemoUpdatePro")
+//public void sellMemoUpdatePro(SellDTO sellDTO) {
+//	System.out.println("SellController sellMemoUpdatePro()");
+//	
+//	// sellMemo 수정
+//	sellService.updateSellMemo(sellDTO);
+//
+//}//sellMemoUpdatePro
 @PostMapping("/sellMemoUpdatePro")
-public void sellMemoUpdatePro(SellDTO sellDTO) {
+public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemoUpdatePro()");
-	
-	// sellMemo 수정
+	System.out.println(sellDTO);
 	sellService.updateSellMemo(sellDTO);
-
-}//sellMemoUpdatePro
+	
+	// 창을 닫기 위한 스크립트를 반환합니다.
+	return ResponseEntity.ok("<script>window.close();</script>");
+}
 
 //----------------------------------------------------- sellMemotype ---------------------------------------
 @GetMapping("/sellMemotype")
 public String sellMemoAdd(HttpServletRequest request, Model model) {
 	System.out.println("SellController sellMemotype()");
 	String sellCode = request.getParameter("sellCode");
+	System.out.println(sellCode);
 	SellDTO sellDTO = sellService.getSellMemo(sellCode);
 	String memotype = request.getParameter("memotype");
 	System.out.println(sellDTO);
@@ -180,11 +188,11 @@ public String sellMemoAdd(HttpServletRequest request, Model model) {
 }//sellMemotype
 
 @PostMapping("/sellMemotypePro")
-public void sellMemoAddPro(SellDTO sellDTO) {
+public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemotypePro()");
 	System.out.println(sellDTO);
 	sellService.insertSellMemo(sellDTO);	
-	
+	return ResponseEntity.ok("<script>window.close();</script>");
 	
 }//sellMemotypePro	
 	

@@ -24,7 +24,7 @@
         <c:when test="${memotype==add}">
             <h1>수주 비고 등록</h1>
     <div class="horizontal-line"></div>
-    <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemotypePro">
+    <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemoUpdatePro">
 		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo"></textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		<button type="submit" >등록</button>		
@@ -34,12 +34,11 @@
         <c:otherwise>
             <h1>수주 비고 수정</h1>
     <div class="horizontal-line"></div>
-    <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemotypePro">
+    <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemoUpdatePro">
 		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo" >${sellDTO.sellMemo}</textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		<button type="submit" >수정</button>		
 		<button type="reset">취소</button>
-		
         <button type="button" onclick="window.close();">닫기</button>
         </form>
             
