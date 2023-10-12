@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
-import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.WarehouseDTO;
 import com.itwillbs.service.RawmaterialsService;
 
@@ -275,10 +274,12 @@ public class RawmaterialsController {
         return "Rawmaterials/selectwarehouse";
     }
   	
-  //----------------------------------------------------- sellMemo ---------------------------------------
+  	
+  	// 여기서부터 비고코드 수정하기
+  	// sellMemo
   	@GetMapping("/sellMemo")
   	public String sellMemo(HttpServletRequest request, Model model) {
-  		System.out.println("SellController sellMemo()");
+  		System.out.println("RawmaterialsController sellMemo()");
   		
   		String rawCode = request.getParameter("rawCode");
   		
@@ -289,67 +290,60 @@ public class RawmaterialsController {
   		
   		return "Rawmaterials/sellMemo";
   		
-  	}//sellMemo
+  	}
   	
-  //----------------------------------------------------- updateSellMemo ---------------------------------------
-//	가상주소 http://localhost:8080/Test/sell/sellMemoUpdate?num=
-//@RequestMapping(value = "/sellMemoUpdate", method = RequestMethod.GET)
-@GetMapping("/sellMemoUpdate")
-public String updateSellMemo(HttpServletRequest request,Model model) {
-	System.out.println("SellController sellMemoUpdate()");
+  	// updateSellMemo
+  	@GetMapping("/sellMemoUpdate")
+  	public String updateSellMemo(HttpServletRequest request,Model model) {
+  		System.out.println("RawmaterialsController sellMemoUpdate()");
 	
-	String rawCode = request.getParameter("rawCode");
+  		String rawCode = request.getParameter("rawCode");
 	
-	//글가져오기
-	RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
+  		// 글 가져오기
+  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
+  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
+  		
+  		return "Rawmaterials/updateSellMemo";
+  	}
+	
+  	// sellMemoUpdatePro
+  	@PostMapping("/sellMemoUpdatePro")
+  	public void sellMemoUpdatePro(RawmaterialsDTO rawmaterialsDTO) {
+  		System.out.println("RawmaterialsController sellMemoUpdatePro()");
+  		// sellMemo 수정
+  		rawmaterialsService.updateSellMemo(rawmaterialsDTO);
+  	}
 
-	model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
-
-	// center/update.jsp
-	// WEB-INF/views/center/update.jsp
-	return "Rawmaterials/updateSellMemo";
-}//sellMemoUpdate
+  	// sellMemotype
+  	@GetMapping("/sellMemotype")
+  	public String sellMemoAdd(HttpServletRequest request, Model model) {
+  		System.out.println("RawmaterialsController sellMemotype()");
+  		
+  		String rawCode = request.getParameter("rawCode");
+  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
+  		String memotype = request.getParameter("memotype");
+  		System.out.println(rawmaterialsDTO);
 	
-@PostMapping("/sellMemoUpdatePro")
-public void sellMemoUpdatePro(RawmaterialsDTO rawmaterialsDTO) {
-	System.out.println("SellController sellMemoUpdatePro()");
-	
-	// sellMemo 수정
-	rawmaterialsService.updateSellMemo(rawmaterialsDTO);
+  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
+  		model.addAttribute("memotype", memotype);
 
-}//sellMemoUpdatePro
+  		return "Rawmaterials/sellMemotype";
+  	}
 
-//----------------------------------------------------- sellMemotype ---------------------------------------
-@GetMapping("/sellMemotype")
-public String sellMemoAdd(HttpServletRequest request, Model model) {
-	System.out.println("SellController sellMemotype()");
-	String rawCode = request.getParameter("rawCode");
-	RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
-	String memotype = request.getParameter("memotype");
-	System.out.println(rawmaterialsDTO);
-	
-	model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
-	model.addAttribute("memotype", memotype);
+  	// sellMemotypePro
+  	@PostMapping("/sellMemotypePro")
+  	public void sellMemoAddPro(RawmaterialsDTO rawmaterialsDTO) {
+  		System.out.println("RawmaterialsController sellMemotypePro()");
+  		System.out.println(rawmaterialsDTO);
+  		rawmaterialsService.insertSellMemo(rawmaterialsDTO);	
+  	}
 
-	return "Rawmaterials/sellMemotype";
-}//sellMemotype
-
-@PostMapping("/sellMemotypePro")
-public void sellMemoAddPro(RawmaterialsDTO rawmaterialsDTO) {
-	System.out.println("SellController sellMemotypePro()");
-	System.out.println(rawmaterialsDTO);
-	rawmaterialsService.insertSellMemo(rawmaterialsDTO);	
-	
-	
-}//sellMemotypePro	
-
-//-------------------------------------------------- sellDelete ---------------------------------------------
-@GetMapping("/sellDelete")
-public void sellDeletePro(RawmaterialsDTO rawmaterialsDTO) {
-	System.out.println("SellController sellDelete()");
-	System.out.println(rawmaterialsDTO);
-	
-	rawmaterialsService.sellDelete(rawmaterialsDTO);
-}// sellDelete
+  	// sellDelete
+  	@GetMapping("/sellDelete")
+  	public void sellDeletePro(RawmaterialsDTO rawmaterialsDTO) {
+  		System.out.println("RawmaterialsController sellDelete()");
+  		System.out.println(rawmaterialsDTO);
+  		rawmaterialsService.sellDelete(rawmaterialsDTO);
+  	}
  	
 }
