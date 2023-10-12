@@ -135,25 +135,25 @@
 	    </table>
 	
 <!-- </div> -->
+<div class="clear"></div>
 <!------------------------------------------------- 페이징 ------------------------------------------>
-<div id="page_control">
+<div id="page_control" >
 
 <c:forEach var="i" begin="${sellPageDTO.startPage}" 
                    end="${sellPageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}">${i}</a> 
+<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}"
+	style="text-decoration: none; color: #5EC397;">${i}</a> 
 </c:forEach>
 
-
 <c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
-	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}">◀</a>
+	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
+	style="text-decoration: none; color: #5EC397;">◀</a>
 </c:if>
 
 
-
-
-
 <c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
-	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}">▶</a>
+	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}" 
+	style="text-decoration: none; color: #5EC397;">▶</a>
 </c:if>
 
 </div>

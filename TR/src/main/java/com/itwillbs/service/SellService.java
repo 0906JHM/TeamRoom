@@ -34,10 +34,10 @@ public class SellService {
 	}//getSellList
 	
 //----------------------------------------------------- getSellCount --------------------------------------------------------
-	public int getSellCount(SellPageDTO sellPageDTO) {
+	public int getSellCount() {
 		System.out.println("SellService getSellCount()");
 		
-		return sellDAO.getSellCount(sellPageDTO);
+		return sellDAO.getSellCount();
 	}//getSellCount
 	
 //----------------------------------------------------- insertSell --------------------------------------------------------

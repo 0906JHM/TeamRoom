@@ -56,10 +56,10 @@ public String sellList(HttpServletRequest request,Model model) {
 	sellPageDTO.setPageNum(pageNum);
 	sellPageDTO.setCurrentPage(currentPage);
 	
-List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
-System.out.println(sellList);
+	List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
+	System.out.println(sellList);
 	// 전체 글개수 가져오기
-	int count = sellService.getSellCount(sellPageDTO);
+	int count = sellService.getSellCount();
 	// 한화면에 보여줄 페이지 개수 설정
 	int pageBlock = 5;
 	// 시작하는 페이지 번호
@@ -80,9 +80,10 @@ System.out.println(sellList);
 	sellPageDTO.setEndPage(endPage);
 	sellPageDTO.setPageCount(pageCount);
 
-	
-	model.addAttribute("sellList", sellList);
-	model.addAttribute("SellpageDTO", sellPageDTO);
+	// 글 목록
+	model.addAttribute("sellList", sellList);// ("이름", 값)
+	// 페이지
+	model.addAttribute("sellPageDTO", sellPageDTO);
 	
 	log.debug("페이지번호"+pageNum);
 	// center/notice.jsp

@@ -26,7 +26,7 @@ public class SellDAO {
 	}// getSellList
 
 //----------------------------------------------------- getSellCount --------------------------------------------------------
-	public int getSellCount(SellPageDTO sellPageDTO) {
+	public int getSellCount() {
 		System.out.println("SellDAO getSellCount()");
 
 		return sqlSession.selectOne(namespace + ".getSellCount");
