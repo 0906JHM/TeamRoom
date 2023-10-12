@@ -7,9 +7,11 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 
-@Repository 
+@Repository  
 public class RawmaterialsDAO implements RawmaterialsDAO2 {
 	
 	// mybatis 객체생성
@@ -19,19 +21,27 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 	// 이름이 너무 기니까 변수로 저장
 	private static final String namespace = "com.itwillbs.mappers.RawmaterialsMapper";
 
+	public Integer getMaxNum() {
+		System.out.println("RawmaterialsDAO getMaxNum()");
+		return sqlSession.selectOne(namespace+".getMaxNum");
+	}
+	
 	public void insertRawmaterials(RawmaterialsDTO rawmaterialsDTO) {
 		System.out.println("RawmaterialsDAO insertRawmaterials()");
 		sqlSession.insert(namespace+".insertRawmaterials", rawmaterialsDTO);
 	}
 
-	public List<RawmaterialsDTO> getRawmaterialsList() {
+	// home 페이징처리, 검색기능
+	public List<RawmaterialsDTO> getRawmaterialsList(PageDTO pageDTO) {
 		System.out.println("RawmaterialsDAO getRawmaterialsList()");		
-		return sqlSession.selectList(namespace+".getRawmaterialsList");
+		return sqlSession.selectList(namespace+".getRawmaterialsList", pageDTO);
 	}
-
-	public List<RawmaterialsDTO> getRawmaterialsSearchList(RawmaterialsDTO rawmaterialsDTO) {
-		return sqlSession.selectList(namespace+".getRawmaterialsSearchList", rawmaterialsDTO);
-	}
+	
+	// home 페이징처리, 검색기능
+	public int getRawmaterialsCount(PageDTO pageDTO) {
+		System.out.println("RawmaterialsDAO getRawmaterialsCount()");
+		return sqlSession.selectOne(namespace+".getRawmaterialsCount",pageDTO);
+    }
 
 	// 체크박스로 선택삭제
 	@Override
@@ -48,5 +58,17 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 		System.out.println("RawmaterialsDAO updateRawmaterials()");
 		sqlSession.update(namespace+".updateRawmaterials", rawmaterialsDTO);
 	}
+
+	// selectclient 페이징처리, 검색기능
+	public List<ClientDTO> getClientList(PageDTO pageDTO) {
+		System.out.println("RawmaterialsDAO getClientList()");		
+		return sqlSession.selectList(namespace+".getClientList", pageDTO);
+	}
+
+	// selectclient 페이징처리, 검색기능
+	public int getClientCount(PageDTO pageDTO) {
+		System.out.println("RawmaterialsDAO getClientCount()");
+		return sqlSession.selectOne(namespace+".getClientCount",pageDTO);
+    }
 	
 }
