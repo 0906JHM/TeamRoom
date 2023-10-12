@@ -4,10 +4,12 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+
+	<typeAliases>
+		<package name="com.itwillbs.domain"/>
+	</typeAliases>
 	
-  	
-<typeAliases>
-  	<typeAlias alias="PerfDTO" type="com.itwillbs.domain.PerformanceDTO"/>  	
-</typeAliases>
+
 
 </configuration>
