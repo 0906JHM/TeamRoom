@@ -38,7 +38,7 @@ function openPopup1() {
 	// window.name = "부모창 이름";
 	window.name = "insert";
 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-	openWin = window.open("selectclient2.html", "selectclient2", "height=600,width=1300");    
+	openWin = window.open("selectrawmaterials.html", "selectrawmaterials", "height=600,width=1300");    
 }
 </script>
 
