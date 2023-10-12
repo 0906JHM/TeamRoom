@@ -20,8 +20,8 @@
 품명 : 		<input type="text" name="rawName" id="rNInput"><br>
 종류 : 		<input type="text" name="rawType" id="rTInput"><br>
 거래처명 : 		<input type="text" name="clientCode"><br>
-창고수량 : 		<input type="text" name="whseCount"><br>
-발주수량 : 		<input type="text" name="buyCount"><br>
+창고수량 : 		<input type="number" name="whseCount"><br>
+발주수량 : 		<input type="number" name="buyCount"><br>
 납입단가 : 		<input type="text" name="rawPrice"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
 담당자 : 		<input type="text" name="buyEmpId"><br>

@@ -10,6 +10,7 @@ import com.itwillbs.dao.RawmaterialsDAO;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
 
 @Service 
 public class RawmaterialsService implements RawmaterialsService2 {
@@ -77,5 +78,34 @@ public class RawmaterialsService implements RawmaterialsService2 {
 		System.out.println("RawmaterialsService getClientCount()");
 		return rawmaterialsDAO.getClientCount(pageDTO);
 	}
+	
+	//----------------------------------------------------- getSellMemo --------------------------------------------------------
+	public RawmaterialsDTO getSellMemo(String rawCode) {
+	System.out.println("SellService getSellMemo()");
+		
+		return rawmaterialsDAO.getSellMemo(rawCode);
+	}//getSellMemo
+	
+	//----------------------------------------------------- updateSellMemo ---------------------------------------
+			public void updateSellMemo(RawmaterialsDTO rawmaterialsDTO) {
+				System.out.println("SellService updateSellMemo");
+
+				rawmaterialsDAO.updateSellMemo(rawmaterialsDTO);
+			}//updateSellMemo
+
+			
+			//----------------------------------------------------- insertSellMemo --------------------------------------------------------
+			public void insertSellMemo(RawmaterialsDTO rawmaterialsDTO) {
+				System.out.println("SellService insertSellMemo()");
+
+				rawmaterialsDAO.insertSellMemo(rawmaterialsDTO);	
+			}//insertSellMemo
+
+			//----------------------------------------------------- sellDelete --------------------------------------------------------
+			public void sellDelete(RawmaterialsDTO rawmaterialsDTO) {
+				System.out.println("SellService sellDelete()");
+				
+				rawmaterialsDAO.deleteSell(rawmaterialsDTO);
+			}//sellDelete
 
 }

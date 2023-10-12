@@ -111,5 +111,23 @@
     		and clientName like concat('%', #{search4}, '%')
     	</if>
  	</select>
+ 	
+ 	<select id="getSellMemo" resultType="com.itwillbs.domain.RawmaterialsDTO">
+		select *
+		from rawMaterial
+		where rawCode = #{rawCode}
+	</select>
+  
+  	<update id="updateSellMemo">
+		update rawMaterial
+		set rawMemo = #{rawMemo}
+		where rawCode = #{rawCode}
+	</update>
+	
+	<update id="insertSellMemo">
+		update rawMaterial 
+		set rawMemo=#{rawMemo}
+		where rawCode = #{rawCode}
+	</update>
 	
 </mapper>

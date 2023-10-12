@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
 
 @Repository  
 public class RawmaterialsDAO implements RawmaterialsDAO2 {
@@ -70,5 +71,40 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 		System.out.println("RawmaterialsDAO getClientCount()");
 		return sqlSession.selectOne(namespace+".getClientCount",pageDTO);
     }
-	
+
+	//----------------------------------------------------- getSellMemo --------------------------------------------------------		
+			public RawmaterialsDTO getSellMemo(String rawCode) {
+				System.out.println("SellDAO getSellMemo()");
+				
+				return sqlSession.selectOne(namespace+".getSellMemo", rawCode);
+		
+			}//getSellMemo
+			
+	//----------------------------------------------------- sellMemoUpdate ---------------------------------------
+			public void updateSellMemo(RawmaterialsDTO rawmaterialsDTO) {
+				System.out.println("SellDAO updateSellMemo()");
+
+				sqlSession.update(namespace + ".updateSellMemo", rawmaterialsDTO);
+			}// updateSellMemo
+
+	//----------------------------------------------------- insertSellMemo --------------------------------------------------------
+			public void insertSellMemo(RawmaterialsDTO rawmaterialsDTO) {
+				System.out.println("SellDAO insertSellMemo()");
+				System.out.println(rawmaterialsDTO);
+				
+
+				sqlSession.insert(namespace + ".insertSellMemo", rawmaterialsDTO);
+			}// insertSellMemo
+			
+	//----------------------------------------------------- deleteSell --------------------------------------------------------
+			public void deleteSell(RawmaterialsDTO rawmaterialsDTO) {
+				System.out.println("SellDAO deleteSell()");
+				
+				sqlSession.update(namespace+".deleteSell",rawmaterialsDTO);
+			}//deleteSell
+
+			
+			
+			
+			
 }
