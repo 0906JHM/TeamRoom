@@ -112,24 +112,6 @@
     	</if>
  	</select>
  	
- 	<select id="getSellMemo" resultType="com.itwillbs.domain.RawmaterialsDTO">
-		select *
-		from rawMaterial
-		where rawCode = #{rawCode}
-	</select>
-  
-  	<update id="updateSellMemo">
-		update rawMaterial
-		set rawMemo = #{rawMemo}
-		where rawCode = #{rawCode}
-	</update>
-	
-	<update id="insertSellMemo">
-		update rawMaterial 
-		set rawMemo=#{rawMemo}
-		where rawCode = #{rawCode}
-	</update>
-
  	<!-- selectwarehouse 페이징처리, 검색기능 -->
 	<select id="getWarehouseList" resultType="com.itwillbs.domain.WarehouseDTO">
 		select *
@@ -168,5 +150,24 @@
        		and whseAddr = #{search4}
     	</if>
  	</select>
+ 	
+	<!-- 여기서부터 비고코드 수정하기 -->
+ 	<select id="getSellMemo" resultType="com.itwillbs.domain.RawmaterialsDTO">
+		select *
+		from rawMaterial
+		where rawCode = #{rawCode}
+	</select>
+  
+  	<update id="updateSellMemo">
+		update rawMaterial
+		set rawMemo = #{rawMemo}
+		where rawCode = #{rawCode}
+	</update>
+	
+	<update id="insertSellMemo">
+		update rawMaterial 
+		set rawMemo=#{rawMemo}
+		where rawCode = #{rawCode}
+	</update>
  	
 </mapper>
