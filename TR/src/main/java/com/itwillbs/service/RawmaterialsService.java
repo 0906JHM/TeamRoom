@@ -7,28 +7,43 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.RawmaterialsDAO;
+import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 
 @Service 
 public class RawmaterialsService implements RawmaterialsService2 {
-
+ 
 	// RawmaterialsDAO 객체생성
 	@Inject
 	private RawmaterialsDAO rawmaterialsDAO;
 
 	public void insertRawmaterials(RawmaterialsDTO rawmaterialsDTO) {
 		System.out.println("RawmaterialsService insertRawmaterials()");
+
+		// 원자재 등록시 글번호 증가
+		if(rawmaterialsDAO.getMaxNum() == null) {
+			rawmaterialsDTO.setRawNum(1);
+		}else {
+			rawmaterialsDTO.setRawNum(rawmaterialsDAO.getMaxNum() + 1);
+		}
 		rawmaterialsDAO.insertRawmaterials(rawmaterialsDTO);
 	}
 
-	public List<RawmaterialsDTO> getRawmaterialsList() {
+	// home 페이징처리, 검색기능
+	public List<RawmaterialsDTO> getRawmaterialsList(PageDTO pageDTO) {
 		System.out.println("RawmaterialsService getRawmaterialsList()");
-		return rawmaterialsDAO.getRawmaterialsList();
+		int startRow = (pageDTO.getCurrentPage()-1)*pageDTO.getPageSize() + 1;
+        int endRow = startRow + pageDTO.getPageSize() - 1;
+        pageDTO.setStartRow(startRow - 1);
+        pageDTO.setEndRow(endRow);
+		return rawmaterialsDAO.getRawmaterialsList(pageDTO);
 	}
-
-	public List<RawmaterialsDTO> getRawmaterialsSearchList(RawmaterialsDTO rawmaterialsDTO) {
-		System.out.println("RawmaterialsService getRawmaterialsSearchList()");
-		return rawmaterialsDAO.getRawmaterialsSearchList(rawmaterialsDTO);
+	
+	// home 페이징처리, 검색기능
+	public int getRawmaterialsCount(PageDTO pageDTO) {
+		System.out.println("RawmaterialsService getRawmaterialsCount()");
+		return rawmaterialsDAO.getRawmaterialsCount(pageDTO);
 	}
 
 	// 체크박스로 선택삭제
@@ -47,5 +62,20 @@ public class RawmaterialsService implements RawmaterialsService2 {
 		rawmaterialsDAO.updateRawmaterials(rawmaterialsDTO);
 	}
 
-	
+	// selectclient 페이징처리, 검색기능
+	public List<ClientDTO> getClientList(PageDTO pageDTO) {
+		System.out.println("RawmaterialsService getClientList()");
+		int startRow = (pageDTO.getCurrentPage()-1)*pageDTO.getPageSize() + 1;
+        int endRow = startRow + pageDTO.getPageSize() - 1;
+        pageDTO.setStartRow(startRow - 1);
+        pageDTO.setEndRow(endRow);
+		return rawmaterialsDAO.getClientList(pageDTO);
+	}
+
+	// selectclient 페이징처리, 검색기능
+	public int getClientCount(PageDTO pageDTO) {
+		System.out.println("RawmaterialsService getClientCount()");
+		return rawmaterialsDAO.getClientCount(pageDTO);
+	}
+
 }
