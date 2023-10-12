@@ -7,7 +7,8 @@
 	
   	
 <typeAliases>
-  	<typeAlias alias="PerfDTO" type="com.itwillbs.domain.PerformanceDTO"/>  	
+  	<typeAlias alias="PerfDTO" type="com.itwillbs.domain.PerformanceDTO"/> 
+	<package name="com.itwillbs.domain"/>
 </typeAliases>
 
 </configuration>
