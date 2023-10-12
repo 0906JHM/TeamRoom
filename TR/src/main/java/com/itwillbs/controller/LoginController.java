@@ -36,9 +36,9 @@ public class LoginController {
 		if(loginDTO != null) {
 			session.setAttribute("empId", loginDTO.getEmpId());
 			System.out.println("성공");
-			return "redirect:/sell/sellMain";
-		}else {
 			return "redirect:/main/calendar";
+		}else {
+			return "redirect:/login/login";
 		}
 	}//loginPro
 
