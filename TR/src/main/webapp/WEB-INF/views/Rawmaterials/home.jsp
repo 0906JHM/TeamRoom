@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 
-<!-- javascript -->
+<!-- javascript --> 
 <script type="text/javascript">
 
 // 체크박스로 삭제
@@ -62,7 +62,7 @@ function deleteValue(){
 	    	success: function(jdata){
 	        	if(jdata = 1) {
 	        		alert("삭제 성공");
-	            	location.replace("list")
+	            	location.replace("home")
 	        	}
 	            else{
 	            	alert("삭제 실패");
@@ -82,8 +82,17 @@ function openPopup2(url) {
 	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
 	myWindow.moveTo(0, 0);
 	myWindow.focus();
-	}
-	
+}
+
+// selectclient 페이지 팝업창
+function openPopup3() {
+    var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
+    // 팝업 창닫기 버튼 클릭시 창닫기
+    popupWindow.onbeforeunload = function() {
+        popupWindow.close();
+    };
+}
+
 // 팝업창에서 작업 완료후 닫고 새로고침
 $(document).ready(function() {
 	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
@@ -100,18 +109,18 @@ $(document).ready(function() {
 <h1>품목관리</h1>
 
 <!-- form(검색) -->
-<form action="${pageContext.request.contextPath}/Rawmaterials/list" method="get">
-원자재코드	<input type="text" name="rawCode" placeholder="원자재코드">
-원자재명	<input type="text" name="rawName" placeholder="원자재명">
-종류		<select name="rawType">
-		<option value="">선택</option>
+<form action="${pageContext.request.contextPath}/Rawmaterials/home" method="get">
+원자재코드	<input type="text" name="search1" placeholder="원자재코드">
+원자재명	<input type="text" name="search2" placeholder="원자재명">
+종류		<select name="search3">
+		<option value="">전체</option>
 		<option value="향기">향기</option>
 		<option value="용기">용기</option>
 		<option value="스틱">스틱</option>
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처		<input type="text" name="clientCode" placeholder="거래처">
+거래처		<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()">
 <input type="submit" value="검색">
 </form>
 
@@ -132,9 +141,8 @@ $(document).ready(function() {
 
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
 <tr>
-<td></td>
+<td>${rawmaterialsDTO.rawNum}</td>
 <td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}')">${rawmaterialsDTO.rawCode}</a></td>
-<%-- <td><a href="${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}">${rawmaterialsDTO.rawCode}</a></td> --%>
 <td>${rawmaterialsDTO.rawName}</td>
 <td>${rawmaterialsDTO.rawType}</td>
 <td>${rawmaterialsDTO.rawUnit}</td>
@@ -148,9 +156,13 @@ $(document).ready(function() {
 </table>
 
 <!-- button -->
-<%-- <input type="button" value="추가" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/insert'"> --%>
 <input type="button" value="추가" onclick="openPopup1()">
 <input type="button" value="삭제" onclick="deleteValue();">
+
+<!-- 페이징처리 -->
+<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
+<a href="${pageContext.request.contextPath}/Rawmaterials/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
+</c:forEach>
 
 </body>
 </html>

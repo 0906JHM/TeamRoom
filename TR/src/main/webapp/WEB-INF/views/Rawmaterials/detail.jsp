@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
 
 <!-- body -->
 <body>
-<h1>상세보기</h1>
+<h1>상세보기</h1> 
 
 <!-- table -->
 <table border="1">
@@ -23,8 +24,6 @@
 <tr><td>거래처</td>	<td>${rawmaterialsDTO.clientCode}</td></tr>
 <tr><td>창고명</td>	<td>${rawmaterialsDTO.whseCode}</td></tr>
 <tr><td>비고</td>		<td>${rawmaterialsDTO.rawMemo}</td></tr>
-<tr><td>작성자</td>	<td>작성자</td></tr>
-<tr><td>작성일자</td>	<td>작성일자</td></tr>
 </table>
 
 <!-- button -->
