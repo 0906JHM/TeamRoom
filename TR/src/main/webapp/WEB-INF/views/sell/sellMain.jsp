@@ -133,8 +133,31 @@
 	             </c:forEach>
 	        </tbody>
 	    </table>
-	</div>
+	
 <!-- </div> -->
+<!------------------------------------------------- 페이징 ------------------------------------------>
+<div id="page_control">
+
+<c:forEach var="i" begin="${sellPageDTO.startPage}" 
+                   end="${sellPageDTO.endPage}" step="1">
+<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}">${i}</a> 
+</c:forEach>
+
+
+<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
+	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}">◀</a>
+</c:if>
+
+
+
+
+
+<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
+	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}">▶</a>
+</c:if>
+
+</div>
+</div>
 </body>
 
 <!---------------------------------------------- javascript ---------------------------------------------->

@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
 import com.itwillbs.service.SellService;
+
+import lombok.extern.slf4j.Slf4j;
  
 
 
 @Controller
+@Slf4j
 @RequestMapping("/sell/*")
 public class SellController {
 	
@@ -36,7 +39,7 @@ public class SellController {
 public String sellList(HttpServletRequest request,Model model) {
 	System.out.println("SellController sellMain()");
 	//한 화면에 보여줄 글개수 설정
-	int pageSize = 10;
+	int pageSize = 5;
 	// 현 페이지 번호 가져오기
 	String pageNum=request.getParameter("pageNum");
 	// 페이지 번호가 없을 경우 => "1"로 설정
@@ -47,6 +50,7 @@ public String sellList(HttpServletRequest request,Model model) {
 	// 페이지 번호 => 정수형 변경
 	int currentPage = Integer.parseInt(pageNum);
 	
+	//DTO에 담을 정보
 	SellPageDTO sellPageDTO = new SellPageDTO();
 	sellPageDTO.setPageSize(pageSize);
 	sellPageDTO.setPageNum(pageNum);
@@ -55,9 +59,9 @@ public String sellList(HttpServletRequest request,Model model) {
 List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
 System.out.println(sellList);
 	// 전체 글개수 가져오기
-	int count = sellService.getSellCount();
+	int count = sellService.getSellCount(sellPageDTO);
 	// 한화면에 보여줄 페이지 개수 설정
-	int pageBlock = 10;
+	int pageBlock = 5;
 	// 시작하는 페이지 번호
 	int startPage=(currentPage-1)/pageBlock*pageBlock+1;
 	// 끝나는 페이지 번호
@@ -80,6 +84,7 @@ System.out.println(sellList);
 	model.addAttribute("sellList", sellList);
 	model.addAttribute("SellpageDTO", sellPageDTO);
 	
+	log.debug("페이지번호"+pageNum);
 	// center/notice.jsp
 	// WEB-INF/views/center/notice.jsp
 	return "sell/sellMain";
@@ -95,7 +100,7 @@ public String sellAdd() {
 }//sellAdd
 
 @PostMapping("/sellAddPro")
-public void sellAddPro(SellDTO sellDTO) {
+public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	System.out.println("SellController sellAddPro()");
 	System.out.println(sellDTO);
 	
@@ -116,7 +121,7 @@ public void sellAddPro(SellDTO sellDTO) {
 	 sellPrice 수주단가
 	 */
 
-	 
+	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellAddPro
 
 
@@ -156,12 +161,12 @@ public String updateSellMemo(HttpServletRequest request,Model model) {
 }//sellMemoUpdate
 	
 @PostMapping("/sellMemoUpdatePro")
-public void sellMemoUpdatePro(SellDTO sellDTO) {
+public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemoUpdatePro()");
-	
-	// sellMemo 수정
+	System.out.println(sellDTO);
 	sellService.updateSellMemo(sellDTO);
-
+	// 창을 닫기 위한 스크립트를 반환합니다.
+	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellMemoUpdatePro
 
 //----------------------------------------------------- sellMemotype ---------------------------------------
@@ -169,6 +174,7 @@ public void sellMemoUpdatePro(SellDTO sellDTO) {
 public String sellMemoAdd(HttpServletRequest request, Model model) {
 	System.out.println("SellController sellMemotype()");
 	String sellCode = request.getParameter("sellCode");
+	System.out.println(sellCode);
 	SellDTO sellDTO = sellService.getSellMemo(sellCode);
 	String memotype = request.getParameter("memotype");
 	System.out.println(sellDTO);
@@ -180,14 +186,14 @@ public String sellMemoAdd(HttpServletRequest request, Model model) {
 }//sellMemotype
 
 @PostMapping("/sellMemotypePro")
-public void sellMemoAddPro(SellDTO sellDTO) {
+public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemotypePro()");
 	System.out.println(sellDTO);
-	sellService.insertSellMemo(sellDTO);	
-	
-	
+	sellService.insertSellMemo(sellDTO);
+	return ResponseEntity.ok("<script>window.close();</script>");
+
 }//sellMemotypePro	
-	
+
 //-------------------------------------------------- sellDelete ---------------------------------------------
 @GetMapping("/sellDelete")
 public void sellDeletePro(SellDTO sellDTO) {

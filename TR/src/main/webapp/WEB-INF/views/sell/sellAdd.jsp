@@ -42,10 +42,10 @@
 		</div>
 		
         <label class="popupLabel">수주 수량 : </label>
-        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5">개<br>
+        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0">개<br>
 	
  	    <label class="popupLabel">수주 단가 : </label>
-        <input type="number" id="sellPrice"  min="0" >원<br> 
+        <input type="number" id="sellPrice"  min="0" value="0">원<br> 
         
      <label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
@@ -54,7 +54,7 @@
         <input type="text" id="sellDuedate" name="sellDuedate" readonly><br>
 
         <label class="popupLabel">담당자 : </label>
-        <input type="search" id="sellEmpId" name="sellEmpId" value="${sessionScope.sellEmpId}" readonly="readonly" ><br>
+        <input type="search" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
 
         <label class="popupLabel">비고 : </label><br>
         <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
