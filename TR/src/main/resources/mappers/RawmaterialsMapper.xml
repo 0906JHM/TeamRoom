@@ -129,7 +129,7 @@
 		set rawMemo=#{rawMemo}
 		where rawCode = #{rawCode}
 	</update>
-=======
+
  	<!-- selectwarehouse 페이징처리, 검색기능 -->
 	<select id="getWarehouseList" resultType="com.itwillbs.domain.WarehouseDTO">
 		select *
@@ -149,7 +149,6 @@
     	</if>
      	order by whseCode desc limit #{startRow}, #{pageSize}
 	</select>
->>>>>>> branch 'master' of https://github.com/0906JHM/TeamRoom.git
 	
 	<!-- selectwarehouse 페이징처리, 검색기능 -->
 	<select id="getWarehouseCount" resultType="java.lang.Integer">
