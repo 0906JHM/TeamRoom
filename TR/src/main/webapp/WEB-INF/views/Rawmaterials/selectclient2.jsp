@@ -59,7 +59,7 @@ function setParentText(){
 </tr>
 
 <c:forEach var="clientDTO" items="${clientList}">
-<tr>
+<tr onclick="document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();">
 <td>${clientDTO.clientType}</td>
 <td>${clientDTO.clientCode}</td>
 <td>${clientDTO.clientCompany}</td>
