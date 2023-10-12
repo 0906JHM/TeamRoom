@@ -41,7 +41,7 @@
 		i.rawCode = s.rawCode
 		left join clients c
 		on i.clientCode = c.clientCode
-		) AS subquery;
+		) AS subquery
 	</select>
 
 	<select id="getInMaterialListSearch"
@@ -68,8 +68,10 @@
 			<when
 				test="inNum != '' and rawName != '' and clientCompany != '' and inState != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				AND r.rawName LIKE
+				CONCAT('%', #{rawName}, '%')
+				AND c.clientCompany LIKE CONCAT('%',
+				#{clientCompany}, '%')
 				AND i.inState = #{inState}
 			</when>
 
@@ -77,7 +79,8 @@
 			<when
 				test="rawName != '' and clientCompany != '' and inState != ''">
 				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				AND c.clientCompany
+				LIKE CONCAT('%', #{clientCompany}, '%')
 				AND i.inState = #{inState}
 			</when>
 
@@ -85,14 +88,16 @@
 			<when
 				test="inNum != '' and clientCompany != '' and inState != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				AND c.clientCompany LIKE
+				CONCAT('%', #{clientCompany}, '%')
 				AND i.inState = #{inState}
 			</when>
 
 			<!-- Case 12: inNum, rawName, inState 고려한 경우 -->
 			<when test="inNum != '' and rawName != '' and inState != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				AND r.rawName
+				LIKE CONCAT('%', #{rawName}, '%')
 				AND i.inState = #{inState}
 			</when>
 
@@ -100,44 +105,52 @@
 			<when
 				test="inNum != '' and rawName != '' and clientCompany != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				AND r.rawName LIKE
+				CONCAT('%', #{rawName}, '%')
+				AND c.clientCompany LIKE CONCAT('%',
+				#{clientCompany}, '%')
 			</when>
 
 			<!-- Case 10: clientCompany와 inState 고려한 경우 -->
 			<when test="clientCompany != '' and inState != ''">
-				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				c.clientCompany LIKE CONCAT('%', #{clientCompany},
+				'%')
 				AND i.inState = #{inState}
 			</when>
 
 			<!-- Case 9: rawName와 inState 고려한 경우 -->
 			<when test="rawName != '' and inState != ''">
 				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND i.inState = #{inState}
+				AND
+				i.inState = #{inState}
 			</when>
 
 			<!-- Case 8: rawName와 clientCompany 고려한 경우 -->
 			<when test="rawName != '' and clientCompany != ''">
 				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				AND
+				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
 			</when>
 
 			<!-- Case 7: inNum와 inState 고려한 경우 -->
 			<when test="inNum != '' and inState != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND i.inState = #{inState}
+				AND i.inState
+				= #{inState}
 			</when>
 
 			<!-- Case 6: inNum와 clientCompany 고려한 경우 -->
 			<when test="inNum != '' and clientCompany != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				AND
+				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
 			</when>
 
 			<!-- Case 5: inNum와 rawName 고려한 경우 -->
 			<when test="inNum != '' and rawName != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				AND r.rawName
+				LIKE CONCAT('%', #{rawName}, '%')
 			</when>
 
 			<!-- Case 4: inState만 고려한 경우 -->
@@ -147,7 +160,8 @@
 
 			<!-- Case 3: clientCompany만 고려한 경우 -->
 			<when test="clientCompany != ''">
-				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
+				c.clientCompany LIKE CONCAT('%', #{clientCompany},
+				'%')
 			</when>
 
 			<!-- Case 2: rawName만 고려한 경우 -->
@@ -311,8 +325,19 @@
 				1=1
 			</otherwise>
 		</choose>
-		) AS subquery;
+		) AS subquery
 
 	</select>
 
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		SELECT
+		MAX(CAST(SUBSTRING(inNum, 3) AS SIGNED)) AS max_num
+		FROM inMaterial
+		WHERE inNum LIKE CONCAT(#{code}, '%')
+	</select>
+	
+	<insert id="insertList">
+		INSERT INTO inMaterial
+		VALUES (#{inNum}, default, #{inCount}, #{rawCode},#{buyNum}, default, #{clientCode}, default, #{inState}, #{inPrice})
+	</insert>
 </mapper>

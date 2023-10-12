@@ -1,5 +1,7 @@
 package com.itwillbs.service;
 
+import java.nio.file.spi.FileSystemProvider;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.InMaterialDAO;
 import com.itwillbs.domain.InMaterialDTO;
+import com.itwillbs.domain.OrderManagementDTO;
 
 @Service
 public class InMaterialService {
@@ -37,5 +40,48 @@ public class InMaterialService {
 
 	public int getInMaterialListCount(InMaterialDTO inMaterialDTO) {
 		return inMaterialDAO.getInMaterialListCount(inMaterialDTO);
+	}
+
+	public void insertList(OrderManagementDTO ordermanagementDTO) {
+//		ordermanagementDTO 여기에서 필요한 데이터 inMaterialDTO 에 넣기 
+		InMaterialDTO inMaterialDTO = new InMaterialDTO();
+		String code = "IN";
+		Integer inNum = inMaterialDAO.getMaxNum(code);
+		if(inNum == null) {
+			inNum = 0;
+		}
+		String changeCode = this.codeChange(code, inNum);
+		
+		inMaterialDTO.setInNum(changeCode);
+		inMaterialDTO.setInCount(ordermanagementDTO.getBuyCount());
+		
+		int price = Integer.parseInt(ordermanagementDTO.getRawPrice()) * ordermanagementDTO.getBuyCount();
+		inMaterialDTO.setInPrice(price);
+		
+		inMaterialDTO.setRawCode(ordermanagementDTO.getRawCode());
+		inMaterialDTO.setClientCode(ordermanagementDTO.getClientCode());
+		inMaterialDTO.setInState("미입고");
+
+		
+		System.out.println("OrderManagementService insertOrderManagement()");
+		
+		// buyNum 자동생성
+		// = rawCode + buyDate
+		// = 원자재코드 + 년 + 월 + 일
+		// = PER1 + 2023 + 10 + 11
+		// = PER120231011
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    String buyDateStr = sdf.format(ordermanagementDTO.getBuyDate());
+	    String buyNum = ordermanagementDTO.getRawCode() + buyDateStr;
+		inMaterialDTO.setBuyNum(buyNum);
+
+		
+		
+		
+		inMaterialDAO.insertList(inMaterialDTO);
+	}
+	
+	public String codeChange(String code_id, int num){
+		return String.format("%s%04d", code_id, ++num);
 	}
 }
