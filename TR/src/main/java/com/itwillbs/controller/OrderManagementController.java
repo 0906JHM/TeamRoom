@@ -104,7 +104,6 @@ public class OrderManagementController {
 			return "redirect:/OrderManagement/home";
 		}
 	
-	
 	// 체크박스로 선택삭제
     @RequestMapping(value = "/delete")
     public String ajaxTest(HttpServletRequest request) throws Exception {
@@ -158,7 +157,7 @@ public class OrderManagementController {
 		return "redirect:/OrderManagement/home";
 	}
     
- // home 페이징처리, 검색기능
+    // selectrawmaterials 페이징처리, 검색기능
  	@GetMapping("/selectrawmaterials")
  	public String selectrawmaterials(HttpServletRequest request,Model model) {
  		
@@ -187,7 +186,7 @@ public class OrderManagementController {
  	    pageDTO.setSearch3(search3);
  	    pageDTO.setSearch4(search4);
  	        
- 	    // 품목추가한 내용 뿌려주기
+ 	    // 품목 추가한 내용 뿌려주기
  	    List<RawmaterialsDTO> rawmaterialsList= rawmaterialsService.getRawmaterialsList(pageDTO);
  	        
  	    int count = rawmaterialsService.getRawmaterialsCount(pageDTO);
@@ -206,16 +205,16 @@ public class OrderManagementController {
  	    pageDTO.setPageCount(pageCount);
  	    model.addAttribute("pageDTO", pageDTO);
  	        
- 	    // 품목추가한 내용 뿌려주기
+ 	    // 품목 추가한 내용 뿌려주기
  	    model.addAttribute("rawmaterialsList", rawmaterialsList);
  		model.addAttribute("pageDTO", pageDTO);
  	    
  	    return "OrderManagement/selectrawmaterials";
  	}
  	
- // selectclient 페이징처리, 검색기능
+ 	// selectclient 페이징처리, 검색기능
   	@GetMapping("/selectclient")
-     public String selectclient(HttpServletRequest request,Model model) {
+    public String selectclient(HttpServletRequest request,Model model) {
          
   		String search1 = request.getParameter("search1");
  		System.out.println("search1 : " + search1);
@@ -226,45 +225,45 @@ public class OrderManagementController {
  		String search4 = request.getParameter("search4");
  		System.out.println("search4 : " + search4);
   		
-         int pageSize = 10;
-         String pageNum=request.getParameter("pageNum");
-         if(pageNum == null) {
-             pageNum = "1";
-         }
+        int pageSize = 10;
+        String pageNum=request.getParameter("pageNum");
+        if(pageNum == null) {
+        	pageNum = "1";
+        }
          
-         int currentPage = Integer.parseInt(pageNum);
-         PageDTO pageDTO =new PageDTO();
-         pageDTO.setPageSize(pageSize);
-         pageDTO.setPageNum(pageNum);
-         pageDTO.setCurrentPage(currentPage);
-         pageDTO.setSearch1(search1); // 검색어저장
+        int currentPage = Integer.parseInt(pageNum);
+        PageDTO pageDTO =new PageDTO();
+        pageDTO.setPageSize(pageSize);
+        pageDTO.setPageNum(pageNum);
+        pageDTO.setCurrentPage(currentPage);
+        pageDTO.setSearch1(search1); // 검색어저장
  	    pageDTO.setSearch2(search2);
  	    pageDTO.setSearch3(search3);
  	    pageDTO.setSearch4(search4);
          
-         // 거래처 내용 뿌려주기
-         List<ClientDTO> clientList= rawmaterialsService.getClientList(pageDTO);
+        // 거래처 내용 뿌려주기
+        List<ClientDTO> clientList= rawmaterialsService.getClientList(pageDTO);
          
-         int count = rawmaterialsService.getClientCount(pageDTO);
-         int pageBlock = 10;
-         int startPage=(currentPage-1)/pageBlock*pageBlock+1;
-         int endPage = startPage + pageBlock -1;
-         int pageCount = count/pageSize+(count%pageSize==0?0:1);
-         if(endPage > pageCount) {
-             endPage = pageCount;
-         }
-         pageDTO.setCount(count);
-         pageDTO.setPageBlock(pageBlock);
-         pageDTO.setStartPage(startPage);
-         pageDTO.setEndPage(endPage);
-         pageDTO.setPageCount(pageCount);
-         model.addAttribute("pageDTO", pageDTO);
+        int count = rawmaterialsService.getClientCount(pageDTO);
+        int pageBlock = 10;
+        int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+        int endPage = startPage + pageBlock -1;
+        int pageCount = count/pageSize+(count%pageSize==0?0:1);
+        if(endPage > pageCount) {
+        	endPage = pageCount;
+        }
+        pageDTO.setCount(count);
+        pageDTO.setPageBlock(pageBlock);
+        pageDTO.setStartPage(startPage);
+        pageDTO.setEndPage(endPage);
+        pageDTO.setPageCount(pageCount);
+        model.addAttribute("pageDTO", pageDTO);
          
-         // 거래처 내용 뿌려주기
-         model.addAttribute("clientList", clientList);
-         model.addAttribute("pageDTO", pageDTO);
+        // 거래처 내용 뿌려주기
+        model.addAttribute("clientList", clientList);
+        model.addAttribute("pageDTO", pageDTO);
          
-         return "OrderManagement/selectclient";
+        return "OrderManagement/selectclient";
      }
 	
 }
