@@ -5,34 +5,55 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.itwillbs.mappers.RawmaterialsMapper"> 
+ 
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		select max(rawNum)
+		from rawMaterial
+	</select>
 
 	<insert id="insertRawmaterials">
-		insert into rawMaterial(rawCode,rawName,rawType,rawUnit,rawPrice,clientCode,whseCode,rawMemo)
-		values(#{rawCode},#{rawName},#{rawType},#{rawUnit},#{rawPrice},#{clientCode},#{whseCode},#{rawMemo})
+		insert into rawMaterial(rawNum,rawCode,rawName,rawType,rawUnit,rawPrice,clientCode,whseCode,rawMemo)
+		values(#{rawNum},#{rawCode},#{rawName},#{rawType},#{rawUnit},#{rawPrice},#{clientCode},#{whseCode},#{rawMemo})
 	</insert>
 	
+	<!-- home 페이징처리, 검색기능 -->
 	<select id="getRawmaterialsList" resultType="com.itwillbs.domain.RawmaterialsDTO">
 		select *
 		from rawMaterial
+		where 1=1
+   		<if test="search1 != null and search1 != ''">
+        	and rawCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and rawName like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and rawType = #{search3}
+    	</if>
+    	<if test="search4 != null and search4 != ''">
+    		and clientCode like concat('%', #{search4}, '%')
+    	</if>
+    	order by rawNum desc limit #{startRow}, #{pageSize}
 	</select>
 	
-	<select id="getRawmaterialsSearchList" resultType="com.itwillbs.domain.RawmaterialsDTO" parameterType="com.itwillbs.domain.RawmaterialsDTO">
-    	select *
-    	from rawMaterial
-    	where 1=1
-   		<if test="rawCode != null and rawCode != ''">
-        	and rawCode like concat('%', #{rawCode}, '%')
+	<!-- home 페이징처리, 검색기능 -->
+ 	<select id="getRawmaterialsCount" resultType="java.lang.Integer">
+		select count(*)
+      	from rawMaterial
+     	where 1=1
+   		<if test="search1 != null and search1 != ''">
+        	and rawCode like concat('%', #{search1}, '%')
     	</if>
-    	<if test="rawName != null and rawName != ''">
-        	and rawName like concat('%', #{rawName}, '%')
+    	<if test="search2 != null and search2 != ''">
+        	and rawName like concat('%', #{search2}, '%')
     	</if>
-   		<if test="rawType != null and rawType != ''">
-       		and rawType = #{rawType}
+   		<if test="search3 != null and search3 != ''">
+       		and rawType = #{search3}
     	</if>
-    	<if test="clientCode != null and clientCode != ''">
-    		and clientCode like concat('%', #{clientCode}, '%')
+    	<if test="search4 != null and search4 != ''">
+    		and clientCode like concat('%', #{search4}, '%')
     	</if>
-	</select>
+    </select>
 	
 	<!-- 체크박스로 선택삭제 -->
     <delete id="delete">
@@ -51,5 +72,44 @@
 		set rawName=#{rawName}, rawType=#{rawType}, rawUnit=#{rawUnit}, rawPrice=#{rawPrice}, clientCode=#{clientCode}, whseCode=#{whseCode}, rawMemo=#{rawMemo}
 		where rawCode = #{rawCode}
 	</update>
-  
+	
+	<!-- selectclient 페이징처리, 검색기능 -->
+	<select id="getClientList" resultType="com.itwillbs.domain.ClientDTO">
+		select *
+		from clients
+		where 1=1
+   		<if test="search1 != null and search1 != ''">
+        	and clientCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and clientCompany like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and clientType = #{search3}
+    	</if>
+    	<if test="search4 != null and search4 != ''">
+    		and clientName like concat('%', #{search4}, '%')
+    	</if>
+     	order by clientCode asc limit #{startRow}, #{pageSize}
+	</select>
+	
+	<!-- selectclient 페이징처리, 검색기능 -->
+	<select id="getClientCount" resultType="java.lang.Integer">
+      	select count(*)
+      	from clients
+      	where 1=1
+   		<if test="search1 != null and search1 != ''">
+        	and clientCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and clientCompany like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and clientType = #{search3}
+    	</if>
+    	<if test="search4 != null and search4 != ''">
+    		and clientName like concat('%', #{search4}, '%')
+    	</if>
+ 	</select>
+	
 </mapper>

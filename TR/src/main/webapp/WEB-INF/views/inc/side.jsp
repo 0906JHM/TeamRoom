@@ -25,7 +25,7 @@
 						<ul class="submenu">
 							<li><a href="${pageContext.request.contextPath }/requirement/reqDetail" class="sidea">소요량관리</a></li>
 							<li><a href="${pageContext.request.contextPath }/product/list" class="sidea">제품관리</a></li>
-							<li><a href="#" class="sidea">원자재관리</a></li>
+							<li><a href="${pageContext.request.contextPath }/Rawmaterials/home" class="sidea">원자재관리</a></li>
 						</ul>
 					</li>
 					<li>
@@ -56,8 +56,8 @@
 							<i class="fa-solid fa-pen"></i>영업관리
 						</div>
 						<ul class="submenu">
-							<li><a href="#" class="sidea">수주관리</a></li>
-							<li><a href="#" class="sidea">발주관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/sell/sellMain" class="sidea">수주관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/OrderManagement/home" class="sidea">발주관리</a></li>
 							<li><a href="${pageContext.request.contextPath}/client/client" class="sidea">거래처관리</a></li>
 						</ul>
 						<div class="sidelink">

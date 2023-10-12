@@ -6,12 +6,12 @@
 
 <!-- head -->
 <head>
-<meta charset="UTF-8"> 
+<meta charset="UTF-8">  
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
 
-<!-- javascript --> 
+<!-- javascript -->
 <script type="text/javascript">
 
 // 체크박스로 삭제
@@ -75,22 +75,23 @@ function deleteValue(){
 
 // insert 페이지 팝업창
 function openPopup1() {
-    window.open('${pageContext.request.contextPath}/Rawmaterials/insert', '_blank', 'height=400,width=600');
+    window.open('${pageContext.request.contextPath}/OrderManagement/insert', '_blank', 'height=400,width=600');
 }
 
-// detail 페이지 팝업창
+//detail 페이지 팝업창
 function openPopup2(url) {
 	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
 	myWindow.moveTo(0, 0);
 	myWindow.focus();
 }
 
-// selectclient 페이지 팝업창
+//selectclient 페이지 팝업창
 function openPopup3() {
-	// window.name = "부모창 이름";
-	window.name = "home";
-	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
+    var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
+    // 팝업 창닫기 버튼 클릭시 창닫기
+    popupWindow.onbeforeunload = function() {
+        popupWindow.close();
+    };
 }
 
 // 팝업창에서 작업 완료후 닫고 새로고침
@@ -107,12 +108,12 @@ $(document).ready(function() {
 <!-- body -->
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<h1>품목관리</h1>
+<h1>발주관리</h1>
 
 <!-- form(검색) -->
-<form action="${pageContext.request.contextPath}/Rawmaterials/home" method="get">
-원자재코드	<input type="text" name="search1" placeholder="원자재코드">
-원자재명	<input type="text" name="search2" placeholder="원자재명">
+<form action="${pageContext.request.contextPath}/OrderManagement/home" method="get">
+발주번호	<input type="text" name="search1" placeholder="발주번호">
+품번	<input type="text" name="search2" placeholder="품번">
 종류		<select name="search3">
 		<option value="">전체</option>
 		<option value="향기">향기</option>
@@ -121,37 +122,43 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+거래처		<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()">
 <input type="submit" value="검색">
 </form>
 
 <!-- table -->
 <table border="1">
 <tr>
-<td>번호</td>
-<td>원자재코드</td>
-<td>원자재명</td>
+<td>발주번호</td>
+<td>품번</td>
+<td>품명</td>
 <td>종류</td>
-<td>단위</td>
-<td>매입단가</td>
-<td>거래처</td>
-<td>창고명</td>
-<td>비고</td>
+<td>거래처명</td>
+<td>창고수량</td>
+<td>발주수량</td>
+<td>납입단가</td>
+<td>단가총계</td>
+<td>발주신청일</td>
+<td>담당자</td>
+<td>입고상태</td>
 <td></td>
 </tr>
 
-<c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
+<c:forEach var="ordermanagementDTO" items="${ordermanagementList}">
 <tr>
-<td>${rawmaterialsDTO.rawNum}</td>
-<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}')">${rawmaterialsDTO.rawCode}</a></td>
-<td>${rawmaterialsDTO.rawName}</td>
-<td>${rawmaterialsDTO.rawType}</td>
-<td>${rawmaterialsDTO.rawUnit}</td>
-<td>${rawmaterialsDTO.rawPrice}</td>
-<td>${rawmaterialsDTO.clientCode}</td>
-<td>${rawmaterialsDTO.whseCode}</td>
-<td>${rawmaterialsDTO.rawMemo}</td>
-<td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
+<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/OrderManagement/detail?buyNum=${ordermanagementDTO.buyNum}')">${ordermanagementDTO.buyNum}</a></td>
+<td>${ordermanagementDTO.rawCode}</td>
+<td>${ordermanagementDTO.rawName}</td>
+<td>${ordermanagementDTO.rawType}</td>
+<td>${ordermanagementDTO.clientCode}</td>
+<td>${ordermanagementDTO.whseCount}</td>
+<td>${ordermanagementDTO.buyCount}</td>
+<td>${ordermanagementDTO.rawPrice}</td>
+<td>${ordermanagementDTO.rawPrice * ordermanagementDTO.buyCount}</td>
+<td>${ordermanagementDTO.buyDate}</td>
+<td>${ordermanagementDTO.buyEmpId}</td>
+<td>${ordermanagementDTO.buyInstate}</td>
+<td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
 </tr>
 </c:forEach>
 </table>
@@ -162,7 +169,7 @@ $(document).ready(function() {
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/Rawmaterials/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
+<a href="${pageContext.request.contextPath}/OrderManagement/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
 
 </body>
