@@ -112,7 +112,6 @@
     	</if>
  	</select>
  	
-<<<<<<< HEAD
  	<select id="getSellMemo" resultType="com.itwillbs.domain.RawmaterialsDTO">
 		select *
 		from rawMaterial
