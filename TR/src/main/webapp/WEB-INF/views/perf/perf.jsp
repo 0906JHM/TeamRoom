@@ -73,26 +73,29 @@
 					<th class="ctth">양품수</th>
 					<th class="ctth">불량수</th>
 					<th class="ctth">불량사유</th>
+			        <th class="ctth">비고</th>
 					<th class="ctth">현황</th> 
-					<th class="ctth">비고</th>
+					
 				</tr>
 			</thead> 
 		 <tbody>
-				
+				<c:forEach var="perfDTO" items="${worklist}">
 					<tr class="ctcontents">
-					    <td class="cttg">번호</td>
-						<td class="cttg">생산실적코드</td>
-						<td class="cttg">작업지시코드</td>
-						<td class="cttg">라인코드</td>
-						<td class="cttg">제품코드</td>
-						<td class="cttg">실적일</td>
-						<td class="cttg">실적수량</td>
-						<td class="cttg">양품수</td>
-						<td class="cttg">불량수</td>
-						<td class="cttg">불량사유</td>
-						<td class="cttg">현황</td>
-						<td class="cttg">비고</td>
+					    <td class="cttg">1</td>
+						<td class="cttg">${perfDTO.perfCode}</td>
+						<td class="cttg">${perfDTO.workCode}</td>
+						<td class="cttg">${perfDTO.lineCode}</td>
+						<td class="cttg">${perfDTO.prodCode}</td>
+						<td class="cttg">${perfDTO.perfDate}</td>
+						<td class="cttg">${perfDTO.perfAmount}</td>
+						<td class="cttg">${perfDTO.perfFair}</td>
+						<td class="cttg">${perfDTO.perfDefect}</td>
+						<td class="cttg">${perfDTO.perfDefectreason}</td>
+						<td class="cttg">${perfDTO.perfMemo}</td>
+						<td class="cttg">${perfDTO.perfStatus}</td>
+						
 					</tr>
+					</c:forEach>
 			</tbody> 
 
 		</table>
@@ -113,68 +116,7 @@ $(document).ready(function() {
             'width=1200px, height=800px, left=500px, top=100px'
         );
     });
-    
-    $('#performCode a').click(function() {
-    	var obj = { perform_code:$('#performCode').text().substring(0,16).trim() };
-    		
-    	$.ajax({
-    		url: "/performance/detail",
-    		type: "post",
-    		data: JSON.stringify(obj),
-    		contentType : "application/json; charset=UTF-8",
-    		dataType : "json",
-    		success: function(data) {
-    			console.log(data);
-    			
-    			var tmp = "<table border='1' class='table table-striped jambo_table bulk_action' style='text-align:center;'>";
-    			tmp += "<tr class='headings'>";
-    			tmp += " <th>생산실적코드</th>";
-    			tmp += "  <td>" + data.perform_code + "</td>";
-    			tmp += " <th>작업지시코드</th>";
-    			tmp += "  <td>" + data.work_code + "</td>";
-    			tmp += " <th>라인코드</th>";
-    			tmp += "  <td>" + data.workOrder.line_code + "</td>";
-    			tmp += " <th>품번</th>";
-    			tmp += ((data.prod_code===""||data.prod_code==null) ? "<td>없음</td>" : "<td>" + data.prod_code + "</td>");
-    			tmp += "</tr>";
-    			tmp += "<tr class='headings'>";
-    			tmp += " <th>실적일</th>";
-    			tmp += "  <td>" + getDate(data.perform_date) + "</td>";
-    			tmp += " <th>실적수량</th>";
-    			tmp += "  <td>" + data.perform_qt + "</td>";
-    			tmp += " <th>양품수</th>";
-    			tmp += "  <td>" + data.perform_fair + "</td>";
-    			tmp += " <th>불량수</th>";
-    			tmp += "  <td>" + data.perform_defect + "</td>";
-    			tmp += "</tr>";
-    			tmp += "<tr class='headings'>";
-    			tmp += " <th>불량사유</th>";
-    			tmp += ((data.defect_note===""||data.defect_note==null) ? "<td>없음</td>" : "<td>" + data.defect_note + "</td>");
-    			tmp += " <th>현황</th>";
-    			tmp += "  <td>" + data.perform_status + "</td>";
-    			tmp += " <th>등록자</th>";
-    			tmp += ((data.emp_id===""||data.emp_id==null) ? "<td>없음</td>" : "<td>" + data.emp_id + "</td>");
-    			tmp += " <th>변경자</th>";
-    			tmp += ((data.change_id===""||data.change_id==null) ? "<td>없음</td>" : "<td>" + data.change_id + "</td>");
-    			tmp += "</tr>";
-    			tmp += "<tr class='headings'>";
-    			tmp += " <th>변경일</th>";
-    			tmp += ((data.change_date===""||data.change_date==null) ? "<td>없음</td>" : "<td>" + getDate(data.change_date) + "</td>");
-    			tmp += " <th>비고</th>";
-    			tmp += ((data.perform_note===""||data.perform_note==null) ? "<td>없음</td>" : "<td>" + data.perform_note + "</td>");
-    			tmp += "</tr>";
-    			tmp += "</table>";
-    			
-    			$('.modal-body').html(tmp);
-    			$('.modal').modal("show");
-    		},
-    		error: function() {
-    			alert("아작스 실패");
-    		}
-    	}); //ajax
-    		
-    }); //생산실적코드 클릭   
-    
+       
 });
 
 </script>			
