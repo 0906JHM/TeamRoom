@@ -153,8 +153,8 @@ public class OrderManagementController {
 	}
     
  // home 페이징처리, 검색기능
- 	@GetMapping("/selectclient2")
- 	public String selectclient2(HttpServletRequest request,Model model) {
+ 	@GetMapping("/selectrawmaterials")
+ 	public String selectrawmaterials(HttpServletRequest request,Model model) {
  		
  		String search1 = request.getParameter("search1");
  		System.out.println("search1 : " + search1);
@@ -204,7 +204,7 @@ public class OrderManagementController {
  	    model.addAttribute("rawmaterialsList", rawmaterialsList);
  		model.addAttribute("pageDTO", pageDTO);
  	    
- 	    return "OrderManagement/selectclient2";
+ 	    return "OrderManagement/selectrawmaterials";
  	}
  	
  // selectclient 페이징처리, 검색기능
