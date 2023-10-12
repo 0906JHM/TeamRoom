@@ -29,7 +29,7 @@ console.log
 </script>
 
 <!-- form(검색) -->
-<form action="${pageContext.request.contextPath}/OrderManagement/selectclient2" method="get">
+<form action="${pageContext.request.contextPath}/OrderManagement/selectrawmaterials" method="get">
 원자재코드	<input type="text" name="search1" placeholder="원자재코드">
 원자재명	<input type="text" name="search2" placeholder="원자재명">
 종류		<select name="search3">
@@ -75,7 +75,7 @@ console.log
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/OrderManagement/selectclient2?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
+<a href="${pageContext.request.contextPath}/OrderManagement/selectrawmaterials?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
 
 </body>
