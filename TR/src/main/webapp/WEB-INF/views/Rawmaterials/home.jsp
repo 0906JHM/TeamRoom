@@ -107,7 +107,7 @@ $(document).ready(function() {
 <!-- body -->
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<h1>품목관리</h1>
+<h1>원자재관리</h1>
 
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/home" method="get">
