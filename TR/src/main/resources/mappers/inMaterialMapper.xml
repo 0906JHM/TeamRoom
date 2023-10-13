@@ -11,7 +11,7 @@
 		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
 		i.rawCode, r.rawName, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		DATE_FORMAT(i.inDate, '%Y-%m-d'), i.inEmpId, i.inState
+		i.inDate, i.inEmpId, i.inState
 		FROM inMaterial
 		i left join rawMaterial
 		r
@@ -32,7 +32,7 @@
 		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
 		i.rawCode, r.rawName, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		DATE_FORMAT(i.inDate, '%Y-%m-d'),i.inEmpId, i.inState
+		i.inDate,i.inEmpId, i.inState
 		FROM inMaterial i
 		left join rawMaterial r
 		on i.rawCode = r.rawCode
@@ -50,7 +50,7 @@
 		i.rawCode,
 		r.rawName, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		DATE_FORMAT(i.inDate, '%Y-%m-d'),
+		i.inDate,
 		i.inEmpId, i.inState
 		FROM inMaterial i
 		left join rawMaterial r
@@ -110,7 +110,7 @@
 		i.rawCode,
 		r.rawName,
 		i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice, DATE_FORMAT(i.inDate, '%Y-%m-d'),
+		r.rawPrice, i.inPrice, i.inDate,
 		i.inEmpId,
 		i.inState
 		FROM inMaterial i left join rawMaterial r
@@ -165,7 +165,7 @@
 		i.rawCode,
 		r.rawName, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		DATE_FORMAT(i.inDate, '%Y-%m-d'),
+		i.inDate,
 		i.inEmpId, i.inState
 		FROM inMaterial i
 		left join rawMaterial r
@@ -205,7 +205,7 @@
 		i.rawCode,
 		r.rawName,
 		i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice, DATE_FORMAT(i.inDate, '%Y-%m-d'),
+		r.rawPrice, i.inPrice, i.inDate,
 		i.inEmpId,
 		i.inState
 		FROM inMaterial i left join rawMaterial r
@@ -256,7 +256,7 @@
 		i.rawCode,
 		r.rawName, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		DATE_FORMAT(i.inDate, '%Y-%m-d'),
+		i.inDate,
 		i.inEmpId, i.inState
 		FROM inMaterial i
 		left join rawMaterial r
@@ -281,6 +281,13 @@
 	<update id="updateInState">
 		update inMaterial
 		SET inState = "입고완료"
+		WHERE inNum =
+		#{inNum}
+	</update>
+	
+	<update id="updateInDate">
+		update inMaterial
+		SET inDate = #{inDate}
 		WHERE inNum =
 		#{inNum}
 	</update>

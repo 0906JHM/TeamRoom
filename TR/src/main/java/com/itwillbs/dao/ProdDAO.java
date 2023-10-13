@@ -82,6 +82,10 @@ public class ProdDAO {
 	public int getProdCount(PageDTO pageDTO) {
 		return sqlSession.selectOne(namespace+".getProdCount",pageDTO);
 	}
+
+	public Integer getMaxNum(String code) {
+		return sqlSession.selectOne(namespace+".getMaxNum",code);
+	}
 	
 	
 

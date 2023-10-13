@@ -155,6 +155,13 @@
 		where
 		prodCode = #{prodCode}
 	</update>
+	
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		SELECT MAX(CAST(SUBSTRING(prodCode,3) AS SIGNED)) AS max_num
+		FROM product
+		WHERE prodCode LIKE CONCAT(#{code}, '%')
+	</select>
+	
 </mapper>
 
 

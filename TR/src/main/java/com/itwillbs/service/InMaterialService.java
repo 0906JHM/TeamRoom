@@ -2,6 +2,7 @@ package com.itwillbs.service;
 
 import java.nio.file.spi.FileSystemProvider;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,17 +46,23 @@ public class InMaterialService {
 	public void insertList(OrderManagementDTO ordermanagementDTO) {
 //		ordermanagementDTO 여기에서 필요한 데이터 inMaterialDTO 에 넣기 
 		InMaterialDTO inMaterialDTO = new InMaterialDTO();
-		String code = "IN";
-		Integer inNum = inMaterialDAO.getMaxNum(code);
-		if(inNum == null) {
-			inNum = 0;
-		}
-		String changeCode = this.codeChange(code, inNum);
+//		String code = "IN";
+//		Integer inNum = inMaterialDAO.getMaxNum(code);
+//		if(inNum == null) {
+//			inNum = 0;
+//		}
+//		String changeCode = this.codeChange(code, inNum);
+		Date now = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+		String formattedDate = dateFormat.format(now);
+		String inNum = "IN" + formattedDate;
 		
-		inMaterialDTO.setInNum(changeCode);
+		
+		inMaterialDTO.setInNum(inNum);
 		inMaterialDTO.setInCount(ordermanagementDTO.getBuyCount());
 		inMaterialDTO.setRawPrice(ordermanagementDTO.getRawPrice());
 		int price = Integer.parseInt(ordermanagementDTO.getRawPrice()) * ordermanagementDTO.getBuyCount();
+//		int price = ordermanagementDTO.getRawPrice() * ordermanagementDTO.getBuyCount();
 		inMaterialDTO.setInPrice(price);
 		
 		inMaterialDTO.setRawCode(ordermanagementDTO.getRawCode());
@@ -65,15 +72,6 @@ public class InMaterialService {
 		
 		System.out.println("OrderManagementService insertOrderManagement()");
 		
-		// buyNum 자동생성
-		// = rawCode + buyDate
-		// = 원자재코드 + 년 + 월 + 일
-		// = PER1 + 2023 + 10 + 11
-		// = PER120231011
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String buyDateStr = sdf.format(ordermanagementDTO.getBuyDate());
-	    String buyNum = ordermanagementDTO.getRawCode() + buyDateStr;
-		inMaterialDTO.setBuyNum(buyNum);
 
 		
 		
@@ -97,6 +95,12 @@ public class InMaterialService {
 
 	public void updateInState(InMaterialDTO inMaterialDTO) {
 		inMaterialDAO.updateInState(inMaterialDTO);
+		
+	}
+
+	public void updateInDate(InMaterialDTO inMaterialDTO) {
+		System.out.println("InMaterialService updateInDate");
+		inMaterialDAO.updateInDate(inMaterialDTO);
 		
 	}
 }

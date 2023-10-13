@@ -16,7 +16,7 @@ h2 {
     overflow-y: hidden;
 }
 .input-row{
-	 height:45px;
+	 height:200%;
 	 width:99%;
 	 border:0;
 }
@@ -77,6 +77,17 @@ background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1
 	border: 0;
   text-align: center;
   font: 500 24px/24px "Inter", sans-serif;
+  text-decoration:none;
+}
+.magambutton{
+background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	/* width:100px;
+	height:40px; */
+	border-radius:5px;
+	color: #FFFFFF;
+	border: 0;
+  text-align: center;
+  /* font: 500 24px/24px "Inter", sans-serif; */
   text-decoration:none;
 }
 fieldset{border: 0;
@@ -157,12 +168,13 @@ align-items: center;
 	background-color:#ffffff;
 	width:1570px;
 	height:45px;
+	
 	font: 500 24px/24px "Inter", sans-serif;
 }
 
 .magamBtn{
 	    border: 1px solid;
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 5px;
     background-color: #17a2b8;
     color: #fff;

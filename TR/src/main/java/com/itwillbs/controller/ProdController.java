@@ -111,7 +111,11 @@ public class ProdController {
 	}//
 
 	@GetMapping("/write")
-	public String write() {
+	public String write(Model model) {
+		String code = prodService.makeCode();
+		ProdDTO prodDTO = new ProdDTO();
+		prodDTO.setProdCode(code);
+		model.addAttribute("prodDTO",prodDTO);
 		return "product/write";
 	}//
 

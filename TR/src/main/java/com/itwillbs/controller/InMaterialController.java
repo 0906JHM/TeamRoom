@@ -66,7 +66,9 @@ public class InMaterialController {
 		String current = dateFormat.format(currentDate);
 		//입고일 세팅
 		inMaterialDTO.setInDate(current);
-		//입고테이블 입고개수 업데이트 => 입고개수 테이블에 없어서 생략
+		//입고일 업데이트
+		inMaterialService.updateInDate(inMaterialDTO);
+		
 		//재고 테이블에서 원자재코드로 입고한만큼 개수 증가
 		inMaterialService.updateWhseCount(inMaterialDTO);
 

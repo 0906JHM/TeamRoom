@@ -76,4 +76,9 @@ public class InMaterialDAO {
 	public void updateInState(InMaterialDTO inMaterialDTO) {
 		sqlSession.update(namespace + ".updateInState", inMaterialDTO);
 	}
+
+	public void updateInDate(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace+".updateInDate",inMaterialDTO);
+		
+	}
 }

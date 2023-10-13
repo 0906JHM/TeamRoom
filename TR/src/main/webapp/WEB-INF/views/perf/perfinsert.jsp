@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/datepicker.css"> 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/perfinsert.css"> 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <body>
 <div class="perfdetail">
@@ -248,7 +250,7 @@
         perfAmountInput.addEventListener('input', updateTotal);
         
         function updateTotal() {
-            var perfAmount = parseInt(perfAmountInput.value, 10); // 지시수량을 가져옴
+            var perfAmount = parseInt(perfAmountInput.value, 10); // 지시수량(실적수량)을 가져옴
             var defectCount = parseInt(perfDefectInput.value, 10) || 0; // 불량품 수를 가져오고, 값이 없으면 0으로 간주
             var fairCount = parseInt(perfFairInput.value, 10) || 0; // 양품 수를 가져오고, 값이 없으면 0으로 간주
 
@@ -256,21 +258,37 @@
 
             if (total > perfAmount) {
                 if (fairCount > perfAmount && defectCount > perfAmount) {
-                    window.alert('양품수와 불량품수의 합은 ' + perfAmount + ' 이하로 입력해야 합니다.');
+                    Swal.fire({
+                        title: '입력 오류',
+                        text: '양품수와 불량품수의 합은 ' + perfAmount + ' 이하여야 합니다.',
+                        icon: 'error'
+                    });
                     perfDefectInput.value = ''; // 불량수 초기화
                     perfFairInput.value = ''; // 양품수 초기화
                 } else if (fairCount > perfAmount) {
-                    window.alert('양품수는 ' + perfAmount + ' 이하로 입력해야 합니다.');
+                    Swal.fire({
+                        title: '입력 오류',
+                        text: '양품수는 ' + perfAmount + ' 이하여야 합니다.',
+                        icon: 'error'
+                    });
                     perfFairInput.value = ''; // 양품수 초기화
                 } else if (defectCount > perfAmount) {
-                    window.alert('불량품수는 ' + perfAmount + ' 이하로 입력해야 합니다.');
+                    Swal.fire({
+                        title: '입력 오류',
+                        text: '불량품수는 ' + perfAmount + ' 이하여야 합니다.',
+                        icon: 'error'
+                    });
                     perfDefectInput.value = ''; // 불량수 초기화
-                } else if(defecCount+fairCount > perfAmount ){
-                	window.alert('양품수와 불량품수의 합은 ' + perfAmount + ' 이하로 입력해야 합니다.');
+                } else if(defectCount + fairCount > perfAmount) {
+                    Swal.fire({
+                        title: '입력 오류',
+                        text: '양품수와 불량품수의 합은 ' + perfAmount + ' 이하여야 합니다.',
+                        icon: 'error'
+                    });
                     perfDefectInput.value = ''; // 불량수 초기화
-                    perfFairInput.value = ''; // 양품수 초기화   	
+                    perfFairInput.value = ''; // 양품수 초기화
                 }
-                }      
+            }  
         }// 지시수량 양품수 불량수 제어 끝 ********************************
         
         
@@ -305,31 +323,45 @@
         
         //불량사유 제어 끝 ***********************************************
         
-         // 폼 제출 이벤트 리스너 추가
     document.getElementById("perfinsert").addEventListener("submit", function(event) {
-        // 이벤트 기본 동작(폼 제출)을 중단하여 자바스크립트 코드를 실행
-        event.preventDefault();
-        
-     // 불량수가 비어있을 경우 0으로 설정
-        setDefaultDefectValue();
-
-        // 여기에 폼 데이터를 서버로 전송하는 코드를 추가할 수 있습니다.
-        // 예를 들어, jQuery를 사용하여 AJAX 요청을 보낼 수 있습니다.
-        // $.post("서버URL", $("#perfForm").serialize(), function(response) {
-        //     // 서버 응답에 대한 처리 코드
-        // });
-
-        // 혹은 폼을 직접 제출할 수도 있습니다.
-        document.getElementById("perfinsert").submit();
-    });
-
-    // "닫기" 버튼 클릭 이벤트 처리 (원하는 동작으로 변경할 수 있습니다)
-    document.getElementById("closebtn").addEventListener("click", function() {
-        // 창을 닫는 동작을 수행할 수 있습니다.
-        window.close();
-    });
+    // 이벤트 기본 동작(폼 제출)을 중단하여 자바스크립트 코드를 실행
+    event.preventDefault();
     
- // 불량수 값이 비어있을 경우 0으로 설정하는 함수
+    // 불량수가 비어있을 경우 0으로 설정
+    setDefaultDefectValue();
+
+    // 여기에 폼 데이터를 서버로 전송하는 코드를 추가할 수 있습니다.
+    $.post("${pageContext.request.contextPath}/perf/perfinsertPro", $("#perfinsert").serialize(), function(response) {
+        // 서버 응답에 대한 처리 코드
+        if (response.success) {
+        	console.log("등록 성공"); // 디버깅 메시지
+            // 서버 요청이 성공적으로 처리되었을 때 Swal.fire 코드를 실행
+            Swal.fire({
+                title: '등록이 완료되었습니다.',
+                text: '성공적으로 등록되었습니다.',
+                icon: 'success'
+            });
+        } else {
+        	   console.log("등록 실패"); // 디버깅 메시지
+            // 서버 요청이 실패했을 때의 처리 코드
+            // 실패 메시지를 표시하거나 사용자에게 알림을 주는 등의 작업을 수행할 수 있습니다.
+            Swal.fire({
+                title: '등록 실패',
+                text: '등록에 실패하였습니다.',
+                icon: 'error'
+            });
+        }
+    });
+});
+
+// "닫기" 버튼 클릭 이벤트 처리
+document.getElementById("closebtn").addEventListener("click", function() {
+	console.log("닫기");
+    // 창을 닫는 동작을 수행할 수 있습니다.
+    window.close();
+});
+    
+    // 불량수 값이 비어있을 경우 0으로 설정하는 함수 실적수량 35 양품수가 35일경우 굳이 0을 입력할 필요가 없을 때 쓰기 위해서 사용
     function setDefaultDefectValue() {
         var perfDefectInput = document.getElementById("perfDefect");
         if (perfDefectInput.value === "") {
