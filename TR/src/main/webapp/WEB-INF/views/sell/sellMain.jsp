@@ -5,8 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%--     <jsp:include page="test4.jsp"></jsp:include> --%>
 <title>Sell/sellMain.jsp</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+
 <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
 <link href="${pageContext.request.contextPath }/resources/css/side.css"	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css">
@@ -58,14 +60,14 @@
 	   <div>
 	    <button id="btnSell" onclick="openSellAdd()">추가</button>
 	  	<button id="btnSell">수정</button>
-	   	<button id="btnSell">삭제</button>
+	   	<button id="delete" >삭제</button>
 	    <button type="reset" id="btnSell">취소</button>
-	    <button id="btnSell">Excel</button>
+	    <button id="btnSell" id="excelDownload">Excel</button>
 	   </div>
 	    
 	    <p>선택 총 0건</p>        
 	   
-	    <p> <input type="checkbox" id="selectAllCheckbox">전체 선택</p>
+	    <p> <input type="checkbox" id="select-list-all"name="select-list-all" data-group="select-list">전체 선택</p>
 	    
 	    <table class="tg" id="sellTable">
 	        <tbody>
@@ -97,9 +99,8 @@
 	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 거래처코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodCode}</td><!-- 제품코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodName}</td><!-- 제품명 -->
-	                <td class="tg-llyw2"></td>
-	               <%--  <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.prodPrice}"pattern="###,### 원" /></td><!-- 제품단가 --> --%>
-	                <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.sellPrice}" pattern="###,### 원" /></td><!-- 수주단가 -->
+	                <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.prodPrice}" pattern="###,###원" /></td><!-- 제품단가 --> 
+	                <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.sellPrice}" pattern="###,###원" /></td><!-- 수주단가 -->
 	                <td class="tg-llyw2">${sellDTO.sellCount}</td><!-- 수주수량-->
 	                <td class="tg-llyw2">${sellDTO.sellDate}</td><!-- 수주일자 -->
 	                <td class="tg-llyw2">${sellDTO.sellDuedate}</td><!-- 납기일자  --> 
@@ -226,13 +227,13 @@ function saveData() {
 <!--------------------------------------------------- 목록 전체 선택 ----------------------------------------->
 <script>
 	// 전체선택
-	document.getElementById("selectAllCheckbox").addEventListener(
+	document.getElementById("select-list-all").addEventListener(
 			"click",
 			function() {
 				var itemCheckboxes = document
 						.querySelectorAll(".item-checkbox");
 				var selectAllButton = document
-						.getElementById("selectAllCheckbox");
+						.getElementById("select-list-all");
 
 				// 모든 아이템을 선택 상태로 만들거나 해제
 				var areAllSelected = true;
@@ -245,7 +246,7 @@ function saveData() {
 				for (var i = 0; i < itemCheckboxes.length; i++) {
 					itemCheckboxes[i].checked = !areAllSelected;
 				}
-			});//selectAllCheckbox
+			});//select-list-all
 			
 			// 숫자를 ###,### 원 형식으로 포맷하는 함수
 		    function formatCurrency(number) {
@@ -308,6 +309,63 @@ function openSellAdd() {
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
+<!-------------------------------------------------- 수주 삭제 ------------------------------------------->
+<script>
+// 삭제 버튼 클릭 시 실행되는 함수
+$('#delete').click(function(event) {	
+    var checked = [];
+    $('input[name=selectedSellCode]:checked').each(function() {
+        checked.push($(this).val());
+    });
+    
+    if (checked.length > 0) {
+        Swal.fire({
+            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" + checked.length + "건\n정말 삭제하시겠습니까?" + "</div>",
+            icon: 'info',
+            showDenyButton: true,
+            confirmButtonColor: '#17A2B8',
+            cancelButtonColor: '#73879C',
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            // confirm => 예 버튼 클릭 시 실행되는 코드
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/sell/sellDelete",
+                    type: "POST",
+                    data: {checked: checked},
+                    dataType: "text",
+                    success: function () {
+                        Swal.fire({
+                            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" + checked.length + "건 삭제 완료",
+                            icon: 'success',
+                            width: '300px',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "삭제 중 오류가 발생했습니다",
+                            icon: 'question',
+                            width: '300px',
+                        });
+                    }
+                }); // ajax
+            } else if (result.isDenied) {
+                Swal.fire({
+                    title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "삭제가 취소되었습니다",
+                    icon: 'error',
+                    width: '300px',
+                });
+            }
+        });
+    }
+});
+</script>
+
+
 <!--------------------------------------------------- 비고 보기 ----------------------------------------->
 <script>
     function openSellMemo(sellCode) {
@@ -341,7 +399,7 @@ function openSellAdd() {
                             ',resizable=yes,scrollbars=yes';
 
         // 새 창을 열기 위한 URL 설정
-        var url = '${pageContext.request.contextPath}/sell/sellMemotype?sellCode=' + sellCode+'?memotype=add';
+        var url = '${pageContext.request.contextPath}/sell/sellMemotype?sellCode=' + sellCode+'&memotype=add';
         // 팝업 창을 열고 속성 설정
         var newWindow = window.open(url, '_blank', popupFeatures); 
     }
@@ -354,7 +412,56 @@ function openSellAdd() {
             window.close(); // 현재창 닫기
         }
     });
-   
+ </script>
+    <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
+    <script>
+    const excelDownload = document.querySelector('#excelDownload');
+	
+	document.addEventListener('DOMContentLoaded', ()=> {
+		excelDownload.addEventListener('click', exportExcel);
+	});
+	
+	function exportExcel() {
+		//1. workbook 생성
+		var wb = XLSX.utils.book_new();
+		
+		//2. 시트 만들기
+		var newWorksheet = excelHandler.getWorksheet();
+		
+		//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+		XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+		
+		//4. 엑셀 파일 만들기
+		var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+		
+		//5. 엑셀 파일 내보내기
+		saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+		
+	} //exportExcel()
+	
+	var excelHandler = {
+		getExcelFileName : function() {
+			return 'sellList'+getToday()+'.xlsx'; //파일명
+		},
+		getSheetName : function() {
+			return 'Sell Sheet'; //시트명
+		},
+		getExcelData : function() {
+			return document.getElementById('data-table'); //table id
+		},
+		getWorksheet : function() {
+			return XLSX.utils.table_to_sheet(this.getExcelData());
+		}
+	} //excelHandler
+	
+	function s2ab(s) {
+		var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+		var view = new Uint8Array(buf);  
+		for(var i=0; i<s.length; i++) {
+			view[i] = s.charCodeAt(i) & 0xFF;
+		}
+		return buf;
+	} //s2ab(s)
 </script>
 
 </html>

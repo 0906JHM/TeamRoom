@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -37,7 +39,8 @@ public class SellController {
 	private SellService sellService;
 	@Inject 
 	private OutProductService outProductService;
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
 //----------------------------------------------------- sellMain---------------------------------------
 @GetMapping("/sellMain")
@@ -194,9 +197,10 @@ public String sellMemoAdd(HttpServletRequest request, Model model) {
 	System.out.println("SellController sellMemotype()");
 	String sellCode = request.getParameter("sellCode");
 	System.out.println(sellCode);
+	
 	SellDTO sellDTO = sellService.getSellMemo(sellCode);
 	String memotype = request.getParameter("memotype");
-	System.out.println(sellDTO);
+	System.out.println(memotype);
 	
 	model.addAttribute("sellDTO", sellDTO);
 	model.addAttribute("memotype", memotype);
@@ -214,9 +218,15 @@ public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
 }//sellMemotypePro	
 
 //-------------------------------------------------- sellDelete ---------------------------------------------
+@RequestMapping(value = "/sellDelete", method = RequestMethod.POST)
+public String sellDelete(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
 
-	
-	
+	// 서비스 - 소요량관리 삭제
+	sellService.sellDelete(checked);
+
+	return "redirect:/sell/sellMain";
+} //sellDelete()
+
 	
 	
 	

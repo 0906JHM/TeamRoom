@@ -7,9 +7,19 @@
 
 
  	<select id="getSellList" resultType="com.itwillbs.domain.SellDTO">
-		select * from sellTest
-		order by sellDate desc
-		limit #{startRow}, #{pageSize}
+	select s.sellCode sellCode, s.sellDate sellDate, s.sellDuedate
+	sellDuedate,s.sellEmpId sellEmpId,s.sellCount sellCount,
+	s.sellFile
+	sellFile,s.sellMemo sellMemo,s.sellState sellState,s.clientCode
+	clientCode,s.sellPrice sellPrice,s.prodCode prodCode,
+	p.prodName
+	prodName,p.prodPrice prodPrice
+	from sellTest s join product p
+	on
+	s.prodCode = p.prodCode
+	order by sellDate desc
+	limit #{startRow},
+	#{pageSize}
 	</select> 
 
 	<select id="getSellCount" resultType="java.lang.Integer">
@@ -20,7 +30,7 @@
 	<insert id="insertSell">
 		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,sellNum,sellPrice)
 		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-				#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}))
+				#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}),sellPrice)
 	</insert>
 	
 	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">
@@ -46,7 +56,6 @@
 		from sellTest
 		WHERE sellCode = #{sellCode}
 	</delete>
-	
 	
 	
 	

@@ -8,10 +8,11 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.SellDAO;
-import com.itwillbs.domain.RawmaterialsDTO;
+
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class SellService {
@@ -73,17 +74,10 @@ public class SellService {
 		}//insertSellMemo
 
 		//----------------------------------------------------- sellDelete --------------------------------------------------------
-		/*
-		 * // 체크박스로 선택삭제
-		 * 
-		 * @Override public void sellDelete(String sellCode){
-		 * sellDAO.sellDelete(sellCode); }//sellDelete
-		 * 
-		 * 
-		 * 
-		 */
+		public void sellDelete(List<String> checked) throws Exception {
+			sellDAO.sellDelete(checked);
+		}//sellDelete
 
-	
 
 }//class
 
