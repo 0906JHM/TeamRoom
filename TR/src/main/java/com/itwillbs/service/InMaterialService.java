@@ -93,4 +93,13 @@ public class InMaterialService {
 		inMaterialDAO.updateWhseCount(inMaterialDTO);
 		
 	}
+
+//	public void updateInMerial(InMaterialDTO inMaterialDTO) {
+//		inMaterialDAO.updateInMerial(inMaterialDTO);
+//	}
+
+	public void updateInState(InMaterialDTO inMaterialDTO) {
+		inMaterialDAO.updateInState(inMaterialDTO);
+		
+	}
 }

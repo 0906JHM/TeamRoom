@@ -310,8 +310,15 @@ var inNum = data[i].inNum;
                     contentType: 'application/json',
                     success: function(response) {
                         console.log('데이터가 성공적으로 업데이트되었습니다.', response);
+                        
+                        
                      // 데이터 업데이트 후 페이지 새로고침
                         location.reload();
+                     
+                     // 버튼을 비활성화하고 색상을 회색으로 변경
+//                         button.attr('disabled', 'disabled');
+//                         button.css('background-color', 'grey');
+                        
                     },
                     error: function(error) {
                         console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
@@ -322,7 +329,11 @@ var inNum = data[i].inNum;
             }
         }
     });
-
+    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
+    if (dataItem.inState === '입고완료') {
+        button.prop('disabled', true);
+        button.css('background-color', 'grey');
+    }
 
 
  // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
