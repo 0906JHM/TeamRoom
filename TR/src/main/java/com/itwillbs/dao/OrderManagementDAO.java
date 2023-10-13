@@ -24,7 +24,7 @@ public class OrderManagementDAO {
 		System.out.println("OrderManagementDAO insertOrderManagement()");
 		sqlSession.insert(namespace+".insertOrderManagement", ordermanagementDTO);
 	}
-	
+
 	// home 페이징처리, 검색기능
 	public List<OrderManagementDTO> getOrderManagementList(PageDTO pageDTO) {
 		System.out.println("OrderManagementDAO getOrderManagementList()");

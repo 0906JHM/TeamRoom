@@ -1,5 +1,7 @@
 package com.itwillbs.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -94,15 +96,25 @@ public class OrderManagementController {
 	}
 	
 	// 가상주소 http://localhost:8080/leeweb/OrderManagement/insertPro
-		@PostMapping("/insertPro")
-		public String insertPro(OrderManagementDTO ordermanagementDTO) {
-			System.out.println("OrderManagementController insertPro()");
-			System.out.println(ordermanagementDTO);
-			
-			inMaterialService.insertList(ordermanagementDTO);
-			ordermanagementService.insertOrderManagement(ordermanagementDTO);
-			return "redirect:/OrderManagement/home";
-		}
+	@PostMapping("/insertPro")
+	public String insertPro(OrderManagementDTO ordermanagementDTO) {
+		System.out.println("OrderManagementController insertPro()");
+		System.out.println(ordermanagementDTO);
+		
+		// buyNum 자동생성
+		// = RA + yyMMddHHmmss
+		Date now = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+		String formattedDate = dateFormat.format(now);
+		String buyNum = "RA" + formattedDate;
+		System.out.println("발주코드 : " + buyNum);
+		ordermanagementDTO.setBuyNum(buyNum);
+		
+		// inMaterial 추가한 코드
+		inMaterialService.insertList(ordermanagementDTO);
+		ordermanagementService.insertOrderManagement(ordermanagementDTO);
+		return "redirect:/OrderManagement/home";
+	}
 	
 	// 체크박스로 선택삭제
     @RequestMapping(value = "/delete")

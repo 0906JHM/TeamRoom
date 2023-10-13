@@ -62,124 +62,39 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		where
-		<choose>
-			<!-- Case 15: 모든 컬럼을 고려한 경우 -->
-			<when
-				test="inNum != '' and rawName != '' and clientCompany != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE
-				CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%',
-				#{clientCompany}, '%')
-				AND i.inState = #{inState}
-			</when>
+		<where>
+			<if test="inState == '검색'">
+				<if test="inNum != ''">
+					i.inNum LIKE CONCAT('%', #{inNum}, '%')
+				</if>
 
-			<!-- Case 14: rawName, clientCompany, inState 고려한 경우 -->
-			<when
-				test="rawName != '' and clientCompany != '' and inState != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany
-				LIKE CONCAT('%', #{clientCompany}, '%')
-				AND i.inState = #{inState}
-			</when>
+				<if test="rawName != ''">
+					AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				</if>
 
-			<!-- Case 13: inNum, clientCompany, inState 고려한 경우 -->
-			<when
-				test="inNum != '' and clientCompany != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND c.clientCompany LIKE
-				CONCAT('%', #{clientCompany}, '%')
-				AND i.inState = #{inState}
-			</when>
+				<if test="clientCompany != ''">
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+			</if>
+			<if test="inState != '검색'">
+				<if test="inNum != ''">
+					i.inNum LIKE CONCAT('%', #{inNum}, '%')
+				</if>
 
-			<!-- Case 12: inNum, rawName, inState 고려한 경우 -->
-			<when test="inNum != '' and rawName != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName
-				LIKE CONCAT('%', #{rawName}, '%')
-				AND i.inState = #{inState}
-			</when>
+				<if test="rawName != ''">
+					AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				</if>
 
-			<!-- Case 11: inNum, rawName, clientCompany 고려한 경우 -->
-			<when
-				test="inNum != '' and rawName != '' and clientCompany != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE
-				CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%',
-				#{clientCompany}, '%')
-			</when>
-
-			<!-- Case 10: clientCompany와 inState 고려한 경우 -->
-			<when test="clientCompany != '' and inState != ''">
-				c.clientCompany LIKE CONCAT('%', #{clientCompany},
-				'%')
-				AND i.inState = #{inState}
-			</when>
-
-			<!-- Case 9: rawName와 inState 고려한 경우 -->
-			<when test="rawName != '' and inState != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND
-				i.inState = #{inState}
-			</when>
-
-			<!-- Case 8: rawName와 clientCompany 고려한 경우 -->
-			<when test="rawName != '' and clientCompany != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND
-				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
-			</when>
-
-			<!-- Case 7: inNum와 inState 고려한 경우 -->
-			<when test="inNum != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND i.inState
-				= #{inState}
-			</when>
-
-			<!-- Case 6: inNum와 clientCompany 고려한 경우 -->
-			<when test="inNum != '' and clientCompany != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND
-				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
-			</when>
-
-			<!-- Case 5: inNum와 rawName 고려한 경우 -->
-			<when test="inNum != '' and rawName != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName
-				LIKE CONCAT('%', #{rawName}, '%')
-			</when>
-
-			<!-- Case 4: inState만 고려한 경우 -->
-			<when test="inState != ''">
-				i.inState = #{inState}
-			</when>
-
-			<!-- Case 3: clientCompany만 고려한 경우 -->
-			<when test="clientCompany != ''">
-				c.clientCompany LIKE CONCAT('%', #{clientCompany},
-				'%')
-			</when>
-
-			<!-- Case 2: rawName만 고려한 경우 -->
-			<when test="rawName != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-			</when>
-
-			<!-- Case 1: inNum만 고려한 경우 -->
-			<when test="inNum != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-			</when>
-
-
-			<!-- Case 0: inNum, rawName, clientCompany, inState 모두 고려하지 않은 경우 -->
-			<otherwise>
-				1=1
-			</otherwise>
-		</choose>
+				<if test="clientCompany != ''">
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+				<if test="inState != ''">
+					AND i.inState LIKE CONCAT('%', #{inState}, '%')
+				</if>
+			</if>
+		</where>
 
 		ORDER BY i.inNum DESC
 		LIMIT #{startRow}, #{pageSize}
@@ -207,127 +122,119 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		where
-		<choose>
-			<!-- Case 15: 모든 컬럼을 고려한 경우 -->
-			<when
-				test="inNum != '' and rawName != '' and clientCompany != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE
-				CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%',
-				#{clientCompany}, '%')
-				AND i.inState = #{inState}
-			</when>
+		<where>
+			<if test="inState == '검색'">
+				<if test="inNum != ''">
+					i.inNum LIKE CONCAT('%', #{inNum}, '%')
+				</if>
 
-			<!-- Case 14: rawName, clientCompany, inState 고려한 경우 -->
-			<when
-				test="rawName != '' and clientCompany != '' and inState != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany
-				LIKE CONCAT('%', #{clientCompany}, '%')
-				AND i.inState = #{inState}
-			</when>
+				<if test="rawName != ''">
+					AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				</if>
 
-			<!-- Case 13: inNum, clientCompany, inState 고려한 경우 -->
-			<when
-				test="inNum != '' and clientCompany != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND c.clientCompany LIKE
-				CONCAT('%', #{clientCompany}, '%')
-				AND i.inState = #{inState}
-			</when>
+				<if test="clientCompany != ''">
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+			</if>
+			<if test="inState != '검색'">
+				<if test="inNum != ''">
+					i.inNum LIKE CONCAT('%', #{inNum}, '%')
+				</if>
 
-			<!-- Case 12: inNum, rawName, inState 고려한 경우 -->
-			<when test="inNum != '' and rawName != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName
-				LIKE CONCAT('%', #{rawName}, '%')
-				AND i.inState = #{inState}
-			</when>
+				<if test="rawName != ''">
+					AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				</if>
 
-			<!-- Case 11: inNum, rawName, clientCompany 고려한 경우 -->
-			<when
-				test="inNum != '' and rawName != '' and clientCompany != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName LIKE
-				CONCAT('%', #{rawName}, '%')
-				AND c.clientCompany LIKE CONCAT('%',
-				#{clientCompany}, '%')
-			</when>
-
-			<!-- Case 10: clientCompany와 inState 고려한 경우 -->
-			<when test="clientCompany != '' and inState != ''">
-				c.clientCompany LIKE CONCAT('%', #{clientCompany},
-				'%')
-				AND i.inState = #{inState}
-			</when>
-
-			<!-- Case 9: rawName와 inState 고려한 경우 -->
-			<when test="rawName != '' and inState != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND
-				i.inState = #{inState}
-			</when>
-
-			<!-- Case 8: rawName와 clientCompany 고려한 경우 -->
-			<when test="rawName != '' and clientCompany != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-				AND
-				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
-			</when>
-
-			<!-- Case 7: inNum와 inState 고려한 경우 -->
-			<when test="inNum != '' and inState != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND i.inState
-				= #{inState}
-			</when>
-
-			<!-- Case 6: inNum와 clientCompany 고려한 경우 -->
-			<when test="inNum != '' and clientCompany != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND
-				c.clientCompany LIKE CONCAT('%', #{clientCompany}, '%')
-			</when>
-
-			<!-- Case 5: inNum와 rawName 고려한 경우 -->
-			<when test="inNum != '' and rawName != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-				AND r.rawName
-				LIKE CONCAT('%', #{rawName}, '%')
-			</when>
-
-			<!-- Case 4: inState만 고려한 경우 -->
-			<when test="inState != ''">
-				i.inState = #{inState}
-			</when>
-
-			<!-- Case 3: clientCompany만 고려한 경우 -->
-			<when test="clientCompany != ''">
-				c.clientCompany LIKE CONCAT('%', #{clientCompany},
-				'%')
-			</when>
-
-			<!-- Case 2: rawName만 고려한 경우 -->
-			<when test="rawName != ''">
-				r.rawName LIKE CONCAT('%', #{rawName}, '%')
-			</when>
-
-			<!-- Case 1: inNum만 고려한 경우 -->
-			<when test="inNum != ''">
-				i.inNum LIKE CONCAT('%', #{inNum}, '%')
-			</when>
-
-
-			<!-- Case 0: inNum, rawName, clientCompany, inState 모두 고려하지 않은 경우 -->
-			<otherwise>
-				1=1
-			</otherwise>
-		</choose>
+				<if test="clientCompany != ''">
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+				<if test="inState != ''">
+					AND i.inState LIKE CONCAT('%', #{inState}, '%')
+				</if>
+			</if>
+		</where>
 		) AS subquery
 
 	</select>
+
+	<select id="getInMaterialListAllSearch"
+		resultType="com.itwillbs.domain.InMaterialDTO">
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode,
+		r.rawName, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		DATE_FORMAT(i.inDate, '%Y-%m-d'),
+		i.inEmpId, i.inState
+		FROM inMaterial i
+		left join rawMaterial r
+		on
+		i.rawCode = r.rawCode
+		left join stock s
+		on
+		i.rawCode = s.rawCode
+		left
+		join clients c
+		on i.clientCode = c.clientCode
+		<where>
+			<if test="inNum != ''">
+				i.inNum LIKE CONCAT('%', #{inNum}, '%')
+			</if>
+
+			<if test="rawName != ''">
+				AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+				'%')
+			</if>
+		</where>
+
+		ORDER BY i.inNum DESC
+		LIMIT #{startRow}, #{pageSize}
+
+	</select>
+
+	<select id="getInMaterialListAllSearchCount" resultType="int">
+		SELECT count(*)
+		FROM (
+		SELECT i.inNum, i.buyNum, r.whseCode,
+		c.clientCompany,
+		i.rawCode,
+		r.rawName,
+		i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice, DATE_FORMAT(i.inDate, '%Y-%m-d'),
+		i.inEmpId,
+		i.inState
+		FROM inMaterial i left join rawMaterial r
+		on
+		i.rawCode =
+		r.rawCode
+		left join stock s
+		on i.rawCode = s.rawCode
+		left
+		join clients c
+		on i.clientCode = c.clientCode
+		<where>
+			<if test="inNum != ''">
+				i.inNum LIKE CONCAT('%', #{inNum}, '%')
+			</if>
+
+			<if test="rawName != ''">
+				AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+				'%')
+			</if>
+		</where>
+		) AS subquery
+
+	</select>
+
 
 	<select id="getMaxNum" resultType="java.lang.Integer">
 		SELECT
@@ -335,13 +242,16 @@
 		FROM inMaterial
 		WHERE inNum LIKE CONCAT(#{code}, '%')
 	</select>
-	
+
 	<insert id="insertList">
 		INSERT INTO inMaterial
-		VALUES (#{inNum}, default, #{inCount}, #{rawCode},#{buyNum}, default, #{clientCode}, default, #{inState}, #{inPrice})
+		VALUES (#{inNum}, default,
+		#{inCount}, #{rawCode},#{buyNum}, default, #{clientCode}, default,
+		#{inState}, #{inPrice})
 	</insert>
-	
-	<select id="inMaterialContent" resultType="com.itwillbs.domain.InMaterialDTO">
+
+	<select id="inMaterialContent"
+		resultType="com.itwillbs.domain.InMaterialDTO">
 		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
 		i.rawCode,
 		r.rawName, i.inCount, s.stockCount,
@@ -360,10 +270,19 @@
 		on i.clientCode = c.clientCode
 		where inNum = #{inNum}
 	</select>
-	
+
 	<update id="updateWhseCount">
 		update stock
 		SET stockCount = stockCount + #{inCount}
 		WHERE rawCode = #{rawCode}
 	</update>
+
+
+	<update id="updateInState">
+		update inMaterial
+		SET inState = "입고완료"
+		WHERE inNum =
+		#{inNum}
+	</update>
+
 </mapper>

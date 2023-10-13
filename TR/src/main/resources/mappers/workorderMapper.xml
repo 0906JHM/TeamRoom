@@ -69,14 +69,14 @@
 		SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND lineProcess='1차공정' 
+		AND workProcess='1차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1 
 	</select>
 	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
-		INSERT INTO workOrder (workCode,prodCode,sellCode,workDate,lineCode,workAmount,workEmpId,lineProcess)
+		INSERT INTO workOrder (workCode,prodCode,sellCode,workDate,lineCode,workAmount,workEmpId,workProcess)
 		VALUES (#{workCode},#{prodCode},#{sellCode},now(),#{lineCode},#{workAmount},#{workEmpId},'1차공정') 
 	</insert>
 	
@@ -127,14 +127,14 @@
 				AND (workDate &gt;= #{search_fromDate} AND workDate &lt;= #{search_toDate}) 
 			</if> 
 			<if test="search_place!=null and !search_place.isEmpty() and !search_place.equals('전체')">
-				AND lineProcess=#{search_place} 
+				AND workProcess=#{search_place} 
 			</if> 
 			<if test="search_prod!=null and !search_prod.isEmpty()">
 				AND prodCode=#{search_prod} 
 			</if> 
 		</where>
 		ORDER BY workCode DESC 
-		LIMIT #{start}, #{cntPerPage}
+		LIMIT #{startPage}, #{cntPerPage}
 	</select>
 	<!-- 작업지시 검색 -->
 	
@@ -149,7 +149,7 @@
 				AND (workDate &gt;= #{search_fromDate} AND workDate &lt;= #{search_toDate}) 
 			</if> 
 			<if test="search_place!=null and !search_place.isEmpty() and !search_place.equals('전체')">
-				AND lineProcess=#{search_place} 
+				AND workProcess=#{search_place} 
 			</if> 
 			<if test="search_prod!=null and !search_prod.isEmpty()">
 				AND prodCode=#{search_prod} 
@@ -163,7 +163,7 @@
 		(SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND lineProcess='2차공정' 
+		AND workProcess='2차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1) 
 	</sql>
@@ -171,7 +171,7 @@
 		(SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND lineProcess='3차공정' 
+		AND workProcess='3차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1) 
 	</sql>
@@ -180,14 +180,14 @@
 	<!-- 작업지시 현재 작업공정 변경 -->
 	<update id="updateStatus" parameterType="WorkOrderDTO">
 		UPDATE workOrder 
-		<if test="lineProcess.equals('1차공정')">
-			SET lineProcess='2차공정', lineCode=<include refid="selectLine2"/> 
+		<if test="workProcess.equals('1차공정')">
+			SET workProcess='2차공정', lineCode=<include refid="selectLine2"/> 
 		</if>
-		<if test="lineProcess.equals('2차공정')">
-			SET lineProcess='3차공정', lineCode=<include refid="selectLine3"/>  
+		<if test="workProcess.equals('2차공정')">
+			SET workProcess='3차공정', lineCode=<include refid="selectLine3"/>  
 		</if>
-		<if test="lineProcess.equals('3차공정')">
-			SET lineProcess='마감
+		<if test="workProcess.equals('3차공정')">
+			SET workProcess='마감
 		</if>
 		WHERE workCode=#{workCode}
 	</update>
@@ -198,7 +198,7 @@
 		SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND lineProcess='2차공정' 
+		AND workProcess='2차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1 
 	</select>
@@ -206,7 +206,7 @@
 		SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND lineProcess='3차공정' 
+		AND workProcess='3차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1 
 	</select>
