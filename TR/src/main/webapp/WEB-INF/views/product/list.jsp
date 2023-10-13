@@ -61,15 +61,14 @@
 		<div class="buttons">
 			<button id="add"
 				onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
-			<button id="modify">수정</button>
+<!-- 			<button id="modify">수정</button> -->
 			<!--     <button id="delete" onclick="deleteSelectedProducts()">삭제</button> -->
 			<button id="delete">삭제</button>
-			<button id="cancel">취소</button>
-			<button id="save">저장</button>
+<!-- 			<button id="cancel">취소</button> -->
+<!-- 			<button id="save">저장</button> -->
 		</div>
-		<h3>총 ${pageDTO.count}건</h3>
+		<h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
 
-		
 			<form id="productList">
 			<div id="productList">
 				<table class="tg" id="productTable">

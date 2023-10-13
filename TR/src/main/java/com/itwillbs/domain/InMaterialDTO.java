@@ -1,6 +1,5 @@
 package com.itwillbs.domain;
 
-import java.sql.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +15,7 @@ public class InMaterialDTO {
 	private int inPrice;
 	private String rawCode;
 	private String rawName;
-	private int rawPrice;
+	private float rawPrice;
 	private String buyNum;
 	private String inEmpId;
 	private String clientCode;

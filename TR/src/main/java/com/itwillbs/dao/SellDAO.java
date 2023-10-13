@@ -1,10 +1,13 @@
 package com.itwillbs.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.SellDTO;
@@ -17,7 +20,8 @@ public class SellDAO {
 	private SqlSession sqlSession;
 
 	private static final String namespace = "com.itwillbs.mappers.sellMapper";
-
+	private static final Logger logger = LoggerFactory.getLogger(SellDAO.class);;
+	
 //----------------------------------------------------- getSellList --------------------------------------------------------	
 	public List<SellDTO> getSellList(SellPageDTO sellPageDTO) {
 		System.out.println("SellDAO getSellList()");
@@ -63,14 +67,21 @@ public class SellDAO {
 			sqlSession.insert(namespace + ".insertSellMemo", sellDTO);
 		}// insertSellMemo
 		
-//----------------------------------------------------- deleteSell --------------------------------------------------------
-		public void deleteSell(SellDTO sellDTO) {
-			System.out.println("SellDAO deleteSell()");
+//----------------------------------------------------- sellDelete --------------------------------------------------------
+		public void sellDelete(List<String> checked) throws Exception {
 			
-			sqlSession.update(namespace+".deleteSell",sellDTO);
-		}//deleteSell
+			Iterator<String> it = checked.iterator();
+			int result = 0;
 
+			while (it.hasNext()) {
+				String sellCode = it.next();
+				result += sqlSession.delete(namespace + ".sellDelete", sellCode);
+			}
 
+	
+
+		}//sellDelete
+		
 
 
 

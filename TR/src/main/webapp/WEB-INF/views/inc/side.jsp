@@ -13,6 +13,9 @@
 	<aside class="sidebar">
 		<div class="sidebody">
 			<div class="logininfo">
+<!-- 			로고자리 -->
+				<a href="${pageContext.request.contextPath }/main/calendar" style="font-size: 40px; padding: 30px;" >ROOMAIR</a>
+<!-- 			로고자리 -->
 				<p class="loginhi">${sessionScope.empId}님 안녕하세요</p>
 			</div>
 

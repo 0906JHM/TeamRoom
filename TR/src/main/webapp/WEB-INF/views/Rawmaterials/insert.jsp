@@ -26,7 +26,7 @@
 			<option value="포장재">포장재</option>
 			</select><br>
 단위 : 		<input type="text" name="rawUnit" value="EA"><br>
-매입단가 : 		<input type="text" name="rawPrice"><br>
+매입단가 : 		<input type="number" name="rawPrice"><br>
 거래처 :		<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup1()"><br>
 창고명 : 		<input type="text" name="whseCode" id="pInput2"> <input type="button" value="창고목록" onclick="openPopup2()"><br>
 비고 : 		<input type="text" name="rawMemo"><br>

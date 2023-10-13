@@ -17,9 +17,8 @@
  
 </head>
 
-<!------------------------------------------------------- 헤더 ---------------------------------------------------->
+<!------------------------------------------------------ 본문 ---------------------------------------------------->
 
-<!---------------------------------------------------- 상단 조회 및 버튼 ----------------------------------------------------->
 <body>
 <div class="popupContainer">
 <h1>수주 등록</h1>
@@ -41,12 +40,14 @@
 		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')"><br>
 		</div>
 		
-        <label class="popupLabel">수주 수량 : </label>
-        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0">개<br>
-	
- 	    <label class="popupLabel">수주 단가 : </label>
-        <input type="number" id="sellPrice"  min="0" value="0">원<br> 
+		<label class="popupLabel">제품 단가 : </label>
+        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
         
+        <label class="popupLabel">수주 수량 : </label>
+        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()">개<br>
+
+ 	    <label class="popupLabel">수주 단가 : </label>
+		<input type="text" id="sellPrice" min="0" value="${formattedSellPrice}" readonly>원<br>    
      <label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
 
@@ -58,9 +59,6 @@
 
         <label class="popupLabel">비고 : </label><br>
         <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
-
-        <label class="popupLabel">첨부파일 : </label>
-        <input type="file" id="sellFile" name="sellFile"><br>
 		
 		<br>
         <button type="submit" >등록</button>
@@ -96,8 +94,36 @@ function openPopup(url) {
     popupWindow.focus();
 }
 $(document).ready(function() {
-   
 });
+
+function calculateSellPrice() {
+  	var prodPriceInput = document.getElementById('prodPrice9999').value;
+    var sellCountInput = document.getElementById('sellCount').value;
+
+ 	// 입력 값을 정리하여 정수로 변환
+    var prodPrice = parseInt(prodPriceInput.replace(/[^\d.]/g, ''), 10);
+    var sellCount = parseInt(sellCountInput, 10);
+	
+    var sellPrice = prodPrice * sellCount;
+    
+    console.log(sellPrice);
+    if (!isNaN(sellPrice)) {
+        document.getElementById('sellPrice').value = formatCurrency(sellPrice);
+    } else {
+        document.getElementById('sellPrice').value = '';
+    }
+}
+//숫자를 ###,### 원 형식으로 포맷하는 함수
+function formatCurrency(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// 이벤트 리스너 등록
+document.getElementById('sellCount').addEventListener('input', calculateSellPrice);
+document.getElementById('prodPrice9999').addEventListener('input', calculateSellPrice);
+
+// 초기화 함수
+calculateSellPrice();
 $(function() {
     // 현재 날짜를 가져오기
     var currentDate = new Date();

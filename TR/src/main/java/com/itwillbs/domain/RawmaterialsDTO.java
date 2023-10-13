@@ -15,7 +15,7 @@ public class RawmaterialsDTO {
 	private String rawName;
 	private String rawType;
 	private String rawUnit;
-	private String rawPrice;
+	private float rawPrice;
 	private String clientCode;
 	private String whseCode;
 	private String rawMemo;

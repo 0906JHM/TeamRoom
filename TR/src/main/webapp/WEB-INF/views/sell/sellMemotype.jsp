@@ -14,17 +14,20 @@
 
 
 </head>
+<%
+String memotype = request.getParameter("memotype");
 
+%>
 <!---------------------------------------------------- 상단 조회 및 버튼 ----------------------------------------------------->
 <body>
 
 <div class="popupContainer">
 
  <c:choose>
-        <c:when test="${memotype==add}">
+         <c:when test="${memotype == 'add'}">
             <h1>수주 비고 등록</h1>
     <div class="horizontal-line"></div>
-     <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemoUpdatePro">
+     <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemotypePro">
 		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo"></textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		<button type="submit" >등록</button>		
