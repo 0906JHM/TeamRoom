@@ -12,7 +12,7 @@ public class ExcepctionController {
 	
 	@ExceptionHandler(Exception.class)
 	public void exceptionHandler(Exception e) {
-		log.debug("예외 발생!!" + e );
+		log.error("예외 발생!!" + e );
 		e.printStackTrace();
 	}
 
