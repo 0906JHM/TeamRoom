@@ -67,13 +67,11 @@ public class OutProductService {
 
 	public void insertList(SellDTO sellDTO) {
 		
-//		max num 가져와서 코드만들기
-		String code = "OC";
-		Integer num = outProductDAO.getMaxNum(code);
-		if(num == null) {
-			num = 0;
-		}
-		String chageCode = this.codeChange(code, num);
+		Date now = new Date();
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+	    String formattedDate = dateFormat.format(now);
+	    String code = "OC" + formattedDate;
+		
 		
 //		제품 단가 가져오기
 		String prodCode = sellDTO.getProdCode();
@@ -81,7 +79,7 @@ public class OutProductService {
 		
 
 		OutProductDTO outProductDTO = new OutProductDTO();
-		outProductDTO.setOutCode(chageCode);
+		outProductDTO.setOutCode(code);
 		outProductDTO.setProdCode(prodCode);
 		outProductDTO.setOutPrice(price);
 		outProductDTO.setSellCode(sellDTO.getSellCode());
