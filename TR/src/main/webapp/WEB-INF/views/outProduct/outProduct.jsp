@@ -28,6 +28,7 @@
 				<label>제품명</label><input type="text" name="prodName" id="prodName9999" placeholder="제품명을 입력하세요" onclick="searchItem('prod','prodCode9999')">
 				<label>거래처명</label><input type="text" name="clientCompany" id="clientCompany9999" placeholder="거래처명을 입력하세요" onclick="searchItem('client','clientCode9999')">
 				<input type="button" value="검색" id="searchButton">
+				<input type="button" value="초기화" id="resetButton">
 		</div>
 		<hr>
 		<div id="buttons">
@@ -76,10 +77,16 @@
 		    	// 페이지 로드 시 초기 게시판 데이터를 가져오기 위한 함수 호출
 		        firstLoadOutProductList();
 				
+		        
 		    	
 		        // 검색 버튼 클릭 시 게시판 데이터를 검색하여 업데이트
 		        $("#searchButton").click(function () {
 		        	// 검색 조건을 가져오기 (이 부분을 필요에 따라 구현)
+		        	$(".buttons").removeClass("highlighted");
+
+			        // 클릭한 버튼에 "highlighted" 클래스 추가
+			        $("#allButton").addClass("highlighted");
+			        
 		        	sellStateButton2 = "검색";
 		        	sellStateButton1 = sellStateButton2;
 		        	
@@ -92,6 +99,16 @@
 					console.log(searchParams);
 		            loadOutProductList(searchParams);
 		        });
+		        
+		        // 취소 리셋 버튼을 누르면 검색창들의 값을 다 지운다
+		        $("#resetButton").click(function () {
+		        	$("#outCode").val('');
+	                $("#prodName9999").val('');
+	                $("#clientCompany9999").val('');
+	                firstLoadOutProductList();
+		        });
+		        
+		        
 				
 		    	// Enter 키 이벤트를 감지할 input 요소에 이벤트 리스너 등록
 		        $("#outCode, #prodName9999, #clientCompany9999").on('keydown', function (e) {
@@ -114,14 +131,14 @@
 		     	// 전체 버튼 클릭 시
 		        $("#allButton").click(function () {
 		            // 전체 버튼에 대한 동작을 추가하고,
-		        	sellStateButton2 = "전체";
+		        	sellStateButton2 = "총검색";
 		        	sellStateButton1 = sellStateButton2;
 		        	
-		        	$("#outCode").val('');
-	                $("#prodName9999").val('');
-	                $("#clientCompany9999").val('');
 		            // 검색 조건을 설정하고 전체 목록을 가져오도록 수정
 		            var searchParams = {
+		            	outCode: $("#outCode").val(),
+					    prodName: $("#prodName9999").val(),
+					    clientCompany: $("#clientCompany9999").val(),
 		                sellState: sellStateButton2 // 전체 조건 추가
 		            };
 		            loadOutProductList(searchParams);
