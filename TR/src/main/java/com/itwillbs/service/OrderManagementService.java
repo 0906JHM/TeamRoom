@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,11 +27,19 @@ public class OrderManagementService {
 		// = 원자재코드 + 년 + 월 + 일
 		// = PER1 + 2023 + 10 + 11
 		// = PER120231011
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String buyDateStr = sdf.format(ordermanagementDTO.getBuyDate());
-	    String buyNum = ordermanagementDTO.getRawCode() + buyDateStr;
-	    ordermanagementDTO.setBuyNum(buyNum);
-	    
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+	    // String buyDateStr = sdf.format(ordermanagementDTO.getBuyDate());
+	    // String buyNum = ordermanagementDTO.getRawCode() + buyDateStr;
+	    // ordermanagementDTO.setBuyNum(buyNum);
+		
+		// buyNum 자동생성
+		// = RA + yyMMddHHmmss
+		Date now = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+		String formattedDate = dateFormat.format(now);
+	    String buyNum = "RA" + formattedDate;
+		System.out.println("발주코드 : " + buyNum);
+		ordermanagementDTO.setBuyNum(buyNum);
 		ordermanagementDAO.insertOrderManagement(ordermanagementDTO);
 	}
 	
