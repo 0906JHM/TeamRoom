@@ -43,10 +43,10 @@ public class StockDAO {
 		return sqlSession.selectOne(namespace+".getBoardCount");
 	} // getBoardCount()
 
-	public StockDTO getBoard(String prodCode) {
+	public StockDTO getBoard(int stockNum) {
 		System.out.println("StockDAO getBoard()");
 		
-		return sqlSession.selectOne(namespace+".getBoard", prodCode);
+		return sqlSession.selectOne(namespace+".getBoard", stockNum);
 	} // getBoard
 
 	public void updateBoard(StockDTO stockDTO) {
@@ -55,10 +55,5 @@ public class StockDAO {
 		sqlSession.update(namespace+".updateBoard", stockDTO);
 	} // updateBoard
 
-	public void deleteBoard(String prodCode) {
-		System.out.println("StockDAO deleteBoard()");
-		
-		sqlSession.delete(namespace+".deleteBoard", prodCode);
-	}
 
 }

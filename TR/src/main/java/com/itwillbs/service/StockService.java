@@ -19,13 +19,6 @@ public class StockService {
 
 	public void insertBoard(StockDTO stockDTO) {
 		System.out.println("StockService insertBoard()");
-//		if(stockDAO.getMaxNum() == null) {
-//			// 글 없는 경우
-//			stockDTO.setNum(1);
-//		} else {
-//			// 글 있는 경우 // max(num) +1
-//			stockDTO.setNum(stockDAO.getMaxNum()+1);
-//		}
 		stockDAO.insertBoard(stockDTO);
 	} // insertBoard()
 
@@ -45,16 +38,16 @@ public class StockService {
 		return stockDAO.getBoardList(pageDTO);
 	} // getBoardList
 	
-	public int getBoardCount() {
+	public int getBoardCount(PageDTO pageDTO) {
 		System.out.println("StockService getBoardCount");
 		return stockDAO.getBoardCount();
 	} // getBoardCount
 
 
 
-	public StockDTO getBoard(String prodCode) {
+	public StockDTO getBoard(int stockNum) {
 		System.out.println("StockService getBoard");
-		return stockDAO.getBoard(prodCode);
+		return stockDAO.getBoard(stockNum);
 	} // getBoard
 
 
@@ -63,15 +56,5 @@ public class StockService {
 		System.out.println("StockService updateBoard()");
 		stockDAO.updateBoard(stockDTO);
 	} // updateboard
-
-
-
-	public void deleteBoard(String prodCode) {
-		System.out.println("StockService deleteBoard()");
-		stockDAO.deleteBoard(prodCode);
-	} // deleteBoard
-
-
-
 
 } // StockService
