@@ -1,3 +1,4 @@
+<%@page import="java.sql.ResultSet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,13 +14,24 @@
 <body>
 <h1>발주등록</h1>
 
+<%
+    // DB 연결 및 쿼리 실행 코드
+    ResultSet rs = stmt.executeQuery(query);
+    if(rs.next()) {
+        int whseCount = rs.getInt("whseCount");
+%>
+        창고수량 : <input type="number" name="whseCount" value="<%= whseCount %>"><br>
+<%
+    }
+%>
+
 <!-- form -->
 <form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post">
 품번 : 		<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
 품명 : 		<input type="text" name="rawName" id="rNInput"><br>
 종류 : 		<input type="text" name="rawType" id="rTInput"><br>
 거래처명 : 		<input type="text" name="clientCode" id="cInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
-창고수량 : 		<input type="number" name="whseCount"><br>
+창고수량 : 		<input type="number" name="whseCount" value="<%= whseCount %>"><br>
 발주수량 : 		<input type="number" name="buyCount"><br>
 납입단가 : 		<input type="text" name="rawPrice"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
