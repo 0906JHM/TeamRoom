@@ -14,18 +14,15 @@
 <body>
 <h1>원자재</h1>
 
-<input id="rawCode" type="hidden"><input id="rawName" type="hidden"><input id="rawType" type="hidden"><input id="whseCount" type="hidden">
-<input id="rawPrice" type="hidden">
+<input id="rCInput" type="hidden"><input id="rNInput" type="hidden"><input id="rTInput" type="hidden">
 
 <!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 function setParentText(){
-	opener.document.getElementById("rawCode").value = document.getElementById("rawCode").value;
-	opener.document.getElementById("rawName").value = document.getElementById("rawName").value;
-	opener.document.getElementById("rawType").value = document.getElementById("rawType").value;
-	opener.document.getElementById("whseCount").value = document.getElementById("whseCount").value;
-	opener.document.getElementById("rawPrice").value = document.getElementById("rawPrice").value;
+	opener.document.getElementById("rCInput").value = document.getElementById("rCInput").value;
+	opener.document.getElementById("rNInput").value = document.getElementById("rNInput").value;
+	opener.document.getElementById("rTInput").value = document.getElementById("rTInput").value;
 	window.close();
 }
 console.log
@@ -58,12 +55,11 @@ console.log
 <td>매입단가</td>
 <td>거래처</td>
 <td>창고명</td>
-<td>재고</td>
 <td>비고</td>
 </tr>
 
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
-<tr onclick="document.getElementById('rawCode').value = '${rawmaterialsDTO.rawCode}'; document.getElementById('rawName').value = '${rawmaterialsDTO.rawName}'; document.getElementById('rawType').value = '${rawmaterialsDTO.rawType}'; document.getElementById('rawPrice').value = '${rawmaterialsDTO.rawPrice}'; document.getElementById('whseCount').value = '${rawmaterialsDTO.whseCount}'; setParentText();">
+<tr onclick="document.getElementById('rCInput').value = '${rawmaterialsDTO.rawCode}'; document.getElementById('rNInput').value = '${rawmaterialsDTO.rawName}'; document.getElementById('rTInput').value = '${rawmaterialsDTO.rawType}'; setParentText();">
 <td>${rawmaterialsDTO.rawNum}</td>
 <td>${rawmaterialsDTO.rawCode}</td>
 <td>${rawmaterialsDTO.rawName}</td>
@@ -72,7 +68,6 @@ console.log
 <td>${rawmaterialsDTO.rawPrice}</td>
 <td>${rawmaterialsDTO.clientCode}</td>
 <td>${rawmaterialsDTO.whseCode}</td>
-<td>${rawmaterialsDTO.whseCount}</td>
 <td>${rawmaterialsDTO.rawMemo}</td>
 </tr>
 </c:forEach>

@@ -107,7 +107,7 @@ $(document).ready(function() {
 <!-- body -->
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<h1>원자재관리</h1>
+<h1>품목관리</h1>
 
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/home" method="get">
@@ -136,7 +136,6 @@ $(document).ready(function() {
 <td>매입단가</td>
 <td>거래처</td>
 <td>창고명</td>
-<td>재고</td>
 <td>비고</td>
 <td></td>
 </tr>
@@ -151,7 +150,6 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawPrice}</td>
 <td>${rawmaterialsDTO.clientCode}</td>
 <td>${rawmaterialsDTO.whseCode}</td>
-<td>${rawmaterialsDTO.whseCount}</td>
 
 <!-- 비고기능 -->
 <c:choose>
