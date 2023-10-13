@@ -23,5 +23,6 @@ public class RawmaterialsDTO {
 	// 내가 추가한 변수
 	private int rawNum;
 	private Timestamp date;
+	private int whseCount;
 	
 }
