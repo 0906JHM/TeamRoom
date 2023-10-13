@@ -8,9 +8,11 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.SellDAO;
+
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class SellService {
@@ -72,19 +74,10 @@ public class SellService {
 		}//insertSellMemo
 
 		//----------------------------------------------------- sellDelete --------------------------------------------------------
-		public void sellDelete(SellDTO sellDTO) {
-			System.out.println("SellService sellDelete()");
-			
-			sellDAO.deleteSell(sellDTO);
+		public void sellDelete(List<String> checked) throws Exception {
+			sellDAO.sellDelete(checked);
 		}//sellDelete
-		
 
-
-
-
- 
-
-	
 
 }//class
 

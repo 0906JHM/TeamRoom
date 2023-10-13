@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.SellDTO;
@@ -36,7 +39,8 @@ public class SellController {
 	private SellService sellService;
 	@Inject 
 	private OutProductService outProductService;
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
 //----------------------------------------------------- sellMain---------------------------------------
 @GetMapping("/sellMain")
@@ -136,6 +140,7 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	 sellState 수주상태(현황), 
 	 clientCode 거래처코드, 
 	 sellPrice 수주단가
+	 prodPrice 제품단가 1ea
 	 */
 
 	return ResponseEntity.ok("<script>window.close();</script>");
@@ -192,9 +197,10 @@ public String sellMemoAdd(HttpServletRequest request, Model model) {
 	System.out.println("SellController sellMemotype()");
 	String sellCode = request.getParameter("sellCode");
 	System.out.println(sellCode);
+	
 	SellDTO sellDTO = sellService.getSellMemo(sellCode);
 	String memotype = request.getParameter("memotype");
-	System.out.println(sellDTO);
+	System.out.println(memotype);
 	
 	model.addAttribute("sellDTO", sellDTO);
 	model.addAttribute("memotype", memotype);
@@ -212,21 +218,15 @@ public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
 }//sellMemotypePro	
 
 //-------------------------------------------------- sellDelete ---------------------------------------------
-@GetMapping("/sellDelete")
-public void sellDeletePro(SellDTO sellDTO) {
-	System.out.println("SellController sellDelete()");
-	System.out.println(sellDTO);
-	
-	sellService.sellDelete(sellDTO);
-}// sellDelete
-	
-	
-	
-	
-	
-	
-	
-	
+@RequestMapping(value = "/sellDelete", method = RequestMethod.POST)
+public String sellDelete(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
+
+	// 서비스 - 소요량관리 삭제
+	sellService.sellDelete(checked);
+
+	return "redirect:/sell/sellMain";
+} //sellDelete()
+
 	
 	
 	
