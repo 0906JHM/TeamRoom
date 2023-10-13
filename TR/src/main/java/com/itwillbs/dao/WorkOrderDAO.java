@@ -183,7 +183,7 @@ public class WorkOrderDAO{
 				logger.debug("##### DAO 원자재 코드 = " + rawCode);
 				
 				//원자재 재고 
-				int rawStock = stockList.get(i).getWhseCount();
+				int rawStock = stockList.get(i).getStockCount();
 				logger.debug("##### DAO 원자재 재고 = " + rawStock);
 				//원자재 소요량
 				int rawReq = Integer.parseInt(reqList.get(i).getReqAmount());
@@ -206,7 +206,7 @@ public class WorkOrderDAO{
 					logger.debug("##### DAO 원자재 코드 = " + rawCode);
 					
 					//원자재 재고 
-					int rawStock = stockList.get(i).getWhseCount();
+					int rawStock = stockList.get(i).getStockCount();
 					logger.debug("##### DAO 원자재 재고 = " + rawStock);
 					//원자재 소요량
 					int rawReq = Integer.parseInt(reqList.get(i).getReqAmount());
@@ -217,7 +217,7 @@ public class WorkOrderDAO{
 					if(rawStock-minus >= 0) {
 						// 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량 >= 0
 						// -> 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량
-						stockList.get(i).setWhseCount(minus);
+						stockList.get(i).setStockCount(minus);
 						sqlSession.update(NAMESPACE + ".reduceRaw", stockList.get(i));
 						logger.debug("##### DAO: 원자재 재고 차감 완료");
 						
@@ -276,7 +276,7 @@ public class WorkOrderDAO{
 		
 		sqlSession.update(NAMESPACE + ".lineUseY", dto.getLineCode());
 		
-		String lineProcess = dto.getLineProcess();
+		String lineProcess = dto.getWorkProcess();
 		if(lineProcess.equals("1차공정")) {
 			String lineCode = sqlSession.selectOne(NAMESPACE + ".selectLine2");
 			sqlSession.update(NAMESPACE + ".updateLine", lineCode);

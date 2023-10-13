@@ -604,16 +604,16 @@
 						<input style="width:250px;" type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
 						<label style="font: 500 24px/24px 'Inter', sans-serif;">~</label> 
 						<input style="width:250px;"type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
-				<label>지시상태&nbsp;</label> 
-				<div id="button">
-			
-				
-			<input type="submit"  class="button" name="search_place" id="allButton" value="전체">
+				<label>지시상태&nbsp;<input type="submit"  class="button" name="search_place" id="allButton" value="전체">
     		<input type="submit"  name="search_place" class="button" id="waitButton" value="대기">
     		<input type="submit"  name="search_place" class="button" id="oneButton" value="1차">
     		<input type="submit"  name="search_place" class="button" id="twoButton" value="2차">
     		<input type="submit"  name="search_place" class="button" id="threeButton" value="3차">
-    		<input type="submit"  name="search_place" class="button" id="finishButton" value="마감" >
+    		<input type="submit"  name="search_place" class="button" id="finishButton" value="마감" ></label> 
+				<div id="button">
+			
+				
+			
 		</div>
 		</fieldset>
 		</form>
@@ -700,7 +700,7 @@
 						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
 							<td>
 								<c:if test="${w.workProcess != '마감'}">
-									<a id="magamBtn" class="button" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}">공정마감</a>
+									<a id="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}">공정마감</a>
 								</c:if>
 							</td>
 						<%-- </c:if> --%>

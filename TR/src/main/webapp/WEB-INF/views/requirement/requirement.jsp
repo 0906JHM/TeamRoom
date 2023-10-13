@@ -17,7 +17,7 @@
 //
 //input으로 바꾸기 
 function inputCng(obj, type, name, value) {
-	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"' class='input-row'>";
 	obj.html(inputBox);
 } //inputCng	
 
@@ -134,7 +134,7 @@ $(document).ready(function() {
     function addRow() {
     	addcounter = num3 + counter;
     	
-        var row = '<tr class="headings">' +
+        var row = '<tr>' +
         	'<td style="color: red;" onclick="deleteRow()">'+addcounter+'</td>' + 
         	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' + 
             '<td><input type="text" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-row"></td>' +
@@ -299,20 +299,20 @@ $(document).ready(function() {
 	var isExecuted = false;
 	
 	//수정버튼 클릭
+	
 	$('#modify').click(function() {
-		Swal.fire({
-            text: '수정할 행을 선택해주세요',
-            confirmButtonColor: '#3085d6',
-            customClass: {
-                text: 'red-text' // 클래스 이름을 지정하여 텍스트 색상을 변경
-            }
-        });
+		
 		event.preventDefault();
 		$('#delete').hide();
 		$('#modify').hide();
 		$('#add').hide();
 		$('#cancle').show();
 		$('#save').show();
+		Swal.fire({
+            text: '수정할 행을 선택해주세요',
+            confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+            
+        });
 
 		//행 하나 클릭했을 때	
 		$('table tr:not(:first-child)').click(function() {
@@ -367,10 +367,10 @@ $(document).ready(function() {
 						
 						self.find('td').each(function(idx,item) {
 							if (idx > 0) {
-								inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+								inputCng($(this),"text",names[idx - 1],preVOs[idx - 1] );
 //								
 								if(idx==4){
-									var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="rawCode">'
+									var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="rawCode" >'
 									$(".selected").append(row);
 								}
 
