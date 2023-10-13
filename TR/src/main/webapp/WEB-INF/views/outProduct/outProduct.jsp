@@ -80,10 +80,14 @@
 		        // 검색 버튼 클릭 시 게시판 데이터를 검색하여 업데이트
 		        $("#searchButton").click(function () {
 		        	// 검색 조건을 가져오기 (이 부분을 필요에 따라 구현)
+		        	sellStateButton2 = "검색";
+		        	sellStateButton1 = sellStateButton2;
+		        	
 			        var searchParams = {
 			            outCode: $("#outCode").val(),
 			            prodName: $("#prodName9999").val(),
 			            clientCompany: $("#clientCompany9999").val(),
+			            sellState: sellStateButton2,
 			        };
 					console.log(searchParams);
 		            loadOutProductList(searchParams);
