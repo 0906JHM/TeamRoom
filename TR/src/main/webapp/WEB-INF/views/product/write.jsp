@@ -32,7 +32,7 @@
     <form action="${pageContext.request.contextPath}/product/writePro" method="post">
     
     <p>제품코드</p>
-    <input type="text" name="prodCode">
+    <input type="text" name="prodCode" value="${prodDTO.prodCode }" readonly="readonly">
     <p>제품명</p>
     <input type="text" name="prodName">
     <p>제품단위</p>
@@ -42,6 +42,7 @@
     <p>향기</p>
     <input type="text" name="prodPerfume">
     <p>거래처명</p>
+    <input type="hidden" name="clientCode" id="clientCode9999" onclick="searchItem('client','clientCode9999')" >
     <input type="text" name="clientCompany" id="clientCompany9999"  readonly
     	onclick="searchItem('client','clientCode9999')">
     <p>창고명</p>

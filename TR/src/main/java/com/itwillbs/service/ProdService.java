@@ -75,6 +75,22 @@ public class ProdService {
 	public int getProdCount(PageDTO pageDTO) {
 		return prodDAO.getProdCount(pageDTO);
 	}
+
+	public String makeCode() {
+		String code = "PR";
+		Integer inNum = prodDAO.getMaxNum(code);
+		if(inNum == null) {
+			inNum = 0;
+		}
+		return this.codeChange(code, inNum);
+	}
+
+	public String codeChange(String code_id, int num){
+		return String.format("%s%04d", code_id, ++num);
+	}
+	
+//	public void makeCode() {
+//	}
 	
 	
 

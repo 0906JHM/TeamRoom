@@ -16,7 +16,7 @@ public class InMaterialDTO {
 	private int inPrice;
 	private String rawCode;
 	private String rawName;
-	private String rawPrice;
+	private int rawPrice;
 	private String buyNum;
 	private String inEmpId;
 	private String clientCode;
