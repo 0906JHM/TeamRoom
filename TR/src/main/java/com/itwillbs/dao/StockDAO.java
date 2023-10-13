@@ -51,7 +51,6 @@ public class StockDAO {
 
 	public void updateBoard(StockDTO stockDTO) {
 		System.out.println("StockDAO updateBoard()");
-		
 		sqlSession.update(namespace+".updateBoard", stockDTO);
 	} // updateBoard
 
