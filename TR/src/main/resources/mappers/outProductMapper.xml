@@ -102,6 +102,51 @@
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 
+	<select id="getOutProductListAllSearch"
+		resultType="com.itwillbs.domain.OutProductDTO">
+		SELECT o.outCode outCode, o.prodCode prodCode, o.outDate outDate,
+		o.outEmpId outEmpId, o.outMemo outMemo,
+		o.outRedate outRedate,
+		o.outCount outCount, o.outPrice outPrice,
+		o.sellCode sellCode,
+		s.sellCount sellCount, s.sellDuedate sellDuedate,
+		s.sellState
+		sellState,
+		s.clientCode clientCode, c.clientCompany clientCompany,
+		p.prodName prodName, p.prodPrice prodPrice,
+		stockTestTest.whseCount
+		whseCount
+		FROM outProduct o LEFT JOIN sellTestTest s
+		ON o.sellCode =
+		s.sellCode
+		LEFT JOIN clients c
+		ON s.clientCode = c.clientCode
+		LEFT JOIN
+		product p
+		ON o.prodCode = p.prodCode
+		LEFT JOIN stockTestTest
+		ON
+		o.prodCode =
+		stockTestTest.prodCode
+		<where>
+			<if test="outCode != ''">
+				AND o.outCode like CONCAT('%', #{outCode}, '%')
+			</if>
+
+			<if test="prodName != ''">
+				AND p.prodName like CONCAT('%', #{prodName}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				AND c.clientCompany like CONCAT('%', #{clientCompany},
+				'%')
+			</if>
+		</where>
+
+		ORDER BY o.outCode DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+
 	<select id="getOutProductListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM (
@@ -203,6 +248,53 @@
 			</if>
 		</where>
 
+		) AS subquery;
+	</select>
+	<select id="getOutProductListAllSearchCount" resultType="int">
+		SELECT COUNT(*)
+		FROM (
+		SELECT o.outCode outCode, o.prodCode prodCode,
+		DATE_FORMAT(o.outDate,
+		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		o.outMemo outMemo,
+		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
+		o.outCount outCount,
+		o.outPrice outPrice,
+		o.sellCode sellCode,
+		s.sellCount sellCount, DATE_FORMAT(s.sellDuedate,
+		'%Y-%m-%d')
+		sellDuedate, s.sellState sellState,
+		s.clientCode clientCode,
+		c.clientCompany clientCompany,
+		p.prodName prodName, p.prodPrice
+		prodPrice,
+		stockTestTest.whseCount whseCount
+		FROM outProduct o LEFT JOIN
+		sellTestTest s
+		ON o.sellCode = s.sellCode
+		LEFT JOIN clients c
+		ON
+		s.clientCode = c.clientCode
+		LEFT JOIN product p
+		ON o.prodCode =
+		p.prodCode
+		LEFT JOIN stockTestTest
+		ON o.prodCode =
+		stockTestTest.prodCode
+		<where>
+			<if test="outCode != ''">
+				AND o.outCode like CONCAT('%', #{outCode}, '%')
+			</if>
+
+			<if test="prodName != ''">
+				AND p.prodName like CONCAT('%', #{prodName}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				AND c.clientCompany like CONCAT('%', #{clientCompany},
+				'%')
+			</if>
+		</where>
 		) AS subquery;
 	</select>
 

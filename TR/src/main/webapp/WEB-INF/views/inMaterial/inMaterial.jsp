@@ -33,13 +33,13 @@
 				placeholder="거래처를 선택하세요."
 				onclick="searchItem('client','clientCode9999')"> <input
 				type="button" value="검색" id="searchButton">
+				<input type="button" value="초기화" id="resetButton">
 		</div>
 		<hr>
 		<div id="buttons">
-			<input type="button" value="전체" id="allButton"
-				class="buttons highlighted"> <input type="button" value="입고"
-				id="inButton" class="buttons"> <input type="button"
-				value="미입고" id="non_inButton" class="buttons">
+			<input type="button" value="전체" id="allButton" class="buttons highlighted"> 
+			<input type="button" value="입고" id="inButton" class="buttons"> 
+			<input type="button" value="미입고" id="non_inButton" class="buttons">
 		</div>
 		<h3 style="padding-left: 1%;">
 			목록 <small id="listCount">총 3건</small>
@@ -85,14 +85,37 @@
 					// 검색 버튼 클릭 시 게시판 데이터를 검색하여 업데이트
 					$("#searchButton").click(function() {
 						// 검색 조건을 가져오기 (이 부분을 필요에 따라 구현)
+						
+						$(".buttons").removeClass("highlighted");
+
+						// 클릭한 버튼에 "highlighted" 클래스 추가
+						$("#allButton").addClass("highlighted");
+						
+						inStateButton2 = "검색";
+						inStateButton1 = inStateButton2;
+						
 						var searchParams = {
 							inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
 							clientCompany : $("#clientCompany9999").val(),
+							inState : inStateButton2
 						};
 						console.log(searchParams);
 						loadinMaterialList(searchParams);
 					});
+					
+					// 취소 리셋 버튼을 누르면 검색창들의 값을 다 지운다
+			        $("#resetButton").click(function () {
+			        	$(".buttons").removeClass("highlighted");
+
+						// 클릭한 버튼에 "highlighted" 클래스 추가
+						$("#allButton").addClass("highlighted");
+						
+			        	$("#inNum").val('');
+		                $("#rawName9999").val('');
+		                $("#clientCompany9999").val('');
+		                firstloadinMaterialList();
+			        });
 
 					// Enter 키 이벤트를 감지할 input 요소에 이벤트 리스너 등록
 					$("#inNum, #rawName9999, #clientCompany9999").on('keydown',
@@ -115,14 +138,14 @@
 					// 전체 버튼 클릭 시
 					$("#allButton").click(function() {
 						// 전체 버튼에 대한 동작을 추가하고,
-						inStateButton2 = "전체";
+						inStateButton2 = "총검색";
 						inStateButton1 = inStateButton2;
 
-						$("#inNum").val('');
-						$("#rawName9999").val('');
-						$("#clientCompany9999").val('');
 						// 검색 조건을 설정하고 전체 목록을 가져오도록 수정
 						var searchParams = {
+							inNum : $("#inNum").val(),
+							rawName : $("#rawName9999").val(),
+							clientCompany : $("#clientCompany9999").val(),
 							inState : inStateButton2
 						// 전체 조건 추가
 						};
