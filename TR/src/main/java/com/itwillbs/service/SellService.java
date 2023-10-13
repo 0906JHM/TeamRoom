@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.SellDAO;
+import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
 
@@ -72,17 +73,15 @@ public class SellService {
 		}//insertSellMemo
 
 		//----------------------------------------------------- sellDelete --------------------------------------------------------
-		public void sellDelete(SellDTO sellDTO) {
-			System.out.println("SellService sellDelete()");
-			
-			sellDAO.deleteSell(sellDTO);
-		}//sellDelete
-		
-
-
-
-
- 
+		/*
+		 * // 체크박스로 선택삭제
+		 * 
+		 * @Override public void sellDelete(String sellCode){
+		 * sellDAO.sellDelete(sellCode); }//sellDelete
+		 * 
+		 * 
+		 * 
+		 */
 
 	
 

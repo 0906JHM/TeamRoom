@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.SellDTO;
@@ -136,6 +137,7 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	 sellState 수주상태(현황), 
 	 clientCode 거래처코드, 
 	 sellPrice 수주단가
+	 prodPrice 제품단가 1ea
 	 */
 
 	return ResponseEntity.ok("<script>window.close();</script>");
@@ -212,19 +214,7 @@ public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
 }//sellMemotypePro	
 
 //-------------------------------------------------- sellDelete ---------------------------------------------
-@GetMapping("/sellDelete")
-public void sellDeletePro(SellDTO sellDTO) {
-	System.out.println("SellController sellDelete()");
-	System.out.println(sellDTO);
-	
-	sellService.sellDelete(sellDTO);
-}// sellDelete
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

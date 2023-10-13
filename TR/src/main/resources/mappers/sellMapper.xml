@@ -18,9 +18,9 @@
 	</select>
 	
 	<insert id="insertSell">
-		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellFile,sellMemo,sellState,clientCode,sellNum,sellPrice)
+		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,sellNum,sellPrice)
 		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-				#{sellFile},#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}))
+				#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}))
 	</insert>
 	
 	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">
@@ -41,8 +41,9 @@
 		where sellCode = #{sellCode}
 	</update>
 
-	<delete id="deleteSell">
-		delete from sellTest
+	<delete id="sellDelete">
+		delete 
+		from sellTest
 		WHERE sellCode = #{sellCode}
 	</delete>
 	

@@ -77,13 +77,14 @@
 	                <td class="tg-llyw">거래처 코드</td>
 	                <td class="tg-llyw">제품 코드</td>
 	                <td class="tg-llyw">제품명</td>
-	                <td class="tg-llyw">수주 단가</td>
+	                <td class="tg-llyw">제품 단가</td>
 	                <td class="tg-llyw">수주 수량</td>
+	                <td class="tg-llyw">수주 단가</td>
 	                <td class="tg-llyw">수주 일자</td>
 	                <td class="tg-llyw">납기 일자</td>
 	                <td class="tg-llyw">담당자</td>
 	                <td class="tg-llyw">비고</td>
-	                <td class="tg-llyw">파일</td>
+	         
 	            </tr>
 	            
 	            <c:forEach var="sellDTO" items="${sellList}">
@@ -96,9 +97,9 @@
 	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 거래처코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodCode}</td><!-- 제품코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodName}</td><!-- 제품명 -->
-	                <td class="tg-llyw2">
-    					<fmt:formatNumber value="${sellDTO.sellPrice}" pattern="###,### 원" />
-					</td><!-- 수주단가 -->
+	                <td class="tg-llyw2"></td>
+	               <%--  <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.prodPrice}"pattern="###,### 원" /></td><!-- 제품단가 --> --%>
+	                <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.sellPrice}" pattern="###,### 원" /></td><!-- 수주단가 -->
 	                <td class="tg-llyw2">${sellDTO.sellCount}</td><!-- 수주수량-->
 	                <td class="tg-llyw2">${sellDTO.sellDate}</td><!-- 수주일자 -->
 	                <td class="tg-llyw2">${sellDTO.sellDuedate}</td><!-- 납기일자  --> 
@@ -116,19 +117,8 @@
 									onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color:#384855;">[입력]</a></td>
 							</c:otherwise>
 						</c:choose>
-						<c:choose>
-							<c:when test="${not empty sellDTO.sellFile}">
-								<td class="tg-llyw2"><a href="#"
-									onclick="downSellFile('${sellDTO.sellCode}')" style="color: red;">[다운]</a>
-									
-								</td>
-							</c:when>
-							<c:otherwise>
-								<td class="tg-llyw2"><input type="file" id="sellFile" name="sellFile"></td>
-							</c:otherwise>
-						</c:choose>
+						
 
-						<td class="tg-llyw2">${sellDTO.sellFile}</td><!-- 파일 -->
 	            </tr>
 	             </c:forEach>
 	        </tbody>

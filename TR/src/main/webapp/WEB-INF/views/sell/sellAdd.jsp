@@ -41,11 +41,14 @@
 		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')"><br>
 		</div>
 		
+		<label class="popupLabel">제품 단가 : </label>
+        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
+        
         <label class="popupLabel">수주 수량 : </label>
         <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0">개<br>
-	
+
  	    <label class="popupLabel">수주 단가 : </label>
-        <input type="number" id="sellPrice"  min="0" value="0">원<br> 
+        <input type="number" id="sellPrice"  min="0" value="prodCode*sellCount" readonly>원<br> 
         
      <label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
@@ -58,9 +61,6 @@
 
         <label class="popupLabel">비고 : </label><br>
         <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
-
-        <label class="popupLabel">첨부파일 : </label>
-        <input type="file" id="sellFile" name="sellFile"><br>
 		
 		<br>
         <button type="submit" >등록</button>
@@ -98,6 +98,20 @@ function openPopup(url) {
 $(document).ready(function() {
    
 });
+
+// 이벤트 리스너를 등록하여 수주 수량이 변경될 때 수주 단가를 계산하고 업데이트합니다.
+document.getElementById('sellCount').addEventListener('input', function() {
+    // 선택한 제품 단가와 수주 수량을 가져옵니다.
+    var prodPrice = parseFloat(document.getElementById('prodPrice9999').value);
+    var sellCount = parseFloat(document.getElementById('sellCount').value);
+
+    // 수주 단가를 계산합니다.
+    var sellPrice = prodPrice * sellCount;
+
+    // 계산된 수주 단가를 화면에 표시합니다.
+    document.getElementById('sellPrice').value = sellPrice + '원';
+});
+
 $(function() {
     // 현재 날짜를 가져오기
     var currentDate = new Date();

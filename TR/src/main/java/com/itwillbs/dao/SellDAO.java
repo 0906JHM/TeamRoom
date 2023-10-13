@@ -63,13 +63,13 @@ public class SellDAO {
 			sqlSession.insert(namespace + ".insertSellMemo", sellDTO);
 		}// insertSellMemo
 		
-//----------------------------------------------------- deleteSell --------------------------------------------------------
-		public void deleteSell(SellDTO sellDTO) {
-			System.out.println("SellDAO deleteSell()");
-			
-			sqlSession.update(namespace+".deleteSell",sellDTO);
-		}//deleteSell
-
+//----------------------------------------------------- sellDelete --------------------------------------------------------
+		/*
+		 * // 체크박스로 선택삭제
+		 * 
+		 * @Override public void sellDelete(String sellCode){
+		 * sqlSession.delete(namespace + ".sellDelete", sellCode); }//sellDelete
+		 */
 
 
 
