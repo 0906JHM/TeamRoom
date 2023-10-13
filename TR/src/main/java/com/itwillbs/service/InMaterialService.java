@@ -94,9 +94,6 @@ public class InMaterialService {
 		
 	}
 
-//	public void updateInMerial(InMaterialDTO inMaterialDTO) {
-//		inMaterialDAO.updateInMerial(inMaterialDTO);
-//	}
 
 	public void updateInState(InMaterialDTO inMaterialDTO) {
 		inMaterialDAO.updateInState(inMaterialDTO);

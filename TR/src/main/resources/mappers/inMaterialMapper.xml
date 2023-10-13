@@ -367,11 +367,6 @@
 		WHERE rawCode = #{rawCode}
 	</update>
 	
-<!-- 	<update id="updateInMerial"> -->
-<!-- 		update inMaterial -->
-<!-- 		set inState = "입고완료", inDate = #{inDate} -->
-<!-- 		where inNum = #{inNum} -->
-<!-- 	</update> -->
 
 <update id="updateInState">
 		update inMaterial
