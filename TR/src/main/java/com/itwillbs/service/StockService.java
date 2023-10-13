@@ -23,7 +23,7 @@ public class StockService {
 	} // insertBoard()
 
 
-
+    // List 페이징
 	public List<StockDTO> getBoardList(PageDTO pageDTO) {
 		System.out.println("StockService getBoardList()");
 		// 시작하는 행번호

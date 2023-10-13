@@ -10,7 +10,7 @@
 <body>
 	<h1>재고 수정</h1>
 	
-<form name ="update"  action="${pageContext.request.contextPath}/stock/updatePro" method="post">
+<form  action="${pageContext.request.contextPath}/stock/updatePro" method="post">
   <table border="1">
       <tbody>
 		<tr>
@@ -20,14 +20,14 @@
 			<td>재고 개수</td>
 		</tr>
 		 <tr>
-		        <td>${stockDTO.prodCode }</td>
-				<td>${stockDTO.rawCode }</td>
-				<td>${stockDTO.whseCode }</td>
-				<td ><input type="number"  id="newCount" name="newCount" min="0" value="${stockDTO.stockCount }"></td> 
+		        <td><input type="text" name="prodCode" value="${stockDTO.prodCode }" readonly></td>
+				<td><input type="text" name="rawCode" value="${stockDTO.rawCode }" readonly></td>
+				<td><input type="text" name="whseCode" value="${stockDTO.whseCode }" readonly></td>
+				<td ><input type="number"  id="newCount" name="stockCount" min="0" value="${stockDTO.stockCount }"></td> 
 	     </tr> 
 </table>
 
-<input type="submit" value="수정" class="btn">
+<input type="submit" value="수정" >
 
 </form>
 

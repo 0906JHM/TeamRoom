@@ -366,4 +366,12 @@
 		SET stockCount = stockCount + #{inCount}
 		WHERE rawCode = #{rawCode}
 	</update>
+	
+
+<update id="updateInState">
+		update inMaterial
+		SET inState = "입고완료"
+		WHERE inNum = #{inNum}
+	</update>
+
 </mapper>

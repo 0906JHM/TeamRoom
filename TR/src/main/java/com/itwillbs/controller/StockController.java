@@ -94,6 +94,7 @@ public class StockController {
 	
 	@RequestMapping(value = "/stock/update", method = RequestMethod.GET)
 	public String update(HttpServletRequest request, Model model) {
+		System.out.println("StockController update()");
 		int stockNum = Integer.parseInt(request.getParameter("stockNum"));
 		// num에 대한 게시판 글 가져오기
         StockDTO stockDTO = stockService.getBoard(stockNum);		
@@ -105,6 +106,7 @@ public class StockController {
 	
 	@RequestMapping(value="/stock/updatePro", method = RequestMethod.POST)
 	public String updatePro(StockDTO stockDTO) {
+		System.out.println("StockController updatePro()");
 		System.out.println(stockDTO);
 		// prodCode에 대한 게시판 글 수정
 		stockService.updateBoard(stockDTO);

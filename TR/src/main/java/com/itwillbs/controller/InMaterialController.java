@@ -46,7 +46,7 @@ public class InMaterialController {
 		return "inMaterial/inMaterial";
 	}
 
-	// 입고처리 버튼
+	// 입고처리 버튼 => 입고상태, 담당자, 날짜 업데이트해야함
 	@PostMapping("/inMaterialUpdate")
 	@ResponseBody
 	public void inMaterialUpdate(@RequestBody InMaterialDTO inMaterialDTO, HttpServletRequest response) {
@@ -54,6 +54,9 @@ public class InMaterialController {
 		
 		inMaterialService.inMaterialContent(inMaterialDTO.getInNum());
 
+		//미입고 => 입고완료
+		inMaterialService.updateInState(inMaterialDTO);
+		
 		// 현재 시간을 Timestamp로 가져오기
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		// Timestamp를 Date로 변환
@@ -66,7 +69,7 @@ public class InMaterialController {
 		//입고테이블 입고개수 업데이트 => 입고개수 테이블에 없어서 생략
 		//재고 테이블에서 원자재코드로 입고한만큼 개수 증가
 		inMaterialService.updateWhseCount(inMaterialDTO);
-		
+
 //		response.setContentType("text/html;charset=UTF-8");
 //		PrintWriter out;
 		

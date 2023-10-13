@@ -65,4 +65,9 @@ public class InMaterialDAO {
 		sqlSession.update(namespace+".updateWhseCount", inMaterialDTO);
 		
 	}
+
+
+	public void updateInState(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace+".updateInState", inMaterialDTO);
+	}
 }

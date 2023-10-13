@@ -8,6 +8,7 @@
   
   <select id="getMaxNum" resultType = "java.lang.Integer">
       select max(num) from stock
+      where 1=1
   </select>
   
   <insert id="insertBoard">
@@ -32,7 +33,7 @@
   
   <select id="getBoardCount" resultType="java.lang.Integer">
       select count(*) from stock
-      where 1=1
+    
        <if test="search1 != null and search1 != ''">
         	and prodCode like concat('%', #{search1}, '%')
     	</if>
@@ -51,8 +52,8 @@
   
   <update id="updateBoard">
       update stock
-      set stockCount = #{stockCount}, prodCode=#{prodCode}, rawCode=#{rawCode}, whseCode=#{whseCode}
-      where stockNum =#{stockNum}
+      set stockCount = #{stockCount}
+      where prodCode =#{prodCode}
   </update>
   
   </mapper>
