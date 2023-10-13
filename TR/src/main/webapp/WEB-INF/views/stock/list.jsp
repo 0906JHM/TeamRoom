@@ -13,9 +13,18 @@
     rel="stylesheet" type="text/css">
     
 <script type="text/javascript">
+
 	 function newTabUpdate(stockNum) {
-     window.open("update?stockNum=" + stockNum, "수정",  "top=60,left=140,width=977,height=377, location=no");
+     window.open("${pageContext.request.contextPath}/stock/update?stockNum=" + stockNum, "수정",  "top=60,left=140,width=977,height=377, location=no");
  }
+	 
+	 $(document).ready(function(stockNum) {
+			var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+		    if (refreshAndClose) {
+		        window.opener.location.reload(); // 부모창 새로고침
+		        window.close(); // 현재창 닫기
+		    }
+	 });
 </script>
 	
 <jsp:include page = "../inc/side.jsp"></jsp:include>
