@@ -106,6 +106,11 @@
 					
 					// 취소 리셋 버튼을 누르면 검색창들의 값을 다 지운다
 			        $("#resetButton").click(function () {
+			        	$(".buttons").removeClass("highlighted");
+
+						// 클릭한 버튼에 "highlighted" 클래스 추가
+						$("#allButton").addClass("highlighted");
+						
 			        	$("#inNum").val('');
 		                $("#rawName9999").val('');
 		                $("#clientCompany9999").val('');
