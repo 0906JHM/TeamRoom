@@ -131,28 +131,23 @@ public String perfinsert(PerformanceDTO perfDTO, HttpServletRequest req) {
 
 	String perfDefect = req.getParameter("perfDefect");
 	System.out.println("+++++++++++++++++++++++:"+perfDefect);
-	
-
 	perfService.perfinsert(perfDTO);
-	
-	
-	
 	
 	return "redirect:/perf/perfinsert";
 	
 	
 }
 
-@PostMapping("/detail")
-@ResponseBody
-public PerformanceDTO perfdetail (@RequestBody PerformanceDTO perfDTO) {
-	
+@GetMapping("/detail")
+public String perfdetail ( HttpServletRequest req , Model model ) {
+	        
+	String perfCode=req.getParameter("perfCode");
+	log.debug(perfCode);
+	System.out.println("@@@@@@@@@@@@@@:"+perfCode);
+	PerformanceDTO perfDTO = perfService.getdetail(perfCode);
+	model.addAttribute("perfDTO",perfDTO);
 
-	log.debug("호출된 실적코드: " + perfDTO.getPerfCode());
-	PerformanceDTO perfDTO2 = perfService.getdetail(perfDTO.getPerfCode());
-
-	return perfDTO2;
-	
+	return "perf/perfdetail";
 }
 
 	

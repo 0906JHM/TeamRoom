@@ -73,7 +73,6 @@
 		 <table class="ct" id="ct">	
 			<thead>
 				<tr class="cthead">
-				
 				    <th class="ctth">생산실적코드</th>
 					<th class="ctth">작업지시코드</th>
 					<th class="ctth">라인코드</th>
@@ -91,7 +90,7 @@
 		 <tbody>
 				<c:forEach var="perfDTO" items="${perflist}">
 					<tr class="ctcontents">	    
-						<td class="cttg">${perfDTO.perfCode} <i class="fa-solid fa-magnifying-glass"></i></td>
+						<td class="cttg">${perfDTO.perfCode} <i class="fa-solid fa-magnifying-glass magnifier" data-perfcode="${perfDTO.perfCode}"></i></td>
 						<td class="cttg">${perfDTO.workCode}</td>
 						<td class="cttg">${perfDTO.lineCode}</td>
 						<td class="cttg">${perfDTO.prodCode}</td>
@@ -127,7 +126,21 @@ $(document).ready(function() {
             'width=1200px, height=800px, left=500px, top=100px'
         );
     });
+    
+    
        
+});
+
+// 돋보기 아이콘에 대한 클릭 이벤트 리스너 추가
+document.querySelectorAll('.magnifier').forEach(function(magnifier) {
+    magnifier.addEventListener('click', function() {
+    	console.log("에러 발생!");
+        // 선택한 실적 코드 가져오기
+        var perfCode = this.getAttribute('data-perfcode');
+        
+        // 새 창을 열고 선택한 실적 코드를 URL 파라미터로 전달
+        window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=600px,height=400px');
+    });
 });
 
 
