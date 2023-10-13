@@ -94,15 +94,15 @@ public class OrderManagementController {
 	}
 	
 	// 가상주소 http://localhost:8080/leeweb/OrderManagement/insertPro
-		@PostMapping("/insertPro")
-		public String insertPro(OrderManagementDTO ordermanagementDTO) {
-			System.out.println("OrderManagementController insertPro()");
-			System.out.println(ordermanagementDTO);
-			
-			inMaterialService.insertList(ordermanagementDTO);
-			ordermanagementService.insertOrderManagement(ordermanagementDTO);
-			return "redirect:/OrderManagement/home";
-		}
+	@PostMapping("/insertPro")
+	public String insertPro(OrderManagementDTO ordermanagementDTO) {
+		System.out.println("OrderManagementController insertPro()");
+		System.out.println(ordermanagementDTO);
+		// inMaterial 추가한 코드
+		inMaterialService.insertList(ordermanagementDTO);
+		ordermanagementService.insertOrderManagement(ordermanagementDTO);
+		return "redirect:/OrderManagement/home";
+	}
 	
 	// 체크박스로 선택삭제
     @RequestMapping(value = "/delete")
