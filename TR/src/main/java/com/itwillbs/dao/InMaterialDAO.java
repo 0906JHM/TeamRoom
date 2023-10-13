@@ -18,41 +18,62 @@ public class InMaterialDAO {
 
 	@Inject
 	private SqlSession sqlSession;
-	
-	private static final String namespace="com.itwillbs.mappers.inMaterialMapper";
+
+	private static final String namespace = "com.itwillbs.mappers.inMaterialMapper";
 
 //------------------------------------------------------------------------------------------
-	
+
 	public List<InMaterialDTO> getInMaterialList(InMaterialDTO inMaterialDTO) {
-		
-		if("전체".equals(inMaterialDTO.getInState())) {
+
+		if ("전체".equals(inMaterialDTO.getInState())) {
 			log.debug("전체용");
-			return sqlSession.selectList(namespace+".getInMaterialList", inMaterialDTO);
-		}else {
+			return sqlSession.selectList(namespace + ".getInMaterialList", inMaterialDTO);
+		} else if ("총검색".equals(inMaterialDTO.getInState())) {
+			log.debug("총검색");
+			return sqlSession.selectList(namespace + ".getInMaterialListAllSearch", inMaterialDTO);
+		} else {
 			log.debug("나머지용");
-			return sqlSession.selectList(namespace+".getInMaterialListSearch", inMaterialDTO);
+			return sqlSession.selectList(namespace + ".getInMaterialListSearch", inMaterialDTO);
 		}
 	}
 
 	public int getInMaterialListCount(InMaterialDTO inMaterialDTO) {
-		 System.out.println("outProductDTO.getSellState(): " + inMaterialDTO.getInState());
-		    if (inMaterialDTO.getInState() == null) {
-		    	inMaterialDTO.setInState("null");
-		    }
-		if("전체".equals(inMaterialDTO.getInState())) {
+		System.out.println("outProductDTO.getSellState(): " + inMaterialDTO.getInState());
+		if (inMaterialDTO.getInState() == null) {
+			inMaterialDTO.setInState("null");
+		}
+		if ("전체".equals(inMaterialDTO.getInState())) {
 			System.out.println("전체용 카운트");
-			return sqlSession.selectOne(namespace+".getInMaterialListCount", inMaterialDTO);
-		}else {
+			return sqlSession.selectOne(namespace + ".getInMaterialListCount", inMaterialDTO);
+		}
+		if ("총검색".equals(inMaterialDTO.getInState())) {
+			System.out.println("총검색 카운트");
+			return sqlSession.selectOne(namespace + ".getInMaterialListAllSearchCount", inMaterialDTO);
+		} else {
 			System.out.println("나머지용 카운트");
-			return sqlSession.selectOne(namespace+".getInMaterialListSearchCount", inMaterialDTO);
+			return sqlSession.selectOne(namespace + ".getInMaterialListSearchCount", inMaterialDTO);
 		}
 	}
 
 	public Integer getMaxNum(String code) {
-		return sqlSession.selectOne(namespace+".getMaxNum", code);
+		return sqlSession.selectOne(namespace + ".getMaxNum", code);
 	}
 
 	public void insertList(InMaterialDTO inMaterialDTO) {
-		sqlSession.selectOne(namespace+".insertList", inMaterialDTO);
+		sqlSession.selectOne(namespace + ".insertList", inMaterialDTO);
+	}
+
+	public InMaterialDTO inMaterialContent(String inNum) {
+		return sqlSession.selectOne(namespace + ".inMaterialContent", inNum);
+	}
+
+	public void updateWhseCount(InMaterialDTO inMaterialDTO) {
+		System.out.println(inMaterialDTO.getInCount());
+		sqlSession.update(namespace + ".updateWhseCount", inMaterialDTO);
+
+	}
+
+	public void updateInState(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace + ".updateInState", inMaterialDTO);
 	}
 }

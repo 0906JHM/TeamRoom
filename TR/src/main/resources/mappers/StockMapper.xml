@@ -8,37 +8,52 @@
   
   <select id="getMaxNum" resultType = "java.lang.Integer">
       select max(num) from stock
+      where 1=1
   </select>
   
   <insert id="insertBoard">
-      insert into stock(whseCount, rawCode, prodCode, whseCode)
-      values (#{whseCount}, #{rawCode}, #{prodCode}, #{whseCode})
+      insert into stock(stockCount, rawCode, prodCode, whseCode)
+      values (#{stockCount}, #{rawCode}, #{prodCode}, #{whseCode})
   </insert>
   
   <select id="getBoardList" resultType="com.itwillbs.domain.StockDTO">
       select * from stock
+      where 1=1
+      <if test="search1 != null and search1 != ''">
+        	and prodCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and rawCode like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and whseCode like concat('%', #{search3}, '%')
+    	</if>
       limit #{startRow}, #{pageSize}
   </select>
   
   <select id="getBoardCount" resultType="java.lang.Integer">
       select count(*) from stock
+    
+       <if test="search1 != null and search1 != ''">
+        	and prodCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and rawCode like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and whseCode like concat('%', #{search3}, '%')
+    	</if>
   </select>
   
   <select id="getBoard" resultType="com.itwillbs.domain.StockDTO">
       select * from stock
-      where prodCode=#{prodCode}
+      where stockNum =#{stockNum}
   </select>
   
   <update id="updateBoard">
       update stock
-      set whseCount = #{whseCount}
-      where prodCode = #{prodCode}
+      set stockCount = #{stockCount}
+      where prodCode =#{prodCode}
   </update>
-  
-  <delete id="deleteBoard">
-      delete from stock
-      where prodeCode = #{prodCode}
-  </delete>
-  
   
   </mapper>

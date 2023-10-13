@@ -1,5 +1,7 @@
 package com.itwillbs.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.OutProductDAO;
 import com.itwillbs.domain.OutProductDTO;
+import com.itwillbs.domain.SellDTO;
 
 @Service
 public class OutProductService {
@@ -62,6 +65,57 @@ public class OutProductService {
 		outProductDAO.updateOutProductContent(outProductDTO);
 	}
 
-	
+	public void insertList(SellDTO sellDTO) {
+		
+//		max num 가져와서 코드만들기
+		String code = "OC";
+		Integer num = outProductDAO.getMaxNum(code);
+		if(num == null) {
+			num = 0;
+		}
+		String chageCode = this.codeChange(code, num);
+		
+//		제품 단가 가져오기
+		String prodCode = sellDTO.getProdCode();
+		int price = sellDTO.getSellCount() * outProductDAO.getProdPrice(prodCode);
+		
+
+		OutProductDTO outProductDTO = new OutProductDTO();
+		outProductDTO.setOutCode(chageCode);
+		outProductDTO.setProdCode(prodCode);
+		outProductDTO.setOutPrice(price);
+		outProductDTO.setSellCode(sellDTO.getSellCode());
+		
+		outProductDAO.insertList(outProductDTO);
+		
+//		outCode, 
+//		prodCode, 
+//		outPrice, 계산해서 넣기
+//		sellCode 이건 계산하기 
+//		outDate, 안해도댐
+//		outCount, 안해도댐
+//		outEmpId, 안해도댐
+//		outRedate, 안해도댐
+//		outMemo, 안해도댐
+		
+		/*
+		 sellCode 수주코드, 
+		 sellDate 수주일자, 
+		 sellDuedate납기일자, 
+		 sellEmpId 수주담당직원, 
+		 sellCount 수주수량, 
+		 prodCode 제품코드, 
+		 prodName 제품명,
+		 sellFile 수주파일, 
+		 sellMemo 수주비고, 
+		 sellState 수주상태(현황), 
+		 clientCode 거래처코드, 
+		 sellPrice 수주단가
+		 */
+	}
+
+	public String codeChange(String code_id, int num){
+		return String.format("%s%05d", code_id, ++num);
+	}
 
 }

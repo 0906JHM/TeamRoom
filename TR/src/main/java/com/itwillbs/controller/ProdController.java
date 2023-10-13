@@ -48,7 +48,7 @@ public class ProdController {
 		//검색어 가져오기
 		// 페이징-------------------------------------------
 		// 한 화면에 보여줄 글개수 설정
-		int pageSize = 2;
+		int pageSize = 10;
 		// 현 페이지 번호 가져오기
 		String pageNum = request.getParameter("pageNum");
 		// 페이지 번호가 없을 경우 => "1"로 설정

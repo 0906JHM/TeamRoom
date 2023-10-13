@@ -1,5 +1,7 @@
 package com.itwillbs.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
+import com.itwillbs.service.OutProductService;
 import com.itwillbs.service.SellService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +34,8 @@ public class SellController {
 	
 	@Inject
 	private SellService sellService;
-	
+	@Inject 
+	private OutProductService outProductService;
 
 
 //----------------------------------------------------- sellMain---------------------------------------
@@ -105,8 +109,20 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	System.out.println("SellController sellAddPro()");
 	System.out.println(sellDTO);
 	
-	sellService.insertSell(sellDTO);	
-
+//	수주 코드 생성 
+	Date now = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+    String formattedDate = dateFormat.format(now);
+    String sellCode = "CL" + formattedDate;
+    System.out.println("수주 코드 만드는거 : " + sellCode);
+    sellDTO.setSellCode(sellCode);
+	
+//  sellState 수정 처음엔 무조건 미출고 
+    sellDTO.setSellState("미출고");
+    
+	outProductService.insertList(sellDTO);		
+	sellService.insertSell(sellDTO);			
+	
 	/*
 	 sellCode 수주코드, 
 	 sellDate 수주일자, 

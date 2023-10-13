@@ -54,7 +54,7 @@ public class InMaterialService {
 		
 		inMaterialDTO.setInNum(changeCode);
 		inMaterialDTO.setInCount(ordermanagementDTO.getBuyCount());
-		
+		inMaterialDTO.setRawPrice(ordermanagementDTO.getRawPrice());
 		int price = Integer.parseInt(ordermanagementDTO.getRawPrice()) * ordermanagementDTO.getBuyCount();
 		inMaterialDTO.setInPrice(price);
 		
@@ -83,5 +83,20 @@ public class InMaterialService {
 	
 	public String codeChange(String code_id, int num){
 		return String.format("%s%04d", code_id, ++num);
+	}
+
+	public InMaterialDTO inMaterialContent(String inNum) {
+		return inMaterialDAO.inMaterialContent(inNum);
+	}
+
+	public void updateWhseCount(InMaterialDTO inMaterialDTO) {
+		inMaterialDAO.updateWhseCount(inMaterialDTO);
+		
+	}
+
+
+	public void updateInState(InMaterialDTO inMaterialDTO) {
+		inMaterialDAO.updateInState(inMaterialDTO);
+		
 	}
 }
