@@ -19,14 +19,14 @@
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount
 		whseCount
-		FROM outProduct o JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sellTestTest s
 		ON o.sellCode =
 		s.sellCode
-		JOIN clients c
+		LEFT JOIN clients c
 		ON s.clientCode = c.clientCode
-		JOIN product p
+		LEFT JOIN product p
 		ON o.prodCode = p.prodCode
-		JOIN stockTestTest
+		LEFT JOIN stockTestTest
 		ON o.prodCode =
 		stockTestTest.prodCode
 		ORDER BY o.prodCode DESC
@@ -48,14 +48,14 @@
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount
 		whseCount
-		FROM outProduct o JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sellTestTest s
 		ON o.sellCode =
 		s.sellCode
-		JOIN clients c
+		LEFT JOIN clients c
 		ON s.clientCode = c.clientCode
-		JOIN product p
+		LEFT JOIN product p
 		ON o.prodCode = p.prodCode
-		JOIN stockTestTest
+		LEFT JOIN stockTestTest
 		ON o.prodCode =
 		stockTestTest.prodCode
 		WHERE
@@ -192,13 +192,13 @@
 		s.clientCode clientCode, c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount whseCount
-		FROM outProduct o JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sellTestTest s
 		ON o.sellCode = s.sellCode
-		JOIN clients c
+		LEFT JOIN clients c
 		ON s.clientCode = c.clientCode
-		JOIN product p
+		LEFT JOIN product p
 		ON o.prodCode = p.prodCode
-		JOIN stockTestTest
+		LEFT JOIN stockTestTest
 		ON o.prodCode = stockTestTest.prodCode
 		) AS subquery;
 	</select>
@@ -215,13 +215,13 @@
 		s.clientCode clientCode, c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount whseCount
-		FROM outProduct o JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sellTestTest s
 		ON o.sellCode = s.sellCode
-		JOIN clients c
+		LEFT JOIN clients c
 		ON s.clientCode = c.clientCode
-		JOIN product p
+		LEFT JOIN product p
 		ON o.prodCode = p.prodCode
-		JOIN stockTestTest
+		LEFT JOIN stockTestTest
 		ON o.prodCode = stockTestTest.prodCode
 		WHERE
 		<choose>
@@ -361,14 +361,14 @@
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount
 		whseCount
-		FROM outProduct o JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sellTestTest s
 		ON o.sellCode =
 		s.sellCode
-		JOIN clients c
+		LEFT JOIN clients c
 		ON s.clientCode = c.clientCode
-		JOIN product p
+		LEFT JOIN product p
 		ON o.prodCode = p.prodCode
-		JOIN stockTestTest
+		LEFT JOIN stockTestTest
 		ON o.prodCode =
 		stockTestTest.prodCode
 		WHERE outCode = #{outCode}
@@ -408,4 +408,22 @@
 		= #{outMemo}
 		WHERE outCode = #{outCode}
 	</update>
+	
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		SELECT MAX(CAST(SUBSTRING(outCode, 3) AS SIGNED)) AS max_num
+		FROM outProduct
+		WHERE outCode LIKE CONCAT(#{code},'%')
+	
+	</select>
+	
+	<select id="getProdPrice" resultType="int">
+		SELECT prodPrice 
+		FROM product 
+		WHERE prodCode = #{prodCode}
+	</select>
+	
+	<insert id="insertList">
+	INSERT INTO outProduct(outCode, prodCode, outPrice, sellCode)
+	VALUES (#{outCode}, #{prodCode}, #{outPrice}, #{sellCode})
+	</insert>
 </mapper>

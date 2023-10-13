@@ -67,6 +67,19 @@ public class OutProductDAO {
 		sqlSession.update(namespace + "updateOutProductContent",outProductDTO);		
 	}
 
+	public Integer getMaxNum(String code) {
+		return sqlSession.selectOne(namespace + "getMaxNum",code);		
+	}
+
+	public int getProdPrice(String prodCode) {
+		return sqlSession.selectOne(namespace + "getProdPrice",prodCode);		
+	}
+
+	public void insertList(OutProductDTO outProductDTO) {
+		sqlSession.insert(namespace + "insertList",outProductDTO);	
+	}
+
+
 	
 	
 	
