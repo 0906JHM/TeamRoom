@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class InMaterialDTO {
 	private String inNum;
-	private Date inDate;
+	private String inDate;
 	private int inCount;
 	private int inPrice;
 	private String rawCode;
