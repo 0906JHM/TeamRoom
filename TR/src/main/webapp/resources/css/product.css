@@ -64,6 +64,12 @@ table {
   	
 }
 
+/* 체크박스 크기조정 */
+#productTable th:first-child,
+#productTable td:first-child {
+    min-width: 20px !important;
+}
+
 table th, table td {
 	min-width: 100px;
     white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
@@ -114,3 +120,5 @@ h3{
 	width: 98%;
 	margin: 0 auto;
 }
+
+
