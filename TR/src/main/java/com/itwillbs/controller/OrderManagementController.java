@@ -97,7 +97,7 @@ public class OrderManagementController {
 	@PostMapping("/insertPro")
 	public String insertPro(OrderManagementDTO ordermanagementDTO) {
 		System.out.println("OrderManagementController insertPro()");
-		System.out.println(ordermanagementDTO);
+		System.out.println(ordermanagementDTO);	
 		// inMaterial 추가한 코드
 		inMaterialService.insertList(ordermanagementDTO);
 		ordermanagementService.insertOrderManagement(ordermanagementDTO);

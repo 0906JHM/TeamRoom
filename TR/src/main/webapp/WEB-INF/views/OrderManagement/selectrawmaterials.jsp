@@ -14,7 +14,10 @@
 <body>
 <h1>원자재</h1>
 
-<input id="rCInput" type="hidden"><input id="rNInput" type="hidden"><input id="rTInput" type="hidden">
+<input id="rCInput" type="hidden">
+<input id="rNInput" type="hidden">
+<input id="rTInput" type="hidden">
+<input id="rPInput" type="hidden">
 
 <!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -23,6 +26,7 @@ function setParentText(){
 	opener.document.getElementById("rCInput").value = document.getElementById("rCInput").value;
 	opener.document.getElementById("rNInput").value = document.getElementById("rNInput").value;
 	opener.document.getElementById("rTInput").value = document.getElementById("rTInput").value;
+	opener.document.getElementById("rPInput").value = document.getElementById("rPInput").value;
 	window.close();
 }
 console.log
@@ -59,7 +63,7 @@ console.log
 </tr>
 
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
-<tr onclick="document.getElementById('rCInput').value = '${rawmaterialsDTO.rawCode}'; document.getElementById('rNInput').value = '${rawmaterialsDTO.rawName}'; document.getElementById('rTInput').value = '${rawmaterialsDTO.rawType}'; setParentText();">
+<tr onclick="document.getElementById('rCInput').value = '${rawmaterialsDTO.rawCode}'; document.getElementById('rNInput').value = '${rawmaterialsDTO.rawName}'; document.getElementById('rTInput').value = '${rawmaterialsDTO.rawType}'; document.getElementById('rPInput').value = '${rawmaterialsDTO.rawPrice}'; setParentText();">
 <td>${rawmaterialsDTO.rawNum}</td>
 <td>${rawmaterialsDTO.rawCode}</td>
 <td>${rawmaterialsDTO.rawName}</td>
