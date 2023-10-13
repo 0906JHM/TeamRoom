@@ -47,30 +47,19 @@ function openPopup2() {
 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
 }
 
-//form 제출 이벤트 핸들러
+// form 제출전 rawPrice 값을 float로 변환
 $('form').on('submit', function(e) {
     e.preventDefault();
-
-    // rawPrice 값을 가져옵니다.
-    var rawPrice = $('#rPInput').val();
-
-    // rawPrice 값을 float으로 변환합니다.
-    var rawPriceFloat = parseFloat(rawPrice);
-
-    // NaN 체크: parseFloat가 실패하면 NaN을 반환합니다.
+    var rawPrice = $('#rPInput').val();			// rawPrice 값을 가져옴
+    var rawPriceFloat = parseFloat(rawPrice); 	// rawPrice 값을 float으로 변환
+    // NaN 체크 : parseFloat가 실패하면 NaN 반환
     if (isNaN(rawPriceFloat)) {
         alert('매입단가는 숫자여야 합니다.');
         return;
     }
-
-    // 변환된 rawPrice 값을 form에 다시 설정합니다.
-    $('#rPInput').val(rawPriceFloat);
-
-    // form을 제출합니다.
-    this.submit();
+    $('#rPInput').val(rawPriceFloat); // 변환된 rawPrice 값을 form에 다시 설정
+    this.submit();					  // form 제출
 });
-
-
 </script>
 </body>
 </html>
