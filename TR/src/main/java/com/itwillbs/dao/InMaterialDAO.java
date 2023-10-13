@@ -55,4 +55,14 @@ public class InMaterialDAO {
 	public void insertList(InMaterialDTO inMaterialDTO) {
 		sqlSession.selectOne(namespace+".insertList", inMaterialDTO);
 	}
+
+	public InMaterialDTO inMaterialContent(String inNum) {
+		return sqlSession.selectOne(namespace+".inMaterialContent",inNum);
+	}
+
+	public void updateWhseCount(InMaterialDTO inMaterialDTO) {
+		System.out.println(inMaterialDTO.getInCount());
+		sqlSession.update(namespace+".updateWhseCount", inMaterialDTO);
+		
+	}
 }

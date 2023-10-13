@@ -3,26 +3,22 @@ package com.itwillbs.domain;
 public class StockDTO {
 	
 	
-	private int whseCount;
+	private int stockCount;
 	private String rawCode;
 	private String prodCode;
 	private String whseCode;
+	private int stockNum;
 	
-	
-	
-	
+	public int getStockCount() {
+		return stockCount;
+	}
 	@Override
 	public String toString() {
-		return "StockDTO [ whseCount=" + whseCount + ", rawCode=" + rawCode + ", prodCode=" + prodCode
-				+ ", whseCode=" + whseCode + "]";
+		return "StockDTO [stockCount=" + stockCount + ", rawCode=" + rawCode + ", prodCode=" + prodCode + ", whseCode="
+				+ whseCode + ", stockNum=" + stockNum + "]";
 	}
-	
-	
-	public int getWhseCount() {
-		return whseCount;
-	}
-	public void setWhseCount(int whseCount) {
-		this.whseCount = whseCount;
+	public void setStockCount(int stockCount) {
+		this.stockCount = stockCount;
 	}
 	public String getRawCode() {
 		return rawCode;
@@ -42,6 +38,19 @@ public class StockDTO {
 	public void setWhseCode(String whseCode) {
 		this.whseCode = whseCode;
 	}
+
+
+	public int getStockNum() {
+		return stockNum;
+	}
+
+
+	public void setStockNum(int stockNum) {
+		this.stockNum = stockNum;
+	}
+
+
+	
 	
 
 }
