@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +40,10 @@ public class WorkOrderController {
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
 								@RequestParam HashMap<String, Object> search, 
 								@RequestParam(value = "input", required = false) Object input, 
-								Model model) throws Exception {
+								Model model,HttpServletRequest request) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: workOrderListGET() 호출");
-		logger.debug("@@@@@ CONTROLLER: search정보!!!!!!!!!!!!!!!" + search);
-		
+		System.out.println("@@@@@ CONTROLLER: search정보!!!!!!!!!!!!!!!" + search);
+		System.out.println(pdto+"pdto 뭔데~~");
 		
 		List<WorkOrderDTO> workList = new ArrayList<>();
 		
@@ -51,7 +53,8 @@ public class WorkOrderController {
 			
 			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
 			
-			
+			search.put("startPage", pdto.getStartPage());
+			search.put("cntPerPage", pdto.getCntPerPage());
 			//서비스 - 작업지시 검색
 			workList = wService.searchWorkOrder(search);
 			logger.debug("@@@@@ CONTROLLER: 검색결과list = " + workList);
@@ -88,7 +91,7 @@ public class WorkOrderController {
 				logger.debug("@@@@@ CONTROLLER: input 정보 전달");
 			}
 		} //else(모든)
-		
+		request.setAttribute("search_place", search.get("search_place"));
 		
 	} //workOrderListGET()
 	

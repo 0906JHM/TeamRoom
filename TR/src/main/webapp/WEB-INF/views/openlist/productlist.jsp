@@ -43,14 +43,17 @@
         			
        			var prodCode = $(this).find('#prodCode').text();
      			var prodName = $(this).find('#prodName').text();
+     			var prodPrice = $(this).find('#prodPrice').text();
      			
      			var number = isPop.match(/\d+/);
      			if(number !=null){
      			$('#prodName'+number, opener.document).val(prodName);
      			$('#prodCode'+number, opener.document).val(prodCode);
+     			$('#prodPrice'+number, opener.document).val(prodPrice);
      			} else {
      			$('#prodName', opener.document).val(prodName);
      			$('#prodCode', opener.document).val(prodCode);
+     			$('#prodPrice', opener.document).val(prodPrice);
      			}
      			
          		window.close();
@@ -126,6 +129,7 @@
 					<th>번호</th>
 					<th>코드</th>
 					<th>제품</th>
+					<th>가격</th>
 					
 				</tr>
 			</thead>
@@ -136,6 +140,7 @@
 						<td></td>
          			    <td id="prodCode">${dto.prodCode }</td>
 						<td id="prodName">${dto.prodName }</td>
+						<td id="prodPrice">${dto.prodPrice }</td>
 					</tr>
 			</c:forEach>
 		</table>

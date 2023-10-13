@@ -70,6 +70,9 @@ function deleteRow() {
 	
 	
 $(document).ready(function() {
+	    	$('#add').show();
+			$('#modify').show();
+			$('#delete').show();
 	
 	
 	//테이블 항목들 인덱스 부여
@@ -91,11 +94,13 @@ $(document).ready(function() {
     
 
     // 버튼 클릭시 addRow() 기능 불러오기
-    $('#addButton').click(function() {
+    $('#add').click(function() {
     	 
     	event.preventDefault();
-    	$('#delete').attr("disabled", true);
-		$('#modify').attr("disabled", true);
+    	$('#modify').hide();
+		$('#delete').hide();
+		$('#cancle').show();
+		$('#save').show();
 		
 		$.ajax({
 			  url: "${pageContext.request.contextPath}/requirement/reqCode",
@@ -129,8 +134,8 @@ $(document).ready(function() {
     function addRow() {
     	addcounter = num3 + counter;
     	
-        var row = '<tr>' +
-        	'<td><span class="input-row" style="color:red" onclick="deleteRow()">'+addcounter+'</span></td>' + 
+        var row = '<tr class="headings">' +
+        	'<td style="color: red;" onclick="deleteRow()">'+addcounter+'</td>' + 
         	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' + 
             '<td><input type="text" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-row"></td>' +
             '<input type="hidden" name="reqs[' + counter + '].prodCode" id= "prodCode'+counter+'">' +
@@ -180,8 +185,11 @@ $(document).ready(function() {
 	// 삭제 기능
 	$('#delete').click(function(event){
 		event.preventDefault();
-		$('#addButton').attr("disabled", true);
-		$('#modify').attr("disabled", true);
+		$('#delete').hide();
+		$('#modify').hide();
+		$('#add').hide();
+		$('#cancle').show();
+		$('#save').show();
 		
 		// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 		$('table tr').each(function(){
@@ -292,9 +300,19 @@ $(document).ready(function() {
 	
 	//수정버튼 클릭
 	$('#modify').click(function() {
+		Swal.fire({
+            text: '수정할 행을 선택해주세요',
+            confirmButtonColor: '#3085d6',
+            customClass: {
+                text: 'red-text' // 클래스 이름을 지정하여 텍스트 색상을 변경
+            }
+        });
 		event.preventDefault();
-		$('#addButton').attr("disabled", true);
-		$('#delete').attr("disabled", true);
+		$('#delete').hide();
+		$('#modify').hide();
+		$('#add').hide();
+		$('#cancle').show();
+		$('#save').show();
 
 		//행 하나 클릭했을 때	
 		$('table tr:not(:first-child)').click(function() {
@@ -445,16 +463,11 @@ $(document).ready(function() {
 						
 					</div>
 					<div>
-						<button class="button" id="addButton" >추가</button>
-						<button class="button" id="modify" >수정</button>
-						<button class="button" id="delete" >삭제</button>
-						<c:if test="${empty param.input }">
-							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'" class="button">취소</button>
-						</c:if>
-						<c:if test="${!empty param.input }">
-							<button onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail?input=${param.input }'" class="button">취소</button>
-						</c:if>
-						<input class="button" type="submit" value="저장" id="save">
+						<button style="display: none;"class="button" id="add" >추가</button>
+						<button style="display: none;"class="button" id="modify" >수정</button>
+						<button style="display: none;"class="button" id="delete" >삭제</button>
+						<button style="display: none;" id ="cancle" onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'" class="button">취소</button>
+						<input style="display: none;" class="button" type="submit" value="저장" id="save">
 					</div>						
 				</div>
 				
@@ -464,7 +477,7 @@ $(document).ready(function() {
 					var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 
 					/* if (team === "물류팀" || team === "관리자") { */
-						document.getElementById("addButton").disabled = false;
+						document.getElementById("add").disabled = false;
 						document.getElementById("modify").disabled = false;
 						document.getElementById("delete").disabled = false;
 						document.getElementById("cancle").disabled = false;
@@ -472,7 +485,7 @@ $(document).ready(function() {
 						document
 								.querySelector("[onclick^='location.href']").disabled = false;
 					/* } */ /* else {
-						document.getElementById("addButton").hidden = true;
+						document.getElementById("add").hidden = true;
 						document.getElementById("modify").hidden = true;
 						document.getElementById("delete").hidden = true;
 						document.getElementById("cancle").hidden = true;
