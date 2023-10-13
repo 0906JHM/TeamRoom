@@ -111,6 +111,9 @@
 						// 클릭한 버튼에 "highlighted" 클래스 추가
 						$("#allButton").addClass("highlighted");
 						
+						inStateButton2 = "전체";
+						inStateButton1 = inStateButton2;
+						
 			        	$("#inNum").val('');
 		                $("#rawName9999").val('');
 		                $("#clientCompany9999").val('');
@@ -431,7 +434,7 @@ var inNum = data[i].inNum;
 				pageNum : page,
 				inState : inStateButton1,
 			};
-			loadOutProductList(searchParams);
+			loadinMaterialList(searchParams);
 		}
 
 		// 숫자를 ###,### 원 형식으로 포맷하는 함수
