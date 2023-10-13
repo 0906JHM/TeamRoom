@@ -18,7 +18,7 @@ public class OrderManagementDTO {
 	private String clientCode;
 	private int whseCount;
 	private int buyCount;
-	private String rawPrice;
+	private int rawPrice;
 	// 단가총계 생략됨
 	private Date buyDate;
 	private String buyEmpId;

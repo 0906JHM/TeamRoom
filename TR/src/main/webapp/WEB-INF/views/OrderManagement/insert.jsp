@@ -16,13 +16,13 @@
 
 <!-- form -->
 <form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post">
-품번 : 		<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
-품명 : 		<input type="text" name="rawName" id="rNInput"><br>
-종류 : 		<input type="text" name="rawType" id="rTInput"><br>
+품번 : 		<input type="text" name="rawCode" id="rawCode"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
+품명 : 		<input type="text" name="rawName" id="rawName"><br>
+종류 : 		<input type="text" name="rawType" id="rawType"><br>
 거래처명 : 		<input type="text" name="clientCode" id="cInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
-창고수량 : 		<input type="number" name="whseCount"><br>
+창고수량 : 		<input type="number" name="whseCount" id="whseCount"><br>
 발주수량 : 		<input type="number" name="buyCount"><br>
-납입단가 : 		<input type="text" name="rawPrice"><br>
+납입단가 : 		<input type="number" name="rawPrice" id="rawPrice"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
 담당자 : 		<input type="text" name="buyEmpId"><br>
 입고상태 : 		<input type="radio" name="buyInstate" value="발주완료" checked>발주완료<br>
