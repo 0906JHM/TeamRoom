@@ -128,17 +128,6 @@
 
 
 
-<!-- <select id="getProdSearch" resultType="com.itwillbs.domain.ProdDTO" 
-	parameterType="com.itwillbs.domain.ProdDTO"> -->
-<!-- select prodCode, prodName, prodUnit,prodSize,prodPerfume,clientCod,whseCode,prodPrice,prodMemo -->
-<!-- from product -->
-<!-- where 1=1 -->
-<!-- <if test="a1 != null and a1 != ''"> -->
-<!-- </if> -->
-<!-- <if test="a2 != null and a2 != ''"> -->
-<!-- </if> -->
-<!-- <if test="a3 != null and a3 != ''"> -->
-<!-- </if> -->
-<!-- </select> -->
+
 	
 
