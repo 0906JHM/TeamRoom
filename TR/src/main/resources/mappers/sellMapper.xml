@@ -19,7 +19,7 @@
 	
 	<insert id="insertSell">
 		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellFile,sellMemo,sellState,clientCode,sellNum,sellPrice)
-		values(CONCAT('CL', DATE_FORMAT(NOW(), '%y%m%d%H%i%s')),#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
+		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
 				#{sellFile},#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}))
 	</insert>
 	
