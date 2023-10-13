@@ -15,7 +15,7 @@ public class RawmaterialsDTO {
 	private String rawName;
 	private String rawType;
 	private String rawUnit;
-	private int rawPrice;
+	private String rawPrice;
 	private String clientCode;
 	private String whseCode;
 	private String rawMemo;
@@ -23,6 +23,5 @@ public class RawmaterialsDTO {
 	// 내가 추가한 변수
 	private int rawNum;
 	private Timestamp date;
-	private int whseCount;
 	
 }
