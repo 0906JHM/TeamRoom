@@ -107,9 +107,13 @@
 			        // 클릭한 버튼에 "highlighted" 클래스 추가
 			        $("#allButton").addClass("highlighted");
 		        	
+			        sellStateButton2 = "전체";
+		        	sellStateButton1 = sellStateButton2;
+			        
 		        	$("#outCode").val('');
 	                $("#prodName9999").val('');
 	                $("#clientCompany9999").val('');
+	                
 	                firstLoadOutProductList();
 		        });
 		        

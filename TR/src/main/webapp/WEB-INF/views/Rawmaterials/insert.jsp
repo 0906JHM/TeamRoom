@@ -11,7 +11,7 @@
 
 <!-- body -->
 <body>
-<h1>품목추가</h1>
+<h1>원자재추가</h1>
 
 <!-- form -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/insertPro" method="post">
