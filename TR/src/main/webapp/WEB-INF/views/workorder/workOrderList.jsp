@@ -69,8 +69,12 @@
 		/////////////// 추가 /////////////////////////////////////
 		$('#add').click(function() {
 
-			$('#modify').attr("disabled", true);
-			$('#delete').attr("disabled", true);
+			/* $('#modify').attr("disabled", true); */
+			$('#modify').hide();
+			$('#add').hide();
+			$('#delete').hide();
+			$('#cancle').show();
+			$('#save').show();
 
 			let today = getToday();
 
@@ -82,35 +86,35 @@
 				tbl += " </td>";
 				// 작업지시코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='workCode' id='workCode' readonly value='";
+				tbl += "  <input type='text' class='input-row' name='workCode' id='workCode' readonly value='";
 				tbl += "WO" + codeCreation();
 				tbl += "' >";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='lineCode' id='lineCode' required readonly >";
+				tbl += "  <input type='text' class='input-row' name='lineCode' id='lineCode' required readonly >";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='sellCode' id='sellCode' required readonly >";
+				tbl += "  <input type='text' class='input-row' name='sellCode' id='sellCode' required readonly >";
 				tbl += " </td>";
-				// 품번
+				// 제품코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='prodCode' id='prodCode' required readonly >";
+				tbl += "  <input type='text' class='input-row' name='prodCode' id='prodCode' required readonly >";
 				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
-				tbl += "  <input type='text' name='workDate' id='workDate' readonly value='";
+				tbl += "  <input type='text' class='input-row' name='workDate' id='workDate' readonly value='";
 				tbl += today;
 				tbl += "' >";
 				tbl += " </td>";
 				// 지시수량
 				tbl += " <td>";
-				tbl += "  <input type='text' name='workAmount' id='workAmount' required >";
+				tbl += "  <input type='text' class='input-row' name='workAmount' id='workAmount' required >";
 				tbl += " </td>";
 				//공정
 				tbl += " <td>";
-				tbl += "  <input type='text' value='1차공정' readonly >";
+				tbl += "  <input type='text' class='input-row' value='대기' readonly >";
 				tbl += " </td>";
 				$('table').append(tbl);
 				
@@ -149,11 +153,11 @@
 			}); //save
 
 			//취소버튼 -> 리셋
-			$('#cancle').click(function() {
+			/* $('#cancle').click(function() {
 				$('#fr').each(function() {
 					this.reset();
 				});
-			}); //cancle click
+			});  *///cancle click
 
 		}); //add click
 
@@ -197,9 +201,16 @@
 		/////////////// 수정 //////////////////////////////
 		//수정버튼 클릭
 		$('#modify').click(function() {
-
-			$('#add').attr("disabled", true);
-			$('#delete').attr("disabled", true);
+			Swal.fire({
+	            text: '수정할 행을 선택해주세요',
+	            confirmButtonColor: '#3085d6',
+	        });
+			
+			$('#delete').hide();
+			$('#modify').hide();
+			$('#add').hide();
+			$('#cancle').show();
+			$('#save').show();
 
 			//행 하나 클릭했을 때	
 			//:not(:first-child)
@@ -236,7 +247,7 @@
 									data.prodCode,
 									data.workDate,
 									data.workAmount,
-									data.lineProcess
+									data.workProcess
 								];
 	
 							var names = [
@@ -246,7 +257,7 @@
 									"prodCode",
 									"workDate",
 									"workAmount",
-									"lineProcess"
+									"workProcess"
 								];
 	
 							//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
@@ -284,11 +295,11 @@
 					
 					
 				//취소버튼 -> 리셋
-				$('#cancle').click(function() {
+				/* $('#cancle').click(function() {
 					$('#fr').each(function() {
 						this.reset();
 					});
-				}); //cancle click
+				});  *///cancle click
 
 			}); //tr click
 
@@ -333,9 +344,11 @@
 		
 		/////////////// 삭제 //////////////////////////////
 		$('#delete').click(function() {
-
-			$('#add').attr("disabled", true);
-			$('#modify').attr("disabled", true);
+			$('#delete').hide();
+			$('#modify').hide();
+			$('#add').hide();
+			$('#cancle').show();
+			$('#save').show();
 	
 				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 				$('table tr').each(function() {
@@ -455,7 +468,7 @@
 			openWindow("line", "search_line");
 		}); //lineCode click
 
-		//품번 검색 팝업
+		//제품코드 검색 팝업
 		$('#search_prod').click(function() {
 			openWindow("prod", "search_prod");
 		}); //prodCode click
@@ -528,14 +541,14 @@
 					tmp += "  <td>" + data.lineCode + "</td>";
 					tmp += " <th> 수주코드 </th>";
 					tmp += "  <td>" + data.sellCode + "</td>";
-					tmp += " <th> 품번 </th>";
+					tmp += " <th> 제품코드 </th>";
 					tmp += "  <td>" + data.prodCode + "</td>";
 					tmp += "</tr>";
 					tmp += "<tr class='headings'>"; 
 					tmp += " <th> 지시일 </th>";
 					tmp += "  <td>" + data.workDate + "</td>";
 					tmp += " <th> 공정 </th>";
-					tmp += "  <td>" + data.lineProcess + "</td>";
+					tmp += "  <td>" + data.workProcess + "</td>";
 					tmp += " <th>지시수량 </th>";
 					tmp += "  <td>" + data.workAmount + "</td>";
 					tmp += "</tr>";
@@ -584,23 +597,25 @@
 				<input type="hidden" name="pageSize" id="pageSize" value="${pdto.cntPerPage }">
 
 				
-					<label>라인코드&nbsp;</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인코드를 선택하세요." style="cursor: pointer;">
-				<label>&nbsp;제품명&nbsp;</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="품목을 선택하세요" style="cursor: pointer;">
-				<br>
-				<label>지시일자&nbsp;</label> 
-						<input type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
-						<label style="font: 500 24px/24px 'Inter', sans-serif; left:28px;">&nbsp;~&nbsp;</label> 
-						<input type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer; left:55px;">
-
-				<input type="submit" value="조회" class="button" style="cursor: pointer; left:55px; position: relative;"> 
-				<br><br>
+					<label>라인코드</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인코드를 선택하세요." style="cursor: pointer;">
+				<label>제품코드</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품코드를 선택하세요" style="cursor: pointer;">
+				
+				<label>지시일자</label> 
+						<input style="width:250px;" type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
+						<label style="font: 500 24px/24px 'Inter', sans-serif;">~</label> 
+						<input style="width:250px;"type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
 				<label>지시상태&nbsp;</label> 
-					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="전체" checked> 전체 
-					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="1차공정"> 1차공정 
-					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="2차공정"> 2차공정 
-					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="3차공정"> 3차공정 
-					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="마감"> 마감 
-			</fieldset>
+				<div id="button">
+			
+				
+			<input type="submit"  class="button" name="search_place" id="allButton" value="전체">
+    		<input type="submit"  name="search_place" class="button" id="waitButton" value="대기">
+    		<input type="submit"  name="search_place" class="button" id="oneButton" value="1차">
+    		<input type="submit"  name="search_place" class="button" id="twoButton" value="2차">
+    		<input type="submit"  name="search_place" class="button" id="threeButton" value="3차">
+    		<input type="submit"  name="search_place" class="button" id="finishButton" value="마감" >
+		</div>
+		</fieldset>
 		</form>
 		</div>
 		<hr>
@@ -616,11 +631,11 @@
 					</div>
 					<div>
 				    <!-- 버튼 제어 -->
-						<button id="add" class="button">추가</button>
-						<button id="modify" class="button">수정</button>
-						<button id="delete" class="button">삭제</button>
-						<button onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'" id="cancle" class="button">취소</button>
-						<button type="submit" id="save" class="button">저장</button>
+						<button style="display: none;" id="add" class="button">추가</button>
+						<button style="display: none;" id="modify" class="button">수정</button>
+						<button style="display: none;" id="delete" class="button">삭제</button>
+						<button style="display: none;" onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'" id="cancle" class="button">취소</button>
+						<button style="display: none;" type="submit" id="save" class="button">저장</button>
 						</div>
 						</div>
 					
@@ -662,7 +677,7 @@
 						<th>작업지시코드</th>
 						<th>라인코드</th>
 						<th>수주코드</th>
-						<th>품번</th>
+						<th>제품코드</th>
 						<th>지시일</th>
 						<th>지시수량</th>
 						<th>공정</th>
@@ -671,21 +686,21 @@
 						<%-- </c:if> --%>
 					</tr>
 				</thead>
-				
+				<tr type='hidden' style='display: none;'></tr>
 				<c:forEach var="w" items="${workList }">
-					<tr class="contents">
-						<td class="a-center"></td>
-						<td id="workCode">${w.workCode }<a href="#" onclick="return false" style="text-decoration:none;">&#128269;</a></td>
+					<tr>
+						<td></td>
+						<td id="workCode">${w.workCode }</td>
 						<td id="lineCode">${w.lineCode }</td>
 						<td>${w.sellCode }</td>
 						<td id="prodCode">${w.prodCode }</td>
 						<td>${w.workDate }</td>
 						<td id="workAmount">${w.workAmount }</td>
-						<td id="linePlace">${w.lineProcess }</td>
+						<td id="linePlace">${w.workProcess }</td>
 						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
 							<td>
-								<c:if test="${w.lineProcess != '마감'}">
-									<a id="magamBtn" class="button" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&lineProcess=${w.lineProcess}">공정마감</a>
+								<c:if test="${w.workProcess != '마감'}">
+									<a id="magamBtn" class="button" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}">공정마감</a>
 								</c:if>
 							</td>
 						<%-- </c:if> --%>
@@ -701,6 +716,41 @@
 	<button id="excelDownload" class="Button">엑셀⬇️</button>
 		
 	<script type="text/javascript">
+    
+
+    // 페이지 로드 시 실행되는 함수
+    $(document).ready(function () {
+    	$('table tr').each(function(index){
+    		var num = "<c:out value='${paging.nowPage}'/>";
+    		var num2 = "<c:out value='${paging.cntPerPage}'/>";
+    		$(this).find('td:first').text(((num-1)*num2) + index-1);
+    		num3 = ((num-1)*num2) + index;
+    	});
+    	$('#add').show();
+		$('#modify').show();
+		$('#delete').show();
+		
+    	var button = document.getElementById("allButton");
+    	
+
+        <c:if test="${requestScope.search_place == '대기'}">
+        var button = document.getElementById("waitButton");
+    </c:if>
+    <c:if test="${requestScope.search_place == '1차'}">
+    var button = document.getElementById("oneButton");
+</c:if>
+<c:if test="${requestScope.search_place == '2차'}">
+var button = document.getElementById("twoButton");
+</c:if>
+<c:if test="${requestScope.search_place == '3차'}">
+var button = document.getElementById("threeButton");
+</c:if>
+<c:if test="${requestScope.search_place == '마감'}">
+var button = document.getElementById("finishButton");
+</c:if>
+button.style.backgroundColor = "#ff5733";
+    });
+
 		
 		//엑셀
 		const excelDownload = document.querySelector('#excelDownload');
@@ -775,25 +825,6 @@
 
 </div>
 
-		
-	<!-- 상세보기 모달창 -->
-	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">작업지시 상세</h4>
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 상세보기 모달창 -->
 	
 	
 </div>

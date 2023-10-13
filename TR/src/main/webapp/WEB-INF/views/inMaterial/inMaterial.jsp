@@ -33,6 +33,7 @@
 				placeholder="거래처를 선택하세요."
 				onclick="searchItem('client','clientCode9999')"> <input
 				type="button" value="검색" id="searchButton">
+				<input type="button" value="초기화" id="resetButton">
 		</div>
 		<hr>
 		<div id="buttons">
@@ -84,18 +85,44 @@
 					// 검색 버튼 클릭 시 게시판 데이터를 검색하여 업데이트
 					$("#searchButton").click(function() {
 						// 검색 조건을 가져오기 (이 부분을 필요에 따라 구현)
+						
+						$(".buttons").removeClass("highlighted");
+
+						// 클릭한 버튼에 "highlighted" 클래스 추가
+						$("#allButton").addClass("highlighted");
+						
+						inStateButton2 = "검색";
+						inStateButton1 = inStateButton2;
+						
 						var searchParams = {
 							inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
 							clientCompany : $("#clientCompany9999").val(),
+							inState : inStateButton2
 						};
 						console.log(searchParams);
 						loadinMaterialList(searchParams);
 					});
+					
+					// 취소 리셋 버튼을 누르면 검색창들의 값을 다 지운다
+			        $("#resetButton").click(function () {
+			        	$(".buttons").removeClass("highlighted");
+
+						// 클릭한 버튼에 "highlighted" 클래스 추가
+						$("#allButton").addClass("highlighted");
+						
+						inStateButton2 = "전체";
+						inStateButton1 = inStateButton2;
+						
+			        	$("#inNum").val('');
+		                $("#rawName9999").val('');
+		                $("#clientCompany9999").val('');
+		                firstloadinMaterialList();
+			        });
 
 					// Enter 키 이벤트를 감지할 input 요소에 이벤트 리스너 등록
-					$("#inNum, #rawName9999, #clientCompany9999").on(
-							'keydown', function(e) {
+					$("#inNum, #rawName9999, #clientCompany9999").on('keydown',
+							function(e) {
 								if (e.key === 'Enter') {
 									e.preventDefault(); // 엔터 키 기본 동작을 막음 (폼 제출 방지)
 									$("#searchButton").click(); // 검색 버튼 클릭
@@ -114,14 +141,14 @@
 					// 전체 버튼 클릭 시
 					$("#allButton").click(function() {
 						// 전체 버튼에 대한 동작을 추가하고,
-						inStateButton2 = "전체";
+						inStateButton2 = "총검색";
 						inStateButton1 = inStateButton2;
 
-						$("#inNum").val('');
-						$("#rawName9999").val('');
-						$("#clientCompany9999").val('');
 						// 검색 조건을 설정하고 전체 목록을 가져오도록 수정
 						var searchParams = {
+							inNum : $("#inNum").val(),
+							rawName : $("#rawName9999").val(),
+							clientCompany : $("#clientCompany9999").val(),
 							inState : inStateButton2
 						// 전체 조건 추가
 						};
@@ -159,6 +186,22 @@
 						};
 						loadinMaterialList(searchParams);
 					});
+					
+// 					//입고 버튼 클릭 시
+// 					$("#inButton").click(function() {
+// 					    // 버튼 클릭 시 처리할 동작을 여기에 추가
+// 					    inStateButton2 = "입고";
+// 					    inStateButton1 = inStateButton2;
+// 					    // 검색 조건을 설정하고 "입고" 상태의 목록을 가져오도록 수정
+// 					    var searchParams = {
+// 					        inNum: $("#inNum").val(),
+// 					        rawName: $("#rawName9999").val(),
+// 					        clientCompany: $("#clientCompany9999").val(),
+// 					        inState: inStateButton2 // "입고" 상태 조건 추가
+// 					    };
+// 					    loadinMaterialList(searchParams);
+// 					});
+
 				});//document
 
 		//----------------------------------------------------------------------------
@@ -172,8 +215,8 @@
 				inState : "전체"
 			};
 
-			
-					$.ajax({
+			$
+					.ajax({
 						type : "GET", // GET 또는 POST 등 HTTP 요청 메서드 선택
 						url : "${pageContext.request.contextPath}/inMaterial/listSearch", // 데이터를 가져올 URL 설정
 						data : searchParams, // 검색 조건 데이터 전달
@@ -193,7 +236,8 @@
 		// 	    게시판 데이터를 서버에서 비동기적으로 가져오는 함수
 		function loadinMaterialList(searchParams) {
 
-			$.ajax({
+			$
+					.ajax({
 						type : "GET", // GET 또는 POST 등 HTTP 요청 메서드 선택
 						url : "${pageContext.request.contextPath}/inMaterial/listSearch", // 데이터를 가져올 URL 설정
 						data : searchParams, // 검색 조건 데이터 전달
@@ -262,27 +306,72 @@
 							+ (data[i].inState ? data[i].inState : '-')
 							+ "</td>");
 
-					// 상세정보 버튼 추가 
-					var contextPath = "${pageContext.request.contextPath}";
-					var inNum = data[i].inNum;
 
-					(function(outCode) {
-						var button = $("<input type='button' value='상세정보'>");
-						button
-								.click(function() {
-									// 버튼 클릭 시 처리할 동작을 여기에 추가
-									window
-											.open(
-													contextPath
-															+ "/inMaterial/inMaterialContent?inNum="
-															+ inNum, "입고 상세정보",
-													"width=500,height=800,toolbar=no,location=no,resizable=yes");
-								});
+					
+// 입고 버튼 추가 
+var contextPath = "${pageContext.request.contextPath}";
+var inNum = data[i].inNum;
 
-						// 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
-						var buttonCell = $("<td>").append(button);
-						row.append(buttonCell);
-					})(data[i].inNum);
+(function(dataItem) {
+    var button = $("<input type='button' value='입고'>");
+    button.click(function() {
+        // 버튼 클릭 시 처리할 동작을 여기에 추가
+        console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
+
+        // confirm 창을 띄워 입고 처리 여부를 확인
+        var confirmation = confirm("입고 처리하시겠습니까?");
+
+        // 확인 버튼이 눌렸을 경우에만 작업 수행
+        if (confirmation) {
+            if (dataItem.hasOwnProperty('inState')) {
+                dataItem.inState = "입고완료";
+                // 변경된 inState 값을 출력하여 확인
+                console.log("변경된 inState 값: " + dataItem.inState);
+
+                // 서버에 변경된 값을 저장하기 위한 Ajax 요청
+                $.ajax({
+                    type: 'POST',
+                    url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
+                    data: JSON.stringify(dataItem),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log('데이터가 성공적으로 업데이트되었습니다.', response);
+                        
+                        
+                     // 데이터 업데이트 후 페이지 새로고침
+                        location.reload();
+                     
+                     // 버튼을 비활성화하고 색상을 회색으로 변경
+//                         button.attr('disabled', 'disabled');
+//                         button.css('background-color', 'grey');
+                        
+                    },
+                    error: function(error) {
+                        console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
+                    }
+                });
+            } else {
+                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
+            }
+        }
+    });
+    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
+    if (dataItem.inState === '입고완료') {
+        button.prop('disabled', true);
+        button.css('background-color', 'grey');
+    }
+
+
+ // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
+ var buttonCell = $("<td>").append(button);
+ row.append(buttonCell);
+})(data[i]);
+					
+					
+					
+					
+					
+					//--------------------------------------------------------------------------------------------
 					//	tbody에 행을 추가합니다.
 					tbody.append(row);
 				} else if (i == data.length - 1) {// 마지막에 페이징 처리데이터가 들어가있다
@@ -345,7 +434,7 @@
 				pageNum : page,
 				inState : inStateButton1,
 			};
-			loadOutProductList(searchParams);
+			loadinMaterialList(searchParams);
 		}
 
 		// 숫자를 ###,### 원 형식으로 포맷하는 함수
@@ -363,8 +452,6 @@
 					+ type + "&input=" + inputId;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
-		
-		
 	</script>
 
 </body>

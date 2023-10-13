@@ -17,7 +17,6 @@ h2 {
 }
 .input-row{
 	 height:45px;
-	font: 500 24px/24px "Inter", sans-serif;
 	 width:99%;
 	 border:0;
 }
@@ -183,3 +182,4 @@ table.jambo_table tbody tr:hover td {
 
 table.jambo_table tbody tr.selected {
   background: rgba(38, 185, 154, 0.16); }
+

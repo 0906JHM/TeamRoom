@@ -50,11 +50,21 @@ function initializeCalendar(calendarEvents, currentDate) {
         locale: 'ko',
         events: calendarEvents,
         eventClick: function(info) {
-            if (info.event.extendedProps.otherDate !== null) {
-                alert(info.event.title + ' 기간: ' + info.event.start.toISOString().substring(0, 10) + ' ~ ' + info.event.extendedProps.otherDate + '\n' + info.event.title + ' 내용: ' + info.event.extendedProps.description);
-            } else {
-                alert(info.event.title + ' 기간: ' + info.event.start.toISOString().substring(0, 10) + ' ~ ' + info.event.start.toISOString().substring(0, 10) + '\n' + info.event.title + ' 내용: ' + info.event.extendedProps.description);
-            }
+            var title = info.event.title;
+		    var start = info.event.start.toISOString().substring(0, 10);
+		    var otherDate = info.event.extendedProps.otherDate;
+		    var description = info.event.extendedProps.description;
+		    
+		    if (otherDate !== null) {
+		        var message ='<div style="text-align:left; padding-left:20%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
+		    } else {
+		        var message ='<div style="text-align:left; padding-left:20%;">' + title + '<br> 기간: ' + start + ' ~ ' + start + '<br>' + title + ' 내용: ' + description + '</div>';
+		    }
+		
+		    Swal.fire({
+		 	    html: message,
+		        confirmButtonText: '확인'
+		    });
         }
     });
     calendar.render();

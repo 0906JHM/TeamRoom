@@ -1,6 +1,5 @@
 package com.itwillbs.service;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,11 +25,11 @@ public class OrderManagementService {
 		// = 원자재코드 + 년 + 월 + 일
 		// = PER1 + 2023 + 10 + 11
 		// = PER120231011
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String buyDateStr = sdf.format(ordermanagementDTO.getBuyDate());
-	    String buyNum = ordermanagementDTO.getRawCode() + buyDateStr;
-	    ordermanagementDTO.setBuyNum(buyNum);
-	    
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+	    // String buyDateStr = sdf.format(ordermanagementDTO.getBuyDate());
+	    // String buyNum = ordermanagementDTO.getRawCode() + buyDateStr;
+	    // ordermanagementDTO.setBuyNum(buyNum);
+		
 		ordermanagementDAO.insertOrderManagement(ordermanagementDTO);
 	}
 	
