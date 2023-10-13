@@ -12,7 +12,19 @@
 
 <!-- body -->
 <body>
-<h1>거래처</h1>
+<h1>거래처</h1> 
+
+<!-- button -->
+<input id="cInput" type="hidden">
+
+<!-- javascript -->
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript">
+function setParentText(){
+	opener.document.getElementById("cInput").value = document.getElementById("cInput").value
+	window.close();
+}
+</script>
 
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/selectclient" method="get">
@@ -47,7 +59,7 @@
 </tr>
 
 <c:forEach var="clientDTO" items="${clientList}">
-<tr>
+<tr onclick="document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();">
 <td>${clientDTO.clientType}</td>
 <td>${clientDTO.clientCode}</td>
 <td>${clientDTO.clientCompany}</td>

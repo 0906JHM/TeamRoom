@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.WarehouseDTO;
 
 @Repository  
 public class RawmaterialsDAO implements RawmaterialsDAO2 {
@@ -70,5 +71,39 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 		System.out.println("RawmaterialsDAO getClientCount()");
 		return sqlSession.selectOne(namespace+".getClientCount",pageDTO);
     }
+
+	// selectwarehouse 페이징처리, 검색기능
+	public List<WarehouseDTO> getWarehouseList(PageDTO pageDTO) {
+		System.out.println("RawmaterialsDAO getWarehouseList()");		
+		return sqlSession.selectList(namespace+".getWarehouseList", pageDTO);
+	}
+
+	// selectwarehouse 페이징처리, 검색기능
+	public int getWarehouseCount(PageDTO pageDTO) {
+		System.out.println("RawmaterialsDAO getWarehouseCount()");
+		return sqlSession.selectOne(namespace+".getWarehouseCount",pageDTO);
+	}
+
+	// 여기서부터 비고코드 수정하기
+	public RawmaterialsDTO getSellMemo(String rawCode) {
+		System.out.println("SellDAO getSellMemo()");
+		return sqlSession.selectOne(namespace+".getSellMemo", rawCode);
+	}
+
+	public void updateSellMemo(RawmaterialsDTO rawmaterialsDTO) {
+		System.out.println("SellDAO updateSellMemo()");
+		sqlSession.update(namespace + ".updateSellMemo", rawmaterialsDTO);
+	}
+
+	public void insertSellMemo(RawmaterialsDTO rawmaterialsDTO) {
+		System.out.println("SellDAO insertSellMemo()");
+		System.out.println(rawmaterialsDTO);
+		sqlSession.insert(namespace + ".insertSellMemo", rawmaterialsDTO);
+	}
+			
+	public void deleteSell(RawmaterialsDTO rawmaterialsDTO) {
+		System.out.println("SellDAO deleteSell()");
+		sqlSession.update(namespace+".deleteSell",rawmaterialsDTO);
+	}
 	
 }

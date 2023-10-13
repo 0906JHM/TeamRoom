@@ -47,4 +47,12 @@ public class InMaterialDAO {
 			return sqlSession.selectOne(namespace+".getInMaterialListSearchCount", inMaterialDTO);
 		}
 	}
+
+	public Integer getMaxNum(String code) {
+		return sqlSession.selectOne(namespace+".getMaxNum", code);
+	}
+
+	public void insertList(InMaterialDTO inMaterialDTO) {
+		sqlSession.selectOne(namespace+".insertList", inMaterialDTO);
+	}
 }

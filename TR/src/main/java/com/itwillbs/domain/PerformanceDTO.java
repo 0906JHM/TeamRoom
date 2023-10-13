@@ -12,6 +12,7 @@ public class PerformanceDTO {
 	private String perfCode;
 	private String workCode;
 	private String prodCode;
+	private String lineCode;
 	private String perfDate;
 	private int perfAmount;
 	private String perfEmpId;

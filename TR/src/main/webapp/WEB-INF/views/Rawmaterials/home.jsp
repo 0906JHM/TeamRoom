@@ -150,7 +150,18 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawPrice}</td>
 <td>${rawmaterialsDTO.clientCode}</td>
 <td>${rawmaterialsDTO.whseCode}</td>
-<td>${rawmaterialsDTO.rawMemo}</td>
+
+<!-- 비고기능 -->
+<c:choose>
+<c:when test="${not empty rawmaterialsDTO.rawMemo}">
+<td class="tg-llyw2"><a href="#" onclick="openSellMemo('${rawmaterialsDTO.rawCode}'); return sellMemoClose();" style="color:red;">[보기]</a></td>
+</c:when>
+<c:otherwise>							
+<td class="tg-llyw2"><a href="#" onclick="addSellMemo('${rawmaterialsDTO.rawCode}'); return sellMemoClose();" style="color:#384855;">[입력]</a></td>
+</c:otherwise>
+</c:choose>
+
+<!-- 체크박스로 삭제 -->
 <td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
 </tr>
 </c:forEach>
@@ -165,5 +176,37 @@ $(document).ready(function() {
 <a href="${pageContext.request.contextPath}/Rawmaterials/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
 
+<!-- 비고기능 -->
+<!-- 비고보기 -->
+<script>
+function openSellMemo(rawCode) {
+	// 팝업창 속성
+	var popupWidth = 450;
+	var popupHeight = 500;
+	var left = (window.innerWidth - popupWidth) / 2;
+	var top = (window.innerHeight - popupHeight) / 2;
+	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+	// 새창을 열기 위한 URL 설정
+	var url = '${pageContext.request.contextPath}/Rawmaterials/sellMemo?rawCode=' + rawCode;
+	// 팝업창 열고 속성 설정
+	var newWindow = window.open(url, '_blank', popupFeatures);       
+}
+</script>
+
+<!-- 비고추가 -->
+<script>
+function addSellMemo(rawCode) {
+	// 팝업창 속성
+	var popupWidth = 450;
+	var popupHeight = 500;
+	var left = (window.innerWidth - popupWidth) / 2;
+	var top = (window.innerHeight - popupHeight) / 2;
+	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+	// 새창을 열기 위한 URL 설정
+	var url = '${pageContext.request.contextPath}/Rawmaterials/sellMemotype?rawCode=' + rawCode+'?memotype=add';
+	// 팝업창 열고 속성 설정
+	var newWindow = window.open(url, '_blank', popupFeatures); 
+}    
+</script>
 </body>
 </html>

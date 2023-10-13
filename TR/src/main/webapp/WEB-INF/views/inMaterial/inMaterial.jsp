@@ -363,6 +363,8 @@
 					+ type + "&input=" + inputId;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
+		
+		
 	</script>
 
 </body>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.WarehouseDTO;
 import com.itwillbs.service.RawmaterialsService;
 
 @Controller   
@@ -219,9 +220,9 @@ public class RawmaterialsController {
         return "Rawmaterials/selectclient";
     }
  	
- 	// selectclient2 페이징처리, 검색기능
-  	@GetMapping("/selectclient2")
-     public String selectclient2(HttpServletRequest request,Model model) {
+ 	// selectwarehouse 페이징처리, 검색기능
+  	@GetMapping("/selectwarehouse")
+     public String selectwarehouse(HttpServletRequest request,Model model) {
          
   		String search1 = request.getParameter("search1");
  		System.out.println("search1 : " + search1);
@@ -248,10 +249,10 @@ public class RawmaterialsController {
  	    pageDTO.setSearch3(search3);
  	    pageDTO.setSearch4(search4);
          
-        // 거래처 내용 뿌려주기
-        List<ClientDTO> clientList= rawmaterialsService.getClientList(pageDTO);
+        // 창고 내용 뿌려주기
+        List<WarehouseDTO> warehouseList= rawmaterialsService.getWarehouseList(pageDTO);
          
-        int count = rawmaterialsService.getClientCount(pageDTO);
+        int count = rawmaterialsService.getWarehouseCount(pageDTO);
         int pageBlock = 10;
         int startPage=(currentPage-1)/pageBlock*pageBlock+1;
         int endPage = startPage + pageBlock -1;
@@ -266,11 +267,83 @@ public class RawmaterialsController {
         pageDTO.setPageCount(pageCount);
         model.addAttribute("pageDTO", pageDTO);
          
-        // 거래처 내용 뿌려주기
-        model.addAttribute("clientList", clientList);
+        // 창고 내용 뿌려주기
+        model.addAttribute("warehouseList", warehouseList);
         model.addAttribute("pageDTO", pageDTO);
          
-        return "Rawmaterials/selectclient2";
+        return "Rawmaterials/selectwarehouse";
     }
+  	
+  	
+  	// 여기서부터 비고코드 수정하기
+  	// sellMemo
+  	@GetMapping("/sellMemo")
+  	public String sellMemo(HttpServletRequest request, Model model) {
+  		System.out.println("RawmaterialsController sellMemo()");
+  		
+  		String rawCode = request.getParameter("rawCode");
+  		
+  		// sellMemo 가져오기
+  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
+  		System.out.println("rawmaterialsDTO" + rawmaterialsDTO);
+  		model.addAttribute("rawmaterialsDTO",rawmaterialsDTO);
+  		
+  		return "Rawmaterials/sellMemo";
+  		
+  	}
+  	
+  	// updateSellMemo
+  	@GetMapping("/sellMemoUpdate")
+  	public String updateSellMemo(HttpServletRequest request,Model model) {
+  		System.out.println("RawmaterialsController sellMemoUpdate()");
+	
+  		String rawCode = request.getParameter("rawCode");
+	
+  		// 글 가져오기
+  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
+  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
+  		
+  		return "Rawmaterials/updateSellMemo";
+  	}
+	
+  	// sellMemoUpdatePro
+  	@PostMapping("/sellMemoUpdatePro")
+  	public void sellMemoUpdatePro(RawmaterialsDTO rawmaterialsDTO) {
+  		System.out.println("RawmaterialsController sellMemoUpdatePro()");
+  		// sellMemo 수정
+  		rawmaterialsService.updateSellMemo(rawmaterialsDTO);
+  	}
+
+  	// sellMemotype
+  	@GetMapping("/sellMemotype")
+  	public String sellMemoAdd(HttpServletRequest request, Model model) {
+  		System.out.println("RawmaterialsController sellMemotype()");
+  		
+  		String rawCode = request.getParameter("rawCode");
+  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
+  		String memotype = request.getParameter("memotype");
+  		System.out.println(rawmaterialsDTO);
+	
+  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
+  		model.addAttribute("memotype", memotype);
+
+  		return "Rawmaterials/sellMemotype";
+  	}
+
+  	// sellMemotypePro
+  	@PostMapping("/sellMemotypePro")
+  	public void sellMemoAddPro(RawmaterialsDTO rawmaterialsDTO) {
+  		System.out.println("RawmaterialsController sellMemotypePro()");
+  		System.out.println(rawmaterialsDTO);
+  		rawmaterialsService.insertSellMemo(rawmaterialsDTO);	
+  	}
+
+  	// sellDelete
+  	@GetMapping("/sellDelete")
+  	public void sellDeletePro(RawmaterialsDTO rawmaterialsDTO) {
+  		System.out.println("RawmaterialsController sellDelete()");
+  		System.out.println(rawmaterialsDTO);
+  		rawmaterialsService.sellDelete(rawmaterialsDTO);
+  	}
  	
 }

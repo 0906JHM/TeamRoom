@@ -31,7 +31,7 @@ public class SellDAO {
 
 		return sqlSession.selectOne(namespace + ".getSellCount");
 	}// getSellCount
-
+ 
 //----------------------------------------------------- insertSell --------------------------------------------------------
 	public void insertSell(SellDTO sellDTO) {
 		System.out.println("SellDAO insertSell()");

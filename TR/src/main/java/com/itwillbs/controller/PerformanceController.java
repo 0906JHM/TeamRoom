@@ -3,17 +3,22 @@ package com.itwillbs.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.EmployeesService;
 import com.itwillbs.service.PerformanceService;
 import com.itwillbs.service.ProdService;
@@ -41,16 +46,15 @@ public class PerformanceController {
 	@GetMapping("/perf")
 	public String perf(Model model) {
 		
-		System.out.println("PerformanceController perf메인페이지요청");
-		log.debug("메인페이지  실적코드 요청");
-		 List<PerformanceDTO> perflist = perfService.perflist();
-			
-	        model.addAttribute("perflist",perflist);
-	       log.debug("반환값"+perflist);
 		
-		
-		
-		
+		  System.out.println("PerformanceController perf메인페이지요청");
+		  log.debug("메인페이지  실적코드 요청"); 
+		  List<PerformanceDTO> perflist =perfService.perflist();
+		  
+		  
+		  log.debug("반환값"+perflist);
+		  model.addAttribute("perflist",perflist); 
+
 		return "perf/perf";
 		
 	}
@@ -103,6 +107,54 @@ public class PerformanceController {
 		
 		
 	}
+	
+	@GetMapping("/worklist")
+	public String worklist(Model model) {
+		
+
+		log.debug("팝업창 prodlist 요청 ");
+		
+        List<WorkOrderDTO> worklist = perfService.getworkList();
+		model.addAttribute("worklist",worklist);
+		System.out.println(worklist);
+		
+		return "perf/worklist";
+		
+		
+	}
+	
+@PostMapping("/perfinsertPro")
+public String perfinsert(PerformanceDTO perfDTO, HttpServletRequest req) {
+	
+	log.debug("insertPro요청");
+	log.debug("받은 값:"+perfDTO);
+
+	String perfDefect = req.getParameter("perfDefect");
+	System.out.println("+++++++++++++++++++++++:"+perfDefect);
+	
+
+	perfService.perfinsert(perfDTO);
+	
+	
+	
+	
+	return "redirect:/perf/perfinsert";
+	
+	
+}
+
+@PostMapping("/detail")
+@ResponseBody
+public PerformanceDTO perfdetail (@RequestBody PerformanceDTO perfDTO) {
+	
+
+	log.debug("호출된 실적코드: " + perfDTO.getPerfCode());
+	PerformanceDTO perfDTO2 = perfService.getdetail(perfDTO.getPerfCode());
+
+	return perfDTO2;
+	
+}
+
 	
 
 	

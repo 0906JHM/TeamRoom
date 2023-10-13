@@ -29,9 +29,17 @@
 	    <form>
 
 	        <label>수주 코드</label>  <input type="text" >
-	        <label>거래처 코드</label>  <input type="text" >
-	        <label>제품 코드</label>  <input type="text" >
-	        <label>제품명</label>  <input type="text" >
+	        
+	        <label>거래처</label> 
+	        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
+        	<input type="text" id="clientCompany9999" placeholder="거래처명" onclick=searchItem('client','clientCode9999'); readonly >
+		
+	        <label>제품</label>  
+	        <input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
+		
+		
+	        <label>제품명</label> 
+	      	<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')">
 	      
 	        <br> 
 	        
@@ -42,16 +50,21 @@
 				<input type="text" name="daterange" value="" >
 	        
 	        <button id="btnSell" type="submit" onclick="location.href='${pageContext.request.contextPath}/sell/sellSearch'">조회</button>
-	        <button id="btnSell" onclick="openSellAdd()">추가</button>
-	  		<button id="btnSell">수정</button>
-	   		<button id="btnSell">삭제</button>
-	    	<button type="reset" id="btnSell">취소</button>
-	    	<button id="btnSell">Excel</button>
-	    	
-	    </form>
 	
+	    	
+	    </form><br>
+	<div class="horizontal-line"></div>
 	<!---------------------------------------------------- 본문 테이블 ----------------------------------------------------->    
-	    <p>선택 총 0건</p>
+	   <div>
+	    <button id="btnSell" onclick="openSellAdd()">추가</button>
+	  	<button id="btnSell">수정</button>
+	   	<button id="btnSell">삭제</button>
+	    <button type="reset" id="btnSell">취소</button>
+	    <button id="btnSell">Excel</button>
+	   </div>
+	    
+	    <p>선택 총 0건</p>        
+	   
 	    <p> <input type="checkbox" id="selectAllCheckbox">전체 선택</p>
 	    
 	    <table class="tg" id="sellTable">
@@ -83,10 +96,12 @@
 	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 거래처코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodCode}</td><!-- 제품코드 -->
 	                <td class="tg-llyw2">${sellDTO.prodName}</td><!-- 제품명 -->
-	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 수주단가 -->
+	                <td class="tg-llyw2">
+    					<fmt:formatNumber value="${sellDTO.sellPrice}" pattern="###,### 원" />
+					</td><!-- 수주단가 -->
 	                <td class="tg-llyw2">${sellDTO.sellCount}</td><!-- 수주수량-->
-	                <td class="tg-llyw2"><fmt:formatDate value="${sellDTO.sellDate}" pattern="yyyy.MM.dd"/></td><!-- 수주일자 -->
-	                <td class="tg-llyw2"><fmt:formatDate value="${sellDTO.sellDuedate}" pattern="yyyy.MM.dd"/></td><!-- 납기일자  --> 
+	                <td class="tg-llyw2">${sellDTO.sellDate}</td><!-- 수주일자 -->
+	                <td class="tg-llyw2">${sellDTO.sellDuedate}</td><!-- 납기일자  --> 
 	                <td class="tg-llyw2">${sellDTO.sellEmpId}</td><!-- 수주담당직원 -->
 						
 						<c:choose>
@@ -118,12 +133,46 @@
 	             </c:forEach>
 	        </tbody>
 	    </table>
-	</div>
+	
 <!-- </div> -->
+<div class="clear"></div>
+<!------------------------------------------------- 페이징 ------------------------------------------>
+<div id="page_control" >
+
+<c:forEach var="i" begin="${sellPageDTO.startPage}" 
+                   end="${sellPageDTO.endPage}" step="1">
+<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}"
+	style="text-decoration: none; color: #5EC397;">${i}</a> 
+</c:forEach>
+
+<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
+	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
+	style="text-decoration: none; color: #5EC397;">◀</a>
+</c:if>
+
+
+<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
+	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}" 
+	style="text-decoration: none; color: #5EC397;">▶</a>
+</c:if>
+
+</div>
+</div>
 </body>
 
 <!---------------------------------------------- javascript ---------------------------------------------->
 <script type="text/javascript">
+
+//팝업 옵션
+const popupOpt = "top=60,left=140,width=720,height=600";
+
+//검색 팝업
+	function searchItem(type, inputId) {
+	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt);
+} //openWindow()
+
+
 $(document).ready(function() {
     $('#add').click(function(event) {
         event.preventDefault();
@@ -207,6 +256,11 @@ function saveData() {
 					itemCheckboxes[i].checked = !areAllSelected;
 				}
 			});//selectAllCheckbox
+			
+			// 숫자를 ###,### 원 형식으로 포맷하는 함수
+		    function formatCurrency(number) {
+		        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
+		    }
 </script>
 
 <!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
@@ -258,7 +312,7 @@ function openSellAdd() {
         // 폼을 제출한 후 창을 닫기 위해 아래 코드를 사용합니다.
         window.close();
     }
-}
+} 
 </script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -302,7 +356,14 @@ function openSellAdd() {
         var newWindow = window.open(url, '_blank', popupFeatures); 
     }
     
-  
+ // 팝업창에서 작업 완료후 닫고 새로고침
+    $(document).ready(function() {
+    	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+        if (refreshAndClose) {
+            window.opener.location.reload(); // 부모창 새로고침
+            window.close(); // 현재창 닫기
+        }
+    });
    
 </script>
 

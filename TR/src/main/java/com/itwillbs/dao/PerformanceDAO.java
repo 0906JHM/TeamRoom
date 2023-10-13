@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +48,32 @@ public class PerformanceDAO {
 		
 		return  sqlsession.selectList(namespace+".getperflist");
 		
+	}
+
+
+
+
+	public List<WorkOrderDTO> getworklist() {
+		
+		return sqlsession.selectList(namespace+".getworklist");
+	}
+
+
+
+
+	public void perfinsert(PerformanceDTO perfDTO) {
+		
+		sqlsession.insert(namespace+".perfinsert",perfDTO);
+		
+		
+	}
+
+
+
+
+	public PerformanceDTO getdetail(String perfCode) {
+		
+		return sqlsession.selectOne(namespace+".getdetail", perfCode);
 	}
 	
 	

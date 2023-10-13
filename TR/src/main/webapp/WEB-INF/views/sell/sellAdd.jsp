@@ -14,7 +14,7 @@
     <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
 <%--     <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"> --%>
 <%--  <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css"> --%>
-
+ 
 </head>
 
 <!------------------------------------------------------- 헤더 ---------------------------------------------------->
@@ -26,8 +26,8 @@
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellAddPro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
 
-        <label class="popupLabel">수주 코드 : </label>
-      	<input type="text" id="sellCode" name="selCode" placeholder="수주 코드" readonly ><br>
+       <!--  <label class="popupLabel">수주 코드 : </label>
+      	<input type="text" id="sellCode" name="selCode" required="required" ><br> -->
       	
       	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
@@ -37,24 +37,24 @@
 		
 		<div class="popupSerch">
  		<label class="popupLabel">제품 : </label>
- 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
+ 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품코드" readonly>
 		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')"><br>
 		</div>
 		
         <label class="popupLabel">수주 수량 : </label>
-        <input type="number" id="sellCount" name="sellCount" placeholder="수주수량"  min="0" max="10000" step="5"><br>
+        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0">개<br>
 	
  	    <label class="popupLabel">수주 단가 : </label>
-        <input type="text" id="sellPrice" placeholder="수주 단가" readonly>원<br> 
+        <input type="number" id="sellPrice"  min="0" value="0">원<br> 
         
-        <label class="popupLabel">수주 일자 : </label>
-        <input type="text" id="sellDate" name="sellDate" placeholder="수주 일자" readonly><br>
+     <label class="popupLabel">수주 일자 : </label>
+        <input type="text" id="sellDate" name="sellDate" readonly><br> 
 
         <label class="popupLabel">납기 일자 : </label>
-        <input type="text" id="sellDuedate" name="sellDuedate" placeholder="납품 일자" readonly><br>
+        <input type="text" id="sellDuedate" name="sellDuedate" readonly><br>
 
         <label class="popupLabel">담당자 : </label>
-        <input type="search" id="sellEmpId" name="sellEmpId" value="${sessionScope.sellEmpId}" readonly="readonly" ><br>
+        <input type="search" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
 
         <label class="popupLabel">비고 : </label><br>
         <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
@@ -98,37 +98,25 @@ function openPopup(url) {
 $(document).ready(function() {
    
 });
+$(function() {
+    // 현재 날짜를 가져오기
+    var currentDate = new Date();
+    
+    // 날짜 형식 지정 (yy-mm-dd)
+    var formattedDate = currentDate.getFullYear() + "-" +
+                        ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" +
+                        ("0" + currentDate.getDate()).slice(-2);
 
-// 수주일자 클릭시 현재날짜로 변경
-document.addEventListener('DOMContentLoaded', function () {
-    var sellDateInput = document.getElementById("sellDate");
-    sellDateInput.addEventListener("click", function () {
-	var today = new Date();
-	var yyyy = today.getFullYear();
-	var mm = String(today.getMonth() + 1).padStart(2, '0');
-	var dd = String(today.getDate()).padStart(2, '0');
-	var hh = String(today.getHours()).padStart(2, '0');
-	var mi = String(today.getMinutes()).padStart(2, '0');
-	var ss = String(today.getSeconds()).padStart(2, '0');
-	var formattedDate = yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mi + ":" + ss;
-	sellDateInput.value = formattedDate;
-	sellDateInput.readOnly = true;
-	sellDateInput.placeholder = "";
-    });
+    // #sellDate 필드에 현재 날짜 설정
+    $("#sellDate").val(formattedDate);
 });
-// 수주일자(현재날짜) 이후로 납품일자 선택 설정
-// 수주일자 입력란의 값 가져오기
-var sellDateInput = document.getElementById("sellDate");
-var sellDateValue = sellDateInput.value;
-
-// 수주일자를 현재 년월일로 설정 (YYYY-MM-DD 형식)
 var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
+var dd = String(today.getDate() + 1).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
 var yyyy = today.getFullYear();
 var currentDateString = yyyy + '-' + mm + '-' + dd;
 // 납품예정일 입력란
-var sellDuedateInput = document.getElementById("sellDuedate");
+// var shipSdateInput = document.getElementById("shipSdate");
 // 수주일자(오늘) 이후의 날짜만 선택할 수 있도록 Datepicker 설정
 $(function() {
     $("#sellDuedate").datepicker({
@@ -138,22 +126,22 @@ $(function() {
 });
 
 // 유효성 검사
-function validateForm() {
+function checkForm() {
     // 각 입력 필드 값
     var clientCode = document.getElementById("clientCode").value;
     var prodCode = document.getElementById("prodCode").value;
     var sellCount = document.getElementById("sellCount").value;
-    var sellDate = document.getElementById("sellDate").value;
+   /*  var sellDate = document.getElementById("sellDate").value; */
     var sellDuedate = document.getElementById("sellDuedate").value;
     var sellEmpId = document.getElementById("sellEmpId").value;
     // 빈 필드 검사
     if (clientCode === "" || prodCode === "" || sellCount === "" ||
-    		sellDate === "" || sellDuedate === "" || sellEmpId === "") {
-        alert("모든 내용을 입력해주세요.");
+    		/* sellDate === "" || */ sellDuedate === "" || sellEmpId === "") {
+        alert("모든 내용을 입력해주세요");
         return false; // 제출 방지
     } // 추가 유효성 검사
-    if (roCount == 0) {
-        alert("몇개부터 가능하도록 할까");
+    if (sellCount == 0 || sellPrice ==0) {
+        alert("모든 내용을 입력해주세요");
         return false; // 제출 방지
     }
     return true;

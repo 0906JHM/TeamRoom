@@ -10,6 +10,7 @@ import com.itwillbs.dao.PerformanceDAO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,22 @@ public class PerformanceService {
 	public List<ProdDTO> getprodList() {
 		
 		return perfDAO.getprodlist();
+	}
+
+	public List<WorkOrderDTO> getworkList() {
+	
+		return perfDAO.getworklist();
+	}
+
+	public void perfinsert(PerformanceDTO perfDTO) {
+		
+		perfDAO.perfinsert(perfDTO);
+		
+	}
+
+	public PerformanceDTO getdetail(String perfCode) {
+		
+		return perfDAO.getdetail(perfCode);
 	}
 
 	

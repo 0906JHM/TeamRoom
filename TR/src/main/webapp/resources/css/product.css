@@ -25,6 +25,8 @@ hr{
 	height: 2px;
 	border: 0;
 	position: relative;
+	transform-origin: 0 0;
+	transform: rotate(0deg) scale(1, -1);
 }
 
 #selectedProId input{
@@ -78,8 +80,35 @@ table td {
 	height: 45px;
 }
 
+table tbody tr:nth-child(even) {
+	background-color: #f2f2f2; /* 짝수 행의 백그라운드 색상 설정 */
+}
+
+table tbody tr:nth-child(odd) {
+	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
+}
+
 .buttons{
 	display: flex;
 	justify-content: flex-end;
 	gap: 1%;
+}
+
+#searchform{
+	display: flex;
+	align-items: center;
+	gap: 1%;
+	height: 40px;
+	margin: 25px 0;
+	padding-left: 1%;
+}
+
+h3{
+	display: block;
+}
+
+#productList {
+	overflow-x: auto; /* 가로 스크롤바를 활성화 */
+	width: 98%;
+	margin: 0 auto;
 }
