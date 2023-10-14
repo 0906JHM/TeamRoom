@@ -70,11 +70,9 @@ public class OutProductController {
 
 			outProductService.updateSellState(outProductDTO);
 
-			// 현재 시간을 Timestamp로 가져오기
-			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
 			// Timestamp를 Date로 변환
-			Date currentDate = new Date(currentTime.getTime());
+			Date currentDate = new Date();
 
 			// Date를 원하는 형식의 문자열로 변환
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

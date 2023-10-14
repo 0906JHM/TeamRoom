@@ -70,8 +70,11 @@
 			</tr>
 			<tr> 
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
-				<td colspan="2"><input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }"></td>
-				<td colspan="2"><input type="number" name="whseCount" value="${outProductDTO.whseCount }" readonly="readonly"></td>
+				<td colspan="2"><input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()"></td>
+				<td colspan="2">
+				<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
+				<input type="number" name="whseCount" value="${outProductDTO.whseCount }" readonly="readonly">
+				</td>
 			</tr>
 			<tr>
 				<th colspan="3">납품가</th>
@@ -105,5 +108,19 @@
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
 	</form>
+	<script type="text/javascript">
+		function updateInventory() {
+		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
+		    var outCountInput = document.querySelector('input[name="outCount"]');
+		    var whseCountInput = document.querySelector('input[name="whseCount"]');
+		    
+		    // 현재 출력해야되는 재고값 계산
+		    var initialWhseCount = parseInt(document.getElementById('initialWhseCount').value, 10);
+		    var outCount = parseInt(outCountInput.value, 10);
+		    
+		    // 재고 입력란 업데이트
+		    whseCountInput.value = initialWhseCount - outCount;
+		}
+	</script>
 </body>
 </html>
