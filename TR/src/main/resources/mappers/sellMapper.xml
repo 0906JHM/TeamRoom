@@ -14,7 +14,7 @@
 	clientCode,s.sellPrice sellPrice,s.prodCode prodCode,
 	p.prodName
 	prodName,p.prodPrice prodPrice
-	from sellTest s join product p
+	from sellTest s left join product p
 	on
 	s.prodCode = p.prodCode
 	order by sellDate desc
@@ -30,7 +30,7 @@
 	<insert id="insertSell">
 		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,sellNum,sellPrice)
 		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-				#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}),sellPrice)
+				#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}))
 	</insert>
 	
 	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">

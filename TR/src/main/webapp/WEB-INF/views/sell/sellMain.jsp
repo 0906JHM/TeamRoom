@@ -406,20 +406,22 @@ $('#delete').click(function(event) {
     
  // 팝업창에서 작업 완료후 닫고 새로고침
     $(document).ready(function() {
-    	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
-        if (refreshAndClose) {
-            window.opener.location.reload(); // 부모창 새로고침
-            window.close(); // 현재창 닫기
-        }
+//     	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+//         if (refreshAndClose) {
+//             window.opener.location.reload(); // 부모창 새로고침
+//             window.close(); // 현재창 닫기
+//         }
+           
+        document.addEventListener('DOMContentLoaded', ()=> {
+    		excelDownload.addEventListener('click', exportExcel);
+       	});
     });
  </script>
     <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
     <script>
     const excelDownload = document.querySelector('#excelDownload');
 	
-	document.addEventListener('DOMContentLoaded', ()=> {
-		excelDownload.addEventListener('click', exportExcel);
-	});
+	
 	
 	function exportExcel() {
 		//1. workbook 생성
