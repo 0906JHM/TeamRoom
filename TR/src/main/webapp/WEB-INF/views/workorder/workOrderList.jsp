@@ -100,7 +100,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='lineCode' id='lineCode' required readonly >";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='lineCode' id='lineCode' readonly >";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
@@ -108,7 +108,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " </td>";
 				// 제품명
 				tbl += " <td>";
-				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='prodName' id='prodName8888' required >";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='prodName' id='prodName8888' readonly>";
 				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
@@ -146,31 +146,32 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 			$('#save').click(function() {
 
 				var prodName = $('#prodName').val();
-				var sellCode = $('#sellCode').val();
+				var lineCode = $('#lineCode').val();
+				var sellCode = $('#sellCode8888').val();
 				var workAmount = $('#workAmount').val();
-
-				/* if (prodName == "" || sellCode == "" || workAmount == "") {
-// 					alert("항목을 모두 입력하세요");
+				if(lineCode == ""){
 					Swal.fire({
-						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
 						icon: 'info',
+						confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
 						width: '300px',
 					})
-				} else { */
-					$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
-					$('#fr').attr("method", "post");
-					$('#fr').submit();
-				/* } */
-
-			}); //save
-
-			//취소버튼 -> 리셋
-			/* $('#cancle').click(function() {
-				$('#fr').each(function() {
-					this.reset();
-				});
-			});  *///cancle click
-
+					
+				}
+				else{
+					 if (sellCode == "" || workAmount == "") {
+							Swal.fire({
+								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+								icon: 'info',
+								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								width: '300px',
+							})
+						} else { 
+							$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
+							$('#fr').attr("method", "post");
+							$('#fr').submit();
+						 } 
+				}}); //save
 		}); //add click
 
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
@@ -214,10 +215,11 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		//수정버튼 클릭
 		$('#modify').click(function() {
 			Swal.fire({
-	            text: '수정할 행을 선택해주세요',
+				 title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "수정할 행을 선택해주세요"+ "</div>",
+				  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+		  icon: 'info', // 아이콘! 느낌표 색? 표시?
 	            confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-	        });
-						  
+	         });		  
 			$('#delete').hide();
 			$('#modify').hide();
 			$('#add').hide();
@@ -302,28 +304,34 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	
 					//저장버튼 -> form 제출
 					$('#save').click(function() {
-	
-						$('#fr').attr("action","${pageContext.request.contextPath}/workorder/modify");
+						var workAmount = $('#workAmount').val();
+						alert(workAmount);/* 
+						if(workAmount <= 0){
+							Swal.fire({
+								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "1이상의 값을 입력해주세요"+ "</div>",
+								icon: 'info',
+								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								width: '300px',
+							})
+							}
+						else{*/
+							$('#fr').attr("action","${pageContext.request.contextPath}/workorder/modify");
 						$('#fr').attr("method","post");
 						$('#fr').submit();
+						/*}
+	 */
+						
 	
 					}); //save
 
 				} //하나씩만 선택 가능
-					
-					
-				//취소버튼 -> 리셋
-				/* $('#cancle').click(function() {
-					$('#fr').each(function() {
-						this.reset();
-					});
-				});  *///cancle click
+			
 
 			}); //tr click
 
 		}); //modify click
 
-		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
+		/* //재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		queryString = window.location.search;
 		urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woModify");
@@ -357,7 +365,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						window.location.href = newUrl;
 					}
 				});//then
-		}
+		} */
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
 		/////////////// 삭제 //////////////////////////////
@@ -456,6 +464,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							  } else if (result.isDenied) {
 									Swal.fire({
 									title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+									confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+									  
 									icon : 'error',
 									width: '300px',
 									});
@@ -467,6 +477,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						Swal.fire({
 							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 							icon : 'warning',
+							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
 							width: '300px',
 							});
 					}// 체크 XXX
@@ -485,15 +496,6 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 		//============================ 검색 =========================================//
 
-		//라인코드 검색 팝업
-		/* $('#search_line').click(function() {
-			openWindow("line", "search_line");
-		}); //lineCode click
-
-		//제품코드 검색 팝업
-		$('#search_prod').click(function() {
-			openWindow("prod", "search_prod");
-		}); //prodName click */
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
@@ -567,15 +569,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		<form method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
-				<label>라인코드</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인코드를 선택하세요." style="cursor: pointer;">
-				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품코드를 선택하세요" style="cursor: pointer;">
+				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 선택하세요." style="cursor: pointer;">
+				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요" onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
 				
 				<label>지시일자</label> 
 						<input style="width:250px;" type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
 						<label style="font: 500 24px/24px 'Inter', sans-serif;">~</label> 
 						<input style="width:250px;"type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
 				<label>지시상태&nbsp;<input type="submit"  class="button" name="search_place" id="allButton" value="전체">
-    		<!-- <input type="submit"  name="search_place" class="button" id="waitButton" value="대기"> -->
     		<input type="submit"  name="search_place" class="button" id="oneButton" value="1차공정">
     		<input type="submit"  name="search_place" class="button" id="twoButton" value="2차공정">
     		<input type="submit"  name="search_place" class="button" id="threeButton" value="3차공정">
@@ -664,9 +665,17 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<td id="lineCode">${w.lineCode }</td>
 						<td>${w.sellCode }</td>
 						<td id="prodName">${w.prodName }</td>
-						<td>${w.workDate }</td>
+						<c:choose>
+    <c:when test="${not empty w.workDatechange}">
+        <td style="color: red;">${w.workDatechange}</td>
+    </c:when>
+    <c:otherwise>
+        <td>${w.workDate}</td>
+    </c:otherwise>
+</c:choose>
+						
 						<td id="workAmount">${w.workAmount }</td>
-						<td id="linePlace">${w.workProcess }</td>
+						<td id="workProcess">${w.workProcess }</td>
 						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
 							<td>
 								<c:if test="${w.workProcess != '마감'}">
@@ -683,6 +692,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </div>
 
 	<div style="float:left;">
+	<button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/workorder/workOrderList?nowPage=1&cntPerPage=100&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}'">
+    테이블 전체 보기</button>
 	<button id="excelDownload" class="Button">엑셀⬇️</button>
 		
 	<script type="text/javascript">
@@ -701,25 +712,23 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		$('#delete').show();
 		
     	var button = document.getElementById("allButton");
-    	
-
-       /*  <c:if test="${requestScope.search_place == '대기'}">
-        var button = document.getElementById("waitButton");
-    </c:if> */
-    <c:if test="${requestScope.search_place == '1차공정'}">
+    	    <c:if test="${search.search_place == '1차공정'}">
     var button = document.getElementById("oneButton");
 </c:if>
-<c:if test="${requestScope.search_place == '2차공정'}">
+<c:if test="${search.search_place == '2차공정'}">
 var button = document.getElementById("twoButton");
 </c:if>
-<c:if test="${requestScope.search_place == '3차공정'}">
+<c:if test="${search.search_place == '3차공정'}">
 var button = document.getElementById("threeButton");
 </c:if>
-<c:if test="${requestScope.search_place == '마감'}">
+<c:if test="${search.search_place == '마감'}">
 var button = document.getElementById("finishButton");
 </c:if>
-button.style.backgroundColor = "#ff5733";
-    });
+button.style.backgroundColor = "#fff";
+button.style.color = "#999999";
+});
+    
+  
 
 		
 		//엑셀
@@ -778,11 +787,25 @@ button.style.backgroundColor = "#ff5733";
 						<c:if test="${paging.startPage != 1 }">
 							<a class="arrow prev" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">◀️</a>
 						</c:if>
-					
+						
+						
+						<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="p">
+    <c:choose>
+        <c:when test="${p eq paging.nowPage}">
+            <a class="a active" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
+        </c:when>
+        <c:otherwise>
+            <a class="a" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+					<%-- 
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p }</a>
+						
+							<a class="a" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p }</a>
+						
 						</c:forEach>
-					
+					 --%>
 						<c:if test="${paging.endPage != paging.lastPage}">
 							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.endPage + 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
 						</c:if>

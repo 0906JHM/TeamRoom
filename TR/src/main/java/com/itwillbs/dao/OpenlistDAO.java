@@ -160,9 +160,9 @@ public class OpenlistDAO {
 			  
 			    public int countSell(SellDTO dto) { HashMap<String, Object>
 			  data = new HashMap<String, Object>();
-			  
-			  data.put("sellCode", dto.getSellCode()); data.put("sellCompany",
-			  dto.getClientCode()); 
+			    
+			  data.put("sellCode", dto.getSellCode()); data.put("clientCompany",
+			  dto.getClientCompany()); 
 			  
 			  return sqlSession.selectOne(NAMESPACE + ".countSearchSell", data); }
 			  
@@ -174,7 +174,7 @@ public class OpenlistDAO {
 			  
 			  data.put("start", pdto.getStart()); data.put("cntPerPage",
 			  pdto.getCntPerPage()); data.put("sellCode", dto.getSellCode());
-			  data.put("sellCompany", dto.getClientCode());
+			  data.put("clientCompany", dto.getClientCompany());
 			  
 			  return sqlSession.selectList(NAMESPACE + ".readSearchSell", data); }
 

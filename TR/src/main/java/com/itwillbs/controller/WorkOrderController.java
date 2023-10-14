@@ -85,13 +85,13 @@ public class WorkOrderController {
 			
 			model.addAttribute("workList", workList);
 			model.addAttribute("paging",pdto);
+			model.addAttribute("search",search);
 			
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
 				logger.debug("@@@@@ CONTROLLER: input 정보 전달");
 			}
 		} //else(모든)
-		request.setAttribute("search_place", search.get("search_place"));
 		
 	} //workOrderListGET()
 	

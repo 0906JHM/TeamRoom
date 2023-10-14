@@ -238,9 +238,11 @@ public class OpenlistController {
 				  model.addAttribute("sell", sell);
 				  logger.debug("DTO : " + dto);
 				  
-				  if (dto.getSellCode() != null || dto.getClientCode() != null) {
+				  if (dto.getSellCode() != null || dto.getClientCompany() != null) {
 				  
-				  logger.debug("if문 호출"); int total = service.countSell(dto);
+				  logger.debug("if문 호출");
+				  int total = service.countSell(dto);
+				  System.out.println(total + "total개수");
 				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
 				  List<SellDTO> list = service.getSellList(dto, pdto);
 				  model.addAttribute("sellList", list);

@@ -160,7 +160,7 @@
 			<if test="clientCode != ''">
 				clientCode like concat ('%', #{clientCode}, '%')
 			</if>
-			<if test="rawName != ''">
+			<if test="clientCompany != ''">
 				and clientCompany like concat ('%', #{clientCompany}, '%')
 			</if>
 		</where>
@@ -176,7 +176,7 @@
 			<if test="clientCode != ''">
 				clientCode like concat ('%', #{clientCode}, '%')
 			</if>
-			<if test="rawName != ''">
+			<if test="clientCompany != ''">
 				and clientCompany like concat ('%', #{clientCompany}, '%')
 			</if>
 		</where>
@@ -201,14 +201,14 @@
 	<resultMap id="sell"
 		type="com.itwillbs.domain.SellDTO">
 
-		<id property="clientCode" column="clientCode" />
-		<result property="sellCode" column="sellCode" />
+		<id property="sellCode" column="sellCode" />
+		<result property="clientCompany" column="clientCompany" />
 
 	</resultMap>
 
 	<select id="readSell" resultMap="sell"
 		resultType="SellDTO">
-		SELECT s.*, c.*, p.*
+		SELECT *
 		FROM sell s
 		LEFT JOIN clients c on s.clientCode = c.clientCode
 		LEFT JOIN product p on s.prodCode = p.prodCode
@@ -239,7 +239,7 @@
 	수주 검색리스트 불러오기 -->
 	<select id="readSearchSell" parameterType="hashMap"
 		resultMap="sell" resultType="SellDTO">
-		SELECT s.*, c.* , p.*
+		SELECT *
 		FROM sell s
 		LEFT JOIN clients c on s.clientCode = c.clientCode
 		LEFT JOIN product p on s.prodCode = p.prodCode

@@ -54,6 +54,7 @@
      			$('#prodName', opener.document).val(prodName);
      			$('#prodCode', opener.document).val(prodCode);
      			$('#prodPrice', opener.document).val(prodPrice);
+     			$('#search_prod', opener.document).val(prodCode);
      			}
      			
          		window.close();

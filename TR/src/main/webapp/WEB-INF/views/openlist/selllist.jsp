@@ -98,9 +98,9 @@
        		<input type="hidden" name="input" id="input" value="${input }">   		
 
        		<label>코드&nbsp;</label>
-        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="sellCode" id="searchName" onfocus="this.value='SL'" placeholder="코드를 입력하세요."> &nbsp;&nbsp;
+        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="sellCode" id="searchCode" onfocus="this.value='SL'" placeholder="코드를 입력하세요."> &nbsp;&nbsp;
         	<label>거래처&nbsp;</label>
-        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="clientCompany" id="searchCode"  placeholder="코드를 입력하세요."> &nbsp;&nbsp;
+        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="clientCompany" id="searchName"  placeholder="거래처를 입력하세요."> &nbsp;&nbsp;
         	
         	<input type="submit" class="button" value="조회">
 

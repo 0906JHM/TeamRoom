@@ -110,7 +110,7 @@
 	<update id="updateWorkOrder">
 		UPDATE workOrder 
 		SET lineCode=#{lineCode}, prodCode=#{prodCode}, sellCode=#{sellCode}, 
-			 change_id=#{workEmpId}, change_date=now(), workAmount=#{workAmount} 
+			 workEmpId=#{workEmpId}, workDatechange=now(), workAmount=#{workAmount} 
 		WHERE workCode=#{workCode}
 	</update>
 	<!-- 작업지시 수정 -->
