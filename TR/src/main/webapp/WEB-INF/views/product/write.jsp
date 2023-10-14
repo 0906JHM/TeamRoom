@@ -10,18 +10,9 @@
     <title>roomair</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- 		추가안되면 사이드바에 있는 이거^때문임 -->
-
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-zrve{background-color:#0949f7;border-color:#3531ff;text-align:center;vertical-align:top}
-.tg .tg-llyw{background-color:#c0c0c0;border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-
-</style>
+<link
+	href="${pageContext.request.contextPath }/resources/css/productWrite.css"
+	rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -31,29 +22,53 @@
     
     <form action="${pageContext.request.contextPath}/product/writePro" method="post">
     
+    <div class="form-group">
     <p>제품코드</p>
     <input type="text" name="prodCode" value="${prodDTO.prodCode }" readonly="readonly">
+    </div>
+    <div class="form-group">
     <p>제품명</p>
-    <input type="text" name="prodName">
+    <input type="text" name="prodName" placeholder="제품명을 입력해 주세요">
+    </div>
+    <div class="form-group">
     <p>제품단위</p>
-    <input type="text" name="prodUnit">
+    <input type="text" name="prodUnit"  placeholder="제품 단위를 입력해 주세요.">
+    </div>
+    <div class="form-group">
     <p>용량</p>
-    <input type="text" name="prodSize">
+    <input type="text" name="prodSize"  placeholder="용량을 입력해 주세요.">
+    </div>
+    <div class="form-group">
     <p>향기</p>
-    <input type="text" name="prodPerfume">
+    <input type="text" name="prodPerfume"  placeholder="향기를 입력해 주세요.">
+    </div>
+    <div class="form-group">
     <p>거래처명</p>
     <input type="hidden" name="clientCode" id="clientCode9999" onclick="searchItem('client','clientCode9999')" >
     <input type="text" name="clientCompany" id="clientCompany9999"  readonly
-    	onclick="searchItem('client','clientCode9999')">
+    	onclick="searchItem('client','clientCode9999')"
+    	 placeholder="거래처를 선텍해 주세요.">
+    </div>
+    <div class="form-group">
     <p>창고명</p>
-    <input type="text" name="whseCode">
+    <input type="text" name="whseCode"  placeholder="창고를 선택해 주세요.">
+    </div>
+    <div class="form-group">
     <p>매출단가</p>
-    <input type="number" step="0.01" name="prodPrice">
+    <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요.">
+    </div>
+<!--     <div class="form-group"> -->
     <p>비고</p>
-    <input type="text" name="prodMemo">
-    
+<!--     <input type="text" name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." -->
+<!--      style="width: 100%; text-align: left; line-height: 1; align-self: flex-start;"> -->
+     
+     <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols="">
+     
+     </textarea>
+<!--     </div> -->
+    <div id="button">
     <input type="submit" value="확인">
-    
+    </div>
     </form>
 </div>
 
@@ -122,6 +137,10 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 //--------------------------------------------------------------------------
+
+document.addEventListener('DOMContentLoaded', function() {
+        document.getElementsByName("prodName")[0].focus();
+    });
 
 </script>
 </body>
