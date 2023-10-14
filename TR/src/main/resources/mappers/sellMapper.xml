@@ -6,58 +6,95 @@
 <mapper namespace="com.itwillbs.mappers.sellMapper">
 
 
- 	<select id="getSellList" resultType="com.itwillbs.domain.SellDTO">
-	select s.sellCode sellCode, s.sellDate sellDate, s.sellDuedate
+ 	<select id="getSellList"
+	resultType="com.itwillbs.domain.SellDTO">
+	select s.sellCode sellCode, s.sellDate sellDate,
+	s.sellDuedate
 	sellDuedate,s.sellEmpId sellEmpId,s.sellCount sellCount,
 	s.sellFile
-	sellFile,s.sellMemo sellMemo,s.sellState sellState,s.clientCode
-	clientCode,s.sellPrice sellPrice,s.prodCode prodCode,
+	sellFile,s.sellMemo sellMemo,s.sellState
+	sellState,s.clientCode
+	clientCode,s.sellPrice sellPrice,s.prodCode
+	prodCode,
 	p.prodName
 	prodName,p.prodPrice prodPrice
-	from sellTest s left join product p
+	from sellTest s left
+	join product p
 	on
 	s.prodCode = p.prodCode
 	order by sellDate desc
-	limit #{startRow},
+	limit
+	#{startRow},
 	#{pageSize}
-	</select> 
+	</select>
+
 
 	<select id="getSellCount" resultType="java.lang.Integer">
-		select count(*) 
+		select count(*)
 		from sellTest
 	</select>
-	
+
+
 	<insert id="insertSell">
-		insert into sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,sellNum,sellPrice)
+		insert into
+		sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,sellNum,sellPrice)
 		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-				#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}))
+		#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT
+		prodPrice FROM product WHERE prodCode = #{prodCode}))
 	</insert>
+
+	<select id="getSell" resultType="com.itwillbs.domain.SellDTO">
+		select * 
+		from sellTest
+		where sellCode = #{sellCode}
+	</select>
+
+	<update id="sellUpdate">
+	update sellTest
+	set
+	sellCode=#{sellCode},
+	sellState=#{sellState},
+	clientCode=#{clientCode},
+	clientCompany=#{clientCompany},
+	prodCode=#{prodCode},
+	prodName=#{prodName},
+	prodPrice=#{prodPrice},
+	sellCount=#{sellCount},
+	sellPrice=#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}),
+	sellDate=#{sellDate},
+	sellDuedate=#{sellDuedate},
+	sellEmpId=#{sellEmpId},
+	sellMemo=#{sellMemo}
+	where sellCode = #{sellCode}
+	</update>
 	
-	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">
+	<delete id="sellDelete">
+		delete
+		from sellTest
+		where sellCode = #{sellCode}
+	</delete>
+	
+	<select id="getSellMemo"
+		resultType="com.itwillbs.domain.SellDTO">
 		select *
 		from sellTest
 		where sellCode = #{sellCode}
 	</select>
-  
-  	<update id="updateSellMemo">
-		update sellTest
-		set sellMemo = #{sellMemo}
-		where sellCode = #{sellCode}
-	</update>
-	
+
 	<update id="insertSellMemo">
-		update sellTest 
+		update sellTest
 		set sellMemo=#{sellMemo}
 		where sellCode = #{sellCode}
 	</update>
 
-	<delete id="sellDelete">
-		delete 
-		from sellTest
-		WHERE sellCode = #{sellCode}
-	</delete>
-	
-	
+	<update id="updateSellMemo">
+		update sellTest
+		set sellMemo = #{sellMemo}
+		where
+		sellCode = #{sellCode}
+	</update>
+
+
 	
 	
 	
