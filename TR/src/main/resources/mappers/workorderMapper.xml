@@ -134,7 +134,7 @@
 			</if> 
 		</where>
 		ORDER BY workCode DESC 
-		LIMIT #{startPage}, #{cntPerPage}
+		LIMIT #{start}, #{cntPerPage}
 	</select>
 	<!-- 작업지시 검색 -->
 	

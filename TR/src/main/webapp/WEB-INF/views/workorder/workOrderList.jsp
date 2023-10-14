@@ -567,10 +567,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		<form method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
-				<input type="hidden" name="pageSize" id="pageSize" value="${pdto.cntPerPage }">
-
-				
-					<label>라인코드</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인코드를 선택하세요." style="cursor: pointer;">
+				<label>라인코드</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인코드를 선택하세요." style="cursor: pointer;">
 				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품코드를 선택하세요" style="cursor: pointer;">
 				
 				<label>지시일자</label> 
@@ -578,7 +575,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<label style="font: 500 24px/24px 'Inter', sans-serif;">~</label> 
 						<input style="width:250px;"type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
 				<label>지시상태&nbsp;<input type="submit"  class="button" name="search_place" id="allButton" value="전체">
-    		<input type="submit"  name="search_place" class="button" id="waitButton" value="대기">
+    		<!-- <input type="submit"  name="search_place" class="button" id="waitButton" value="대기"> -->
     		<input type="submit"  name="search_place" class="button" id="oneButton" value="1차공정">
     		<input type="submit"  name="search_place" class="button" id="twoButton" value="2차공정">
     		<input type="submit"  name="search_place" class="button" id="threeButton" value="3차공정">
@@ -600,7 +597,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		
 				<div class="x_title">
 				<div class="x_total">
-					<h2><small>총 ${pdto.total } 건</small></h2>
+					<h2><small>총 ${paging.total } 건</small></h2>
 					</div>
 					<div>
 				    <!-- 버튼 제어 -->
@@ -706,9 +703,9 @@ const popupOpt = "top=60,left=140,width=720,height=600";
     	var button = document.getElementById("allButton");
     	
 
-        <c:if test="${requestScope.search_place == '대기'}">
+       /*  <c:if test="${requestScope.search_place == '대기'}">
         var button = document.getElementById("waitButton");
-    </c:if>
+    </c:if> */
     <c:if test="${requestScope.search_place == '1차공정'}">
     var button = document.getElementById("oneButton");
 </c:if>
@@ -778,16 +775,16 @@ button.style.backgroundColor = "#ff5733";
 	
 	<div id="pagination" class="page_wrap">
 			<div class="page_nation">
-						<c:if test="${pdto.startPage != 1 }">
-							<a class="arrow prev" href="${pageContext.request.contextPath}/workorder/workOrderList?page=${pdto.startPage - 1 }&pageSize=${pdto.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">◀️</a>
+						<c:if test="${paging.startPage != 1 }">
+							<a class="arrow prev" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">◀️</a>
 						</c:if>
 					
-						<c:forEach begin="${pdto.startPage }" end="${pdto.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/workorder/workOrderList?page=${p }&pageSize=${pdto.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p }</a>
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+							<a class="active" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p }</a>
 						</c:forEach>
 					
-						<c:if test="${pdto.endPage != pdto.lastPage}">
-							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?page=${pdto.endPage + 1 }&pageSize=${pdto.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
+						<c:if test="${paging.endPage != paging.lastPage}">
+							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.endPage + 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
 						</c:if>
 					</div>
 			</div>

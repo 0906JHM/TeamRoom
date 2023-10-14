@@ -52,7 +52,7 @@ public class RequirementDAO {
 
 		data.put("reqCode", dto.getReqCode());
 		data.put("prodCode", dto.getProdCode());
-		data.put("rawCode", dto.getRaw().getRawCode());
+		data.put("rawCode", dto.getRawCode());
 		
 		return sqlSession.selectOne(NAMESPACE + ".countSearchReq", data);
 	}
@@ -66,7 +66,7 @@ public class RequirementDAO {
 		data.put("cntPerPage", pdto.getCntPerPage());
 		data.put("reqCode", dto.getReqCode());
 		data.put("prodCode", dto.getProdCode());
-		data.put("rawCode", dto.getRaw().getRawCode());
+		data.put("rawCode", dto.getRawCode());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchReq", data);
 	}

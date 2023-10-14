@@ -537,7 +537,7 @@ $(document).ready(function() {
 								<td id="rawName"> ${dto.raw.rawName }</td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
-								<td id="rawCode" type='hidden' style='display: none;'>${dto.raw.rawCode }</td>
+								<td id="rawCode" type='hidden' style='display: none;'>${dto.rawCode }</td>
 							</tr>
 						</c:forEach>
 					</table>
