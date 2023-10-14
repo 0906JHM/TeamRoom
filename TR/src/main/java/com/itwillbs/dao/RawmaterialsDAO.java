@@ -84,26 +84,9 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 		return sqlSession.selectOne(namespace+".getWarehouseCount",pageDTO);
 	}
 
-	// 여기서부터 비고코드 수정하기
-	public RawmaterialsDTO getSellMemo(String rawCode) {
-		System.out.println("SellDAO getSellMemo()");
-		return sqlSession.selectOne(namespace+".getSellMemo", rawCode);
-	}
-
-	public void updateSellMemo(RawmaterialsDTO rawmaterialsDTO) {
-		System.out.println("SellDAO updateSellMemo()");
-		sqlSession.update(namespace + ".updateSellMemo", rawmaterialsDTO);
-	}
-
-	public void insertSellMemo(RawmaterialsDTO rawmaterialsDTO) {
-		System.out.println("SellDAO insertSellMemo()");
-		System.out.println(rawmaterialsDTO);
-		sqlSession.insert(namespace + ".insertSellMemo", rawmaterialsDTO);
-	}
-			
-	public void deleteSell(RawmaterialsDTO rawmaterialsDTO) {
-		System.out.println("SellDAO deleteSell()");
-		sqlSession.update(namespace+".deleteSell",rawmaterialsDTO);
+	public RawmaterialsDTO getMemo(String rawCode) {
+		System.out.println("RawmaterialsDAO getMemo()");
+		return sqlSession.selectOne(namespace+".getMemo", rawCode);
 	}
 	
 }

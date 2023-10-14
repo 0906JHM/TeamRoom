@@ -274,76 +274,17 @@ public class RawmaterialsController {
         return "Rawmaterials/selectwarehouse";
     }
   	
-  	
-  	// 여기서부터 비고코드 수정하기
-  	// sellMemo
-  	@GetMapping("/sellMemo")
-  	public String sellMemo(HttpServletRequest request, Model model) {
-  		System.out.println("RawmaterialsController sellMemo()");
+  	@GetMapping("/memo")
+  	public String memo(HttpServletRequest request, Model model) {
+  		System.out.println("RawmaterialsController memo()");
   		
   		String rawCode = request.getParameter("rawCode");
   		
-  		// sellMemo 가져오기
-  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
-  		System.out.println("rawmaterialsDTO" + rawmaterialsDTO);
+  		// memo 가져오기
+  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getMemo(rawCode);
   		model.addAttribute("rawmaterialsDTO",rawmaterialsDTO);
   		
-  		return "Rawmaterials/sellMemo";
-  		
-  	}
-  	
-  	// updateSellMemo
-  	@GetMapping("/sellMemoUpdate")
-  	public String updateSellMemo(HttpServletRequest request,Model model) {
-  		System.out.println("RawmaterialsController sellMemoUpdate()");
-	
-  		String rawCode = request.getParameter("rawCode");
-	
-  		// 글 가져오기
-  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
-  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
-  		
-  		return "Rawmaterials/updateSellMemo";
-  	}
-	
-  	// sellMemoUpdatePro
-  	@PostMapping("/sellMemoUpdatePro")
-  	public void sellMemoUpdatePro(RawmaterialsDTO rawmaterialsDTO) {
-  		System.out.println("RawmaterialsController sellMemoUpdatePro()");
-  		// sellMemo 수정
-  		rawmaterialsService.updateSellMemo(rawmaterialsDTO);
+  		return "Rawmaterials/memo";
   	}
 
-  	// sellMemotype
-  	@GetMapping("/sellMemotype")
-  	public String sellMemoAdd(HttpServletRequest request, Model model) {
-  		System.out.println("RawmaterialsController sellMemotype()");
-  		
-  		String rawCode = request.getParameter("rawCode");
-  		RawmaterialsDTO rawmaterialsDTO = rawmaterialsService.getSellMemo(rawCode);
-  		String memotype = request.getParameter("memotype");
-  		System.out.println(rawmaterialsDTO);
-	
-  		model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
-  		model.addAttribute("memotype", memotype);
-
-  		return "Rawmaterials/sellMemotype";
-  	}
-
-  	// sellMemotypePro
-  	@PostMapping("/sellMemotypePro")
-  	public void sellMemoAddPro(RawmaterialsDTO rawmaterialsDTO) {
-  		System.out.println("RawmaterialsController sellMemotypePro()");
-  		System.out.println(rawmaterialsDTO);
-  		rawmaterialsService.insertSellMemo(rawmaterialsDTO);	
-  	}
-
-  	// sellDelete
-  	@GetMapping("/sellDelete")
-  	public void sellDeletePro(RawmaterialsDTO rawmaterialsDTO) {
-  		System.out.println("RawmaterialsController sellDelete()");
-  		System.out.println(rawmaterialsDTO);
-  		rawmaterialsService.sellDelete(rawmaterialsDTO);
-  	}
- 	
 }
