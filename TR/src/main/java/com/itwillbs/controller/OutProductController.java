@@ -92,7 +92,15 @@ public class OutProductController {
 			// 4차
 			// 재고 테이블에서 제품코드로 출고한만큼 개수 감소
 			if (outProductDTO2.getOutCount() < outProductDTO.getOutCount()) {
+				System.out.println("1 디비에 저장된 값 "+outProductDTO2.getOutCount());
+				System.out.println("2 디비에 저장된 값 "+outProductDTO2.getOutCount());
+				System.out.println("3 뺄 값 "+outProductDTO.getOutCount());
+				System.out.println("4 뺄 값 "+outProductDTO.getOutCount());
 				outProductDTO.setOutCount(outProductDTO.getOutCount() - outProductDTO2.getOutCount());
+				System.out.println("5 디비에 저장된 값 "+outProductDTO2.getOutCount());
+				System.out.println("6 디비에 저장된 값 "+outProductDTO2.getOutCount());
+				System.out.println("7 뺄 값 "+outProductDTO.getOutCount());
+				System.out.println("8 뺄 값 "+outProductDTO.getOutCount());
 				outProductService.updateWhseCount(outProductDTO);
 			}
 			response.setContentType("text/html;charset=UTF-8");

@@ -70,10 +70,13 @@
 			</tr>
 			<tr> 
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
-				<td colspan="2"><input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()"></td>
 				<td colspan="2">
-				<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
-				<input type="number" name="whseCount" value="${outProductDTO.whseCount }" readonly="readonly">
+					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
+					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+				</td>
+				<td colspan="2">
+					<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
+					<input type="number" name="whseCount" value="${outProductDTO.whseCount }" min="0" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -101,9 +104,7 @@
 		</table>
 		<div id="buttons">
 		<c:if test="${outProductDTO.sellState != '출고완료' }">
-			<c:if test="${outProductDTO.sellCount <= outProductDTO.whseCount && outProductDTO.outCount <= outProductDTO.whseCount}">
 				<input type="submit" value="출고">
-			</c:if>
 		</c:if>
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
@@ -116,10 +117,11 @@
 		    
 		    // 현재 출력해야되는 재고값 계산
 		    var initialWhseCount = parseInt(document.getElementById('initialWhseCount').value, 10);
+		    var initialOutCount = parseInt(document.getElementById('initialOutCount').value, 10);
 		    var outCount = parseInt(outCountInput.value, 10);
 		    
 		    // 재고 입력란 업데이트
-		    whseCountInput.value = initialWhseCount - outCount;
+		    whseCountInput.value = initialWhseCount + initialOutCount - outCount;
 		}
 	</script>
 </body>
