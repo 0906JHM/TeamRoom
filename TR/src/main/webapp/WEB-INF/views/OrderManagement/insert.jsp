@@ -19,12 +19,12 @@
 품명 : 		<input type="text" name="rawName" id="rNInput"><br>
 종류 : 		<input type="text" name="rawType" id="rTInput"><br>
 매입단가 : 	<input type="number" name="rawPrice" id="rPInput"><br>
-거래처명 : 	<input type="text" name="clientCode" id="cInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
+거래처명 : 	<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
 창고수량 : 	<input type="number" name="whseCount" id="wCInput"><br>
 발주수량 : 	<input type="number" name="buyCount"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
 담당자 : 		<input type="text" name="buyEmpId"><br>
-입고상태 : 		<input type="radio" name="buyInstate" value="발주완료" checked>발주완료<br>
+입고상태 : 	<input type="radio" name="buyInstate" value="발주완료" checked>발주완료<br>
 <input type="submit" value="발주등록">
 </form>
 
@@ -44,7 +44,7 @@ function openPopup1() {
 // 거래처목록 페이지 팝업창
 function openPopup2() {
 	window.name = "insert";
-	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
+	openWin = window.open("../Rawmaterials/selectclient.html", "selectclient", "height=600,width=1300");    
 }
 
 // form 제출전 rawPrice 값을 float로 변환

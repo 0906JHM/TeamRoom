@@ -135,7 +135,7 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
 <input type="submit" value="검색">
 </form>
 
