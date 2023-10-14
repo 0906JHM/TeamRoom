@@ -69,7 +69,7 @@
 		SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND workProcess='1차공정' 
+		AND lineProcess='1차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1 
 	</select>
@@ -163,7 +163,7 @@
 		(SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND workProcess='2차공정' 
+		AND lineProcess='2차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1) 
 	</sql>
@@ -171,7 +171,7 @@
 		(SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND workProcess='3차공정' 
+		AND lineProcess='3차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1) 
 	</sql>
@@ -198,7 +198,7 @@
 		SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND workProcess='2차공정' 
+		AND lineProcess='2차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1 
 	</select>
@@ -206,7 +206,7 @@
 		SELECT lineCode 
 		FROM line 
 		WHERE lineUse=2 
-		AND workProcess='3차공정' 
+		AND lineProcess='3차공정' 
 		ORDER BY lineCode DESC 
 		LIMIT 1 
 	</select>

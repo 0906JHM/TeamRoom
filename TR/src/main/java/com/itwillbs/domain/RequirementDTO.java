@@ -5,9 +5,10 @@
   @Data public class RequirementDTO {
 	  private String reqCode;
 	  private String prodCode;
-	  private String rawCode;
 	  private String reqAmount;
-	  private String reqMemo; 
+	  private String reqMemo;
+	  private String rawCode;
+	  private String rawName;
 	  
 		/*
 		 * @Override public String toString() { return "RequirementDTO [reqCode=" +

@@ -67,7 +67,7 @@ public class RequirementController {
 		model.addAttribute("reqs", reqs);
 		logger.debug("DTO : " + dto);
 
-		if (dto.getReqCode() != null || dto.getProdCode() != null || dto.getRawCode() != null) {
+		if (dto.getReqCode() != null || dto.getProdCode() != null || dto.getRaw().getRawCode() != null) {
 
 			logger.debug("if문 호출");
 			logger.debug("DTO : " + dto);

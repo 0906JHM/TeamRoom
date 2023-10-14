@@ -21,6 +21,7 @@ public class WorkOrderDTO {
 	private Date changeDate;
 	private String workState;
 	private String workProcess;
+	private String prodName;
 	
 //	private ProductVO product;
 	

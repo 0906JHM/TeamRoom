@@ -41,16 +41,21 @@
        		$('table tr').click(function(){
        			$(this).css('background', '#ccc');
         			
-       			var rawCode = $(this).find('#rawCode').text();
-     			var rawName = $(this).find('#rawName').text();
+       			var clientCompany = $(this).find('#clientCompany').text();
+     			var sellCode = $(this).find('#sellCode').text();
+     			var prodName = $(this).find('#prodName').text();
+     			
      			
      			var number = isPop.match(/\d+/);
      			if(number !=null){
-     			$('#rawName'+number, opener.document).val(rawName);
-     			$('#rawCode'+number, opener.document).val(rawCode);
+     			$('#sellCode'+number, opener.document).val(sellCode);
+     			$('#clientCompany'+number, opener.document).val(clientCompany);
+     			$('#prodName'+number, opener.document).val(prodName);
+     			
      			} else {
-     			$('#rawName', opener.document).val(rawName);
-     			$('#rawCode', opener.document).val(rawCode);
+     			$('#sellCode8888', opener.document).val(sellCode);
+     			$('#clientCompany8888', opener.document).val(clientCompany);
+     			$('#prodName8888', opener.document).val(prodName);
      			}
      			
          		window.close();
@@ -83,7 +88,7 @@
 <body>
 <div class="right_col">
 
-	<h1 style="margin-left: 1%;">원자재 목록</h1>
+	<h1 style="margin-left: 1%;">수주 목록</h1>
 	
 	<div style="margin: 1% 1%;">
 	<hr style="width:680;">
@@ -93,9 +98,10 @@
        		<input type="hidden" name="input" id="input" value="${input }">   		
 
        		<label>코드&nbsp;</label>
-        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="rawCode" id="searchCode" onfocus="this.value='RM'" placeholder="코드를 입력하세요."> &nbsp;&nbsp;
-        	<label>원자재&nbsp;</label>
-        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="rawName" id="searchName" placeholder="원자재를 입력하세요."> &nbsp;&nbsp;
+        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="sellCode" id="searchName" onfocus="this.value='SL'" placeholder="코드를 입력하세요."> &nbsp;&nbsp;
+        	<label>거래처&nbsp;</label>
+        	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="clientCompany" id="searchCode"  placeholder="코드를 입력하세요."> &nbsp;&nbsp;
+        	
         	<input type="submit" class="button" value="조회">
 
 		</fieldset>
@@ -119,23 +125,25 @@
 			<div class="table-responsive">
 				<div class="table-wrapper" >
 <%-- 		완제품 목록 총 ${paging.total}건 --%>
-		<table id="rawTable"
+		<table id="sellTable"
 		class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 			<thead>
 				<tr class="headings">
 					<th>번호</th>
 					<th>코드</th>
-					<th>원자재</th>
+					<th>거래처</th>
+					<th>제품</th>
 					
 				</tr>
 			</thead>
 			
 			
-			<c:forEach var="dto" items="${rawList}">
+			<c:forEach var="dto" items="${sellList}">
 					<tr style="font: 500 20px/20px 'Inter', sans-serif;">
 						<td></td>
-         			    <td id="rawCode">${dto.rawCode }</td>
-						<td id="rawName">${dto.rawName }</td>
+						<td id="sellCode">${dto.sellCode }</td>
+         			    <td id="clientCompany">${dto.clientCompany }</td>
+						<td id="prodName">${dto.prodName }</td>
 					</tr>
 			</c:forEach>
 		</table>
@@ -153,15 +161,15 @@
 <div id="pagination" class="page_wrap" >
 			<div class="page_nation" style="text-align: center; font-size: 0; position: absolute; bottom: 1%; right: 1%;">
 						<c:if test="${paging.startPage != 1 }">
-							<a class="arrow prev" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">◀️</a>
+							<a class="arrow prev" href="${pageContext.request.contextPath}/search/sell?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&clientCompany=${dto.clientCompany }&sellCode=${dto.sellCode }">◀️</a>
 						</c:if>
 					
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">${p }</a>
+							<a class="active" href="${pageContext.request.contextPath}/search/sell?nowPage=${p }&cntPerPage=${paging.cntPerPage}&clientCompany=${dto.clientCompany }&sellCode=${dto.sellCode }">${p }</a>
 						</c:forEach>
 					
 						<c:if test="${paging.endPage != paging.lastPage}">
-							<a class="arrow next" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">▶️</a>
+							<a class="arrow next" href="${pageContext.request.contextPath}/search/sell?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&clientCompany=${dto.clientCompany }&sellCode=${dto.sellCode }">▶️</a>
 						</c:if>
 					</div>
 			</div>

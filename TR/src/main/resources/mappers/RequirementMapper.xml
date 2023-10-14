@@ -35,7 +35,7 @@
 
 	 <select id="readReq" resultMap="requirements"
 		resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.* , p.prodName ,rm.rawName
+		SELECT r.* , p.prodName ,rm.*
 		FROM requirement r
 		LEFT JOIN product p on p.prodCode = r.prodCode
 		LEFT JOIN rawMaterial rm on r.rawCode = rm.rawCode
@@ -92,11 +92,11 @@
 	소요량관리 검색리스트 불러오기 -->
 	 <select id="readSearchReq" parameterType="hashMap"
 		resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*,p.prodName ,rm.rawName
+		SELECT r.*,p.prodName ,rm.*
 		FROM requirement r
 		LEFT join product p on
 		p.prodCode = r.prodCode
-		JOIN rawMaterial rm on r.rawCode =
+		LEFT JOIN rawMaterial rm on r.rawCode =
 		rm.rawCode
 		<where>
 			<if test="reqCode != ''">
@@ -166,7 +166,7 @@
 		reqCode=#{reqCode}
 	</select> -->
 	 <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*,p.prodName ,rm.rawName
+		SELECT r.*,p.prodName ,rm.*
 		FROM requirement r
 		LEFT join
 		product p on p.prodCode = r.prodCode
@@ -180,7 +180,7 @@
 	소요량관리 수정 -->
 	<update id="updateReq">
 		UPDATE requirement
-		SET reqCode=#{reqCode},prodCode=#{prodCode},rawCode=#{rawCode},reqAmount=#{reqAmount},
+		SET reqCode=#{reqCode},prodCode=#{prodCode},rawName=#{rawName},reqAmount=#{reqAmount},
 		reqMemo=#{reqMemo}
 		WHERE reqCode=#{reqCode}
 	</update>

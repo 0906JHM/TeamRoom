@@ -17,7 +17,7 @@
 //
 //input으로 바꾸기 
 function inputCng(obj, type, name, value) {
-	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"' class='input-row'>";
+	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"8888' value='"+value+"' class='input-row'>";
 	obj.html(inputBox);
 } //inputCng	
 
@@ -29,6 +29,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
+
+
 
 
 function submitForm() {
@@ -73,6 +75,7 @@ $(document).ready(function() {
 	    	$('#add').show();
 			$('#modify').show();
 			$('#delete').show();
+		
 	
 	
 	//테이블 항목들 인덱스 부여
@@ -136,13 +139,14 @@ $(document).ready(function() {
     	
         var row = '<tr>' +
         	'<td style="color: red;" onclick="deleteRow()">'+addcounter+'</td>' + 
-        	'<input type="hidden" name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' + 
-            '<td><input type="text" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-row"></td>' +
+        	'<input type="hidden"  name="reqs[' + counter + '].rawCode" id = "rawCode'+counter+'" required>' + 
+            '<td><input type="text" style="background-color:rgba(0, 0, 0, 0);" name="reqs[' + counter + '].reqCode" " value="'+ reqCode +'" readonly required class="input-row"></td>' +
+   
             '<input type="hidden" name="reqs[' + counter + '].prodCode" id= "prodCode'+counter+'">' +
             '<td><input type="text" name="reqs[' + counter + '].prod.prodName" id = "prodName'+counter+'" readonly onclick=searchItem("prod","prodCode'+counter+'"); placeholder="제품명을 선택하세요." class="input-row"></td>' +
             '<td><input type="text" name="reqs[' + counter + '].raw.rawName" id="rawName'+counter+'" readonly onclick=searchItem("raw","rawCode'+counter+'"); placeholder="원자재를 선택하세요." class="input-row"></td>' + 
             
-            '<td><input type="number" name="reqs[' + counter + '].reqAmount" required class="input-row" placeholder="소요량을 선택하세요."></td>' +
+            '<td><input type="number" name="reqs[' + counter + '].reqAmount" required class="input-row" value="1" min="1" placeholder="소요량을 선택하세요."></td>' +
             '<td><input type="text" name="reqs[' + counter + '].reqMemo" class="input-row" placeholder="비고를 입력하세요."></td>' +
             
             '</tr>';
@@ -231,13 +235,14 @@ $(document).ready(function() {
 							  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 					  icon: 'info', // 아이콘! 느낌표 색? 표시?
 					  showDenyButton: true,
-					  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
+					  confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
 					  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 					  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 //						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
 					  width : '300px', // alert창 크기 조절
 					  
 					}).then((result) => {
+						
 				
 				 /* confirm => 예 눌렀을 때  */
 				  if (result.isConfirmed) {
@@ -263,6 +268,8 @@ $(document).ready(function() {
 							Swal.fire({
 								title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
 								icon : 'question',
+								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+								  
 								width: '300px',
 								});
 							
@@ -272,6 +279,8 @@ $(document).ready(function() {
 							Swal.fire({
 							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
 							icon : 'error',
+							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+							  
 							width: '300px',
 							});
 				}// if(confirm)
@@ -308,6 +317,7 @@ $(document).ready(function() {
 		$('#add').hide();
 		$('#cancle').show();
 		$('#save').show();
+		
 		Swal.fire({
             text: '수정할 행을 선택해주세요',
             confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
@@ -348,7 +358,7 @@ $(document).ready(function() {
 								data.raw.rawName,
 								data.reqAmount,
 								data.reqMemo,
-								data.rawCode
+								data.raw.rawCode
 								];
 						
 					
@@ -368,30 +378,37 @@ $(document).ready(function() {
 						self.find('td').each(function(idx,item) {
 							if (idx > 0) {
 								inputCng($(this),"text",names[idx - 1],preVOs[idx - 1] );
-//								
-								if(idx==4){
-									var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="rawCode" >'
+							
+								$(this).find("input").each(function(){
+										if($(this).attr("name") == "reqCode") {
+											$(this).attr("readonly", true);
+											$(this).attr("style","background-color:rgba(0, 0, 0, 0);");
+										}
+										else if($(this).attr("name") == "reqAmount") {
+											$(this).attr("type", "number");
+											$(this).attr("min", "1");
+											
+										}
+								});
+								/* 	
+								if(idx==7){
+									var row = '<input type="hidden" name="rawCode" value="'+preVOs[7]+'" id="rawCode" >'
 									$(".selected").append(row);
-								}
+								} */
 
 
 							} //라인코드부터 다 수정 가능하게
 
 						}); // self.find(~~)
-						
-						
-
-						 //품번 검색 
-						$('#prodCode').click(function() {
-							openWindow("prod","prodCode");
-						}); //prodCode click
-						
+						  //품번 검색 
+						$('#prodName8888').click(function(){
+			                searchItem("prod", "prodCode8888");
+			            });
 						//품번 검색 팝업(raw)
-						$('#rawName').click(function() {
-							openWindow("raw", "searchRaw");
-						}); //rawCode click */
-
-					},
+						$('#rawName8888').click(function(){
+			                searchItem("raw", "rawCode8888");
+			            });
+	},
 					error : function(data) {
 						alert("아작스 실패 ~~");
 					}
@@ -517,9 +534,10 @@ $(document).ready(function() {
 								<td id="reqCode">${dto.reqCode }</td>
 								<td type='hidden' style='display: none;'>${dto.prodCode }</td>
 								<td id="prodName"> ${dto.prod.prodName }</td>
-								<td> ${dto.raw.rawName }</td>
+								<td id="rawName"> ${dto.raw.rawName }</td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
+								<td id="rawCode" type='hidden' style='display: none;'>${dto.raw.rawCode }</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -546,6 +564,11 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+ <script>
+        $(document).ready(function(){
+            
+        });
+    </script>
 </body>
 </html>
 
