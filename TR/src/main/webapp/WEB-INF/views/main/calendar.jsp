@@ -52,12 +52,24 @@
 		</div>
 		<div id="con_2">
 			<div id="chart_2">
-				<h3>재고 관리</h3>
-				<canvas id="bar_chart1"></canvas>
+				<div>
+					<h3 class="chartTitleTab1 current" onclick="showTab1('perfList')">창고별 재고</h3>
+					<h3 class="chartTitleTab1 " onclick="showTab1('perfList')">유형별 재고</h3>
+				</div>
+				<div>
+					<canvas id="stockList" class="chartTab2 current"></canvas>
+					<canvas id="prodRawList" class="chartTab2 "></canvas>
+				</div>
 			</div>
 			<div id="chart_3">
-				<h3>생산 실적</h3>
-				<canvas id="bar_chart2"></canvas>
+			   <div class="flex-container">
+			       <h3 class="chartTitleTab2 current" onclick="showTab2('perfList')">최근 생산실적</h3>
+			       <h3 class="chartTitleTab2" onclick="showTab2('linePerfList')">라인별 생산실적</h3>
+			   </div>
+			   <div>
+			       <canvas id="perfList" class="chartTab2 current"></canvas>
+			       <canvas id="linePerfList" class="chartTab2"></canvas>
+			   </div>
 			</div>
 		</div>
 
@@ -152,7 +164,7 @@
 	                        // 데이터가 변경된 경우에만 차트를 그립니다.
 	                        // 이전 데이터 업데이트
 	                        stock_compare = result; // 데이터 배열을 복사하여 참조 문제 해결
-	                        createBarChart(result, "bar_chart1");
+	                        createBarChart(result, "stockList");
 	                    }
 	                }
 	            });
@@ -174,13 +186,36 @@
 	                        // 데이터가 변경된 경우에만 차트를 그립니다.
 	                        // 이전 데이터 업데이트
 	                        perf_compare = result; // 데이터 배열을 복사하여 참조 문제 해결
-	                        createBarChart(result, "bar_chart2");
+	                        createBarChart(result, "perfList");
 	                    }
 	                }
 	            });
 	        }
-	        
 		});
+		
+		function showTab2(tabName) {
+		    // 숨길 모든 탭을 숨깁니다.
+		    var tabs = document.getElementsByClassName('chartTab2');
+		    for (var i = 0; i < tabs.length; i++) {
+		        tabs[i].style.display = 'none';
+		    }
+
+		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
+		    var h3Elements = document.getElementsByClassName('chartTitleTab2');
+		    for (var j = 0; j < h3Elements.length; j++) {
+		        h3Elements[j].classList.remove('current');
+		    }
+
+		    // 선택한 탭을 표시합니다.
+		    var selectedTab = document.getElementById(tabName);
+		    selectedTab.style.display = 'block';
+
+		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
+		    var associatedH3 = document.querySelector('[onclick="showTab(\'' + tabName + '\')"]');
+		    associatedH3.classList.add('current');
+		}
+
+
 	</script>
 
 </body>
