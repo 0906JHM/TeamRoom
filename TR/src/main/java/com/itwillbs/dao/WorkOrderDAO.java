@@ -154,90 +154,70 @@ public class WorkOrderDAO{
 	//작업지시 수정
 	
 	public int updateWorkOrder(WorkOrderDTO udto) throws Exception {
-		logger.debug("##### DAO: updateWorkOrder() 호출");
-		
-		int rawExist = 0;
-		
-		// (udto 지시수량 - 기존컬럼 지시수량) 만큼 재고수량에서 차감
-		int originQt = readWorkOrder(udto.getWorkCode()).getWorkAmount();
-		String prodCode = udto.getProdCode();
-		
-		//원자재 소요량 목록
-		List<RequirementDTO> reqList = sqlSession.selectList(NAMESPACE + ".consumption", prodCode);
-				
-		//해당 완제품에 필요한 원자재 재고 테이블에 있는지 조회
-		List<StockDTO> stockList = new ArrayList<>();
-		stockList = sqlSession.selectList(NAMESPACE + ".reqRaw", prodCode);
-		
-		//있으면 원자재 재고수와 (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량 비교 (반복문)
-		if(stockList.size() > 0) {
-			//(udto 지시수량 - 기존컬럼 지시수량)
-			int workAmount = udto.getWorkAmount() - originQt;
-			
-			int minus = 0;
-			boolean check = true;
-			
-			for(int i=0; i<stockList.size(); i++) {
-				
-				String rawCode = stockList.get(i).getRawCode();
-				logger.debug("##### DAO 원자재 코드 = " + rawCode);
-				
-				//원자재 재고 
-				int rawStock = stockList.get(i).getStockCount();
-				logger.debug("##### DAO 원자재 재고 = " + rawStock);
-				//원자재 소요량
-				int rawReq = Integer.parseInt(reqList.get(i).getReqAmount());
-				//(udto 지시수량 - 기존컬럼 지시수량)*원자재소요량
-				minus = workAmount*rawReq;
-				logger.debug("##### DAO 지시수량*원자재 소요량 = " + minus);
-				
-				if(rawStock-minus < 0) {
-					// 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량 < 0
-					// -> 작업지시 수정 불가
-					check = false;
-					break;
-				}
-			} //for(stockList)
-			
-			if(check) {
-				for(int i=0; i<stockList.size(); i++) {
-					
-					String rawCode = stockList.get(i).getRawCode();
-					logger.debug("##### DAO 원자재 코드 = " + rawCode);
-					
-					//원자재 재고 
-					int rawStock = stockList.get(i).getStockCount();
-					logger.debug("##### DAO 원자재 재고 = " + rawStock);
-					//원자재 소요량
-					int rawReq = Integer.parseInt(reqList.get(i).getReqAmount());
-					//(udto 지시수량 - 기존컬럼 지시수량)*원자재소요량
-					minus = workAmount*rawReq;
-					logger.debug("##### DAO 지시수량*원자재 소요량 = " + minus);
-					
-					if(rawStock-minus >= 0) {
-						// 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량 >= 0
-						// -> 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량
-						stockList.get(i).setStockCount(minus);
-						sqlSession.update(NAMESPACE + ".reduceRaw", stockList.get(i));
-						logger.debug("##### DAO: 원자재 재고 차감 완료");
-						
-						rawExist = 1;
-					} //재고차감
-					
-				} //for(stockList)
-				
-				//작업지시 수정
-				int result = sqlSession.update(NAMESPACE + ".updateWorkOrder", udto);
+		 logger.debug("##### DAO: updateWorkOrder() 호출");
+		  int rawExist = 0;
+		 
+		 /* // (udto 지시수량 - 기존컬럼 지시수량) 만큼 재고수량에서 차감 int originQt =
+		 * readWorkOrder(udto.getWorkCode()).getWorkAmount(); String prodCode =
+		 * udto.getProdCode();
+		 * 
+		 * //원자재 소요량 목록 List<RequirementDTO> reqList = sqlSession.selectList(NAMESPACE +
+		 * ".consumption", prodCode);
+		 * 
+		 * //해당 완제품에 필요한 원자재 재고 테이블에 있는지 조회 List<StockDTO> stockList = new
+		 * ArrayList<>(); stockList = sqlSession.selectList(NAMESPACE + ".reqRaw",
+		 * prodCode);
+		 * 
+		 * //있으면 원자재 재고수와 (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량 비교 (반복문) if(stockList.size() >
+		 * 0) { //(udto 지시수량 - 기존컬럼 지시수량) int workAmount = udto.getWorkAmount() -
+		 * originQt;
+		 * 
+		 * int minus = 0; boolean check = true;
+		 * 
+		 * for(int i=0; i<stockList.size(); i++) {
+		 * 
+		 * String rawCode = stockList.get(i).getRawCode();
+		 * logger.debug("##### DAO 원자재 코드 = " + rawCode);
+		 * 
+		 * //원자재 재고 int rawStock = stockList.get(i).getStockCount();
+		 * logger.debug("##### DAO 원자재 재고 = " + rawStock); //원자재 소요량 int rawReq =
+		 * Integer.parseInt(reqList.get(i).getReqAmount()); //(udto 지시수량 - 기존컬럼
+		 * 지시수량)*원자재소요량 minus = workAmount*rawReq;
+		 * logger.debug("##### DAO 지시수량*원자재 소요량 = " + minus);
+		 * 
+		 * if(rawStock-minus < 0) { // 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량 < 0 //
+		 * -> 작업지시 수정 불가 check = false; break; } } //for(stockList)
+		 * 
+		 * if(check) { for(int i=0; i<stockList.size(); i++) {
+		 * 
+		 * String rawCode = stockList.get(i).getRawCode();
+		 * logger.debug("##### DAO 원자재 코드 = " + rawCode);
+		 * 
+		 * //원자재 재고 int rawStock = stockList.get(i).getStockCount();
+		 * logger.debug("##### DAO 원자재 재고 = " + rawStock); //원자재 소요량 int rawReq =
+		 * Integer.parseInt(reqList.get(i).getReqAmount()); //(udto 지시수량 - 기존컬럼
+		 * 지시수량)*원자재소요량 minus = workAmount*rawReq;
+		 * logger.debug("##### DAO 지시수량*원자재 소요량 = " + minus);
+		 * 
+		 * if(rawStock-minus >= 0) { // 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량 >= 0 //
+		 * -> 원자재 재고 - (udto 지시수량 - 기존컬럼 지시수량)*원자재 소요량
+		 * stockList.get(i).setStockCount(minus); sqlSession.update(NAMESPACE +
+		 * ".reduceRaw", stockList.get(i)); logger.debug("##### DAO: 원자재 재고 차감 완료");
+		 * 
+		 * rawExist = 1; } //재고차감
+		 * 
+		 * } //for(stockList)
+		 * 
+		 * //작업지시 수정
+		 */	int result = sqlSession.update(NAMESPACE + ".updateWorkOrder", udto);
 				logger.debug("##### DAO: update 결과 ===> " + result);
-			} //if(원자재 모두 있을 때만)
-					
-					
-		} else {
-			//없으면 
-			// -> 작업지시 수정 불가
-			logger.debug("##### DAO: 원자재 재고 없음");
-		} //if(완제품에 필요한 원자재 재고 있없)
-		
+				/*
+				 * } //if(원자재 모두 있을 때만)
+				 * 
+				 * 
+				 * } else { //없으면 // -> 작업지시 수정 불가 logger.debug("##### DAO: 원자재 재고 없음"); }
+				 * //if(완제품에 필요한 원자재 재고 있없)
+				 */
 		
 		return rawExist;
 	} //updateWorkOrder()

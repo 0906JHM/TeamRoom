@@ -18,9 +18,10 @@ public class WorkOrderDTO {
 	private String workEmpId;
 	private String changeId;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date changeDate;
+	private Date workDatechange;
 	private String workState;
 	private String workProcess;
+	private String prodName;
 	
 //	private ProductVO product;
 	

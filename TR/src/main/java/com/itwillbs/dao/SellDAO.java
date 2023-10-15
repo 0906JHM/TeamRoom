@@ -22,28 +22,60 @@ public class SellDAO {
 	private static final String namespace = "com.itwillbs.mappers.sellMapper";
 	private static final Logger logger = LoggerFactory.getLogger(SellDAO.class);;
 	
-//----------------------------------------------------- getSellList --------------------------------------------------------	
+//----------------------------------------------------- 수주 목록 --------------------------------------------------------	
 	public List<SellDTO> getSellList(SellPageDTO sellPageDTO) {
 		System.out.println("SellDAO getSellList()");
 
 		return sqlSession.selectList(namespace + ".getSellList", sellPageDTO);
 	}// getSellList
 
-//----------------------------------------------------- getSellCount --------------------------------------------------------
+//----------------------------------------------------- 수주 개수 --------------------------------------------------------
 	public int getSellCount() {
 		System.out.println("SellDAO getSellCount()");
 
 		return sqlSession.selectOne(namespace + ".getSellCount");
 	}// getSellCount
  
-//----------------------------------------------------- insertSell --------------------------------------------------------
+//----------------------------------------------------- 수주 추가 --------------------------------------------------------
 	public void insertSell(SellDTO sellDTO) {
 		System.out.println("SellDAO insertSell()");
 
 		sqlSession.insert(namespace + ".insertSell", sellDTO);
 	}// insertSell
+	
+//----------------------------------------------------- 수주 정보 보기 ---------------------------------------
+	public SellDTO getSell(String sellCode) {
+		return sqlSession.selectOne(namespace+".getSell", sellCode);
+	}//getSell
 
-//----------------------------------------------------- getSellMemo --------------------------------------------------------		
+//----------------------------------------------------- 수주 수정 ---------------------------------------	
+	public void sellUpdate(SellDTO sellDTO) {
+		sqlSession.update(namespace+".sellUpdate",sellDTO);
+		
+	}//sellUpdate
+	
+//----------------------------------------------------- 수주 삭제 --------------------------------------------------------
+	public void sellDelete(List<String> checked) throws Exception {
+
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+
+		while (it.hasNext()) {
+			String sellCode = it.next();
+			result += sqlSession.delete(namespace + ".sellDelete", sellCode);
+		}
+	}//sellDelete
+	
+//----------------------------------------------------- 비고 추가 --------------------------------------------------------
+	public void insertSellMemo(SellDTO sellDTO) {
+		System.out.println("SellDAO insertSellMemo()");
+		System.out.println(sellDTO);
+
+
+		sqlSession.insert(namespace + ".insertSellMemo", sellDTO);
+	}// insertSellMemo
+	
+//----------------------------------------------------- 비고 보기 --------------------------------------------------------		
 		public SellDTO getSellMemo(String sellCode) {
 			System.out.println("SellDAO getSellMemo()");
 			
@@ -51,36 +83,19 @@ public class SellDAO {
 	
 		}//getSellMemo
 		
-//----------------------------------------------------- sellMemoUpdate ---------------------------------------
+//----------------------------------------------------- 비고 수정 ---------------------------------------
 		public void updateSellMemo(SellDTO sellDTO) {
 			System.out.println("SellDAO updateSellMemo()");
 
 			sqlSession.update(namespace + ".updateSellMemo", sellDTO);
 		}// updateSellMemo
 
-//----------------------------------------------------- insertSellMemo --------------------------------------------------------
-		public void insertSellMemo(SellDTO sellDTO) {
-			System.out.println("SellDAO insertSellMemo()");
-			System.out.println(sellDTO);
-			
 
-			sqlSession.insert(namespace + ".insertSellMemo", sellDTO);
-		}// insertSellMemo
+
+
 		
-//----------------------------------------------------- sellDelete --------------------------------------------------------
-		public void sellDelete(List<String> checked) throws Exception {
-			
-			Iterator<String> it = checked.iterator();
-			int result = 0;
 
-			while (it.hasNext()) {
-				String sellCode = it.next();
-				result += sqlSession.delete(namespace + ".sellDelete", sellCode);
-			}
-
-	
-
-		}//sellDelete
+		
 		
 
 

@@ -5,26 +5,14 @@
   @Data public class RequirementDTO {
 	  private String reqCode;
 	  private String prodCode;
-	  private String rawCode;
 	  private String reqAmount;
-	  private String reqMemo; 
-	  
-		/*
-		 * @Override public String toString() { return "RequirementDTO [reqCode=" +
-		 * reqCode + ", prodCode=" + prodCode + ", rawCode=" + rawCode + ", reqAmount="
-		 * + reqAmount + ", reqMemo=" + reqMemo+"]"; }
-		 */
-
-	  
-		
-		 private ProdDTO prod;
-		 private RawmaterialsDTO raw; 
-		 
-  
-		
-		 public RequirementDTO() {
+	  private String reqMemo;
+	  private String rawCode;
+	  private ProdDTO prod;
+	  private RawmaterialsDTO raw; 
+	  public RequirementDTO() {
 		 prod = new ProdDTO();
-		 raw = new RawmaterialsDTO(); 
+		 raw = new RawmaterialsDTO();
 		 }
 		
   

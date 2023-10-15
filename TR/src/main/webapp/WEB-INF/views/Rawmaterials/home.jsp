@@ -93,6 +93,20 @@ function openPopup3() {
 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
 }
 
+// memo 페이지 팝업창
+function openPopup4(rawCode) {
+	// 팝업창 속성
+	var popupWidth = 450;
+	var popupHeight = 500;
+	var left = (window.innerWidth - popupWidth) / 2;
+	var top = (window.innerHeight - popupHeight) / 2;
+	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+	// 새창을 열기 위한 URL 설정
+	var url = '${pageContext.request.contextPath}/Rawmaterials/memo?rawCode=' + rawCode;
+	// 팝업창 열고 속성 설정
+	var newWindow = window.open(url, '_blank', popupFeatures);       
+}
+
 // 팝업창에서 작업 완료후 닫고 새로고침
 $(document).ready(function() {
 	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
@@ -121,7 +135,7 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
 <input type="submit" value="검색">
 </form>
 
@@ -136,6 +150,7 @@ $(document).ready(function() {
 <td>매입단가</td>
 <td>거래처</td>
 <td>창고명</td>
+<td>창고수량</td>
 <td>비고</td>
 <td></td>
 </tr>
@@ -150,16 +165,17 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawPrice}</td>
 <td>${rawmaterialsDTO.clientCode}</td>
 <td>${rawmaterialsDTO.whseCode}</td>
+<td>${rawmaterialsDTO.whseCount}</td>
 
 <!-- 비고기능 -->
-<c:choose>
+<td><c:choose>
 <c:when test="${not empty rawmaterialsDTO.rawMemo}">
-<td class="tg-llyw2"><a href="#" onclick="openSellMemo('${rawmaterialsDTO.rawCode}'); return sellMemoClose();" style="color:red;">[보기]</a></td>
+<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" style="color:black;">[보기]</a>
 </c:when>
-<c:otherwise>							
-<td class="tg-llyw2"><a href="#" onclick="addSellMemo('${rawmaterialsDTO.rawCode}'); return sellMemoClose();" style="color:#384855;">[입력]</a></td>
+<c:otherwise>
+<c:set var="rawMemo" value="" />
 </c:otherwise>
-</c:choose>
+</c:choose></td>
 
 <!-- 체크박스로 삭제 -->
 <td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
@@ -176,37 +192,5 @@ $(document).ready(function() {
 <a href="${pageContext.request.contextPath}/Rawmaterials/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
 
-<!-- 비고기능 -->
-<!-- 비고보기 -->
-<script>
-function openSellMemo(rawCode) {
-	// 팝업창 속성
-	var popupWidth = 450;
-	var popupHeight = 500;
-	var left = (window.innerWidth - popupWidth) / 2;
-	var top = (window.innerHeight - popupHeight) / 2;
-	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
-	// 새창을 열기 위한 URL 설정
-	var url = '${pageContext.request.contextPath}/Rawmaterials/sellMemo?rawCode=' + rawCode;
-	// 팝업창 열고 속성 설정
-	var newWindow = window.open(url, '_blank', popupFeatures);       
-}
-</script>
-
-<!-- 비고추가 -->
-<script>
-function addSellMemo(rawCode) {
-	// 팝업창 속성
-	var popupWidth = 450;
-	var popupHeight = 500;
-	var left = (window.innerWidth - popupWidth) / 2;
-	var top = (window.innerHeight - popupHeight) / 2;
-	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
-	// 새창을 열기 위한 URL 설정
-	var url = '${pageContext.request.contextPath}/Rawmaterials/sellMemotype?rawCode=' + rawCode+'?memotype=add';
-	// 팝업창 열고 속성 설정
-	var newWindow = window.open(url, '_blank', popupFeatures); 
-}    
-</script>
 </body>
 </html>

@@ -14,12 +14,13 @@
 <body>
 <h1>거래처</h1>
 
-<!-- button -->
-거래처 <input type="text" placeholder="등록할 거래처" id="cInput"> <input type="button" value="등록" onclick="setParentText()">
+<input id="cInput" type="hidden">
 
 <!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
+
+// 자식에서 부모페이지로 값 넣기
 function setParentText(){
 	opener.document.getElementById("pInput").value = document.getElementById("cInput").value
 	window.close();
@@ -59,7 +60,7 @@ function setParentText(){
 </tr>
 
 <c:forEach var="clientDTO" items="${clientList}">
-<tr onclick="document.getElementById('cInput').value='${clientDTO.clientCode}'; setParentText();">
+<tr onclick="document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();">
 <td>${clientDTO.clientType}</td>
 <td>${clientDTO.clientCode}</td>
 <td>${clientDTO.clientCompany}</td>

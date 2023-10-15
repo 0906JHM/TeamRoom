@@ -153,15 +153,15 @@
 <div id="pagination" class="page_wrap" >
 			<div class="page_nation" style="text-align: center; font-size: 0; position: absolute; bottom: 1%; right: 1%;">
 						<c:if test="${paging.startPage != 1 }">
-							<a class="arrow prev" href="${pageContext.request.contextPath}/search/raw?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">◀️</a>
+							<a class="arrow prev" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">◀️</a>
 						</c:if>
 					
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/search/raw?nowPage=${p }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">${p }</a>
+							<a class="active" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">${p }</a>
 						</c:forEach>
 					
 						<c:if test="${paging.endPage != paging.lastPage}">
-							<a class="arrow next" href="${pageContext.request.contextPath}/search/raw?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">▶️</a>
+							<a class="arrow next" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">▶️</a>
 						</c:if>
 					</div>
 			</div>

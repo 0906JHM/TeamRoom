@@ -4,8 +4,12 @@ body{
 	background-color: #F5F6FA;
 	height: auto;
 	}
+#fr{
+	display: block;
+    margin-top: 0em;
+    margin-block-end: 1em;
+}
 
- 
 h2 {
     font-size: 30px;
     font-weight: bold;
@@ -16,7 +20,7 @@ h2 {
     overflow-y: hidden;
 }
 .input-row{
-	 height:200%;
+	 height:23px;
 	 width:99%;
 	 border:0;
 }
@@ -67,6 +71,7 @@ box-sizing: border-box;
   color: #000000;
   text-align: center;
   font: 500 24px/24px "Inter", sans-serif;
+  cursor: pointer;
 }
 .button{
 background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
@@ -78,15 +83,29 @@ background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1
   text-align: center;
   font: 500 24px/24px "Inter", sans-serif;
   text-decoration:none;
+  cursor: pointer;
+}
+.allbutton{
+background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	width:204px;
+	height:40px;
+	border-radius:5px;
+	color: #FFFFFF;
+	border: 0;
+  text-align: center;
+  font: 500 24px/24px "Inter", sans-serif;
+  text-decoration:none;
+  cursor: pointer;
 }
 .magambutton{
 background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
 	/* width:100px;
 	height:40px; */
-	border-radius:5px;
+	border-radius:3px;
 	color: #FFFFFF;
 	border: 0;
   text-align: center;
+  cursor: pointer;
   /* font: 500 24px/24px "Inter", sans-serif; */
   text-decoration:none;
 }
@@ -126,11 +145,17 @@ align-items: center;
 	height:35px;
 	line-height:35px;
 	text-align:center;
-	background-color:#fff;
+	
 	font-size:20px;
-	color:#999999;
+	
 	text-decoration:none;
+	background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	color:#fff;	
+	border-radius:5px;
 }
+.page_nation a.active {
+	background-color:#fff;
+	color:#999999;}
 .page_nation .arrow {
 	border:1px solid #ccc;
 }
@@ -152,11 +177,7 @@ align-items: center;
 	background:#f8f8f8 url('img/page_nnext.png') no-repeat center center;
 	margin-right:0;
 }
-.page_nation a.active {
-	background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-	color:#fff;
-	
-	border-radius:5px;}
+
 .headings{
 	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	width:1570px;
@@ -172,14 +193,6 @@ align-items: center;
 	font: 500 24px/24px "Inter", sans-serif;
 }
 
-.magamBtn{
-	    border: 1px solid;
-    border-radius: 2px;
-    padding: 5px;
-    background-color: #17a2b8;
-    color: #fff;
-    text-decoration:none;
-}
 
 table.jambo_table {
   border: 1px solid rgba(221, 221, 221, 0.78); }
@@ -195,3 +208,8 @@ table.jambo_table tbody tr:hover td {
 table.jambo_table tbody tr.selected {
   background: rgba(38, 185, 154, 0.16); }
 
+/* .active-selected {
+    color: black; 텍스트 색상
+    background-color: #007bff; 배경 색상
+    다른 스타일 속성들을 여기에 추가할 수 있습니다.
+} */

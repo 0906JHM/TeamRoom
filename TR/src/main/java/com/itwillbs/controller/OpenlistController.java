@@ -32,6 +32,7 @@ import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementList;
 import com.itwillbs.domain.RequirementPageDTO;
+import com.itwillbs.domain.SellDTO;
 import com.mysql.cj.Session;
 
 @Controller
@@ -60,6 +61,9 @@ public class OpenlistController {
 		
 		else if (type.equals("client")) {
 			return "redirect:/search/client?input=" + input;
+		}
+		else if (type.equals("sell")) {
+			return "redirect:/search/sell?input=" + input;
 		}
 
 		return "";
@@ -213,6 +217,59 @@ public class OpenlistController {
 		  return "openlist/clientlist";
 		  
 		  }
+		  
+		  
+		// =====================================================================================
+
+		  
+			// 수주목록 // http://localhost:8088/search/sell
+			  
+				  @RequestMapping(value = "/sell", method = RequestMethod.GET)
+				  public String sellGET(Model model, SellDTO dto, RequirementPageDTO pdto,
+				  
+				  @RequestParam(value = "nowPage", required = false) String nowPage,
+				  
+				  @RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+				  
+				  @RequestParam(value = "input", required = false) String input) throws Exception {
+				  
+				  logger.debug("sellGET() 호출");
+				  List<SellDTO> sell = new ArrayList<SellDTO>();
+				  model.addAttribute("sell", sell);
+				  logger.debug("DTO : " + dto);
+				  
+				  if (dto.getSellCode() != null || dto.getClientCompany() != null) {
+				  
+				  logger.debug("if문 호출");
+				  int total = service.countSell(dto);
+				  System.out.println(total + "total개수");
+				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
+				  List<SellDTO> list = service.getSellList(dto, pdto);
+				  model.addAttribute("sellList", list);
+				  model.addAttribute("paging", pdto);
+				  model.addAttribute("DTO", dto);
+				  logger.debug("pdto : " + pdto);
+				  logger.debug("DTO : " + dto);
+				  
+				  logger.debug("검색 리스트 가져감");
+				  
+				  // input 추가
+				  if (input != null && !input.equals("")) {
+				  model.addAttribute("input", input);
+				  logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@"); }
+				  }
+				  else {
+					  logger.debug("else문 호출");
+				  int total = service.countSell();
+				  pdto = new RequirementPageDTO(total);
+				  logger.debug("pdto : " + pdto);
+				  List<SellDTO> list = service.getSellList(pdto);
+				  model.addAttribute("sellList", list);
+				  model.addAttribute("paging", pdto);
+				  logger.debug(" 모든 리스트 가져감"); }
+				  return "openlist/selllist";
+				  
+				  }
 	// 소요량관리
 	// http://localhost:8088/requirement/reqdetail
 	/*

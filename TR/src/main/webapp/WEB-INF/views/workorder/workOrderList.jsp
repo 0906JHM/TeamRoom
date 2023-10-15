@@ -24,6 +24,14 @@
 
 <script type="text/javascript">
 	//========================= 함수, 상수 ==================================//
+	// 팝업 옵션
+const popupOpt = "top=60,left=140,width=720,height=600";
+
+//검색 팝업
+	function searchItem(type, inputId) {
+	 	var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt);
+} //openWindow()
 
 	//오늘 날짜 yyyy-mm-dd
 	function getToday() {
@@ -50,7 +58,7 @@
 	
 	//input으로 바꾸기 
 	function inputCng(obj, type, name, value) {
-		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"' class='input-row'>";
 		obj.html(inputBox);
 	} //inputCng
 
@@ -86,39 +94,39 @@
 				tbl += " </td>";
 				// 작업지시코드
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' name='workCode' id='workCode' readonly value='";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='workCode' id='workCode' readonly value='";
 				tbl += "WO" + codeCreation();
 				tbl += "' >";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' name='lineCode' id='lineCode' required readonly >";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='lineCode' id='lineCode' readonly >";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' name='sellCode' id='sellCode' required readonly >";
+				tbl += "  <input type='text' class='input-row' name='sellCode' id='sellCode8888' required readonly >";
 				tbl += " </td>";
-				// 제품코드
+				// 제품명
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' name='prodCode' id='prodCode' required readonly >";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='prodName' id='prodName8888' readonly>";
 				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' name='workDate' id='workDate' readonly value='";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='workDate' id='workDate' readonly value='";
 				tbl += today;
 				tbl += "' >";
 				tbl += " </td>";
 				// 지시수량
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' name='workAmount' id='workAmount' required >";
+				tbl += "  <input type='number' class='input-row' value='1' min='1' name='workAmount' id='workAmount' required >";
 				tbl += " </td>";
 				//공정
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' value='대기' readonly >";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' value='1차공정' readonly >";
 				tbl += " </td>";
 				$('table').append(tbl);
 				
-				//1차공정 라인 중 사용 가능한 라인 입력
+				//1차공정공정 라인 중 사용 가능한 라인 입력
 				$.ajax({
 					url: "${pageContext.request.contextPath}/workorder/getLine",
 					type: "post",
@@ -127,38 +135,43 @@
 						$('#lineCode').val(data);
 					}
 				});
+			
+				$('#sellCode8888').click(function() {
+					searchItem("sell", "sellCode8888");
+				});
 				
 		
 
 			// 저장 -> form 제출하고 저장함
 			$('#save').click(function() {
 
-				var prodCode = $('#prodCode').val();
-				var sellCode = $('#sellCode').val();
+				var prodName = $('#prodName').val();
+				var lineCode = $('#lineCode').val();
+				var sellCode = $('#sellCode8888').val();
 				var workAmount = $('#workAmount').val();
-
-				/* if (prodCode == "" || sellCode == "" || workAmount == "") {
-// 					alert("항목을 모두 입력하세요");
+				if(lineCode == ""){
 					Swal.fire({
-						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
 						icon: 'info',
+						confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
 						width: '300px',
 					})
-				} else { */
-					$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
-					$('#fr').attr("method", "post");
-					$('#fr').submit();
-				/* } */
-
-			}); //save
-
-			//취소버튼 -> 리셋
-			/* $('#cancle').click(function() {
-				$('#fr').each(function() {
-					this.reset();
-				});
-			});  *///cancle click
-
+					
+				}
+				else{
+					 if (sellCode == "" || workAmount == "") {
+							Swal.fire({
+								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+								icon: 'info',
+								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								width: '300px',
+							})
+						} else { 
+							$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
+							$('#fr').attr("method", "post");
+							$('#fr').submit();
+						 } 
+				}}); //save
 		}); //add click
 
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
@@ -202,10 +215,11 @@
 		//수정버튼 클릭
 		$('#modify').click(function() {
 			Swal.fire({
-	            text: '수정할 행을 선택해주세요',
-	            confirmButtonColor: '#3085d6',
-	        });
-			
+				 title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "수정할 행을 선택해주세요"+ "</div>",
+				  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+		  icon: 'info', // 아이콘! 느낌표 색? 표시?
+	            confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+	         });		  
 			$('#delete').hide();
 			$('#modify').hide();
 			$('#add').hide();
@@ -244,7 +258,7 @@
 									data.workCode,
 									data.lineCode,
 									data.sellCode,
-									data.prodCode,
+									data.prodName,
 									data.workDate,
 									data.workAmount,
 									data.workProcess
@@ -254,7 +268,7 @@
 									"workCode",
 									"lineCode",
 									"sellCode",
-									"prodCode",
+									"prodName",
 									"workDate",
 									"workAmount",
 									"workProcess"
@@ -270,7 +284,13 @@
 									$(this).find("input").each(function(){
 										if($(this).attr("name") != "workAmount") {
 											$(this).attr("readonly", true);
+											$(this).attr("style","background-color:rgba(0, 0, 0, 0);");
 										}
+										else if($(this).attr("name") == "workAmount") {
+											$(this).attr("type", "number");
+											$(this).attr("min", "1");
+											}
+										
 									}); //readonly
 									
 								} //라인코드부터 다 수정 가능하게
@@ -284,28 +304,34 @@
 	
 					//저장버튼 -> form 제출
 					$('#save').click(function() {
-	
-						$('#fr').attr("action","${pageContext.request.contextPath}/workorder/modify");
+						var workAmount = $('#workAmount').val();
+						alert(workAmount);/* 
+						if(workAmount <= 0){
+							Swal.fire({
+								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "1이상의 값을 입력해주세요"+ "</div>",
+								icon: 'info',
+								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								width: '300px',
+							})
+							}
+						else{*/
+							$('#fr').attr("action","${pageContext.request.contextPath}/workorder/modify");
 						$('#fr').attr("method","post");
 						$('#fr').submit();
+						/*}
+	 */
+						
 	
 					}); //save
 
 				} //하나씩만 선택 가능
-					
-					
-				//취소버튼 -> 리셋
-				/* $('#cancle').click(function() {
-					$('#fr').each(function() {
-						this.reset();
-					});
-				});  *///cancle click
+			
 
 			}); //tr click
 
 		}); //modify click
 
-		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
+		/* //재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		queryString = window.location.search;
 		urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woModify");
@@ -339,7 +365,7 @@
 						window.location.href = newUrl;
 					}
 				});//then
-		}
+		} */
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
 		/////////////// 삭제 //////////////////////////////
@@ -394,8 +420,8 @@
 									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 							  icon: 'info', // 아이콘! 느낌표 색? 표시?
 							  showDenyButton: true,
-							  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
-							  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
+							   confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 							  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 //	 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
 							  width : '300px', // alert창 크기 조절
@@ -415,6 +441,8 @@
 		 							Swal.fire({
 										  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
 										  icon: 'success',
+										  confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+
 										  width : '300px',
 										}).then((result) => {
 										  if (result.isConfirmed) {
@@ -426,6 +454,8 @@
 									Swal.fire({
 										title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
 										icon : 'question',
+										confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+
 										width: '300px',
 										});
 									
@@ -434,6 +464,8 @@
 							  } else if (result.isDenied) {
 									Swal.fire({
 									title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+									confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+									  
 									icon : 'error',
 									width: '300px',
 									});
@@ -445,6 +477,7 @@
 						Swal.fire({
 							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 							icon : 'warning',
+							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
 							width: '300px',
 							});
 					}// 체크 XXX
@@ -463,15 +496,6 @@
 
 		//============================ 검색 =========================================//
 
-		//라인코드 검색 팝업
-		$('#search_line').click(function() {
-			openWindow("line", "search_line");
-		}); //lineCode click
-
-		//제품코드 검색 팝업
-		$('#search_prod').click(function() {
-			openWindow("prod", "search_prod");
-		}); //prodCode click
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
@@ -522,56 +546,7 @@
 		
 		
 		//작업지시코드 클릭시 상세조회
-		$('#workCode a').click(function() {
-			var obj = { workCode:$('#workCode').text().substring(0,16).trim() };
-				
-			$.ajax({
-				url : "${pageContext.request.contextPath}/workorder/detail",
-				type : "post",
-				contentType : "application/json; charset=UTF-8",
-				dataType : "json",
-				data : JSON.stringify(obj),
-				success : function(data) {
-					
-					var tmp = "<table border='1' class='table table-striped jambo_table bulk_action' style='text-align:center;'>";
-					tmp += "<tr class='headings'>";
-					tmp += " <th>작업지시코드 </th>";
-					tmp += "  <td>" + data.workCode + "</td>";
-					tmp += " <th> 라인코드 </th>";
-					tmp += "  <td>" + data.lineCode + "</td>";
-					tmp += " <th> 수주코드 </th>";
-					tmp += "  <td>" + data.sellCode + "</td>";
-					tmp += " <th> 제품코드 </th>";
-					tmp += "  <td>" + data.prodCode + "</td>";
-					tmp += "</tr>";
-					tmp += "<tr class='headings'>"; 
-					tmp += " <th> 지시일 </th>";
-					tmp += "  <td>" + data.workDate + "</td>";
-					tmp += " <th> 공정 </th>";
-					tmp += "  <td>" + data.workProcess + "</td>";
-					tmp += " <th>지시수량 </th>";
-					tmp += "  <td>" + data.workAmount + "</td>";
-					tmp += "</tr>";
-					tmp += "<tr class='headings'>";
-					tmp += " <th> 등록자 </th>";
-					tmp += ((data.empId===""||data.empId==null) ? "<td>없음</td>" : "<td>"+data.empId+"</td>");
-					tmp += " <th> 변경자 </th>";
-					tmp += ((data.changeId===""||data.changeId==null) ? "<td>없음</td>" : "<td>"+data.changeId+"</td>");
-					tmp += " <th> 변경일 </th>";
-					tmp += ((data.changeDate===""||data.changeDate==null) ? "<td>없음</td>" : "<td>"+data.changeDate+"</td>");
-					tmp += "</tr>";
-					tmp += "</table>";
-					
-					
-					$('.modal-body').html(tmp);
-					$('.modal').modal("show");
-				},
-				error: function() {
-					console.log("아작스 실패");
-				}  
-			}); //ajax
-				
-		}); //작업지시코드 클릭
+		
 		
 		
 	}); //jQuery
@@ -594,21 +569,17 @@
 		<form method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
-				<input type="hidden" name="pageSize" id="pageSize" value="${pdto.cntPerPage }">
-
-				
-					<label>라인코드</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인코드를 선택하세요." style="cursor: pointer;">
-				<label>제품코드</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품코드를 선택하세요" style="cursor: pointer;">
+				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 선택하세요." style="cursor: pointer;">
+				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요" onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
 				
 				<label>지시일자</label> 
 						<input style="width:250px;" type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
 						<label style="font: 500 24px/24px 'Inter', sans-serif;">~</label> 
 						<input style="width:250px;"type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
 				<label>지시상태&nbsp;<input type="submit"  class="button" name="search_place" id="allButton" value="전체">
-    		<input type="submit"  name="search_place" class="button" id="waitButton" value="대기">
-    		<input type="submit"  name="search_place" class="button" id="oneButton" value="1차">
-    		<input type="submit"  name="search_place" class="button" id="twoButton" value="2차">
-    		<input type="submit"  name="search_place" class="button" id="threeButton" value="3차">
+    		<input type="submit"  name="search_place" class="button" id="oneButton" value="1차공정">
+    		<input type="submit"  name="search_place" class="button" id="twoButton" value="2차공정">
+    		<input type="submit"  name="search_place" class="button" id="threeButton" value="3차공정">
     		<input type="submit"  name="search_place" class="button" id="finishButton" value="마감" ></label> 
 				<div id="button">
 			
@@ -627,7 +598,7 @@
 		
 				<div class="x_title">
 				<div class="x_total">
-					<h2><small>총 ${pdto.total } 건</small></h2>
+					<h2><small>총 ${paging.total } 건</small></h2>
 					</div>
 					<div>
 				    <!-- 버튼 제어 -->
@@ -677,7 +648,7 @@
 						<th>작업지시코드</th>
 						<th>라인코드</th>
 						<th>수주코드</th>
-						<th>제품코드</th>
+						<th>제품</th>
 						<th>지시일</th>
 						<th>지시수량</th>
 						<th>공정</th>
@@ -693,10 +664,18 @@
 						<td id="workCode">${w.workCode }</td>
 						<td id="lineCode">${w.lineCode }</td>
 						<td>${w.sellCode }</td>
-						<td id="prodCode">${w.prodCode }</td>
-						<td>${w.workDate }</td>
+						<td id="prodName">${w.prodName }</td>
+						<c:choose>
+    <c:when test="${not empty w.workDatechange}">
+        <td style="color: red;">${w.workDatechange}</td>
+    </c:when>
+    <c:otherwise>
+        <td>${w.workDate}</td>
+    </c:otherwise>
+</c:choose>
+						
 						<td id="workAmount">${w.workAmount }</td>
-						<td id="linePlace">${w.workProcess }</td>
+						<td id="workProcess">${w.workProcess }</td>
 						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
 							<td>
 								<c:if test="${w.workProcess != '마감'}">
@@ -713,6 +692,8 @@
 </div>
 
 	<div style="float:left;">
+	<button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/workorder/workOrderList?nowPage=1&cntPerPage=100&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}'">
+    테이블 전체 보기</button>
 	<button id="excelDownload" class="Button">엑셀⬇️</button>
 		
 	<script type="text/javascript">
@@ -731,25 +712,23 @@
 		$('#delete').show();
 		
     	var button = document.getElementById("allButton");
-    	
-
-        <c:if test="${requestScope.search_place == '대기'}">
-        var button = document.getElementById("waitButton");
-    </c:if>
-    <c:if test="${requestScope.search_place == '1차'}">
+    	    <c:if test="${search.search_place == '1차공정'}">
     var button = document.getElementById("oneButton");
 </c:if>
-<c:if test="${requestScope.search_place == '2차'}">
+<c:if test="${search.search_place == '2차공정'}">
 var button = document.getElementById("twoButton");
 </c:if>
-<c:if test="${requestScope.search_place == '3차'}">
+<c:if test="${search.search_place == '3차공정'}">
 var button = document.getElementById("threeButton");
 </c:if>
-<c:if test="${requestScope.search_place == '마감'}">
+<c:if test="${search.search_place == '마감'}">
 var button = document.getElementById("finishButton");
 </c:if>
-button.style.backgroundColor = "#ff5733";
-    });
+button.style.backgroundColor = "#fff";
+button.style.color = "#999999";
+});
+    
+  
 
 		
 		//엑셀
@@ -805,16 +784,30 @@ button.style.backgroundColor = "#ff5733";
 	
 	<div id="pagination" class="page_wrap">
 			<div class="page_nation">
-						<c:if test="${pdto.startPage != 1 }">
-							<a class="arrow prev" href="${pageContext.request.contextPath}/workorder/workOrderList?page=${pdto.startPage - 1 }&pageSize=${pdto.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">◀️</a>
+						<c:if test="${paging.startPage != 1 }">
+							<a class="arrow prev" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">◀️</a>
 						</c:if>
-					
-						<c:forEach begin="${pdto.startPage }" end="${pdto.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/workorder/workOrderList?page=${p }&pageSize=${pdto.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p }</a>
+						
+						
+						<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="p">
+    <c:choose>
+        <c:when test="${p eq paging.nowPage}">
+            <a class="a active" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
+        </c:when>
+        <c:otherwise>
+            <a class="a" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+					<%-- 
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+						
+							<a class="a" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p }</a>
+						
 						</c:forEach>
-					
-						<c:if test="${pdto.endPage != pdto.lastPage}">
-							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?page=${pdto.endPage + 1 }&pageSize=${pdto.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
+					 --%>
+						<c:if test="${paging.endPage != paging.lastPage}">
+							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.endPage + 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
 						</c:if>
 					</div>
 			</div>

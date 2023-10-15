@@ -55,7 +55,7 @@
         <input type="text" id="sellDuedate" name="sellDuedate" readonly><br>
 
         <label class="popupLabel">담당자 : </label>
-        <input type="search" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
+        <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
 
         <label class="popupLabel">비고 : </label><br>
         <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
