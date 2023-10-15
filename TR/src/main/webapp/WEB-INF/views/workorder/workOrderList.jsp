@@ -58,7 +58,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	
 	//input으로 바꾸기 
 	function inputCng(obj, type, name, value) {
-		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"' class='input-row'>";
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"8888' value='"+value+"' class='input-row'>";
 		obj.html(inputBox);
 	} //inputCng
 
@@ -100,11 +100,15 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='lineCode' id='lineCode' readonly >";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='lineCode' id='lineCode8888' readonly >";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
 				tbl += "  <input type='text' class='input-row' name='sellCode' id='sellCode8888' required readonly >";
+				tbl += " </td>";
+				// 제품코드
+				tbl += " <td style='display: none;'>";
+				tbl += "  <input type='hidden' name='prodCode' id='prodCode8888'>";
 				tbl += " </td>";
 				// 제품명
 				tbl += " <td>";
@@ -118,23 +122,40 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " </td>";
 				// 지시수량
 				tbl += " <td>";
-				tbl += "  <input type='number' class='input-row' value='1' min='1' name='workAmount' id='workAmount' required >";
+				tbl += "  <input type='number' class='input-row' value='1' min='1' name='workAmount' id='workAmount8888' required >";
 				tbl += " </td>";
 				//공정
 				tbl += " <td>";
 				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' value='1차공정' readonly >";
 				tbl += " </td>";
 				$('table').append(tbl);
-				
+				var lineCode
 				//1차공정공정 라인 중 사용 가능한 라인 입력
 				$.ajax({
 					url: "${pageContext.request.contextPath}/workorder/getLine",
 					type: "post",
 					dataType: "text",
 					success: function(data) {
-						$('#lineCode').val(data);
+						$('#lineCode8888').val(data);
+						lineCode = $('#lineCode8888').val();
+						if (lineCode == ""){
+							Swal.fire({
+								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
+								icon: 'info',
+								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								width: '400px',
+							}).then((result) => {
+							    if (result.isConfirmed) {
+							        // 확인 버튼을 눌렀을 때 특정 주소로 이동
+							    	window.location.href = window.location.href;
+							    }
+							});
+						}
 					}
 				});
+				
+				
+				
 			
 				$('#sellCode8888').click(function() {
 					searchItem("sell", "sellCode8888");
@@ -146,32 +167,24 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 			$('#save').click(function() {
 
 				var prodName = $('#prodName').val();
-				var lineCode = $('#lineCode').val();
+				
 				var sellCode = $('#sellCode8888').val();
-				var workAmount = $('#workAmount').val();
-				if(lineCode == ""){
-					Swal.fire({
-						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
-						icon: 'info',
-						confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-						width: '300px',
-					})
-					
-				}
-				else{
+				var workAmount = $('#workAmount8888').val();
+			
 					 if (sellCode == "" || workAmount == "") {
 							Swal.fire({
 								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
 								icon: 'info',
 								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-								width: '300px',
+								width: '400px',
 							})
 						} else { 
 							$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
 							$('#fr').attr("method", "post");
 							$('#fr').submit();
 						 } 
-				}}); //save
+				});
+				//save
 		}); //add click
 
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
@@ -188,13 +201,13 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				  confirmButtonColor: '#17A2B8', 
 				  cancelButtonColor: '#73879C', 
 				  confirmButtonText: 'Yes', 
-				  width : '300px',
+				  width : '400px',
 				
 				}).then((result) => {
 					
 					// confirm => 예를 눌렀을 때
 					if(result.isConfirmed){
-						location.href = "/stock/raw_order";
+						location.href = "${pageContext.request.contextPath}/OrderManagement/home";
 					}//if
 					//취소 눌렀을 때
 					else {
@@ -258,20 +271,24 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 									data.workCode,
 									data.lineCode,
 									data.sellCode,
+									data.prodCode,
 									data.prodName,
 									data.workDate,
 									data.workAmount,
-									data.workProcess
+									data.workProcess,
+									""
 								];
 	
 							var names = [
 									"workCode",
 									"lineCode",
 									"sellCode",
+									"prodCode",
 									"prodName",
 									"workDate",
 									"workAmount",
-									"workProcess"
+									"workProcess",
+									"magam"
 								];
 	
 							//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
@@ -304,22 +321,21 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	
 					//저장버튼 -> form 제출
 					$('#save').click(function() {
-						var workAmount = $('#workAmount').val();
-						alert(workAmount);/* 
+						var workAmount = $('#workAmount8888').val();
 						if(workAmount <= 0){
 							Swal.fire({
 								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "1이상의 값을 입력해주세요"+ "</div>",
 								icon: 'info',
 								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-								width: '300px',
+								width: '400px',
 							})
 							}
-						else{*/
+						else{
 							$('#fr').attr("action","${pageContext.request.contextPath}/workorder/modify");
 						$('#fr').attr("method","post");
 						$('#fr').submit();
-						/*}
-	 */
+						}
+	 
 						
 	
 					}); //save
@@ -331,7 +347,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 		}); //modify click
 
-		/* //재고 부족시 등록 방지, 발주페이지 이동 confirm창
+		 //재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		queryString = window.location.search;
 		urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woModify");
@@ -347,14 +363,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				  confirmButtonColor: '#17A2B8', 
 				  cancelButtonColor: '#73879C', 
 				  confirmButtonText: 'Yes', 
-				  width : '300px',
+				  width : '400px',
 				
 				}).then((result) => {
 					
 					// confirm => 예를 눌렀을 때
 					if(result.isConfirmed){
-						location.href = "/stock/raw_order";
-					}//if
+						location.href = "${pageContext.request.contextPath}/OrderManagement/home";
+					}
 					//취소 눌렀을 때
 					else {
 						var url = new URL(window.location.href);
@@ -365,7 +381,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						window.location.href = newUrl;
 					}
 				});//then
-		} */
+		} 
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
 		/////////////// 삭제 //////////////////////////////
@@ -423,8 +439,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							   confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
   cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 							  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
-//	 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
-							  width : '300px', // alert창 크기 조절
+	 						  cancelButtonText: 'No', // cancel 버튼 텍스트 지정
+							  width : '400px', // alert창 크기 조절
 							  
 							}).then((result) => {
 						
@@ -443,7 +459,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 										  icon: 'success',
 										  confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
 
-										  width : '300px',
+										  width : '400px',
 										}).then((result) => {
 										  if (result.isConfirmed) {
 										    location.reload();
@@ -456,7 +472,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 										icon : 'question',
 										confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
 
-										width: '300px',
+										width: '400px',
 										});
 									
 								}
@@ -467,7 +483,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 									confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
 									  
 									icon : 'error',
-									width: '300px',
+									width: '400px',
 									});
 						}// if(confirm)
 					});		
@@ -478,18 +494,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 							icon : 'warning',
 							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-							width: '300px',
+							width: '400px',
 							});
 					}// 체크 XXX
 		
 				}); // save
 				
 
-			//취소 -> 리셋
-			$('#cancle').click(function() {
-				$('input:checkbox').prop('checked', false);
-			});
-
+			
 		}); //delete click
 
 		//============================ 버튼 구현 ====================================//
@@ -569,7 +581,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		<form method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
-				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 선택하세요." style="cursor: pointer;">
+				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 입력하세요." style="cursor: pointer;">
 				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요" onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
 				
 				<label>지시일자</label> 
@@ -657,13 +669,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<%-- </c:if> --%>
 					</tr>
 				</thead>
-				<tr type='hidden' style='display: none;'></tr>
+				<tr style='display: none;'></tr>
 				<c:forEach var="w" items="${workList }">
 					<tr>
 						<td></td>
 						<td id="workCode">${w.workCode }</td>
-						<td id="lineCode">${w.lineCode }</td>
+						<td id="lineCode">${w.lineCode }</td>						
 						<td>${w.sellCode }</td>
+						<td style='display: none;' id="prodCode">${w.prodCode }</td>
 						<td id="prodName">${w.prodName }</td>
 						<c:choose>
     <c:when test="${not empty w.workDatechange}">
@@ -679,7 +692,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
 							<td>
 								<c:if test="${w.workProcess != '마감'}">
-									<a id="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}">공정마감</a>
+									<a name="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}">공정마감</a>
 								</c:if>
 							</td>
 						<%-- </c:if> --%>
@@ -701,6 +714,44 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
     // 페이지 로드 시 실행되는 함수
     $(document).ready(function () {
+    	 $("[name='magamBtn']").on("click", function(event) {
+    	        event.preventDefault(); // 기존 링크 동작을 막음
+
+    	        // 링크의 href 속성값을 가져옴
+    	        var url = $(this).attr("href");
+
+    	        // AJAX 요청
+    	        $.ajax({
+    	            type: "GET", // 또는 "POST" - HTTP 요청 방식 선택
+    	            url: url,
+    	            dataType: "text",
+    	            success: function(response) {
+    	            	 if(response === "")
+    	            		 {
+    	            			Swal.fire({
+    								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
+    								icon: 'info',
+    								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+    								width: '400px',
+    							}).then((result) => {
+    							    if (result.isConfirmed) {
+    							        // 확인 버튼을 눌렀을 때 특정 주소로 이동
+    							    	window.location.href = window.location.href;
+    							    }
+    							});
+    	            		 
+    	            		 }
+    	            	 else{
+    	            	 window.location.href = window.location.href;
+    	            	 }
+    	             },
+    	             error: function(error) {
+    	                 console.error("AJAX 요청 실패:", error);
+    	                 // 실패에 대한 처리를 추가하세요.
+    	             }
+    	        });
+    	    });
+    	 
     	$('table tr').each(function(index){
     		var num = "<c:out value='${paging.nowPage}'/>";
     		var num2 = "<c:out value='${paging.cntPerPage}'/>";

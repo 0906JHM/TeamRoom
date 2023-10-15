@@ -106,9 +106,15 @@
 		(#{reqCode},#{prodCode},#{rawCode},#{reqAmount},#{reqMemo})
 		
 	</insert>
-	<!-- 소요량관리 정보 다중 입력
+	<!-- 소요량관리 정보 다중 입력 -->
+	
+	<select id="findCode" resultType="int">
+		SELECT COUNT(*)
+		FROM requirement
+		WHERE prodCode = #{prodCode} AND rawCode = #{rawCode}
+    </select>
 
-	소요량관리 삭제 -->
+	<!--  소요량관리 삭제 -->
 	<delete id="deleteReq">
 		DELETE FROM requirement
 		WHERE reqCode=#{reqCode}

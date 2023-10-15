@@ -36,9 +36,9 @@ public class WorkOrderService {
 	} //removeWorkOrder()
 
 	
-	public WorkOrderDTO getWorkOrder(String work_code) throws Exception {
+	public WorkOrderDTO getWorkOrder(String workCode) throws Exception {
 		// DAO - 작업지시 조회
-		return wdao.readWorkOrder(work_code);
+		return wdao.readWorkOrder(workCode);
 	} //getWorkOrder()
 	
 	
@@ -66,9 +66,9 @@ public class WorkOrderService {
 	} //getSearchWorkOrder()
 
 	
-	public void modifyStatus(WorkOrderDTO dto) throws Exception {
+	public String modifyStatus(WorkOrderDTO dto) throws Exception {
 		// DAO - 작업지시 현재 작업 공정 변경
-		wdao.updateStatus(dto);
+		return wdao.updateStatus(dto);
 	} //modifyStatus()
 
 	

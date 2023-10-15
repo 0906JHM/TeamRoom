@@ -64,6 +64,18 @@ public class RequirementService {
 			}
 		}
 	}
+	
+public int findCode(List<RequirementDTO> req) throws Exception {
+		int findCode = 0; 
+		for (RequirementDTO reqs : req) {
+			if(reqs.getReqCode() != null) {			
+				System.out.println("@@@@@@@@@@@@@@"+reqs.getReqCode());
+				
+			findCode += pdao.findCode(reqs);
+			}
+		}
+		return findCode;
+	}
 
 	// 소요량관리 삭제
 	

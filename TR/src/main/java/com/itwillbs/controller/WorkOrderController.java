@@ -189,14 +189,14 @@ public class WorkOrderController {
 	@ResponseBody
 	@RequestMapping(value = "/detail", method = RequestMethod.POST)
 	public WorkOrderDTO getWorkOrder(@RequestBody WorkOrderDTO dto) throws Exception {
-		logger.debug("@@@@@ CONTROLLER: getWorkOrder() 호출");
+		logger.debug("@@@@@ CONTROLLER: workOrder/detail() 호출");
 		logger.debug("@@@@@ CONTROLLER: workCode = " + dto.getWorkCode());
 		
 		//서비스 - 작업지시 정보 가져오기
-		WorkOrderDTO preVO = wService.getWorkOrder(dto.getWorkCode());
-		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+		WorkOrderDTO preDTO = wService.getWorkOrder(dto.getWorkCode());
+		logger.debug("@@@@@ CONTROLLER: preDTO = " + preDTO);
 		
-		return preVO;
+		return preDTO;
 	} //getWorkOrder()
 	
 	//작업지시 수정 
@@ -212,14 +212,14 @@ public class WorkOrderController {
 	
 	//작업지시 현재 작업 공정 변경
 //	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+	@ResponseBody
 	@RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
 	public String updateStatus(WorkOrderDTO dto) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: updateStatus() 호출");
 		logger.debug("@@@@@ CONTROLLER: dto  = = = = = = > > > " + dto);
-		
-		wService.modifyStatus(dto);
-		
-		return "redirect:/workorder/workOrderList";
+		String lineCode = wService.modifyStatus(dto);
+		System.out.println("lineCode는"+lineCode);
+		return lineCode;
 	} //updateStatus()
 	
 	

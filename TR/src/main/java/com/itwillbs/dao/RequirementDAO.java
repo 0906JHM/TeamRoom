@@ -92,6 +92,10 @@ public class RequirementDAO {
 
 	}
 	
+	public int findCode(RequirementDTO req) {
+		return sqlSession.selectOne(NAMESPACE + ".findCode", req);
+	}
+	
 	// 소요량 데이터 삭제
 	 
 	public void deleteReq(List<String> checked) throws Exception {
