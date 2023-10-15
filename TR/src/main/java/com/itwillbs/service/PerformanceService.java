@@ -52,6 +52,12 @@ public class PerformanceService {
 		return perfDAO.getdetail(perfCode);
 	}
 
+	public void perfupdate(PerformanceDTO perfDTO) {
+		
+		perfDAO.perfupdate(perfDTO);
+		
+	}
+
 	
 
 

@@ -34,7 +34,7 @@
 					<!-- 3 넘김--><td>${workorderDTO.prodCode}</td>
 					<!-- 4 안넘김--><td>${workorderDTO.workDate}</td>
 					<!-- 5 넘김--><td>${workorderDTO.workAmount}</td>
-					<!-- 6 넘김--><td>${workorderDTO.lineProcess}</td>
+					<!-- 6 넘김--><td>${workorderDTO.workProcess}</td>
 				</tr>
 			</c:forEach>
 

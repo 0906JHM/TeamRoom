@@ -75,6 +75,16 @@ public class PerformanceDAO {
 		
 		return sqlsession.selectOne(namespace+".getdetail", perfCode);
 	}
+
+
+
+
+	public void perfupdate(PerformanceDTO perfDTO) {
+		
+		sqlsession.update(namespace+".perfupdate",perfDTO);
+		
+		
+	}
 	
 	
 	
