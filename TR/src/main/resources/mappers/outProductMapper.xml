@@ -353,7 +353,7 @@
 
 	<update id="updateWhseCount">
 		UPDATE stockTestTest
-		SET whseCount = #{whseCount} -
+		SET whseCount = whseCount -
 		#{outCount}
 		WHERE prodCode = #{prodCode}
 	</update>

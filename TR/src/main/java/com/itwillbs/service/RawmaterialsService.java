@@ -95,25 +95,9 @@ public class RawmaterialsService implements RawmaterialsService2 {
 		return rawmaterialsDAO.getWarehouseCount(pageDTO);
 	}
 
-	// 여기서부터 비고코드 수정하기
-	public RawmaterialsDTO getSellMemo(String rawCode) {
-		System.out.println("SellService getSellMemo()");
-		return rawmaterialsDAO.getSellMemo(rawCode);
-	}
-
-	public void updateSellMemo(RawmaterialsDTO rawmaterialsDTO) {
-		System.out.println("SellService updateSellMemo");
-		rawmaterialsDAO.updateSellMemo(rawmaterialsDTO);
-	}
-
-	public void insertSellMemo(RawmaterialsDTO rawmaterialsDTO) {
-		System.out.println("SellService insertSellMemo()");
-		rawmaterialsDAO.insertSellMemo(rawmaterialsDTO);	
-	}
-
-	public void sellDelete(RawmaterialsDTO rawmaterialsDTO) {
-		System.out.println("SellService sellDelete()");
-		rawmaterialsDAO.deleteSell(rawmaterialsDTO);
+	public RawmaterialsDTO getMemo(String rawCode) {
+		System.out.println("RawmaterialsService getMemo()");
+		return rawmaterialsDAO.getMemo(rawCode);
 	}
 	
 }

@@ -1,159 +1,205 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="javax.servlet.http.HttpServletRequest"%>
+
 <!DOCTYPE html>
 <html>
+<meta charset="UTF-8">
 <head>
-<title>Sell/sellMain.jsp</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<title>sell/sellMain.jsp</title>
 
-<%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
-<link href="${pageContext.request.contextPath }/resources/css/side.css"	rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"><!-- 수주일자 기간선택 -->
-
-
-
+<!-- side.jsp css-->
+<link href="${pageContext.request.contextPath }/resources/css/side.css"
+	rel="stylesheet" type="text/css">
+<!-- 본문 css -->
+<link
+	href="${pageContext.request.contextPath }/resources/css/product.css"
+	rel="stylesheet" type="text/css">
+<!-- 수주일자 기간선택 -->
+<link
+	href="${pageContext.request.contextPath}/resources/css/daterange.css"
+	rel="stylesheet" type="text/css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<!-- J쿼리 호출 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../resources/js/scripts.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </head>
 
-<!------------------------------------------------------- 헤더 ---------------------------------------------------->
-
-<!---------------------------------------------------- 상단 조회 및 버튼 ----------------------------------------------------->
-
-<!-- <div class="outer-container"> -->
 <body>
-    <jsp:include page="../inc/side.jsp"></jsp:include>
-	<div class="main-content" >
-	    <h2>수주 관리</h2>
-	    <div class="horizontal-line"></div>
-	    <form>
 
-	        <label>수주 코드</label>  <input type="text" >
-	        
-	        <label>거래처</label> 
+	<!------------------------------------------------------- 사이드바 ---------------------------------------------------->
+	<jsp:include page="../inc/side.jsp"></jsp:include>
+
+	<!------------------------------------------------------- 본문 타이틀 ---------------------------------------------------->
+	<div class="container">
+		<h2>수주 관리</h2>
+	
+		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
+		<div id="searchform">
+			<form action="${pageContext.request.contextPath}/sell/sellMain"
+				method="get" id="selectedProId">
+
+				<label>수주 코드</label> <input type="text"> 
+				
+				<label>거래처</label> 
 	        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
         	<input type="text" id="clientCompany9999" placeholder="거래처명" onclick=searchItem('client','clientCode9999'); readonly >
 		
-	        <label>제품</label>  
+					
+				<br>
+				
+			<label>처리 상태</label> <select name="sellState">
+					<option value="notYet">미출고</option>
+					<option value="ing">중간납품</option>
+					<option value="complete">출고완료</option>
+				</select> 
+				
+				<label>제품</label>  
 	        <input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
-		
-		
-	        <label>제품명</label> 
 	      	<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')">
 	      
-	        <br> 
-	        
-	       	<label>처리 상태</label>  <input type="text" vale=""><!--outProduct에서 출고완료 체크하면 출고완료 표시되도록 -->
-	       	<label for="startDate">수주 일자</label> 
-	       		<input type="text" name="daterange" value="" >
-			<label for="startDate">납기일자</label> 
-				<input type="text" name="daterange" value="" >
-	        
-	        <button id="btnSell" type="submit" onclick="location.href='${pageContext.request.contextPath}/sell/sellSearch'">조회</button>
-	
-	    	
-	    </form><br>
-	<div class="horizontal-line"></div>
-	<!---------------------------------------------------- 본문 테이블 ----------------------------------------------------->    
-	   <div>
-	    <button id="btnSell" onclick="openSellAdd()">추가</button>
-	  	<button id="btnSell">수정</button>
-	   	<button id="delete" >삭제</button>
-	    <button type="reset" id="btnSell">취소</button>
-	    <button id="btnSell" id="excelDownload">Excel</button>
-	   </div>
-	    
-	    <p>선택 총 0건</p>        
-	   
-	    <p> <input type="checkbox" id="select-list-all"name="select-list-all" data-group="select-list">전체 선택</p>
-	    
-	    <table class="tg" id="sellTable">
-	        <tbody>
-	            <tr>
-	           	 	<td class="tg-llyw">선택</td>
-	                <td class="tg-llyw">번호</td>
-	                <td class="tg-llyw">처리 상태</td>
-	                <td class="tg-llyw">수주 코드</td>
-	                <td class="tg-llyw">거래처 코드</td>
-	                <td class="tg-llyw">제품 코드</td>
-	                <td class="tg-llyw">제품명</td>
-	                <td class="tg-llyw">제품 단가</td>
-	                <td class="tg-llyw">수주 수량</td>
-	                <td class="tg-llyw">수주 단가</td>
-	                <td class="tg-llyw">수주 일자</td>
-	                <td class="tg-llyw">납기 일자</td>
-	                <td class="tg-llyw">담당자</td>
-	                <td class="tg-llyw">비고</td>
-	         
-	            </tr>
-	            
-	            <c:forEach var="sellDTO" items="${sellList}">
-	            <tr>
-	            	<td class="tg-llyw2"><input type="checkbox" class="item-checkbox"></td>
-	            
-	        	    <td class="tg-llyw2">${sellDTO.sellNum}</td><!-- 목록번호 --> 
-	                <td class="tg-llyw2">${sellDTO.sellState}</td><!-- 처리(출고)상태 -->
-	                <td class="tg-llyw2">${sellDTO.sellCode}</td><!-- 수주코드 -->
-	                <td class="tg-llyw2">${sellDTO.clientCode}</td><!-- 거래처코드 -->
-	                <td class="tg-llyw2">${sellDTO.prodCode}</td><!-- 제품코드 -->
-	                <td class="tg-llyw2">${sellDTO.prodName}</td><!-- 제품명 -->
-	                <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.prodPrice}" pattern="###,###원" /></td><!-- 제품단가 --> 
-	                <td class="tg-llyw2"><fmt:formatNumber value="${sellDTO.sellPrice}" pattern="###,###원" /></td><!-- 수주단가 -->
-	                <td class="tg-llyw2">${sellDTO.sellCount}</td><!-- 수주수량-->
-	                <td class="tg-llyw2">${sellDTO.sellDate}</td><!-- 수주일자 -->
-	                <td class="tg-llyw2">${sellDTO.sellDuedate}</td><!-- 납기일자  --> 
-	                <td class="tg-llyw2">${sellDTO.sellEmpId}</td><!-- 수주담당직원 -->
-						
-						<c:choose>
-							<c:when test="${not empty sellDTO.sellMemo}">
-								<td class="tg-llyw2"><a href="#"
-									onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color: red;">[보기]</a>
-								</td>
-							</c:when>
-							<c:otherwise>
+				<br>
+				
+				<label for="startDate">수주 일자</label> 
+				<input type="text" name="daterange" value=""> 
+				
+				<label for="startDate">납기일자</label>
+				<input type="text" name="daterange" value="">
+
+				<button type="submit">조회</button>
+			</form>
+		</div>
+		<br>
+		<!------------------------------------------------------- 추가, 수정, 삭제, 엑셀 버튼 ---------------------------------------------------->
+		<div class="buttons">
+			<button id="add" onclick="openSellAdd()">추가</button>
+			<button id="modify">수정</button>
+			<button id="delete">삭제</button>
+			<button id="Excel">Excel</button>
+		</div>
+
+		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
+		<small>총 ${sellPageDTO.count}건</small>
+
+		<form id="selltList">
+			<div id="sellList">
+				<table class="tg" id="sellTable">
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="select-list-all"
+								name="select-list-all" data-group="select-list"></th>
 							
-								<td class="tg-llyw2"><a href="#"
-									onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color:#384855;">[입력]</a></td>
-							</c:otherwise>
-						</c:choose>
-						
+							
+							<td>처리 상태</td>
+							<td>수주 코드</td>
+							<td>거래처 코드</td>
+							<td>제품 코드</td>
+							<td>제품명</td>
+							<td>제품 단가</td>
+							<td>수주 수량</td>
+							<td>수주 단가</td>
+							<td>수주 일자</td>
+							<td>납기 일자</td>
+							<td>담당자</td>
+							<td>비고</td>
+						</tr>
+					</thead>
+					
+					
+					
+					<tbody>
+						<c:forEach var="sellDTO" items="${sellList}">
+							<tr>
+								<td><input type="checkbox" id="select-list"
+									value="${sellDTO.sellCode}" name="selectedSellCode"
+									data-group="select-list"></td>
 
-	            </tr>
-	             </c:forEach>
-	        </tbody>
-	    </table>
-	
-<!-- </div> -->
-<div class="clear"></div>
-<!------------------------------------------------- 페이징 ------------------------------------------>
-<div id="page_control" >
+								
+								<td>${sellDTO.sellState}</td><!-- 처리(출고)상태 -->
+								
+								<td	onclick="openSellDetail()">${sellDTO.sellCode}</td><!-- 수주코드 -->
+								
+								<td>${sellDTO.clientCode}</td><!-- 거래처코드 -->
+								
+								<td>${sellDTO.prodCode}</td><!-- 제품코드 -->
+								
+								<td>${sellDTO.prodName}</td><!-- 제품명 -->
+								
+								<td><fmt:formatNumber value="${sellDTO.prodPrice}"
+										pattern="###,###원" /></td><!-- 제품단가 -->
+								
+								<td>${sellDTO.sellCount}개</td><!-- 수주수량-->
+								
+								<td><fmt:formatNumber value="${sellDTO.sellPrice}"
+										pattern="###,###원" /></td><!-- 수주단가 -->
+								
+								<td>${sellDTO.sellDate}</td><!-- 수주일자 -->
+								
+								<td>${sellDTO.sellDuedate}</td><!-- 납기일자  -->
+								
+								<td>${sellDTO.sellEmpId}</td><!-- 수주담당직원 -->
+								
 
-<c:forEach var="i" begin="${sellPageDTO.startPage}" 
-                   end="${sellPageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}"
-	style="text-decoration: none; color: #5EC397;">${i}</a> 
-</c:forEach>
+								<c:choose>
+									<c:when test="${not empty sellDTO.sellMemo}">
+										<td class="tg-llyw2"><a href="#"
+											onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();"
+											style="color: red;">[보기]</a></td>
+									</c:when>
+									<c:otherwise>
 
-<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
-	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
-	style="text-decoration: none; color: #5EC397;">◀</a>
-</c:if>
+										<td class="tg-llyw2"><a href="#"
+											onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();"
+											style="color: #384855;">[입력]</a></td>
+									</c:otherwise>
+								</c:choose>
 
 
-<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
-	<a href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}" 
-	style="text-decoration: none; color: #5EC397;">▶</a>
-</c:if>
+							</tr>
+						</c:forEach>
+					</tbody>
 
-</div>
-</div>
-</body>
+				</table>
+			</div>
+			<!------------------------------------------------- 페이징 ------------------------------------------>
+			<c:forEach var="i" begin="${sellPageDTO.startPage}"
+				end="${sellPageDTO.endPage}" step="1">
+				<a
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}"
+					style="text-decoration: none; color: #5EC397;">${i}</a>
+			</c:forEach>
 
-<!---------------------------------------------- javascript ---------------------------------------------->
-<script type="text/javascript">
+			<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
+				<a
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
+					style="text-decoration: none; color: #5EC397;">◀</a>
+			</c:if>
 
+
+			<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
+				<a
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}"
+					style="text-decoration: none; color: #5EC397;">▶</a>
+			</c:if>
+
+
+		</form>
+	</div>
+
+
+	<!--################################################################ script ###################################################################-->
+	<script>
+
+var contextPath = "${pageContext.request.contextPath}";
+
+<!------------------------------------------------- 팝업창 옵션 ------------------------------------------>
 //팝업 옵션
 const popupOpt = "top=60,left=140,width=720,height=600";
 
@@ -163,100 +209,87 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 
-
-$(document).ready(function() {
-    $('#add').click(function(event) {
-        event.preventDefault();
-        addRow();
-    });
-    
-    $('#save').click(function(event) {
-        event.preventDefault();
-        saveData();
-    })
-});
-
-var rowCount = 1; // 초기 행 번호 설정
-
-function addRow() {
-    var table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
-    
-    var numRowsToAdd = 1; // 한 번에 추가할 행의 개수
-
-    for (var i = 0; i < numRowsToAdd; i++) {
-        var newRow = table.insertRow(table.rows.length);
-
-        for (var j = 0; j < 10; j++) {
-            var cell = newRow.insertCell(j);
-
-            if (j === 0) {
-                // 첫 번째 셀에는 일련번호 설정 (rowCount 사용)
-                cell.innerHTML = rowCount++;
-            } else {
-                // 나머지 셀에는 입력 필드 추가
-                cell.innerHTML = '<input type="text">';
-            }
-            
-        }
-    }
-}
-
-function saveData() {
-    var table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
-    var newRow = table.rows[table.rows.length - 1]; // 마지막 행 가져오기
-
-    var data = []; // 행의 데이터를 저장할 배열
-
-    for (var j = 1; j < 10; j++) {
-        var inputElement = newRow.cells[j].querySelector('input');
-        var cellValue = inputElement.value;
-        data.push(cellValue);
-        
-        // 값을 저장한 후 입력 필드를 비활성화(disabled) 상태로 변경
-        inputElement.setAttribute('disabled', 'disabled');
-    }
-
-    // 여기서 data 배열에 저장된 데이터를 원하는 방식으로 처리하면 됩니다.
-    // 예를 들어, 서버에 전송하거나 로컬 스토리지에 저장할 수 있습니다.
-
-    // 데이터 처리 후, 필요한 작업을 수행하세요.
-    alert('데이터가 저장되었습니다: ');
-}
-</script>
-
 <!--------------------------------------------------- 목록 전체 선택 ----------------------------------------->
-<script>
-	// 전체선택
-	document.getElementById("select-list-all").addEventListener(
-			"click",
-			function() {
-				var itemCheckboxes = document
-						.querySelectorAll(".item-checkbox");
-				var selectAllButton = document
-						.getElementById("select-list-all");
-
-				// 모든 아이템을 선택 상태로 만들거나 해제
-				var areAllSelected = true;
-				for (var i = 0; i < itemCheckboxes.length; i++) {
-					if (!itemCheckboxes[i].checked) {
-						areAllSelected = false;
-						break;
-					}
-				}
-				for (var i = 0; i < itemCheckboxes.length; i++) {
-					itemCheckboxes[i].checked = !areAllSelected;
-				}
-			});//select-list-all
+$(document).ready(function() {
+$('#select-list-all').click(function() {
+			var checkAll = $(this).is(":checked");
 			
-			// 숫자를 ###,### 원 형식으로 포맷하는 함수
-		    function formatCurrency(number) {
-		        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
-		    }
-</script>
+			if(checkAll) {
+				$('input:checkbox').prop('checked', true);
+			} else {
+				$('input:checkbox').prop('checked', false);
+			}
+		});
+
+<!--------------------------------------------------- 수주 삭제 ----------------------------------------->
+$('#delete').click(function(event){	
+
+		var checked = [];
+		
+		$('input[name=selectedSellCode]:checked').each(function(){
+			checked.push($(this).val());
+		});
+
+		if(checked.length > 0) {
+			Swal.fire({
+				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+				  icon: 'info', // 아이콘! 느낌표 색? 표시?
+				  showDenyButton: true,
+				  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
+				  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
+				  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
+//					  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+				  width : '300px', // alert창 크기 조절
+				  
+				}).then((result) => {
+			
+			 /* confirm => 예 눌렀을 때  */
+			  if (result.isConfirmed) {
+				$.ajax({
+						url: "${pageContext.request.contextPath}/product/delete",
+						type: "POST",
+						data: {checked : checked},
+						dataType: "text",	
+						success: function () {
+							Swal.fire({
+							  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+							  icon: 'success',
+							  width : '300px',
+							}).then((result) => {
+							  if (result.isConfirmed) {
+							    location.reload();
+							  }
+							});
+					},
+					error: function () {
+						Swal.fire({
+							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+							icon : 'question',
+							width: '300px',
+							});	
+					}
+				});//ajax
+				  } else if (result.isDenied) {
+						Swal.fire({
+						title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+						icon : 'error',
+						width: '300px',
+						});
+			}// if(confirm)
+		});		
+			
+		}// 체크 null
+		else{
+			Swal.fire({
+				title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+				icon : 'warning',
+				width: '300px',
+				});
+		}
+}); 
+});// end function
 
 <!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
-<script>
-
 	$(function() {
 		$('input[name="daterange"]').daterangepicker({
 			autoUpdateInput : false,
@@ -278,14 +311,11 @@ function saveData() {
 		$('.cancelBtn').text('취소');
 		$('.applyBtn').text('적용');
 	});
-</script>
 
 <!--------------------------------------------------- 수주 추가 ----------------------------------------->
-<script type="text/javascript">
-// 팝업 창을 열기 위한 JavaScript 함수를 정의합니다.
 function openSellAdd() {
 
-    // 팝업 창의 속성을 설정합니다.
+    // 팝업 창 
     var popupWidth = 500;
     var popupHeight = 700;
     var left = (window.innerWidth - popupWidth) / 2;
@@ -294,7 +324,7 @@ function openSellAdd() {
                         ',left=' + left + ',top=' + top +
                         ',resizable=yes,scrollbars=yes';
 
-    // selladd.jsp 파일을 팝업 창으로 엽니다.
+    // selladd.jsp 파일을 팝업 창 오픈
     window.open( '${pageContext.request.contextPath}/sell/sellAdd','popupUrl', popupFeatures);
     
     function submitClose() {
@@ -304,70 +334,27 @@ function openSellAdd() {
         window.close();
     }
 } 
-</script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-<!-------------------------------------------------- 수주 삭제 ------------------------------------------->
-<script>
-// 삭제 버튼 클릭 시 실행되는 함수
-$('#delete').click(function(event) {	
-    var checked = [];
-    $('input[name=selectedSellCode]:checked').each(function() {
-        checked.push($(this).val());
-    });
-    
-    if (checked.length > 0) {
-        Swal.fire({
-            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" + checked.length + "건\n정말 삭제하시겠습니까?" + "</div>",
-            icon: 'info',
-            showDenyButton: true,
-            confirmButtonColor: '#17A2B8',
-            cancelButtonColor: '#73879C',
-            confirmButtonText: 'Yes',
-        }).then((result) => {
-            // confirm => 예 버튼 클릭 시 실행되는 코드
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/sell/sellDelete",
-                    type: "POST",
-                    data: {checked: checked},
-                    dataType: "text",
-                    success: function () {
-                        Swal.fire({
-                            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" + checked.length + "건 삭제 완료",
-                            icon: 'success',
-                            width: '300px',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    },
-                    error: function () {
-                        Swal.fire({
-                            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "삭제 중 오류가 발생했습니다",
-                            icon: 'question',
-                            width: '300px',
-                        });
-                    }
-                }); // ajax
-            } else if (result.isDenied) {
-                Swal.fire({
-                    title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "삭제가 취소되었습니다",
-                    icon: 'error',
-                    width: '300px',
-                });
-            }
-        });
-    }
-});
-</script>
-
-
+<!--------------------------------------------------- 수주 수정, 수주 정보 보기 ----------------------------------------->
+function openSellDetail() {
+	// 팝업 창 
+    var popupWidth = 500;
+    var popupHeight = 700;
+    var left = (window.innerWidth - popupWidth) / 2;
+    var top = (window.innerHeight - popupHeight) / 2;
+    var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
+                        ',left=' + left + ',top=' + top +
+                        ',resizable=yes,scrollbars=yes';
+	
+    window.open( '${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}','popupUrl', popupFeatures);
+	
+    function submitClose() {
+    	 window.close();
+	
+	}
+}
 <!--------------------------------------------------- 비고 보기 ----------------------------------------->
-<script>
+
     function openSellMemo(sellCode) {
         // 팝업 창의 속성을 설정합니다.
         var popupWidth = 450;
@@ -384,10 +371,10 @@ $('#delete').click(function(event) {
         // 팝업 창을 열고 속성 설정
         var newWindow = window.open(url, '_blank', popupFeatures);       
     }
-</script>
+
 
 <!--------------------------------------------------- 비고 추가 ----------------------------------------->
-<script>
+
     function addSellMemo(sellCode) {
         // 팝업 창의 속성을 설정합니다.
         var popupWidth = 450;
@@ -406,62 +393,16 @@ $('#delete').click(function(event) {
     
  // 팝업창에서 작업 완료후 닫고 새로고침
     $(document).ready(function() {
-    	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
-        if (refreshAndClose) {
-            window.opener.location.reload(); // 부모창 새로고침
-            window.close(); // 현재창 닫기
-        }
+//     	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+//         if (refreshAndClose) {
+//             window.opener.location.reload(); // 부모창 새로고침
+//             window.close(); // 현재창 닫기
+//         }
+           
+        document.addEventListener('DOMContentLoaded', ()=> {
+    		excelDownload.addEventListener('click', exportExcel);
+       	});
     });
  </script>
-    <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
-    <script>
-    const excelDownload = document.querySelector('#excelDownload');
-	
-	document.addEventListener('DOMContentLoaded', ()=> {
-		excelDownload.addEventListener('click', exportExcel);
-	});
-	
-	function exportExcel() {
-		//1. workbook 생성
-		var wb = XLSX.utils.book_new();
-		
-		//2. 시트 만들기
-		var newWorksheet = excelHandler.getWorksheet();
-		
-		//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
-		XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-		
-		//4. 엑셀 파일 만들기
-		var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-		
-		//5. 엑셀 파일 내보내기
-		saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
-		
-	} //exportExcel()
-	
-	var excelHandler = {
-		getExcelFileName : function() {
-			return 'sellList'+getToday()+'.xlsx'; //파일명
-		},
-		getSheetName : function() {
-			return 'Sell Sheet'; //시트명
-		},
-		getExcelData : function() {
-			return document.getElementById('data-table'); //table id
-		},
-		getWorksheet : function() {
-			return XLSX.utils.table_to_sheet(this.getExcelData());
-		}
-	} //excelHandler
-	
-	function s2ab(s) {
-		var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-		var view = new Uint8Array(buf);  
-		for(var i=0; i<s.length; i++) {
-			view[i] = s.charCodeAt(i) & 0xFF;
-		}
-		return buf;
-	} //s2ab(s)
-</script>
-
+</body>
 </html>

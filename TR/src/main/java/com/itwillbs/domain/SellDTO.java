@@ -24,6 +24,7 @@ public class SellDTO {
 	private int sellNum; //수주번호
 	private String sellPrice; //수주단가	
 	private String prodPrice;//제품단가 1ea
+	private String clientCompany;
 
 	
 }//class

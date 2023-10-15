@@ -160,7 +160,7 @@
 			<if test="clientCode != ''">
 				clientCode like concat ('%', #{clientCode}, '%')
 			</if>
-			<if test="rawName != ''">
+			<if test="clientCompany != ''">
 				and clientCompany like concat ('%', #{clientCompany}, '%')
 			</if>
 		</where>
@@ -176,7 +176,78 @@
 			<if test="clientCode != ''">
 				clientCode like concat ('%', #{clientCode}, '%')
 			</if>
-			<if test="rawName != ''">
+			<if test="clientCompany != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	
+	<!-- ////////////////////////////////////////////////////////////////
+
+	수주 총 게시글 갯수 출력 -->
+	<select id="countSell" resultType="int">
+		SELECT COUNT(*)
+		FROM sell s
+		LEFT JOIN clients c on s.clientCode = c.clientCode
+		LEFT JOIN product p on s.prodCode = p.prodCode
+		
+	</select>
+	<!-- 수주관리 총 게시글 갯수 출력
+
+	수주 목록 불러오기 -->
+	<resultMap id="sell"
+		type="com.itwillbs.domain.SellDTO">
+
+		<id property="sellCode" column="sellCode" />
+		<result property="clientCompany" column="clientCompany" />
+
+	</resultMap>
+
+	<select id="readSell" resultMap="sell"
+		resultType="SellDTO">
+		SELECT *
+		FROM sell s
+		LEFT JOIN clients c on s.clientCode = c.clientCode
+		LEFT JOIN product p on s.prodCode = p.prodCode
+		
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select>
+	<!-- 수주 목록 불러오기
+
+	수주 검색 게시글 갯수 출력 -->
+	<select id="countSearchSell" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM sell s
+		LEFT JOIN clients c on s.clientCode = c.clientCode
+		LEFT JOIN product p on s.prodCode = p.prodCode
+		<where>
+			<if test="sellCode != ''">
+				sellCode like concat ('%', #{sellCode}, '%')
+			</if>
+			<if test="clientCompany != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+		</where>
+	</select>
+	<!-- 수주 검색 게시글 갯수 출력
+
+	수주 검색리스트 불러오기 -->
+	<select id="readSearchSell" parameterType="hashMap"
+		resultMap="sell" resultType="SellDTO">
+		SELECT *
+		FROM sell s
+		LEFT JOIN clients c on s.clientCode = c.clientCode
+		LEFT JOIN product p on s.prodCode = p.prodCode
+		<where>
+			<if test="sellCode != ''">
+				sellCode like concat ('%', #{sellCode}, '%')
+			</if>
+			<if test="clientCompany != ''">
 				and clientCompany like concat ('%', #{clientCompany}, '%')
 			</if>
 		</where>
@@ -189,14 +260,14 @@
 	<!-- //////////////////////////////////////////////////////////////// -->
 
 	<!-- 소요량관리 총 게시글 갯수 출력 -->
-	<select id="countReq" resultType="int">
+	<!-- <select id="countReq" resultType="int">
 		SELECT COUNT(*)
 		FROM requirement
-	</select>
+	</select> -->
 	<!-- 소요량관리 총 게시글 갯수 출력
 
 	소요량관리 목록 불러오기 -->
-	<resultMap id="requirements"
+	<!-- <resultMap id="requirements"
 		type="com.itwillbs.domain.RequirementDTO">
 
 		<id property="reqCode" column="reqCode" />
@@ -208,13 +279,13 @@
 		 <collection property="prod" ofType="com.itwillbs.domain.ProdDTO">
 			<result property="prodName" column="prodName" />
 		</collection>
-
+ -->
 		<!-- <collection property="raw"
 			ofType="com.itwillbs.domain.RawmaterialsDTO">
 			<result property="rawName" column="rawName" />
 		</collection> -->
 
-	</resultMap>
+	<!-- </resultMap> -->
 
 	<!-- <select id="readReq" resultMap="requirements"
 		resultType="com.itwillbs.domain.RequirementDTO">
@@ -226,7 +297,7 @@
 		order by 1 desc 
 		limit #{start}, #{cntPerPage}
 	</select> -->
-	<select id="readReq" resultMap="requirements"
+	<!-- <select id="readReq" resultMap="requirements"
 		resultType="com.itwillbs.domain.RequirementDTO">
 		SELECT r.*, p.prodName
 		FROM requirement r
@@ -234,7 +305,7 @@
 		product p on p.prodCode = r.prodCode
 		order by 1 desc 
 		limit #{start}, #{cntPerPage}
-	</select>
+	</select> -->
 	<!-- 소요량관리 목록 불러오기
 
 	소요량관리 검색 게시글 갯수 출력 -->
@@ -256,7 +327,7 @@
 			</if>
 		</where>
 	</select> -->
-	<select id="countSearchReq" parameterType="hashMap"
+	<!-- <select id="countSearchReq" parameterType="hashMap"
 		resultType="int">
 		SELECT COUNT(*)
 		FROM requirement				
@@ -271,7 +342,7 @@
 				and rawCode = #{rawCode}
 			</if>
 		</where>
-	</select>
+	</select> -->
 	<!-- 소요량관리 검색 게시글 갯수 출력
 
 	소요량관리 검색리스트 불러오기 -->
@@ -297,7 +368,7 @@
 		order by 1 desc
 		limit #{start},#{cntPerPage}
 	</select> -->
-	<select id="readSearchReq" parameterType="hashMap"
+	<!-- <select id="readSearchReq" parameterType="hashMap"
 		resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
 		SELECT *
 		FROM requirement
@@ -316,15 +387,15 @@
 		order by 1 desc
 		limit #{start},#{cntPerPage}
 	</select>
-	<!-- 소요량관리 검색리스트 불러오기
+	소요량관리 검색리스트 불러오기
 	
-	소요량관리 추가버튼 클릭 시 품목코드 가져가기 -->
+	소요량관리 추가버튼 클릭 시 품목코드 가져가기
 	<select id="readReqCode" resultType="String">
 		select reqCode from requirement order by reqCode desc limit 1;
 	</select>
-	<!-- 소요량관리 추가버튼 클릭 시 품목코드 가져가기
+	소요량관리 추가버튼 클릭 시 품목코드 가져가기
 
-	소요량관리 정보 다중 입력 -->
+	소요량관리 정보 다중 입력
 	<insert id="reqIn">
 	
 		insert into requirement
@@ -332,16 +403,16 @@
 		(#{reqCode},#{prodCode},#{rawCode},#{reqAmount},#{reqMemo})
 		
 	</insert>
-	<!-- 소요량관리 정보 다중 입력
+	소요량관리 정보 다중 입력
 
-	소요량관리 삭제 -->
+	소요량관리 삭제
 	<delete id="deleteReq">
 		DELETE FROM requirement
 		WHERE reqCode=#{reqCode}
 	</delete>
-	<!-- 소요량관리 삭제
+	소요량관리 삭제
 	
-	소요량관리 수정 시 조회 -->
+	소요량관리 수정 시 조회
 	<select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
 		SELECT r.*,p.prodName
 		FROM requirement r
@@ -350,7 +421,7 @@
 		WHERE
 		reqCode=#{reqCode}
 	</select>
-	<!-- <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
+	<select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
 		SELECT r.*,p.prodName ,rm.rawName
 		FROM requirement r
 		join
@@ -359,16 +430,16 @@
 		r.rawCode = rm.rawCode
 		WHERE
 		reqCode=#{reqCode}
-	</select> -->
-	<!-- 소요량관리 수정 시 조회
+	</select>
+	소요량관리 수정 시 조회
 
-	소요량관리 수정 -->
+	소요량관리 수정
 	<update id="updateReq">
 		UPDATE requirement
 		SET reqCode=#{reqCode},prodCode=#{prodCode},rawCode=#{rawCode},reqAmount=#{reqAmount},
 		reqMemo=#{reqMemo}
 		WHERE reqCode=#{reqCode}
-	</update>
+	</update> -->
 	<!-- 소요량관리 수정
 
 	//////////////////////////////////////////////////////////////// -->

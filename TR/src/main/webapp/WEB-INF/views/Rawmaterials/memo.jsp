@@ -16,12 +16,10 @@
 
 <!-- form -->
 <form>
-<textarea id="rawMemo" readonly="readonly" style="width: 350px; height: 250px;">${rawmaterialsDTO.rawMemo}</textarea><br>
+<textarea id="rawMemo" readonly="readonly" style="width:350px; height:250px;">${rawmaterialsDTO.rawMemo}</textarea><br>
 <input type="hidden" name="rawCode" value="${rawmaterialsDTO.rawCode}"/>
-
-<!-- button -->
-<button type="button" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/sellMemotype?rawCode=${rawmaterialsDTO.rawCode}&memotype=modify'">수정</button>
 <button type="button" onclick="window.close()">닫기</button>
 </form>
+
 </body>
 </html>

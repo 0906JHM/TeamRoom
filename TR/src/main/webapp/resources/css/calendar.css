@@ -38,3 +38,16 @@ body {
 	width: 70%;
 	height: 70%;
 }
+
+.flex-container {
+    display: flex;
+    flex-direction: row; /* 기본값이므로 생략해도 됩니다. */
+    justify-content: center;
+    text-align: center;
+ 	gap: 1%;
+}
+
+.chartTitleTab1.current, .chartTitleTab2.current {
+    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1); /* 원하는 배경 색상으로 변경하세요 */
+}
+

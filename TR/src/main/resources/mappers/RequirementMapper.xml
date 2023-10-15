@@ -35,22 +35,14 @@
 
 	 <select id="readReq" resultMap="requirements"
 		resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.* , p.prodName ,rm.rawName
+		SELECT r.* , p.prodName ,rm.*
 		FROM requirement r
 		LEFT JOIN product p on p.prodCode = r.prodCode
 		LEFT JOIN rawMaterial rm on r.rawCode = rm.rawCode
 		order by 1 desc 
 		limit #{start}, #{cntPerPage}
 	</select> 
-	<!-- <select id="readReq" resultMap="requirements"
-		resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*, p.prodName
-		FROM requirement r
-		left join
-		product p on p.prodCode = r.prodCode
-		order by 1 desc 
-		limit #{start}, #{cntPerPage}
-	</select> -->
+	
 	<!-- 소요량관리 목록 불러오기
 
 	소요량관리 검색 게시글 갯수 출력 -->
@@ -64,73 +56,40 @@
 				r.reqCode like concat ('%', #{reqCode}, '%')
 			</if>
 			<if test="prodCode != ''">
-				and r.prodCode = #{prodCode}
+				and r.prodCode like concat ('%', #{prodCode}, '%')
 			</if>
 			<if test="rawCode != ''">
-				and r.rawCode = #{rawCode}
+				and r.rawCode like concat ('%', #{rawCode}, '%')
 			</if>
 		</where>
 	</select>
-	<!-- <select id="countSearchReq" parameterType="hashMap"
-		resultType="int">
-		SELECT COUNT(*)
-		FROM requirement				
-		<where>
-			<if test="reqCode != ''">
-				reqCode like concat ('%', #{reqCode}, '%')
-			</if>
-			<if test="prodCode != ''">
-				and prodCode = #{prodCode}
-			</if>
-			<if test="rawCode != ''">
-				and rawCode = #{rawCode}
-			</if>
-		</where>
-	</select> -->
+	
 	<!-- 소요량관리 검색 게시글 갯수 출력
 
 	소요량관리 검색리스트 불러오기 -->
 	 <select id="readSearchReq" parameterType="hashMap"
 		resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*,p.prodName ,rm.rawName
+		SELECT r.*,p.prodName ,rm.*
 		FROM requirement r
 		LEFT join product p on
 		p.prodCode = r.prodCode
-		JOIN rawMaterial rm on r.rawCode =
+		LEFT JOIN rawMaterial rm on r.rawCode =
 		rm.rawCode
 		<where>
 			<if test="reqCode != ''">
 				r.reqCode like concat ('%', #{reqCode}, '%')
 			</if>
 			<if test="prodCode != ''">
-				and r.prodCode = #{prodCode}
+				and r.prodCode like concat ('%', #{prodCode}, '%')
 			</if>
 			<if test="rawCode != ''">
-				and r.rawCode = #{rawCode}
+				and r.rawCode like concat ('%', #{rawCode}, '%')
 			</if>
 		</where>
 		order by 1 desc
 		limit #{start},#{cntPerPage}
 	</select> 
-	<!-- <select id="readSearchReq" parameterType="hashMap"
-		resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT *
-		FROM requirement
-		
-		<where>
-			<if test="reqCode != ''">
-				reqCode like concat ('%', #{reqCode}, '%')
-			</if>
-			<if test="prodCode != ''">
-				and prodCode = #{prodCode}
-			</if>
-			<if test="rawCode != ''">
-				and rawCode = #{rawCode}
-			</if>
-		</where>
-		order by 1 desc
-		limit #{start},#{cntPerPage}
-	</select> -->
+	
 	<!-- 소요량관리 검색리스트 불러오기
 	
 	소요량관리 추가버튼 클릭 시 품목코드 가져가기 -->
@@ -166,7 +125,7 @@
 		reqCode=#{reqCode}
 	</select> -->
 	 <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*,p.prodName ,rm.rawName
+		SELECT r.*,p.prodName ,rm.*
 		FROM requirement r
 		LEFT join
 		product p on p.prodCode = r.prodCode

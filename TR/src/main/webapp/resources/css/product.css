@@ -4,22 +4,26 @@ body {
 	background-color: #F5F6FA;
 }
 
-.container{
+.container {
 	display: flex;
 	flex-direction: column;
 }
 
-h2{
+h2 {
 	font-size: 30px;
 	font-weight: bold;
 	padding-left: 1%;
+}
+
+.tab{
+	border: 1px solid rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 }
 
 label {
 	font: 500 18px/18px "Inter", sans-serif;
 }
 
-hr{
+hr {
 	background: #adb5bb;
 	width: 1570px;
 	height: 2px;
@@ -29,7 +33,7 @@ hr{
 	transform: rotate(0deg) scale(1, -1);
 }
 
-#selectedProId input{
+#selectedProId input {
 	border: 1px solid #adb5bb;
 	border-radius: 5px;
 	width: 300px;
@@ -38,12 +42,12 @@ hr{
 	padding-left: 10px;
 }
 
-#con{
+#con {
 	display: flex;
 	flex-direction: column;
 }
 
-button{
+button {
 	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
 	width: 100px;
 	height: 40px;
@@ -55,33 +59,44 @@ button{
 }
 
 table {
- 	border: 1px solid rgba(221, 221, 221, 0.78); 
-	margin : 0 auto;
-  	color: #000000; 
-  	max-width:1570px;
-  	font: 500 18px/18px "Inter", sans-serif;
-  	text-align: center;
-  	
+	border: 1px solid rgba(221, 221, 221, 0.78);
+	margin: 0 auto;
+	color: #000000;
+	max-width: 1570px;
+	font: 500 18px/18px "Inter", sans-serif;
+	text-align: center;
 }
 
+/* 사이드바랑 겹치는거 */
+tr td{
+	font: 500 18px/18px "Inter", sans-serif !important;
+}
+tr th{
+	font-weight: bold !important;
+/* 	font: 500 20px/20px "Inter", sans-serif !important; */
+	padding: 0 15px !important;
+	border: 1px solid #F5F6FA !important;
+}
+
+
 /* 체크박스 크기조정 */
-#productTable th:first-child,
-#productTable td:first-child {
-    min-width: 20px !important;
+#productTable th:first-child, #productTable td:first-child {
+	min-width: 20px !important;
 }
 
 table th, table td {
 	min-width: 100px;
-    white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
-    padding: 0 15px;
+	white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+	padding: 0 15px;
 }
 
 table thead tr {
-  	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
-	width:1570px;
-	height:45px;
+	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width: 1570px;
+	height: 45px;
 	font: 500 20px/20px "Inter", sans-serif;
 }
+
 table td {
 	height: 45px;
 }
@@ -94,7 +109,7 @@ table tbody tr:nth-child(odd) {
 	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
 }
 
-.buttons{
+.buttons {
 	display: flex;
 	justify-content: flex-end;
 	gap: 1%;
@@ -102,7 +117,7 @@ table tbody tr:nth-child(odd) {
 	margin-top: 15px;
 }
 
-#searchform{
+#searchform {
 	display: flex;
 	align-items: center;
 	gap: 1%;
@@ -111,7 +126,7 @@ table tbody tr:nth-child(odd) {
 	padding-left: 1%;
 }
 
-h3{
+h3 {
 	display: block;
 }
 
@@ -121,4 +136,26 @@ h3{
 	margin: 0 auto;
 }
 
+.page a {
+	margin: 0;
+	padding: 0;
+	background-color: rgba(94, 195, 151, 1);
+	border-radius: 5px;
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	font-size: 20px;
+	cursor: pointer;
+	display: inline-block; /* display를 inline-block으로 변경하여 가로 정렬을 가능하게 함 */
+	margin-right: 5px; /* 각 링크 사이의 간격을 추가 */
+	text-decoration: none; /* 하이퍼링크 효과 제거 */
+	color: #FFFFFF; /* 링크의 텍스트 색상 설정 */
+}
 
+.page{
+	margin: 25px 0;
+	display: flex;
+	padding-right: 1%;
+	justify-content: flex-end;
+}

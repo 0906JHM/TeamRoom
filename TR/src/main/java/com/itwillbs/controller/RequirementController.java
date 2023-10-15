@@ -66,6 +66,7 @@ public class RequirementController {
 		List<RequirementDTO> reqs = new ArrayList<RequirementDTO>();
 		model.addAttribute("reqs", reqs);
 		logger.debug("DTO : " + dto);
+		
 
 		if (dto.getReqCode() != null || dto.getProdCode() != null || dto.getRawCode() != null) {
 
@@ -80,7 +81,7 @@ public class RequirementController {
 			List<RequirementDTO> list = service.getReqList(dto, pdto);
 			model.addAttribute("reqList", list);
 			model.addAttribute("paging", pdto);
-			model.addAttribute("DTO", dto);
+			model.addAttribute("dto", dto);
 			logger.debug("pdto : " + pdto);
 			logger.debug("DTO : " + dto);
 

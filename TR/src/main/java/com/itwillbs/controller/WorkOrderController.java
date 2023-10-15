@@ -53,15 +53,15 @@ public class WorkOrderController {
 			
 			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
 			
-			search.put("startPage", pdto.getStartPage());
-			search.put("cntPerPage", pdto.getCntPerPage());
-			//서비스 - 작업지시 검색
-			workList = wService.searchWorkOrder(search);
-			logger.debug("@@@@@ CONTROLLER: 검색결과list = " + workList);
 			
 			logger.debug("@@@@@ CONTROLLER: 검색 결과 수 = " + wService.getSearchWorkOrder(search));
 			int total = wService.getSearchWorkOrder(search);
 			pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
+			search.put("start", pdto.getStart());
+			search.put("cntPerPage", pdto.getCntPerPage());
+			//서비스 - 작업지시 검색
+			workList = wService.searchWorkOrder(search);
+			logger.debug("@@@@@ CONTROLLER: 검색결과list = " + workList);
 			
 			model.addAttribute("search", search);
 			model.addAttribute("workList", workList);
@@ -84,14 +84,14 @@ public class WorkOrderController {
 			workList = wService.getAllWorkOrder(pdto);
 			
 			model.addAttribute("workList", workList);
-			model.addAttribute("pdto",pdto);
+			model.addAttribute("paging",pdto);
+			model.addAttribute("search",search);
 			
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
 				logger.debug("@@@@@ CONTROLLER: input 정보 전달");
 			}
 		} //else(모든)
-		request.setAttribute("search_place", search.get("search_place"));
 		
 	} //workOrderListGET()
 	

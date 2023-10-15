@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
 import com.itwillbs.service.OutProductService;
@@ -42,7 +43,7 @@ public class SellController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
-//----------------------------------------------------- sellMain---------------------------------------
+//----------------------------------------------------- 수주 목록 ---------------------------------------
 @GetMapping("/sellMain")
 public String sellList(HttpServletRequest request,Model model) {
 	System.out.println("SellController sellMain()");
@@ -100,7 +101,7 @@ public String sellList(HttpServletRequest request,Model model) {
 }//
 	
 
-//----------------------------------------------------- sellAdd ---------------------------------------
+//----------------------------------------------------- 수주 추가 ---------------------------------------
 @GetMapping("/sellAdd")
 public String sellAdd() {
 	System.out.println("SellController sellAdd()");
@@ -146,8 +147,43 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellAddPro
 
+//-------------------------------------------------- 수주 수정 ---------------------------------------------
+	@GetMapping("/sellUpdate")
+	public String sellUpdate(HttpServletRequest request, Model model) {
+		System.out.println("sellController sellUpdate()");
+		String sellCode = request.getParameter("sellCode");
 
-//----------------------------------------------------- sellMemo ---------------------------------------
+		// 내용가져오기
+		SellDTO sellDTO = sellService.getSell(sellCode);
+		System.out.println(sellCode);
+		model.addAttribute("sellDTO", sellDTO);
+
+		return "sell/sellUpdate";
+	}//sellUpdate
+
+	@PostMapping("/sellUpdatePro")
+	public ResponseEntity<String> sellUpdatePro(SellDTO sellDTO) {
+		System.out.println("SellController sellUpdatePro()");
+		// 수정
+		sellService.sellUpdate(sellDTO);
+
+		//return "redirect:/sell/sellMain";
+		
+		return ResponseEntity.ok("<script>window.close();</script>");
+	}//sellUpdatePro
+	
+//-------------------------------------------------- 수주 삭제 ---------------------------------------------
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String sellDelete(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
+
+		// 서비스 - 소요량관리 삭제
+		sellService.sellDelete(checked);
+
+		return "redirect:/sell/sellMain";
+	}//sellDelete
+		
+		
+//----------------------------------------------------- 비고 보기 ---------------------------------------
 @GetMapping("/sellMemo")
 public String sellMemo(HttpServletRequest request, Model model) {
 	System.out.println("SellController sellMemo()");
@@ -163,7 +199,33 @@ public String sellMemo(HttpServletRequest request, Model model) {
 	
 }//sellMemo
 
-//----------------------------------------------------- updateSellMemo ---------------------------------------
+//----------------------------------------------------- 비고 추가 ---------------------------------------
+@GetMapping("/sellMemotype")
+public String sellMemoAdd(HttpServletRequest request, Model model) {
+	System.out.println("SellController sellMemotype()");
+	String sellCode = request.getParameter("sellCode");
+	System.out.println(sellCode);
+	
+	SellDTO sellDTO = sellService.getSellMemo(sellCode);
+	String memotype = request.getParameter("memotype");
+	System.out.println(memotype);
+	
+	model.addAttribute("sellDTO", sellDTO);
+	model.addAttribute("memotype", memotype);
+
+	return "sell/sellMemotype";
+}//sellMemotype
+
+@PostMapping("/sellMemotypePro")
+public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
+	System.out.println("SellController sellMemotypePro()");
+	System.out.println(sellDTO);
+	sellService.insertSellMemo(sellDTO);
+	return ResponseEntity.ok("<script>window.close();</script>");
+
+}//sellMemotypePro	
+
+//----------------------------------------------------- 비고 수정 ---------------------------------------
 //	가상주소 http://localhost:8080/Test/sell/sellMemoUpdate?num=
 //@RequestMapping(value = "/sellMemoUpdate", method = RequestMethod.GET)
 @GetMapping("/sellMemoUpdate")
@@ -191,41 +253,6 @@ public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellMemoUpdatePro
 
-//----------------------------------------------------- sellMemotype ---------------------------------------
-@GetMapping("/sellMemotype")
-public String sellMemoAdd(HttpServletRequest request, Model model) {
-	System.out.println("SellController sellMemotype()");
-	String sellCode = request.getParameter("sellCode");
-	System.out.println(sellCode);
-	
-	SellDTO sellDTO = sellService.getSellMemo(sellCode);
-	String memotype = request.getParameter("memotype");
-	System.out.println(memotype);
-	
-	model.addAttribute("sellDTO", sellDTO);
-	model.addAttribute("memotype", memotype);
-
-	return "sell/sellMemotype";
-}//sellMemotype
-
-@PostMapping("/sellMemotypePro")
-public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
-	System.out.println("SellController sellMemotypePro()");
-	System.out.println(sellDTO);
-	sellService.insertSellMemo(sellDTO);
-	return ResponseEntity.ok("<script>window.close();</script>");
-
-}//sellMemotypePro	
-
-//-------------------------------------------------- sellDelete ---------------------------------------------
-@RequestMapping(value = "/sellDelete", method = RequestMethod.POST)
-public String sellDelete(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
-
-	// 서비스 - 소요량관리 삭제
-	sellService.sellDelete(checked);
-
-	return "redirect:/sell/sellMain";
-} //sellDelete()
 
 	
 	
