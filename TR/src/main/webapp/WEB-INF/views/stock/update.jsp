@@ -23,7 +23,7 @@
 		        <td><input type="text" name="prodCode" value="${stockDTO.prodCode }" readonly></td>
 				<td><input type="text" name="rawCode" value="${stockDTO.rawCode }" readonly></td>
 				<td><input type="text" name="whseCode" value="${stockDTO.whseCode }" readonly></td>
-				<td ><input type="number"  id="newCount" name="stockCount" min="0" value="${stockDTO.stockCount }"></td> 
+				<td ><input type="number"   name="stockCount" min="0" value="${stockDTO.stockCount }"></td> 
 	     </tr> 
 </table>
 

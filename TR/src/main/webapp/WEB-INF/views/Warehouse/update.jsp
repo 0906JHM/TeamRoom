@@ -7,7 +7,9 @@
 <title>창고 수정</title>
 </head>
 <body>
+
 	<h1>창고 수정</h1>
+	
 	<form action="${pageContext.request.contextPath}/Warehouse/updatePro"
 		method="post">
 
@@ -47,13 +49,7 @@
 				<td><input type="text" name="whseTel"
 					value=" ${warehouseDTO.whseTel}"></td>
 			</tr>
-
-			<tr>
-				<td>창고비고</td>
-				<td><input type="text" name="whseMemo"
-					value=" ${warehouseDTO.whseMemo}"></td>
-			</tr>
-
+			
 			<tr>
 				<td>제품코드</td>
 				<td><input type="text" name="prodCode"
@@ -68,14 +64,20 @@
 
 			<tr>
 				<td>창고관리사원아이디</td>
-				<td><input type="text" name="EmpId"
+				<td><input type="text" name="whseEmpId"
 					value=" ${warehouseDTO.whseEmpId}"></td>
 			</tr>
 
 			<tr>
 				<td>재고개수</td>
-				<td><input type="text" name="whseCount"
+				<td><input type="number"  name="whseCount" min="0"
 					value=" ${warehouseDTO.whseCount}"></td>
+			</tr>
+			
+			<tr>
+				<td>창고비고</td>
+				<td><input type="text" name="whseMemo"
+					value=" ${warehouseDTO.whseMemo}"></td>
 			</tr>
 
 		</table>
