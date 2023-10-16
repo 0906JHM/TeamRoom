@@ -81,7 +81,7 @@
 		<div class="buttons">
 			<button id="add" onclick="openSellAdd()">추가</button>
 			<button id="delete">삭제</button>
-			<button id="Excel">Excel</button>
+			<button id="excelDownload">엑셀⬇️</button>
 		</div>
 
 		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
@@ -409,6 +409,62 @@ function openSellDetail(sellCode) {
     		excelDownload.addEventListener('click', exportExcel);
        	});
     });
+
+    <!--------------------------------------------------- 엑셀 ----------------------------------------->
+
+ 
+    $(document).ready(function () {
+		//엑셀
+			 const excelDownload = document.querySelector('#excelDownload');
+					excelDownload.addEventListener('click', exportExcel);
+					function exportExcel() {
+					    // 1. 워크북 생성
+					    var wb = XLSX.utils.book_new();
+					    // 2. 워크시트 생성
+					    var newWorksheet = excelHandler.getWorksheet();
+					    // 3. 워크시트를 워크북에 추가
+					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+					    // 4. 엑셀 파일 생성
+					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+					    // 5. 엑셀 파일 내보내기
+					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+					}
+
+					// 현재 날짜를 가져오는 함수
+					function getToday() {
+					    var date = new Date();
+					    var year = date.getFullYear();
+					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+					    return year + month + day;
+					}
+
+			var excelHandler = {
+			getExcelFileName : function() {
+				return 'productList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'product Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('productTable'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+			
+			function s2ab(s) {
+				
+				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+				var view = new Uint8Array(buf);  
+				for(var i=0; i<s.length; i++) {
+					view[i] = s.charCodeAt(i) & 0xFF;
+				}
+				alert("이까지 옴");
+				return buf;
+			}
+	  });
  </script>
 </body>
 </html>
