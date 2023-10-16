@@ -103,7 +103,7 @@ function deleteValue(){
 </head>
 <body>
 
-    <h2>창고 관리</h2>
+<h1>창고 관리</h1>
     <form action="${pageContext.request.contextPath}/Warehouse/list" method="get">
     창고코드 <input type="text" name="search1" placeholder="창고코드">
     제품코드 <input type="text" name="search2" placeholder="제품코드">
@@ -119,6 +119,7 @@ function deleteValue(){
     <input type="button" value="수정" onclick="newTabUpdate()">
     <input type="button" value="삭제" onclick="deleteValue();">
     <br>
+    <h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
     
     <table border="1">
     <tr>
@@ -129,11 +130,11 @@ function deleteValue(){
     <td>창고사용상태</td>
     <td>창고주소</td>
     <td>창고연락처</td>
-    <td>창고비고</td>
     <td>제품코드</td>
     <td>원자재코드</td>
     <td>창고관리사원아이디</td>
     <td>재고개수</td>
+    <td>창고비고</td>
     </tr>
     
     <c:forEach var="warehouseDTO" items="${warehouseList}">
@@ -145,11 +146,11 @@ function deleteValue(){
     <td>${warehouseDTO.whseState}</td>
     <td>${warehouseDTO.whseAddr}</td>
     <td>${warehouseDTO.whseTel}</td>
-    <td>${warehouseDTO.whseMemo}</td>
     <td>${warehouseDTO.prodCode}</td>
     <td>${warehouseDTO.rawCode}</td>
     <td>${warehouseDTO.whseEmpId}</td>
     <td>${warehouseDTO.whseCount}</td>
+    <td>${warehouseDTO.whseMemo}</td>
     </tr>
     </c:forEach>
     </table>
