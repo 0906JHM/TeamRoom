@@ -10,6 +10,7 @@ import com.itwillbs.dao.CalendarDAO;
 import com.itwillbs.domain.CalendarDTO;
 import com.itwillbs.domain.ChartDTO;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.OrderManagementDTO;
 import com.itwillbs.domain.SellDTO;
 
 @Service
@@ -47,6 +48,11 @@ public class CalendarService {
 		calendarDTO.setCalendar_memo(memo);
 		
 		calendarDAO.insertSellCalendar(calendarDTO);
+	}
+
+	public void insertOrderCalendar(OrderManagementDTO ordermanagementDTO) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

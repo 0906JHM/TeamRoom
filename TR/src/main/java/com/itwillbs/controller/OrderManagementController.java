@@ -21,6 +21,7 @@ import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.OrderManagementDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.service.CalendarService;
 import com.itwillbs.service.InMaterialService;
 import com.itwillbs.service.OrderManagementService;
 import com.itwillbs.service.RawmaterialsService;
@@ -36,6 +37,8 @@ public class OrderManagementController {
 	private RawmaterialsService rawmaterialsService;
 	@Inject
 	private InMaterialService inMaterialService;
+	@Inject
+	private CalendarService calendarService;
 	
 	// 가상주소 http://localhost:8080/leeweb/OrderManagement/home
 	// home 페이징처리, 검색기능
@@ -107,6 +110,9 @@ public class OrderManagementController {
 		// inMaterial 추가한 코드
 		inMaterialService.insertList(ordermanagementDTO);
 		ordermanagementService.insertOrderManagement(ordermanagementDTO);
+		
+		calendarService.insertOrderCalendar(ordermanagementDTO);
+		
 		return "redirect:/OrderManagement/home";
 	}
 	
