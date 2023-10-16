@@ -1,5 +1,7 @@
 package com.itwillbs.service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,10 +55,17 @@ public class CalendarService {
 	public void insertOrderCalendar(OrderManagementDTO ordermanagementDTO) {
 		CalendarDTO calendarDTO = new CalendarDTO();
 		
-//		calendarDTO.setCode(ordermanagementDTO.getSellCode());
-//		calendarDTO.setCalendar_title("원자재 발주");
-//		calendarDTO.setStartDate(ordermanagementDTO.getSellDate());
-//		calendarDTO.setEndDate(ordermanagementDTO.getSellDuedate());
+		String clientCode = ordermanagementDTO.getClientCode();
+		ClientDTO clientDTO = calendarDAO.getClient(clientCode);
+		
+		calendarDTO.setCode(ordermanagementDTO.getBuyNum());
+		calendarDTO.setCalendar_title("원자재 발주");
+		Date date = ordermanagementDTO.getBuyDate();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = dateFormat.format(date);
+		calendarDTO.setStartDate(formattedDate);
+		String memo = clientDTO.getClientCompany() + " " + ordermanagementDTO.getRawName() +"("+ ordermanagementDTO.getRawCode() + ") " + ordermanagementDTO.getBuyCount();
+		calendarDTO.setCalendar_memo(memo);
 	}
 	
 	
