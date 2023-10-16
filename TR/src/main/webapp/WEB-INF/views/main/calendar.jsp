@@ -80,7 +80,7 @@
 		$(document).ready(function() {
 			
 			var stockChartInterval; // (창고별 재고) 변수를 선언하여 setInterval 핸들러를 저장할 준비를 합니다.
-			var prodRawChartInterval; // (유형별 재고) 변수를 선언하여 setInterval 핸들러를 저장할 준비를 합니다.
+			var prodRawChartInterval; // (유형별 재고) 변수를 선언하여 setInterval 핸들러를 저장할 준비를 합니다. 이거 필요가없음 수정
 			var perfChartInterval;	// (최근 생산실적) 변수를 선언하여 setInterval 핸들러를 저장할 준비를 합니다.
 			var linePerfChartInterval;	// (라인별 생산실적) 변수를 선언하여 setInterval 핸들러를 저장할 준비를 합니다.
 			
@@ -89,6 +89,7 @@
 			var sales_compare = null; // 매출 차트와 비교할 변수
 			var stock_compare = null; // 재고 차트와 비교할 변수
 			var perf_compare = null; // 실적 차트와 비교할 변수
+			var line_compare = null; // 라인 실적 차트와 비교할 변수
 			
 			var currentDate = new Date(); // 초기 currentDate 설정
 			
@@ -243,43 +244,43 @@
 		}
 		
 		// 유형별 재고
-		function startProdRawChartInterval() {
-			prodRawChartInterval = setInterval(loadStockChart, 4000);
-		}
+// 		function startProdRawChartInterval() {
+// 			prodRawChartInterval = setInterval(loadStockChart, 4000);
+// 		}
 
-		function stopProdRawChartInterval() {
-		    clearInterval(prodRawChartInterval);
-		}
+// 		function stopProdRawChartInterval() {
+// 		    clearInterval(prodRawChartInterval);
+// 		}
 		
-		function showTab2(tabName) {
-			startProdRawChartInterval();
+// 		function showTab2(tabName) {
+// 			startProdRawChartInterval();
 			
-		    // 숨길 모든 탭을 숨깁니다.
-		    var tabs = document.getElementsByClassName('chartTab1');
-		    for (var i = 0; i < tabs.length; i++) {
-		        tabs[i].style.display = 'none';
-		    }
+// 		    // 숨길 모든 탭을 숨깁니다.
+// 		    var tabs = document.getElementsByClassName('chartTab1');
+// 		    for (var i = 0; i < tabs.length; i++) {
+// 		        tabs[i].style.display = 'none';
+// 		    }
 
-		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
-		    var h3Elements = document.getElementsByClassName('chartTitleTab1');
-		    for (var j = 0; j < h3Elements.length; j++) {
-		        h3Elements[j].classList.remove('current');
-		    }
+// 		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
+// 		    var h3Elements = document.getElementsByClassName('chartTitleTab1');
+// 		    for (var j = 0; j < h3Elements.length; j++) {
+// 		        h3Elements[j].classList.remove('current');
+// 		    }
 
-		    // 선택한 탭을 표시합니다.
-		    var selectedTab = document.getElementById(tabName);
-		    selectedTab.style.display = 'block';
+// 		    // 선택한 탭을 표시합니다.
+// 		    var selectedTab = document.getElementById(tabName);
+// 		    selectedTab.style.display = 'block';
 
-		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
-		    var associatedH3 = document.querySelector('[onclick="showTab2(\'' + tabName + '\')"]');
-		    associatedH3.classList.add('current');
+// 		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
+// 		    var associatedH3 = document.querySelector('[onclick="showTab2(\'' + tabName + '\')"]');
+// 		    associatedH3.classList.add('current');
 		    
-		    stopProdRawChartInterval();
-		}
+// 		    stopProdRawChartInterval();
+// 		}
 	
 		// 최근 생산실적 
 		function startPerfChartInterval() {
-			perfChartInterval = setInterval(loadStockChart, 4000);
+			perfChartInterval = setInterval(loadPerfChart, 4000);
 		}
 
 		function stopPerfChartInterval() {
@@ -313,38 +314,38 @@
 		}
 		
 		// 라인별 생산실적
-		function startLinePerfChartInterval() {
-			linePerfChartInterval = setInterval(loadStockChart, 4000);
-		}
+// 		function startLinePerfChartInterval() {
+// 			linePerfChartInterval = setInterval(loadStockChart, 4000);
+// 		}
 
-		function stopLinePerfChartInterval() {
-		    clearInterval(linePerfChartInterval);
-		}
-		function showTab4(tabName) {
-			startLinePerfChartInterval();
+// 		function stopLinePerfChartInterval() {
+// 		    clearInterval(linePerfChartInterval);
+// 		}
+// 		function showTab4(tabName) {
+// 			startLinePerfChartInterval();
 			
-		    // 숨길 모든 탭을 숨깁니다.
-		    var tabs = document.getElementsByClassName('chartTab2');
-		    for (var i = 0; i < tabs.length; i++) {
-		        tabs[i].style.display = 'none';
-		    }
+// 		    // 숨길 모든 탭을 숨깁니다.
+// 		    var tabs = document.getElementsByClassName('chartTab2');
+// 		    for (var i = 0; i < tabs.length; i++) {
+// 		        tabs[i].style.display = 'none';
+// 		    }
 
-		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
-		    var h3Elements = document.getElementsByClassName('chartTitleTab2');
-		    for (var j = 0; j < h3Elements.length; j++) {
-		        h3Elements[j].classList.remove('current');
-		    }
+// 		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
+// 		    var h3Elements = document.getElementsByClassName('chartTitleTab2');
+// 		    for (var j = 0; j < h3Elements.length; j++) {
+// 		        h3Elements[j].classList.remove('current');
+// 		    }
 
-		    // 선택한 탭을 표시합니다.
-		    var selectedTab = document.getElementById(tabName);
-		    selectedTab.style.display = 'block';
+// 		    // 선택한 탭을 표시합니다.
+// 		    var selectedTab = document.getElementById(tabName);
+// 		    selectedTab.style.display = 'block';
 
-		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
-		    var associatedH3 = document.querySelector('[onclick="showTab4(\'' + tabName + '\')"]');
-		    associatedH3.classList.add('current');
+// 		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
+// 		    var associatedH3 = document.querySelector('[onclick="showTab4(\'' + tabName + '\')"]');
+// 		    associatedH3.classList.add('current');
 		    
-		    stopLinePerfChartInterval();
-		}
+// 		    stopLinePerfChartInterval();
+// 		}
 	</script>
 
 </body>

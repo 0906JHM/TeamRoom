@@ -72,8 +72,27 @@ public class AjaxCalendarController {
 	            event.setOtherDate(calendarDTO.getEndDate()); // 실제 종료 날짜 설정
 
 	            // 제목에 따라 이벤트 색상을 지정합니다.
-	            String color = (calendarDTO.getCalendar_title().equals("수주")) ? "blue"
-	                    : ((calendarDTO.getCalendar_title().equals("발주")) ? "red" : "orange");
+//	            String color = (calendarDTO.getCalendar_title().equals("수주")) ? "blue"
+//	                    : ((calendarDTO.getCalendar_title().equals("발주")) ? "red" : "orange");
+	            String color;
+
+	            switch (calendarDTO.getCalendar_title()) {
+	                case "수주":
+	                    color = "#4b77a9";
+	                    break;
+	                case "발주":
+	                    color = "#5f255f";
+	                    break;
+	                case "원자재 발주":
+	                    color = "#d21243";
+	                    break;
+	                case "원자재 입고":
+	                    color = "#ff5733";
+	                    break;
+	                default:
+	                    color = "#ffcc29";
+	            }
+	            
 	            event.setColor(color);
 
 	            // 생성한 JSON 객체를 목록에 추가합니다.
