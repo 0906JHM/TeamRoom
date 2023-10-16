@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.PageDTO;
+import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
@@ -34,17 +37,82 @@ public class ClientController {
 	
 	
 	@GetMapping("/client")
-	public String client(Model model) {
+	public String client(Model model,HttpServletRequest request,ClientDTO clientDTO) {
+		
+System.out.println("BoardController list()");
+		
+		//검색어 가져오기
+		String search = request.getParameter("search");
+		
+		// <----------------------------------->
+		// 한 화면에 보여줄 글 개수 
+		int pageSize = 10;
+		
+		// 현 페이지 번호 가져오기
+		String pageNum=request.getParameter("pageNum");
+		//페이지 번호가 없을 경우에는 1로 설정
+		if (pageNum == null ) {
+			pageNum = "1";
+		}
+		
+		// 페이지 번호 => 정수형 변경
+		int currentPage = Integer.parseInt(pageNum);
+		
+		PageDTO pageDTO = new PageDTO();
+		pageDTO.setPageSize(pageSize);
+		pageDTO.setPageNum(pageNum);
+		pageDTO.setCurrentPage(currentPage);
+		
+		
+		pageDTO.setSearch(search);
+		
+		List<ClientDTO> clientList;
+		int count;
+		if (clientDTO.getClientCode() != null || clientDTO.getClientName() != null || clientDTO.getClientCompany() != null) {
+		clientList = clientService.getSearch(clientDTO, pageDTO);
+		count = clientService.getSearchcount(clientDTO);
+	
+		}
+		else {
+			clientList = clientService.getclientList(pageDTO);
+			count = clientService.getclientCount(pageDTO);
+		}
+
+		
+		int pageBlock = 10;
+		// 시작하는 페이지 번호
+		int startPage = (pageDTO.getCurrentPage()-1)/pageBlock*pageBlock+1;
+		// 끝나는 페이지 번호
+		int endPage = startPage + pageBlock -1;
+		
+		//전체페이지 개수 
+		int pageCount = count/pageSize+(count%pageSize==0?0:1);
+		// 끝나는 페이지 번호 전체 페이지 개수 비교 
+		
+		if(endPage > pageCount ) {
+			
+			endPage= pageCount;
+			
+		}
+		
+		pageDTO.setCount(count);
+		pageDTO.setPageBlock(pageBlock);
+		pageDTO.setStartPage(startPage);
+		pageDTO.setEndPage(endPage);
+		pageDTO.setPageCount(pageCount);
+		
+		
 		
 		System.out.println("ClientController client");
 		log.debug("거래처리스트출력");
 		
-	    List<ClientDTO> clientList = clientService.getclientList();
 	    
 		
 		model.addAttribute("clientList",clientList);
 		
 		return "client/client";
+		
+		
 		
 	}
 	

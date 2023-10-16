@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.ClientDAO;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
@@ -27,10 +28,10 @@ public class ClientService {
 		
 	}
 
-	public List<ClientDTO> getclientList() {
-		return clientDAO.getclientList();
+       public List<ClientDTO> getclientList(PageDTO pageDTO) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 	public String  getclientCode(String clientType) {
 		
 		System.out.println("ClientService getClientCode=============" + clientType);
@@ -65,5 +66,32 @@ public class ClientService {
 		clientDAO.clientdelete(clientCompany);
 		
 	}
+
+	public List<ClientDTO> getSearch(ClientDTO clientDTO, PageDTO pageDTO) {
+		
+		System.out.println("ClientService getSearch****************");
+		int startRow = (pageDTO.getCurrentPage() - 1) * pageDTO.getPageSize() + 1;
+		// 끝나는 행번호 구하기
+		int endRow = startRow + pageDTO.getPageSize() - 1;
+
+		// 디비 startRow - 1
+		pageDTO.setStartRow(startRow - 1);
+		pageDTO.setEndRow(endRow);
+		return clientDAO.getSearch(clientDTO, clientDTO);
+	}
+
+	public int getSearchcount(ClientDTO clientDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getclientCount(PageDTO pageDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+
+	
 	
 }
