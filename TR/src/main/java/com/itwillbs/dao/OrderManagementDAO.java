@@ -12,8 +12,8 @@ import com.itwillbs.domain.PageDTO;
 
 @Repository 
 public class OrderManagementDAO {
-	
-	// mybatis 객체생성
+	 
+	// mybatis 객체생성 
 	@Inject
 	private SqlSession sqlSession;
 		
@@ -52,4 +52,9 @@ public class OrderManagementDAO {
 		sqlSession.update(namespace+".updateOrderManagement", ordermanagementDTO);
 	}
 
+	// 엑셀 수정
+	public List<OrderManagementDTO> getOrderManagementList2() {
+		return sqlSession.selectList(namespace+".getOrderManagementList2");
+	}
+	
 }

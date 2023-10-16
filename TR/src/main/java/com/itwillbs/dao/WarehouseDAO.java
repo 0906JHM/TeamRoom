@@ -36,6 +36,7 @@ public class WarehouseDAO {
 
 	public void insertWarehouse(WarehouseDTO warehouseDTO) {
 		System.out.println("WarehouseDAO insertWarehouse()");
+		System.out.println(warehouseDTO);
 		sqlSession.insert(namespace+".insertWarehouse", warehouseDTO);
 	}
 

@@ -54,9 +54,19 @@ public class PerformanceService {
 
 	public void perfupdate(PerformanceDTO perfDTO) {
 		
+		System.out.println("Peroformnace Service UpdatePro 받은값:-++++++++++++++" + perfDTO);
 		perfDAO.perfupdate(perfDTO);
 		
 	}
+	
+	public boolean perfdelete(String perfCode) {
+		
+		
+		return perfDAO.perfdelete(perfCode);
+	}
+	
+
+
 
 	
 

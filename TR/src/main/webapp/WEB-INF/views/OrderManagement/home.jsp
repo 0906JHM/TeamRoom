@@ -5,9 +5,11 @@
 <html>
 
 <!-- head -->
-<head>
+<head> 
 <meta charset="UTF-8">  
 <title>Insert title here</title>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
 
@@ -127,7 +129,7 @@ $(document).ready(function() {
 </form>
 
 <!-- table -->
-<table border="1">
+<table border="1" id="data-table">
 <tr>
 <td>발주번호</td>
 <td>품번</td>
@@ -172,5 +174,64 @@ $(document).ready(function() {
 <a href="${pageContext.request.contextPath}/OrderManagement/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
 
+<!-- button -->
+<button id="excelDownload">엑셀 ⬇️</button>
+<button onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체엑셀 ⬇️</button>
+				
+<!-- javascript -->
+<script type="text/javascript">
+
+// 엑셀
+function getToday() {
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = ("0" + (1 + date.getMonth())).slice(-2);
+	var day = ("0" + date.getDate()).slice(-2);
+	return year + "-" + month + "-" + day;
+}
+
+const excelDownload = document.querySelector('#excelDownload');
+
+document.addEventListener('DOMContentLoaded', ()=> {
+	excelDownload.addEventListener('click', exportExcel);
+});
+
+function exportExcel() {
+    // 1.workbook 생성
+    var wb = XLSX.utils.book_new();
+    // 2.시트 만들기
+    var newWorksheet = excelHandler.getWorksheet();
+    // 3.workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+    // 4.엑셀파일 만들기
+    var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+    // 5.엑셀파일 내보내기
+    saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+}
+
+var excelHandler = {
+    getExcelFileName : function() {
+        return 'performanceList'+getToday()+'.xlsx'; // 파일명
+    },
+    getSheetName : function() {
+        return 'Performance Sheet'; // 시트명
+    },
+    getExcelData : function() {
+        return document.getElementById('data-table'); // table id
+    },
+    getWorksheet : function() {
+        return XLSX.utils.table_to_sheet(this.getExcelData());
+    }
+}
+
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length); // s -> arrayBuffer
+    var view = new Uint8Array(buf);  
+    for(var i=0; i<s.length; i++) {
+        view[i] = s.charCodeAt(i) & 0xFF;
+    }
+    return buf;
+}
+</script>
 </body>
 </html>

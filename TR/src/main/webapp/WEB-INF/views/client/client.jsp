@@ -129,7 +129,7 @@
 				});
 			});
 
-			function clientInsert() {
+			function perfInsert() {
 				window
 						.open(
 								'${pageContext.request.contextPath}/client/clientinsert',

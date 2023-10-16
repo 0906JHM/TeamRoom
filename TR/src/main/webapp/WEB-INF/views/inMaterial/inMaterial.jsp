@@ -11,7 +11,16 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/outProduct.css"
 	rel="stylesheet" type="text/css">
+	
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<script type="text/javascript">
 <title>inMaterial</title>
 </head>
 <body>
@@ -40,12 +49,13 @@
 			<input type="button" value="전체" id="allButton" class="buttons highlighted"> 
 			<input type="button" value="입고" id="inButton" class="buttons"> 
 			<input type="button" value="미입고" id="non_inButton" class="buttons">
+			<button id="excelDownload" class ="buttons">엑셀⬇️</button>
 		</div>
 		<h3 style="padding-left: 1%;">
 			목록 <small id="listCount">총 3건</small>
 		</h3>
 		<div id="inMaterialList">
-			<table>
+			<table id="inMaterialTable">
 				<thead>
 					<tr>
 						<th>입고 번호</th>
@@ -186,21 +196,6 @@
 						};
 						loadinMaterialList(searchParams);
 					});
-					
-// 					//입고 버튼 클릭 시
-// 					$("#inButton").click(function() {
-// 					    // 버튼 클릭 시 처리할 동작을 여기에 추가
-// 					    inStateButton2 = "입고";
-// 					    inStateButton1 = inStateButton2;
-// 					    // 검색 조건을 설정하고 "입고" 상태의 목록을 가져오도록 수정
-// 					    var searchParams = {
-// 					        inNum: $("#inNum").val(),
-// 					        rawName: $("#rawName9999").val(),
-// 					        clientCompany: $("#clientCompany9999").val(),
-// 					        inState: inStateButton2 // "입고" 상태 조건 추가
-// 					    };
-// 					    loadinMaterialList(searchParams);
-// 					});
 
 				});//document
 
@@ -452,6 +447,60 @@ var inNum = data[i].inNum;
 					+ type + "&input=" + inputId;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
+		
+	  $(document).ready(function () {
+		//엑셀
+			 const excelDownload = document.querySelector('#excelDownload');
+					excelDownload.addEventListener('click', exportExcel);
+					function exportExcel() {
+					    // 1. 워크북 생성
+					    var wb = XLSX.utils.book_new();
+					    // 2. 워크시트 생성
+					    var newWorksheet = excelHandler.getWorksheet();
+					    // 3. 워크시트를 워크북에 추가
+					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+					    // 4. 엑셀 파일 생성
+					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+					    // 5. 엑셀 파일 내보내기
+					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+					}
+
+					// 현재 날짜를 가져오는 함수
+					function getToday() {
+					    var date = new Date();
+					    var year = date.getFullYear();
+					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+					    return year + month + day;
+					}
+
+			var excelHandler = {
+			getExcelFileName : function() {
+				return 'inMaterialList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'inMaterial Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('inMaterialTable'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+			
+			function s2ab(s) {
+				
+				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+				var view = new Uint8Array(buf);  
+				for(var i=0; i<s.length; i++) {
+					view[i] = s.charCodeAt(i) & 0xFF;
+				}
+				alert("이까지 옴");
+				return buf;
+			}
+	  });
+		
 	</script>
 
 </body>

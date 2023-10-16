@@ -31,7 +31,7 @@
 </head>
 <body>
    
-      <h2>재고 관리</h2>
+      <h1>재고 관리</h1>
       <form action="${pageContext.request.contextPath}/stock/list" method="get">
       제품코드 <input type="text" name="search1" placeholder="제품코드">
       원자재코드 <input type="text" name="search2" placeholder="원자재코드">
@@ -39,6 +39,7 @@
       <input type="submit" value="검색">
       </form>
       <br>
+      <h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
       <table border="1">
       <tbody>
 		<tr>
