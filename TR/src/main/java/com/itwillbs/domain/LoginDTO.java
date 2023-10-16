@@ -12,6 +12,7 @@ public class LoginDTO {
 	private String empId;
 	private String empPass;
 	private String empName;
+	private String empDepartment;
 	
 	
 	
