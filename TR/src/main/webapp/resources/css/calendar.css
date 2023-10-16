@@ -24,6 +24,9 @@ body {
 	align-items: center;
 	text-align: center;
 }
+#con_2{
+	gap:2%;
+}
 
 #con_1>#calendar {
 	width: 37%;
@@ -47,14 +50,4 @@ body {
  	gap: 1%;
 }
 
-.chartTitleTab1.current, .chartTitleTab2.current {
-    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1); /* 원하는 배경 색상으로 변경하세요 */
-}
-.chartTab2 {
-    display: none; /* 모든 차트 숨기기 */
-}
-
-.chartTab2.current {
-    display: block; /* current 클래스가 있는 경우 차트 표시 */
-}
 

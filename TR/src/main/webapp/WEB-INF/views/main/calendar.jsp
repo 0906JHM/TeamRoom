@@ -52,26 +52,30 @@
 		</div>
 		<div id="con_2">
 			<div id="chart_2">
-				<div class="flex-container">
+<!-- 				<div class="flex-container"> -->
 <!-- 					<h3 class="chartTitleTab1 current" onclick="showTab1('stockList')">창고별 재고</h3> -->
-					<h3>창고별 재고</h3>
+				<h3>창고별 재고</h3>
 <!-- 					<h3 class="chartTitleTab1 " onclick="showTab2('prodRawList')">유형별 재고</h3> -->
-				</div>
-				<div>
+<!-- 				</div> -->
+<!-- 				<div> -->
 <!-- 					<canvas id="stockList" class="chartTab1 current"></canvas> -->
-					<canvas id="stockList"></canvas>
+				<canvas id="stockList"></canvas>
 <!-- 					<canvas id="prodRawList" class="chartTab1 "></canvas> -->
-				</div>
+<!-- 				</div> -->
 			</div>
-			<div id="chart_3">
-			   <div class="flex-container">
-			       <h3 class="chartTitleTab2 current" onclick="showTab3('perfList')">최근 생산실적</h3>
-			       <h3 class="chartTitleTab2" onclick="showTab4('linePerfList')">라인별 생산실적</h3>
-			   </div>
-			   <div>
-			       <canvas id="perfList" class="chartTab2 current"></canvas>
-			       <canvas id="linePerfList" class="chartTab2"></canvas>
-			   </div>
+			<div id="chart_2">
+<!-- 			   <div class="flex-container"> -->
+<!-- 			       <h3 class="chartTitleTab2 current" onclick="showTab3('perfList')">최근 생산실적</h3> -->
+<!-- 			       <h3 class="chartTitleTab2" onclick="showTab4('linePerfList')">라인별 생산실적</h3> -->
+				<h3>라인별 생산량</h3>
+<!-- 			   </div> -->
+<!-- 			   <div> -->
+			       <canvas id="linePerfList"></canvas>
+<!-- 			   </div> -->
+			</div>
+			<div  id="chart_2">
+				<h3>최근 생산량</h3>
+		    	<canvas id="perfList"></canvas>
 			</div>
 		</div>
 
@@ -222,6 +226,8 @@
 	                }
 	            });
 	        }
+	        
+// 	        showTab3('perfList');
 		});
 		
 		
@@ -298,73 +304,73 @@
 // 		}
 	
 		// 최근 생산실적 
-		function startPerfChartInterval() {
-			perfChartInterval = setInterval(loadPerfChart, 4000);
-		}
+// 		function startPerfChartInterval() {
+// 			perfChartInterval = setInterval(loadPerfChart, 4000);
+// 		}
 
-		function stopPerfChartInterval() {
-		    clearInterval(perfChartInterval);
-		}
+// 		function stopPerfChartInterval() {
+// 		    clearInterval(perfChartInterval);
+// 		}
 		
-		function showTab3(tabName) {
-			startPerfChartInterval();
+// 		function showTab3(tabName) {
+// 			startPerfChartInterval();
 			
-		    // 숨길 모든 탭을 숨깁니다.
-		    var tabs = document.getElementsByClassName('chartTab2');
-		    for (var i = 0; i < tabs.length; i++) {
-		        tabs[i].style.display = 'none';
-		    }
+// 		    // 숨길 모든 탭을 숨깁니다.
+// 		    var tabs = document.getElementsByClassName('chartTab2');
+// 		    for (var i = 0; i < tabs.length; i++) {
+// 		        tabs[i].style.display = 'none';
+// 		    }
 
-		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
-		    var h3Elements = document.getElementsByClassName('chartTitleTab2');
-		    for (var j = 0; j < h3Elements.length; j++) {
-		        h3Elements[j].classList.remove('current');
-		    }
+// 		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
+// 		    var h3Elements = document.getElementsByClassName('chartTitleTab2');
+// 		    for (var j = 0; j < h3Elements.length; j++) {
+// 		        h3Elements[j].classList.remove('current');
+// 		    }
 
-		    // 선택한 탭을 표시합니다.
-		    var selectedTab = document.getElementById(tabName);
-		    selectedTab.style.display = 'block';
+// 		    // 선택한 탭을 표시합니다.
+// 		    var selectedTab = document.getElementById(tabName);
+// 		    selectedTab.style.display = 'block';
 
-		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
-		    var associatedH3 = document.querySelector('[onclick="showTab3(\'' + tabName + '\')"]');
-		    associatedH3.classList.add('current');
+// 		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
+// 		    var associatedH3 = document.querySelector('[onclick="showTab3(\'' + tabName + '\')"]');
+// 		    associatedH3.classList.add('current');
 		    
-		    startPerfChartInterval();
-		}
+// 		    startPerfChartInterval();
+// 		}
 		
 // 		라인별 생산실적
-		function startLinePerfChartInterval() {
-			linePerfChartInterval = setInterval(loadStockChart, 4000);
-		}
+// 		function startLinePerfChartInterval() {
+// 			linePerfChartInterval = setInterval(loadLinePerfChart, 4000);
+// 		}
 
-		function stopLinePerfChartInterval() {
-		    clearInterval(linePerfChartInterval);
-		}
-		function showTab4(tabName) {
-			startLinePerfChartInterval();
+// 		function stopLinePerfChartInterval() {
+// 		    clearInterval(linePerfChartInterval);
+// 		}
+// 		function showTab4(tabName) {
+// 			startLinePerfChartInterval();
 			
-		    // 숨길 모든 탭을 숨깁니다.
-		    var tabs = document.getElementsByClassName('chartTab2');
-		    for (var i = 0; i < tabs.length; i++) {
-		        tabs[i].style.display = 'none';
-		    }
+// 		    // 숨길 모든 탭을 숨깁니다.
+// 		    var tabs = document.getElementsByClassName('chartTab2');
+// 		    for (var i = 0; i < tabs.length; i++) {
+// 		        tabs[i].style.display = 'none';
+// 		    }
 
-		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
-		    var h3Elements = document.getElementsByClassName('chartTitleTab2');
-		    for (var j = 0; j < h3Elements.length; j++) {
-		        h3Elements[j].classList.remove('current');
-		    }
+// 		    // 모든 탭의 associated h3 요소에서 'current' 클래스를 제거합니다.
+// 		    var h3Elements = document.getElementsByClassName('chartTitleTab2');
+// 		    for (var j = 0; j < h3Elements.length; j++) {
+// 		        h3Elements[j].classList.remove('current');
+// 		    }
 
-		    // 선택한 탭을 표시합니다.
-		    var selectedTab = document.getElementById(tabName);
-		    selectedTab.style.display = 'block';
+// 		    // 선택한 탭을 표시합니다.
+// 		    var selectedTab = document.getElementById(tabName);
+// 		    selectedTab.style.display = 'block';
 
-		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
-		    var associatedH3 = document.querySelector('[onclick="showTab4(\'' + tabName + '\')"]');
-		    associatedH3.classList.add('current');
+// 		    // 선택한 탭에 해당하는 associated h3 요소에 'current' 클래스를 추가합니다.
+// 		    var associatedH3 = document.querySelector('[onclick="showTab4(\'' + tabName + '\')"]');
+// 		    associatedH3.classList.add('current');
 		    
-		    stopLinePerfChartInterval();
-		}
+// 		    stopLinePerfChartInterval();
+// 		}
 	</script>
 
 </body>

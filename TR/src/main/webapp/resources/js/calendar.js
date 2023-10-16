@@ -61,7 +61,7 @@ function initializeCalendar(calendarEvents, currentDate) {
 		    var description = info.event.extendedProps.description;
 		    
 		    if (otherDate !== null) {
-		        var message ='<div style="text-align:left; padding-left:20%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
+		        var message ='<div style="text-align:left; padding-left:15%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
 		    } else {
 		        var message ='<div style="text-align:left; padding-left:20%;">' + title + '<br> 기간: ' + start + ' ~ ' + start + '<br>' + title + ' 내용: ' + description + '</div>';
 		    }
