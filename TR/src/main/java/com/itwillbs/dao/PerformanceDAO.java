@@ -81,9 +81,20 @@ public class PerformanceDAO {
 
 	public void perfupdate(PerformanceDTO perfDTO) {
 		
+		System.out.println("Peroformnace DAO UpdatePro 받은값:-++++++++++++++" + perfDTO);
 		sqlsession.update(namespace+".perfupdate",perfDTO);
 		
 		
+	}
+
+
+
+
+	public boolean perfdelete(String perfCode) {
+		
+		
+		
+		return sqlsession.delete(namespace+".perfdelete",perfCode) > 0;
 	}
 	
 	
