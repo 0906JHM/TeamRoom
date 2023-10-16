@@ -53,10 +53,10 @@ public class CalendarService {
 	public void insertOrderCalendar(OrderManagementDTO ordermanagementDTO) {
 		CalendarDTO calendarDTO = new CalendarDTO();
 		
-		calendarDTO.setCode(sellDTO.getSellCode());
-		calendarDTO.setCalendar_title("원자재 발주");
-		calendarDTO.setStartDate(sellDTO.getSellDate());
-		calendarDTO.setEndDate(sellDTO.getSellDuedate());
+//		calendarDTO.setCode(ordermanagementDTO.getSellCode());
+//		calendarDTO.setCalendar_title("원자재 발주");
+//		calendarDTO.setStartDate(ordermanagementDTO.getSellDate());
+//		calendarDTO.setEndDate(ordermanagementDTO.getSellDuedate());
 	}
 	
 	
