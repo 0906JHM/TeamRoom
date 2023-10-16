@@ -10,7 +10,7 @@
 		insert into buy(buyNum,rawCode,rawName,rawType,clientCode,whseCount,buyCount,rawPrice,buyDate,buyEmpId,buyInstate)
 		values(#{buyNum},#{rawCode},#{rawName},#{rawType},#{clientCode},#{whseCount},#{buyCount},#{rawPrice},#{buyDate},#{buyEmpId},#{buyInstate})
 	</insert> 
-
+ 
 	<!-- home 페이징처리, 검색기능 -->
 	<select id="getOrderManagementList" resultType="com.itwillbs.domain.OrderManagementDTO">
 		select *

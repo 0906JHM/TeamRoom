@@ -5,7 +5,7 @@
 <html>
 
 <!-- head -->
-<head>
+<head> 
 <meta charset="UTF-8">  
 <title>Insert title here</title>
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
