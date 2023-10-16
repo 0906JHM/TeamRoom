@@ -152,22 +152,6 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellAddPro
 
-//----------------------------------------------------- 수주 상세정보 ---------------------------------------
-@GetMapping("/sellDetail")
-public String sellDetail(HttpServletRequest request, Model model) {
-	System.out.println("SellController sellDetail()");
-	
-	String sellCode = request.getParameter("sellCode");
-	
-	// sellMemo 가져오기
-	SellDTO sellDTO = sellService.getSell(sellCode);
-	System.out.println("sellDTO" + sellDTO);
-	model.addAttribute("sellDTO",sellDTO);
-	
-	return "sell/sellDetail";
-	
-}//sellDetail
-
 //-------------------------------------------------- 수주 수정 ---------------------------------------------
 	@GetMapping("/sellUpdate")
 	public String sellUpdate(HttpServletRequest request, Model model) {
@@ -176,22 +160,21 @@ public String sellDetail(HttpServletRequest request, Model model) {
 
 		// 내용가져오기
 		SellDTO sellDTO = sellService.getSell(sellCode);
-		
 		System.out.println(sellCode);
 		model.addAttribute("sellDTO", sellDTO);
 
-		return "sell/sellDetail";
+		return "sell/sellUpdate";
 	}//sellUpdate
 
 	@PostMapping("/sellUpdatePro")
-	public String sellUpdatePro(SellDTO sellDTO) {
+	public ResponseEntity<String> sellUpdatePro(SellDTO sellDTO) {
 		System.out.println("SellController sellUpdatePro()");
 		// 수정
 		sellService.sellUpdate(sellDTO);
 
 		//return "redirect:/sell/sellMain";
 		
-		return "redirect:/sell/sellUpdate";
+		return ResponseEntity.ok("<script>window.close();</script>");
 	}//sellUpdatePro
 	
 //-------------------------------------------------- 수주 삭제 ---------------------------------------------
@@ -201,9 +184,7 @@ public String sellDetail(HttpServletRequest request, Model model) {
 		System.out.println("넘어온 데이터 "+checked);
 		
 		int result = sellService.sellDelete(checked);
-		System.out.println(result);
 		calendarService.deleteSellCalendar(checked);
-		
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
 	    } else {
