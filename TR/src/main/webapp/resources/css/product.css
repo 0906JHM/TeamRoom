@@ -65,6 +65,7 @@ table {
 	max-width: 1570px;
 	font: 500 18px/18px "Inter", sans-serif;
 	text-align: center;
+	width: 100%;
 }
 
 /* 사이드바랑 겹치는거 */
@@ -132,7 +133,7 @@ h3 {
 
 #productList {
 	overflow-x: auto; /* 가로 스크롤바를 활성화 */
-	width: 98%;
+	width: 100%;
 	margin: 0 auto;
 }
 

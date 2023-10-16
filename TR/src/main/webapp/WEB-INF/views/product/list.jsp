@@ -24,12 +24,20 @@
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- J쿼리 호출 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="../resources/js/scripts.js"></script>
 
-<script src="../resources/js/productList_im.js"></script>
+<!-- <script src="../resources/js/productList_im.js"></script> -->
 <!-- 		추가안되면 사이드바에 있는 이거^때문임 -->
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<!-- SheetJS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 </head>
 
@@ -61,15 +69,18 @@
 		<div class="buttons">
 			<button id="add"
 				onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
-<!-- 			<button id="modify">수정</button> -->
+			<!-- 			<button id="modify">수정</button> -->
 			<!--     <button id="delete" onclick="deleteSelectedProducts()">삭제</button> -->
 			<button id="delete">삭제</button>
-<!-- 			<button id="cancel">취소</button> -->
-<!-- 			<button id="save">저장</button> -->
+			<!-- 			<button id="cancel">취소</button> -->
+			<!-- 			<button id="save">저장</button> -->
+			<button id="excelDownload" class="buttons">엑셀⬇️</button>
 		</div>
-		<h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
+		<h3 style="padding-left: 1%;">
+			목록 <small>총 ${pageDTO.count}건</small>
+		</h3>
 
-			<form id="productList">
+		<form id="productList">
 			<div id="productList">
 				<table class="tab" id="productTable">
 					<thead>
@@ -111,8 +122,8 @@
 					</tbody>
 
 				</table>
-</div>
-<div class="page">
+			</div>
+			<div class="page">
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
 					<a
 						href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Prev</a>
@@ -129,11 +140,11 @@
 					<a
 						href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Next</a>
 				</c:if>
-</div>
+			</div>
 
-			</form>
-		</div>
-	
+		</form>
+	</div>
+
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";
@@ -276,6 +287,58 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 //--------------------------------------------------------------------------
+  $(document).ready(function () {
+		//엑셀
+			 const excelDownload = document.querySelector('#excelDownload');
+					excelDownload.addEventListener('click', exportExcel);
+					function exportExcel() {
+					    // 1. 워크북 생성
+					    var wb = XLSX.utils.book_new();
+					    // 2. 워크시트 생성
+					    var newWorksheet = excelHandler.getWorksheet();
+					    // 3. 워크시트를 워크북에 추가
+					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+					    // 4. 엑셀 파일 생성
+					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+					    // 5. 엑셀 파일 내보내기
+					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+					}
+
+					// 현재 날짜를 가져오는 함수
+					function getToday() {
+					    var date = new Date();
+					    var year = date.getFullYear();
+					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+					    return year + month + day;
+					}
+
+			var excelHandler = {
+			getExcelFileName : function() {
+				return 'productList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'product Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('productTable'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+			
+			function s2ab(s) {
+				
+				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+				var view = new Uint8Array(buf);  
+				for(var i=0; i<s.length; i++) {
+					view[i] = s.charCodeAt(i) & 0xFF;
+				}
+				alert("이까지 옴");
+				return buf;
+			}
+	  });
 
 </script>
 

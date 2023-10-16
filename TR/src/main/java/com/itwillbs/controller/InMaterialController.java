@@ -34,7 +34,7 @@ public class InMaterialController {
 	private InMaterialService inMaterialService;
 //--------------------------------------------------------------
 
-//	출고 페이지 이동 -> ajaxOutProductController에서 ajax로 리스트 불러오게 할려고 
+//	입고 페이지 이동 -> ajaxInMaterialController에서 ajax로 리스트 불러오게 할려고 
 	@GetMapping("/list")
 	public String getInMaterialList(Model model) {
 
