@@ -15,7 +15,7 @@ import com.itwillbs.domain.PageDTO;
 @Service
 public class OrderManagementService { 
 
-	// OrderManagementDAO 객체생성
+	// OrderManagementDAO 객체생성 
 	@Inject
 	private OrderManagementDAO ordermanagementDAO;
 	

@@ -1,8 +1,6 @@
 package com.itwillbs.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -109,16 +107,10 @@ public class OrderManagementController {
 	public String insertPro(OrderManagementDTO ordermanagementDTO) {
 		System.out.println("OrderManagementController insertPro()");
 		System.out.println(ordermanagementDTO);	
-		Date now = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
-		String formattedDate = dateFormat.format(now);
-	    String buyNum = "RA" + formattedDate;
-		System.out.println("발주코드 : " + buyNum);
-		ordermanagementDTO.setBuyNum(buyNum);
 		// inMaterial 추가한 코드
 		inMaterialService.insertList(ordermanagementDTO);
 		ordermanagementService.insertOrderManagement(ordermanagementDTO);
-		
+		// calendar 추가한 코드
 		calendarService.insertOrderCalendar(ordermanagementDTO);
 		
 		return "redirect:/OrderManagement/home";
@@ -308,7 +300,8 @@ public class OrderManagementController {
   	    List<OrderManagementDTO> orders = ordermanagementService.getOrderManagementList2();
   	    for (int i = 0; i < orders.size(); i++) {
   	    	OrderManagementDTO order = orders.get(i);
-  	    	int rawPrice = Integer.parseInt(order.getRawPrice());
+  	    	int rawPrice = (int) order.getRawPrice();
+//  	    	int rawPrice = Integer.parseInt(order.getRawPrice());
   	    	int buyCount = order.getBuyCount();
   	    	int total = rawPrice * buyCount;
   	        Row row = sheet.createRow(i + 1);
