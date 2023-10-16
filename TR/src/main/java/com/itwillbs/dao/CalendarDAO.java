@@ -36,8 +36,8 @@ public class CalendarDAO {
 		return sqlSession.selectList(namespace+"getPerfList");
 	}
 
-	public void insertSellCalendar(SellDTO sellDTO) {
-		sqlSession.selectList(namespace+"insertSellCalendar", sellDTO);
+	public void insertSellCalendar(CalendarDTO calendarDTO) {
+		sqlSession.selectList(namespace+"insertSellCalendar", calendarDTO);
 	}
 
 }

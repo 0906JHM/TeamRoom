@@ -46,7 +46,7 @@ public class CalendarService {
 		String memo = sellDTO.getClientCompany() + " " + sellDTO.getProdName() +"("+ sellDTO.getProdCode() + ") " + sellDTO.getSellCount();
 		calendarDTO.setCalendar_memo(memo);
 		
-		calendarDAO.insertSellCalendar(sellDTO);
+		calendarDAO.insertSellCalendar(calendarDTO);
 	}
 	
 	
