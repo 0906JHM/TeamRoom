@@ -41,5 +41,12 @@ SELECT * FROM product
  
  </select>
  
+ <update id="perfupdate">
+ update performance set 
+ perfFair=#{perfFair}, perfDefect=#{perfDefect}, perfDefectreason=#{perfDefectreason},perfDefectmemo=#{perfDefectmemo},
+ perfMemo=#{perfMemo},perfStatus=#{perfStatus}
+ where perfCode=#{perfCode}
+ </update>
+ 
  
  </mapper>

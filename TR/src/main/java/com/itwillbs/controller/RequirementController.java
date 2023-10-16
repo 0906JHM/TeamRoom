@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -111,15 +113,26 @@ public class RequirementController {
 	}
 
 	// 소요량관리 정보 추가
-	
-	  @RequestMapping(value = "/reqDetail", method = RequestMethod.POST) public
-	  String requirementPOST(RequirementList reqs) throws Exception {
+	@ResponseBody
+	  @RequestMapping(value = "/reqAdd", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String requirementPOST(RequirementList reqs) throws Exception {
 		  
-	  logger.debug("requirementPOST() 호출");
-	  logger.debug("reqs : " + reqs.getReqs());
-	  service.insertReq(reqs.getReqs()); 
-	  
-	  return "redirect:/requirement/reqDetail";
+		int findCode = 0;
+		findCode = service.findCode(reqs.getReqs());
+		String result="";
+
+		if (findCode > 0) {
+			System.out.println("존재");
+			result="존재";
+		        return result;
+		    }  // 저장 작업 수행
+		  logger.debug("requirementPOST() 호출");
+		  logger.debug("reqs : " + reqs.getReqs());
+		  service.insertReq(reqs.getReqs());
+		  System.out.println("성공");
+		  result="성공";
+		    // 성공 응답 반환
+		    return result;	
 	  }
 	 
 

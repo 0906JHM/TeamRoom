@@ -71,7 +71,7 @@
 
 			<form id="productList">
 			<div id="productList">
-				<table class="tg" id="productTable">
+				<table class="tab" id="productTable">
 					<thead>
 						<tr>
 							<!-- 체크박스 열 추가 -->
@@ -112,7 +112,7 @@
 
 				</table>
 </div>
-
+<div class="page">
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
 					<a
 						href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Prev</a>
@@ -129,7 +129,7 @@
 					<a
 						href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Next</a>
 				</c:if>
-
+</div>
 
 			</form>
 		</div>

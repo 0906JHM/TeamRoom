@@ -12,16 +12,13 @@
 		<result property="stockMemo" column="stockMemo"/>
 		<result property="prodCode" column="prodCode"/>
 		<result property="stockCount" column="stockCount"/>
-		
-		<collection property="requirement" ofType="RequirementDTO">
-			<result property="rawCode" column="rawCode"/>
-			<result property="prodCode" column="prodCode"/>
-		</collection>
 	</resultMap>
 	
 	<!-- 작업지시 목록 -->
 	<select id="allWorkOrder" resultType="WorkOrderDTO">
-		SELECT * FROM workOrder 
+		SELECT *
+		FROM workOrder w
+LEFT JOIN product p on w.prodCode = p.prodCode 
 		WHERE workCode != '' 
 		ORDER BY workCode DESC 
 		LIMIT #{start}, #{cntPerPage}
@@ -70,7 +67,7 @@
 		FROM line 
 		WHERE lineUse=2 
 		AND lineProcess='1차공정' 
-		ORDER BY lineCode DESC 
+		ORDER BY lineCode 
 		LIMIT 1 
 	</select>
 	
@@ -98,11 +95,20 @@
 		DELETE FROM workOrder 
 		WHERE workCode=#{workCode}
 	</delete>
+	<update id="lineUseDY">
+    UPDATE line l
+    INNER JOIN workOrder w ON l.lineCode = w.lineCode
+    SET l.lineUse = 2
+    WHERE w.workCode = #{workCode}
+</update>
+	
 	<!-- 작업지시 삭제 -->
 	
 	<!-- 작업지시 조회 -->
 	<select id="readWorkOrder" resultType="WorkOrderDTO">
-		SELECT * FROM workOrder WHERE workCode=#{workCode}
+		SELECT * FROM workOrder w
+LEFT JOIN product p on w.prodCode = p.prodCode 
+		WHERE workCode=#{workCode}
 	</select>
 	<!-- 작업지시 조회 -->
 	
@@ -118,14 +124,15 @@
 	<!-- 작업지시 검색 -->
 	<select id="searchWorkOrder" parameterType="hashMap" resultType="WorkOrderDTO">
 		
-		SELECT * FROM workOrder 
+		SELECT * FROM workOrder w
+LEFT JOIN product p on w.prodCode = p.prodCode 
 		<where>
 			<if test="search_line!=null and !search_line.isEmpty()">
 				lineCode=#{search_line} 
-			</if> 
-			<if test="(search_fromDate!=null and !search_fromDate.equals('')) and (search_toDate!=null and !search_toDate.equals(''))">
-				AND (workDate &gt;= #{search_fromDate} AND workDate &lt;= #{search_toDate}) 
-			</if> 
+			</if>
+			<if test="(search_fromDate != null and !search_fromDate.equals('')) and (search_toDate != null and !search_toDate.equals(''))">
+               AND (COALESCE(workDatechange, workDate) &gt;= #{search_fromDate} AND COALESCE(workDatechange, workDate) &lt;= #{search_toDate})
+</if> 
 			<if test="search_place!=null and !search_place.isEmpty() and !search_place.equals('전체')">
 				AND workProcess=#{search_place} 
 			</if> 
@@ -146,7 +153,7 @@
 				lineCode=#{search_line} 
 			</if> 
 			<if test="(search_fromDate!=null and !search_fromDate.equals('')) and (search_toDate!=null and !search_toDate.equals(''))">
-				AND (workDate &gt;= #{search_fromDate} AND workDate &lt;= #{search_toDate}) 
+				AND (workDate &gt;= #{search_fromDate} AND workDate &lt;= #{search_toDate})
 			</if> 
 			<if test="search_place!=null and !search_place.isEmpty() and !search_place.equals('전체')">
 				AND workProcess=#{search_place} 
@@ -164,7 +171,7 @@
 		FROM line 
 		WHERE lineUse=2 
 		AND lineProcess='2차공정' 
-		ORDER BY lineCode DESC 
+		ORDER BY lineCode
 		LIMIT 1) 
 	</sql>
 	<sql id="selectLine3">
@@ -172,7 +179,7 @@
 		FROM line 
 		WHERE lineUse=2 
 		AND lineProcess='3차공정' 
-		ORDER BY lineCode DESC 
+		ORDER BY lineCode
 		LIMIT 1) 
 	</sql>
 	
@@ -187,7 +194,7 @@
 			SET workProcess='3차공정', lineCode=<include refid="selectLine3"/>  
 		</if>
 		<if test="workProcess.equals('3차공정')">
-			SET workProcess='마감
+			SET workProcess='마감', lineCode='없음'
 		</if>
 		WHERE workCode=#{workCode}
 	</update>
@@ -199,7 +206,7 @@
 		FROM line 
 		WHERE lineUse=2 
 		AND lineProcess='2차공정' 
-		ORDER BY lineCode DESC 
+		ORDER BY lineCode
 		LIMIT 1 
 	</select>
 	<select id="selectLine3" resultType="String">
@@ -207,7 +214,7 @@
 		FROM line 
 		WHERE lineUse=2 
 		AND lineProcess='3차공정' 
-		ORDER BY lineCode DESC 
+		ORDER BY lineCode 
 		LIMIT 1 
 	</select>
 	

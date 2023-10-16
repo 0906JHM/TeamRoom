@@ -100,27 +100,66 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 
 function submitForm() {
-	  var isValid = true;
+    var isValid = true;
 
-	  // 유효성 검사
-	  $('#reqTable input[required]').each(function() {
-	    if ($(this).val().trim() === '') {
-	      isValid = false;
-	      return false; // 유효성 검사 실패 시 반복문 종료
-	    }
-	  });
+    // 유효성 검사
+    $('#reqTable input[required]').each(function() {
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            return false; // 유효성 검사 실패 시 반복문 종료
+        }
+    });
 
-	  if (isValid) {
-	    $('#fr').submit();
-	  } else {
-		 	 Swal.fire({
-			title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
-			confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-			icon: 'info',
-			width: '300px',
-		 });
-	  }
-	}
+    if (isValid) {
+        // 폼 데이터를 직렬화
+        var formData = $('#fr').serialize();
+
+        // AJAX 요청
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.contextPath}/requirement/reqAdd",
+            data: formData,
+            dataType: "text",
+            success: function(response) {
+                // 서버로부터 받은 응답 처리
+                if (response === "존재") {
+                    // 이미 존재하는 레코드일 때의 처리
+                    Swal.fire({
+                        title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "이미 존재하는 항목이 있습니다.",
+                        confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+                        icon: 'success',
+                        width: '400px',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                } else if (response === "성공") {
+                    // 성공적으로 저장된 경우의 처리
+                    location.reload();
+                    // 여기에 필요한 추가 동작을 수행하세요.
+                } else {
+                    // 기타 응답에 대한 처리
+                    console.error("알 수 없는 응답:", response);
+                    // 실패에 대한 처리를 추가하세요.
+                }
+            },
+            error: function(error) {
+                // AJAX 요청 실패 시 처리
+                console.error("AJAX 요청 실패:", error);
+                // 실패에 대한 처리를 추가하세요.
+            }
+        });
+    } else {
+        Swal.fire({
+            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요" + "</div>",
+            confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+            icon: 'info',
+            width: '400px',
+        });
+    }
+}
+
 var counter = 0;
 var addcounter = 0;
 var num3 = 0;
@@ -282,7 +321,7 @@ $(document).ready(function() {
 					  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 					  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 //						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
-					  width : '300px', // alert창 크기 조절
+					  width : '400px', // alert창 크기 조절
 					  
 					}).then((result) => {
 						
@@ -301,7 +340,7 @@ $(document).ready(function() {
 								  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
 								  confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
 								  icon: 'success',
-								  width : '300px',
+								  width : '400px',
 								}).then((result) => {
 								  if (result.isConfirmed) {
 								    location.reload();
@@ -314,7 +353,7 @@ $(document).ready(function() {
 								icon : 'question',
 								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
 								  
-								width: '300px',
+								width: '400px',
 								});
 							
 						}
@@ -325,7 +364,7 @@ $(document).ready(function() {
 							icon : 'error',
 							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
 							  
-							width: '300px',
+							width: '400px',
 							});
 				}// if(confirm)
 			});		
@@ -336,7 +375,7 @@ $(document).ready(function() {
 					title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 					icon : 'warning',
 					confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-					width: '300px',
+					width: '400px',
 					});
 			}// 체크 XXX
 
@@ -404,7 +443,7 @@ $(document).ready(function() {
 								data.raw.rawName,
 								data.reqAmount,
 								data.reqMemo,
-								data.raw.rawCode
+								data.rawCode
 								];
 						
 					
@@ -463,7 +502,7 @@ $(document).ready(function() {
 							title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "1이상의 값을 입력해주세요"+ "</div>",
 							icon: 'info',
 							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
-							width: '300px',
+							width: '400px',
 						})}
 					else{$('#fr').attr("action","${pageContext.request.contextPath}/requirement/reqModify");
 					$('#fr').attr("method","post");

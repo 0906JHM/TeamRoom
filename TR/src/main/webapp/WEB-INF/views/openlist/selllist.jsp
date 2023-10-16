@@ -44,6 +44,7 @@
        			var clientCompany = $(this).find('#clientCompany').text();
      			var sellCode = $(this).find('#sellCode').text();
      			var prodName = $(this).find('#prodName').text();
+     			var prodCode = $(this).find('#prodCode').text();
      			
      			
      			var number = isPop.match(/\d+/);
@@ -51,11 +52,13 @@
      			$('#sellCode'+number, opener.document).val(sellCode);
      			$('#clientCompany'+number, opener.document).val(clientCompany);
      			$('#prodName'+number, opener.document).val(prodName);
+     			$('#prodCode'+number, opener.document).val(prodCode);
      			
      			} else {
      			$('#sellCode8888', opener.document).val(sellCode);
      			$('#clientCompany8888', opener.document).val(clientCompany);
      			$('#prodName8888', opener.document).val(prodName);
+     			$('#prodCode8888', opener.document).val(prodCode);
      			}
      			
          		window.close();
@@ -133,6 +136,7 @@
 					<th>코드</th>
 					<th>거래처</th>
 					<th>제품</th>
+					<th style='display: none;'></th>
 					
 				</tr>
 			</thead>
@@ -144,6 +148,7 @@
 						<td id="sellCode">${dto.sellCode }</td>
          			    <td id="clientCompany">${dto.clientCompany }</td>
 						<td id="prodName">${dto.prodName }</td>
+						<td style='display: none;' id="prodCode">${dto.prodCode }</td>
 					</tr>
 			</c:forEach>
 		</table>

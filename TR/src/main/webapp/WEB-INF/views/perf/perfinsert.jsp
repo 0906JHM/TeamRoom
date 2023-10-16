@@ -60,7 +60,7 @@
 						<td ><input type="text" id="lineCode" name="lineCode"></td> <!--  제품코드 -->
 						<td ><input type="text" id="perfDate" name="perfDate"></td> <!-- 실적일자(자동생성) -->
 						<td ><input type="text" id="perfEmpId" name="perfEmpId"></td> <!--  담당자아이디 -->
-				        <td ><input type="number" id="perfAmount" name="perfAmount" readonly required></td> <!-- 실적수량 -->
+				        <td ><input type="number" id="perfAmount" name="perfAmount" required></td> <!-- 실적수량 -->
 						<td ><input type="number" id="perfFair" name="perfFair" required></td> <!-- 양품수-->
 						<td ><input type="number" id="perfDefect" name="perfDefect"></td> <!-- 불량수 -->
 						
