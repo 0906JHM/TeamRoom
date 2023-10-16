@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.ChartDTO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
@@ -95,6 +96,15 @@ public class PerformanceDAO {
 		
 		
 		return sqlsession.delete(namespace+".perfdelete",perfCode) > 0;
+	}
+
+
+
+
+	public List<ChartDTO> getpielist(String lineCode) {
+		
+		return sqlsession.selectOne(namespace+".getpielist",lineCode);
+		
 	}
 	
 	
