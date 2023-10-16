@@ -110,11 +110,13 @@ public class OrderManagementController {
 		System.out.println("OrderManagementController insertPro()");
 		System.out.println(ordermanagementDTO);	
 		
+		// buyNum 자동생성
+		// = RA + yyMMddHHmmss
 		Date now = new Date();
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
 	    String formattedDate = dateFormat.format(now);
 	    String buyNum = "RA" + formattedDate;
-	    System.out.println("수주 코드 만드는거 : " + buyNum);
+	    System.out.println("발주코드 : " + buyNum);
 	    ordermanagementDTO.setBuyNum(buyNum);
 		
 		// inMaterial 추가한 코드
