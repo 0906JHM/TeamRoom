@@ -13,6 +13,7 @@ public class CalendarDTO {
 	private String calendar_memo;
 	private String startDate;
 	private String endDate;
+	private String code;
 
 	
 }
