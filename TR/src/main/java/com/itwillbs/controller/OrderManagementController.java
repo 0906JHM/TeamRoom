@@ -1,6 +1,8 @@
 package com.itwillbs.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -107,6 +109,14 @@ public class OrderManagementController {
 	public String insertPro(OrderManagementDTO ordermanagementDTO) {
 		System.out.println("OrderManagementController insertPro()");
 		System.out.println(ordermanagementDTO);	
+		
+		Date now = new Date();
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+	    String formattedDate = dateFormat.format(now);
+	    String buyNum = "RA" + formattedDate;
+	    System.out.println("수주 코드 만드는거 : " + buyNum);
+	    ordermanagementDTO.setBuyNum(buyNum);
+		
 		// inMaterial 추가한 코드
 		inMaterialService.insertList(ordermanagementDTO);
 		ordermanagementService.insertOrderManagement(ordermanagementDTO);

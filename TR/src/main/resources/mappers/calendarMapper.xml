@@ -6,28 +6,33 @@
 <mapper namespace="com.itwillbs.mappers.calendarMapper">
 <!-- 	달력 -->
 	<select id="getCalendarList" resultType="com.itwillbs.domain.CalendarDTO">
-		select *
-		from calendar
+		SELECT *
+		FROM calendar
 	</select>
 <!-- 	매출 차트 -->
 	<select id="getSalesList" resultType="com.itwillbs.domain.ChartDTO">
-		select company as label, value as data
-		from pie_chart
+		SELECT company as label, value as data
+		FROM pie_chart
 	</select>
 <!-- 	재고 완재품 차트 -->
 	<select id="getStockList" resultType="com.itwillbs.domain.ChartDTO">
-		select stock_name as label, count as data
-		from stock_chart
+		SELECT stock_name as label, count as data
+		FROM stock_chart
 	</select>
 <!-- 	실적 차트 -->
 	<select id="getPerfList" resultType="com.itwillbs.domain.ChartDTO">
-		select  date_format(perfdate, '%Y-%m-%d') as label, count as data
-		from perf_chart
-		order by perfdate asc
+		SELECT  date_format(perfdate, '%Y-%m-%d') as label, count as data
+		FROM perf_chart
+		ORDER BY perfdate asc
 	</select>
 	
 	<insert id="insertSellCalendar">
-		insert into calendar
-		values(default, #{calendar_title}, #{calendar_memo}, #{startDate}, #{endDate}, #{code})
+		INSERT INTO calendar
+		VALUES (default, #{calendar_title}, #{calendar_memo}, #{startDate}, #{endDate}, #{code})
 	</insert>
+	
+	<delete id="deleteSellCalendar">
+		DELETE FROM calendar
+		WHERE code = #{code}
+	</delete>
 </mapper>
