@@ -58,7 +58,6 @@
 	clientCompany=#{clientCompany},
 	prodCode=#{prodCode},
 	prodName=#{prodName},
-	prodPrice=#{prodPrice},
 	sellCount=#{sellCount},
 	sellPrice=#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}),
 	sellDate=#{sellDate},
