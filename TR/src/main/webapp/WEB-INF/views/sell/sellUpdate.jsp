@@ -23,47 +23,48 @@
 <div class="popupContainer">
 <h1>수주 상세정보</h1>
 <div class="horizontal-line"></div>
-    <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
-<label>수주 코드</label>
-			<input type="text" name="prodCode" value="${sellDTO.sellCode}" readonly>
-			<br>
-			<label>처리 상태</label>
-			<input type="text" name="prodCode" value="${sellDTO.sellState}" readonly>
-			<br>
-			<label>거래처</label>
-			<input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="${sellDTO.clientCode}" readonly >
-        	<input type="text" id="clientCompany9999" placeholder="${sellDTO.clientCompany}" onclick=searchItem('client','clientCode9999'); readonly >
-			<br>
-			<label>제품</label>
-			<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="${sellDTO.prodCode}" readonly>
-	      	<input type="text" name="prodName" id="prodName9999" placeholder="${sellDTO.prodName}" readonly onclick="searchItem('prod','prodCode9999')">
-			<br>
-			<label>제품 단가</label>
-			<input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); value="${sellDTO.prodPrice}"readonly>원
-			<br>
-			<label>수주 수량</label>
-			<input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="${sellDTO.sellCount}" onchange="calculateSellPrice()">개<br>
-			<br>
-			<label>수주 단가</label>
-			<input type="number" step="0.01" name="prodPrice" value="${sellDTO.sellPrice}" pattern="###,###원" />
-			<br>
-			<label>수주 일자</label>
-			<input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDate}"readonly><br> 
-			<br>
-			<label>납기 일자</label>
-			<input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDuedate}"readonly><br> 
-			<br>
-			<label>담당자</label>
-			<input type="text" name="prodMemo" value="${sellDTO.sellEmpId}" readonly>
-			<br>
-			<label>비고</label>
-			<input type="text" name="prodMemo" value="${sellDTO.sellMemo}">
-			<br>
-			
-			
-			<input type="submit" value="수정">
-			
-			<button type="button" onclick="window.close()">닫기</button>
+    <form action="${pageContext.request.contextPath}/sell/sellAddPro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
+
+       	<label class="popupLabel">수주 코드 : </label>
+      	<input type="text" id="sellCode" name="selCode" required="required" ><br> 
+      	
+      	<div class="popupSerch">
+        <label class="popupLabel">거래처 : </label>
+        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly required>
+        <input type="text" id="clientCompany9999" name="clientCompany" onclick=searchItem('client','clientCode9999'); placeholder="거래처명" readonly required><br>
+		</div>
+		
+		<div class="popupSerch">
+ 		<label class="popupLabel">제품 : </label>
+ 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품코드" readonly required>
+		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')" required><br>
+		</div>
+		
+		<label class="popupLabel">제품 단가 : </label>
+        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
+        
+        <label class="popupLabel">수주 수량 : </label>
+        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()" required>개<br>
+
+ 	    <label class="popupLabel">수주 단가 : </label>
+		<input type="text" id="sellPrice" min="0" value="${formattedSellPrice}" readonly>원<br>    
+     <label class="popupLabel">수주 일자 : </label>
+        <input type="text" id="sellDate" name="sellDate" readonly><br> 
+
+        <label class="popupLabel">납기 일자 : </label>
+        <input type="text" id="sellDuedate" name="sellDuedate" required><br>
+
+        <label class="popupLabel">담당자 : </label>
+        <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
+
+        <label class="popupLabel">비고 : </label><br>
+        <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
+		
+		<br>
+        <button type="submit" >등록</button>
+        <button type="reset">취소</button>
+        <button type="button" onclick="window.close()">닫기</button>
+    
 	</form>
 
 </div>

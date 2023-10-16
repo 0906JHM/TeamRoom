@@ -60,6 +60,7 @@
 	clientCompany=#{clientCompany},
 	prodCode=#{prodCode},
 	prodName=#{prodName},
+	prodPrice=#{prodPrice},
 	sellCount=#{sellCount},
 	sellPrice=#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}),
 	sellDate=#{sellDate},
@@ -75,7 +76,8 @@
 		where sellCode = #{sellCode}
 	</delete>
 	
-	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">
+	<select id="getSellMemo"
+		resultType="com.itwillbs.domain.SellDTO">
 		select *
 		from sellTest
 		where sellCode = #{sellCode}
