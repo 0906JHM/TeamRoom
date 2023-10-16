@@ -48,5 +48,10 @@ SELECT * FROM product
  where perfCode=#{perfCode}
  </update>
  
+ <delete id="perfdelete">
+ delete from performance where perfCode=#{perfCode}
+ 
+ </delete>
+ 
  
  </mapper>

@@ -42,7 +42,7 @@
 					<th>제품코드</th><!-- worklist에서 받아옴 -->
 					<th>라인코드</th><!-- worklist에서 받아옴 -->
 					<th >실적일</th>
-					<th> 담당자 </th>
+					<th> 담당자 </th> <!--  세션으로 넘겨받음 -->
 					<th >실적수량</th><!-- worklist에서 받아옴 -->
 					<th >양품수</th><!-- worklist에서 받아옴 -->
 					<th >불량수</th>
@@ -59,7 +59,7 @@
 						<td ><input type="text" id="prodCode" name="prodCode"></td> <!--  제품코드 -->
 						<td ><input type="text" id="lineCode" name="lineCode"></td> <!--  제품코드 -->
 						<td ><input type="text" id="perfDate" name="perfDate"></td> <!-- 실적일자(자동생성) -->
-						<td ><input type="text" id="perfEmpId" name="perfEmpId"></td> <!--  담당자아이디 -->
+						<td ><input type="text" id="perfEmpId" name="perfEmpId"></td> <!--  담당자아이디(세션으로처리) -->
 				        <td ><input type="number" id="perfAmount" name="perfAmount" required></td> <!-- 실적수량 -->
 						<td ><input type="number" id="perfFair" name="perfFair" required></td> <!-- 양품수-->
 						<td ><input type="number" id="perfDefect" name="perfDefect"></td> <!-- 불량수 -->

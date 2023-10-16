@@ -73,5 +73,10 @@ public class OrderManagementService {
 		System.out.println("OrderManagementService updateOrderManagement()");
 		ordermanagementDAO.updateOrderManagement(ordermanagementDTO);
 	}
+	
+	// 엑셀 수정
+	public List<OrderManagementDTO> getOrderManagementList2() {
+		return ordermanagementDAO.getOrderManagementList2();
+	}
 
 }

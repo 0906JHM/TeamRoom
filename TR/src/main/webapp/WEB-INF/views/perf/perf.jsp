@@ -13,10 +13,9 @@
 	href="${pageContext.request.contextPath}/resources/css/perf.css">
 
 	
-	
 	<link href="${pageContext.request.contextPath }/resources/css/side.css"
 	rel="stylesheet" type="text/css">
-	
+
 	<script src="https://kit.fontawesome.com/25ef23e806.js"
 	crossorigin="anonymous"></script>
 	
@@ -107,8 +106,30 @@
 			</tbody> 
 
 		</table>
-		</div> <!--  TABLE FORM -->
 		
+		
+		<div class="exceldown">
+		 <input type="button" id="entrytable" class="entrytable" value="전체테이블">
+		  <input type="button" id="exceldown" class="exceldown" value="액셀다운">
+		 </div>
+		 
+		 <div class="paging">
+		       <input type="button" value="1" style="float:right">
+		 
+		 </div>
+		
+		
+		
+		</div> <!--  TABLE FORM -->
+		 
+		 <div class="chart">
+		 <h2> 생산실적 현황 </h2>
+		 <div class="chartbody">
+		 
+		 
+		 
+		 </div> <!--  chartbody -->
+		 </div> <!--  chart -->
 
 			
 			</div> <!--  CLIENTBODY -->

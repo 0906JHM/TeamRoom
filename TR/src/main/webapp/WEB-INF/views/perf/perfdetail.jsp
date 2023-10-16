@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
 </head>
 <body>
@@ -107,8 +108,8 @@ modifyButton.addEventListener("click", function() {
 
     console.log("perfDefectDisplay.textContent: " + perfDefectInput.textContent);
     console.log("perfDefectDisplay.innerText: " + perfDefectInput.innerText);
-    var existingPerfDefectInput = document.getElementById("perfDefectInput"); // 기존의 perfDefectInput 요소 가져오기
-    var newPerfDefectInput = createInputBox(perfDefectInput.textContent || perfDefectDisplay.innerText);
+	    var existingPerfDefectInput = document.getElementById("perfDefectInput"); // 기존의 perfDefectInput 요소 가져오기
+	    var newPerfDefectInput = createInputBox(perfDefectInput.textContent || perfDefectDisplay.innerText);
     console.log(newPerfDefectInput); // perfDefectInput이 제대로 가져와지는지 확인해보기
     perfDefectInput.innerHTML = ""; // perfDefectDisplay의 내용을 비우기
     perfDefectInput.appendChild(newPerfDefectInput); // 새로운 perfDefectInput을 perfDefectDisplay에 추가
@@ -250,6 +251,36 @@ $('#update2').click(function() {
         '_blank',
         'width=1200px, height=800px, left=500px, top=100px'
     );
+});
+
+
+
+
+$('#deletebtn').click(function() {
+    var perfCode = $('#perfCodeDisplay').text();
+    // 서버로 perfCode 값을 전송하여 해당 행을 삭제
+    $.post("${pageContext.request.contextPath}/perfajax/delete", {
+        perfCode: perfCode
+    })
+    .done(function(response) {
+        // 성공 응답을 받은 경우
+        Swal.fire({
+            title: '삭제 성공',
+            text: '성공적으로 삭제되었습니다.',
+            icon: 'success'
+        }).then(function() {
+            location.reload(); // 페이지 새로고침
+            window.opener.location.reload(); // 부모 창 새로고침
+        });
+    })
+    .fail(function(response) {
+        // 실패 응답을 받은 경우
+        Swal.fire({
+            title: '삭제 실패',
+            text: '삭제에 실패하였습니다.',
+            icon: 'error'
+        });
+    });
 });
 
 

@@ -52,4 +52,9 @@ public class OrderManagementDAO {
 		sqlSession.update(namespace+".updateOrderManagement", ordermanagementDTO);
 	}
 
+	// 엑셀 수정
+	public List<OrderManagementDTO> getOrderManagementList2() {
+		return sqlSession.selectList(namespace+".getOrderManagementList2");
+	}
+	
 }
