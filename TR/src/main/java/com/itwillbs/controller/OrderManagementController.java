@@ -1,10 +1,16 @@
 package com.itwillbs.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -265,5 +271,50 @@ public class OrderManagementController {
          
         return "OrderManagement/selectclient";
      }
+
+  	// 엑셀 (수정)
+  	@GetMapping("/download")
+  	public void download(HttpServletResponse response) throws IOException {
+  	    Workbook workbook = new XSSFWorkbook();
+  	    Sheet sheet = workbook.createSheet("Orders");
+  	    Row header = sheet.createRow(0);
+  	    header.createCell(0).setCellValue("발주번호");
+  	    header.createCell(1).setCellValue("품번");
+  	    header.createCell(2).setCellValue("품명");
+  	    header.createCell(3).setCellValue("종류");
+  	    header.createCell(4).setCellValue("거래처명");
+  	    header.createCell(5).setCellValue("창고수량");   
+  	    header.createCell(6).setCellValue("발주수량");
+  	    header.createCell(7).setCellValue("납입단가");
+  	    header.createCell(8).setCellValue("단가총계");
+  	    header.createCell(9).setCellValue("발주신청일");
+  	    header.createCell(10).setCellValue("담당자");
+  	    header.createCell(11).setCellValue("입고상태");
+
+  	    List<OrderManagementDTO> orders = ordermanagementService.getOrderManagementList2();
+  	    for (int i = 0; i < orders.size(); i++) {
+  	    	OrderManagementDTO order = orders.get(i);
+  	    	int rawPrice = Integer.parseInt(order.getRawPrice());
+  	    	int buyCount = order.getBuyCount();
+  	    	int total = rawPrice * buyCount;
+  	        Row row = sheet.createRow(i + 1);
+  	        row.createCell(0).setCellValue(order.getBuyNum());
+  	        row.createCell(1).setCellValue(order.getRawCode());
+  	        row.createCell(2).setCellValue(order.getRawName());
+  	        row.createCell(3).setCellValue(order.getRawType());
+  	        row.createCell(4).setCellValue(order.getClientCode());
+  	        row.createCell(5).setCellValue(order.getWhseCount());
+  	        row.createCell(6).setCellValue(order.getBuyCount());
+  	        row.createCell(7).setCellValue(order.getRawPrice());
+  	        row.createCell(8).setCellValue(total);
+  	        row.createCell(9).setCellValue(order.getBuyDate());
+  	        row.createCell(10).setCellValue(order.getBuyEmpId());
+  	        row.createCell(11).setCellValue(order.getBuyInstate());
+  	    }
+  	    response.setContentType("application/vnd.ms-excel");
+  	    response.setHeader("Content-Disposition", "attachment; filename=orders.xlsx");
+  	    workbook.write(response.getOutputStream());
+  	    workbook.close();
+  	}
 	
 }
