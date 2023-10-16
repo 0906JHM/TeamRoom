@@ -23,7 +23,7 @@
 창고수량 : 	<input type="number" name="whseCount" id="wCInput"><br>
 발주수량 : 	<input type="number" name="buyCount"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
-담당자 : 		<input type="text" name="buyEmpId"><br>
+담당자 : 		<input type="text" name="buyEmpId" value="${sessionScope.empId}" readonly="readonly"><br>
 입고상태 : 	<input type="radio" name="buyInstate" value="발주완료" checked>발주완료<br>
 <input type="submit" value="발주등록">
 </form>

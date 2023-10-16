@@ -117,20 +117,24 @@ search    <input type="text" name="search" placeholder="search">
 <th>공정</th>
 </tr>
 <c:forEach var="lineDTO" items="${lineList }">
-<tr onclick="window.open('update?lineCode=${lineDTO.lineCode}', '_blank', 'width=800,height=600')">
+<tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}' === 'true') { window.open('update?lineCode=${lineDTO.lineCode}', '_blank', 'width=800,height=600'); } else { event.preventDefault(); }">
     <td>${lineDTO.lineCode}</td>
     <td>${lineDTO.lineName}</td>
     <td>${lineDTO.lineUse}</td>
     <td>${lineDTO.lineEmpId}</td>
     <td>${lineDTO.lineInsertDate}</td>
     <td>${lineDTO.lineProcess}</td>
+    <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
     <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${lineDTO.lineCode}"></td>
+    </c:if>
 </tr>
 </c:forEach>
-</table>
 
+</table>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
 <input type="button" value="삭제" onclick="deleteValue();">
 <button onclick="window.open('line2', '_blank', 'width=800,height=600')">등록</button>
+</c:if>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
