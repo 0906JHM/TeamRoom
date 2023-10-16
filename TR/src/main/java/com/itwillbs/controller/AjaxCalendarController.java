@@ -105,7 +105,7 @@ public class AjaxCalendarController {
 	    return entity;
 	}
 	@RequestMapping(value = "/main/salesList", method = RequestMethod.POST)
-	public ResponseEntity<List<ChartDTO>> SalesList() {
+	public ResponseEntity<List<ChartDTO>> salesList() {
 		List<ChartDTO> salesList = calendarService.getSalesList();
 
 		ResponseEntity<List<ChartDTO>> entity = new ResponseEntity<>(salesList, HttpStatus.OK);
@@ -114,7 +114,7 @@ public class AjaxCalendarController {
 		
 	}
 	@RequestMapping(value = "/main/stockList", method = RequestMethod.POST)
-	public ResponseEntity<List<ChartDTO>> StockList() {
+	public ResponseEntity<List<ChartDTO>> stockList() {
 		List<ChartDTO> stockList = calendarService.getStockList();
 		
 		ResponseEntity<List<ChartDTO>> entity = new ResponseEntity<>(stockList, HttpStatus.OK);
@@ -123,12 +123,20 @@ public class AjaxCalendarController {
 		
 	}
 	@RequestMapping(value = "/main/perfList", method = RequestMethod.POST)
-	public ResponseEntity<List<ChartDTO>> PerfList() {
+	public ResponseEntity<List<ChartDTO>> perfList() {
 		List<ChartDTO> perfList = calendarService.getPerfList();
 		
 		ResponseEntity<List<ChartDTO>> entity = new ResponseEntity<>(perfList, HttpStatus.OK);
 		
 		return entity;
 		
+	}
+	@RequestMapping(value = "/main/linePerfList", method = RequestMethod.POST)
+	public ResponseEntity<List<ChartDTO>> linePerfList() {
+		List<ChartDTO> perfList = calendarService.getPerfList();
+		
+		ResponseEntity<List<ChartDTO>> entity = new ResponseEntity<>(perfList, HttpStatus.OK);
+		
+		return entity;
 	}
 }

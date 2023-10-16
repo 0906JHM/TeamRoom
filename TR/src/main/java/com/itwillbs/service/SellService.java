@@ -66,8 +66,8 @@ public class SellService {
 	}//sellUpdate
 
 	//----------------------------------------------------- 수주 삭제 --------------------------------------------------------
-	public void sellDelete(List<String> checked) throws Exception {
-		sellDAO.sellDelete(checked);
+	public int sellDelete(List<String> checked) throws Exception {
+		return sellDAO.sellDelete(checked);
 	}//sellDelete
 
 	//----------------------------------------------------- 비고 보기 --------------------------------------------------------
