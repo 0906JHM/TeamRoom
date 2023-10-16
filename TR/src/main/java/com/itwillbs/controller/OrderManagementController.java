@@ -29,7 +29,7 @@ import com.itwillbs.service.RawmaterialsService;
 @Controller  
 @RequestMapping("/OrderManagement/*")
 public class OrderManagementController {
-	
+	 
 	// OrderManagementService 객체생성
 	@Inject
 	private OrderManagementService ordermanagementService;
@@ -110,7 +110,7 @@ public class OrderManagementController {
 		// inMaterial 추가한 코드
 		inMaterialService.insertList(ordermanagementDTO);
 		ordermanagementService.insertOrderManagement(ordermanagementDTO);
-		
+		// calendar 추가한 코드
 		calendarService.insertOrderCalendar(ordermanagementDTO);
 		
 		return "redirect:/OrderManagement/home";
@@ -300,7 +300,8 @@ public class OrderManagementController {
   	    List<OrderManagementDTO> orders = ordermanagementService.getOrderManagementList2();
   	    for (int i = 0; i < orders.size(); i++) {
   	    	OrderManagementDTO order = orders.get(i);
-  	    	int rawPrice = Integer.parseInt(order.getRawPrice());
+  	    	int rawPrice = (int) order.getRawPrice();
+//  	    	int rawPrice = Integer.parseInt(order.getRawPrice());
   	    	int buyCount = order.getBuyCount();
   	    	int total = rawPrice * buyCount;
   	        Row row = sheet.createRow(i + 1);
