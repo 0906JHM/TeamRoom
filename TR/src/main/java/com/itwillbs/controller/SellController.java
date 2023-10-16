@@ -152,6 +152,22 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellAddPro
 
+//----------------------------------------------------- 수주 상세정보 ---------------------------------------
+@GetMapping("/sellDetail")
+public String sellDetail(HttpServletRequest request, Model model) {
+	System.out.println("SellController sellDetail()");
+	
+	String sellCode = request.getParameter("sellCode");
+	
+	// sellMemo 가져오기
+	SellDTO sellDTO = sellService.getSell(sellCode);
+	System.out.println("sellDTO" + sellDTO);
+	model.addAttribute("sellDTO",sellDTO);
+	
+	return "sell/sellDetail";
+	
+}//sellDetail
+
 //-------------------------------------------------- 수주 수정 ---------------------------------------------
 	@GetMapping("/sellUpdate")
 	public String sellUpdate(HttpServletRequest request, Model model) {
@@ -160,21 +176,22 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 
 		// 내용가져오기
 		SellDTO sellDTO = sellService.getSell(sellCode);
+		
 		System.out.println(sellCode);
 		model.addAttribute("sellDTO", sellDTO);
 
-		return "sell/sellUpdate";
+		return "sell/sellDetail";
 	}//sellUpdate
 
 	@PostMapping("/sellUpdatePro")
-	public ResponseEntity<String> sellUpdatePro(SellDTO sellDTO) {
+	public String sellUpdatePro(SellDTO sellDTO) {
 		System.out.println("SellController sellUpdatePro()");
 		// 수정
 		sellService.sellUpdate(sellDTO);
 
 		//return "redirect:/sell/sellMain";
 		
-		return ResponseEntity.ok("<script>window.close();</script>");
+		return "redirect:/sell/sellUpdate";
 	}//sellUpdatePro
 	
 //-------------------------------------------------- 수주 삭제 ---------------------------------------------

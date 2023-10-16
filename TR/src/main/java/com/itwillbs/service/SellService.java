@@ -53,12 +53,18 @@ public class SellService {
 		sellDAO.insertSell(sellDTO);	
 	}//insertSell
 
-	//----------------------------------------------------- 수주 정보 보기 --------------------------------------------------------
+	//----------------------------------------------------- 수주 상세정보 --------------------------------------------------------
 	public SellDTO getSell(String sellCode) {
-		return sellDAO.getSell(sellCode);
+		System.out.println("SellService getSell()");
+		
+		SellDTO sellDTO = sellDAO.getSell(sellCode);
+		
+	    return sellDTO;
 
+//		return sellDAO.getSell(sellCode);
+		
 	}//getSell
-	
+
 	//----------------------------------------------------- 수주 수정 --------------------------------------------------------
 	public void sellUpdate(SellDTO sellDTO) {
 		sellDAO.sellUpdate(sellDTO);
@@ -67,6 +73,8 @@ public class SellService {
 
 	//----------------------------------------------------- 수주 삭제 --------------------------------------------------------
 	public int sellDelete(List<String> checked) throws Exception {
+		System.out.println("SellService sellDelete()");
+		
 		return sellDAO.sellDelete(checked);
 	}//sellDelete
 

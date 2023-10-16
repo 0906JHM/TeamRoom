@@ -123,7 +123,7 @@
 								
 								<td>${sellDTO.sellState}</td><!-- 처리(출고)상태 -->
 								
-								<td	onclick="openSellDetail()">${sellDTO.sellCode}</td><!-- 수주코드 -->
+								<td	onclick="openSellDetail('${sellDTO.sellCode}')">${sellDTO.sellCode}</td><!-- 수주코드 -->
 								
 								<td>${sellDTO.clientCode}</td><!-- 거래처코드 -->
 								
@@ -341,8 +341,8 @@ function openSellAdd() {
     }
 } 
 
-<!--------------------------------------------------- 수주 수정, 수주 정보 보기 ----------------------------------------->
-function openSellDetail() {
+<!--------------------------------------------------- 수주 상세정보 ----------------------------------------->
+function openSellDetail(sellCode) {
 	// 팝업 창 
     var popupWidth = 500;
     var popupHeight = 700;
@@ -352,7 +352,7 @@ function openSellDetail() {
                         ',left=' + left + ',top=' + top +
                         ',resizable=yes,scrollbars=yes';
 	
-    window.open( '${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}','popupUrl', popupFeatures);
+    window.open( '${pageContext.request.contextPath}/sell/sellDetail?sellCode='+sellCode,'popupUrl', popupFeatures);
 	
     function submitClose() {
     	 window.close();

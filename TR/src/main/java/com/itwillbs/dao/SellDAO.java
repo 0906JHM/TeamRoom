@@ -43,20 +43,26 @@ public class SellDAO {
 		sqlSession.insert(namespace + ".insertSell", sellDTO);
 	}// insertSell
 	
-//----------------------------------------------------- 수주 정보 보기 ---------------------------------------
+//----------------------------------------------------- 수주 상세정보 ---------------------------------------
 	public SellDTO getSell(String sellCode) {
+		System.out.println("SellDAO getSell()");
+		
 		return sqlSession.selectOne(namespace+".getSell", sellCode);
+	
 	}//getSell
 
 //----------------------------------------------------- 수주 수정 ---------------------------------------	
 	public void sellUpdate(SellDTO sellDTO) {
+		System.out.println("SellDAO sellUpdate()");
+		
 		sqlSession.update(namespace+".sellUpdate",sellDTO);
 		
 	}//sellUpdate
 	
 //----------------------------------------------------- 수주 삭제 --------------------------------------------------------
 	public int sellDelete(List<String> checked) throws Exception {
-
+		System.out.println("SellDAO sellDelete()");
+		
 		Iterator<String> it = checked.iterator();
 		int result = 0;
 
