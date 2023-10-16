@@ -11,18 +11,12 @@
 <title>sell/sellMain.jsp</title>
 
 <!-- side.jsp css-->
-<link href="${pageContext.request.contextPath }/resources/css/side.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/resources/css/side.css"	rel="stylesheet" type="text/css">
 <!-- 본문 css -->
-<link
-	href="${pageContext.request.contextPath }/resources/css/product.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/resources/css/product.css" rel="stylesheet" type="text/css">
 <!-- 수주일자 기간선택 -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/daterange.css"
-	rel="stylesheet" type="text/css">
-<script
-	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/daterange.css"	rel="stylesheet" type="text/css">
+<script	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- J쿼리 호출 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -30,15 +24,10 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<!-- SheetJS -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
-<!--FileSaver [savaAs 함수 이용] -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<!-- 엑셀 다운로드 -->
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 </head>
 
@@ -49,7 +38,7 @@
 
 	<!------------------------------------------------------- 본문 타이틀 ---------------------------------------------------->
 	<div class="container">
-		<h2>수주 관리</h2>
+		<h2 id="sellMain">수주 관리</h2>
 	
 		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
 		<div id="searchform">
@@ -208,6 +197,10 @@
 
 var contextPath = "${pageContext.request.contextPath}";
 
+<!------------------------------------------------- 수주관리 페이지 새로고침 ------------------------------------------>
+document.getElementById("sellMain").addEventListener("click", function() {
+    location.reload(); //
+});
 <!------------------------------------------------- 팝업창 옵션 ------------------------------------------>
 //팝업 옵션
 const popupOpt = "top=60,left=140,width=720,height=600";
