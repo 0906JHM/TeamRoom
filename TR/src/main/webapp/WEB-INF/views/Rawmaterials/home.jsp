@@ -9,7 +9,10 @@
 <meta charset="UTF-8"> 
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+
+<!-- css -->
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/Rawmaterials.css" rel="stylesheet" type="text/css">
 
 <!-- javascript --> 
 <script type="text/javascript">
@@ -136,7 +139,7 @@ $(document).ready(function() {
 		<option value="포장재">포장재</option>
 		</select>
 거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
-<input type="submit" value="검색">
+<input type="submit" value="검색" id="btnRaw">
 </form>
 
 <!-- table -->
@@ -184,8 +187,8 @@ $(document).ready(function() {
 </table>
 
 <!-- button -->
-<input type="button" value="추가" onclick="openPopup1()">
-<input type="button" value="삭제" onclick="deleteValue();">
+<input type="button" value="추가" onclick="openPopup1()" id="btnRaw">
+<input type="button" value="삭제" onclick="deleteValue();" id="btnRaw">
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
