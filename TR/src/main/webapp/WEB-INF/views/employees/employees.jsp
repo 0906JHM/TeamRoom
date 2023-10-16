@@ -8,31 +8,7 @@
 <title>인사관리</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css">
-<style>
-    #employeeTable {
-        border-collapse: collapse;
-        width: 50%;
-    }
-    #employeeTable th,
-    #employeeTable td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    #employeeTable th {
-        background-color: #f2f2f2;
-    }
-    #employeeTable tr:hover {
-        background-color: #f5f5f5;
-    }
-    input[type="checkbox"] {
-        transform: scale(1.5);
-    }
-    .table-container {
-        margin: 20px;
-    }
-</style>
+<link href="${pageContext.request.contextPath}/resources/css/employees.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 //체크박스 선택/해제
@@ -105,11 +81,18 @@ function deleteValue(){
 </head>
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
+<div id="con">
+<h2>인사 관리</h2>
+<hr>
+<div id="searchForm">
 <form action="${pageContext.request.contextPath}/employees/employees" method="get">
-search    <input type="text" name="search" placeholder="search">
+<span class="styled-text">search</span><input type="text" name="search" placeholder="search">
 <input type="submit" value="검색" id="btnSell">
 </form>
+</div>
+<hr>
     <table id="employeeTable">
+    <thead>
         <tr>
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
             <th>사원번호</th>
@@ -123,6 +106,8 @@ search    <input type="text" name="search" placeholder="search">
             <th>입사일자</th>
             <th>재직구분</th>
         </tr>
+    </thead>
+
 <c:forEach var="employeesDTO" items="${employeesList }">
 <tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}' === 'true') { window.open('update?empId=${employeesDTO.empId}', '_blank', 'width=800,height=600'); } else { event.preventDefault(); }">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
@@ -142,6 +127,8 @@ search    <input type="text" name="search" placeholder="search">
 </tr>
 </c:forEach>    
     </table>
+</div>
+
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">    
     <input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
     <button onclick="window.open('employees2', '_blank', 'width=800,height=600')" id="btnSell">등록</button>

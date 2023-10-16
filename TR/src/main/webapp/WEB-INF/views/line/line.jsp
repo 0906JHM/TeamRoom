@@ -8,30 +8,7 @@
 <title>라인관리</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
-<style>
-    #lineTable {
-        border-collapse: collapse;
-        width: 50%;
-    }
-    #lineTable th,
-    #lineTable td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    #lineTable th {
-        background-color: #f2f2f2;
-    }
-    #lineTable tr:hover {
-        background-color: #f5f5f5;
-    }
-    input[type="checkbox"] {
-        transform: scale(1.5);
-    }
-    .table-container {
-        margin: 20px;
-    }
-</style>
+<link href="${pageContext.request.contextPath}/resources/css/employees.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 //체크박스 선택/해제
@@ -105,7 +82,7 @@ function deleteValue(){
 <jsp:include page="../inc/side.jsp"></jsp:include>
 <form action="${pageContext.request.contextPath}/line/line" method="get">
 search    <input type="text" name="search" placeholder="search">
-<input type="submit" value="검색">
+<input type="submit" value="검색" id="btnSell">
 </form>
 <table id="lineTable">
 <tr>
@@ -132,8 +109,8 @@ search    <input type="text" name="search" placeholder="search">
 
 </table>
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
-<input type="button" value="삭제" onclick="deleteValue();">
-<button onclick="window.open('line2', '_blank', 'width=800,height=600')">등록</button>
+<input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
+<button onclick="window.open('line2', '_blank', 'width=800,height=600')" id="btnSell">등록</button>
 </c:if>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
