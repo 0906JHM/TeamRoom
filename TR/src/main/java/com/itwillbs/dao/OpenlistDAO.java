@@ -21,6 +21,7 @@ import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
+import com.itwillbs.domain.WarehouseDTO;
 import com.itwillbs.service.RequirementService;
 
 
@@ -177,6 +178,45 @@ public class OpenlistDAO {
 			  data.put("clientCompany", dto.getClientCompany());
 			  
 			  return sqlSession.selectList(NAMESPACE + ".readSearchSell", data); }
+			    
+			    
+			    // ==========================================================================
+				
+				// 창고목록 리스트 총 갯수
+				 
+				public int countWhse() {
+					logger.debug(" 창고목록 리스트 갯수 확인 ");
+					return sqlSession.selectOne(NAMESPACE + ".countWhse");
+				}
+				
+				// 창고목록 전체 리스트
+				
+				    public List<WarehouseDTO> readWhseList(RequirementPageDTO pdto) throws
+				  Exception { logger.debug(" 창고목록 전체리스트 DAO "); return
+				  sqlSession.selectList(NAMESPACE + ".readWhse", pdto); }
+				  
+				  // 창고목록 검색 갯수
+				  
+				    public int countWhse(WarehouseDTO dto) { HashMap<String, Object>
+				  data = new HashMap<String, Object>();
+				  
+				  data.put("whseCode", dto.getWhseCode()); data.put("whseName",
+				  dto.getWhseName()); 
+				  
+				  return sqlSession.selectOne(NAMESPACE + ".countSearchWhse", data); }
+				  
+				  // 창고목록 검색리스트
+				  
+				    public List<WarehouseDTO> readWhseList(WarehouseDTO dto,
+				  RequirementPageDTO pdto) throws Exception { HashMap<String, Object> data = new
+				  HashMap<String, Object>();
+				  
+				  data.put("start", pdto.getStart()); data.put("cntPerPage",
+				  pdto.getCntPerPage()); data.put("whseCode", dto.getWhseCode());
+				  data.put("whseName", dto.getWhseName());
+				  
+				  return sqlSession.selectList(NAMESPACE + ".readSearchWhse", data); }
+
 
 	// ==========================================================================
 	

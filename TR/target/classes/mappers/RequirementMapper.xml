@@ -122,14 +122,7 @@
 	<!-- 소요량관리 삭제
 	
 	소요량관리 수정 시 조회 -->
-	<!-- <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*,p.prodName
-		FROM requirement r
-		join
-		product p on p.prodCode = r.prodCode
-		WHERE
-		reqCode=#{reqCode}
-	</select> -->
+	
 	 <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
 		SELECT r.*,p.prodName ,rm.*
 		FROM requirement r

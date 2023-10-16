@@ -128,7 +128,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 LEFT JOIN product p on w.prodCode = p.prodCode 
 		<where>
 			<if test="search_line!=null and !search_line.isEmpty()">
-				lineCode=#{search_line} 
+			lineCode like concat ('%', #{search_line}, '%')
 			</if>
 			<if test="(search_fromDate != null and !search_fromDate.equals('')) and (search_toDate != null and !search_toDate.equals(''))">
                AND (COALESCE(workDatechange, workDate) &gt;= #{search_fromDate} AND COALESCE(workDatechange, workDate) &lt;= #{search_toDate})
