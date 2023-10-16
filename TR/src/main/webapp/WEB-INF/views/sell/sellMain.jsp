@@ -30,6 +30,16 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<!-- SheetJS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+
 </head>
 
 <body>
@@ -52,14 +62,7 @@
 	        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
         	<input type="text" id="clientCompany9999" placeholder="거래처명" onclick=searchItem('client','clientCode9999'); readonly >
 		
-					
 				<br>
-				
-			<label>처리 상태</label> <select name="sellState">
-					<option value="notYet">미출고</option>
-					<option value="ing">중간납품</option>
-					<option value="complete">출고완료</option>
-				</select> 
 				
 				<label>제품</label>  
 	        <input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
@@ -83,7 +86,14 @@
 			<button id="delete">삭제</button>
 			<button id="excelDownload">엑셀⬇️</button>
 		</div>
-
+		
+		<!------------------------------------------------------- 수주 상태 ---------------------------------------------------->
+		<div id="buttons">
+			<input type="button" class="buttons highlighted" value="전체" id="allButton">
+    		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
+    		<input type="button" class="buttons " value="중간납품" id="interim_deliveryButton">
+    		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
+		</div>
 		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
 		<small>총 ${sellPageDTO.count}건</small>
 
@@ -410,9 +420,7 @@ function openSellDetail(sellCode) {
        	});
     });
 
-    <!--------------------------------------------------- 엑셀 ----------------------------------------->
-
- 
+    <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
     $(document).ready(function () {
 		//엑셀
 			 const excelDownload = document.querySelector('#excelDownload');
@@ -441,13 +449,13 @@ function openSellDetail(sellCode) {
 
 			var excelHandler = {
 			getExcelFileName : function() {
-				return 'productList'+getToday()+'.xlsx'; //파일명
+				return '수주 리스트 '+getToday()+'.xlsx'; //파일명
 			},
 			getSheetName : function() {
-				return 'product Sheet'; //시트명
+				return 'Sell Sheet'; //시트명
 			},
 			getExcelData : function() {
-				return document.getElementById('productTable'); //table id
+				return document.getElementById('sellTable'); //table id
 			},
 			getWorksheet : function() {
 				return XLSX.utils.table_to_sheet(this.getExcelData());
@@ -461,7 +469,7 @@ function openSellDetail(sellCode) {
 				for(var i=0; i<s.length; i++) {
 					view[i] = s.charCodeAt(i) & 0xFF;
 				}
-				alert("이까지 옴");
+				/* alert("이까지 옴"); */
 				return buf;
 			}
 	  });
