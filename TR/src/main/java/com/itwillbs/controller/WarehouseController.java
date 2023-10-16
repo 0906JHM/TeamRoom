@@ -26,6 +26,15 @@ public class WarehouseController {
 	@GetMapping("/list")
 	public String list(HttpServletRequest request , Model model) {
 		
+		String search1 = request.getParameter("search1");
+		System.out.println("search1 : " + search1);
+		String search2 = request.getParameter("search2");
+		System.out.println("search2 : " + search2);
+		String search3 = request.getParameter("search3");
+		System.out.println("search3 : " + search3);
+		String search4 = request.getParameter("search4");
+		System.out.println("search4 : " + search4);
+		
 		// 페이징
 		int pageSize = 10;
 		String pageNum = request.getParameter("pageNum");
@@ -38,6 +47,10 @@ public class WarehouseController {
 		pageDTO.setPageSize(pageSize);
 		pageDTO.setPageNum(pageNum);
 		pageDTO.setCurrentPage(currentPage);
+		pageDTO.setSearch1(search1); // 검색어저장
+		pageDTO.setSearch2(search2);
+		pageDTO.setSearch3(search3);
+		pageDTO.setSearch4(search4);
 		
 		List<WarehouseDTO> warehouseList = warehouseService.getWarehouseList(pageDTO);
 		
@@ -58,12 +71,12 @@ public class WarehouseController {
 		model.addAttribute("warehouseList",warehouseList);
 		model.addAttribute("pageDTO", pageDTO);
 		
-		return "warehouse/list";
+		return "Warehouse/list";
 	} // list
 	
 	@GetMapping("/write")
 	public String write() {
-		return "warehouse/write";
+		return "Warehouse/write";
 	} // write
 	
 	@PostMapping("/writePro")
@@ -72,8 +85,9 @@ public class WarehouseController {
 		// 글쓰기
 		warehouseService.insertWarehouse(warehouseDTO);
 		// 주소 변경 후 이동
-		return "redirect:/warehouse/list";
+		return "redirect:/Warehouse/list";
 	} // writePro
+	
 	
 	@GetMapping("/update")
 	public String update(HttpServletRequest request, Model model) {
@@ -84,7 +98,7 @@ public class WarehouseController {
 		WarehouseDTO warehouseDTO = warehouseService.getWarehouse(whseCode);
 		model.addAttribute("warehouseDTO", warehouseDTO);
 		
-		return "warehouse/update";
+		return "Warehouse/update";
 	} // update
 	
 	@PostMapping("/updatePro")
@@ -93,7 +107,7 @@ public class WarehouseController {
 		System.out.println(warehouseDTO);
 		//  게시판 글 수정
 		warehouseService.updateWarehouse(warehouseDTO);
-		return "redirect:/warehouse/list";
+		return "redirect:/Warehouse/list";
 	} // updatePro
 	
 	// 체크박스로 선택삭제
