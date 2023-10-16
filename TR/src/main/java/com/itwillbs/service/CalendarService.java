@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.itwillbs.dao.CalendarDAO;
 import com.itwillbs.domain.CalendarDTO;
 import com.itwillbs.domain.ChartDTO;
+import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.SellDTO;
 
 @Service
 public class CalendarService {
@@ -30,6 +32,21 @@ public class CalendarService {
 
 	public List<ChartDTO> getPerfList() {
 		return calendarDAO.getPerfList();
+	}
+
+	public void insertSellCalendar(SellDTO sellDTO) {
+		
+		CalendarDTO calendarDTO = new CalendarDTO();
+		
+		calendarDTO.setCode(sellDTO.getSellCode());
+		calendarDTO.setCalendar_title("수주");
+		calendarDTO.setStartDate(sellDTO.getSellDate());
+		calendarDTO.setEndDate(sellDTO.getSellDuedate());
+		
+		String memo = sellDTO.getClientCompany() + " " + sellDTO.getProdName() +"("+ sellDTO.getProdCode() + ") " + sellDTO.getSellCount();
+		calendarDTO.setCalendar_memo(memo);
+		
+		calendarDAO.insertSellCalendar(sellDTO);
 	}
 	
 	

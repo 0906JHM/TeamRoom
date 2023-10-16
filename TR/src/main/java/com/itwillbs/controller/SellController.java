@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
+import com.itwillbs.service.CalendarService;
 import com.itwillbs.service.OutProductService;
 import com.itwillbs.service.SellService;
 
@@ -40,6 +41,8 @@ public class SellController {
 	private SellService sellService;
 	@Inject 
 	private OutProductService outProductService;
+	@Inject
+	private CalendarService calendarService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
@@ -127,7 +130,7 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
     
 	outProductService.insertList(sellDTO);		
 	sellService.insertSell(sellDTO);			
-	
+	calendarService.insertSellCalendar(sellDTO);
 	/*
 	 sellCode 수주코드, 
 	 sellDate 수주일자, 

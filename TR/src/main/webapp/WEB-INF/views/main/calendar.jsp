@@ -54,11 +54,11 @@
 			<div id="chart_2">
 				<div class="flex-container">
 					<h3 class="chartTitleTab1 current" onclick="showTab1('stockList')">창고별 재고</h3>
-					<h3 class="chartTitleTab1 " onclick="showTab2('prodRawList')">유형별 재고</h3>
+<!-- 					<h3 class="chartTitleTab1 " onclick="showTab2('prodRawList')">유형별 재고</h3> -->
 				</div>
 				<div>
 					<canvas id="stockList" class="chartTab1 current"></canvas>
-					<canvas id="prodRawList" class="chartTab1 "></canvas>
+<!-- 					<canvas id="prodRawList" class="chartTab1 "></canvas> -->
 				</div>
 			</div>
 			<div id="chart_3">

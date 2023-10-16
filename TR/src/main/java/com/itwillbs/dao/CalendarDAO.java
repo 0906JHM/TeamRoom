@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.CalendarDTO;
 import com.itwillbs.domain.ChartDTO;
+import com.itwillbs.domain.SellDTO;
 
 @Repository
 public class CalendarDAO {
@@ -34,4 +35,9 @@ public class CalendarDAO {
 	public List<ChartDTO> getPerfList() {
 		return sqlSession.selectList(namespace+"getPerfList");
 	}
+
+	public void insertSellCalendar(SellDTO sellDTO) {
+		sqlSession.selectList(namespace+"insertSellCalendar", sellDTO);
+	}
+
 }
