@@ -195,12 +195,14 @@ function s2ab(s) {
 <td>발주신청일</td>
 <td>담당자</td>
 <td>입고상태</td>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}">
 <td></td>
+</c:if>
 </tr>
 
 <c:forEach var="ordermanagementDTO" items="${ordermanagementList}">
 <tr>
-<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/OrderManagement/detail?buyNum=${ordermanagementDTO.buyNum}')">${ordermanagementDTO.buyNum}</a></td>
+<td><a href="#" onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}' === 'true') { openPopup2('${pageContext.request.contextPath}/OrderManagement/detail?buyNum=${ordermanagementDTO.buyNum}'); } else { event.preventDefault(); }">${ordermanagementDTO.buyNum}</a></td>
 <td>${ordermanagementDTO.rawCode}</td>
 <td>${ordermanagementDTO.rawName}</td>
 <td>${ordermanagementDTO.rawType}</td>
@@ -212,15 +214,18 @@ function s2ab(s) {
 <td>${ordermanagementDTO.buyDate}</td>
 <td>${ordermanagementDTO.buyEmpId}</td>
 <td>${ordermanagementDTO.buyInstate}</td>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}"> 
 <td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
+</c:if>
 </tr>
 </c:forEach>
 </table>
 
 <!-- button -->
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}"> 
 <input type="button" value="추가" onclick="openPopup1()">
 <input type="button" value="삭제" onclick="deleteValue();">
-
+</c:if>
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
