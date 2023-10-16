@@ -1,7 +1,5 @@
 package com.itwillbs.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,9 +29,6 @@ public class OrderManagementService {
 	    // String buyDateStr = sdf.format(ordermanagementDTO.getBuyDate());
 	    // String buyNum = ordermanagementDTO.getRawCode() + buyDateStr;
 	    // ordermanagementDTO.setBuyNum(buyNum);
-		
-		// buyNum 자동생성
-		// = RA + yyMMddHHmmss
 		
 		ordermanagementDAO.insertOrderManagement(ordermanagementDTO);
 	}
@@ -69,7 +64,7 @@ public class OrderManagementService {
 		ordermanagementDAO.updateOrderManagement(ordermanagementDTO);
 	}
 	
-	// 엑셀 수정
+	// 엑셀
 	public List<OrderManagementDTO> getOrderManagementList2() {
 		return ordermanagementDAO.getOrderManagementList2();
 	}
