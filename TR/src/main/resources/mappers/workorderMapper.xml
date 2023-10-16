@@ -137,7 +137,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 				AND workProcess=#{search_place} 
 			</if> 
 			<if test="search_prod!=null and !search_prod.isEmpty()">
-				AND prodCode=#{search_prod} 
+				AND w.prodCode=#{search_prod} 
 			</if> 
 		</where>
 		ORDER BY workCode DESC 
