@@ -288,7 +288,7 @@ public class OrderManagementController {
         return "OrderManagement/selectclient";
      }
 
-  	// 엑셀 (수정)
+  	// 엑셀
   	@GetMapping("/download")
   	public void download(HttpServletResponse response) throws IOException {
   	    Workbook workbook = new XSSFWorkbook();
@@ -311,7 +311,6 @@ public class OrderManagementController {
   	    for (int i = 0; i < orders.size(); i++) {
   	    	OrderManagementDTO order = orders.get(i);
   	    	int rawPrice = (int) order.getRawPrice();
-//  	    	int rawPrice = Integer.parseInt(order.getRawPrice());
   	    	int buyCount = order.getBuyCount();
   	    	int total = rawPrice * buyCount;
   	        Row row = sheet.createRow(i + 1);
