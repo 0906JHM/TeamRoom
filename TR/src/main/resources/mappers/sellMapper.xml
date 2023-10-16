@@ -74,8 +74,7 @@
 		where sellCode = #{sellCode}
 	</delete>
 	
-	<select id="getSellMemo"
-		resultType="com.itwillbs.domain.SellDTO">
+	<select id="getSellMemo" resultType="com.itwillbs.domain.SellDTO">
 		select *
 		from sellTest
 		where sellCode = #{sellCode}

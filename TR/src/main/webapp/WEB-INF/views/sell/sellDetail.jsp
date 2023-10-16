@@ -6,15 +6,12 @@
 <html>
 <head>
 <%--     <jsp:include page="test4.jsp"></jsp:include> --%>
-    <title>Sell/sellAdd</title>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link href="${pageContext.request.contextPath}/resources/css/popup.css" rel="stylesheet" type="text/css">
+    <title>Sell/updateSellMemo.jsp</title>
     <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
 <%--     <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"> --%>
 <%--  <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css"> --%>
- 
+<link href="${pageContext.request.contextPath}/resources/css/popup.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <!------------------------------------------------------ 본문 ---------------------------------------------------->
@@ -25,44 +22,46 @@
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
 <label>수주 코드</label>
+			<label>수주 코드</label>
 			<input type="text" name="prodCode" value="${sellDTO.sellCode}" readonly>
 			<br>
 			<label>처리 상태</label>
 			<input type="text" name="prodCode" value="${sellDTO.sellState}" readonly>
 			<br>
 			<label>거래처</label>
-			<input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="${sellDTO.clientCode}" readonly >
-        	<input type="text" id="clientCompany9999" placeholder="${sellDTO.clientCompany}" onclick=searchItem('client','clientCode9999'); readonly >
+			<input type="text" name="clientCode" value="${sellDTO.clientCode}" readonly >
+        	<input type="text" value="${sellDTO.clientCompany}" readonly >
 			<br>
 			<label>제품</label>
-			<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="${sellDTO.prodCode}" readonly>
-	      	<input type="text" name="prodName" id="prodName9999" placeholder="${sellDTO.prodName}" readonly onclick="searchItem('prod','prodCode9999')">
+			<input type="text" name="prodCode" value="${sellDTO.prodCode}" readonly>
+	      	<input type="text" name="prodName" value="${sellDTO.prodName}" readonly>
 			<br>
 			<label>제품 단가</label>
-			<input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); value="${sellDTO.prodPrice}"readonly>원
+			<input type="text" name="prodPrice" value="${sellDTO.prodPrice}" readonly>원
 			<br>
 			<label>수주 수량</label>
-			<input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="${sellDTO.sellCount}" onchange="calculateSellPrice()">개<br>
+			<input type="number" id="sellCount" name="sellCount" value="${sellDTO.sellCount}" readonly>개
 			<br>
 			<label>수주 단가</label>
-			<input type="number" step="0.01" name="prodPrice" value="${sellDTO.sellPrice}" pattern="###,###원" />
+			<input type="text" step="0.01" name="prodPrice" value="${sellDTO.sellPrice}" pattern="###,###원" readonly/>
 			<br>
 			<label>수주 일자</label>
-			<input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDate}"readonly><br> 
+			<input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDate}"readonly>
 			<br>
 			<label>납기 일자</label>
-			<input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDuedate}"readonly><br> 
+			<input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDuedate}"readonly>
 			<br>
 			<label>담당자</label>
-			<input type="text" name="prodMemo" value="${sellDTO.sellEmpId}" readonly>
+			<input type="text" name="sellEmpId" value="${sellDTO.sellEmpId}" readonly>
 			<br>
 			<label>비고</label>
-			<input type="text" name="prodMemo" value="${sellDTO.sellMemo}">
+			<br>
+			<textarea id="sellMemo" readonly="readonly" style="width: 350px; height: 250px;">${sellDTO.sellMemo}</textarea>
 			<br>
 			
-			
-			<input type="submit" value="수정">
-			
+			<c:if test="${sessionScope.id == sellDTO.sellEmpId}">
+				<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'">수정</button>
+			</c:if>
 			<button type="button" onclick="window.close()">닫기</button>
 	</form>
 
@@ -70,7 +69,7 @@
 <!--  ************************************************ javaScript *************************************************************-->
 
 <!----------------------------------------------- 등록버튼 ---------------------------------------------->
-
+ 
 <script type="text/javascript">
 
 //팝업 옵션
@@ -150,27 +149,6 @@ $(function() {
     });
 });
 
-// 유효성 검사
-function checkForm() {
-    // 각 입력 필드 값
-    var clientCode = document.getElementById("clientCode").value;
-    var prodCode = document.getElementById("prodCode").value;
-    var sellCount = document.getElementById("sellCount").value;
-   /*  var sellDate = document.getElementById("sellDate").value; */
-    var sellDuedate = document.getElementById("sellDuedate").value;
-/*     var sellEmpId = document.getElementById("sellEmpId").value; */
-    // 빈 필드 검사
-    if (clientCode == "" || prodCode == "" || sellCount == "" ||
-    		/* sellDate === "" || */ sellDuedate == "" || sellEmpId == "") {
-        alert("모든 내용을 입력해주세요");
-        return false; // 제출 방지
-    } // 추가 유효성 검사
-    if (sellCount == 0 || sellPrice ==0) {
-        alert("모든 내용을 입력해주세요");
-        return false; // 제출 방지
-    }
-    return true;
-}
 </script>
 
 
