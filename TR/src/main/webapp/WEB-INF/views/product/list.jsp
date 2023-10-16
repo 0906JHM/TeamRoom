@@ -67,8 +67,10 @@
 <!-- 			<button id="cancel">취소</button> -->
 <!-- 			<button id="save">저장</button> -->
 		</div>
+		<div id="excel">
 		<h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
-
+		<button id="excelDownload" class ="button">엑셀⬇️</button>
+		</div>
 			<form id="productList">
 			<div id="productList">
 				<table class="tab" id="productTable">

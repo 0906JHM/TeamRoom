@@ -41,9 +41,14 @@
 			<input type="button" value="입고" id="inButton" class="buttons"> 
 			<input type="button" value="미입고" id="non_inButton" class="buttons">
 		</div>
+		
+		<div id="excel">
 		<h3 style="padding-left: 1%;">
 			목록 <small id="listCount">총 3건</small>
 		</h3>
+		<button id="excelDownload" class ="button">엑셀⬇️</button>
+		</div>
+		
 		<div id="inMaterialList">
 			<table>
 				<thead>
