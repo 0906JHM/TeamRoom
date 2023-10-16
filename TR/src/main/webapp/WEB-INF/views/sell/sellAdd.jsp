@@ -30,21 +30,21 @@
       	
       	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
-        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
-        <input type="text" id="clientCompany9999" placeholder="거래처명" onclick=searchItem('client','clientCode9999'); readonly ><br>
+        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly required>
+        <input type="text" id="clientCompany9999" name="clientCompany" onclick=searchItem('client','clientCode9999'); placeholder="거래처명" readonly required><br>
 		</div>
 		
 		<div class="popupSerch">
  		<label class="popupLabel">제품 : </label>
- 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품코드" readonly>
-		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')"><br>
+ 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품코드" readonly required>
+		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')" required><br>
 		</div>
 		
 		<label class="popupLabel">제품 단가 : </label>
         <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
         
         <label class="popupLabel">수주 수량 : </label>
-        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()">개<br>
+        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()" required>개<br>
 
  	    <label class="popupLabel">수주 단가 : </label>
 		<input type="text" id="sellPrice" min="0" value="${formattedSellPrice}" readonly>원<br>    
@@ -52,7 +52,7 @@
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
 
         <label class="popupLabel">납기 일자 : </label>
-        <input type="text" id="sellDuedate" name="sellDuedate" readonly><br>
+        <input type="text" id="sellDuedate" name="sellDuedate" required><br>
 
         <label class="popupLabel">담당자 : </label>
         <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
@@ -159,10 +159,10 @@ function checkForm() {
     var sellCount = document.getElementById("sellCount").value;
    /*  var sellDate = document.getElementById("sellDate").value; */
     var sellDuedate = document.getElementById("sellDuedate").value;
-    var sellEmpId = document.getElementById("sellEmpId").value;
+/*     var sellEmpId = document.getElementById("sellEmpId").value; */
     // 빈 필드 검사
-    if (clientCode === "" || prodCode === "" || sellCount === "" ||
-    		/* sellDate === "" || */ sellDuedate === "" || sellEmpId === "") {
+    if (clientCode == "" || prodCode == "" || sellCount == "" ||
+    		/* sellDate === "" || */ sellDuedate == "" || sellEmpId == "") {
         alert("모든 내용을 입력해주세요");
         return false; // 제출 방지
     } // 추가 유효성 검사
