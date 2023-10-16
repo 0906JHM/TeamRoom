@@ -58,6 +58,10 @@ public class CalendarService {
 //		calendarDTO.setStartDate(ordermanagementDTO.getSellDate());
 //		calendarDTO.setEndDate(ordermanagementDTO.getSellDuedate());
 	}
+
+	public void deleteSellCalendar(List<String> checked) {
+		calendarDAO.deleteSellCalendar(checked);
+	}
 	
 	
 }
