@@ -14,8 +14,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/side.css"	rel="stylesheet" type="text/css">
 <!-- 본문 css -->
 <link href="${pageContext.request.contextPath }/resources/css/product.css" rel="stylesheet" type="text/css">
-<!-- 수주일자 기간선택 -->
-<link href="${pageContext.request.contextPath}/resources/css/daterange.css"	rel="stylesheet" type="text/css">
+
 <script	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- J쿼리 호출 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -28,7 +27,8 @@
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-
+<!-- 수주일자 기간선택 -->
+<link href="${pageContext.request.contextPath}/resources/css/daterange.css"	rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -62,7 +62,7 @@
 				<label for="startDate">수주 일자</label> 
 				<input type="text" name="daterange" value=""> 
 				
-				<label for="startDate">납기일자</label>
+				<label for="startDate">납기 일자</label>
 				<input type="text" name="daterange" value="">
 
 				<button type="submit">조회</button>
@@ -223,6 +223,28 @@ $('#select-list-all').click(function() {
 			}
 		});
 
+<!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
+$(function() {
+	$('input[name="daterange"]').daterangepicker({
+		autoUpdateInput : false,
+		locale : {
+			cancelLabel : 'Clear'
+		}
+	});
+	$('input[name="daterange"]').on(
+			'apply.daterangepicker',
+			function(ev, picker) {
+				$(this).val(
+						picker.startDate.format('YYYY/MM/DD') + ' - '
+								+ picker.endDate.format('YYYY/MM/DD'));
+			});
+	$('input[name="daterange"]').on('cancel.daterangepicker',
+			function(ev, picker) {
+				$(this).val('');
+			});
+	$('.cancelBtn').text('취소');
+	$('.applyBtn').text('적용');
+});
 <!--------------------------------------------------- 수주 삭제 ----------------------------------------->
 $('#delete').click(function(event){	
 
@@ -298,7 +320,15 @@ $('#delete').click(function(event){
 }); 
 });// end function
 
-<!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
+/* <!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
+$(document).ready(function() {
+    // Daterangepicker 초기화 및 설정
+    $('input[name="daterange"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
 	$(function() {
 		$('input[name="daterange"]').daterangepicker({
 			autoUpdateInput : false,
@@ -320,7 +350,7 @@ $('#delete').click(function(event){
 		$('.cancelBtn').text('취소');
 		$('.applyBtn').text('적용');
 	});
-
+ */
 <!--------------------------------------------------- 수주 추가 ----------------------------------------->
 function openSellAdd() {
 

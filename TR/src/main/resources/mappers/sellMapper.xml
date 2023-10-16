@@ -44,9 +44,11 @@
 	</insert>
 
 	<select id="getSell" resultType="com.itwillbs.domain.SellDTO">
-		select * 
-		from sellTest
+	select *
+	from sellTest s
+	left join product p	on s.prodCode = p.prodCode
 		where sellCode = #{sellCode}
+		
 	</select>
 
 	<update id="sellUpdate">

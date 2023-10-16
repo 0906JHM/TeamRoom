@@ -43,7 +43,7 @@
 			<input type="number" id="sellCount" name="sellCount" value="${sellDTO.sellCount}" readonly>개
 			<br>
 			<label>수주 단가</label>
-			<input type="text" step="0.01" name="prodPrice" value="${sellDTO.sellPrice}" pattern="###,###원" readonly/>
+			<input type="text" step="0.01" name="prodPrice" value="<fmt:formatNumber type="number" maxFractionDigits="2" value="${sellDTO.sellPrice}" pattern="###,###" />" id="calculateSellPrice" readonly/>
 			<br>
 			<label>수주 일자</label>
 			<input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDate}"readonly>
@@ -91,34 +91,13 @@ function openPopup(url) {
     var popupWindow = window.open(url, '_blank', "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
     popupWindow.focus();
 }
-$(document).ready(function() {
-});
+/* $(document).ready(function() {
+}); */
 
-function calculateSellPrice() {
-  	var prodPriceInput = document.getElementById('prodPrice9999').value;
-    var sellCountInput = document.getElementById('sellCount').value;
-
- 	// 입력 값을 정리하여 정수로 변환
-    var prodPrice = parseInt(prodPriceInput.replace(/[^\d.]/g, ''), 10);
-    var sellCount = parseInt(sellCountInput, 10);
-	
-    var sellPrice = prodPrice * sellCount;
-    
-    console.log(sellPrice);
-    if (!isNaN(sellPrice)) {
-        document.getElementById('sellPrice').value = formatCurrency(sellPrice);
-    } else {
-        document.getElementById('sellPrice').value = '';
-    }
-}
-//숫자를 ###,### 원 형식으로 포맷하는 함수
-function formatCurrency(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 
 // 이벤트 리스너 등록
-document.getElementById('sellCount').addEventListener('input', calculateSellPrice);
-document.getElementById('prodPrice9999').addEventListener('input', calculateSellPrice);
+// document.getElementById('sellCount').addEventListener('input', calculateSellPrice);
+// document.getElementById('prodPrice9999').addEventListener('input', calculateSellPrice);
 
 // 초기화 함수
 calculateSellPrice();
@@ -148,6 +127,10 @@ $(function() {
         dateFormat: "yy-mm-dd", // MySQL DATE 형식으로 출력
     });
 });
+//숫자를 ###,### 원 형식으로 포맷하는 함수
+function formatCurrency(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 
 </script>
 
