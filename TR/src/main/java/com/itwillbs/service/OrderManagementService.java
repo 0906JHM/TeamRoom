@@ -14,8 +14,8 @@ import com.itwillbs.domain.PageDTO;
 
 @Service
 public class OrderManagementService { 
-
-	// OrderManagementDAO 객체생성
+ 
+	// OrderManagementDAO 객체생성 
 	@Inject
 	private OrderManagementDAO ordermanagementDAO;
 	
@@ -34,12 +34,7 @@ public class OrderManagementService {
 		
 		// buyNum 자동생성
 		// = RA + yyMMddHHmmss
-		Date now = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
-		String formattedDate = dateFormat.format(now);
-	    String buyNum = "RA" + formattedDate;
-		System.out.println("발주코드 : " + buyNum);
-		ordermanagementDTO.setBuyNum(buyNum);
+		
 		ordermanagementDAO.insertOrderManagement(ordermanagementDTO);
 	}
 	
