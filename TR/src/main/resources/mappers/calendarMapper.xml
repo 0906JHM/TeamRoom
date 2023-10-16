@@ -35,9 +35,4 @@
 		SELECT *
 		FROM Clients
 	</select>
-	
-	<delete id="deleteSellCalendar">
-		DELETE FROM calendar
-		WHERE code = #{code}
-	</delete>
 </mapper>

@@ -202,8 +202,10 @@ public String sellDetail(HttpServletRequest request, Model model) {
 		
 		int result = sellService.sellDelete(checked);
 		System.out.println(result);
-		calendarService.deleteSellCalendar(checked);
-		
+		System.out.println(result);
+		System.out.println(result);
+		System.out.println(result);
+		System.out.println(result);
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
 	    } else {

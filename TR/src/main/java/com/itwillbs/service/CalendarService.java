@@ -67,10 +67,6 @@ public class CalendarService {
 		String memo = clientDTO.getClientCompany() + " " + ordermanagementDTO.getRawName() +"("+ ordermanagementDTO.getRawCode() + ") " + ordermanagementDTO.getBuyCount();
 		calendarDTO.setCalendar_memo(memo);
 	}
-
-	public void deleteSellCalendar(List<String> checked) {
-		calendarDAO.deleteSellCalendar(checked);
-	}
 	
 	
 }
