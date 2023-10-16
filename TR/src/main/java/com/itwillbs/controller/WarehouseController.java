@@ -94,6 +94,17 @@ public class WarehouseController {
 		//  게시판 글 수정
 		warehouseService.updateWarehouse(warehouseDTO);
 		return "redirect:/warehouse/list";
-	}
+	} // updatePro
+	
+	// 체크박스로 선택삭제
+    @RequestMapping(value = "/delete")
+    public String ajaxTest(HttpServletRequest request) throws Exception {
+        String[] ajaxMsg = request.getParameterValues("valueArr");
+        int size = ajaxMsg.length;
+        for(int i=0; i<size; i++) {
+        	warehouseService.delete(ajaxMsg[i]);
+        }
+        return "redirect:/Warehouse/list";
+    }
 
 }
