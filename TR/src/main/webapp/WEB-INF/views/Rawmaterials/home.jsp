@@ -124,9 +124,12 @@ $(document).ready(function() {
 <!-- body -->
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
+<div id="content">
 <h1>품목관리</h1>
 
 <!-- form(검색) -->
+<hr>
+<div id="searchForm">
 <form action="${pageContext.request.contextPath}/Rawmaterials/home" method="get">
 원자재코드	<input type="text" name="search1" placeholder="원자재코드">
 원자재명	<input type="text" name="search2" placeholder="원자재명">
@@ -141,8 +144,10 @@ $(document).ready(function() {
 거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
 <input type="submit" value="검색" id="btnRaw">
 </form>
+</div>
 
 <!-- table -->
+<hr>
 <table border="1">
 <tr>
 <td>번호</td>
@@ -185,6 +190,7 @@ $(document).ready(function() {
 </tr>
 </c:forEach>
 </table>
+</div>
 
 <!-- button -->
 <input type="button" value="추가" onclick="openPopup1()" id="btnRaw">
@@ -194,6 +200,5 @@ $(document).ready(function() {
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/Rawmaterials/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
-
 </body>
 </html>
