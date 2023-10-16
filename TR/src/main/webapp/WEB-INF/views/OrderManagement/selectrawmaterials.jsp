@@ -54,7 +54,7 @@ function openPopup4(rawCode) {
 	// 새창을 열기 위한 URL 설정
 	var url = '${pageContext.request.contextPath}/Rawmaterials/memo?rawCode=' + rawCode;
 	// 팝업창 열고 속성 설정
-	var newWindow = window.open(url, '_blank', popupFeatures);       
+	var newWindow = window.open(url, 'uuu', popupFeatures);       
 }
 </script>
 
@@ -89,7 +89,7 @@ function openPopup4(rawCode) {
 <td>비고</td>
 </tr>
 
-<c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
+<c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}"> 
 <tr onclick="if(event.target.tagName!='A'){document.getElementById('rCInput').value = '${rawmaterialsDTO.rawCode}'; document.getElementById('rNInput').value = '${rawmaterialsDTO.rawName}'; document.getElementById('rTInput').value = '${rawmaterialsDTO.rawType}'; document.getElementById('rPInput').value = '${rawmaterialsDTO.rawPrice}'; document.getElementById('wCInput').value = '${rawmaterialsDTO.whseCount}'; setParentText();}">
 <td>${rawmaterialsDTO.rawNum}</td>
 <td>${rawmaterialsDTO.rawCode}</td>
@@ -104,7 +104,7 @@ function openPopup4(rawCode) {
 <!-- 비고기능 -->
 <td><c:choose>
 <c:when test="${not empty rawmaterialsDTO.rawMemo}">
-<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" target="_blank" style="color:black;">[보기]</a>
+<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" style="color:black;">[보기]</a>
 </c:when>
 <c:otherwise>
 <c:set var="rawMemo" value="" />

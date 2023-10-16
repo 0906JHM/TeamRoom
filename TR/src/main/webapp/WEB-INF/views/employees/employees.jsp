@@ -8,7 +8,7 @@
 <title>인사관리</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
-
+<link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css">
 <style>
     #employeeTable {
         border-collapse: collapse;
@@ -107,12 +107,14 @@ function deleteValue(){
 <jsp:include page="../inc/side.jsp"></jsp:include>
 <form action="${pageContext.request.contextPath}/employees/employees" method="get">
 search    <input type="text" name="search" placeholder="search">
-<input type="submit" value="검색">
+<input type="submit" value="검색" id="btnSell">
 </form>
     <table id="employeeTable">
         <tr>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
             <th>사원번호</th>
             <th>비밀번호</th>
+</c:if>
             <th>사원명</th>
             <th>부서</th>
             <th>직책</th>
@@ -122,9 +124,11 @@ search    <input type="text" name="search" placeholder="search">
             <th>재직구분</th>
         </tr>
 <c:forEach var="employeesDTO" items="${employeesList }">
-<tr onclick="window.open('update?empId=${employeesDTO.empId}', '_blank', 'width=800,height=600')">
+<tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}' === 'true') { window.open('update?empId=${employeesDTO.empId}', '_blank', 'width=800,height=600'); } else { event.preventDefault(); }">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
     <td>${employeesDTO.empId}</td>
     <td>${employeesDTO.empPass}</td>
+</c:if>
     <td>${employeesDTO.empName}</td>
     <td>${employeesDTO.empDepartment}</td>
     <td>${employeesDTO.empPosition}</td>
@@ -132,19 +136,20 @@ search    <input type="text" name="search" placeholder="search">
     <td>${employeesDTO.empTel}</td>
     <td>${employeesDTO.empHiredate}</td>
     <td>${employeesDTO.empState}</td>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
     <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
+</c:if>
 </tr>
 </c:forEach>    
     </table>
-    
-    <input type="button" value="삭제" onclick="deleteValue();">
-    <button onclick="window.open('employees2', '_blank', 'width=800,height=600')">등록</button>
-
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">    
+    <input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
+    <button onclick="window.open('employees2', '_blank', 'width=800,height=600')" id="btnSell">등록</button>
+</c:if>
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
 </c:forEach>
-
 
 </body>
 

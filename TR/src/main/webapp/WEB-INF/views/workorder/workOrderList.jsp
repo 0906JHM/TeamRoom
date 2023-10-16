@@ -19,126 +19,7 @@
     <c:redirect url="/smmain/smMain" />
 </c:if> --%>
 
-<!-- 모달창 script -->
-	<script>
-      //modal창에 열기 위한 이벤트 헨들러
-        function openModal(e) {
-        	//modal창의 id 값 할당
-            const myModal = document.getElementById("myModal");
-           const elements = [];
-            for (let i = 1; i <= 10; i++) {
-                elements[i] ='element' + i;
-            }
-        	//클릭한 요소의 name의 속성 값을 가져와서 clickedElementName변수에 저장한다
-        	//즉 이 부분은 클릭한 요소의 name속성을 추출하는 역할
-        	// "getBoundingClientRect()" 메서드를 사용하여 클릭한 요소의 화면 좌표 정보를 가져옵니다.
-        	// 이 정보는 모달 창의 위치를 설정하는 데 사용됩니다.           
-            /* const clickedElementValue = e.getAttribute("name"); */
-        	
-        	//클릭한 요소의 좌표정보 
-            const rect = e.getBoundingClientRect();
-           
-            
-        	// 클릭한 요소의 오른쪽 아래 모서리의 화면 좌표를 "x"와 "y" 변수에 저장합니다.
-        	// 이것은 모달 창을 클릭한 요소의 위치에 배치하는 데 사용됩니다.
-            var x = rect.left;
-            var y = rect.top;
-           
-            //클릭후에 모달창을 생성하는 위치를 조정
-            myModal.style.left = x + "px";
-            myModal.style.top = y + "px";
-            myModal.style.display = "block";
-            
-            // modalContent를 초기화 (이전 내용 지우기)
-            myModal.innerHTML = "";
-           
-            //닫기
-            myModal.innerHTML = `<span id="closeModalButton" style="cursor: pointer;">닫기</span><br>`;
-            const clickedElementId = e.getAttribute("id");
-            if(clickedElementId.startsWith("PR")){
-            	//modal_ajax 
-            	$.ajax({
-            	  url : '${pageContext.request.contextPath}/KDMajax/modalprod',
-            	  data: {prodCode:clickedElementId},
-            	  type : 'GET',
-            	  dataType:'json',
-            	  success: function (json) {
-                      if (json && typeof json === 'object') {
-                    	  
-                    	// 값 할당
-                    	addInput("제품 코드:", elements[0],json.prodCode);
-            	addInput("제품 단위:", elements[1],json.prodUnit);
-            	addInput("용량:", elements[2],json.prodSize);
-            	addInput("향기 종류:", elements[3],json.prodPerfume);
-            	addInput("거래처 코드:", elements[4],json.clientCode);
-                addInput("창고 코드:", elements[5],json.whseCode);
-                addInput("매출 단가:", elements[6],json.prodPrice);
-                addInput("제품 비고:", elements[7],json.prodMemo);
-                    	} else {
-                    	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                    	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                    	}
 
-                  }
-              });	
-            	
-
-      	  } else if(clickedElementId.startsWith("SL")){
-              	//modal_ajax 
-              	$.ajax({
-              	  url : '${pageContext.request.contextPath}/KDMajax/modalsell',
-              	  data: {sellCode:clickedElementId},
-              	  type : 'GET',
-              	  dataType:'json',
-              	  success: function (json) {
-                        if (json && typeof json === 'object') {
-                        	// 값 할당
-                        	
-
-                      	addInput("수주 일자:", elements[0],json.sellDate);
-              	addInput("납기 일자:", elements[1],json.sellDuedate);
-              	addInput("관리 사원:", elements[2],json.sellEmpId);
-              	addInput("수주 수량:", elements[3],json.sellCount);
-                  addInput("수주 단가:", elements[4],json.sellPrice);
-                  addInput("제품 코드:", elements[5],json.prodCode);
-                  addInput("제품 이름:", elements[6],json.prodName);
-                  addInput("수주 비고:", elements[7],json.sellMemo);
-                  addInput("출고 상태:", elements[8],json.sellState);
-                  addInput("거래처 이름:", elements[9],json.clientCompany);
-                  addInput("거래처 코드:", elements[10],json.clientCode);
-                      	} else {
-                      	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                      	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                      	}
-                        }
-                });	//기존 닫기 창 함수
-               
-        } //ajax
-            closeModalButton.addEventListener("click", function (e) {
-          	    if (e.target === closeModalButton) {
-          	        myModal.style.display = "none";
-          	    }
-          	});
-      }    
-            //input시 동적으로 생성하기 위한 함수
-            function addInput(label, id, value) {
-                const div = document.createElement("div");
-                const input = document.createElement("input");
-                div.style.display = "flex";
-                div.style.justifyContent = "flex-end";
-                input.type = "text";
-                input.id = id;
-                input.value = value; // 값을 설정
-                input.size = 8;
-                input.readOnly = true;
-                div.appendChild(document.createTextNode(label));
-                div.appendChild(input);
-                myModal.appendChild(div);
-            }
-          	
-        
-               
-    </script>
 <!-- 폰트 -->
 
 <script type="text/javascript">
@@ -688,10 +569,6 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 
 <body>
-<!-- 모달창 -->
-	<div id="myModal" class="modaldetail">
-	</div>
-	<!-- 모달창 -->
 <jsp:include page="../inc/side.jsp"></jsp:include>
 <!-- page content -->
 <div class="right_col">
@@ -706,6 +583,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				<input type="hidden" name="input" id="input" value="${input }">
 				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 입력하세요." style="cursor: pointer;">
 				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요" onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
+				
 				<label>지시일자</label> 
 						<input style="width:250px;" type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
 						<label style="font: 500 24px/24px 'Inter', sans-serif;">~</label> 
@@ -796,11 +674,10 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 					<tr>
 						<td></td>
 						<td id="workCode">${w.workCode }</td>
-						<td id="lineCode">${w.lineCode }</td>
-						<td><div style="display: flex; justify-content: center; align-items: center;">${w.sellCode }<div class="search-icon" onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}"></div></div></td>
+						<td id="lineCode">${w.lineCode }</td>						
+						<td>${w.sellCode }</td>
 						<td style='display: none;' id="prodCode">${w.prodCode }</td>
-						<td><div style="display: flex; justify-content: center; align-items: center;">${w.prodName }<div class="search-icon" onclick="openModal(this)" id="${w.prodCode }" name="prodName" value="${w.prodName }"></div></div></td>
-								
+						<td id="prodName">${w.prodName }</td>
 						<c:choose>
     <c:when test="${not empty w.workDatechange}">
         <td style="color: red;">${w.workDatechange}</td>

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.PerformanceDAO;
+import com.itwillbs.domain.ChartDTO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
@@ -64,6 +65,13 @@ public class PerformanceService {
 		
 		return perfDAO.perfdelete(perfCode);
 	}
+
+	public List<ChartDTO> getpileList(String lineCode) {
+	
+		return perfDAO.getpielist(lineCode);
+	}
+
+
 	
 
 

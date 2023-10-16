@@ -15,124 +15,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
 <!--FileSaver [savaAs 함수 이용] -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-
-
-
-	<!-- 모달창 script -->
-	<script>
-      //modal창에 열기 위한 이벤트 헨들러
-        function openModal(e) {
-        	//modal창의 id 값 할당
-            const myModal = document.getElementById("myModal");
-           const elements = [];
-            for (let i = 1; i <= 10; i++) {
-                elements[i] ='element' + i;
-            }
-        	//클릭한 요소의 name의 속성 값을 가져와서 clickedElementName변수에 저장한다
-        	//즉 이 부분은 클릭한 요소의 name속성을 추출하는 역할
-        	// "getBoundingClientRect()" 메서드를 사용하여 클릭한 요소의 화면 좌표 정보를 가져옵니다.
-        	// 이 정보는 모달 창의 위치를 설정하는 데 사용됩니다.           
-            /* const clickedElementValue = e.getAttribute("name"); */
-        	
-        	//클릭한 요소의 좌표정보 
-            const rect = e.getBoundingClientRect();
-           
-            
-        	// 클릭한 요소의 오른쪽 아래 모서리의 화면 좌표를 "x"와 "y" 변수에 저장합니다.
-        	// 이것은 모달 창을 클릭한 요소의 위치에 배치하는 데 사용됩니다.
-            var x = rect.left;
-            var y = rect.top;
-           
-            //클릭후에 모달창을 생성하는 위치를 조정
-            myModal.style.left = x + "px";
-            myModal.style.top = y + "px";
-            myModal.style.display = "block";
-            
-            // modalContent를 초기화 (이전 내용 지우기)
-            myModal.innerHTML = "";
-           
-            //닫기
-            myModal.innerHTML = `<span id="closeModalButton" style="cursor: pointer;">닫기</span><br>`;
-            const clickedElementId = e.getAttribute("id");
-            if(clickedElementId.startsWith("PR")){
-            	//modal_ajax 
-            	$.ajax({
-            	  url : '${pageContext.request.contextPath}/KDMajax/modalprod',
-            	  data: {prodCode:clickedElementId},
-            	  type : 'GET',
-            	  dataType:'json',
-            	  success: function (json) {
-                      if (json && typeof json === 'object') {
-                    	  
-                    	// 값 할당
-                    	addInput("제품 코드:", elements[0],json.prodCode);
-            	addInput("제품 단위:", elements[1],json.prodUnit);
-            	addInput("용량:", elements[2],json.prodSize);
-            	addInput("향기 종류:", elements[3],json.prodPerfume);
-            	addInput("거래처 코드:", elements[4],json.clientCode);
-                addInput("창고 코드:", elements[5],json.whseCode);
-                addInput("매출 단가:", elements[6],json.prodPrice);
-                addInput("제품 비고:", elements[7],json.prodMemo);
-                    	} else {
-                    	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                    	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                    	}
-
-                  }
-              });	
-            	
-
-      	  } else if(clickedElementId.startsWith("PE")){
-              	//modal_ajax 
-              	$.ajax({
-              	  url : '${pageContext.request.contextPath}/KDMajax/modalraw',
-              	  data: {rawCode:clickedElementId},
-              	  type : 'GET',
-              	  dataType:'json',
-              	  success: function (json) {
-                        if (json && typeof json === 'object') {
-                        	// 값 할당
-                      	addInput("원자재 코드:", elements[0],json.rawCode);
-              	addInput("원자재 종류:", elements[1],json.rawType);
-              	addInput("원자재 단위:", elements[2],json.rawUnit);
-              	addInput("원자재 가격:", elements[3],json.rawPrice);
-                  addInput("거래처 코드:", elements[4],json.clientCode);
-                  addInput("창고 코드:", elements[5],json.whseCode);
-                  addInput("원자재 비고:", elements[6],json.rawMemo);
-                      	} else {
-                      	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                      	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                      	}
-                        }
-                });	//기존 닫기 창 함수
-               
-        } //ajax
-            closeModalButton.addEventListener("click", function (e) {
-          	    if (e.target === closeModalButton) {
-          	        myModal.style.display = "none";
-          	    }
-          	});
-      }    
-            //input시 동적으로 생성하기 위한 함수
-            function addInput(label, id, value) {
-                const div = document.createElement("div");
-                const input = document.createElement("input");
-                div.style.display = "flex";
-                div.style.justifyContent = "flex-end";
-                input.type = "text";
-                input.id = id;
-                input.value = value; // 값을 설정
-                input.size = 8;
-                input.readOnly = true;
-                div.appendChild(document.createTextNode(label));
-                div.appendChild(input);
-                myModal.appendChild(div);
-            }
-          	
-        
-               
-    </script>
-
 <script type="text/javascript">
 function getToday() {
 	var date = new Date();
@@ -654,10 +536,6 @@ $(document).ready(function() {
 <title>requirement</title>
 </head>
 <body>
-<!-- 모달창 -->
-	<div id="myModal" class="modaldetail">
-	</div>
-	<!-- 모달창 -->
 <jsp:include page="../inc/side.jsp"></jsp:include>
 <!-- 사이드바 -->
 <!-- page content -->
@@ -727,7 +605,7 @@ $(document).ready(function() {
 			<div class="table-responsive">
 				<div class="table-wrapper" >
 				<form id="fr" method="post">
-					<table id="reqTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center; ">
+					<table id="reqTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 						<thead>
 							<tr class="headings">
 								<th>번호</th>
@@ -746,8 +624,8 @@ $(document).ready(function() {
 								<td></td>
 								<td id="reqCode">${dto.reqCode }</td>
 								<td style='display: none;'>${dto.prodCode }</td>
-								<td><div style="display: flex; justify-content: center; align-items: center;">${dto.prod.prodName }<div class="search-icon" onclick="openModal(this)" id="${dto.prodCode }" name="prodName" value="${dto.prod.prodName }"></div></div></td>
-								<td><div style="display: flex; justify-content: center; align-items: center;">${dto.raw.rawName }<div class="search-icon" onclick="openModal(this)" id="${dto.rawCode }" name="rawName" value="${dto.raw.rawName }"></div></div></td>
+								<td id="prodName"> ${dto.prod.prodName }</td>
+								<td id="rawName"> ${dto.raw.rawName }</td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
 								<td id="rawCode" style='display: none;'>${dto.rawCode }</td>

@@ -184,11 +184,7 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 		System.out.println("넘어온 데이터 "+checked);
 		
 		int result = sellService.sellDelete(checked);
-		System.out.println(result);
-		System.out.println(result);
-		System.out.println(result);
-		System.out.println(result);
-		System.out.println(result);
+		calendarService.deleteSellCalendar(checked);
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
 	    } else {

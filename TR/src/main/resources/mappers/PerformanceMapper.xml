@@ -53,5 +53,29 @@ SELECT * FROM product
  
  </delete>
  
+ <select id="getpielist" resultType="PerformanceDTO">
+ <!-- MainMapper.xml -->
+    SELECT * FROM performance
+    WHERE 
+    <choose>
+        <when test="lineCode == 101">
+            line_code = 101
+        </when>
+        <when test="lineCode == 102">
+            line_code = 102
+        </when>
+        <when test="lineCode == 103">
+            line_code = 103
+        </when>
+        <!-- 기타 다른 조건에 대한 처리 -->
+        <otherwise>
+            1=1 <!-- 항상 참인 조건을 넣어서 아무런 영향을 미치지 않게 함 -->
+        </otherwise>
+    </choose>
+</select>
+ 
+ 
+ 
+ 
  
  </mapper>

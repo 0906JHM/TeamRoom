@@ -23,7 +23,21 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 	
+	<style>
+	
+#pie_chart1, #pie_chart2, #pie_chart3 {
+ width: 500px;
+
+}
+
+.chartbody {
+display:flex;
+}
+	
+	
+	</style>
 </head>
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
@@ -125,8 +139,15 @@
 		 <div class="chart">
 		 <h2> 생산실적 현황 </h2>
 		 <div class="chartbody">
-		 
-		 
+		 <div id="pie_chart1">
+		 <canvas id="pie-chart" width="500" height="450"></canvas>
+		 </div>
+		 <div id="pie_chart2">
+		 <canvas id="pie-chart2" width="500" height="450"></canvas>
+		 </div>
+		 <div id="pie_chart3">
+		 <canvas id="pie-chart3" width="500" height="450"></canvas>
+		 </div>
 		 
 		 </div> <!--  chartbody -->
 		 </div> <!--  chart -->
@@ -162,7 +183,87 @@ document.querySelectorAll('.magnifier').forEach(function(magnifier) {
         // 새 창을 열고 선택한 실적 코드를 URL 파라미터로 전달
         window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=600px,height=400px');
     });
+}); // 돋보기 자세히 보기 끝 @@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
+    data: {
+        labels: ["실적수", "양품수", "불량수" ],
+        datasets: [{
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd","#3cba9f","#e8c3b9" ],
+          data: [5267,2478,734,]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '1-1 라인 생산량'
+      }
+    }
 });
+
+new Chart(document.getElementById("pie-chart2"), {
+    type: 'pie',
+    data: {
+      labels: ["실적수", "양품수", "불량수" ],
+      datasets: [{
+        label: "Population (millions)",
+        backgroundColor: ["#3e95cd","#3cba9f","#e8c3b9" ],
+        data: [5267,2478,734,]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '1-2라인 생산량'
+      }
+    }
+});
+
+new Chart(document.getElementById("pie-chart3"), {
+    type: 'pie',
+    data: {
+      labels: ["실적수", "양품수", "불량수" ],
+      datasets: [{
+        label: "Population (millions)",
+        backgroundColor: ["#3e95cd","#3cba9f","#e8c3b9" ],
+        data: [5267,2478,734,]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '1-3라인 생산량'
+      }
+    }
+});
+
+
+//페이지가 처음 로드된 후, 4초마다 업데이트를 요청하는 함수를 호출
+setInterval(loadSalesChart, 4000);
+
+loadSalesChartForLineCode(101);
+
+function loadSalesChart() {
+    $.ajax({
+        url: '${pageContext.request.contextPath}/main/perflist',
+        type: 'POST',
+        data: { lineCode: lineCode },
+        dataType: 'json',
+        success: function(result) {
+            if (!jsonObjectsAreEqual(result, sales_compare)) {
+                // 데이터가 변경된 경우에만 차트를 그립니다.
+                // 이전 데이터 업데이트
+                sales_compare = result; // 데이터 배열을 복사하여 참조 문제 해결
+                createPieChart(result, "pie_chart");
+            }
+        }
+    });
+}
+
 
 
 

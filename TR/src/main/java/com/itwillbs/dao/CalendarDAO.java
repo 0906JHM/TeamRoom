@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +39,16 @@ public class CalendarDAO {
 
 	public void insertSellCalendar(CalendarDTO calendarDTO) {
 		sqlSession.selectList(namespace+"insertSellCalendar", calendarDTO);
+	}
+
+	public void deleteSellCalendar(List<String> checked) {
+		Iterator<String> it = checked.iterator();
+
+		while (it.hasNext()) {
+			String code = it.next();
+			System.out.println("삭제할 코드 값 : " + code);
+			sqlSession.delete(namespace + "deleteSellCalendar", code);
+		}
 	}
 
 }
