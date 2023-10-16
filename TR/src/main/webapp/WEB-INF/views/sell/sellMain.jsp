@@ -45,7 +45,7 @@
 			<form action="${pageContext.request.contextPath}/sell/sellMain"
 				method="get" id="selectedProId">
 
-				<label>수주 코드</label> <input type="text"> 
+				<label>수주 코드</label> <input type="text" id="sellCode"> 
 				
 				<label>거래처</label> 
 	        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
@@ -60,12 +60,13 @@
 				<br>
 				
 				<label for="startDate">수주 일자</label> 
-				<input type="text" name="daterange" value=""> 
+				<input type="text" name="daterange" id="sellDate" value=""> 
 				
 				<label for="startDate">납기 일자</label>
-				<input type="text" name="daterange" value="">
+				<input type="text" name="daterange" id="sellDuedate"  value="">
 
-				<button type="submit">조회</button>
+				<input type="button" value="조회" id="searchButton">
+				<input type="button" value="취소" id="resetButton">
 			</form>
 		</div>
 		<br>
@@ -76,7 +77,7 @@
 			<button id="excelDownload">엑셀⬇️</button>
 		</div>
 		
-		<!------------------------------------------------------- 수주 상태 ---------------------------------------------------->
+		<!------------------------------------------------------- 수주 상태 검색---------------------------------------------------->
 		<div id="buttons">
 			<input type="button" class="buttons highlighted" value="전체" id="allButton">
     		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
@@ -411,7 +412,6 @@ function openSellDetail(sellCode) {
         var newWindow = window.open(url, '_blank', popupFeatures);       
     }
 
-
 <!--------------------------------------------------- 비고 추가 ----------------------------------------->
 
     function addSellMemo(sellCode) {
@@ -496,6 +496,115 @@ function openSellDetail(sellCode) {
 				return buf;
 			}
 	  });
+    
+   <!--------------------------------------------------- 상단 조건 검색 ----------------------------------------->
+ //라인, 품목, 수주 검색
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String popUpGET(Model model, @RequestParam("type") String type, 
+			@RequestParam("input") String input) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: popUpGET() 호출");
+		logger.debug("@@@@@ CONTROLLER: type = " + type);
+		
+		
+		if(type.equals("line")) {
+			return "redirect:/performance/line?input="+input;
+		}
+		
+		else if(type.equals("prod")) {
+			return "redirect:/performance/product?input="+input;
+		}
+		
+		else if(type.equals("client")) {
+			return "redirect:/person/Clients?input="+input;
+		}
+		
+		else if(type.equals("client_p")) {
+			String state = URLEncoder.encode("수주처", "UTF-8");
+			return "redirect:/person/Clients?input="+input+"&search_client_type="+state;
+		}
+		else if(type.equals("client_r")) {
+			String state = URLEncoder.encode("발주처", "UTF-8");
+			return "redirect:/person/Clients?input="+input+"&search_client_type="+state;
+		}
+		
+		else if(type.equals("wh")) {
+			return "redirect:/performance/warehouse?input="+input;
+		}
+		
+		else if(type.equals("wh_p")) {
+			String state = URLEncoder.encode("완제품", "UTF-8");
+			return "redirect:/performance/warehouse?input="+input+"&wh_dv="+state;
+		}
+		else if(type.equals("wh_r")) {
+			String state = URLEncoder.encode("원자재", "UTF-8");
+			return "redirect:/performance/warehouse?input="+input+"&wh_dv="+state;
+		}
+		
+		else if(type.equals("emp")) {
+			return "redirect:/person/empinfo?input="+input;
+		}
+		
+		else /* if(type.equals("order"))*/ {
+			return "redirect:/person/orderStatus?input="+input;
+		}
+		
+		
+	} 
+   /*
+    광민님 검색코드
+    
+    $("#searchButton").click(function () {
+    	// 검색 조건을 가져오기 (이 부분을 필요에 따라 구현)
+    	$(".buttons").removeClass("highlighted");
+
+        // 클릭한 버튼에 "highlighted" 클래스 추가
+        $("#allButton").addClass("highlighted");
+        
+    	sellStateButton2 = "검색";
+    	sellStateButton1 = sellStateButton2;
+    	
+        var searchParams = {
+            outCode: $("#outCode").val(),
+            prodName: $("#prodName9999").val(),
+            clientCompany: $("#clientCompany9999").val(),
+            outCode: $("#outCode").val(),
+            prodName: $("#prodName9999").val(),
+            clientCompany: $("#clientCompany9999").val(),
+              
+            sellState: sellStateButton2,
+        };
+		console.log(searchParams);
+        loadSellList(searchParams);
+    });
+    
+    // 취소 버튼 클릭 시 검색입력값 초기화
+    $("#resetButton").click(function () {
+    	$(".buttons").removeClass("highlighted");
+
+        // 클릭한 버튼에 "highlighted" 클래스 추가
+        $("#allButton").addClass("highlighted");
+    	
+        sellStateButton2 = "전체";
+    	sellStateButton1 = sellStateButton2;
+        
+    	$("#sellCode").val('');
+        $("#clientCode").val('');
+        $("#clientCompany9999").val('');
+        $("#prodCode9999").val('');
+        $("#prodName9999").val('');
+        $("#sellDate").val('');
+        $("#sellDuedate").val('');
+        
+        firstLoadSellList();
+    });
+
+	// 검색입력란에서 Enter키 눌러도 검색 폼 안넘어가게
+    $("#sellCode, #clientCode, #clientCompany9999, #prodCode9999, #prodName9999, #sellDate, #sellDuedate").on('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // 엔터 키 기본 동작을 막음 (폼 제출 방지)
+            $("#searchButton").click(); // 검색 버튼 클릭
+        }
+    }); */
  </script>
 </body>
 </html>
