@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.LineDTO;
+import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.WorkOrderDTO;
@@ -44,9 +46,9 @@ public class PerformanceDAO {
 
 
 
-	public List<PerformanceDTO> getperflist() {
+	public List<PerformanceDTO> getperflist(PageDTO pageDTO) {
 		
-		return  sqlsession.selectList(namespace+".getperflist");
+		return  sqlsession.selectList(namespace+".getperflist", pageDTO);
 		
 	}
 
@@ -61,9 +63,9 @@ public class PerformanceDAO {
 
 
 
-	public void perfinsert(PerformanceDTO perfDTO) {
+	public boolean perfinsert(PerformanceDTO perfDTO) {
 		
-		sqlsession.insert(namespace+".perfinsert",perfDTO);
+		return sqlsession.insert(namespace+".perfinsert",perfDTO) > 0;
 		
 		
 	}
@@ -96,9 +98,47 @@ public class PerformanceDAO {
 		
 		return sqlsession.delete(namespace+".perfdelete",perfCode) > 0;
 	}
+
+
+
+
+	public List<PerformanceDTO> getSearch(PerformanceDTO perfDTO, PageDTO pageDTO) {
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("startRow", pageDTO.getStartRow());
+		data.put("pageSize", pageDTO.getPageSize());
+		data.put("prodCode", perfDTO.getProdCode());
+		data.put("lineCode", perfDTO.getLineCode());
+		
+		/*
+		 * data.put("perfDate1", perfDTO.getPerfDate()); data.put("perfDate2",
+		 * perfDTO.getPerfDate());
+		 */
+		return sqlsession.selectList(namespace+".getSearch", data);
+	}
+
+
+
+
+	public int getSearchcount(PerformanceDTO perfDTO) {
+		
+		return sqlsession.selectOne(namespace+".getSearchcount", perfDTO);
+	}
+
+
+
+
+	public int getperfCount(PageDTO pageDTO) {
+		
+		return sqlsession.selectOne(namespace+".getperfCount",pageDTO);
+	}
 	
+	//차트JS 도넛차트 
+	public List<PerformanceDTO> getdonut(List<String> lineCode) {
+		System.out.println("PerformanceDAO getDonut Service에서 가져온 값:"+lineCode);
+		List<PerformanceDTO>  result =  sqlsession.selectList(namespace+".getdonut", lineCode);
+		System.out.println("DB에서 가져온값 ++++++++++++++++++++:"+result);
+        return result;
 	
-	
-	
+}
 
 }

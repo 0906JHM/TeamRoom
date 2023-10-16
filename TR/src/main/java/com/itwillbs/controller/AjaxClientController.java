@@ -26,6 +26,7 @@ public class AjaxClientController {
 	
 	  @PostMapping("/insertPro")
 	    public ResponseEntity<String> insertClient(ClientDTO clientDTO) {
+		  
 	        try {
 	        	
 	            clientService.insertClient(clientDTO);

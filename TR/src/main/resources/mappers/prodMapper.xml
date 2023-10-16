@@ -42,8 +42,7 @@
 		left join warehouse w
 		on
 		p.whseCode = w.whseCode
-		
-		
+			
 		<where>
 			<if test="prodCode != ''">
 				p.prodCode like concat ('%', #{prodCode}, '%')

@@ -21,8 +21,10 @@
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	
+	 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/datepicker.css"> 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	
 </head>
 <body>
@@ -43,13 +45,10 @@
 </div>
 
 
-<div class="perfcd1">
- 실적일: <input type="text" id="workdate1" name="workdate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="workdate2	" class="form-control" placeholder="날짜 선택" readonly>
-</div>
+<!-- <div class="perfcd1">
+ 실적일: <input type="text" id="workdate1" name="perfDate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="perfDate2	" class="form-control" placeholder="날짜 선택" readonly>
+</div> -->
 
-<div class="perfcd1">
- 작업지시코드: <input type="text" id="workCode" name="workCode" class="cdbox" placeholder="작업지시코드" readonly>
-</div>
 
 
 </div> <!--  perfcd -->
@@ -113,10 +112,23 @@
 		  <input type="button" id="exceldown" class="exceldown" value="액셀다운">
 		 </div>
 		 
-		 <div class="paging">
-		       <input type="button" value="1" style="float:right">
-		 
-		 </div>
+		 	<div class="page"> <!--  페이징 영역 -->
+				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
+					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}">Prev</a>
+				</c:if>
+				
+
+				<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
+					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${i}&lineCode=${perfDTO.perfCode}&prodCode=${perfDTO.prodCode}">${i}</a>
+				</c:forEach>
+
+
+				<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
+					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${perfDTO.prodCode}">Next</a>
+				</c:if>
+				
+			</div> <!--  페이징영역 -->
+		
 		
 		
 		
@@ -125,7 +137,7 @@
 		 <div class="chart">
 		 <h2> 생산실적 현황 </h2>
 		 <div class="chartbody">
-		 
+		 <canvas id="donutChart" width="400px" height="400px"></canvas>
 		 
 		 
 		 </div> <!--  chartbody -->
@@ -150,7 +162,7 @@ $(document).ready(function() {
     
     
        
-});
+
 
 // 돋보기 아이콘에 대한 클릭 이벤트 리스너 추가
 document.querySelectorAll('.magnifier').forEach(function(magnifier) {
@@ -166,6 +178,57 @@ document.querySelectorAll('.magnifier').forEach(function(magnifier) {
 
 
 
+      
+   // 라인 코드 리스트
+      var lineCode = ["L101", "L102", "L103"];
+      $.ajax({
+          type: "POST",
+          url: "${pageContext.request.contextPath}/perfajax/perfdonut",
+          dataType: "json",
+          contentType: "application/json", // 데이터 형식을 JSON으로 지정
+          data: JSON.stringify(lineCode), // 라인 코드 리스트를 JSON 문자열로 변환하여 전송
+          success: function(data) {
+              console.log(data);
+              // 파이차트 그리는 함수 호출 등으로 처리 가능
+           // 도넛 차트 생성 및 표시
+              createDonutChart(data);
+          },
+          error: function(error) {
+              console.log("Error fetching data: " + error);
+          }
+      });
+      
+      function createDonutChart(data) {
+    	    // 도넛 차트를 그릴 때 사용할 데이터 배열과 라벨 배열을 초기화합니다.
+    	    var chartData = [];
+    	    var labels = [];
+
+    	    // data 객체에서 필요한 데이터를 추출하여 배열에 추가합니다.
+    	    data.forEach(function(item) {
+    	        // 각 라인 코드에 대한 데이터를 추출하여 배열에 추가합니다.
+    	        chartData.push(item.totalAmount);  // 실적 수량 데이터를 사용하려면 item.totalAmount를 수정하세요.
+    	        labels.push(item.lineCode);
+    	    });
+
+    	    // Chart.js를 사용하여 도넛 차트를 생성합니다.
+    	    var ctx = document.getElementById('donutChart').getContext('2d');
+    	    var donutChart = new Chart(ctx, {
+    	        type: 'doughnut', // 도넛 차트 유형을 설정합니다.
+    	        data: {
+    	            labels: labels, // 라벨 배열을 설정합니다.
+    	            datasets: [{
+    	                data: chartData, // 차트 데이터 배열을 설정합니다.
+    	                backgroundColor: ['red', 'green', 'blue'], // 차트 데이터에 대한 배경색을 설정합니다.
+    	                borderWidth: 1 // 차트 데이터에 대한 테두리 두께를 설정합니다.
+    	            }]
+    	        },
+    	        options: {
+    	            responsive: true,
+    	            maintainAspectRatio: false
+    	        }
+    	    });
+    	}
+});
 </script>			
 			
 </html>

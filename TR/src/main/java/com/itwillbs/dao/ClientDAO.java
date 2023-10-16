@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
@@ -36,12 +38,7 @@ public class ClientDAO {
 			
 		}
 
-		public List<ClientDTO> getclientList() {
-			
-			
-			return sqlsession.selectList(namespace+".getclientList");
-			
-		}
+		
 
 		public String getclientCode(String clientType) {
 			        log.debug("ClientDAO getclientCode 요청");
@@ -86,6 +83,39 @@ public class ClientDAO {
 			
 			sqlsession.delete(namespace+".clientdelete",clientCompany);
 			
+		}
+
+		public List<ClientDTO> getSearch(ClientDTO clientDTO, PageDTO pageDTO) {
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			data.put("startRow", pageDTO.getStartRow());
+			data.put("pageSize", pageDTO.getPageSize());
+			data.put("clientCode", clientDTO.getClientCode());
+			data.put("clientCompany", clientDTO.getClientCompany());
+			
+			return sqlsession.selectList(namespace+".getSearch", data);
+		}
+		
+		
+
+
+
+		public int getSearchcount(ClientDTO clientDTO) {
+			
+			return sqlsession.selectOne(namespace+".getSearchcount",clientDTO);
+     	}
+
+
+
+		public int getclientCount(PageDTO pageDTO) {
+			
+			return sqlsession.selectOne(namespace+".getclientCount",pageDTO);
+		}
+
+
+
+		public List<ClientDTO> getclientList(PageDTO pageDTO) {
+			
+			return sqlsession.selectList(namespace+".getclientList", pageDTO);
 		}
 
 }

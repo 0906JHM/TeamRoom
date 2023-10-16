@@ -6,7 +6,10 @@ import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itwillbs.domain.ChartDTO;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.service.PerformanceService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +46,31 @@ public class AjaxPerformanceController {
 	    }
 	}
 	
+	@PostMapping("/ajaxinsert")
+	public ResponseEntity<String> ajaxinsert ( PerformanceDTO perfDTO ) {
+		log.debug("perfInsert요청");
+		
+		boolean success = perfService.perfinsert(perfDTO);
+		System.out.println(success);
+		 if (success) {
+		        return ResponseEntity.ok("등록 성공");
+		        
+		    } else {
+		    	
+		        return ResponseEntity.status(500).body("등록 실패"); // 실패 응답, 500은 서버 오류 코드
+		    }
+		}
+	
+	@PostMapping("/perfdonut")
+	public ResponseEntity<List<PerformanceDTO>> getdonut(@RequestBody List<String> lineCode) {
+		 System.out.println("Line Codes: " + lineCode);
+	    List<PerformanceDTO> getdonutdata = perfService.getdonut(lineCode);
+	    log.debug("가져오는값:"+ lineCode);
+	    return ResponseEntity.ok(getdonutdata);
+	    
+
+	}
+}
 	
 
 	
-}

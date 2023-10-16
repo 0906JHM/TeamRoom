@@ -29,9 +29,19 @@ public class ClientService {
 	}
 
        public List<ClientDTO> getclientList(PageDTO pageDTO) {
-		// TODO Auto-generated method stub
-		return null;
+    	// 10개씩 가져올때 현페이지에 대한 시작하는 행번호 구하기
+   		int startRow = (pageDTO.getCurrentPage() - 1) * pageDTO.getPageSize() + 1;
+   		// 끝나는 행번호 구하기
+   		int endRow = startRow + pageDTO.getPageSize() - 1;
+
+   		// 디비 startRow - 1
+   		pageDTO.setStartRow(startRow - 1);
+   		pageDTO.setEndRow(endRow);
+		
+		return clientDAO.getclientList(pageDTO);	
+		
 	}
+       
 	public String  getclientCode(String clientType) {
 		
 		System.out.println("ClientService getClientCode=============" + clientType);
@@ -77,17 +87,18 @@ public class ClientService {
 		// 디비 startRow - 1
 		pageDTO.setStartRow(startRow - 1);
 		pageDTO.setEndRow(endRow);
-		return clientDAO.getSearch(clientDTO, clientDTO);
+		
+		return clientDAO.getSearch(clientDTO, pageDTO);
 	}
 
 	public int getSearchcount(ClientDTO clientDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return clientDAO.getSearchcount(clientDTO);
 	}
 
 	public int getclientCount(PageDTO pageDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		 return clientDAO.getclientCount(pageDTO);
 	}
 
 	

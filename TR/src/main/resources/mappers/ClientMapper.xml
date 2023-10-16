@@ -15,10 +15,44 @@
 		#{clientFax}, #{clientEmail},#{clientMemo})
 	</insert>
 
-	<select id="getclientList"
-		resultType="com.itwillbs.domain.ClientDTO">
-		select * from clients
+	<select id="getclientList" resultType="com.itwillbs.domain.ClientDTO">
+    SELECT * FROM clients
+    order by clientCode desc
+    limit #{startRow}, #{pageSize}
+</select>
 
+<select id="getSearch" resultType="ClientDTO">
+		select * FROM clients	
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				and clientCompany = #{clientCompany}
+			</if>
+		</where>
+		order by clientCode desc
+		limit #{startRow}, #{pageSize}
+	</select>
+	
+	<select id="getSearchcount" resultType="java.lang.Integer">
+		SELECT count(#{clientCode})
+		FROM clients
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				and clientCompany like concat ('%' ,#{clientCompany}, '%')
+			</if>
+		</where>
+		order by clientCode desc
+	</select>
+
+<select id="getclientCount" resultType="java.lang.Integer">
+	select count(*) from clients
 	</select>
 
 	<select id="getclientCode" resultType="java.lang.String">
@@ -39,6 +73,10 @@
 		SELECT * FROM product WHERE
 		clientCode = #{clientCode};
 	</select>
+	
+	
+	
+	
 
 	<update id="clientupdate">
 		UPDATE clients
