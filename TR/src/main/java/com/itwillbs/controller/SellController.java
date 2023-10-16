@@ -12,11 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.SellPageDTO;
+import com.itwillbs.service.CalendarService;
 import com.itwillbs.service.OutProductService;
 import com.itwillbs.service.SellService;
 
@@ -40,6 +43,8 @@ public class SellController {
 	private SellService sellService;
 	@Inject 
 	private OutProductService outProductService;
+	@Inject
+	private CalendarService calendarService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
@@ -127,7 +132,7 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
     
 	outProductService.insertList(sellDTO);		
 	sellService.insertSell(sellDTO);			
-	
+	calendarService.insertSellCalendar(sellDTO);
 	/*
 	 sellCode 수주코드, 
 	 sellDate 수주일자, 
@@ -174,12 +179,22 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	
 //-------------------------------------------------- 수주 삭제 ---------------------------------------------
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String sellDelete(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
-
-		// 서비스 - 소요량관리 삭제
-		sellService.sellDelete(checked);
-
-		return "redirect:/sell/sellMain";
+	public ResponseEntity<String> sellDelete(@RequestBody List<String> checked) throws Exception {
+		
+		System.out.println("넘어온 데이터 "+checked);
+		
+		int result = sellService.sellDelete(checked);
+		System.out.println(result);
+		System.out.println(result);
+		System.out.println(result);
+		System.out.println(result);
+		System.out.println(result);
+		if (result > 0) {
+	        return new ResponseEntity<String>("success", HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
+	    }
+		
 	}//sellDelete
 		
 		

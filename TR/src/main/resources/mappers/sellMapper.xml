@@ -37,9 +37,9 @@
 
 	<insert id="insertSell">
 		insert into
-		sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,sellNum,sellPrice)
+		sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,clientCompany,sellNum,sellPrice)
 		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-		#{sellMemo},#{sellState},#{clientCode},#{sellNum},#{sellCount}*(SELECT
+		#{sellMemo},#{sellState},#{clientCode},#{clientCompany}, #{sellNum},#{sellCount}*(SELECT
 		prodPrice FROM product WHERE prodCode = #{prodCode}))
 	</insert>
 

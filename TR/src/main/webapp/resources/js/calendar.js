@@ -51,12 +51,17 @@ function initializeCalendar(calendarEvents, currentDate) {
         events: calendarEvents,
         eventClick: function(info) {
             var title = info.event.title;
-		    var start = info.event.start.toISOString().substring(0, 10);
+            
+     		var eventDate = moment(info.event.start);
+			var start = eventDate.format("YYYY-MM-DD");
+
+//		    var start = info.event.start.toISOString().substring(0, 10);
+
 		    var otherDate = info.event.extendedProps.otherDate;
 		    var description = info.event.extendedProps.description;
 		    
 		    if (otherDate !== null) {
-		        var message ='<div style="text-align:left; padding-left:20%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
+		        var message ='<div style="text-align:left; padding-left:15%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
 		    } else {
 		        var message ='<div style="text-align:left; padding-left:20%;">' + title + '<br> 기간: ' + start + ' ~ ' + start + '<br>' + title + ' 내용: ' + description + '</div>';
 		    }

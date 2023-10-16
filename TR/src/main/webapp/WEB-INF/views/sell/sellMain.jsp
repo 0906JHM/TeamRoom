@@ -80,7 +80,6 @@
 		<!------------------------------------------------------- 추가, 수정, 삭제, 엑셀 버튼 ---------------------------------------------------->
 		<div class="buttons">
 			<button id="add" onclick="openSellAdd()">추가</button>
-			<button id="modify">수정</button>
 			<button id="delete">삭제</button>
 			<button id="Excel">Excel</button>
 		</div>
@@ -229,7 +228,9 @@ $('#delete').click(function(event){
 		$('input[name=selectedSellCode]:checked').each(function(){
 			checked.push($(this).val());
 		});
-
+		
+		console.log(checked);
+		
 		if(checked.length > 0) {
 			Swal.fire({
 				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
@@ -245,30 +246,35 @@ $('#delete').click(function(event){
 			
 			 /* confirm => 예 눌렀을 때  */
 			  if (result.isConfirmed) {
-				$.ajax({
-						url: "${pageContext.request.contextPath}/product/delete",
-						type: "POST",
-						data: {checked : checked},
-						dataType: "text",	
-						success: function () {
-							Swal.fire({
-							  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
-							  icon: 'success',
-							  width : '300px',
-							}).then((result) => {
-							  if (result.isConfirmed) {
-							    location.reload();
-							  }
-							});
-					},
-					error: function () {
-						Swal.fire({
-							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
-							icon : 'question',
-							width: '300px',
-							});	
-					}
-				});//ajax
+				  $.ajax({
+					    url: "${pageContext.request.contextPath}/sell/delete",
+					    type: "POST",
+					    data: JSON.stringify(checked), // 데이터를 JSON 문자열로 변환
+					    contentType: "application/json", // Content-Type 설정
+					    dataType: "text",
+					    success: function (response) {
+					    	console.log(response); // 서버에서 반환한 응답을 콘솔에 출력
+					        // 서버에서의 응답을 처리합니다.
+					        // response 변수에 서버에서 반환한 문자열이 들어있습니다.
+					        Swal.fire({
+					            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + response + "</div>",
+					            icon: 'success',
+					            width: '300px',
+					        }).then((result) => {
+					            if (result.isConfirmed) {
+					                location.reload();
+					            }
+					        });
+					    },
+					    error: function (response) {
+					    	console.log(response); // 서버에서 반환한 응답을 콘솔에 출력
+	                        Swal.fire({
+	                            title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "삭제 중 오류가 발생했습니다",
+	                            icon: 'question',
+	                            width: '300px',
+	                        });
+	                    }
+					});
 				  } else if (result.isDenied) {
 						Swal.fire({
 						title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",

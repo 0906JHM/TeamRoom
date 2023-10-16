@@ -26,4 +26,8 @@
 		order by perfdate asc
 	</select>
 	
+	<insert id="insertSellCalendar">
+		insert into calendar
+		values(default, #{calendar_title}, #{calendar_memo}, #{startDate}, #{endDate}, #{code})
+	</insert>
 </mapper>

@@ -55,15 +55,17 @@ public class SellDAO {
 	}//sellUpdate
 	
 //----------------------------------------------------- 수주 삭제 --------------------------------------------------------
-	public void sellDelete(List<String> checked) throws Exception {
+	public int sellDelete(List<String> checked) throws Exception {
 
 		Iterator<String> it = checked.iterator();
 		int result = 0;
 
 		while (it.hasNext()) {
 			String sellCode = it.next();
+			System.out.println("삭제할 코드 값 : " + sellCode);
 			result += sqlSession.delete(namespace + ".sellDelete", sellCode);
 		}
+		return result;
 	}//sellDelete
 	
 //----------------------------------------------------- 비고 추가 --------------------------------------------------------
