@@ -178,8 +178,7 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 //-------------------------------------------------- 수주 삭제 ---------------------------------------------
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String sellDelete(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
-
-		// 서비스 - 소요량관리 삭제
+		
 		sellService.sellDelete(checked);
 
 		return "redirect:/sell/sellMain";

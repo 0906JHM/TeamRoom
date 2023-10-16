@@ -26,7 +26,7 @@
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		
 		<button type="submit" >수정</button>		
-		<button type="reset">취소</button>
+		<!-- <button type="reset">취소</button> -->
         <button type="button" onclick="window.close();">닫기</button>
     </form>
 </div>

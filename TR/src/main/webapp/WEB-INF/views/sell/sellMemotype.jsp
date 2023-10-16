@@ -31,7 +31,8 @@ String memotype = request.getParameter("memotype");
 		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo"></textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		<button type="submit" >등록</button>		
-		<button type="reset">취소</button>
+		<!-- <button type="reset">취소</button> -->
+		<button type="button" onclick="window.close();">닫기</button>
 </form>
         </c:when>
         <c:otherwise>

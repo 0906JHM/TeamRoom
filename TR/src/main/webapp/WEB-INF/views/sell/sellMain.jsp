@@ -80,7 +80,6 @@
 		<!------------------------------------------------------- 추가, 수정, 삭제, 엑셀 버튼 ---------------------------------------------------->
 		<div class="buttons">
 			<button id="add" onclick="openSellAdd()">추가</button>
-			<button id="modify">수정</button>
 			<button id="delete">삭제</button>
 			<button id="Excel">Excel</button>
 		</div>
@@ -246,7 +245,7 @@ $('#delete').click(function(event){
 			 /* confirm => 예 눌렀을 때  */
 			  if (result.isConfirmed) {
 				$.ajax({
-						url: "${pageContext.request.contextPath}/product/delete",
+						url: "${pageContext.request.contextPath}/sell/delete",
 						type: "POST",
 						data: {checked : checked},
 						dataType: "text",	
