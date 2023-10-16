@@ -68,7 +68,7 @@
 		where buyNum = #{buyNum}
 	</update>
 	
-<!-- 	엑셀수정 -->
+	<!-- 엑셀 -->
 	<select id="getOrderManagementList2" resultType="com.itwillbs.domain.OrderManagementDTO">
 		select *
 		from buy
