@@ -51,8 +51,12 @@ public class CalendarService {
 	}
 
 	public void insertOrderCalendar(OrderManagementDTO ordermanagementDTO) {
-		// TODO Auto-generated method stub
+		CalendarDTO calendarDTO = new CalendarDTO();
 		
+		calendarDTO.setCode(sellDTO.getSellCode());
+		calendarDTO.setCalendar_title("원자재 발주");
+		calendarDTO.setStartDate(sellDTO.getSellDate());
+		calendarDTO.setEndDate(sellDTO.getSellDuedate());
 	}
 	
 	
