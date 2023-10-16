@@ -11,9 +11,13 @@
 <link href="${pageContext.request.contextPath }/resources/css/outProduct.css"
 	rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<title>Insert title here</title>
 
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
+<title>출고 페이지</title>
 
 </head>
 <body>
@@ -36,6 +40,7 @@
     		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
     		<input type="button" class="buttons " value="중간납품" id="interim_deliveryButton">
     		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
+    		<input type="button"  value="엑셀" id="exportButton">
 		</div>
 		<h3 style="padding-left:1%;">목록 <small id="listCount">총 3건</small></h3>
 		<div id="outProductList">
@@ -206,7 +211,7 @@
 	            };
 				
 		        $.ajax({
-		            type: "GET", // GET 또는 POST 등 HTTP 요청 메서드 선택
+		            type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
 		            url: "${pageContext.request.contextPath}/outProduct/listSearch", // 데이터를 가져올 URL 설정
 		            data: searchParams, // 검색 조건 데이터 전달
 		            dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
@@ -226,7 +231,7 @@
 		    function loadOutProductList(searchParams) {
 		    	
 		        $.ajax({
-		            type: "GET", // GET 또는 POST 등 HTTP 요청 메서드 선택
+		            type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
 		            url: "${pageContext.request.contextPath}/outProduct/listSearch", // 데이터를 가져올 URL 설정
 		            data: searchParams, // 검색 조건 데이터 전달
 		            dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
@@ -370,7 +375,44 @@
 		    	var popup = window.open(url, "", popupOpt);
 		    } //openWindow()
 		 	
-	</script>
+// 		   	엑셀
+
+
+    // 버튼 클릭 시 실행
+    document.getElementById('exportButton').addEventListener('click', function () {
+        // 엑셀로 내보낼 데이터
+
+		var searchParams = {
+			outCode: $("#outCode").val(),
+			prodName: $("#prodName9999").val(),
+			clientCompany: $("#clientCompany9999").val(),
+		    sellState: sellStateButton2 // 전체 조건 추가
+        };
+			
+        $.ajax({
+        	type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+        	url: "${pageContext.request.contextPath}/outProduct/excel", // 데이터를 가져올 URL 설정
+        	data: searchParams, // 검색 조건 데이터 전달
+        	dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+        	success: function (data) {
+        		// 새 워크북을 생성
+        		var wb = XLSX.utils.book_new();
+		        // 워크시트 생성
+		        var ws = XLSX.utils.aoa_to_sheet(data);
+		        // 워크북에 워크시트 추가
+		        XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
+		        // Blob 형태로 워크북 생성
+		        var blob = XLSX.write(wb, { bookType: 'xlsx', type: 'blob' });
+		        // 파일 이름 설정 (원하는 파일 이름으로 변경)
+		        var fileName = "OutProduct.xlsx";
+		        // Blob 파일을 다운로드
+		        saveAs(blob, fileName);
+        	}
+        });
+    });
+
+		   
+    </script>
 
 </body>
 </html>

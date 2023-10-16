@@ -22,7 +22,7 @@ public class AjaxOutProductController {
 	private OutProductService outProductService;
 	
 //	OutProductController 에서 페이지 이동을 하고 ajaxcontroller에서 리스트 불러오는것
-	@RequestMapping(value = "/listSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/listSearch", method = RequestMethod.POST)
 	public ResponseEntity<List<OutProductDTO>> SalesList(OutProductDTO outProductDTO, HttpServletRequest request) {
 		System.out.println("출고코드"+outProductDTO.getOutCode());
 		System.out.println("제품이름"+outProductDTO.getProdName());
