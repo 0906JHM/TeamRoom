@@ -51,8 +51,8 @@
 				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode"> 
 				
 				<label>거래처</label> 
-	        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
-        	<input type="text" id="clientCompany9999" placeholder="거래처명" onclick=searchItem('client','clientCode9999'); readonly >
+	        <input type="text" id="sellclientCode9999" name="sellclientCode" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" readonly >
+        	<input type="text" id="sellclientCompany9999" placeholder="거래처명" onclick=searchItem('sellclient','sellclientCode9999'); readonly >
 		
 				<br>
 				
