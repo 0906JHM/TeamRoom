@@ -81,4 +81,17 @@ public class InMaterialDAO {
 		sqlSession.update(namespace+".updateInDate",inMaterialDTO);
 		
 	}
+
+	public List<InMaterialDTO> getExcelList(InMaterialDTO inMaterialDTO) {
+		if ("전체".equals(inMaterialDTO.getInState())) {
+			log.debug("전체용");
+			return sqlSession.selectList(namespace + ".getExcelList", inMaterialDTO);
+		} else if ("총검색".equals(inMaterialDTO.getInState())) {
+			log.debug("총검색");
+			return sqlSession.selectList(namespace + ".getExcelListAllSearch", inMaterialDTO);
+		} else {
+			log.debug("나머지용");
+			return sqlSession.selectList(namespace + ".getExcelListSearch", inMaterialDTO);
+		}
+	}
 }

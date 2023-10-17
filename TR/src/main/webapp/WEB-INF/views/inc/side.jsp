@@ -15,12 +15,14 @@
 			<div class="logininfo">
 				<!-- 			로고자리 -->
 				<%-- 				<a href="${pageContext.request.contextPath }/main/calendar" style="font-size: 40px; padding: 30px;" >ROOMAIR</a> --%>
-				<a href="${pageContext.request.contextPath }/main/calendar"> <img
-					src="${pageContext.request.contextPath }/resources/img/logo.png"
-					style="width: 150px; margin: 20px 0px 0px 60px;" >
+				<div id="logo">
+				<a href="${pageContext.request.contextPath }/main/calendar"> 
+				<img
+					src="${pageContext.request.contextPath }/resources/img/logo.png">
 				</a>
+				</div>
 				<!-- 			로고자리 -->
-				<p class="loginhi">${sessionScope.empId}님안녕하세요</p>
+				<p class="loginhi">${sessionScope.empId}님 안녕하세요</p>
 			</div>
 
 			<div class="sidebar">

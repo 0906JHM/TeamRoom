@@ -71,7 +71,7 @@ public class OutProductService {
 		Date now = new Date();
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
 	    String formattedDate = dateFormat.format(now);
-	    String code = "OC" + formattedDate;
+	    String code = "OP" + formattedDate;
 		
 		
 //		제품 단가 가져오기
@@ -119,6 +119,14 @@ public class OutProductService {
 
 	public List<OutProductDTO> getExcelList(OutProductDTO outProductDTO) {
 		return outProductDAO.getExcelList(outProductDTO);
+	}
+
+	public void deleteSell(List<String> checked) {
+		System.out.println("aaaaaaaaaaaaaa");
+		System.out.println("aaaaaaaaaaaaaa");
+		System.out.println("aaaaaaaaaaaaaa");
+		System.out.println("aaaaaaaaaaaaaa");
+		outProductDAO.deleteSell(checked);
 	}
 
 }
