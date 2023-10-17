@@ -75,12 +75,6 @@ public class ProdController {
 			prodList = prodService.getProdList(pageDTO);
 			count = prodService.getProdCount(pageDTO);
 		}
-
-		// 전체 글개수 가져오기
-		
-		
-		
-		
 		
 		// 한화면에 보여줄 페이지 개수 설정
 		int pageBlock = 10;
@@ -104,9 +98,7 @@ public class ProdController {
 
 		model.addAttribute("prodList", prodList);
 		model.addAttribute("pageDTO", pageDTO);
-		
-		// member/list.jsp
-		// WEB-INF/views/member/list.jsp
+
 		return "product/list";
 	}//
 
@@ -131,41 +123,6 @@ public class ProdController {
 		return "redirect:/product/list";
 	}//
 
-	/*
-	 * @GetMapping("/search") public String search(ProdDTO prodDTO, Model
-	 * model,HttpServletRequest request) {
-	 * 
-	 * 
-	 * 
-	 * int pageSize = 1; // 현 페이지 번호 가져오기 String pageNum =
-	 * request.getParameter("pageNum"); // 페이지 번호가 없을 경우 => "1"로 설정 if (pageNum ==
-	 * null) { pageNum = "1"; }
-	 * 
-	 * // 페이지 번호 => 정수형 변경 int currentPage = Integer.parseInt(pageNum);
-	 * 
-	 * PageDTO pageDTO = new PageDTO(); pageDTO.setPageSize(pageSize);
-	 * pageDTO.setPageNum(pageNum); pageDTO.setCurrentPage(currentPage); // 전체 글개수
-	 * 가져오기
-	 * 
-	 * int count = prodService.getSearchcount(prodDTO); List<ProdDTO> prodList =
-	 * prodService.getSearch(prodDTO, pageDTO); model.addAttribute("prodList",
-	 * prodList);
-	 * 
-	 * 
-	 * // 한화면에 보여줄 페이지 개수 설정 int pageBlock = 10; // 시작하는 페이지 번호 int startPage =
-	 * (currentPage - 1) / pageBlock * pageBlock + 1; // 끝나는 페이지 번호 int endPage =
-	 * startPage + pageBlock - 1; // 전체페이지 개수 int pageCount = count / pageSize +
-	 * (count % pageSize == 0 ? 0 : 1); // 끝나는 페이지 번호 전체페이지 개수 비교 // => 끝나는 페이지 번호가
-	 * 크면 전체페이지 개수로 변경 if (endPage > pageCount) { endPage = pageCount; }
-	 * 
-	 * pageDTO.setCount(count); pageDTO.setPageBlock(pageBlock);
-	 * pageDTO.setStartPage(startPage); pageDTO.setEndPage(endPage);
-	 * pageDTO.setPageCount(pageCount);
-	 * 
-	 * model.addAttribute("prodList", prodList); model.addAttribute("pageDTO",
-	 * pageDTO); return "product/list"; }
-	 */
-
 	@GetMapping("/update")
 	public String update(HttpServletRequest request, Model model) {
 		System.out.println("prodController update()");
@@ -187,44 +144,5 @@ public class ProdController {
 
 		return "redirect:/product/list";
 	}//
-
-//	@GetMapping("/list")
-//	public String roomair(ProdDTO prodDTO, Model model) {
-//	    List<ProdDTO> prodList = prodService.getProdSearch(prodDTO);
-//	    System.out.println("controller");
-//	    model.addAttribute("prodList", prodList);
-//	    return "product/list";
-//	}
-
-//	@GetMapping("/list")
-//	public void getProdList(Model model, ProdDTO prodDTO) {
-//		System.out.println("ProdController getProdList");
-//		List<ProdDTO> prodList = new ArrayList<ProdDTO>();
-//		model.addAttribute("prodList", prodList);
-//		
-//		if (prodDTO.getProdCode() != null || prodDTO.getProdName() != null || prodDTO.getClientCode() != null ) {
-////			int total = prodService.countProd(prodDTO);
-////			pvo = new PagingVO(total, pvo.getNowPage(), pvo.getCntPerPage());
-////			List<ProdDTO> pordList = prodService.getProdList(prodDTO);//(prodDTO, pvo)페이지 디티오
-//			model.addAttribute("prodList", prodList);
-////			model.addAttribute("paging", pvo);
-//			model.addAttribute("prodDTO", prodDTO);
-//
-//
-////			if (input != null && !input.equals("")) {
-////				model.addAttribute("input", input);
-////				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
-////			}
-//		} else {
-////			int total = prodService.countProd();
-////			pvo = new PagingVO(total);
-////			logger.debug("pvo : " + pvo);
-////			List<ProductVO> list = service.getProdList(pvo);
-////			model.addAttribute("prodList", list);
-////			model.addAttribute("paging", pvo);
-////			logger.debug(" 모든 리스트 가져감");
-//		}
-//		
-//	}
 
 }

@@ -59,7 +59,6 @@ public class ProdService {
 	}
 
 	public ProdDTO getProd(String prodCode) {
-
 		return prodDAO.getProd(prodCode);
 	}
 
@@ -88,35 +87,5 @@ public class ProdService {
 	public String codeChange(String code_id, int num){
 		return String.format("%s%04d", code_id, ++num);
 	}
-	
-//	public void makeCode() {
-//	}
-	
-	
-
-//	@Inject
-//	private ProdDAO prodDAO;
-//
-//	public List<ProdDTO> getProdSearch(ProdDTO prodDTO) {
-//		System.out.println("ProService getProdSearch()");
-//		return prodDAO.getProdSearch(prodDTO);
-//	}
-//	
-//	// 품목관리 총 갯수
-////	@Override
-////	public int countProd() {
-////		return prodDAO.countProd();
-////	}
-//
-//	// 품목관리 목록 불러오기
-//public List<ProdDTO> getProdList(ProdDTO prodDTO) throws Exception {
-//	return prodDAO.getProdList(prodDTO);
-//}
-//
-//// 품목관리 검색리스트 갯수 불러오기
-////	@Override
-////	public int countProd(ProdDTO prodDTO) {
-////		return prodDAO.countProd(prodDTO);
-////	}
 
 }

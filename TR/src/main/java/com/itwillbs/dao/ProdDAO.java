@@ -29,17 +29,12 @@ public class ProdDAO {
 	}
 	
 	 public void productDelete(List<String> checked) throws Exception {
-			
-
 			Iterator<String> it = checked.iterator();
 			int result = 0;
-
 			while (it.hasNext()) {
 				String prodCode = it.next();
 				result += sqlSession.delete(namespace + ".productDelete", prodCode);
 			}
-
-
 		}
 	
 	public void insert(ProdDTO prodDTO) {
@@ -60,11 +55,6 @@ public class ProdDAO {
 
 		return sqlSession.selectList(namespace+".getSearch", data);
 	}
-//	
-//	//품목관리 리스트 불러오기
-//	public List<ProdDTO> getProdList(ProdDTO prodDTO) {
-//		return sqlSession.selectList(namespace+".getProdList", prodDTO);
-//	}
 
 	public ProdDTO getProd(String prodCode) {
 		
@@ -86,9 +76,6 @@ public class ProdDAO {
 	public Integer getMaxNum(String code) {
 		return sqlSession.selectOne(namespace+".getMaxNum",code);
 	}
-	
-	
-
 
 }
 
