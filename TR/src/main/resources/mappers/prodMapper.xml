@@ -6,8 +6,6 @@
 <mapper namespace="com.itwillbs.mappers.proMapper">
 
 
-
-
 	<insert id="insert">
 		insert into product
 		values (#{prodCode}, #{prodName},
@@ -60,6 +58,7 @@
 		limit #{startRow}, #{pageSize}
 	</select>
 	
+	
 	<select id="getSearchcount" resultType="java.lang.Integer">
 		select count(p.prodCode)
 		FROM product p
@@ -83,8 +82,8 @@
 			</if>
 		</where>
 		order by p.prodCode desc
-		<!-- limit #{start},#{cntPerPage} -->
 	</select>
+
 
 	<!-- 페이징 -->
 	<select id="getProdCount" resultType="java.lang.Integer">
@@ -94,15 +93,15 @@
 
 	<delete id="productDelete">
 		DELETE FROM product WHERE prodCode = #{prodCode}
-
-
 	</delete>
+
 
 	<select id="getProd" resultType="com.itwillbs.domain.ProdDTO">
 		select * from product
 		where
 		prodCode = #{prodCode}
 	</select>
+
 
 	<update id="updateProd">
 		update product
@@ -117,11 +116,13 @@
 		prodCode = #{prodCode}
 	</update>
 	
+	
 	<select id="getMaxNum" resultType="java.lang.Integer">
 		SELECT MAX(CAST(SUBSTRING(prodCode,3) AS SIGNED)) AS max_num
 		FROM product
 		WHERE prodCode LIKE CONCAT(#{code}, '%')
 	</select>
+	
 	
 </mapper>
 
