@@ -9,7 +9,11 @@
 <link href="${pageContext.request.contextPath }/resources/css/outProductContent.css"
 	rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<title>Insert title here</title>
+
+<!-- SweetAlert  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<title>출고 상세 페이지</title>
 </head>
 <body>
 

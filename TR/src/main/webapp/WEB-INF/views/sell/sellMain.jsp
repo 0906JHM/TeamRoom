@@ -14,6 +14,7 @@
 <!-- side.jsp css-->
 <link href="${pageContext.request.contextPath }/resources/css/side.css"	rel="stylesheet" type="text/css">
 <!-- 본문 css -->
+<link href="${pageContext.request.contextPath }/resources/css/outProduct.css">
 <link href="${pageContext.request.contextPath }/resources/css/product.css" rel="stylesheet" type="text/css">
 
 <script	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
@@ -71,20 +72,21 @@
 			</form>
 		</div>
 		<br>
-		<!------------------------------------------------------- 추가, 수정, 삭제, 엑셀 버튼 ---------------------------------------------------->
+		<!------------------------------------------------------- 추가, 수정, 삭제 버튼 ---------------------------------------------------->
 		<div class="buttons">
 			<button id="add" onclick="openSellAdd()">추가</button>
 			<button id="delete">삭제</button>
-			<button id="excelDownload">엑셀⬇️</button>
 		</div>
 		
-		<!------------------------------------------------------- 수주 상태 검색---------------------------------------------------->
+		<!------------------------------------------------------- 수주 상태 검색, 엑셀---------------------------------------------------->
 		<div id="buttons">
 			<input type="button" class="buttons highlighted" value="전체" id="allButton">
     		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
     		<input type="button" class="buttons " value="중간납품" id="interim_deliveryButton">
     		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
+    		<input type="button" id="exportButton" value="엑셀">
 		</div>
+
 		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
 		<small>총 ${sellPageDTO.count}건</small>
 
@@ -441,15 +443,15 @@ function openSellDetail(sellCode) {
 //         }
            
         document.addEventListener('DOMContentLoaded', ()=> {
-    		excelDownload.addEventListener('click', exportExcel);
+        	exportButton.addEventListener('click', exportExcel);
        	});
     });
 
     <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
     $(document).ready(function () {
 		//엑셀
-			 const excelDownload = document.querySelector('#excelDownload');
-					excelDownload.addEventListener('click', exportExcel);
+			 const exportButton = document.querySelector('#exportButton');
+			 exportButton.addEventListener('click', exportExcel);
 					function exportExcel() {
 					    // 1. 워크북 생성
 					    var wb = XLSX.utils.book_new();

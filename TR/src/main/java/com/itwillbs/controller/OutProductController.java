@@ -51,12 +51,12 @@ public class OutProductController {
 
 //	페이지 세부정보 에서 출고처리 버튼
 	@PostMapping("/outProductUpdate")
-	public void outProductUpdate(OutProductDTO outProductDTO, HttpServletResponse response) {
+	public void outProductUpdate(OutProductDTO outProductDTO,HttpServletRequest request, HttpServletResponse response) {
 //		디비에 저장된 outProductDTO2 		업데이트된 내용이 들어있는 outProductDTO
 		OutProductDTO outProductDTO2 = outProductService.outProductContent(outProductDTO.getOutCode());
 
 //		저장된 재고의 개수와 출고할 개수를 비교해서 실행
-		if (outProductDTO2.getWhseCount() >= outProductDTO.getOutCount()) {
+		if (outProductDTO2.getWhseCount() >= outProductDTO.getOutCount() && outProductDTO.getOutCount() != 0) {
 			// sellState 변경
 			if (outProductDTO.getOutCount() < outProductDTO.getSellCount()) {
 				if (outProductDTO.getOutCount() == 0) {
@@ -121,9 +121,12 @@ public class OutProductController {
 				out = response.getWriter();
 				out.println("<script>");
 				out.println("alert('재고의 수가 부족합니다.');");
+				out.println("window.location.href = contextPath + '/outProduct/outProductContent?outCode=" + outProductDTO.getOutCode() + "';");
 				out.println("window.opener.location.reload();");
 				out.println("window.close();");
 				out.println("</script>");
+
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
