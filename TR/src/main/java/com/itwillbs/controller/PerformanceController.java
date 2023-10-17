@@ -50,6 +50,17 @@ public class PerformanceController {
 		
 		          //검색어 가져오기
 				String search = request.getParameter("search");
+				String lineCode= request.getParameter("lineCode");
+				String prodCode=request.getParameter("prodCode");
+
+				
+				
+				
+				
+				perfDTO.setLineCode(lineCode);
+				perfDTO.setProdCode(prodCode);
+				
+				
 				
 				// <----------------------------------->
 				// 한 화면에 보여줄 글 개수 
@@ -70,20 +81,25 @@ public class PerformanceController {
 				pageDTO.setPageNum(pageNum);
 				pageDTO.setCurrentPage(currentPage);
 				
-
+                   int count;
 				
 				List<PerformanceDTO> perflist;
-				int count;
+				
 			//	if (perfDTO.getLineCode() != null || perfDTO.getProdCode() != null || perfDTO.getPerfDate() != null)
-				if (perfDTO.getLineCode() != null || perfDTO.getProdCode() != null  ) {
+				if (perfDTO.getLineCode() != null || perfDTO.getProdCode() != null ) {
 				perflist = perfService.getSearch(perfDTO, pageDTO);
 				count = perfService.getSearchcount(perfDTO);
-			
+				
+				System.out.println(" IF문 perfList: +++++++++++++ " + perflist);
+				System.out.println(" IF문 perfcount: +++++++++++++ " + count);
 				}
 				else {
 					perflist = perfService.getperflist(pageDTO);
 					count = perfService.getperfCount(pageDTO);
+					System.out.println("else문 perfList++++++++++++++++" + perflist);
+					System.out.println("else문 perfcount+++++++++++++++"+ count);
 				}
+			
 
 				
 				int pageBlock = 5;
@@ -239,7 +255,3 @@ public String perfupdatePro(PerformanceDTO perfDTO) {
 
 }
 
-
-
-
-	

@@ -46,7 +46,7 @@ System.out.println("BoardController list()");
 		
 		// <----------------------------------->
 		// 한 화면에 보여줄 글 개수 
-		int pageSize = 10;
+		int pageSize = 5;
 		
 		// 현 페이지 번호 가져오기
 		String pageNum=request.getParameter("pageNum");
@@ -71,15 +71,16 @@ System.out.println("BoardController list()");
 		if (clientDTO.getClientCode() != null || clientDTO.getClientName() != null || clientDTO.getClientCompany() != null) {
 		clientList = clientService.getSearch(clientDTO, pageDTO);
 		count = clientService.getSearchcount(clientDTO);
-	
+		System.out.println("ClientController 널이 아님");
 		}
 		else {
 			clientList = clientService.getclientList(pageDTO);
 			count = clientService.getclientCount(pageDTO);
+			System.out.println("ClientController 널임");
 		}
 
 		
-		int pageBlock = 10;
+		int pageBlock = 5;
 		// 시작하는 페이지 번호
 		int startPage = (pageDTO.getCurrentPage()-1)/pageBlock*pageBlock+1;
 		// 끝나는 페이지 번호
@@ -109,7 +110,7 @@ System.out.println("BoardController list()");
 	    
 		
 		model.addAttribute("clientList",clientList);
-		
+		model.addAttribute("pageDTO",pageDTO);
 		return "client/client";
 		
 		

@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/perf.css">
 
@@ -19,12 +21,12 @@
 	<script src="https://kit.fontawesome.com/25ef23e806.js"
 	crossorigin="anonymous"></script>
 	
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/datepicker.css"> 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 	
 </head>
 <body>
@@ -46,7 +48,7 @@
 
 
 <!-- <div class="perfcd1">
- 실적일: <input type="text" id="workdate1" name="perfDate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="perfDate2	" class="form-control" placeholder="날짜 선택" readonly>
+ 실적일: <input type="text" id="workdate1" name="perfDate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="perfDate2" class="form-control" placeholder="날짜 선택" readonly>
 </div> -->
 
 
@@ -137,9 +139,23 @@
 		 <div class="chart">
 		 <h2> 생산실적 현황 </h2>
 		 <div class="chartbody">
-		 <canvas id="donutChart" width="400px" height="400px"></canvas>
+		 <div class="chart1">
+		 <canvas id="donutChart" width="400px" height="400px"></canvas><!-- totalamount -->
 		 
+		 </div>
 		 
+		 <div class="chart2">
+		 <canvas id="donutChart2" width="400px" height="400px"></canvas> <!-- - totalfair -->
+		 </div>
+		 
+		 <div class="chart3">
+		  <canvas id="donutChart3" width="400px" height="400px"></canvas> <!--  totaldefect -->
+		 </div>
+		
+		 
+
+		 
+	
 		 </div> <!--  chartbody -->
 		 </div> <!--  chart -->
 
@@ -189,35 +205,69 @@ document.querySelectorAll('.magnifier').forEach(function(magnifier) {
           data: JSON.stringify(lineCode), // 라인 코드 리스트를 JSON 문자열로 변환하여 전송
           success: function(data) {
               console.log(data);
+              console.log("데이터 받음: ", data); // 데이터를 로그에 출력
+
               // 파이차트 그리는 함수 호출 등으로 처리 가능
-           // 도넛 차트 생성 및 표시
-              createDonutChart(data);
+             // 도넛 차트 생성 및 표시
+             
+              var donutChartLabels = data.map(function(item) {
+        return item.lineCode;
+    });
+              
+             
+           // 각 차트에 대한 라벨과 데이터 분리
+        var donutChartLabels = data.map(function(item) {
+            return item.lineCode;
+        });
+
+        var totalAmountData = data.map(function(item) {
+            return item.totalAmount;
+        });
+
+        var totalFairData = data.map(function(item) {
+            return item.totalFair;
+        });
+
+        var totalDefectData = data.map(function(item) {
+            return item.totalDefect;
+        });
+
+        // 각 차트에 대한 도넛 차트 생성
+        createDonutChart(totalAmountData, donutChartLabels, 'donutChart');
+        createDonutChart(totalFairData, donutChartLabels, 'donutChart2');
+        createDonutChart(totalDefectData, donutChartLabels, 'donutChart3');
           },
           error: function(error) {
               console.log("Error fetching data: " + error);
           }
+          
       });
       
-      function createDonutChart(data) {
-    	    // 도넛 차트를 그릴 때 사용할 데이터 배열과 라벨 배열을 초기화합니다.
+/*       function createDonutChart(data, labels, chartId) { */
+/*     	    // 도넛 차트를 그릴 때 사용할 데이터 배열과 라벨 배열을 초기화합니다.
     	    var chartData = [];
-    	    var labels = [];
+    	   
 
-    	    // data 객체에서 필요한 데이터를 추출하여 배열에 추가합니다.
     	    data.forEach(function(item) {
-    	        // 각 라인 코드에 대한 데이터를 추출하여 배열에 추가합니다.
-    	        chartData.push(item.totalAmount);  // 실적 수량 데이터를 사용하려면 item.totalAmount를 수정하세요.
-    	        labels.push(item.lineCode);
-    	    });
+    	        chartData.push(item);  // 여기에서 실적 수량, 양품 수량 또는 불량 수량 데이터를 가져옵니다.
+    	        
+    	    }); */
+    	    
+    	    
 
     	    // Chart.js를 사용하여 도넛 차트를 생성합니다.
-    	    var ctx = document.getElementById('donutChart').getContext('2d');
+    	     function createDonutChart(data, labels, chartId) {
+    	    	console.log("도넛 차트 데이터: ", data);
+    	    	console.log("도넛 차트 라벨: ", labels);
+    	    	 console.log("도넛 차트 ID: ", chartId); // 이 줄을 추가하여 chartId 출력
+    	    	
+    	    var ctx = document.getElementById(chartId).getContext('2d');
     	    var donutChart = new Chart(ctx, {
     	        type: 'doughnut', // 도넛 차트 유형을 설정합니다.
     	        data: {
     	            labels: labels, // 라벨 배열을 설정합니다.
     	            datasets: [{
-    	                data: chartData, // 차트 데이터 배열을 설정합니다.
+    	                data: data, // 차트 데이터 배열을 설정합니다.
     	                backgroundColor: ['red', 'green', 'blue'], // 차트 데이터에 대한 배경색을 설정합니다.
     	                borderWidth: 1 // 차트 데이터에 대한 테두리 두께를 설정합니다.
     	            }]

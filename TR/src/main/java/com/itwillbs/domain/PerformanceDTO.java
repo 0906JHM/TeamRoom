@@ -23,4 +23,10 @@ public class PerformanceDTO {
 	private String perfDefectmemo;
 	private String perfMemo;
 	private String perfStatus;
+	
+	//도넛차트 변수 추가 
+	private int totalAmount;
+	private int totalFair;
+	private int totalDefect;
+	
 }

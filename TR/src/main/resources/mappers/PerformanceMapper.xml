@@ -31,7 +31,7 @@
 
 			<if test="prodCode !=''">
 				and prodCode like concat ('%', #{prodCode}, '%')
-			</if>
+			</if>			 
 		</where>
 		order by perfCode desc
 		limit #{startRow}, #{pageSize}
@@ -41,12 +41,12 @@
 		SELECT count(#{perfCode})
 		FROM performance
 		<where>
-			<if test="lineCode != ''">
+			<if test="lineCode !=''">
 				lineCode like concat ('%', #{lineCode}, '%')
 			</if>
 
-			<if test="prodCode != ''">
-				and prodCode like concat ('%' ,#{prodCode}, '%')
+			<if test="prodCode !=''">
+				and prodCode like concat ('%', #{prodCode}, '%')
 			</if>
 		</where>
 		order by perfCode desc
@@ -65,7 +65,7 @@
         SUM(perfDefect) AS totalDefect
     FROM 
         performance
-    WHERE 
+    Where
         lineCode IN 
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item}
