@@ -180,7 +180,8 @@ public class ProdController {
 		System.out.println("ProdController memotypePro()");
 		System.out.println(prodDTO);
 		prodService.insertProdMemo(prodDTO);
-		return ResponseEntity.ok("<script>window.close();</script>");
+		return ResponseEntity.ok("<script>window.onunload = function() { if (window.opener && !window.opener.closed) { window.opener.location.reload(); } }; window.close();</script>");
+
 
 	}// prodMemotypePro
 
@@ -206,6 +207,7 @@ public class ProdController {
 		System.out.println(prodDTO);
 		prodService.updateProdMemo(prodDTO);
 		// 창을 닫기 위한 스크립트를 반환합니다.
-		return ResponseEntity.ok("<script>window.close();</script>");
+		return ResponseEntity.ok("<script>window.onunload = function() { if (window.opener && !window.opener.closed) { window.opener.location.reload(); } }; window.close();</script>");
+
 	}// memoUpdatePro
 }

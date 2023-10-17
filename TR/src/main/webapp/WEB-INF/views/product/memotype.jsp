@@ -46,7 +46,10 @@ String memotype = request.getParameter("memotype");
    
 </div>
 <!---------------------------------------------- javascript ---------------------------------------------->
-	
+<script type="text/javascript">
+
+
+</script>
 
 
 </body>
