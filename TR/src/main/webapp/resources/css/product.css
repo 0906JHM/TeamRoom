@@ -58,6 +58,14 @@ button {
 	font: 500 20px/20px "Inter", sans-serif
 }
 
+button#excelDownload {
+    align-items: center;
+    /* font-size: 18px; */
+    /* text-align: center; */
+    justify-content: center;
+    margin-right: 18px;
+}
+
 table {
 	border: 1px solid rgba(221, 221, 221, 0.78);
 	margin: 0 auto;
@@ -114,8 +122,8 @@ table tbody tr:nth-child(odd) {
 	display: flex;
 	justify-content: flex-end;
 	gap: 1%;
-	padding-right: 2%;
-	margin-top: 15px;
+/* 	padding-right: 2%; */
+/* 	margin-top: 15px; */
 }
 
 #searchform {
