@@ -74,7 +74,7 @@
 			<button id="delete">삭제</button>
 			<!-- 			<button id="cancel">취소</button> -->
 			<!-- 			<button id="save">저장</button> -->
-			<button id="excelDownload" class="buttons">엑셀⬇️</button>
+			<button id="excelDownload" class="buttons">엑셀⬇</button>
 		</div>
 		<h3 style="padding-left: 1%;">
 			목록 <small>총 ${pageDTO.count}건</small>

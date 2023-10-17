@@ -51,7 +51,9 @@
     </div>
     <div class="form-group">
     <p>창고명</p>
-    <input type="text" name="whseCode"  placeholder="창고를 선택해 주세요.">
+    <input type="hidden" name="whseCode" id="whseCode" onclick="searchItem('whse','whseCode9999')">
+    <input type="text" name="whseCode" id="whseName9999"  placeholder="창고를 선택해 주세요."
+    onclick="searchItem('whse','whseCode9999')">
     </div>
     <div class="form-group">
     <p>매출단가</p>
