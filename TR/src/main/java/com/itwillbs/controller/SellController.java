@@ -185,6 +185,7 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 		
 		int result = sellService.sellDelete(checked);
 		calendarService.deleteSellCalendar(checked);
+		outProductService.deleteSell(checked);
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
 	    } else {

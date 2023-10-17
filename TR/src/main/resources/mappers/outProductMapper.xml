@@ -541,4 +541,9 @@
 
 		ORDER BY o.outCode DESC
 	</select>
+	
+	<delete id="deleteSell">
+		DELETE FROM outProduct
+		WHERE sellCode = #{code}
+	</delete>
 </mapper>

@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +93,17 @@ public class OutProductDAO {
 		} else {
 			System.out.println("나머지용");
 			return sqlSession.selectList(namespace + "getExcelListSearch", outProductDTO);
+		}
+	}
+
+	public void deleteSell(List<String> checked) {
+
+		Iterator<String> it = checked.iterator();
+
+		while (it.hasNext()) {
+			String code = it.next();
+			System.out.println("삭제할 코드 값 : " + code);
+			sqlSession.delete(namespace + "deleteSell", code);
 		}
 	}
 
