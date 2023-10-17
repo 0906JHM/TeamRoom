@@ -33,6 +33,7 @@ import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementList;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
+import com.itwillbs.domain.WarehouseDTO;
 import com.mysql.cj.Session;
 
 @Controller
@@ -64,6 +65,9 @@ public class OpenlistController {
 		}
 		else if (type.equals("sell")) {
 			return "redirect:/search/sell?input=" + input;
+		}
+		else if (type.equals("whes")) {
+			return "redirect:/search/whes?input=" + input;
 		}
 
 		return "";
@@ -268,6 +272,54 @@ public class OpenlistController {
 				  model.addAttribute("paging", pdto);
 				  logger.debug(" 모든 리스트 가져감"); }
 				  return "openlist/selllist";
+				  
+				  }
+				  
+				  
+				// 창고목록 // http://localhost:8088/search/rawMaterial
+				  
+				  @RequestMapping(value = "/whes", method = RequestMethod.GET)
+				  public String whesGET(Model model, WarehouseDTO dto, RequirementPageDTO pdto,
+				  
+				  @RequestParam(value = "nowPage", required = false) String nowPage,
+				  
+				  @RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+				  
+				  @RequestParam(value = "input", required = false) String input) throws Exception {
+				  
+				  logger.debug("whesGET() 호출");
+				  List<WarehouseDTO> whes = new ArrayList<WarehouseDTO>();
+				  model.addAttribute("whes", whes);
+				  logger.debug("DTO : " + dto);
+				  
+				  if (dto.getWhseCode() != null || dto.getWhseName() != null) {
+				  
+				  logger.debug("if문 호출"); int total = service.countWhse(dto);
+				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
+				  List<WarehouseDTO> list = service.getWhseList(dto, pdto);
+				  model.addAttribute("whesList", list);
+				  model.addAttribute("paging", pdto);
+				  model.addAttribute("DTO", dto);
+				  logger.debug("pdto : " + pdto);
+				  logger.debug("DTO : " + dto);
+				  
+				  logger.debug("검색 리스트 가져감");
+				  
+				  // input 추가
+				  if (input != null && !input.equals("")) {
+				  model.addAttribute("input", input);
+				  logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@"); }
+				  }
+				  else {
+					  logger.debug("else문 호출");
+				  int total = service.countWhse();
+				  pdto = new RequirementPageDTO(total);
+				  logger.debug("pdto : " + pdto);
+				  List<WarehouseDTO> list = service.getWhseList(pdto);
+				  model.addAttribute("whesList", list);
+				  model.addAttribute("paging", pdto);
+				  logger.debug(" 모든 리스트 가져감"); }
+				  return "openlist/wheslist";
 				  
 				  }
 	// 소요량관리
