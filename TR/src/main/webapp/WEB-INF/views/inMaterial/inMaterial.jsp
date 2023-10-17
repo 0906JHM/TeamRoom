@@ -11,15 +11,18 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/outProduct.css"
 	rel="stylesheet" type="text/css">
-	
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- sweetalert -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <!-- SheetJS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
 <!--FileSaver [savaAs 함수 이용] -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <script type="text/javascript">
 <title>inMaterial</title>
 </head>
@@ -286,7 +289,7 @@
 							+ (data[i].stockCount ? data[i].stockCount : '-')
 							+ "</td>");
 					row.append("<td>"
-							+ (data[i].rawPrice ? data[i].rawPrice : '-')
+							+ (data[i].rawPrice ? formatCurrency(data[i].rawPrice) : '-')
 							+ "</td>");
 					row
 							.append("<td>"
@@ -561,6 +564,5 @@ var inNum = data[i].inNum;
 				}		
 		
 	</script>
-
 </body>
 </html>

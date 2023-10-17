@@ -49,13 +49,13 @@
 	<!-- 사이드바 -->
 
 	<div class="container">
-		<h2>제품 관리</h2>
+		<h2>품목관리</h2>
 		<hr>
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/product/list"
 				method="get" id="selectedProId">
-				<label>제품코드</label> <input type="text" placeholder="제품코드를 입력하세요."
-					name="prodCode"> <label>제품명</label> <input type="text"
+				<label>품번</label> <input type="text" placeholder="제품코드를 입력하세요."
+					name="prodCode"> <label>품명</label> <input type="text"
 					placeholder="제품명을 입력하세요." name="prodName"> <label>거래처명</label>
 				<input type="text" name="clientCompany" id="clientCompany9999"
 					readonly placeholder="거래처를 선택하세요."
@@ -389,6 +389,11 @@ const popupOpt = "top=60,left=140,width=720,height=600";
       var newWindow = window.open(url, '_blank', popupFeatures); 
   }
   
+//숫자를 ###,### 원 형식으로 포맷하는 함수
+	function formatCurrency(number) {
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+				+ '원';
+	}
 
 
 </script>

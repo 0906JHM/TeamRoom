@@ -37,7 +37,7 @@
 								class="sidea">소요량관리</a></li>
 							<li><a
 								href="${pageContext.request.contextPath }/product/list"
-								class="sidea">제품관리</a></li>
+								class="sidea">품목관리</a></li>
 							<li><a
 								href="${pageContext.request.contextPath }/Rawmaterials/home"
 								class="sidea">원자재관리</a></li>
