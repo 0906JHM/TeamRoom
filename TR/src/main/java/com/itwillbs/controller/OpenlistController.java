@@ -66,8 +66,8 @@ public class OpenlistController {
 		else if (type.equals("sell")) {
 			return "redirect:/search/sell?input=" + input;
 		}
-		else if (type.equals("whes")) {
-			return "redirect:/search/whes?input=" + input;
+		else if (type.equals("whse")) {
+			return "redirect:/search/whse?input=" + input;
 		}
 
 		return "";
@@ -278,8 +278,8 @@ public class OpenlistController {
 				  
 				// 창고목록 // http://localhost:8088/search/rawMaterial
 				  
-				  @RequestMapping(value = "/whes", method = RequestMethod.GET)
-				  public String whesGET(Model model, WarehouseDTO dto, RequirementPageDTO pdto,
+				  @RequestMapping(value = "/whse", method = RequestMethod.GET)
+				  public String whseGET(Model model, WarehouseDTO dto, RequirementPageDTO pdto,
 				  
 				  @RequestParam(value = "nowPage", required = false) String nowPage,
 				  
@@ -287,9 +287,9 @@ public class OpenlistController {
 				  
 				  @RequestParam(value = "input", required = false) String input) throws Exception {
 				  
-				  logger.debug("whesGET() 호출");
-				  List<WarehouseDTO> whes = new ArrayList<WarehouseDTO>();
-				  model.addAttribute("whes", whes);
+				  logger.debug("whseGET() 호출");
+				  List<WarehouseDTO> whse = new ArrayList<WarehouseDTO>();
+				  model.addAttribute("whse", whse);
 				  logger.debug("DTO : " + dto);
 				  
 				  if (dto.getWhseCode() != null || dto.getWhseName() != null) {
@@ -297,7 +297,7 @@ public class OpenlistController {
 				  logger.debug("if문 호출"); int total = service.countWhse(dto);
 				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
 				  List<WarehouseDTO> list = service.getWhseList(dto, pdto);
-				  model.addAttribute("whesList", list);
+				  model.addAttribute("whseList", list);
 				  model.addAttribute("paging", pdto);
 				  model.addAttribute("DTO", dto);
 				  logger.debug("pdto : " + pdto);
@@ -316,10 +316,10 @@ public class OpenlistController {
 				  pdto = new RequirementPageDTO(total);
 				  logger.debug("pdto : " + pdto);
 				  List<WarehouseDTO> list = service.getWhseList(pdto);
-				  model.addAttribute("whesList", list);
+				  model.addAttribute("whseList", list);
 				  model.addAttribute("paging", pdto);
 				  logger.debug(" 모든 리스트 가져감"); }
-				  return "openlist/wheslist";
+				  return "openlist/whselist";
 				  
 				  }
 	// 소요량관리
