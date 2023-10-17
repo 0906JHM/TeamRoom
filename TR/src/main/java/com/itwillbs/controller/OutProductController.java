@@ -56,7 +56,7 @@ public class OutProductController {
 		OutProductDTO outProductDTO2 = outProductService.outProductContent(outProductDTO.getOutCode());
 
 //		저장된 재고의 개수와 출고할 개수를 비교해서 실행
-		if (outProductDTO2.getWhseCount() >= outProductDTO.getOutCount()) {
+		if (outProductDTO2.getWhseCount() >= outProductDTO.getOutCount() && outProductDTO.getOutCount() != 0) {
 			// sellState 변경
 			if (outProductDTO.getOutCount() < outProductDTO.getSellCount()) {
 				if (outProductDTO.getOutCount() == 0) {
