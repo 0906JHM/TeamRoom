@@ -45,8 +45,8 @@
 			</div>
 			<div class="form-group">
 				<p>거래처명</p>
-				<input type="hidden" name="clientCode" id="clientCode9999" onclick="searchItem('client','clientCode9999')" value="${prodDTO.clientCode}">
-				<input type="text" name="clientCompany" id="clientCompany9999" readonly	onclick="searchItem('client','clientCode9999')"
+				<input type="hidden" name="clientCode" id="clientCode9999" onclick="searchItem('sellclient','clientCode9999')" value="${prodDTO.clientCode}">
+				<input type="text" name="clientCompany" id="clientCompany9999" readonly	onclick="searchItem('sellclient','clientCode9999')"
 					 style="cursor: pointer;"
 					value="${prodDTO.clientCompany}">
 				<%--     <input type="text" name="clientCode" value="${prodDTO.clientCode}" style="cursor: pointer;"> --%>

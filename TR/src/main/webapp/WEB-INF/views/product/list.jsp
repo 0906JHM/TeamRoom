@@ -59,7 +59,7 @@
 					placeholder="제품명을 입력하세요." name="prodName"> <label>거래처명</label>
 				<input type="text" name="clientCompany" id="clientCompany9999"
 					readonly placeholder="거래처를 선택하세요."
-					onclick="searchItem('client','clientCode9999')">
+					onclick="searchItem('sellclient','clientCode9999')">
 				<!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
 				<button type="submit">조회</button>
 			</form>
