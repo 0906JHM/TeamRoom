@@ -56,10 +56,10 @@
 			<br>
 			<label>비고</label>
 			<br>
-			<textarea id="sellMemo" readonly="readonly" style="width: 350px; height: 250px;">${sellDTO.sellMemo}</textarea>
+			<textarea id="sellMemo" readonly="readonly" style="width: 400px; height: 150px;">${sellDTO.sellMemo}</textarea>
 			<br>
 			
-			<c:if test="${sessionScope.id == sellDTO.sellEmpId}">
+			<c:if test="${sessionScope.empId == sellDTO.sellEmpId}">
 				<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'">수정</button>
 			</c:if>
 			<button type="button" onclick="window.close()">닫기</button>

@@ -92,6 +92,10 @@ public class SellDAO {
 			sqlSession.update(namespace + ".updateSellMemo", sellDTO);
 		}// updateSellMemo
 
+		public List<SellDTO> getSellListSearch(SellDTO sellDTO) {
+			return sqlSession.selectList(namespace + ".getSellListSearch", sellDTO);
+		}
+
 
 
 

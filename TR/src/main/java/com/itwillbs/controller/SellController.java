@@ -280,7 +280,60 @@ public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellMemoUpdatePro
 
+@PostMapping("/sellMainSearch")
+public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sellDTO) {
+	
+	String daterange1 = request.getParameter("daterange1");
+	String daterange2 = request.getParameter("daterange2");
+	
+	if(!("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null)) {
+		String sellDate =  daterange1.split(" - ")[0].replaceAll("/", "-");
+		String sellEndDate = daterange1.split(" - ")[1].replaceAll("/", "-");
+		sellDTO.setSellDate(sellDate);
+		sellDTO.setSellEndDate(sellEndDate);
+	}
+	if(!("".equals(daterange2) || "null".equals(daterange2) || daterange2 == null)) {
+		String sellDuedate =  daterange2.split(" - ")[0].replaceAll("/", "-");
+		String sellEndDuedate = daterange2.split(" - ")[1].replaceAll("/", "-");
+		sellDTO.setSellDuedate(sellDuedate);
+		sellDTO.setSellEndDuedate(sellEndDuedate);
+	}
+	if("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null) {
+		sellDTO.setSellDate("");
+		sellDTO.setSellEndDate("");
+	}
+	if("".equals(daterange2) || "null".equals(daterange2) || daterange2 == null) {
+		sellDTO.setSellDuedate("");
+		sellDTO.setSellEndDuedate("");
+	}
+	if("".equals(sellDTO.getProdCode()) || "null".equals(sellDTO.getProdCode()) || sellDTO.getProdCode() == null) {
+		System.out.println("제품 변경");
+		sellDTO.setProdCode("");
+	}
+	if("".equals(sellDTO.getClientCode()) || "null".equals(sellDTO.getClientCode()) || sellDTO.getClientCode() == null) {
+		System.out.println("거래처 변경");
+		sellDTO.setClientCode("");
+	}
+	if("".equals(sellDTO.getSellCode()) || "null".equals(sellDTO.getSellCode()) || sellDTO.getSellCode() == null) {
+		System.out.println("수주코드 변경");
+		sellDTO.setSellCode("");
+	}
+	
+	
+	System.out.println(sellDTO);
 
+	List<SellDTO>sellList= sellService.getSellListSearch(sellDTO);
+	
+
+	// 글 목록
+	model.addAttribute("sellList", sellList);// ("이름", 값)
+	// 페이지
+	
+	// center/notice.jsp
+	// WEB-INF/views/center/notice.jsp
+	return "sell/sellMain";
+	
+}
 	
 	
 	

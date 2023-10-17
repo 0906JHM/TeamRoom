@@ -46,11 +46,11 @@
      			
      			var number = isPop.match(/\d+/);
      			if(number !=null){
-     			$('#clientCompany'+number, opener.document).val(clientCompany);
-     			$('#clientCode'+number, opener.document).val(clientCode);
+     			$('#sellclientCompany'+number, opener.document).val(clientCompany);
+     			$('#sellclientCode'+number, opener.document).val(clientCode);
      			} else {
-     			$('#clientCompany', opener.document).val(clientCompany);
-     			$('#clientCode', opener.document).val(clientCode);
+     			$('#sellclientCompany', opener.document).val(clientCompany);
+     			$('#sellclientCode', opener.document).val(clientCode);
      			}
      			
          		window.close();

@@ -91,6 +91,10 @@ public class SellService {
 		sellDAO.updateSellMemo(sellDTO);
 	}//updateSellMemo
 
+	public List<SellDTO> getSellListSearch(SellDTO sellDTO) {
+		return sellDAO.getSellListSearch(sellDTO);
+	}
+
 	
 
 

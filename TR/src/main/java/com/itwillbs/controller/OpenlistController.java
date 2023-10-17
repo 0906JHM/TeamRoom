@@ -70,10 +70,10 @@ public class OpenlistController {
 			return "redirect:/search/whse?input=" + input;
 		}
 		else if (type.equals("buyclient")) {
-			return "redirect:/search/client?input=" + input;
+			return "redirect:/search/buyclient?input=" + input;
 		}
 		else if (type.equals("sellclient")) {
-			return "redirect:/search/client?input=" + input;
+			return "redirect:/search/sellclient?input=" + input;
 		}
 
 		return "";
@@ -224,7 +224,7 @@ public class OpenlistController {
 		  model.addAttribute("clientList", list);
 		  model.addAttribute("paging", pdto);
 		  logger.debug(" 모든 리스트 가져감"); }
-		  return "openlist/buyclientlist";
+		  return "openlist/clientlist";
 		  
 		  }
 		  
@@ -264,14 +264,14 @@ public class OpenlistController {
 		  }
 		  else {
 			  logger.debug("else문 호출");
-		  int total = service.sellcountClient();
+		  int total = service.buycountClient();
 		  pdto = new RequirementPageDTO(total);
 		  logger.debug("pdto : " + pdto);
-		  List<ClientDTO> list = service.sellgetClientList(pdto);
+		  List<ClientDTO> list = service.buygetClientList(pdto);
 		  model.addAttribute("clientList", list);
 		  model.addAttribute("paging", pdto);
 		  logger.debug(" 모든 리스트 가져감"); }
-		  return "openlist/sellclientlist";
+		  return "openlist/buyclientlist";
 		  
 		  }
 		  
@@ -293,9 +293,9 @@ public class OpenlistController {
 		  
 		  if (dto.getClientCode() != null || dto.getClientCompany() != null) {
 		  
-		  logger.debug("if문 호출"); int total = service.countClient(dto);
+		  logger.debug("if문 호출"); int total = service.sellcountClient(dto);
 		  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
-		  List<ClientDTO> list = service.getClientList(dto, pdto);
+		  List<ClientDTO> list = service.sellgetClientList(dto, pdto);
 		  model.addAttribute("clientList", list);
 		  model.addAttribute("paging", pdto);
 		  model.addAttribute("DTO", dto);
@@ -311,14 +311,14 @@ public class OpenlistController {
 		  }
 		  else {
 			  logger.debug("else문 호출");
-		  int total = service.countClient();
+		  int total = service.sellcountClient();
 		  pdto = new RequirementPageDTO(total);
 		  logger.debug("pdto : " + pdto);
-		  List<ClientDTO> list = service.getClientList(pdto);
+		  List<ClientDTO> list = service.sellgetClientList(pdto);
 		  model.addAttribute("clientList", list);
 		  model.addAttribute("paging", pdto);
 		  logger.debug(" 모든 리스트 가져감"); }
-		  return "openlist/clientlist";
+		  return "openlist/sellclientlist";
 		  
 		  }
 		  
