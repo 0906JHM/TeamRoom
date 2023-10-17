@@ -26,5 +26,8 @@ public class SellDTO {
 	private String prodPrice;//제품단가 1ea
 	private String clientCompany;
 
+	private String sellEndDate;
+	private String sellEndDuedate;
+	
 	
 }//class

@@ -20,17 +20,18 @@
 <script	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- J쿼리 호출 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../resources/js/scripts.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <!-- 엑셀 다운로드 -->
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <!-- 수주일자 기간선택 -->
-<link href="${pageContext.request.contextPath}/resources/css/daterange.css"	rel="stylesheet" type="text/css">
+
+
+
+
+
 </head>
 
 <body>
@@ -44,10 +45,10 @@
 	
 		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
 		<div id="searchform">
-			<form action="${pageContext.request.contextPath}/sell/sellMain"
-				method="get" id="selectedProId">
+			<form action="${pageContext.request.contextPath}/sell/sellMainSearch"
+				method="post" id="selectedProId">
 
-				<label>수주 코드</label> <input type="text" id="sellCode"> 
+				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode"> 
 				
 				<label>거래처</label> 
 	        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly >
@@ -62,12 +63,11 @@
 				<br>
 				
 				<label for="startDate">수주 일자</label> 
-				<input type="text" name="daterange" id="sellDate" value=""> 
-				
-				<label for="startDate">납기 일자</label>
-				<input type="text" name="daterange" id="sellDuedate"  value="">
-
-				<input type="button" value="조회" id="searchButton">
+	       		<input type="text" name="daterange1" value="" class="daterange" >
+				<label for="startDate">납기일자</label> 
+				<input type="text" name="daterange2" value="" class="daterange">
+				<input type="hidden" name="sellState" value="">
+				<input type="submit" value="조회" id="searchButton">
 				<input type="button" value="취소" id="resetButton">
 			</form>
 		</div>
@@ -197,6 +197,35 @@
 
 
 	<!--################################################################ script ###################################################################-->
+	
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/daterange.css"	rel="stylesheet" type="text/css">
+	<script type="text/javascript">
+
+	$(function() {
+	    // 클래스로 daterangepicker 초기화
+	    $('.daterange').daterangepicker({
+	        autoUpdateInput: false,
+	        locale: {
+	            cancelLabel: 'Clear'
+	        }
+	    });
+
+	    $('.daterange').on('apply.daterangepicker', function(ev, picker) {
+	        $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+	    });
+
+	    $('.daterange').on('cancel.daterangepicker', function(ev, picker) {
+	        $(this).val('');
+	    });
+
+	    $('.cancelBtn').text('취소');
+	    $('.applyBtn').text('적용');
+	});
+
+</script>
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";
@@ -227,28 +256,7 @@ $('#select-list-all').click(function() {
 			}
 		});
 
-<!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
-$(function() {
-	$('input[name="daterange"]').daterangepicker({
-		autoUpdateInput : false,
-		locale : {
-			cancelLabel : 'Clear'
-		}
-	});
-	$('input[name="daterange"]').on(
-			'apply.daterangepicker',
-			function(ev, picker) {
-				$(this).val(
-						picker.startDate.format('YYYY/MM/DD') + ' - '
-								+ picker.endDate.format('YYYY/MM/DD'));
-			});
-	$('input[name="daterange"]').on('cancel.daterangepicker',
-			function(ev, picker) {
-				$(this).val('');
-			});
-	$('.cancelBtn').text('취소');
-	$('.applyBtn').text('적용');
-});
+
 <!--------------------------------------------------- 수주 삭제 ----------------------------------------->
 $('#delete').click(function(event){	
 
@@ -323,38 +331,7 @@ $('#delete').click(function(event){
 		}
 }); 
 });// end function
-
-/* <!--------------------------------------------------- 수주, 납기일자 기간선택 ----------------------------------------->
-$(document).ready(function() {
-    // Daterangepicker 초기화 및 설정
-    $('input[name="daterange"]').daterangepicker({
-        autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
-        }
-    });
-	$(function() {
-		$('input[name="daterange"]').daterangepicker({
-			autoUpdateInput : false,
-			locale : {
-				cancelLabel : 'Clear'
-			}
-		});
-		$('input[name="daterange"]').on(
-				'apply.daterangepicker',
-				function(ev, picker) {
-					$(this).val(
-							picker.startDate.format('YYYY/MM/DD') + ' - '
-									+ picker.endDate.format('YYYY/MM/DD'));
-				});
-		$('input[name="daterange"]').on('cancel.daterangepicker',
-				function(ev, picker) {
-					$(this).val('');
-				});
-		$('.cancelBtn').text('취소');
-		$('.applyBtn').text('적용');
-	});
- */
+ 
 <!--------------------------------------------------- 수주 추가 ----------------------------------------->
 
 function openSellAdd() {
@@ -502,57 +479,7 @@ function openSellDetail(sellCode) {
 	  });
     
    <!--------------------------------------------------- 상단 조건 검색 ----------------------------------------->
- //라인, 품목, 수주 검색
-// 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-// 	public String popUpGET(Model model, @RequestParam("type") String type, 
-// 			@RequestParam("input") String input) throws Exception {
-// 		logger.debug("@@@@@ CONTROLLER: popUpGET() 호출");
-// 		logger.debug("@@@@@ CONTROLLER: type = " + type);
-		
-		
-// 		if(type.equals("line")) {
-// 			return "redirect:/performance/line?input="+input;
-// 		}
-		
-// 		else if(type.equals("prod")) {
-// 			return "redirect:/performance/product?input="+input;
-// 		}
-		
-// 		else if(type.equals("client")) {
-// 			return "redirect:/person/Clients?input="+input;
-// 		}
-		
-// 		else if(type.equals("client_p")) {
-// 			String state = URLEncoder.encode("수주처", "UTF-8");
-// 			return "redirect:/person/Clients?input="+input+"&search_client_type="+state;
-// 		}
-// 		else if(type.equals("client_r")) {
-// 			String state = URLEncoder.encode("발주처", "UTF-8");
-// 			return "redirect:/person/Clients?input="+input+"&search_client_type="+state;
-// 		}
-		
-// 		else if(type.equals("wh")) {
-// 			return "redirect:/performance/warehouse?input="+input;
-// 		}
-		
-// 		else if(type.equals("wh_p")) {
-// 			String state = URLEncoder.encode("완제품", "UTF-8");
-// 			return "redirect:/performance/warehouse?input="+input+"&wh_dv="+state;
-// 		}
-// 		else if(type.equals("wh_r")) {
-// 			String state = URLEncoder.encode("원자재", "UTF-8");
-// 			return "redirect:/performance/warehouse?input="+input+"&wh_dv="+state;
-// 		}
-		
-// 		else if(type.equals("emp")) {
-// 			return "redirect:/person/empinfo?input="+input;
-// 		}
-		
-// 		else /* if(type.equals("order"))*/ {
-// 			return "redirect:/person/orderStatus?input="+input;
-// 		}
-		
-		
+	
 // 	} 
    /*
     광민님 검색코드
