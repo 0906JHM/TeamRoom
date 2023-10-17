@@ -256,6 +256,67 @@
 
 	</select>
 	
+	<!-- ////////////////////////////////////////////////////////////////
+
+	창고 총 게시글 갯수 출력 -->
+	<select id="countWhse" resultType="int">
+		SELECT COUNT(*)
+		FROM warehouse
+		
+	</select>
+	<!-- 창고관리 총 게시글 갯수 출력
+
+	창고 목록 불러오기 -->
+	<resultMap id="whse"
+		type="com.itwillbs.domain.WarehouseDTO">
+
+		<id property="whseCode" column="whseCode" />
+		<result property="whseName" column="whseName" />
+
+	</resultMap>
+
+	<select id="readWhse" resultMap="whse"
+		resultType="WarehouseDTO">
+		SELECT *
+		FROM warehouse
+		
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select>
+	
+	<!-- 창고 검색 게시글 갯수 출력 -->
+	<select id="countSearchWhse" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM warehouse
+		<where>
+			<if test="whseCode != ''">
+				whseCode like concat ('%', #{whseCode}, '%')
+			</if>
+			<if test="whseName != ''">
+				and whseName like concat ('%', #{whseName}, '%')
+			</if>
+		</where>
+	</select>
+	<!-- 창고 검색 게시글 갯수 출력
+
+	창고 검색리스트 불러오기 -->
+	<select id="readSearchWhse" parameterType="hashMap"
+		resultMap="whse" resultType="WarehouseDTO">
+		SELECT *
+		from warehouse
+		<where>
+			<if test="whseCode != ''">
+				whseCode like concat ('%', #{whseCode}, '%')
+			</if>
+			<if test="whseName != ''">
+				and whseName like concat ('%', #{whseName}, '%')
+			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	
 
 	<!-- //////////////////////////////////////////////////////////////// -->
 

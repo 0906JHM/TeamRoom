@@ -80,7 +80,7 @@ public class AjaxCalendarController {
 	                case "수주":
 	                    color = "#4b77a9";
 	                    break;
-	                case "발주":
+	                case "출고":
 	                    color = "#5f255f";
 	                    break;
 	                case "원자재 발주":

@@ -20,7 +20,7 @@
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount
 		whseCount
-		FROM outProduct o LEFT JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
 		LEFT JOIN clients c
@@ -52,7 +52,7 @@
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount
 		whseCount
-		FROM outProduct o LEFT JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
 		LEFT JOIN clients c
@@ -117,7 +117,7 @@
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount
 		whseCount
-		FROM outProduct o LEFT JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
 		LEFT JOIN clients c
@@ -168,7 +168,7 @@
 		prodPrice,
 		stockTestTest.whseCount whseCount
 		FROM outProduct o LEFT JOIN
-		sellTestTest s
+		sell s
 		ON o.sellCode = s.sellCode
 		LEFT JOIN clients c
 		ON
@@ -202,7 +202,7 @@
 		prodPrice,
 		stockTestTest.whseCount whseCount
 		FROM outProduct o LEFT JOIN
-		sellTestTest s
+		sell s
 		ON o.sellCode = s.sellCode
 		LEFT JOIN clients c
 		ON
@@ -271,7 +271,7 @@
 		prodPrice,
 		stockTestTest.whseCount whseCount
 		FROM outProduct o LEFT JOIN
-		sellTestTest s
+		sell s
 		ON o.sellCode = s.sellCode
 		LEFT JOIN clients c
 		ON
@@ -316,7 +316,7 @@
 		p.prodName prodName, p.prodPrice prodPrice,
 		stockTestTest.whseCount
 		whseCount
-		FROM outProduct o LEFT JOIN sellTestTest s
+		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
 		LEFT JOIN clients c
@@ -332,7 +332,7 @@
 	</select>
 
 	<update id="updateSellState">
-		UPDATE sellTestTest
+		UPDATE sell
 		SET sellState = #{sellState}
 		WHERE
 		sellCode = #{sellCode}
@@ -406,7 +406,7 @@
 		prodPrice,
 		stockTestTest.whseCount whseCount
 		FROM outProduct
-		o LEFT JOIN sellTestTest s
+		o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
 		LEFT JOIN clients c
@@ -441,7 +441,7 @@
 		prodPrice,
 		stockTestTest.whseCount whseCount
 		FROM outProduct
-		o LEFT JOIN sellTestTest s
+		o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
 		LEFT JOIN clients c
@@ -491,7 +491,7 @@
 		prodPrice,
 		stockTestTest.whseCount whseCount
 		FROM outProduct
-		o LEFT JOIN sellTestTest s
+		o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
 		LEFT JOIN clients c
