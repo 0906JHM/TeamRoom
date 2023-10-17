@@ -47,13 +47,15 @@
     <input type="hidden" name="clientCode" id="clientCode9999" onclick="searchItem('client','clientCode9999')" >
     <input type="text" name="clientCompany" id="clientCompany9999"  readonly
     	onclick="searchItem('client','clientCode9999')"
-    	 placeholder="거래처를 선텍해 주세요.">
+    	 placeholder="거래처를 선텍해 주세요."
+    	 style="cursor: pointer;">
     </div>
     <div class="form-group">
     <p>창고명</p>
-    <input type="hidden" name="whseCode" id="whseCode" onclick="searchItem('whse','whseCode9999')">
-    <input type="text" name="whseCode" id="whseName9999"  placeholder="창고를 선택해 주세요."
-    onclick="searchItem('whse','whseCode9999')">
+    <input type="hidden" name="whseCode" id="whseCode9999" onclick="searchItem('whse','whseCode9999')">
+    <input type="text" name="whseName" id="whseName9999"  placeholder="창고를 선택해 주세요."
+    onclick="searchItem('whse','whseCode9999')"
+    style="cursor: pointer;" readonly>
     </div>
     <div class="form-group">
     <p>매출단가</p>

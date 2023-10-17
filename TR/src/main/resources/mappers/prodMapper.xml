@@ -97,20 +97,22 @@
 
 
 	<select id="getProd" resultType="com.itwillbs.domain.ProdDTO">
-		select * from product
-		where
-		prodCode = #{prodCode}
+			select *
+			from product p
+		left join clients c
+		on c.clientCode = p.clientCode
+		left join warehouse w on p.whseCode = w.whseCode		
+		where p.prodCode = #{prodCode}
 	</select>
 
 
 	<update id="updateProd">
+
 		update product
 		set
 		prodName = #{prodName}, prodUnit = #{prodUnit},
-		prodSize = #{prodSize},
-		prodPerfume = #{prodPerfume},
-		clientCode = #{clientCode}, whseCode =
-		#{whseCode},
+		prodSize = #{prodSize},	prodPerfume = #{prodPerfume},
+		clientCode = #{clientCode}, whseCode = #{whseCode},
 		prodPrice = #{prodPrice}, prodMemo = #{prodMemo}
 		where
 		prodCode = #{prodCode}
