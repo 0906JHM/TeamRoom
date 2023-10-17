@@ -1,15 +1,12 @@
 package com.itwillbs.controller;
 
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.InMaterialDTO;
-import com.itwillbs.domain.OutProductDTO;
-import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.service.InMaterialService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,9 +34,6 @@ public class InMaterialController {
 	public String getInMaterialList(Model model) {
 
 		log.debug("호출한 곳");
-//			List<OutProductDTO> outProductList = outProductService.getOutProductList();
-//			
-//			model.addAttribute("outProductList", outProductList);
 
 		return "inMaterial/inMaterial";
 	}
@@ -71,9 +63,6 @@ public class InMaterialController {
 		
 		//재고 테이블에서 원자재코드로 입고한만큼 개수 증가
 		inMaterialService.updateWhseCount(inMaterialDTO);
-
-//		response.setContentType("text/html;charset=UTF-8");
-//		PrintWriter out;
 		
 		
 	}

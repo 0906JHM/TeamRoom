@@ -77,6 +77,22 @@ public class ProdDAO {
 		return sqlSession.selectOne(namespace+".getMaxNum",code);
 	}
 
+	public ProdDTO getProdMemo(String prodCode) {
+		System.out.println("ProdDAO getProdMemo()");
+		return sqlSession.selectOne(namespace+".getProdMemo", prodCode);
+	}//getProdMemo
+
+	public void insertProdMemo(ProdDTO prodDTO) {
+		System.out.println("ProdDAO insertProdMemo()");
+		System.out.println(prodDTO);
+		sqlSession.insert(namespace + ".insertProdMemo", prodDTO);
+	}// insertProdMemo
+
+	public void updateProdMemo(ProdDTO prodDTO) {
+		System.out.println("ProdDAO updateProdMemo()");
+		sqlSession.update(namespace + ".updateProdMemo", prodDTO);
+	}// updateProdMemo
+
 }
 
 

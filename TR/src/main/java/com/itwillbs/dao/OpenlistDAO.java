@@ -112,12 +112,28 @@ public class OpenlistDAO {
 			logger.debug(" 거래처목록 리스트 갯수 확인 ");
 			return sqlSession.selectOne(NAMESPACE + ".countClient");
 		}
+		public int buycountClient() {
+			logger.debug(" 거래처목록 리스트 갯수 확인 ");
+			return sqlSession.selectOne(NAMESPACE + ".buycountClient");
+		}
+		public int sellcountClient() {
+			logger.debug(" 거래처목록 리스트 갯수 확인 ");
+			return sqlSession.selectOne(NAMESPACE + ".sellcountClient");
+		}
 		
 		// 거래처목록 전체 리스트
 		
 		    public List<ClientDTO> readClientList(RequirementPageDTO pdto) throws
 		  Exception { logger.debug(" 거래처목록 전체리스트 DAO "); return
 		  sqlSession.selectList(NAMESPACE + ".readClient", pdto); }
+		    
+		    public List<ClientDTO> buyreadClientList(RequirementPageDTO pdto) throws
+			  Exception { logger.debug(" 거래처목록 전체리스트 DAO "); return
+			  sqlSession.selectList(NAMESPACE + ".buyreadClient", pdto); }
+		    
+		    public List<ClientDTO> sellreadClientList(RequirementPageDTO pdto) throws
+			  Exception { logger.debug(" 거래처목록 전체리스트 DAO "); return
+			  sqlSession.selectList(NAMESPACE + ".sellreadClient", pdto); }
 		  
 		  // 거래처목록 검색 갯수
 		  
@@ -128,6 +144,22 @@ public class OpenlistDAO {
 		  dto.getClientCompany()); 
 		  
 		  return sqlSession.selectOne(NAMESPACE + ".countSearchClient", data); }
+		    
+		    public int buycountClient(ClientDTO dto) { HashMap<String, Object>
+			  data = new HashMap<String, Object>();
+			  
+			  data.put("clientCode", dto.getClientCode()); data.put("clientCompany",
+			  dto.getClientCompany()); 
+			  
+			  return sqlSession.selectOne(NAMESPACE + ".buycountSearchClient", data); }
+		    
+		    public int sellcountClient(ClientDTO dto) { HashMap<String, Object>
+			  data = new HashMap<String, Object>();
+			  
+			  data.put("clientCode", dto.getClientCode()); data.put("clientCompany",
+			  dto.getClientCompany()); 
+			  
+			  return sqlSession.selectOne(NAMESPACE + ".sellcountSearchClient", data); }
 		  
 		  // 거래처목록 검색리스트
 		  
@@ -140,6 +172,26 @@ public class OpenlistDAO {
 		  data.put("clientCompany", dto.getClientCompany());
 		  
 		  return sqlSession.selectList(NAMESPACE + ".readSearchClient", data); }
+		    
+		    public List<ClientDTO> buyreadClientList(ClientDTO dto,
+		  		  RequirementPageDTO pdto) throws Exception { HashMap<String, Object> data = new
+		  		  HashMap<String, Object>();
+		  		  
+		  		  data.put("start", pdto.getStart()); data.put("cntPerPage",
+		  		  pdto.getCntPerPage()); data.put("clientCode", dto.getClientCode());
+		  		  data.put("clientCompany", dto.getClientCompany());
+		  		  
+		  		  return sqlSession.selectList(NAMESPACE + ".buyreadSearchClient", data); }
+		    
+		    public List<ClientDTO> sellreadClientList(ClientDTO dto,
+		  		  RequirementPageDTO pdto) throws Exception { HashMap<String, Object> data = new
+		  		  HashMap<String, Object>();
+		  		  
+		  		  data.put("start", pdto.getStart()); data.put("cntPerPage",
+		  		  pdto.getCntPerPage()); data.put("clientCode", dto.getClientCode());
+		  		  data.put("clientCompany", dto.getClientCompany());
+		  		  
+		  		  return sqlSession.selectList(NAMESPACE + ".sellreadSearchClient", data); }
 
 		    
 		    // ==========================================================================

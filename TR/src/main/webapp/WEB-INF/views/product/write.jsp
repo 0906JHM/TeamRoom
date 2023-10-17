@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
     <p>제품단위</p>
-    <input type="text" name="prodUnit"  placeholder="제품 단위를 입력해 주세요.">
+    <input type="text" name="prodUnit"  placeholder="제품 단위를 입력해 주세요." value="EA">
     </div>
     <div class="form-group">
     <p>용량</p>
@@ -59,15 +59,8 @@
     <p>매출단가</p>
     <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요.">
     </div>
-<!--     <div class="form-group"> -->
     <p>비고</p>
-<!--     <input type="text" name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." -->
-<!--      style="width: 100%; text-align: left; line-height: 1; align-self: flex-start;"> -->
-     
-     <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols="">
-     
-     </textarea>
-<!--     </div> -->
+     <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols=""></textarea>
     <div id="button">
     <input type="submit" value="확인">
     </div>
@@ -75,28 +68,7 @@
 </div>
 
 <script type="text/javascript">
-//------------- 제품코드 인풋박스 클릭 시 에이젝스 실행 --------------------------
 
-// $('#prodCode9999').click(function(){
-//    $.ajax({
-//        url: "${pageContext.request.contextPath}/product/prodCode",
-//        method: "GET",
-//        dataType: "text",
-//        success: function(data) {
-//            // Ajax 요청에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
-//            codeNum = data;
-//            console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
-
-//            // 변수에 할당된 데이터를 기반으로 추가 작업 수행
-//            someFunction(codeNum);
-//        }
-//    }); // ajax 끝 */
-
-//    document.getElementById("prodCode").textContent = prodCode;
-
-
-
-// });
 
 $(document).ready(function() {
     $('#prodCode9999').click(function(){

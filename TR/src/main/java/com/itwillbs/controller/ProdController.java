@@ -5,26 +5,21 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.ProdService;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 @RequestMapping("/product/*")
 public class ProdController {
 
@@ -45,7 +40,7 @@ public class ProdController {
 	public String list(ProdDTO prodDTO, Model model, HttpServletRequest request) {
 		System.out.println("1");
 
-		//검색어 가져오기
+		// 검색어 가져오기
 		// 페이징-------------------------------------------
 		// 한 화면에 보여줄 글개수 설정
 		int pageSize = 10;
@@ -63,19 +58,18 @@ public class ProdController {
 		pageDTO.setPageSize(pageSize);
 		pageDTO.setPageNum(pageNum);
 		pageDTO.setCurrentPage(currentPage);
-		
+
 		List<ProdDTO> prodList;
 		int count;
 		if (prodDTO.getProdCode() != null || prodDTO.getProdName() != null || prodDTO.getClientCompany() != null) {
-		prodList = prodService.getSearch(prodDTO, pageDTO);
-		count = prodService.getSearchcount(prodDTO);
-	
-		}
-		else {
+			prodList = prodService.getSearch(prodDTO, pageDTO);
+			count = prodService.getSearchcount(prodDTO);
+
+		} else {
 			prodList = prodService.getProdList(pageDTO);
 			count = prodService.getProdCount(pageDTO);
 		}
-		
+
 		// 한화면에 보여줄 페이지 개수 설정
 		int pageBlock = 10;
 		// 시작하는 페이지 번호
@@ -107,7 +101,7 @@ public class ProdController {
 		String code = prodService.makeCode();
 		ProdDTO prodDTO = new ProdDTO();
 		prodDTO.setProdCode(code);
-		model.addAttribute("prodDTO",prodDTO);
+		model.addAttribute("prodDTO", prodDTO);
 		return "product/write";
 	}//
 
@@ -145,4 +139,74 @@ public class ProdController {
 		return "redirect:/product/list";
 	}//
 
+	// ----------------------------------------------------- 비고 보기
+	// ---------------------------------------
+	@GetMapping("/memo")
+	public String memo(HttpServletRequest request, Model model) {
+		System.out.println("ProdController memo()");
+
+		String prodCode = request.getParameter("prodCode");
+
+		// PordMemo 가져오기
+		ProdDTO prodDTO = prodService.getProdMemo(prodCode);
+		System.out.println("prodDTO" + prodDTO);
+		model.addAttribute("prodDTO", prodDTO);
+
+		return "product/memo";
+
+	}// prodMemo
+
+	// ----------------------------------------------------- 비고 추가
+	// ---------------------------------------
+	@GetMapping("/memotype")
+	public String prodMemoAdd(HttpServletRequest request, Model model) {
+		System.out.println("ProdController memotype()");
+		String prodCode = request.getParameter("prodCode");
+		System.out.println(prodCode);
+
+		ProdDTO prodDTO = prodService.getProdMemo(prodCode);
+		String memotype = request.getParameter("memotype");
+		System.out.println(memotype);
+
+		model.addAttribute("prodDTO", prodDTO);
+		model.addAttribute("memotype", memotype);
+
+		return "product/memotype";
+	}// prodMemotype
+
+	@PostMapping("/memotypePro")
+	public ResponseEntity<String> prodMemoAddPro(ProdDTO prodDTO) {
+		System.out.println("ProdController memotypePro()");
+		System.out.println(prodDTO);
+		prodService.insertProdMemo(prodDTO);
+		return ResponseEntity.ok("<script>window.onunload = function() { if (window.opener && !window.opener.closed) { window.opener.location.reload(); } }; window.close();</script>");
+
+
+	}// prodMemotypePro
+
+	// ----------------------------------------------------- 비고 수정
+	// ---------------------------------------
+	@GetMapping("/memoUpdate")
+	public String updateProdMemo(HttpServletRequest request, Model model) {
+		System.out.println("ProdController memoUpdate()");
+
+		String prodCode = request.getParameter("prodCode");
+
+		// 글가져오기
+		ProdDTO prodDTO = prodService.getProdMemo(prodCode);
+
+		model.addAttribute("prodDTO", prodDTO);
+
+		return "product/updateMemo";
+	}// prodMemoUpdate
+
+	@PostMapping("/memoUpdatePro")
+	public ResponseEntity<String> memoUpdatePro(ProdDTO prodDTO) {
+		System.out.println("ProdController memoUpdatePro()");
+		System.out.println(prodDTO);
+		prodService.updateProdMemo(prodDTO);
+		// 창을 닫기 위한 스크립트를 반환합니다.
+		return ResponseEntity.ok("<script>window.onunload = function() { if (window.opener && !window.opener.closed) { window.opener.location.reload(); } }; window.close();</script>");
+
+	}// memoUpdatePro
 }
