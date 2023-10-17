@@ -291,5 +291,115 @@
 		WHERE inNum =
 		#{inNum}
 	</update>
+	
+	<select id="getExcelList"
+		resultType="com.itwillbs.domain.InMaterialDTO">
+
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode, r.rawName, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate, i.inEmpId, i.inState
+		FROM inMaterial
+		i left join rawMaterial
+		r
+		on i.rawCode = r.rawCode
+		left join stock s
+		on
+		i.rawCode = s.rawCode
+		left join clients c
+		on i.clientCode = c.clientCode
+		order by i.inNum desc
+
+	</select>
+	
+<select id="getExcelListAllSearch"
+		resultType="com.itwillbs.domain.InMaterialDTO">
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode,
+		r.rawName, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate,
+		i.inEmpId, i.inState
+		FROM inMaterial i
+		left join rawMaterial r
+		on
+		i.rawCode = r.rawCode
+		left join stock s
+		on
+		i.rawCode = s.rawCode
+		left
+		join clients c
+		on i.clientCode = c.clientCode
+		<where>
+			<if test="inNum != ''">
+				i.inNum LIKE CONCAT('%', #{inNum}, '%')
+			</if>
+
+			<if test="rawName != ''">
+				AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+				'%')
+			</if>
+		</where>
+		ORDER BY i.inNum DESC
+	</select>
+	
+	<select id="getExcelListSearch"
+		resultType="com.itwillbs.domain.InMaterialDTO">
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode,
+		r.rawName, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate,
+		i.inEmpId, i.inState
+		FROM inMaterial i
+		left join rawMaterial r
+		on
+		i.rawCode = r.rawCode
+		left join stock s
+		on
+		i.rawCode = s.rawCode
+		left
+		join clients c
+		on i.clientCode = c.clientCode
+		<where>
+			<if test="inState == '검색'">
+				<if test="inNum != ''">
+					i.inNum LIKE CONCAT('%', #{inNum}, '%')
+				</if>
+
+				<if test="rawName != ''">
+					AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				</if>
+
+				<if test="clientCompany != ''">
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+			</if>
+			<if test="inState != '검색'">
+				<if test="inNum != ''">
+					i.inNum LIKE CONCAT('%', #{inNum}, '%')
+				</if>
+
+				<if test="rawName != ''">
+					AND r.rawName LIKE CONCAT('%', #{rawName}, '%')
+				</if>
+
+				<if test="clientCompany != ''">
+					AND c.clientCompany LIKE CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+				<if test="inState != ''">
+					AND i.inState LIKE CONCAT('%', #{inState}, '%')
+				</if>
+			</if>
+		</where>
+		ORDER BY i.inNum DESC
+	</select>
+	
 
 </mapper>
