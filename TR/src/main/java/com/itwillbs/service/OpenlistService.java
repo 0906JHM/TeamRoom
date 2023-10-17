@@ -20,6 +20,7 @@ import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
+import com.itwillbs.domain.WarehouseDTO;
 
 
 @Service
@@ -117,14 +118,14 @@ public class OpenlistService {
 
 		// ==========================================================================
 
-			// 거래처목록 총 갯수
+			// 수주목록 총 갯수
 			
 			public int countSell() {
 				return pdao.countSell();
 			}
 
 			
-			  // 거래처목록 전체 리스트
+			  // 수주목록 전체 리스트
 			  
 			   public List<SellDTO> getSellList(RequirementPageDTO pdto) throws Exception
 			   { return pdao.readSellList(pdto);
@@ -132,16 +133,48 @@ public class OpenlistService {
 			 
 
 			
-			  // 거래처목록 검색 갯수
+			  // 수주목록 검색 갯수
 			  
 			   public int countSell(SellDTO dto) { return
 			  pdao.countSell(dto); }
 			 
 			
-			  // 거래처목록 검색 리스트
+			  // 수주목록 검색 리스트
 			  
 			   public List<SellDTO> getSellList(SellDTO dto,
 			  RequirementPageDTO pdto) throws Exception { return pdao.readSellList(dto, pdto); }
+			   
+			   
+			// ==========================================================================
+
+				// 거래처목록 총 갯수
+				
+				public int countWhse() {
+					return pdao.countWhse();
+				}
+
+				
+				  // 거래처목록 전체 리스트
+				  
+				   public List<WarehouseDTO> getWhseList(RequirementPageDTO pdto) throws Exception
+				   { return pdao.readWhseList(pdto);
+				  }
+				 
+
+				
+				  // 거래처목록 검색 갯수
+				  
+				   public int countWhse(WarehouseDTO dto) { return
+				  pdao.countWhse(dto); }
+				 
+				
+				  // 거래처목록 검색 리스트
+				  
+				   public List<WarehouseDTO> getWhseList(WarehouseDTO dto,
+				  RequirementPageDTO pdto) throws Exception { return pdao.readWhseList(dto, pdto); }
+			 
+
+				
 		 
 	// ==========================================================================
 
