@@ -41,7 +41,7 @@ String memotype = request.getParameter("memotype");
         <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemoUpdatePro">
 		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo" >${sellDTO.sellMemo}</textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
-		<button type="submit" >수정</button>		
+		<button type="submit" >저장</button>		
 		<button type="reset">취소</button>
         <button type="button" onclick="window.close();">닫기</button>
         </form>

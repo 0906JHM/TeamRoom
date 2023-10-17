@@ -26,7 +26,7 @@
     <form action="${pageContext.request.contextPath}/sell/sellAddPro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
 
        	<label class="popupLabel">수주 코드 : </label>
-      	<input type="text" id="sellCode" name="selCode" required="required" ><br> 
+      	<input type="text" id="sellCode" name="sellCode" value="${sellDTO.sellCode}" readonly ><br> 
       	
       	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
@@ -41,13 +41,13 @@
 		</div>
 		
 		<label class="popupLabel">제품 단가 : </label>
-        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
+        <input type="text" name="prodPrice" id="prodPrice9999" placeholder="0" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
         
         <label class="popupLabel">수주 수량 : </label>
         <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()" required>개<br>
 
  	    <label class="popupLabel">수주 단가 : </label>
-		<input type="text" id="sellPrice" min="0" value="${formattedSellPrice}" readonly>원<br>    
+		<input type="text" id="sellPrice" min="0" placeholder="0" value="${formattedSellPrice}" readonly>원<br>    
      <label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
 
@@ -61,7 +61,7 @@
         <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
 		
 		<br>
-        <button type="submit" >등록</button>
+        <button type="submit" >저장</button>
         <button type="reset">취소</button>
         <button type="button" onclick="window.close()">닫기</button>
     

@@ -47,7 +47,7 @@
         <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()" required>개<br>
 
  	    <label class="popupLabel">수주 단가 : </label>
-		<input type="text" id="sellPrice" min="0" value="${formattedSellPrice}" readonly>원<br>    
+		<input type="text" id="sellPrice" min="0" placeholder="0"  value="${formattedSellPrice}" readonly>원<br>    
      <label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
 
