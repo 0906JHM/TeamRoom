@@ -1,6 +1,7 @@
 package com.itwillbs.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -79,6 +80,19 @@ public class OutProductDAO {
 
 	public void insertList(OutProductDTO outProductDTO) {
 		sqlSession.insert(namespace + "insertList", outProductDTO);
+	}
+
+	public List<OutProductDTO> getExcelList(OutProductDTO outProductDTO) {
+		if ("전체".equals(outProductDTO.getSellState())) {
+			System.out.println("전체용");
+			return sqlSession.selectList(namespace + "getExcelList", outProductDTO);
+		} else if ("총검색".equals(outProductDTO.getSellState())) {
+			System.out.println("전체검색");
+			return sqlSession.selectList(namespace + "getExcelListAllSearch", outProductDTO);
+		} else {
+			System.out.println("나머지용");
+			return sqlSession.selectList(namespace + "getExcelListSearch", outProductDTO);
+		}
 	}
 
 }

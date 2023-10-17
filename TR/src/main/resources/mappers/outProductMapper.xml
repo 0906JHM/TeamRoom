@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.itwillbs.mappers.outProductMapper">
+
 	<select id="getOutProductList"
 		resultType="com.itwillbs.domain.OutProductDTO">
 		SELECT o.outCode outCode, o.prodCode prodCode, o.outDate
@@ -385,4 +386,159 @@
 		sellCode)
 		VALUES (#{outCode}, #{prodCode}, #{outPrice}, #{sellCode})
 	</insert>
+
+	<select id="getExcelList" resultType="com.itwillbs.domain.OutProductDTO">
+		SELECT
+		o.outCode outCode, o.prodCode prodCode,
+		DATE_FORMAT(o.outDate,
+		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		o.outMemo outMemo,
+		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
+		o.outCount outCount,
+		o.outPrice outPrice,
+		o.sellCode sellCode,
+		s.sellCount sellCount, DATE_FORMAT(s.sellDuedate,
+		'%Y-%m-%d')
+		sellDuedate, s.sellState sellState,
+		s.clientCode clientCode,
+		c.clientCompany clientCompany,
+		p.prodName prodName, p.prodPrice
+		prodPrice,
+		stockTestTest.whseCount whseCount
+		FROM outProduct
+		o LEFT JOIN sellTestTest s
+		ON o.sellCode =
+		s.sellCode
+		LEFT JOIN clients c
+		ON s.clientCode = c.clientCode
+		LEFT JOIN
+		product p
+		ON o.prodCode =
+		p.prodCode
+		LEFT JOIN stockTestTest
+		ON
+		o.prodCode
+		=
+		stockTestTest.prodCode
+		ORDER BY o.outCode DESC
+	</select>
+
+	<select id="getExcelListAllSearch" resultType="com.itwillbs.domain.OutProductDTO">
+		SELECT o.outCode outCode, o.prodCode prodCode,
+		DATE_FORMAT(o.outDate,
+		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		o.outMemo outMemo,
+		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
+		o.outCount outCount,
+		o.outPrice outPrice,
+		o.sellCode sellCode,
+		s.sellCount sellCount, DATE_FORMAT(s.sellDuedate,
+		'%Y-%m-%d')
+		sellDuedate, s.sellState sellState,
+		s.clientCode clientCode,
+		c.clientCompany clientCompany,
+		p.prodName prodName, p.prodPrice
+		prodPrice,
+		stockTestTest.whseCount whseCount
+		FROM outProduct
+		o LEFT JOIN sellTestTest s
+		ON o.sellCode =
+		s.sellCode
+		LEFT JOIN clients c
+		ON s.clientCode = c.clientCode
+		LEFT JOIN
+		product p
+		ON o.prodCode =
+		p.prodCode
+		LEFT JOIN stockTestTest
+		ON
+		o.prodCode =
+		stockTestTest.prodCode
+		<where>
+			<if test="outCode != ''">
+				AND o.outCode like CONCAT('%', #{outCode}, '%')
+			</if>
+
+			<if test="prodName != ''">
+				AND p.prodName like CONCAT('%', #{prodName}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				AND c.clientCompany like CONCAT('%', #{clientCompany},
+				'%')
+			</if>
+		</where>
+
+		ORDER BY o.outCode DESC
+	</select>
+
+	<select id="getExcelListSearch" resultType="com.itwillbs.domain.OutProductDTO">
+		SELECT
+		o.outCode outCode, o.prodCode prodCode,
+		DATE_FORMAT(o.outDate,
+		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		o.outMemo outMemo,
+		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
+		o.outCount outCount,
+		o.outPrice outPrice,
+		o.sellCode sellCode,
+		s.sellCount sellCount, DATE_FORMAT(s.sellDuedate,
+		'%Y-%m-%d')
+		sellDuedate, s.sellState sellState,
+		s.clientCode clientCode,
+		c.clientCompany clientCompany,
+		p.prodName prodName, p.prodPrice
+		prodPrice,
+		stockTestTest.whseCount whseCount
+		FROM outProduct
+		o LEFT JOIN sellTestTest s
+		ON o.sellCode =
+		s.sellCode
+		LEFT JOIN clients c
+		ON s.clientCode = c.clientCode
+		LEFT JOIN
+		product p
+		ON o.prodCode =
+		p.prodCode
+		LEFT JOIN stockTestTest
+		ON
+		o.prodCode =
+		stockTestTest.prodCode
+		<where>
+			<if test="sellState == '검색'">
+				<if test="outCode != ''">
+					AND o.outCode like CONCAT('%', #{outCode}, '%')
+				</if>
+
+				<if test="prodName != ''">
+					AND p.prodName like CONCAT('%', #{prodName}, '%')
+				</if>
+
+				<if test="clientCompany != ''">
+					AND c.clientCompany like CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+			</if>
+			<if test="sellState != '검색'">
+				<if test="outCode != ''">
+					AND o.outCode like CONCAT('%', #{outCode}, '%')
+				</if>
+
+				<if test="prodName != ''">
+					AND p.prodName like CONCAT('%', #{prodName}, '%')
+				</if>
+
+				<if test="clientCompany != ''">
+					AND c.clientCompany like CONCAT('%', #{clientCompany},
+					'%')
+				</if>
+
+				<if test="sellState != ''">
+					AND s.sellState like CONCAT('%', #{sellState}, '%')
+				</if>
+			</if>
+		</where>
+
+		ORDER BY o.outCode DESC
+	</select>
 </mapper>

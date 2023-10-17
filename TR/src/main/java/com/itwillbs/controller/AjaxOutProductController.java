@@ -1,6 +1,7 @@
 package com.itwillbs.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,8 @@ public class AjaxOutProductController {
 	private OutProductService outProductService;
 	
 //	OutProductController 에서 페이지 이동을 하고 ajaxcontroller에서 리스트 불러오는것
-	@RequestMapping(value = "/listSearch", method = RequestMethod.GET)
-	public ResponseEntity<List<OutProductDTO>> SalesList(OutProductDTO outProductDTO, HttpServletRequest request) {
+	@RequestMapping(value = "/listSearch", method = RequestMethod.POST)
+	public ResponseEntity<List<OutProductDTO>> outProductList(OutProductDTO outProductDTO, HttpServletRequest request) {
 		System.out.println("출고코드"+outProductDTO.getOutCode());
 		System.out.println("제품이름"+outProductDTO.getProdName());
 		System.out.println("거래처이름"+outProductDTO.getClientCompany());
@@ -106,6 +107,40 @@ public class AjaxOutProductController {
 
 		ResponseEntity<List<OutProductDTO>> entity = new ResponseEntity<>(outProductList, HttpStatus.OK);
 	    return entity;
+	}
+	
+//	OutProductController 에서 페이지 이동을 하고 ajaxcontroller에서 리스트 불러오는것
+	@RequestMapping(value = "/excel", method = RequestMethod.POST)
+	public ResponseEntity<List<OutProductDTO>> excelList(OutProductDTO outProductDTO) {
+		System.out.println("출고코드"+outProductDTO.getOutCode());
+		System.out.println("제품이름"+outProductDTO.getProdName());
+		System.out.println("거래처이름"+outProductDTO.getClientCompany());
+		System.out.println("거래 상태 "+outProductDTO.getSellState());
+		
+		if("".equals(outProductDTO.getOutCode()) || "null".equals(outProductDTO.getOutCode()) || outProductDTO.getOutCode() == null) {
+			System.out.println("출고 코드 변경");
+			outProductDTO.setOutCode("");
+		}
+		if("".equals(outProductDTO.getProdName()) || "null".equals(outProductDTO.getProdName()) || outProductDTO.getProdName() == null) {
+			System.out.println("제품 이름 변경");
+			outProductDTO.setProdName("");
+		}
+		if("".equals(outProductDTO.getClientCompany()) || "null".equals(outProductDTO.getClientCompany()) || outProductDTO.getClientCompany() == null) {
+			System.out.println("거래처 이름 변경");
+			outProductDTO.setClientCompany("");
+		}
+		if("".equals(outProductDTO.getSellState()) || "null".equals(outProductDTO.getSellState()) || outProductDTO.getSellState() == null) {
+			System.out.println("거래처 이름 변경");
+			outProductDTO.setSellState("");
+		}
+		
+		
+//		게시판 전체 글 개수 구하기
+		List<OutProductDTO> outProductList = outProductService.getExcelList(outProductDTO);
+		
+		
+		ResponseEntity<List<OutProductDTO>> entity = new ResponseEntity<>(outProductList, HttpStatus.OK);
+		return entity;
 	}
 	
 	
