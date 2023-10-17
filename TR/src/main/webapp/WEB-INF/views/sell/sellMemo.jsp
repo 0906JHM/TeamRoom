@@ -25,7 +25,9 @@
 		<textarea id="sellMemo" readonly="readonly" style="width: 350px; height: 250px;">${sellDTO.sellMemo}</textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		
+		<c:if test="${sessionScope.id == sellDTO.sellEmpId}">
 		<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellMemotype?sellCode=${sellDTO.sellCode}&memotype=modify'">수정</button>
+        </c:if>
         <button type="button" onclick="window.close()">닫기</button>
     </form>
 </div>
