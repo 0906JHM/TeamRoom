@@ -14,8 +14,8 @@
 <!-- side.jsp css-->
 <link href="${pageContext.request.contextPath }/resources/css/side.css"	rel="stylesheet" type="text/css">
 <!-- 본문 css -->
-<link href="${pageContext.request.contextPath }/resources/css/outProduct.css">
-<link href="${pageContext.request.contextPath }/resources/css/product.css" rel="stylesheet" type="text/css">
+<%-- <link href="${pageContext.request.contextPath }/resources/css/outProduct.css">
+ --%><link href="${pageContext.request.contextPath }/resources/css/sell.css" rel="stylesheet" type="text/css">
 
 <script	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- J쿼리 호출 -->
@@ -27,7 +27,7 @@
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <!-- 수주일자 기간선택 -->
-
+<link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"><!-- 수주일자 기간선택 -->
 
 
 
@@ -198,10 +198,7 @@
 
 	<!--################################################################ script ###################################################################-->
 	
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	<link href="${pageContext.request.contextPath}/resources/css/daterange.css"	rel="stylesheet" type="text/css">
+	
 	<script type="text/javascript">
 
 	$(function() {
@@ -226,6 +223,10 @@
 	});
 
 </script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";
