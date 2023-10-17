@@ -155,3 +155,20 @@ width:200px;
 height:15px;
 font-size:15px;
 }
+
+.chartbody{
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+	
+	
+}
+
+.chart{
+	background-color: white;
+	
+}
+.chart .chart1haed {
+	text-align: center !important;
+	
+}

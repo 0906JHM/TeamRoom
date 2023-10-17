@@ -139,19 +139,26 @@
 		 <div class="chart">
 		 <h2> 생산실적 현황 </h2>
 		 <div class="chartbody">
+		 
+		 <div class="chart1head">
+		 <h2 class="labelhead"> 실적수</h2>
 		 <div class="chart1">
-		 <canvas id="donutChart" width="400px" height="400px"></canvas><!-- totalamount -->
-		 
-		 </div>
-		 
+		 <canvas id="donutChart" width="400px" height="400px"></canvas><!-- totalamount --> 
+		 </div> <!--  chart1 -->
+		 </div> <!-- chart1head -->
 		 <div class="chart2">
-		 <canvas id="donutChart2" width="400px" height="400px"></canvas> <!-- - totalfair -->
+		 <h2 class="labelhead"> 양품수 </h2>
+		 <div class="chart2head">
+		 <canvas id="donutChart2" width="600px" height="400px"></canvas> <!-- - totalfair -->
+		 </div>
 		 </div>
 		 
 		 <div class="chart3">
+		 <h2 class="labelhaed"> 불량수</h2>
+		 <div class="chart3haed">
 		  <canvas id="donutChart3" width="400px" height="400px"></canvas> <!--  totaldefect -->
 		 </div>
-		
+		</div>
 		 
 
 		 
@@ -242,43 +249,67 @@ document.querySelectorAll('.magnifier').forEach(function(magnifier) {
           }
           
       });
-      
-/*       function createDonutChart(data, labels, chartId) { */
-/*     	    // 도넛 차트를 그릴 때 사용할 데이터 배열과 라벨 배열을 초기화합니다.
-    	    var chartData = [];
-    	   
-
-    	    data.forEach(function(item) {
-    	        chartData.push(item);  // 여기에서 실적 수량, 양품 수량 또는 불량 수량 데이터를 가져옵니다.
-    	        
-    	    }); */
-    	    
-    	    
-
+  	    
     	    // Chart.js를 사용하여 도넛 차트를 생성합니다.
     	     function createDonutChart(data, labels, chartId) {
     	    	console.log("도넛 차트 데이터: ", data);
     	    	console.log("도넛 차트 라벨: ", labels);
     	    	 console.log("도넛 차트 ID: ", chartId); // 이 줄을 추가하여 chartId 출력
-    	    	
-    	    var ctx = document.getElementById(chartId).getContext('2d');
+    	     var ctx = document.getElementById(chartId).getContext('2d');
+    	     var totalValue = data.reduce((total, value) => total + value, 0);
+    	      console.log("총합: ", totalValue.toFixed(2)); // totalValue를 로그로 출력합니다.
     	    var donutChart = new Chart(ctx, {
     	        type: 'doughnut', // 도넛 차트 유형을 설정합니다.
     	        data: {
     	            labels: labels, // 라벨 배열을 설정합니다.
     	            datasets: [{
     	                data: data, // 차트 데이터 배열을 설정합니다.
-    	                backgroundColor: ['red', 'green', 'blue'], // 차트 데이터에 대한 배경색을 설정합니다.
+    	                backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56'], // 차트 데이터에 대한 배경색을 설정합니다.
     	                borderWidth: 1 // 차트 데이터에 대한 테두리 두께를 설정합니다.
     	            }]
     	        },
     	        options: {
-    	            responsive: true,
-    	            maintainAspectRatio: false
-    	        }
-    	    });
-    	}
-});
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: 150,
+                    chartArea: {
+                        // 차트 영역 크기 조절
+                        left: 1,
+                        right: 1,
+                        top: 1,
+                        bottom: 1
+                    },
+                    // 이하 옵션들은 필요에 따라 조절할 수 있습니다.
+                    animation: {
+                        animateRotate: false,
+                        animateScale: true
+                    },
+                    tooltips: {
+                        position: 'top' // 툴팁을 위쪽에 표시
+                    },
+                    legend: {
+                        display: false,
+                        position: 'top'
+                    },
+                    plugins: {
+                        labels: {
+                            render: 'value',
+                            fontColor: ['black', 'black', 'black'],
+                            precision: 2
+                        }
+                    },
+                    elements: {
+                        center: {
+                            text: totalValue.toFixed(2),
+                            color: '#36a2eb',
+                            fontStyle: 'Arial',
+                            sidePadding: 1
+                        }
+                    }
+                }
+            });
+        }
+    });
 </script>			
 			
 </html>
