@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itwillbs.domain.ClientDTO;
+
 import com.itwillbs.domain.LineDTO;
+import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.WorkOrderDTO;
@@ -45,16 +46,78 @@ public class PerformanceController {
 	
 	
 	@GetMapping("/perf")
-	public String perf(Model model) {
+	public String perf(Model model,HttpServletRequest request, PerformanceDTO perfDTO) {
 		
-		
-		  System.out.println("PerformanceController perf메인페이지요청");
-		  log.debug("메인페이지  실적코드 요청"); 
-		  List<PerformanceDTO> perflist =perfService.perflist();
+		          //검색어 가져오기
+				String search = request.getParameter("search");
+				
+				// <----------------------------------->
+				// 한 화면에 보여줄 글 개수 
+				int pageSize = 5;
+				
+				// 현 페이지 번호 가져오기
+				String pageNum=request.getParameter("pageNum");
+				//페이지 번호가 없을 경우에는 1로 설정
+				if (pageNum == null ) {
+					pageNum = "1";
+				}
+				
+				// 페이지 번호 => 정수형 변경
+				int currentPage = Integer.parseInt(pageNum);
+				
+				PageDTO pageDTO = new PageDTO();
+				pageDTO.setPageSize(pageSize);
+				pageDTO.setPageNum(pageNum);
+				pageDTO.setCurrentPage(currentPage);
+				
+
+				
+				List<PerformanceDTO> perflist;
+				int count;
+			//	if (perfDTO.getLineCode() != null || perfDTO.getProdCode() != null || perfDTO.getPerfDate() != null)
+				if (perfDTO.getLineCode() != null || perfDTO.getProdCode() != null  ) {
+				perflist = perfService.getSearch(perfDTO, pageDTO);
+				count = perfService.getSearchcount(perfDTO);
+			
+				}
+				else {
+					perflist = perfService.getperflist(pageDTO);
+					count = perfService.getperfCount(pageDTO);
+				}
+
+				
+				int pageBlock = 5;
+				// 시작하는 페이지 번호
+				int startPage = (currentPage -1)/pageBlock*pageBlock+1;
+				// 끝나는 페이지 번호
+				int endPage = startPage + pageBlock -1;
+				
+				//전체페이지 개수 
+				int pageCount = count/pageSize+(count%pageSize==0?0:1);
+				// 끝나는 페이지 번호 전체 페이지 개수 비교 
+				
+				if(endPage > pageCount ) {
+					
+					endPage= pageCount;
+					
+				}
+				
+				pageDTO.setCount(count);
+				pageDTO.setPageBlock(pageBlock);
+				pageDTO.setStartPage(startPage);
+				pageDTO.setEndPage(endPage);
+				pageDTO.setPageCount(pageCount);
+	
+				 System.out.println("PerformanceController perf메인페이지요청");
+				  log.debug("메인페이지  실적코드 요청"); 
+				log.debug("실적코드 가지온값들: +++++++"+ perflist);
+				log.debug("실적코드 카운트값 출력:++++++++++" + count);
+	
 		  
 		  
-		  log.debug("반환값"+perflist);
+
 		  model.addAttribute("perflist",perflist); 
+		  model.addAttribute("pageDTO", pageDTO);
 
 		return "perf/perf";
 		
@@ -67,7 +130,7 @@ public class PerformanceController {
 		log.debug("PerformanceController perf추가페이지요청 ");
 		
 		/*
-		 * List<ClientDTO> clientList = clientService.getclientList();
+		 * List<perfDTO> clientList = clientService.getclientList();
 		 * 
 		 * 
 		 * model.addAttribute("clientList",clientList);

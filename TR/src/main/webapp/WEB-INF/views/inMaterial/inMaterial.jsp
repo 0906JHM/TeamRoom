@@ -49,7 +49,7 @@
 			<input type="button" value="전체" id="allButton" class="buttons highlighted"> 
 			<input type="button" value="입고" id="inButton" class="buttons"> 
 			<input type="button" value="미입고" id="non_inButton" class="buttons">
-			<button id="excelDownload" class ="buttons">엑셀⬇️</button>
+			<input type="button" value="엑셀" id="exportButton">
 		</div>
 		<h3 style="padding-left: 1%;">
 			목록 <small id="listCount">총 3건</small>
@@ -448,58 +448,117 @@ var inNum = data[i].inNum;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
 		
-	  $(document).ready(function () {
-		//엑셀
-			 const excelDownload = document.querySelector('#excelDownload');
-					excelDownload.addEventListener('click', exportExcel);
-					function exportExcel() {
-					    // 1. 워크북 생성
-					    var wb = XLSX.utils.book_new();
-					    // 2. 워크시트 생성
-					    var newWorksheet = excelHandler.getWorksheet();
-					    // 3. 워크시트를 워크북에 추가
-					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-					    // 4. 엑셀 파일 생성
-					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-					    // 5. 엑셀 파일 내보내기
-					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
-					}
+// 	  $(document).ready(function () {
+// 		//엑셀
+// 			 const excelDownload = document.querySelector('#excelDownload');
+// 					excelDownload.addEventListener('click', exportExcel);
+// 					function exportExcel() {
+// 					    // 1. 워크북 생성
+// 					    var wb = XLSX.utils.book_new();
+// 					    // 2. 워크시트 생성
+// 					    var newWorksheet = excelHandler.getWorksheet();
+// 					    // 3. 워크시트를 워크북에 추가
+// 					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+// 					    // 4. 엑셀 파일 생성
+// 					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+// 					    // 5. 엑셀 파일 내보내기
+// 					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+// 					}
 
-					// 현재 날짜를 가져오는 함수
-					function getToday() {
-					    var date = new Date();
-					    var year = date.getFullYear();
-					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
-					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
-					    return year + month + day;
-					}
+// 					// 현재 날짜를 가져오는 함수
+// 					function getToday() {
+// 					    var date = new Date();
+// 					    var year = date.getFullYear();
+// 					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+// 					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+// 					    return year + month + day;
+// 					}
 
-			var excelHandler = {
-			getExcelFileName : function() {
-				return 'inMaterialList'+getToday()+'.xlsx'; //파일명
-			},
-			getSheetName : function() {
-				return 'inMaterial Sheet'; //시트명
-			},
-			getExcelData : function() {
-				return document.getElementById('inMaterialTable'); //table id
-			},
-			getWorksheet : function() {
-				return XLSX.utils.table_to_sheet(this.getExcelData());
-			}
-		} //excelHandler
+// 			var excelHandler = {
+// 			getExcelFileName : function() {
+// 				return 'inMaterialList'+getToday()+'.xlsx'; //파일명
+// 			},
+// 			getSheetName : function() {
+// 				return 'inMaterial Sheet'; //시트명
+// 			},
+// 			getExcelData : function() {
+// 				return document.getElementById('inMaterialTable'); //table id
+// 			},
+// 			getWorksheet : function() {
+// 				return XLSX.utils.table_to_sheet(this.getExcelData());
+// 			}
+// 		} //excelHandler
 			
-			function s2ab(s) {
+// 			function s2ab(s) {
 				
-				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-				var view = new Uint8Array(buf);  
-				for(var i=0; i<s.length; i++) {
-					view[i] = s.charCodeAt(i) & 0xFF;
-				}
-				alert("이까지 옴");
-				return buf;
-			}
-	  });
+// 				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+// 				var view = new Uint8Array(buf);  
+// 				for(var i=0; i<s.length; i++) {
+// 					view[i] = s.charCodeAt(i) & 0xFF;
+// 				}
+// 				alert("이까지 옴");
+// 				return buf;
+// 			}
+// 	  });
+		
+		   // 버튼 클릭 시 실행
+		   // 클라이언트에서 서버로 데이터 요청
+				document.getElementById('exportButton').addEventListener('click', function () {
+				    // 엑셀로 내보낼 데이터
+				    var searchParams = {
+				    		inNum : $("#inNum").val(),
+							rawName : $("#rawName9999").val(),
+							clientCompany : $("#clientCompany9999").val(),
+							inState : inStateButton1
+				    };
+				
+				    $.ajax({
+				        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+				        url: "${pageContext.request.contextPath}/inMaterial/excel", // 데이터를 가져올 URL 설정
+				        data: searchParams, // 검색 조건 데이터 전달
+				        dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+				        success: function (data) {
+				            // 데이터 가공
+							var modifiedData = data.map(function (item) {
+							    return {
+							        '입고번호': item.inNum,
+							        '발주번호': item.buyNum,
+							        '입고창고': item.whseCode,
+							        '거래처명': item.clientCompany,
+							        '품번': item.rawCode,
+							        '품명': item.rawName,
+							        '발주수량': item.inCount,
+							        '재고수량': item.stock,
+							        '단가': item.rawPrice,
+							        '총액': item.inPrice,
+							        '입고일': item.inDate,
+							        '담당자': item.inEmpId,
+							        '상태': item.inState,
+							    };
+							});
+				            // 새 워크북을 생성
+				            var wb = XLSX.utils.book_new();
+				            // JSON 데이터를 워크시트로 변환
+				            var ws = XLSX.utils.json_to_sheet(modifiedData);
+				            // 워크북에 워크시트 추가
+				            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
+				            // Blob 형태로 워크북 생성
+				            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+				            // 파일 이름 설정 (원하는 파일 이름으로 변경)
+				            var fileName = "InMaterial.xlsx";
+				            // Blob 파일을 다운로드
+				            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
+				        }
+				    });
+				});
+				
+				// ArrayBuffer 만들어주는 함수
+				function s2ab(s) {
+				    var buf = new ArrayBuffer(s.length); // convert s to arrayBuffer
+				    var view = new Uint8Array(buf); // create uint8array as viewer
+				    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
+				    return buf;
+				}		
 		
 	</script>
 

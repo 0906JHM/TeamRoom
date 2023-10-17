@@ -41,13 +41,8 @@
 			
 			
 			</div>
-			
-			
-			
-			
-			
+
 		<table class="ct" id="ct">
-			
 			<thead>
 				<tr class="cthead">
 				    <th class="ctth">번호</th>
@@ -89,14 +84,31 @@
 			</tbody>
 
 		</table>
-		</div>
-		<!-- <div style="float: right;">
-				<input type="button" value="추가" id="addButton" class="addbutton"
-					onclick="clientInsert()">
-			</div> -->
-			</div>
+		
+		<div class="page"> <!--  페이징 영역 -->
+				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
+					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&clientCode=${clientDTO.clientCode}&clientCompany=${clientDTO.clientCompany}">Prev</a>
+				</c:if>
+				
+
+				<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
+					<a href="${pageContext.request.contextPath}/client/client?pageNum=${i}&clientCode=${clientDTO.clientCode}&clientCompany=${clientDTO.clientCompany}">${i}</a>
+				</c:forEach>
+
+
+				<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
+					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&clientCode=${clientDTO.clientCode}&clientCompany=${clientDTO.clientCompany}">Next</a>
+				</c:if>
+				
+			</div> <!--  페이징영역 -->
+		
+		</div> <!--  TABLE FORM -->
+		
+					
+
+			</div> <!--  CLIENTBODY1 -->
 			
-			</div>
+			</div> <!--  CLIENTBODY -->
 			
 
 		<script>

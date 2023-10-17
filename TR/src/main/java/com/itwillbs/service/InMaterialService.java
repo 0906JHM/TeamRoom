@@ -104,4 +104,8 @@ public class InMaterialService {
 		inMaterialDAO.updateInDate(inMaterialDTO);
 		
 	}
+
+	public List<InMaterialDTO> getExcelList(InMaterialDTO inMaterialDTO) {
+		return inMaterialDAO.getExcelList(inMaterialDTO);
+	}
 }

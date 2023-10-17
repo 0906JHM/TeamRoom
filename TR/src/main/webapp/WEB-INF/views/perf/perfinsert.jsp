@@ -331,7 +331,7 @@
     setDefaultDefectValue();
 
     // 여기에 폼 데이터를 서버로 전송하는 코드를 추가할 수 있습니다.
-    $.post("${pageContext.request.contextPath}/perf/perfinsertPro", $("#perfinsert").serialize(), function(response) {
+    $.post("${pageContext.request.contextPath}/perfajax/ajaxinsert", $("#perfinsert").serialize(), function(response) {
         // 서버 응답에 대한 처리 코드
         if (response.success) {
         	console.log("등록 성공"); // 디버깅 메시지

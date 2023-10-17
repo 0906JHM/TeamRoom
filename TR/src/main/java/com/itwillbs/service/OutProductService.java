@@ -3,6 +3,7 @@ package com.itwillbs.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -114,6 +115,10 @@ public class OutProductService {
 
 	public String codeChange(String code_id, int num){
 		return String.format("%s%05d", code_id, ++num);
+	}
+
+	public List<OutProductDTO> getExcelList(OutProductDTO outProductDTO) {
+		return outProductDAO.getExcelList(outProductDTO);
 	}
 
 }

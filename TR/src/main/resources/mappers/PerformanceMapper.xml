@@ -18,8 +18,61 @@
  
  <select id="getperflist" resultType="PerformanceDTO">
  select * from performance
- 
+   order by perfCode desc
+    limit #{startRow}, #{pageSize}
  </select>
+ 
+ <select id="getSearch" resultType="PerformanceDTO">
+		select * FROM performance	
+		<where>
+			<if test="lineCode !=''">
+				lineCode like concat ('%', #{lineCode}, '%')
+			</if>
+
+			<if test="prodCode !=''">
+				and prodCode like concat ('%', #{prodCode}, '%')
+			</if>
+		</where>
+		order by perfCode desc
+		limit #{startRow}, #{pageSize}
+	</select>
+	
+	<select id="getSearchcount" resultType="java.lang.Integer">
+		SELECT count(#{perfCode})
+		FROM performance
+		<where>
+			<if test="lineCode != ''">
+				lineCode like concat ('%', #{lineCode}, '%')
+			</if>
+
+			<if test="prodCode != ''">
+				and prodCode like concat ('%' ,#{prodCode}, '%')
+			</if>
+		</where>
+		order by perfCode desc
+	</select>
+	
+	<select id="getperfCount" resultType="java.lang.Integer">
+	select count(*) from performance
+	</select>
+	
+	<!--  도넛차트 DB값 가져오기  -->
+	<select id="getdonut" resultType="PerformanceDTO" parameterType="java.util.List">
+    SELECT 
+        lineCode AS lineCode,
+        SUM(perfAmount) AS totalAmount,
+        SUM(perfFair) AS totalFair,
+        SUM(perfDefect) AS totalDefect
+    FROM 
+        performance
+    WHERE 
+        lineCode IN 
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    GROUP BY 
+        lineCode;
+</select>
  
  <select id="getlinelist" resultType="com.itwillbs.domain.LineDTO">
  
