@@ -11,6 +11,8 @@
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" 
     rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath }/resources/css/stock.css" 
+    rel="stylesheet" type="text/css">
     
 <script type="text/javascript">
 
@@ -30,26 +32,32 @@
 <jsp:include page = "../inc/side.jsp"></jsp:include>
 </head>
 <body>
-   
-      <h1>재고 관리</h1>
-      <form action="${pageContext.request.contextPath}/stock/list" method="get">
-      제품코드 <input type="text" name="search1" placeholder="제품코드">
-      원자재코드 <input type="text" name="search2" placeholder="원자재코드">
-      창고코드 <input type="text" name="search3" placeholder="창고코드">
-      <input type="submit" value="검색">
+<div class="container">
+      <h2>재고 관리</h2>
+      <hr>
+      <div id="searchform">
+      <form action="${pageContext.request.contextPath}/stock/list" method="get"  id="selected">
+      <label>제품코드</label> <input type="text" name="search1" placeholder="제품코드">
+      <label>원자재코드</label> <input type="text" name="search2" placeholder="원자재코드">
+      <label>창고코드</label> <input type="text" name="search3" placeholder="창고코드">
+      <button type="submit">조회</button>
       </form>
+      </div>
+      <hr>
       <br>
       <h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
-      <table border="1">
-      <tbody>
+<div id="list">    
+      <table id="stockTable">
+      <thead>
 		<tr>
-			<td>제품 코드</td>
-			<td>원자재 코드</td>
-			<td>창고 코드</td>
-			<td>재고 개수</td>
-			<td> </td>
+			<th>제품 코드</th>
+			<th>원자재 코드</th>
+			<th>창고 코드</th>
+			<th>재고 개수</th>
+			<th> </th>
 		</tr>
-
+        </thead>
+        <tbody>
 		<c:forEach var="stockDTO" items="${boardList}">
 			<tr>
 				<td>${stockDTO.prodCode }</td>
@@ -63,8 +71,9 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	
-	<div id="page_control">
+</div>  	
+
+	<div class="page">
 <c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
 	<a href="${pageContext.request.contextPath}/stock/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}">Prev</a>
 </c:if>
@@ -79,6 +88,6 @@
 </c:if>
 
 </div>
-
+</div>	
 </body>
 </html>

@@ -18,7 +18,7 @@
 	prodCode,
 	p.prodName
 	prodName,p.prodPrice prodPrice
-	from sellTest s left
+	from sell s left
 	join product p
 	on
 	s.prodCode = p.prodCode
@@ -31,13 +31,13 @@
 
 	<select id="getSellCount" resultType="java.lang.Integer">
 		select count(*)
-		from sellTest
+		from sell
 	</select>
 
 
 	<insert id="insertSell">
 		insert into
-		sellTest(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,clientCompany,sellNum,sellPrice)
+		sell(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,clientCompany,sellNum,sellPrice)
 		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
 		#{sellMemo},#{sellState},#{clientCode},#{clientCompany}, #{sellNum},#{sellCount}*(SELECT
 		prodPrice FROM product WHERE prodCode = #{prodCode}))
@@ -45,14 +45,14 @@
 
 	<select id="getSell" resultType="com.itwillbs.domain.SellDTO">
 	select *
-	from sellTest s
+	from sell s
 	left join product p	on s.prodCode = p.prodCode
 		where sellCode = #{sellCode}
 		
 	</select>
 
 	<update id="sellUpdate">
-	update sellTest
+	update sell
 	set
 	sellCode=#{sellCode},
 	sellState=#{sellState},
@@ -72,25 +72,25 @@
 	
 	<delete id="sellDelete">
 		delete
-		from sellTest
+		from sell
 		where sellCode = #{sellCode}
 	</delete>
 	
 	<select id="getSellMemo"
 		resultType="com.itwillbs.domain.SellDTO">
 		select *
-		from sellTest
+		from sell
 		where sellCode = #{sellCode}
 	</select>
 
 	<update id="insertSellMemo">
-		update sellTest
+		update sell
 		set sellMemo=#{sellMemo}
 		where sellCode = #{sellCode}
 	</update>
 
 	<update id="updateSellMemo">
-		update sellTest
+		update sell
 		set sellMemo = #{sellMemo}
 		where
 		sellCode = #{sellCode}

@@ -11,6 +11,8 @@
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" 
     rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath }/resources/css/warehouse.css" 
+    rel="stylesheet" type="text/css">
  <jsp:include page = "../inc/side.jsp"></jsp:include>   
  
  <!-- javascript -->
@@ -103,43 +105,55 @@ function deleteValue(){
 </head>
 <body>
 
-<h1>창고 관리</h1>
-    <form action="${pageContext.request.contextPath}/Warehouse/list" method="get">
-    창고코드 <input type="text" name="search1" placeholder="창고코드">
-    제품코드 <input type="text" name="search2" placeholder="제품코드">
-    창고이름 <input type="text" name="search3" placeholder="창고이름">
-    창고타입 <select name="search4">
+<div class="container">
+<h2>창고 관리</h2>
+<hr>
+<div id="searchform">
+    <form action="${pageContext.request.contextPath}/Warehouse/list" method="get" id="selected">
+    <label>창고코드</label> <input type="text" name="search1" placeholder="창고코드">
+    <label>제품코드</label> <input type="text" name="search2" placeholder="제품코드">
+    <label>창고이름</label> <input type="text" name="search3" placeholder="창고이름">
+    <label>창고타입</label> <select name="search4">
                     <option value="">전체</option>
                     <option value="원자재">원자재</option>
 		            <option value="완제품">완제품</option>
                 </select>
-    <input type="submit" value="검색">           
+    <button type="submit" >조회</button>      
     </form>
-    <input type="button" value="추가" onclick="newTabInsert()">
-    <input type="button" value="수정" onclick="newTabUpdate()">
-    <input type="button" value="삭제" onclick="deleteValue();">
-    <br>
+    </div>
+    <hr>
+<div class="buttons"> 
+   <button onclick="newTabInsert()">추가</button>
+   <button onclick="newTabUpdate()">수정</button>
+   <button onclick="deleteValue();">삭제</button>
+<!--     <input type="button" value="추가" onclick="newTabInsert()"> -->
+<!--     <input type="button" value="수정" onclick="newTabUpdate()"> -->
+<!--     <input type="button" value="삭제" onclick="deleteValue();"> -->
+</div>    
     <h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
     
-    <table border="1">
+    <div id="list">
+    <table class="tab"  id="warehouseTable">
+    <thead>
     <tr>
-    <td></td>
-    <td>창고코드</td>
-    <td>창고이름</td>
-    <td>창고타입</td>
-    <td>창고사용상태</td>
-    <td>창고주소</td>
-    <td>창고연락처</td>
-    <td>제품코드</td>
-    <td>원자재코드</td>
-    <td>창고관리사원아이디</td>
-    <td>재고개수</td>
-    <td>창고비고</td>
+    <th name="selected"></th>
+    <th>창고코드</th>
+    <th>창고이름</th>
+    <th>창고타입</th>
+    <th>창고사용상태</th>
+    <th>창고주소</th>
+    <th>창고연락처</th>
+    <th>제품코드</th>
+    <th>원자재코드</th>
+    <th>창고관리사원아이디</th>
+    <th>재고개수</th>
+    <th>창고비고</th>
     </tr>
-    
+    </thead>
+    <tbody>
     <c:forEach var="warehouseDTO" items="${warehouseList}">
     <tr>
-    <td><input type="checkbox" name="RowCheck" value="${warehouseDTO.whseCode}"></td>
+    <td><input type="checkbox" name="RowCheck" value="${warehouseDTO.whseCode}" name="selected"></td>
     <td>${warehouseDTO.whseCode}</td>
     <td>${warehouseDTO.whseName}</td>
     <td>${warehouseDTO.whseType}</td>
@@ -153,9 +167,11 @@ function deleteValue(){
     <td>${warehouseDTO.whseMemo}</td>
     </tr>
     </c:forEach>
+    </tbody>
     </table>
+    </div>
 
-<div id="page_control">
+<div class="page">
 <c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
 	<a href="${pageContext.request.contextPath}/Warehouse/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}">Prev</a>
 </c:if>
@@ -169,6 +185,7 @@ function deleteValue(){
 	<a href="${pageContext.request.contextPath}/Warehouse/list?pageNum=${pageDTO.startPage + pageDTO.pageBlock}">Next</a>
 </c:if>
 
+</div>
 </div>
 </body>
 </html>
