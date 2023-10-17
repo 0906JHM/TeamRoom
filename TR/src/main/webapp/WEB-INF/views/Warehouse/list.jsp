@@ -20,7 +20,7 @@
 
 // 추가
 function newTabInsert() {
-    window.open("${pageContext.request.contextPath}/Warehouse/write", "추가",  "top=80,left=140,width=977,height=450, location=no");
+    window.open("${pageContext.request.contextPath}/Warehouse/write", "추가",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=600,height=900");
 }
 
 // 수정
@@ -32,7 +32,7 @@ function newTabUpdate() {
 		ch = list[i].value;
 		}
 	}
-	window.open("${pageContext.request.contextPath}/Warehouse/update?whseCode="+ch, "수정",  "top=80,left=140,width=977,height=450, location=no");
+	window.open("${pageContext.request.contextPath}/Warehouse/update?whseCode="+ch, "수정",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=600,height=900");
 }
 
 $(document).ready(function() {
@@ -143,10 +143,7 @@ function deleteValue(){
     <th>창고사용상태</th>
     <th>창고주소</th>
     <th>창고연락처</th>
-    <th>제품코드</th>
-    <th>원자재코드</th>
     <th>창고관리사원아이디</th>
-    <th>재고개수</th>
     <th>창고비고</th>
     </tr>
     </thead>
@@ -160,10 +157,7 @@ function deleteValue(){
     <td>${warehouseDTO.whseState}</td>
     <td>${warehouseDTO.whseAddr}</td>
     <td>${warehouseDTO.whseTel}</td>
-    <td>${warehouseDTO.prodCode}</td>
-    <td>${warehouseDTO.rawCode}</td>
     <td>${warehouseDTO.whseEmpId}</td>
-    <td>${warehouseDTO.whseCount}</td>
     <td>${warehouseDTO.whseMemo}</td>
     </tr>
     </c:forEach>

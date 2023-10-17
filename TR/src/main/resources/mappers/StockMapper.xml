@@ -12,8 +12,8 @@
   </select>
   
   <insert id="insertBoard">
-      insert into stock(stockCount, rawCode, prodCode, whseCode)
-      values (#{stockCount}, #{rawCode}, #{prodCode}, #{whseCode})
+      insert into stock(stockCount, rawCode, prodCode, whseCode, stockMemo)
+      values (#{stockCount}, #{rawCode}, #{prodCode}, #{whseCode}, #{stockMemo})
   </insert>
   
   <select id="getBoardList" resultType="com.itwillbs.domain.StockDTO">
