@@ -5,83 +5,71 @@
 <head>
 <meta charset="UTF-8">
 <title>창고 수정</title>
+
+<link href="${pageContext.request.contextPath }/resources/css/warehousewrite.css"
+	rel="stylesheet" type="text/css">
+	
 </head>
 <body>
 
-	<h1>창고 수정</h1>
-	
+<div class="container">
+	<h2>창고 수정</h2>
 	<form action="${pageContext.request.contextPath}/Warehouse/updatePro"
 		method="post">
 
-		<table border="1">
-			<tr>
-				<td>창고코드</td>
-				<td><input type="text" name="whseCode"
-					value="${warehouseDTO.whseCode}" readonly></td>
-			</tr>
+                 <div class="form-group">
+				<p>창고코드</p>
+				<input type="text" name="whseCode"
+				value="${warehouseDTO.whseCode}" readonly>
+				</div>
+				
+                <div class="form-group">
+				<p>창고이름</p>
+				<input type="text" name="whseName"
+				value="${warehouseDTO.whseName}" readonly>
+				</div>
 
-			<tr>
-				<td>창고이름</td>
-				<td><input type="text" name="whseName"
-					value="${warehouseDTO.whseName}" readonly></td>
-			</tr>
+                <div class="form-group">
+				<p>창고 타입</p>
+				<input type="text" name="whseType"
+				value=" ${warehouseDTO.whseType}">
+				</div>
 
-			<tr>
-				<td>창고타입</td>
-				<td><input type="text" name="whseType"
-					value=" ${warehouseDTO.whseType}"></td>
-			</tr>
+                <div class="form-group">
+				<p>창고 사용 상태</p>
+				<input type="text" name="whseState"
+				value="${warehouseDTO.whseState}">
+				</div>
+				
+				<div class="form-group">
+				<p>창고 주소</p>
+				<input type="text" name="whseAddr"
+				value=" ${warehouseDTO.whseAddr}">
+				</div>
+				
+				<div class="form-group">
+				<p>창고 연락처</p>
+				<input type="text" name="whseTel"
+				value=" ${warehouseDTO.whseTel}">
+				</div>
+				
+				<div class="form-group">
+				<p>창고 관리사원 아이디</p>
+				<input type="text" name="whseEmpId"
+				value=" ${warehouseDTO.whseEmpId}">
+				</div>
+				
+				<div class="form-group">
+				<p>창고비고</p>
+				<input type="text" name="whseMemo"
+				value=" ${warehouseDTO.whseMemo}">
+				</div>
+				
+				<div id="button">
+				<input type="submit" value="수정">
+				</div>
 
-			<tr>
-				<td>창고사용상태</td>
-				<td><input type="text" name="whseState"
-					value="${warehouseDTO.whseState}"></td>
-			</tr>
-
-			<tr>
-				<td>창고주소</td>
-				<td><input type="text" name="whseAddr"
-					value=" ${warehouseDTO.whseAddr}"></td>
-			</tr>
-
-			<tr>
-				<td>창고연락처</td>
-				<td><input type="text" name="whseTel"
-					value=" ${warehouseDTO.whseTel}"></td>
-			</tr>
-			
-			<tr>
-				<td>제품코드</td>
-				<td><input type="text" name="prodCode"
-					value=" ${warehouseDTO.prodCode}"></td>
-			</tr>
-
-			<tr>
-				<td>원자재코드</td>
-				<td><input type="text" name="rawCode"
-					value=" ${warehouseDTO.rawCode}"></td>
-			</tr>
-
-			<tr>
-				<td>창고관리사원아이디</td>
-				<td><input type="text" name="whseEmpId"
-					value=" ${warehouseDTO.whseEmpId}"></td>
-			</tr>
-
-			<tr>
-				<td>재고개수</td>
-				<td><input type="number"  name="whseCount" min="0"
-					value=" ${warehouseDTO.whseCount}"></td>
-			</tr>
-			
-			<tr>
-				<td>창고비고</td>
-				<td><input type="text" name="whseMemo"
-					value=" ${warehouseDTO.whseMemo}"></td>
-			</tr>
-
-		</table>
-		<input type="submit" value="수정">
 	</form>
 </body>
+</div>
 </html>

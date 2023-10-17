@@ -5,33 +5,48 @@
 <head>
 <meta charset="UTF-8">
 <title>재고 수정</title>
+
+<link href="${pageContext.request.contextPath }/resources/css/stockupdate.css"
+	rel="stylesheet" type="text/css">
 </head>
 	
 <body>
-	<h1>재고 수정</h1>
+
+<div class="container">
+	<h2>재고 수정</h2>
 	
 <form  action="${pageContext.request.contextPath}/stock/updatePro" method="post">
-  <table border="1">
-      <tbody>
-		<tr>
-		    <td>제품 코드</td>
-			<td>원자재 코드</td>
-			<td>창고 코드</td>
-			<td>재고 개수</td>
-		</tr>
-		 <tr>
-		        <td><input type="text" name="prodCode" value="${stockDTO.prodCode }" readonly></td>
-				<td><input type="text" name="rawCode" value="${stockDTO.rawCode }" readonly></td>
-				<td><input type="text" name="whseCode" value="${stockDTO.whseCode }" readonly></td>
-				<td ><input type="number"   name="stockCount" min="0" value="${stockDTO.stockCount }"></td> 
-	     </tr> 
-</table>
 
+             <div class="form-group">
+		    <p>제품 코드</p>
+		    <input type="text" name="prodCode" value="${stockDTO.prodCode }" readonly>
+		    </div>
+		    
+		    <div class="form-group">
+			<p>원자재 코드</p>
+			<input type="text" name="rawCode" value="${stockDTO.rawCode }" readonly>
+			</div>
+			
+			<div class="form-group">
+			<p>창고 코드</p>
+			<input type="text" name="whseCode" value="${stockDTO.whseCode }" readonly>
+			</div>
+			
+			<div class="form-group">
+			<p>재고 개수</p>
+			<input type="number"   name="stockCount" min="0" value="${stockDTO.stockCount }">
+			</div>
+			
+			<div class="form-group">
+			<p>재고 비고</p>
+			<input type="text" name="stockMemo" value="${stockDTO.stockMemo }">
+			</div>
+	
+<div id="button">
 <input type="submit" value="수정" >
+</div>
 
 </form>
-
-
-
+</div>
 </body>
 </html>

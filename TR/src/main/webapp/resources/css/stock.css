@@ -42,6 +42,19 @@ hr {
 	padding-left: 10px;
 }
 
+#selected select {
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 100px;
+	height: 40px;
+	font: 500 18px/18px "Inter", sans-serif;
+	padding-left: 10px;
+}
+
+.bt1{
+	width : 20px;
+}
+
 #con {
 	display: flex;
 	flex-direction: column;
@@ -57,7 +70,6 @@ button {
 	text-align: center;
 	font: 500 20px/20px "Inter", sans-serif
 }
-
 
 table {
 	border: 1px solid rgba(221, 221, 221, 0.78);
@@ -80,9 +92,11 @@ tr th{
 	border: 1px solid #F5F6FA !important;
 }
 
-#stockTable th:last-child, #stockTable td:last-child {
+/* 체크박스 크기조정 */
+#stockTable th:first-child, #stockTable td:first-child {
 	min-width: 20px !important;
 }
+
 
 
 table th, table td {
@@ -116,7 +130,6 @@ table tbody tr:nth-child(odd) {
 	gap: 1%;
 	padding-right: 2%;
 	margin-top: 15px;
-	
 }
 
 #searchform {

@@ -7,7 +7,8 @@
   <mapper namespace ="com.itwillbs.Mappers.WarehouseMapper">
   
   <select id="getWarehouseList" resultType="com.itwillbs.domain.WarehouseDTO">
-        select * from warehouse where 1=1
+        SELECT * from warehouse
+where 1=1
         <if test="search1 != null and search1 != ''">
         	and whseCode like concat('%', #{search1}, '%')
     	</if>
