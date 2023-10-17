@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
     <p>제품단위</p>
-    <input type="text" name="prodUnit"  placeholder="제품 단위를 입력해 주세요.">
+    <input type="text" name="prodUnit"  placeholder="제품 단위를 입력해 주세요." value="EA">
     </div>
     <div class="form-group">
     <p>용량</p>
@@ -61,7 +61,6 @@
     </div>
     <p>비고</p>
      <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols=""></textarea>
-<!--     </div> -->
     <div id="button">
     <input type="submit" value="확인">
     </div>

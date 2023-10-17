@@ -16,7 +16,7 @@
     <h1>비고</h1>
     <div class="horizontal-line"></div>
     <form class="popup">
-		<textarea id="prodMemo" style="width: 350px; height: 250px;">${prodDTO.prodMemo}</textarea><br>
+		<textarea id="prodMemo" style="width: 350px; height: 250px;" readonly="readonly">${prodDTO.prodMemo}</textarea><br>
 		<input type="hidden" name="ProdCode" value="${prodDTO.prodCode}" />
 		
 		<button type="button" onclick="location.href='${pageContext.request.contextPath}/product/memotype?prodCode=${prodDTO.prodCode}&memotype=modify'">수정</button>
