@@ -88,4 +88,21 @@ public class ProdService {
 		return String.format("%s%04d", code_id, ++num);
 	}
 
+	public ProdDTO getProdMemo(String prodCode) {
+		System.out.println("ProdService getProdMemo()");
+		return prodDAO.getProdMemo(prodCode);
+	}//getProdMemo
+
+
+	public void insertProdMemo(ProdDTO prodDTO) {
+		System.out.println("ProdService insertProdMemo()");
+
+		prodDAO.insertProdMemo(prodDTO);	
+	}//insertProdMemo
+
+	public void updateProdMemo(ProdDTO prodDTO) {
+		System.out.println("ProdService updateMemo");
+		prodDAO.updateProdMemo(prodDTO);
+	}//updateMemo
+
 }

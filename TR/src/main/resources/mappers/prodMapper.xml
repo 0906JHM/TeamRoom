@@ -123,7 +123,24 @@
 		WHERE prodCode LIKE CONCAT(#{code}, '%')
 	</select>
 	
+	<select id="getProdMemo" resultType="com.itwillbs.domain.ProdDTO">
+		select *
+		from product
+		where prodCode = #{prodCode}
+	</select>
 	
+	<update id="insertProdMemo">
+		update product
+		set prodMemo = #{prodMemo}
+		where prodCode = #{prodCode}
+	</update>
+	
+	<update id="updateProdMemo">
+	update product
+		set prodMemo = #{prodMemo}
+		where
+		prodCode = #{prodCode}
+	</update>
 </mapper>
 
 

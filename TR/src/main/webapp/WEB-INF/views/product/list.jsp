@@ -116,7 +116,19 @@
 								<td id="clientCompany">${prodDTO.clientCompany}</td>
 								<td id="whseName">${prodDTO.whseName}</td>
 								<td id="prodPrice"><fmt:formatNumber>${prodDTO.prodPrice}</fmt:formatNumber></td>
-								<td id="prodMemo">${prodDTO.prodMemo}</td>
+								<c:choose>
+									<c:when test="${not empty prodDTO.prodMemo}">
+										<td class="tg-llyw2"><a href="#"
+											onclick="openProdMemo('${prodDTO.prodCode}'); return prodMemoClose();"
+											style="color: red;">[보기]</a></td>
+									</c:when>
+									<c:otherwise>
+
+										<td class="tg-llyw2"><a href="#"
+											onclick="addProdMemo('${prodDTO.prodCode}'); return prodMemoClose();"
+											style="color: #384855;">[입력]</a></td>
+									</c:otherwise>
+								</c:choose>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -339,6 +351,45 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				return buf;
 			}
 	  });
+	  
+//   <!--------------------------------------------------- 비고 보기 ----------------------------------------->
+
+  function openProdMemo(prodCode) {
+      // 팝업 창의 속성을 설정합니다.
+      var popupWidth = 450;
+      var popupHeight = 500;
+      var left = (window.innerWidth - popupWidth) / 2;
+      var top = (window.innerHeight - popupHeight) / 2;
+      var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
+                          ',left=' + left + ',top=' + top +
+                          ',resizable=yes,scrollbars=yes';
+
+      // 새 창을 열기 위한 URL 설정
+      var url = '${pageContext.request.contextPath}/product/memo?prodCode=' + prodCode;
+
+      // 팝업 창을 열고 속성 설정
+      var newWindow = window.open(url, '_blank', popupFeatures);       
+  }
+  
+  <!--------------------------------------------------- 비고 추가 ----------------------------------------->
+
+  function addProdMemo(prodCode) {
+      // 팝업 창의 속성을 설정합니다.
+      var popupWidth = 450;
+      var popupHeight = 500;
+      var left = (window.innerWidth - popupWidth) / 2;
+      var top = (window.innerHeight - popupHeight) / 2;
+      var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
+                          ',left=' + left + ',top=' + top +
+                          ',resizable=yes,scrollbars=yes';
+
+      // 새 창을 열기 위한 URL 설정
+      var url = '${pageContext.request.contextPath}/product/memotype?prodCode=' + prodCode+'&memotype=add';
+      // 팝업 창을 열고 속성 설정
+      var newWindow = window.open(url, '_blank', popupFeatures); 
+  }
+  
+
 
 </script>
 
