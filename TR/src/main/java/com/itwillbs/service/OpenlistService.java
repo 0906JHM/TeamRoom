@@ -94,12 +94,24 @@ public class OpenlistService {
 		public int countClient() {
 			return pdao.countClient();
 		}
+		public int buycountClient() {
+			return pdao.buycountClient();
+		}
+		public int sellcountClient() {
+			return pdao.sellcountClient();
+		}
 
 		
 		  // 거래처목록 전체 리스트
 		  
 		   public List<ClientDTO> getClientList(RequirementPageDTO pdto) throws Exception
 		   { return pdao.readClientList(pdto);
+		  }
+		   public List<ClientDTO> buygetClientList(RequirementPageDTO pdto) throws Exception
+		   { return pdao.buyreadClientList(pdto);
+		  }
+		   public List<ClientDTO> sellgetClientList(RequirementPageDTO pdto) throws Exception
+		   { return pdao.sellreadClientList(pdto);
 		  }
 		 
 
@@ -108,12 +120,24 @@ public class OpenlistService {
 		  
 		   public int countClient(ClientDTO dto) { return
 		  pdao.countClient(dto); }
+		   
+		   public int buycountClient(ClientDTO dto) { return
+					  pdao.buycountClient(dto); }
+		   
+		   public int sellcountClient(ClientDTO dto) { return
+					  pdao.sellcountClient(dto); }
 		 
 		
 		  // 거래처목록 검색 리스트
 		  
 		   public List<ClientDTO> getClientList(ClientDTO dto,
 		  RequirementPageDTO pdto) throws Exception { return pdao.readClientList(dto, pdto); }
+		   
+		   public List<ClientDTO> buygetClientList(ClientDTO dto,
+					  RequirementPageDTO pdto) throws Exception { return pdao.buyreadClientList(dto, pdto); }
+		   
+		   public List<ClientDTO> sellgetClientList(ClientDTO dto,
+					  RequirementPageDTO pdto) throws Exception { return pdao.sellreadClientList(dto, pdto); }
 	 
 
 		// ==========================================================================

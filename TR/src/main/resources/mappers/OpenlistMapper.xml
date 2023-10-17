@@ -132,6 +132,18 @@
 		SELECT COUNT(*) FROM
 		clients
 	</select>
+	
+	<select id="buycountClient" resultType="int">
+		SELECT COUNT(*) FROM
+		clients
+		where clientType = '발주처'
+	</select>
+	
+	<select id="sellcountClient" resultType="int">
+		SELECT COUNT(*) FROM		
+		clients
+		where clientType = '수주처'
+	</select>
 	<!-- 원자재관리 총 게시글 갯수 출력
 
 	거래처 목록 불러오기 -->
@@ -150,6 +162,24 @@
 		order by 1 desc
 		limit #{start}, #{cntPerPage}
 	</select>
+	
+	<select id="buyreadClient" resultMap="clients"
+		resultType="ClientDTO">
+		SELECT *
+		from clients
+		where clientType = '발주처'
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select>
+	
+	<select id="sellreadClient" resultMap="clients"
+		resultType="ClientDTO">
+		SELECT *
+		from clients
+		where clientType = '수주처'
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
+	</select>
 	<!-- 거래처 목록 불러오기
 
 	거래처 검색 게시글 갯수 출력 -->
@@ -163,6 +193,34 @@
 			<if test="clientCompany != ''">
 				and clientCompany like concat ('%', #{clientCompany}, '%')
 			</if>
+		</where>
+	</select>
+	
+	<select id="buycountSearchClient" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM clients
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+			<if test="clientCompany != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+			and where clientType = '발주처'
+		</where>
+	</select>
+	
+	<select id="sellcountSearchClient" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM clients
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+			<if test="clientCompany != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+			and clientType = '수주처'
 		</where>
 	</select>
 	<!-- 거래처 검색 게시글 갯수 출력
@@ -179,6 +237,43 @@
 			<if test="clientCompany != ''">
 				and clientCompany like concat ('%', #{clientCompany}, '%')
 			</if>
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	
+	<select id="buyreadSearchClient" parameterType="hashMap"
+		resultMap="clients" resultType="ClientDTO">
+		SELECT *
+		from clients
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+			<if test="clientCompany != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+			and where clientType = '발주처'
+		</where>
+		order by 1 desc
+		limit #{start},#{cntPerPage}
+
+	</select>
+	
+	<select id="sellreadSearchClient" parameterType="hashMap"
+		resultMap="clients" resultType="ClientDTO">
+		SELECT *
+		from clients
+		<where>
+			<if test="clientCode != ''">
+				clientCode like concat ('%', #{clientCode}, '%')
+			</if>
+			<if test="clientCompany != ''">
+				and clientCompany like concat ('%', #{clientCompany}, '%')
+			</if>
+				and clientType = '수주처'
+			
 		</where>
 		order by 1 desc
 		limit #{start},#{cntPerPage}
