@@ -93,7 +93,11 @@ public class SellDAO {
 		}// updateSellMemo
 
 		public List<SellDTO> getSellListSearch(SellDTO sellDTO) {
-			return sqlSession.selectList(namespace + ".getSellListSearch", sellDTO);
+			if("전체".equals(sellDTO.getSellState())) {
+				return sqlSession.selectList(namespace + ".getSellListAllSearch", sellDTO);
+			}else {
+				return sqlSession.selectList(namespace + ".getSellListSearch", sellDTO);
+			}
 		}
 
 

@@ -74,14 +74,14 @@ public class InMaterialDAO {
 
 	}
 
-	public void updateInState(InMaterialDTO inMaterialDTO) {
-		sqlSession.update(namespace + ".updateInState", inMaterialDTO);
-	}
+//	public void updateInState(InMaterialDTO inMaterialDTO) {
+//		sqlSession.update(namespace + ".updateInState", inMaterialDTO);
+//	}
 
-	public void updateInDate(InMaterialDTO inMaterialDTO) {
-		sqlSession.update(namespace+".updateInDate",inMaterialDTO);
-		
-	}
+//	public void updateInDate(InMaterialDTO inMaterialDTO) {
+//		sqlSession.update(namespace+".updateInDate",inMaterialDTO);
+//		
+//	}
 
 	public List<InMaterialDTO> getExcelList(InMaterialDTO inMaterialDTO) {
 		if ("전체".equals(inMaterialDTO.getInState())) {
@@ -94,5 +94,16 @@ public class InMaterialDAO {
 			log.debug("나머지용");
 			return sqlSession.selectList(namespace + ".getExcelListSearch", inMaterialDTO);
 		}
+	}
+
+//	public void updateInEmpId(InMaterialDTO inMaterialDTO) {
+//		System.out.println("InMaterialDAO updateInEmpId");
+//		sqlSession.update(namespace+".updateInEmpId",inMaterialDTO);
+//	}
+
+	public void updateInMaterial(InMaterialDTO inMaterialDTO) {
+		System.out.println("InMaterialDAO updateInMaterial");
+		sqlSession.update(namespace+".updateInMaterial",inMaterialDTO);
+		
 	}
 }

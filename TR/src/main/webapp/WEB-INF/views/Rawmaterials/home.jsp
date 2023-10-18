@@ -52,24 +52,28 @@ function deleteValue(){
 		alert("선택된 원자재가 없습니다.");
 	}
 	else{
-		var chk = confirm("정말 삭제하시겠습니까?");				 
-		$.ajax({
-			url : url,             // 전송 URL
-			type : 'POST',         // GET or POST 방식
-			traditional : true,
-			data : {
-			valueArr : valueArr    // 보내고자 하는 data 변수설정
-			},
-	    	success: function(jdata){
-	        	if(jdata = 1) {
-	        		alert("삭제 성공");
-	            	location.replace("home")
-	        	}
-	            else{
-	            	alert("삭제 실패");
-	            }
-	   		}
-		});
+		var chk = confirm("정말 삭제하시겠습니까?");
+        if(chk) {				 
+		    $.ajax({
+			    url : url,             // 전송 URL
+			    type : 'POST',         // GET or POST 방식
+			    traditional : true,
+			    data : {
+			    valueArr : valueArr    // 보내고자 하는 data 변수설정
+			    },
+	    	    success: function(jdata){
+	        	    if(jdata = 1) {
+	        		    alert("삭제 성공");
+	            	    location.replace("home")
+	        	    }
+	                else{
+	            	    alert("삭제 실패");
+	                }
+	   		    }
+		    });
+        } else {
+            alert("삭제 실패");
+        }
 	}
 }
 
@@ -86,12 +90,12 @@ function openPopup2(url) {
 }
 
 // selectclient 페이지 팝업창
-function openPopup3() {
-	// window.name = "부모창 이름";
-	window.name = "home";
-	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
-}
+// function openPopup3() {
+// 	// window.name = "부모창 이름";
+// 	window.name = "home";
+// 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
+// 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
+// }
 
 // memo 페이지 팝업창
 function openPopup4(rawCode) {
@@ -135,7 +139,7 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+<!-- 거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()"> -->
 <input type="submit" value="검색">
 </form>
 
@@ -148,7 +152,7 @@ $(document).ready(function() {
 <td>종류</td>
 <td>단위</td>
 <td>매입단가</td>
-<td>거래처</td>
+<!-- <td>거래처</td> -->
 <td>창고명</td>
 <td>창고수량</td>
 <td>비고</td>
@@ -163,7 +167,7 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawType}</td>
 <td>${rawmaterialsDTO.rawUnit}</td>
 <td>${rawmaterialsDTO.rawPrice}</td>
-<td>${rawmaterialsDTO.clientCode}</td>
+<%-- <td>${rawmaterialsDTO.clientCode}</td> --%>
 <td>${rawmaterialsDTO.whseCode}</td>
 <td>${rawmaterialsDTO.whseCount}</td>
 

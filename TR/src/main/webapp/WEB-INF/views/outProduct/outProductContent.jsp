@@ -76,7 +76,12 @@
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
 				<td colspan="2">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
-					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+					<c:if test="${outProductDTO.whseCount == 0} ">
+						<input type="number" name="outCount" value="${outProductDTO.outCount }" readonly="readonly" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+					</c:if>
+					<c:if test="${outProductDTO.whseCount > 0} ">
+						<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+					</c:if>
 				</td>
 				<td colspan="2">
 					<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
@@ -107,7 +112,7 @@
 			</tr>
 		</table>
 		<div id="buttons">
-		<c:if test="${outProductDTO.sellState != '출고완료' }">
+		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.whseCount != 0 }">
 				<input type="button" id="updateButton" value="출고">
 		</c:if>
 			<input type="button" value="닫기" onclick="window.close()">

@@ -47,26 +47,25 @@
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/sell/sellMainSearch"
 				method="post" id="selectedProId">
-
 				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode"> 
 				
 				<label>거래처</label> 
-	        <input type="text" id="sellclientCode9999" name="sellclientCode" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" readonly >
-        	<input type="text" id="sellclientCompany9999" placeholder="거래처명" onclick=searchItem('sellclient','sellclientCode9999'); readonly >
+	        <input type="text" id="sellclientCode9999" name="clientCode" value="${sellDTOSearch.clientCode}" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" readonly >
+        	<input type="text" id="sellclientCompany9999" name="clientCompany" placeholder="거래처명" value="${sellDTOSearch.clientCompany}" onclick=searchItem('sellclient','sellclientCode9999'); readonly >
 		
 				<br>
 				
 				<label>제품</label>  
-	        <input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
-	      	<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')">
+	        <input type="text" name="prodCode" id="prodCode9999" value="${sellDTOSearch.prodCode}"  onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
+	      	<input type="text" name="prodName" id="prodName9999" value="${sellDTOSearch.prodName}"  placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')">
 	      
 				<br>
 				
 				<label for="startDate">수주 일자</label> 
-	       		<input type="text" name="daterange1" value="" class="daterange" >
+	       		<input type="text" name="daterange1" value="${sellDTOSearch.sellDate}" class="daterange" >
 				<label for="startDate">납기일자</label> 
-				<input type="text" name="daterange2" value="" class="daterange">
-				<input type="hidden" name="sellState" value="">
+				<input type="text" name="daterange2" value="${sellDTOSearch.sellDuedate}" class="daterange">
+				<input type="hidden" name="sellState" value="${sellDTOSearch.sellState}">
 				<input type="submit" value="조회" id="searchButton">
 				<input type="button" value="취소" id="resetButton">
 			</form>
@@ -496,6 +495,44 @@ function openSellDetail(sellCode) {
 
  // 변환된 날짜를 다시 sellDateCell에 표시
  document.getElementById("sellDateType").textContent = formattedDate;
+ 
+ document.addEventListener('DOMContentLoaded', function () {
+	    var allButton = document.getElementById('allButton');
+	    var nonDeliveryButton = document.getElementById('non_deliveryButton');
+	    var interimDeliveryButton = document.getElementById('interim_deliveryButton');
+	    var deliveryButton = document.getElementById('deliveryButton');
+	    var sellStateInput = document.querySelector('input[name="sellState"]');
+	  
+	    allButton.addEventListener('click', function () {
+	        // 전체 버튼을 클릭할 때, input 태그의 값을 변경
+	        sellStateInput.value = "전체";
+// 	        $('#selectedProId').submit();
+	    });
+
+	    nonDeliveryButton.addEventListener('click', function () {
+	        // 미출고 버튼을 클릭할 때, input 태그의 값을 변경
+	        sellStateInput.value = "미출고";
+// 	        $('#selectedProId').submit();
+	    });
+
+	    interimDeliveryButton.addEventListener('click', function () {
+	        // 중간납품 버튼을 클릭할 때, input 태그의 값을 변경
+	        sellStateInput.value = "중간납품";
+// 	        $('#selectedProId').submit();
+	    });
+
+	    deliveryButton.addEventListener('click', function () {
+	        // 출고완료 버튼을 클릭할 때, input 태그의 값을 변경
+	        sellStateInput.value = "출고완료";
+// 	        $('#selectedProId').submit();
+	    });
+	});
+ 
+
+
+
+
+
  </script>
 </body>
 </html>
