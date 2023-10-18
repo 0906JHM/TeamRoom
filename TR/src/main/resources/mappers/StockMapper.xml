@@ -16,9 +16,9 @@
       values (#{stockCount}, #{rawCode}, #{prodCode}, #{whseCode}, #{stockMemo})
   </insert>
   
-  <select id="getBoardList" resultType="com.itwillbs.domain.StockDTO">
+  <select id="getstockListR" resultType="com.itwillbs.domain.StockDTO">
       select * from stock
-      where 1=1
+      where stockType = '원자재'
       <if test="search1 != null and search1 != ''">
         	and prodCode like concat('%', #{search1}, '%')
     	</if>
@@ -28,12 +28,27 @@
    		<if test="search3 != null and search3 != ''">
        		and whseCode like concat('%', #{search3}, '%')
     	</if>
-      limit #{startRow}, #{pageSize}
+           order by stockNum limit #{startRow}, #{pageSize}
   </select>
   
-  <select id="getBoardCount" resultType="java.lang.Integer">
+    <select id="getstockListP" resultType="com.itwillbs.domain.StockDTO">
+      select * from stock
+      where stockType = '완제품'
+      <if test="search1 != null and search1 != ''">
+        	and prodCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and rawCode like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and whseCode like concat('%', #{search3}, '%')
+    	</if>
+     order by stockNum limit #{startRow}, #{pageSize}
+  </select>
+  
+  <select id="getStockCountR" resultType="java.lang.Integer">
       select count(*) from stock
-    
+     where stockType = '원자재'
        <if test="search1 != null and search1 != ''">
         	and prodCode like concat('%', #{search1}, '%')
     	</if>
@@ -45,15 +60,34 @@
     	</if>
   </select>
   
-  <select id="getBoard" resultType="com.itwillbs.domain.StockDTO">
+    <select id="getStockCountP" resultType="java.lang.Integer">
+      select count(*) from stock
+    where stockType = '완제품'
+       <if test="search1 != null and search1 != ''">
+        	and prodCode like concat('%', #{search1}, '%')
+    	</if>
+    	<if test="search2 != null and search2 != ''">
+        	and rawCode like concat('%', #{search2}, '%')
+    	</if>
+   		<if test="search3 != null and search3 != ''">
+       		and whseCode like concat('%', #{search3}, '%')
+    	</if>
+  </select>
+  
+  <select id="getBoardR" resultType="com.itwillbs.domain.StockDTO">
+      select * from stock
+      where stockNum =#{stockNum}
+  </select>
+  
+    <select id="getBoardP" resultType="com.itwillbs.domain.StockDTO">
       select * from stock
       where stockNum =#{stockNum}
   </select>
   
   <update id="updateBoard">
       update stock
-      set stockCount = #{stockCount}
-      where prodCode =#{prodCode}
+      set stockCount = #{stockCount}, stockMemo=#{stockMemo}
+      where prodCode=#{prodCode} or rawCode=#{rawCode}
   </update>
   
   </mapper>
