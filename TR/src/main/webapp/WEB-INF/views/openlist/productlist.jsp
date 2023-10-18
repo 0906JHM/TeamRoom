@@ -50,13 +50,14 @@
      			$('#prodName'+number, opener.document).val(prodName);
      			$('#prodCode'+number, opener.document).val(prodCode);
      			$('#prodPrice'+number, opener.document).val(prodPrice);
+     			window.opener.$('#prodCode'+number).trigger('change');
      			} else {
      			$('#prodName', opener.document).val(prodName);
      			$('#prodCode', opener.document).val(prodCode);
      			$('#prodPrice', opener.document).val(prodPrice);
      			$('#search_prod', opener.document).val(prodCode);
+     			window.opener.$('#prodCode'+number).trigger('change');
      			}
-     			
          		window.close();
          	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
         		

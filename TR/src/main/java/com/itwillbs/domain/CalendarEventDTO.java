@@ -14,6 +14,6 @@ public class CalendarEventDTO {
     private String end;
     private String description;
     private String otherDate;
-    private String color;
+    private String backgroundColor;
     
 }
