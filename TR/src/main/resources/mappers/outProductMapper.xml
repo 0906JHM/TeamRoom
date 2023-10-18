@@ -546,4 +546,10 @@
 		DELETE FROM outProduct
 		WHERE sellCode = #{code}
 	</delete>
+	
+	<update id="updateList">
+		UPDATE outProduct
+		SET prodCode =#{prodCode}, outPrice = #{outPrice}
+		WHERE sellCode = #{sellCode}
+	</update>
 </mapper>
