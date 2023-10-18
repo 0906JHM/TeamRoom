@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.InMaterialDTO;
 import com.itwillbs.service.InMaterialService;
 
@@ -41,7 +43,7 @@ public class InMaterialController {
 	// 입고처리 버튼 => 입고상태, 담당자, 날짜 업데이트해야함
 	@PostMapping("/inMaterialUpdate")
 	@ResponseBody
-	public void inMaterialUpdate(@RequestBody InMaterialDTO inMaterialDTO, HttpServletRequest response) {
+	public void inMaterialUpdate(@RequestBody InMaterialDTO inMaterialDTO, HttpServletRequest response, HttpSession session, HttpServletRequest request) {
 		System.out.println("inMaterialController inMaterialUpdate");
 		
 		inMaterialService.inMaterialContent(inMaterialDTO.getInNum());
@@ -56,6 +58,14 @@ public class InMaterialController {
 		// Date를 원하는 형식의 문자열로 변환
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String current = dateFormat.format(currentDate);
+		if (session != null) {
+            // 세션으로부터 사용자 아이디 가져오기
+            String inEmpId = (String) session.getAttribute("empId");
+            inMaterialDTO.setInEmpId(inEmpId);
+            inMaterialService.updateInEmpId(inMaterialDTO);
+        } else {
+            // 세션이 없을 경우 예외 처리
+        }
 		//입고일 세팅
 		inMaterialDTO.setInDate(current);
 		//입고일 업데이트
@@ -64,8 +74,19 @@ public class InMaterialController {
 		//재고 테이블에서 원자재코드로 입고한만큼 개수 증가
 		inMaterialService.updateWhseCount(inMaterialDTO);
 		
+		//담당자 추가
+		 session = request.getSession(false); // 세션이 없으면 새로 생성하지 않음
+
+	        
+	        System.out.println("세션값"+session.getAttribute("empId"));
+//		EmployeesDTO employeesDTO = (EmployeesDTO)session.getAttribute("empId");
+//		String empId = employeesDTO.getEmpId();
+//		System.out.println("세션아이디"+session.getAttribute("empId"));
+//		inMaterialService.updateInEmpId(empId);
+		
 		
 	}
+	
 
 
 

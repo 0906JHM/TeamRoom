@@ -95,4 +95,9 @@ public class InMaterialDAO {
 			return sqlSession.selectList(namespace + ".getExcelListSearch", inMaterialDTO);
 		}
 	}
+
+	public void updateInEmpId(InMaterialDTO inMaterialDTO) {
+		System.out.println("InMaterialDAO updateInEmpId");
+		sqlSession.update(namespace+".updateInEmpId",inMaterialDTO);
+	}
 }

@@ -108,4 +108,9 @@ public class InMaterialService {
 	public List<InMaterialDTO> getExcelList(InMaterialDTO inMaterialDTO) {
 		return inMaterialDAO.getExcelList(inMaterialDTO);
 	}
+
+	public void updateInEmpId(InMaterialDTO inMaterialDTO) {
+		System.out.println("InMaterialService updateInEmpId");
+		inMaterialDAO.updateInEmpId(inMaterialDTO);
+	}
 }

@@ -401,5 +401,11 @@
 		ORDER BY i.inNum DESC
 	</select>
 	
+<!-- 	입고담당자 업데이트 -->
+	<update id="updateInEmpId">
+		update inMaterial
+		set inEmpId = #{inEmpId}
+		WHERE inNum = #{inNum}
+	</update>
 
 </mapper>
