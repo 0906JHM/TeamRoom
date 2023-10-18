@@ -60,6 +60,7 @@ public class InMaterialDAO {
 	}
 
 	public void insertList(InMaterialDTO inMaterialDTO) {
+		System.out.println(inMaterialDTO);
 		sqlSession.selectOne(namespace + ".insertList", inMaterialDTO);
 	}
 

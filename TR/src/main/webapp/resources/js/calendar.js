@@ -61,16 +61,22 @@ function initializeCalendar(calendarEvents, currentDate) {
 		    var description = info.event.extendedProps.description;
 		    
 		    if (otherDate !== null) {
-		        var message ='<div style="text-align:left; padding-left:15%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
+		        var message ='<div style="text-align:left; padding-left:10%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
 		    } else {
-		        var message ='<div style="text-align:left; padding-left:20%;">' + title + '<br> 기간: ' + start + ' ~ ' + start + '<br>' + title + ' 내용: ' + description + '</div>';
+		        var message ='<div style="text-align:left; padding-left:10%;">' + title + '<br> 기간: ' + start + ' ~ ' + start + '<br>' + title + ' 내용: ' + description + '</div>';
 		    }
 		
 		    Swal.fire({
 		 	    html: message,
 		        confirmButtonText: '확인'
 		    });
-        }
+        },
+        // 아래의 eventContent와 eventDidMount 부분이 추가된 부분입니다.
+        eventContent: function(arg) {
+		    return {
+		        html: arg.event.title // 이벤트의 제목만 표시
+   			};
+		},
     });
     calendar.render();
 }

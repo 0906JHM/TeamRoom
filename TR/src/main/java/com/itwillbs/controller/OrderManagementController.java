@@ -39,8 +39,6 @@ public class OrderManagementController {
 	private RawmaterialsService rawmaterialsService;
 	@Inject
 	private InMaterialService inMaterialService;
-	@Inject
-	private CalendarService calendarService;
 	
 	// 가상주소 http://localhost:8080/leeweb/OrderManagement/home
 	// home 페이징처리, 검색기능
@@ -122,8 +120,6 @@ public class OrderManagementController {
 		// inMaterial 추가한 코드
 		inMaterialService.insertList(ordermanagementDTO);
 		ordermanagementService.insertOrderManagement(ordermanagementDTO);
-		// calendar 추가한 코드
-		calendarService.insertOrderCalendar(ordermanagementDTO);
 		
 		return "redirect:/OrderManagement/home";
 	}
