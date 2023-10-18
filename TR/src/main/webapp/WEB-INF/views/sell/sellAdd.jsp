@@ -23,32 +23,33 @@
 <div class="popupContainer">
 <h1>수주 등록</h1>
 <div class="horizontal-line"></div>
-    <form action="${pageContext.request.contextPath}/sell/sellAddPro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
+    <form action="${pageContext.request.contextPath}/sell/sellAddPro" id=sellAdd class="popup"  method="post"> <!-- onsubmit="checkForm()" --> 
 
        <!--  <label class="popupLabel">수주 코드 : </label>
       	<input type="text" id="sellCode" name="selCode" required="required" ><br> -->
       	
       	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
-        <input type="text" id="sellclientCode9999" name="clientCode" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" readonly required>
-        <input type="text" id="sellclientCompany9999" name="clientCompany" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처명" readonly required><br>
+        <input type="text" id="sellclientCode9999" name="clientCode" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" required="required">
+        <input type="text" id="sellclientCompany9999" name="clientCompany" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처명"  required><br>
 		</div>
 		
 		<div class="popupSerch">
  		<label class="popupLabel">제품 : </label>
- 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly required>
-		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')" required><br>
+ 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드"  required>
+		<input type="text" name="prodName" id="prodName9999" placeholder="제품명"  onclick="searchItem('prod','prodCode9999')" required><br>
 		</div>
 		
 		<label class="popupLabel">제품 단가 : </label>
-        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); placeholder="제품 단가" readonly>원<br>
+        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); placeholder="제품 단가"  required>원<br>
         
         <label class="popupLabel">수주 수량 : </label>
-        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()" required>개<br>
+        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" placeholder="0"  required >개<br>
 
  	    <label class="popupLabel">수주 단가 : </label>
-		<input type="text" id="sellPrice" min="0"  placeholder="먼저 수주 수량을 선택하세요" value="${formattedSellPrice}" readonly>원<br>    
-     <label class="popupLabel">수주 일자 : </label>
+		<input type="text" id="sellPrice" min="0"  placeholder="수주 단가" value="${formattedSellPrice}" readonly="readonly" >원<br>    
+     	
+     	<label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
 
         <label class="popupLabel">납기 일자 : </label>
@@ -61,7 +62,7 @@
         <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
 		
 		<br>
-        <button type="submit" >등록</button>
+        <button type="button" onclick="formCheck()" >등록</button>
         <button type="reset">취소</button>
         <button type="button" onclick="window.close()">닫기</button>
     
@@ -69,12 +70,9 @@
 
 </div>
 <!--  ************************************************ javaScript *************************************************************-->
-
-<!----------------------------------------------- 등록버튼 ---------------------------------------------->
-
 <script type="text/javascript">
 
-//팝업 옵션
+//----------------------------------------------------- 팝업 옵션 -------------------------------------------
 const popupOpt = "top=60,left=140,width=720,height=600";
 
 //검색 팝업
@@ -96,6 +94,26 @@ function openPopup(url) {
 $(document).ready(function() {
 });
 
+//--------------------------------------- 수주 수량 0일때 폼 안넘어가게 --------------------------
+function formCheck() {
+    if ($('#sellCount').val() == 0) {
+        alert("수주 수량을 입력하세요.");
+        return false; // 폼 제출 방지
+    } else {
+        $('#sellAdd').submit();    
+    }
+}
+//---------------------------------------------- 수주 단가 계산 함수 -----------------------------------------
+// 제품 코드의 값이 변경이 될때 가격 자동 변경
+$(document).ready(function() {
+    // 동적 이벤트 핸들러 등록
+    $(document).on('change', '#prodCode9999', function() {
+    	console.log("change 이벤트");
+        calculateSellPrice();
+    });
+});
+
+// 수주단가 계산 함수(=제품단가*수주수량)
 function calculateSellPrice() {
   	var prodPriceInput = document.getElementById('prodPrice9999').value;
     var sellCountInput = document.getElementById('sellCount').value;
@@ -124,6 +142,9 @@ document.getElementById('prodPrice9999').addEventListener('input', calculateSell
 
 // 초기화 함수
 calculateSellPrice();
+//----------------------------------------------- 수주 수량 입력 확인 ------------------------------------
+
+//------------------------------------------------ 수주일자, 납기일자 함수 ---------------------------------
 $(function() {
     // 현재 날짜를 가져오기
     var currentDate = new Date();
@@ -151,27 +172,8 @@ $(function() {
     });
 });
 
-// 유효성 검사
-function checkForm() {
-    // 각 입력 필드 값
-    var clientCode = document.getElementById("clientCode").value;
-    var prodCode = document.getElementById("prodCode").value;
-    var sellCount = document.getElementById("sellCount").value;
-   /*  var sellDate = document.getElementById("sellDate").value; */
-    var sellDuedate = document.getElementById("sellDuedate").value;
-/*     var sellEmpId = document.getElementById("sellEmpId").value; */
-    // 빈 필드 검사
-    if (clientCode == "" || prodCode == "" || sellCount == "" ||
-    		/* sellDate === "" || */ sellDuedate == "" || sellEmpId == "") {
-        alert("모든 내용을 입력해주세요");
-        return false; // 제출 방지
-    } // 추가 유효성 검사
-    if (sellCount == 0 || sellPrice ==0) {
-        alert("모든 내용을 입력해주세요");
-        return false; // 제출 방지
-    }
-    return true;
-}
+
+
 </script>
 
 
