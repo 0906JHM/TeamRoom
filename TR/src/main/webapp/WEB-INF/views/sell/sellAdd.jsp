@@ -30,29 +30,29 @@
       	
       	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
-        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly required>
-        <input type="text" id="clientCompany9999" name="clientCompany" onclick=searchItem('client','clientCode9999'); placeholder="거래처명" readonly required><br>
+        <input type="text" id="sellclientCode9999" name="clientCode" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" readonly required>
+        <input type="text" id="sellclientCompany9999" name="clientCompany" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처명" readonly required><br>
 		</div>
 		
 		<div class="popupSerch">
  		<label class="popupLabel">제품 : </label>
- 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품코드" readonly required>
+ 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly required>
 		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')" required><br>
 		</div>
 		
 		<label class="popupLabel">제품 단가 : </label>
-        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
+        <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); placeholder="제품 단가" readonly>원<br>
         
         <label class="popupLabel">수주 수량 : </label>
         <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()" required>개<br>
 
  	    <label class="popupLabel">수주 단가 : </label>
-		<input type="text" id="sellPrice" min="0" placeholder="0"  value="${formattedSellPrice}" readonly>원<br>    
+		<input type="text" id="sellPrice" min="0"  placeholder="먼저 수주 수량을 선택하세요" value="${formattedSellPrice}" readonly>원<br>    
      <label class="popupLabel">수주 일자 : </label>
         <input type="text" id="sellDate" name="sellDate" readonly><br> 
 
         <label class="popupLabel">납기 일자 : </label>
-        <input type="text" id="sellDuedate" name="sellDuedate" required><br>
+        <input type="text" id="sellDuedate" name="sellDuedate"  placeholder="납기 일자를 선택하세요" required><br>
 
         <label class="popupLabel">담당자 : </label>
         <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
