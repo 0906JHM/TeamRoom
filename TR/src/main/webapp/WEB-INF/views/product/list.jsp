@@ -57,9 +57,9 @@
 				<label>품번</label> <input type="text" placeholder="제품코드를 입력하세요."
 					name="prodCode"> <label>품명</label> <input type="text"
 					placeholder="제품명을 입력하세요." name="prodName"> <label>거래처명</label>
-				<input type="text" name="clientCompany" id="clientCompany9999"
+				<input type="text" name="clientCompany" id="sellclientCompany9999"
 					readonly placeholder="거래처를 선택하세요."
-					onclick="searchItem('sellclient','clientCode9999')">
+					onclick="searchItem('sellclient','sellclientCode9999')" style="cursor: pointer;">
 				<!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
 				<button type="submit">조회</button>
 			</form>
