@@ -49,7 +49,7 @@
  	    <label class="popupLabel">수주 단가 : </label>
 		<input type="text" id="sellPrice" min="0" placeholder="0" value="${formattedSellPrice}" readonly>원<br>    
      <label class="popupLabel">수주 일자 : </label>
-        <input type="text" id="sellDate" name="sellDate" readonly><br> 
+        <input type="text" id="sellDate" name="sellDate" ><br> 
 
         <label class="popupLabel">납기 일자 : </label>
         <input type="text" id="sellDuedate" name="sellDuedate" required><br>
@@ -124,29 +124,17 @@ document.getElementById('prodPrice9999').addEventListener('input', calculateSell
 
 // 초기화 함수
 calculateSellPrice();
-$(function() {
-    // 현재 날짜를 가져오기
-    var currentDate = new Date();
-    
-    // 날짜 형식 지정 (yy-mm-dd)
-    var formattedDate = currentDate.getFullYear() + "-" +
-                        ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" +
-                        ("0" + currentDate.getDate()).slice(-2);
 
-    // #sellDate 필드에 현재 날짜 설정
-    $("#sellDate").val(formattedDate);
+
+$(function() {
+    $("#sellDate").datepicker
 });
-var today = new Date();
-var dd = String(today.getDate() + 1).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-var yyyy = today.getFullYear();
-var currentDateString = yyyy + '-' + mm + '-' + dd;
 // 납품예정일 입력란
 // var shipSdateInput = document.getElementById("shipSdate");
 // 수주일자(오늘) 이후의 날짜만 선택할 수 있도록 Datepicker 설정
 $(function() {
-    $("#sellDuedate").datepicker({
-        minDate: currentDateString, // 현재 날짜 이후로 설정
+    $("#sellDuedate").datepicker({ //납기일자는
+        minDate: "#sellDate", // 수주일자 이후로만 설정가능
         dateFormat: "yy-mm-dd", // MySQL DATE 형식으로 출력
     });
 });
