@@ -22,15 +22,15 @@
 		<table>
 			<tbody>
 				<tr>
-					<th>출고코드</th>
+					<th>출고 코드</th>
 					<td><input type="text" name="outCode" value="${outProductDTO.outCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>수주코드</th>
+					<th>수주 코드</th>
 					<td><input type="text" name="sellCode" value="${outProductDTO.sellCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>거래처코드</th>
+					<th>거래처 코드</th>
 					<td><input type="text" name="clientCode" value="${outProductDTO.clientCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
@@ -38,11 +38,11 @@
 					<td><input type="text" name="clientCompany" value="${outProductDTO.clientCompany }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>상품코드</th>
+					<th>제품 코드</th>
 					<td><input type="text" name="prodCode" value="${outProductDTO.prodCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>상품이름</th>
+					<th>제품명</th>
 					<td><input type="text" name="prodName" value="${outProductDTO.prodName }" readonly="readonly"></td>
 				</tr>
 				<tr>
@@ -50,7 +50,7 @@
 					<td><input type="text" name="outEmpId" value="${outProductDTO.outEmpId }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>출고상태</th>
+					<th>출고 상태</th>
 					<td><input type="text" name="sellState" value="${outProductDTO.sellState }" readonly="readonly"></td>
 				</tr>
 			</tbody>
@@ -58,7 +58,7 @@
 		<br>
 		<table class="outProductTable">
 			<tr>
-				<th colspan="2">납품예정일</th>
+				<th colspan="2">납품 예정일</th>
 				<th colspan="2">출고일</th>
 				<th colspan="2">재출고일</th>
 			</tr>
@@ -68,9 +68,9 @@
 				<td colspan="2"><input type="text" name="outRedate" value="${outProductDTO.outRedate }" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th colspan="2">수주개수</th>
-				<th colspan="2">출고개수</th>
-				<th colspan="2">재고개수</th>
+				<th colspan="2">수주 개수</th>
+				<th colspan="2">출고 개수</th>
+				<th colspan="2">재고 개수</th>
 			</tr>
 			<tr> 
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
@@ -90,7 +90,7 @@
 			</tr>
 			<tr>
 				<th colspan="3">납품가</th>
-				<th colspan="3">출고가격</th>
+				<th colspan="3">출고 가격</th>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -105,7 +105,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th colspan="6">출고비고</th>
+				<th colspan="6">비고</th>
 			</tr>
 			<tr>
 				<td colspan="6"><input type="text" name="outMemo" value="${outProductDTO.outMemo }" id="inputMemo" placeholder="비고 입력"></td>
