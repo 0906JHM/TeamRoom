@@ -99,5 +99,10 @@ public class RawmaterialsService implements RawmaterialsService2 {
 		System.out.println("RawmaterialsService getMemo()");
 		return rawmaterialsDAO.getMemo(rawCode);
 	}
+
+	public ClientDTO getMemo2(String clientCode) {
+		System.out.println("RawmaterialsService getMemo2()");
+		return rawmaterialsDAO.getMemo2(clientCode);
+	}
 	
 }

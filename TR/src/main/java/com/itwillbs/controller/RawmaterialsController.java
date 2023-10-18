@@ -265,6 +265,7 @@ public class RawmaterialsController {
         return "Rawmaterials/selectwarehouse";
     }
   	
+  	// selectrawmaterials 비고
   	@GetMapping("/memo")
   	public String memo(HttpServletRequest request, Model model) {
   		System.out.println("RawmaterialsController memo()");
@@ -277,5 +278,19 @@ public class RawmaterialsController {
   		
   		return "Rawmaterials/memo";
   	}
+  	
+  	// selectclient 비고
+   	@GetMapping("/memo2")
+   	public String memo2(HttpServletRequest request, Model model) {
+   		System.out.println("RawmaterialsController memo2()");
+   		
+   		String clientCode = request.getParameter("clientCode");
+   		
+   		// memo 가져오기
+   		ClientDTO clientDTO = rawmaterialsService.getMemo2(clientCode);
+   		model.addAttribute("clientDTO",clientDTO);
+   		
+   		return "Rawmaterials/memo2";
+   	}
 
 }

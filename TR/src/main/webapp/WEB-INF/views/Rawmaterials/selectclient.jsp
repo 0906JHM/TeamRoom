@@ -25,6 +25,20 @@ function setParentText(){
 	opener.document.getElementById("pInput").value = document.getElementById("cInput").value
 	window.close();
 }
+
+//memo 페이지 팝업창
+function openPopup4(clientCode) {
+	// 팝업창 속성
+	var popupWidth = 450;
+	var popupHeight = 500;
+	var left = (window.innerWidth - popupWidth) / 2;
+	var top = (window.innerHeight - popupHeight) / 2;
+	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+	// 새창을 열기 위한 URL 설정
+	var url = '${pageContext.request.contextPath}/Rawmaterials/memo2?clientCode=' + clientCode;
+	// 팝업창 열고 속성 설정
+	var newWindow = window.open(url, '_blank', popupFeatures);       
+}
 </script>
 
 <!-- form(검색) -->
@@ -55,7 +69,7 @@ function setParentText(){
 </tr>
 
 <c:forEach var="clientDTO" items="${clientList}">
-<tr onclick="document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();">
+<tr onclick="if(event.target.tagName!='A'){document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();}">
 <td>${clientDTO.clientType}</td>
 <td>${clientDTO.clientCode}</td>
 <td>${clientDTO.clientCompany}</td>
@@ -69,7 +83,17 @@ function setParentText(){
 <td>${clientDTO.clientPhone}</td>
 <td>${clientDTO.clientFax}</td>
 <td>${clientDTO.clientEmail}</td>
-<td>${clientDTO.clientMemo}</td>
+
+<!-- 비고기능 -->
+<td><c:choose>
+<c:when test="${not empty clientDTO.clientMemo}">
+<a href="#" onclick="openPopup4('${clientDTO.clientCode}');" style="color:black;">[보기]</a>
+</c:when>
+<c:otherwise>
+<c:set var="clientMemo" value="" />
+</c:otherwise>
+</c:choose></td>
+
 </tr>
 </c:forEach>
 </table>
