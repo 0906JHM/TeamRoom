@@ -61,7 +61,7 @@
     <p>매출 단가(원)</p>
     <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요.">
     </div>
-    <p>비고</p>
+    <p class="memo">비고</p>
      <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols=""></textarea>
     <div id="button">
     <input type="submit" value="확인">

@@ -63,7 +63,7 @@
 				<input type="number" step="0.01" name="prodPrice"
 					value="${prodDTO.prodPrice}">
 			</div>
-			<p>비고</p>
+			<p class="memo">비고</p>
 			<%--     <input type="text" name="prodMemo" value="${prodDTO.prodMemo}"> --%>
 			<textarea name="prodMemo" class="prodMemo" rows="5" cols="">${prodDTO.prodMemo}</textarea>
 			<div id="button">
