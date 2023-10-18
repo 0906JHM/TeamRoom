@@ -170,8 +170,6 @@ public class RawmaterialsController {
 		System.out.println("search2 : " + search2);
 		String search3 = request.getParameter("search3");
 		System.out.println("search3 : " + search3);
-		String search4 = request.getParameter("search4");
-		System.out.println("search4 : " + search4);
  		
         int pageSize = 10;
         String pageNum=request.getParameter("pageNum");
@@ -187,7 +185,6 @@ public class RawmaterialsController {
         pageDTO.setSearch1(search1); // 검색어저장
 	    pageDTO.setSearch2(search2);
 	    pageDTO.setSearch3(search3);
-	    pageDTO.setSearch4(search4);
         
         // 거래처 내용 뿌려주기
         List<ClientDTO> clientList= rawmaterialsService.getClientList(pageDTO);

@@ -38,7 +38,7 @@ $(function(){
 	});
 });
 
-// 체크박스로 삭제
+//체크박스로 삭제
 function deleteValue(){
 	var url = "delete"; // Controller로 보내고자 하는 URL
 	var valueArr = new Array();
@@ -51,27 +51,31 @@ function deleteValue(){
 	}
 	
 	if (valueArr.length == 0){
-		alert("선택된 원자재가 없습니다.");
+		alert("선택된 발주가 없습니다.");
 	}
 	else{
-		var chk = confirm("정말 삭제하시겠습니까?");				 
-		$.ajax({
-			url : url,             // 전송 URL
-			type : 'POST',         // GET or POST 방식
-			traditional : true,
-			data : {
-			valueArr : valueArr    // 보내고자 하는 data 변수설정
-			},
-	    	success: function(jdata){
-	        	if(jdata = 1) {
-	        		alert("삭제 성공");
-	            	location.replace("home")
-	        	}
-	            else{
-	            	alert("삭제 실패");
-	            }
-	   		}
-		});
+		var chk = confirm("정말 삭제하시겠습니까?");
+        if(chk) {				 
+		    $.ajax({
+			    url : url,             // 전송 URL
+			    type : 'POST',         // GET or POST 방식
+			    traditional : true,
+			    data : {
+			    valueArr : valueArr    // 보내고자 하는 data 변수설정
+			    },
+	    	    success: function(jdata){
+	        	    if(jdata = 1) {
+	        		    alert("삭제 성공");
+	            	    location.replace("home")
+	        	    }
+	                else{
+	            	    alert("삭제 실패");
+	                }
+	   		    }
+		    });
+        } else {
+            alert("삭제 실패");
+        }
 	}
 }
 
@@ -136,6 +140,7 @@ $(document).ready(function() {
 <td>품명</td>
 <td>종류</td>
 <td>거래처명</td>
+<td>창고코드</td>
 <td>창고수량</td>
 <td>발주수량</td>
 <td>납입단가</td>
@@ -153,6 +158,7 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.rawName}</td>
 <td>${ordermanagementDTO.rawType}</td>
 <td>${ordermanagementDTO.clientCode}</td>
+<td>${ordermanagementDTO.whseCode}</td>
 <td>${ordermanagementDTO.whseCount}</td>
 <td>${ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.rawPrice}</td>

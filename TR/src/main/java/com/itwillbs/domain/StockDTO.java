@@ -18,7 +18,7 @@ public class StockDTO {
 	private String whseCode;
 	private int stockNum;
 	private String stockMemo;
-	private int whseCount;
+	private String stockType;
 	
 
 

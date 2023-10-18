@@ -64,7 +64,7 @@
 	
 	<update id="updateRawmaterials">
 		update rawMaterial
-		set rawName=#{rawName}, rawType=#{rawType}, rawUnit=#{rawUnit}, rawPrice=#{rawPrice}, clientCode=#{clientCode}, whseCode=#{whseCode}, rawMemo=#{rawMemo}
+		set rawName=#{rawName}, rawType=#{rawType}, rawUnit=#{rawUnit}, rawPrice=#{rawPrice}, whseCode=#{whseCode}, rawMemo=#{rawMemo}
 		where rawCode = #{rawCode}
 	</update>
 	
@@ -79,12 +79,10 @@
     	<if test="search2 != null and search2 != ''">
         	and clientCompany like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and clientType = #{search3}
+    	<if test="search3 != null and search3 != ''">
+    		and clientName like concat('%', #{search3}, '%')
     	</if>
-    	<if test="search4 != null and search4 != ''">
-    		and clientName like concat('%', #{search4}, '%')
-    	</if>
+    	and clientType like concat('%', '발주처', '%')
      	order by clientCode asc limit #{startRow}, #{pageSize}
 	</select>
 	
@@ -99,12 +97,10 @@
     	<if test="search2 != null and search2 != ''">
         	and clientCompany like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and clientType = #{search3}
+    	<if test="search3 != null and search3 != ''">
+    		and clientName like concat('%', #{search3}, '%')
     	</if>
-    	<if test="search4 != null and search4 != ''">
-    		and clientName like concat('%', #{search4}, '%')
-    	</if>
+    	and clientType like concat('%', '발주처', '%')
  	</select>
  	
  	<!-- selectwarehouse 페이징처리, 검색기능 -->
@@ -118,12 +114,13 @@
     	<if test="search2 != null and search2 != ''">
         	and whseName like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseType = #{search3}
+    	<if test="search3 != null and search3 != ''">
+        	and whseAddr like concat('%', #{search3}, '%')
     	</if>
     	<if test="search4 != null and search4 != ''">
-       		and whseAddr = #{search4}
+        	and rawCode like concat('%', #{search4}, '%')
     	</if>
+    	and whseType like concat('%', '원자재', '%')
      	order by whseCode desc limit #{startRow}, #{pageSize}
 	</select>
 	
@@ -138,12 +135,13 @@
     	<if test="search2 != null and search2 != ''">
         	and whseName like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseType = #{search3}
+    	<if test="search3 != null and search3 != ''">
+        	and whseAddr like concat('%', #{search3}, '%')
     	</if>
     	<if test="search4 != null and search4 != ''">
-       		and whseAddr = #{search4}
+        	and rawCode like concat('%', #{search4}, '%')
     	</if>
+    	and whseType like concat('%', '원자재', '%')
  	</select>
  	
  	<select id="getMemo" resultType="com.itwillbs.domain.RawmaterialsDTO">

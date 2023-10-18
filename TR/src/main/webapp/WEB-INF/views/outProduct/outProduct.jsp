@@ -46,20 +46,20 @@
 			<table>
 				<thead>
 					<tr>
-						<th>출고번호</th>
-						<th>수주번호</th>
-						<th>거래처코드</th>
+						<th>출고 코드</th>
+						<th>수주 코드</th>
+						<th>거래처 코드</th>
 						<th>거래처명</th>
-						<th>제품코드</th>
-						<th>제품이름</th>
-						<th>주문수량</th>
-						<th>출고수량</th>
-						<th>재고수량</th>
+						<th>제품 코드</th>
+						<th>제품명</th>
+						<th>주문 수량</th>
+						<th>출고 수량</th>
+						<th>재고 수량</th>
 						<th>납품가</th>
-						<th>납품예정일</th>
-						<th>출고날짜</th>
+						<th>납품 예정일</th>
+						<th>출고 날짜</th>
 						<th>담당자</th>
-						<th>출고여부</th>
+						<th>출고 여부</th>
 						<th>상세정보</th>
 					</tr>
 				</thead>
