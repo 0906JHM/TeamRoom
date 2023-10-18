@@ -62,10 +62,13 @@
 				<br>
 				
 				<label for="startDate">수주 일자</label> 
-	       		<input type="text" name="daterange1" value="${sellDTOSearch.sellDate}" class="daterange" >
+	       		<input type="text" id="sellDate" name="daterange1" value="${sellDTOSearch.sellDate}" class="daterange" >
+				
 				<label for="startDate">납기일자</label> 
-				<input type="text" name="daterange2" value="${sellDTOSearch.sellDuedate}" class="daterange">
-				<input type="hidden" name="sellState" value="${sellDTOSearch.sellState}">
+				<input type="text" id="sellDuedate" name="daterange2" value="${sellDTOSearch.sellDuedate}" class="daterange">
+				
+				<input type="hidden" id="sellState" name="sellState" value="${sellDTOSearch.sellState}">
+			
 				<input type="submit" value="조회" id="searchButton">
 				<input type="button" value="취소" id="resetButton">
 			</form>
@@ -141,7 +144,7 @@
 								<td><fmt:formatNumber value="${sellDTO.sellPrice}"
 										pattern="###,###원" /></td><!-- 수주단가 -->
 								
-								<td id="sellDateType">${sellDTO.sellDate}</td><!-- 수주일자 -->
+								<td>${sellDTO.sellDate}</td><!-- 수주일자 -->
 								
 								<td>${sellDTO.sellDuedate}</td><!-- 납기일자  -->
 								
@@ -487,23 +490,6 @@ function openSellDetail(sellCode) {
 	  });
     
    <!--------------------------------------------------- 상단 조건 검색 ----------------------------------------->
-	
-
-    
-
- // sellDateCell의 내용을 가져와서 날짜 객체로 변환
- var sellDateText = document.getElementById("sellDateType").textContent;
- var sellDate = new Date(sellDateText);
-
- // 날짜를 "yyyy-mm-dd" 형식으로 직접 변환
- var year = sellDate.getFullYear();
- var month = String(sellDate.getMonth() + 1).padStart(2, '0');
- var day = String(sellDate.getDate()).padStart(2, '0');
- var formattedDate = year + "-" + month + "-" + day;
-
- // 변환된 날짜를 다시 sellDateCell에 표시
- document.getElementById("sellDateType").textContent = formattedDate;
- 
  document.addEventListener('DOMContentLoaded', function () {
 	    var allButton = document.getElementById('allButton');
 	    var nonDeliveryButton = document.getElementById('non_deliveryButton');
@@ -536,7 +522,26 @@ function openSellDetail(sellCode) {
 	    });
 	});
  
+//-------------------------------------------------- 검색 초기화 -----------------------------------
+ $("#resetButton").click(function () {
+ 	$(".buttons").removeClass("highlighted");
 
+     // 클릭한 버튼에 "highlighted" 클래스 추가
+     $("#allButton").addClass("highlighted");
+ 	
+     sellStateButton2 = "전체";
+ 	sellStateButton1 = sellStateButton2;
+     
+ 	$("#sellCode").val('');
+ 	$("#sellclientCode9999").val('');
+ 	$("#sellclientCompany9999").val('');
+ 	$("#prodCode9999").val('');
+ 	$("#prodName9999").val('');
+ 	$("#sellDate").val('');
+ 	$("#sellDuedate").val('');
+    $("#sellState").val('');
+     firstLoadSellList();
+ });
 
 
 

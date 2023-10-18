@@ -92,17 +92,23 @@ public class SellDAO {
 			sqlSession.update(namespace + ".updateSellMemo", sellDTO);
 		}// updateSellMemo
 
+		
+		//---------------------------------------------- 수주 조회 목록 ------------------------------------------------
 		public List<SellDTO> getSellListSearch(SellDTO sellDTO) {
 			if("전체".equals(sellDTO.getSellState())) {
 				return sqlSession.selectList(namespace + ".getSellListAllSearch", sellDTO);
 			}else {
 				return sqlSession.selectList(namespace + ".getSellListSearch", sellDTO);
 			}
-		}
+		}//getSellListSearch
 
+	//----------------------------------------------------- 수주 조회 개수 --------------------------------------------------------
+		public int getSellSearchCount() {
+			System.out.println("SellDAO getSellSearchCount()");
 
-
-
+			return sqlSession.selectOne(namespace + ".getSellSearchCount");
+		}//getSellSearchCount
+		
 		
 
 		

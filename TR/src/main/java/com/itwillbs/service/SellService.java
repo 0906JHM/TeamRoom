@@ -91,10 +91,19 @@ public class SellService {
 		sellDAO.updateSellMemo(sellDTO);
 	}//updateSellMemo
 
+	//---------------------------------------------- 수주 조회 목록 ------------------------------------------------	
 	public List<SellDTO> getSellListSearch(SellDTO sellDTO) {
 		return sellDAO.getSellListSearch(sellDTO);
-	}
+	}//getSellListSearch
 
+	//----------------------------------------------------- 수주 조회 개수 --------------------------------------------------------
+	public int getSellSearchCount() {
+		System.out.println("SellService getSellSearchCount()");
+
+		return sellDAO.getSellSearchCount();
+	}//getSellSearchCount
+
+	
 	
 
 
