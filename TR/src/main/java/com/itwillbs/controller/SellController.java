@@ -185,6 +185,7 @@ public String sellDetail(HttpServletRequest request, Model model) {
 	public ResponseEntity<String> sellUpdatePro(SellDTO sellDTO) {
 		System.out.println("SellController sellUpdatePro()");
 		// 수정
+		outProductService.updateList(sellDTO);
 		sellService.sellUpdate(sellDTO);
 
 		//return "redirect:/sell/sellMain";
