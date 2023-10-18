@@ -23,20 +23,20 @@
 <div class="popupContainer">
 <h1>수주 정보 수정</h1>
 <div class="horizontal-line"></div>
-    <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
+    <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="sellUpdate" class="popup"  method="post"  >
 
        	<label class="popupLabel">수주 코드 : </label>
       	<input type="text" id="sellCode" name="sellCode" value="${sellDTO.sellCode}" readonly ><br> 
       	
       	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
-        <input type="text" id="clientCode9999" name="clientCode"  value="${sellDTO.clientCode}" onclick=searchItem('client','clientCode9999'); readonly required>
-        <input type="text" id="clientCompany9999" name="clientCompany" value="${sellDTO.clientCompany}" onclick=searchItem('client','clientCode9999');  readonly required><br>
+        <input type="text" id="clientCode9999" name="clientCode"  value="${sellDTO.clientCode}" onclick=searchItem('client','clientCode9999'); required>
+        <input type="text" id="clientCompany9999" name="clientCompany" value="${sellDTO.clientCompany}" onclick=searchItem('client','clientCode9999');  required><br>
 		</div>
 		
 		<div class="popupSerch">
  		<label class="popupLabel">제품 : </label>
- 		<input type="text" name="prodCode" id="prodCode9999" value="${sellDTO.prodCode}" onclick=searchItem('prod','prodCode9999'); readonly required>
+ 		<input type="text" name="prodCode" id="prodCode9999" value="${sellDTO.prodCode}" onclick=searchItem('prod','prodCode9999'); required>
 		<input type="text" name="prodName" id="prodName9999" value="${sellDTO.prodName}" readonly onclick="searchItem('prod','prodCode9999')" required><br>
 		</div>
 		
@@ -50,7 +50,7 @@
 		<input type="text" id="sellPrice" min="0" value="${formattedSellPrice}" readonly>원<br>    
 		
     	<label class="popupLabel">수주 일자 : </label>
-        <input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDate}"readonly><br>
+        <input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDate}" readonly><br>
         
         <label class="popupLabel">납기 일자 : </label>
         <input type="text" id="sellDuedate" value="${sellDTO.sellDuedate}" name="sellDuedate" required><br>
@@ -59,10 +59,10 @@
         <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
 
         <label class="popupLabel">비고 : </label><br>
-        <textarea id="sellMemo" name="sellMemo"  value="${sellDTO.sellMemo}" style="width: 400px; height: 150px;"></textarea><br>
+        <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;">${sellDTO.sellMemo}</textarea><br>
 		
 		<br>
-        <button type="submit" >저장</button>
+       <button type="button" onclick="formCheck()" >등록</button>
         <button type="reset">취소</button>
         <button type="button" onclick="window.close()">닫기</button>
     
@@ -71,9 +71,11 @@
 </div>
 <!--  ************************************************ javaScript *************************************************************-->
 
-<!----------------------------------------------- 등록버튼 ---------------------------------------------->
+
 
 <script type="text/javascript">
+
+//--------------------------------------------------- 제품가격에 따라 수주가격 자동 변경  ----------------------
 // 제품 코드의 값이 변경이 될때 가격 변경
 $(document).ready(function() {
     // 동적 이벤트 핸들러 등록
@@ -83,12 +85,7 @@ $(document).ready(function() {
     });
 });
 
-
-
-
-</script>
-
-<script>
+//--------------------------------------------------- 팝업옵션 ----------------------
 //팝업 옵션
 const popupOpt = "top=60,left=140,width=720,height=600";
 
@@ -111,6 +108,7 @@ function openPopup(url) {
 $(document).ready(function() {
 });
 
+//--------------------------------------------------- 수주가격 구하는 함수 (=제품가격*수주수량) ----------------------
 function calculateSellPrice() {
   	var prodPriceInput = document.getElementById('prodPrice9999').value;
     var sellCountInput = document.getElementById('sellCount').value;
@@ -140,12 +138,11 @@ document.getElementById('prodPrice9999').addEventListener('input', calculateSell
 // 초기화 함수
 calculateSellPrice();
 
-
+//--------------------------------------------------- 납기 일자 ----------------------------
 $(function() {
     $("#sellDate").datepicker
 });
-// 납품예정일 입력란
-// var shipSdateInput = document.getElementById("shipSdate");
+
 // 수주일자(오늘) 이후의 날짜만 선택할 수 있도록 Datepicker 설정
 $(function() {
     $("#sellDuedate").datepicker({ //납기일자는
@@ -154,26 +151,15 @@ $(function() {
     });
 });
 
-// 유효성 검사
-function checkForm() {
-    // 각 입력 필드 값
-    var clientCode = document.getElementById("clientCode").value;
-    var prodCode = document.getElementById("prodCode").value;
-    var sellCount = document.getElementById("sellCount").value;
-   /*  var sellDate = document.getElementById("sellDate").value; */
-    var sellDuedate = document.getElementById("sellDuedate").value;
-/*     var sellEmpId = document.getElementById("sellEmpId").value; */
-    // 빈 필드 검사
-    if (clientCode == "" || prodCode == "" || sellCount == "" ||
-    		/* sellDate === "" || */ sellDuedate == "" || sellEmpId == "") {
-        alert("모든 내용을 입력해주세요");
-        return false; // 제출 방지
-    } // 추가 유효성 검사
-    if (sellCount == 0 || sellPrice ==0) {
-        alert("모든 내용을 입력해주세요");
-        return false; // 제출 방지
+
+//--------------------------------------- 수주 수량 0일때 폼 안넘어가게 --------------------------
+function formCheck() {
+    if ($('#sellCount').val() == 0) {
+        alert("수주 수량을 입력하세요.");
+        return false; // 폼 제출 방지
+    } else {
+        $('#sellUpdate').submit();    
     }
-    return true;
 }
 </script>
 

@@ -81,9 +81,23 @@ button:hover {
 			<button type="submit">로그인</button>
 		</form>
 	</div>
+	
+	
 </body>
-<script>
+<script type="text/javascript">
+/* $(document).ready(function(){
+//		id="join" 폼을 전송했을때
+	$('#login').submit(function(){
 
+//      class="id"  value 비어있으면
+		if($('.empId')!={loginDTO.empId}){
+			// 아이디 입력하세요
+			alert("계정 정보가 틀렸습니다");
+			$('.empId').focus();
+			//submit버튼이 동작하지 못하게 막음
+			return false;
+		}
+	}); */
 
 </script>
 

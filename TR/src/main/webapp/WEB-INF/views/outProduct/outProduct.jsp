@@ -46,20 +46,20 @@
 			<table>
 				<thead>
 					<tr>
-						<th>출고번호</th>
-						<th>수주번호</th>
-						<th>거래처코드</th>
+						<th>출고 코드</th>
+						<th>수주 코드</th>
+						<th>거래처 코드</th>
 						<th>거래처명</th>
-						<th>제품코드</th>
-						<th>제품이름</th>
-						<th>주문수량</th>
-						<th>출고수량</th>
-						<th>재고수량</th>
+						<th>제품 코드</th>
+						<th>제품명</th>
+						<th>주문 수량</th>
+						<th>출고 수량</th>
+						<th>재고 수량</th>
 						<th>납품가</th>
-						<th>납품예정일</th>
-						<th>출고날짜</th>
+						<th>납품 예정일</th>
+						<th>출고 날짜</th>
 						<th>담당자</th>
-						<th>출고여부</th>
+						<th>출고 여부</th>
 						<th>상세정보</th>
 					</tr>
 				</thead>
@@ -285,7 +285,7 @@
 		  			        var button = $("<input type='button' value='상세정보'>");
 		  			        button.click(function () {
 		  			            // 버튼 클릭 시 처리할 동작을 여기에 추가
-		  			            window.open(contextPath + "/outProduct/outProductContent?outCode=" + outCode, "출고 상세정보", "width=500,height=800,toolbar=no,location=no,resizable=yes");
+		  			            window.open(contextPath + "/outProduct/outProductContent?outCode=" + outCode, "출고 상세정보", "width=500,height=700,toolbar=no,location=no,resizable=yes");
 		  			        });
 		
 		  			        // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가

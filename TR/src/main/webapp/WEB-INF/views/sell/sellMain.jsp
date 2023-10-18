@@ -244,6 +244,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 
+//팝업창에서 작업 완료후 닫고 새로고침
+$(document).ready(function() {
+	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+    if (refreshAndClose) {
+        window.opener.location.reload(); // 부모창 새로고침
+        window.close(); // 현재창 닫기
+    }
+});
 <!--------------------------------------------------- 목록 전체 선택 ----------------------------------------->
 $(document).ready(function() {
 $('#select-list-all').click(function() {

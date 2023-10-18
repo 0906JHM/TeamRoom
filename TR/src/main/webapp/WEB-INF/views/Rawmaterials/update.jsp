@@ -45,7 +45,7 @@ function openPopup2() {
     <td><input type="text" name="rawPrice" value="${rawmaterialsDTO.rawPrice}"></td></tr>
 <!-- <tr><td>거래처</td> -->
 <%--     <td><input type="text" name="clientCode" id="pInput" value="${rawmaterialsDTO.clientCode}"> <input type="button" value="목록" onclick="openPopup1()"></td></tr> --%>
-<tr><td>창고명</td>
+<tr><td>창고코드</td>
     <td><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}"> <input type="button" value="목록" onclick="openPopup2()"></td></tr>
 <tr><td>비고</td>
 	<td><textarea name="rawMemo" rows="10" cols="15">${rawmaterialsDTO.rawMemo}</textarea></td></tr>

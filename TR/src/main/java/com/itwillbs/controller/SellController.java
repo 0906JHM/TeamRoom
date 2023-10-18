@@ -1,11 +1,13 @@
 package com.itwillbs.controller;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +45,6 @@ public class SellController {
 	private SellService sellService;
 	@Inject 
 	private OutProductService outProductService;
-	@Inject
-	private CalendarService calendarService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
@@ -115,7 +115,7 @@ public String sellAdd() {
 }//sellAdd
 
 @PostMapping("/sellAddPro")
-public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
+public void sellAddPro(SellDTO sellDTO, HttpServletResponse response) {
 	System.out.println("SellController sellAddPro()");
 	System.out.println(sellDTO);
 	
@@ -132,7 +132,6 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
     
 	outProductService.insertList(sellDTO);		
 	sellService.insertSell(sellDTO);			
-	calendarService.insertSellCalendar(sellDTO);
 	/*
 	 sellCode 수주코드, 
 	 sellDate 수주일자, 
@@ -149,7 +148,17 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
 	 prodPrice 제품단가 1ea
 	 */
 
-	return ResponseEntity.ok("<script>window.close();</script>");
+	response.setContentType("text/html;charset=UTF-8");
+	PrintWriter out;
+	try {
+		out = response.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("window.close();");
+		out.println("</script>");
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
 }//sellAddPro
 
 //-------------------------------------------------- 수주 상세정보 ------------------------------------------
@@ -182,15 +191,23 @@ public String sellDetail(HttpServletRequest request, Model model) {
 	}//sellUpdate
 
 	@PostMapping("/sellUpdatePro")
-	public ResponseEntity<String> sellUpdatePro(SellDTO sellDTO) {
+	public void sellUpdatePro(SellDTO sellDTO, HttpServletResponse response) {
 		System.out.println("SellController sellUpdatePro()");
 		// 수정
 		outProductService.updateList(sellDTO);
 		sellService.sellUpdate(sellDTO);
 
-		//return "redirect:/sell/sellMain";
-		
-		return ResponseEntity.ok("<script>window.close();</script>");
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println("<script>");
+			out.println("window.opener.location.reload();");
+			out.println("window.close();");
+			out.println("</script>");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}//sellUpdatePro
 	
 //-------------------------------------------------- 수주 삭제 ---------------------------------------------
@@ -200,7 +217,6 @@ public String sellDetail(HttpServletRequest request, Model model) {
 		System.out.println("넘어온 데이터 "+checked);
 		
 		int result = sellService.sellDelete(checked);
-		calendarService.deleteSellCalendar(checked);
 		outProductService.deleteSell(checked);
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
@@ -245,12 +261,22 @@ public String sellMemoAdd(HttpServletRequest request, Model model) {
 }//sellMemotype
 
 @PostMapping("/sellMemotypePro")
-public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
+public void sellMemotypePro(SellDTO sellDTO, HttpServletResponse response) {
 	System.out.println("SellController sellMemotypePro()");
 	System.out.println(sellDTO);
 	sellService.insertSellMemo(sellDTO);
-	return ResponseEntity.ok("<script>window.close();</script>");
-
+	
+	response.setContentType("text/html;charset=UTF-8");
+	PrintWriter out;
+	try {
+		out = response.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("window.close();");
+		out.println("</script>");
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
 }//sellMemotypePro	
 
 //----------------------------------------------------- 비고 수정 ---------------------------------------
@@ -272,6 +298,7 @@ public String updateSellMemo(HttpServletRequest request,Model model) {
 	return "sell/updateSellMemo";
 }//sellMemoUpdate
 	
+//----------------------------------------------------- 비고 수정 ---------------------------------------
 @PostMapping("/sellMemoUpdatePro")
 public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemoUpdatePro()");

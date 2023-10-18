@@ -37,13 +37,13 @@ function setParentText(){
 }
 
 // selectclient 페이지 팝업창
-function openPopup3() {
-    var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
-    // 팝업 창닫기 버튼 클릭시 창닫기
-    popupWindow.onbeforeunload = function() {
-        popupWindow.close();
-    };
-}
+// function openPopup3() {
+//     var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
+//     // 팝업 창닫기 버튼 클릭시 창닫기
+//     popupWindow.onbeforeunload = function() {
+//         popupWindow.close();
+//     };
+// }
 
 // memo 페이지 팝업창
 function openPopup4(rawCode) {
@@ -106,7 +106,7 @@ function openPopup4(rawCode) {
 <!-- 비고기능 -->
 <td><c:choose>
 <c:when test="${not empty rawmaterialsDTO.rawMemo}">
-<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" target="_blank" style="color:black;">[보기]</a>
+<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" style="color:black;">[보기]</a>
 </c:when>
 <c:otherwise>
 <c:set var="rawMemo" value="" />
