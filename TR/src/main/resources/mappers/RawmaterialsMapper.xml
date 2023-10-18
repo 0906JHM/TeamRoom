@@ -118,12 +118,13 @@
     	<if test="search2 != null and search2 != ''">
         	and whseName like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseType = #{search3}
+    	<if test="search3 != null and search3 != ''">
+        	and whseAddr like concat('%', #{search3}, '%')
     	</if>
     	<if test="search4 != null and search4 != ''">
-       		and whseAddr = #{search4}
+        	and rawCode like concat('%', #{search4}, '%')
     	</if>
+    	and whseType like concat('%', '원자재', '%')
      	order by whseCode desc limit #{startRow}, #{pageSize}
 	</select>
 	
@@ -138,12 +139,13 @@
     	<if test="search2 != null and search2 != ''">
         	and whseName like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseType = #{search3}
+    	<if test="search3 != null and search3 != ''">
+        	and whseAddr like concat('%', #{search3}, '%')
     	</if>
     	<if test="search4 != null and search4 != ''">
-       		and whseAddr = #{search4}
+        	and rawCode like concat('%', #{search4}, '%')
     	</if>
+    	and whseType like concat('%', '원자재', '%')
  	</select>
  	
  	<select id="getMemo" resultType="com.itwillbs.domain.RawmaterialsDTO">
