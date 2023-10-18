@@ -76,12 +76,16 @@
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
 				<td colspan="2">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
-					<c:if test="${outProductDTO.whseCount == 0} ">
-						<input type="number" name="outCount" value="${outProductDTO.outCount }" readonly="readonly" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+					<c:if test="${outProductDTO.whseCount == null || outProductDTO.whseCount == 0}">
+   						<input type="number" name="outCount" value="0" readonly="readonly">
+    					<script type="text/javascript">
+        					console.log("재고가 0개");
+    					</script>
 					</c:if>
-					<c:if test="${outProductDTO.whseCount > 0} ">
-						<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+					<c:if test="${outProductDTO.whseCount != null && outProductDTO.whseCount > 0}">
+    					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
 					</c:if>
+
 				</td>
 				<td colspan="2">
 					<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
@@ -118,6 +122,7 @@
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
 	</form>
+	
 	<script type="text/javascript">
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
