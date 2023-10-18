@@ -64,7 +64,7 @@
 	
 	<update id="updateRawmaterials">
 		update rawMaterial
-		set rawName=#{rawName}, rawType=#{rawType}, rawUnit=#{rawUnit}, rawPrice=#{rawPrice}, clientCode=#{clientCode}, whseCode=#{whseCode}, rawMemo=#{rawMemo}
+		set rawName=#{rawName}, rawType=#{rawType}, rawUnit=#{rawUnit}, rawPrice=#{rawPrice}, whseCode=#{whseCode}, rawMemo=#{rawMemo}
 		where rawCode = #{rawCode}
 	</update>
 	
