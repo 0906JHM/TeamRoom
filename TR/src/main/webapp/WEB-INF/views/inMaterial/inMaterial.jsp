@@ -44,7 +44,7 @@
 			<input type="text" name="clientCompany" id="clientCompany9999"
 				placeholder="거래처를 선택하세요."
 				onclick="searchItem('client','clientCode9999')"> <input
-				type="button" value="검색" id="searchButton">
+				type="button" value="조회" id="searchButton">
 				<input type="button" value="초기화" id="resetButton">
 		</div>
 		<hr>
