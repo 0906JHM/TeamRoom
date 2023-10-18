@@ -11,8 +11,10 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/perf.css">
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/perf.css">
 
 	
 	<link href="${pageContext.request.contextPath }/resources/css/side.css"
@@ -182,134 +184,181 @@ $(document).ready(function() {
             'width=1200px, height=800px, left=500px, top=100px'
         );
     });
-    
-    
-       
 
-
-// 돋보기 아이콘에 대한 클릭 이벤트 리스너 추가
-document.querySelectorAll('.magnifier').forEach(function(magnifier) {
-    magnifier.addEventListener('click', function() {
-    	console.log("에러 발생!");
-        // 선택한 실적 코드 가져오기
-        var perfCode = this.getAttribute('data-perfcode');
+    // 돋보기 아이콘에 대한 클릭 이벤트 리스너 추가
+    document.querySelectorAll('.magnifier').forEach(function(magnifier) {
+        magnifier.addEventListener('click', function() {
+            console.log("에러 발생!");
+            // 선택한 실적 코드 가져오기
+            var perfCode = this.getAttribute('data-perfcode');
         
-        // 새 창을 열고 선택한 실적 코드를 URL 파라미터로 전달
-        window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=600px,height=400px');
+            // 새 창을 열고 선택한 실적 코드를 URL 파라미터로 전달
+            window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=600px,height=400px');
+        });
     });
-});
 
+    // 라인 코드 리스트
+    var lineCode = ["L101", "L102", "L103"];
+    $.ajax({
+        type: "POST",
+        url: "${pageContext.request.contextPath}/perfajax/perfdonut",
+        dataType: "json",
+        contentType: "application/json", // 데이터 형식을 JSON으로 지정
+        data: JSON.stringify(lineCode), // 라인 코드 리스트를 JSON 문자열로 변환하여 전송
+        success: function(data) {
+            console.log(data);
+            console.log("데이터 받음: ", data); // 데이터를 로그에 출력
 
-
-      
-   // 라인 코드 리스트
-      var lineCode = ["L101", "L102", "L103"];
-      $.ajax({
-          type: "POST",
-          url: "${pageContext.request.contextPath}/perfajax/perfdonut",
-          dataType: "json",
-          contentType: "application/json", // 데이터 형식을 JSON으로 지정
-          data: JSON.stringify(lineCode), // 라인 코드 리스트를 JSON 문자열로 변환하여 전송
-          success: function(data) {
-              console.log(data);
-              console.log("데이터 받음: ", data); // 데이터를 로그에 출력
-
-              // 파이차트 그리는 함수 호출 등으로 처리 가능
-             // 도넛 차트 생성 및 표시
-             
-              var donutChartLabels = data.map(function(item) {
-        return item.lineCode;
-    });
-              
-             
-           // 각 차트에 대한 라벨과 데이터 분리
-        var donutChartLabels = data.map(function(item) {
-            return item.lineCode;
-        });
-
-        var totalAmountData = data.map(function(item) {
-            return item.totalAmount;
-        });
-
-        var totalFairData = data.map(function(item) {
-            return item.totalFair;
-        });
-
-        var totalDefectData = data.map(function(item) {
-            return item.totalDefect;
-        });
-
-        // 각 차트에 대한 도넛 차트 생성
-        createDonutChart(totalAmountData, donutChartLabels, 'donutChart');
-        createDonutChart(totalFairData, donutChartLabels, 'donutChart2');
-        createDonutChart(totalDefectData, donutChartLabels, 'donutChart3');
-          },
-          error: function(error) {
-              console.log("Error fetching data: " + error);
-          }
-          
-      });
-  	    
-    	    // Chart.js를 사용하여 도넛 차트를 생성합니다.
-    	     function createDonutChart(data, labels, chartId) {
-    	    	console.log("도넛 차트 데이터: ", data);
-    	    	console.log("도넛 차트 라벨: ", labels);
-    	    	 console.log("도넛 차트 ID: ", chartId); // 이 줄을 추가하여 chartId 출력
-    	     var ctx = document.getElementById(chartId).getContext('2d');
-    	     var totalValue = data.reduce((total, value) => total + value, 0);
-    	      console.log("총합: ", totalValue.toFixed(2)); // totalValue를 로그로 출력합니다.
-    	    var donutChart = new Chart(ctx, {
-    	        type: 'doughnut', // 도넛 차트 유형을 설정합니다.
-    	        data: {
-    	            labels: labels, // 라벨 배열을 설정합니다.
-    	            datasets: [{
-    	                data: data, // 차트 데이터 배열을 설정합니다.
-    	                backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56'], // 차트 데이터에 대한 배경색을 설정합니다.
-    	                borderWidth: 1 // 차트 데이터에 대한 테두리 두께를 설정합니다.
-    	            }]
-    	        },
-    	        options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: 150,
-                    chartArea: {
-                        // 차트 영역 크기 조절
-                        left: 1,
-                        right: 1,
-                        top: 1,
-                        bottom: 1
-                    },
-                    // 이하 옵션들은 필요에 따라 조절할 수 있습니다.
-                    animation: {
-                        animateRotate: false,
-                        animateScale: true
-                    },
-                    tooltips: {
-                        position: 'top' // 툴팁을 위쪽에 표시
-                    },
-                    legend: {
-                        display: false,
-                        position: 'top'
-                    },
-                    plugins: {
-                        labels: {
-                            render: 'value',
-                            fontColor: ['black', 'black', 'black'],
-                            precision: 2
-                        }
-                    },
-                    elements: {
-                        center: {
-                            text: totalValue.toFixed(2),
-                            color: '#36a2eb',
-                            fontStyle: 'Arial',
-                            sidePadding: 1
-                        }
-                    }
-                }
+            // 파이차트 그리는 함수 호출 등으로 처리 가능
+            // 도넛 차트 생성 및 표시
+            var donutChartLabels = data.map(function(item) {
+                return item.lineCode;
             });
+
+            // 각 차트에 대한 라벨과 데이터 분리
+            var donutChartLabels = data.map(function(item) {
+                return item.lineCode;
+            });
+
+            var totalAmountData = data.map(function(item) {
+                return item.totalAmount;
+            });
+
+            var totalFairData = data.map(function(item) {
+                return item.totalFair;
+            });
+
+            var totalDefectData = data.map(function(item) {
+                return item.totalDefect;
+            });
+
+            // 각 차트에 대한 도넛 차트 생성
+            createDonutChart(totalAmountData, donutChartLabels, 'donutChart');
+            createDonutChart(totalFairData, donutChartLabels, 'donutChart2');
+            createDonutChart(totalDefectData, donutChartLabels, 'donutChart3');
+        },
+        error: function(error) {
+            console.log("Error fetching data: " + error);
         }
     });
-</script>			
+    
+
+
+    // Chart.js를 사용하여 도넛 차트를 생성합니다.
+    function createDonutChart(data, labels, chartId) {
+        console.log("도넛 차트 데이터: ", data);
+        console.log("도넛 차트 라벨: ", labels);
+        console.log("도넛 차트 ID: ", chartId); // 이 줄을 추가하여 chartId 출력
+          
+        Chart.register(ChartDataLabels);
+        var ctx = document.getElementById(chartId).getContext('2d');
+        var totalValue = data.reduce((total, value) => total + value, 0);
+        console.log("총합: ", totalValue.toFixed(2)); // totalValue를 로그로 출력합니다.
+
+        var donutChart = new Chart(ctx, {
+            type: 'doughnut', // 도넛 차트 유형을 설정합니다.
+            data: {
+                labels: labels, // 라벨 배열을 설정합니다.
+                datasets: [{
+                    data: data, // 차트 데이터 배열을 설정합니다.
+                    backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56'], // 차트 데이터에 대한 배경색을 설정합니다.
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: 100,
+                chartArea: {
+                    // 차트 영역 크기 조절
+                    left: 50,
+                    right: 50,
+                    top: 50,
+                    bottom: 50
+                },
+                animation: {
+                    animateRotate: false,
+                    animateScale: true
+                },
+                plugins: {
+                    datalabels: {
+                        color: 'white', // 데이터 레이블 텍스트 색상
+                        font: {
+                            size: 18, // 데이터 레이블 폰트 크기
+                            weight: 'bold' // 데이터 레이블 폰트 굵기
+                        }
+                    }
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += context.formattedValue;
+                            return label;
+                        }
+                    },
+                    position: 'top'
+                },
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        });
+    }
+    
+    Chart.plugins.register({
+        afterDatasetsDraw: function(chart) {
+            var ctx = chart.ctx;
+            var totalValue = chart.data.datasets[0].data.reduce((total, value) => total + value, 0); // 데이터 총합 계산
+
+            chart.data.datasets.forEach(function(dataset, datasetIndex) {
+                var meta = chart.getDatasetMeta(datasetIndex);
+                if (!meta.hidden) {
+                    meta.data.forEach(function(element, index) {
+                        // 데이터 레이블의 텍스트 가져오기
+                        var dataLabel = dataset.data[index].toString();
+
+                        // 데이터 레이블의 좌표 가져오기
+                        var model = element._model;
+                        var x = model.x;
+                        var y = model.y;
+
+                        // 데이터 레이블의 스타일 설정
+                        ctx.fillStyle = 'white'; // 텍스트 색상
+                        ctx.font = 'bold 15px Arial'; // 폰트 스타일 및 크기
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+
+                        // 데이터 레이블 그리기
+                        ctx.fillText(dataLabel, x, y);
+
+                        // 테두리 그리기 (borderWidth 설정)
+                        ctx.lineWidth = 10;
+                        ctx.strokeStyle = 'white';
+                        ctx.strokeRect(x - model.innerRadius, y, model.innerRadius * 2, model.innerRadius * 2);
+                    });
+                }
+            });
+
+            // 차트 중앙 좌표 가져오기
+            var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+            var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+
+            // 데이터 레이블의 스타일 설정 (total 밸류값 출력)
+            ctx.fillStyle = 'white'; // 텍스트 색상
+            ctx.font = 'bold 15px Arial'; // 폰트 스타일 및 크기
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // 데이터 레이블 그리기 (total 밸류값 출력)
+            ctx.fillText(totalValue.toFixed(2), centerX, centerY);
+        }
+    });
+    
+});
+</script>	
 			
 </html>
