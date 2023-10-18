@@ -24,12 +24,11 @@
 <select id="getSearch" resultType="ClientDTO">
 		select * FROM clients	
 		<where>
-			<if test="clientCode != ''">
-				clientCode like concat ('%', #{clientCode}, '%')
-			</if>
-
-			<if test="clientCompany != ''">
-				and clientCompany = #{clientCompany}
+ 			<if test="clientCompany != null and clientCompany !=''">
+				 clientCompany = #{clientCompany}
+			</if> 
+			<if test="clientType != null and clientType != ''">
+				AND clientType= #{clientType}
 			</if>
 		</where>
 		order by clientCode desc
@@ -37,15 +36,14 @@
 	</select>
 	
 	<select id="getSearchcount" resultType="java.lang.Integer">
-		SELECT count(#{clientCode})
+		SELECT count(*)
 		FROM clients
 		<where>
-			<if test="clientCode != ''">
-				clientCode like concat ('%', #{clientCode}, '%')
-			</if>
-
-			<if test="clientCompany != ''">
-				and clientCompany like concat ('%' ,#{clientCompany}, '%')
+ 	 		<if test="clientCompany != null and clientCompany !=''">
+				 clientCompany like concat ('%' ,#{clientCompany}, '%')
+			</if> 
+			<if test="clientType != null and clientType != ''">
+				AND clientType= #{clientType}
 			</if>
 		</where>
 		order by clientCode desc

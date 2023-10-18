@@ -59,23 +59,27 @@
 					placeholder="제품명을 입력하세요." name="prodName"> <label>거래처명</label>
 				<input type="text" name="clientCompany" id="sellclientCompany9999"
 					readonly placeholder="거래처를 선택하세요."
-					onclick="searchItem('sellclient','sellclientCode9999')" style="cursor: pointer !important;">
+					onclick="searchItem('sellclient','sellclientCode9999')"
+					style="cursor: pointer !important;">
 				<!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
 				<button type="submit">조회</button>
 			</form>
 		</div>
 		<hr>
 		<%--     <form action="${pageContext.request.contextPath}/product/write" method="post"> --%>
-		<div class="buttons">
-			<button id="add"
-				onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
-			<!-- 			<button id="modify">수정</button> -->
-			<!--     <button id="delete" onclick="deleteSelectedProducts()">삭제</button> -->
-			<button id="delete">삭제</button>
-			<!-- 			<button id="cancel">취소</button> -->
-			<!-- 			<button id="save">저장</button> -->
-			<button id="excelDownload" class="buttons">엑셀⬇</button>
-		</div>
+		<c:if
+			test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
+			<div class="buttons">
+				<button id="add"
+					onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
+				<!-- 			<button id="modify">수정</button> -->
+				<!--     <button id="delete" onclick="deleteSelectedProducts()">삭제</button> -->
+				<button id="delete">삭제</button>
+				<!-- 			<button id="cancel">취소</button> -->
+				<!-- 			<button id="save">저장</button> -->
+				<button id="excelDownload" class="buttons">엑셀⬇</button>
+			</div>
+		</c:if>
 		<h3 style="padding-left: 1%;">
 			목록 <small>총 ${pageDTO.count}건</small>
 		</h3>
@@ -106,12 +110,24 @@
 									value="${prodDTO.prodCode}" name="selectedProId"
 									data-group="select-list"></td>
 								<!-- 체크박스 열 -->
-								<td id="prodCode"><a href="#"
-									onclick="openPopup2('${pageContext.request.contextPath}/product/update?prodCode=${prodDTO.prodCode}')">${prodDTO.prodCode}</a>
-									<%--                 ${prodDTO.prodCode} --%></td>
+
+								<td id="prodCode">
+									<!-- 								<a href="#" --> <%-- 									onclick="openPopup2('${pageContext.request.contextPath}/product/update?prodCode=${prodDTO.prodCode}')"> --%>
+									<%-- 									${prodDTO.prodCode}</a> --%> <c:choose>
+										<c:when
+											test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
+											<a href="#"
+												onclick="openPopup2('${pageContext.request.contextPath}/product/update?prodCode=${prodDTO.prodCode}')">
+												${prodDTO.prodCode} </a>
+										</c:when>
+										<c:otherwise>
+        ${prodDTO.prodCode}
+    </c:otherwise>
+									</c:choose> <%--                 ${prodDTO.prodCode} --%>
+								</td>
 								<td id="prodName">${prodDTO.prodName}</td>
 								<td id="prodUnit">${prodDTO.prodUnit}</td>
-								<td id="prodSize">${prodDTO.prodSize} ml</td>
+								<td id="prodSize">${prodDTO.prodSize}ml</td>
 								<td id="prodPerfume">${prodDTO.prodPerfume}</td>
 								<td id="clientCompany">${prodDTO.clientCompany}</td>
 								<td id="whseName">${prodDTO.whseName}</td>
