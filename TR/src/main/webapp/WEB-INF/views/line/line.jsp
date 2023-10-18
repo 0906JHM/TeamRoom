@@ -8,30 +8,7 @@
 <title>라인관리</title>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
-<style>
-    #lineTable {
-        border-collapse: collapse;
-        width: 50%;
-    }
-    #lineTable th,
-    #lineTable td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    #lineTable th {
-        background-color: #f2f2f2;
-    }
-    #lineTable tr:hover {
-        background-color: #f5f5f5;
-    }
-    input[type="checkbox"] {
-        transform: scale(1.5);
-    }
-    .table-container {
-        margin: 20px;
-    }
-</style>
+<link href="${pageContext.request.contextPath}/resources/css/employees.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 //체크박스 선택/해제
@@ -56,37 +33,46 @@ $(function(){
    });
 });
 
-//삭제기능  
+//체크박스로 삭제
 function deleteValue(){
-   var url = "delete";    // Controller로 보내고자 하는 URL (.dh부분은 자신이 설정한 값으로 변경해야됨)
-   var valueArr = new Array();
-   var list = $("input[name='RowCheck']");
-   
-      for(var i = 0; i < list.length; i++){
-         
-         if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
-         valueArr.push(list[i].value);
-         }
-      }
-          if (valueArr.length == 0){
-             alert("선택된 글이 없습니다.");
-          }
-          else{
-            var chk = confirm("정말 삭제하시겠습니까?");             
+    var url = "delete"; // Controller로 보내고자 하는 URL
+    var valueArr = new Array();
+    var list = $("input[name='RowCheck']");
+
+    for(var i = 0; i < list.length; i++){
+        if(list[i].checked){ // 선택되어 있으면 배열에 값을 저장함
+            valueArr.push(list[i].value);
+        }
+    }
+
+    if (valueArr.length == 0){
+        alert("선택된 라인이 없습니다.");
+    }
+    else{
+        var chk = confirm("정말 삭제하시겠습니까?");
+        if(chk) {
             $.ajax({
-                url : url,
-                type : 'POST',
+                url : url,             // 전송 URL
+                type : 'POST',         // GET or POST 방식
                 traditional : true,
                 data : {
-                    valueArr : valueArr
+                valueArr : valueArr    // 보내고자 하는 data 변수설정
                 },
-                success: function(){
-                    location.replace("line");
-                }
+                success: function(jdata){
+                    if(jdata = 1) {
+                        alert("삭제 성공");
+                        location.replace("employees")
+                    }
+                    else{
+                        alert("삭제 실패");
+                    }
+                   }
             });
-
-         }   
-}//deleteValue
+        } else {
+            alert("삭제 실패");
+        }
+    }
+}
 	
 	// 페이지 로드 후 스크립트 실행
 	$(document).ready(function() {
@@ -103,11 +89,18 @@ function deleteValue(){
 
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
+<div id="con">
+<h2>라인 관리</h2>
+<hr>
+<div id="searchForm">
 <form action="${pageContext.request.contextPath}/line/line" method="get">
-search    <input type="text" name="search" placeholder="search">
-<input type="submit" value="검색">
+<span class="styled-text">search</span><input type="text" name="search" placeholder="search">
+<input type="submit" value="검색" id="btnSell">
 </form>
+</div>
+<hr>
 <table id="lineTable">
+<thead>
 <tr>
 <th>라인코드</th>
 <th>라인명</th>
@@ -116,21 +109,27 @@ search    <input type="text" name="search" placeholder="search">
 <th>등록일</th>
 <th>공정</th>
 </tr>
+</thead>
 <c:forEach var="lineDTO" items="${lineList }">
-<tr onclick="window.open('update?lineCode=${lineDTO.lineCode}', '_blank', 'width=800,height=600')">
+<tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}' === 'true') { window.open('update?lineCode=${lineDTO.lineCode}', '_blank', 'width=800,height=600'); } else { event.preventDefault(); }">
     <td>${lineDTO.lineCode}</td>
     <td>${lineDTO.lineName}</td>
     <td>${lineDTO.lineUse}</td>
     <td>${lineDTO.lineEmpId}</td>
     <td>${lineDTO.lineInsertDate}</td>
     <td>${lineDTO.lineProcess}</td>
+    <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
     <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${lineDTO.lineCode}"></td>
+    </c:if>
 </tr>
 </c:forEach>
 </table>
+</div>
 
-<input type="button" value="삭제" onclick="deleteValue();">
-<button onclick="window.open('line2', '_blank', 'width=800,height=600')">등록</button>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
+<input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
+<button onclick="window.open('line2', '_blank', 'width=800,height=600')" id="btnSell">등록</button>
+</c:if>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
