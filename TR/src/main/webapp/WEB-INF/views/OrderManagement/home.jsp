@@ -51,7 +51,7 @@ function deleteValue(){
 	}
 	
 	if (valueArr.length == 0){
-		alert("선택된 원자재가 없습니다.");
+		alert("선택된 발주가 없습니다.");
 	}
 	else{
 		var chk = confirm("정말 삭제하시겠습니까?");				 
