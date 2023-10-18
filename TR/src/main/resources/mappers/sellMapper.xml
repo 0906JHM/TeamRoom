@@ -35,9 +35,9 @@
 
 	<insert id="insertSell">
 		insert into
-		sell(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,clientCompany,sellPrice)
-		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-		#{sellMemo},#{sellState},#{clientCode},#{clientCompany},#{sellCount}*(SELECT
+		sell(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,sellMemo,sellState,clientCode,sellPrice)
+		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},
+		#{sellMemo},#{sellState},#{clientCode},#{sellCount}*(SELECT
 		prodPrice FROM product WHERE prodCode = #{prodCode}))
 	</insert>
 
@@ -45,6 +45,7 @@
 	select *
 	from sell s
 	left join product p	on s.prodCode = p.prodCode
+	left join clients c on s.clientCode = c.clientCode
 		where sellCode = #{sellCode}
 		
 	</select>
@@ -52,13 +53,8 @@
 	<update id="sellUpdate">
 	update sell
 	set
-	sellCode=#{sellCode},
-	sellState=#{sellState},
 	clientCode=#{clientCode},
-	clientCompany=#{clientCompany},
 	prodCode=#{prodCode},
-	prodName=#{prodName},
-	prodPrice=#{prodPrice},
 	sellCount=#{sellCount},
 	sellPrice=#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}),
 	sellDate=#{sellDate},

@@ -142,7 +142,7 @@
 								<td><fmt:formatNumber value="${sellDTO.sellPrice}"
 										pattern="###,###원" /></td><!-- 수주단가 -->
 								
-								<td>${sellDTO.sellDate}</td><!-- 수주일자 -->
+								<td id="sellDateType">${sellDTO.sellDate}</td><!-- 수주일자 -->
 								
 								<td>${sellDTO.sellDuedate}</td><!-- 납기일자  -->
 								
@@ -481,62 +481,21 @@ function openSellDetail(sellCode) {
     
    <!--------------------------------------------------- 상단 조건 검색 ----------------------------------------->
 	
-// 	} 
-   /*
-    광민님 검색코드
+
     
-    $("#searchButton").click(function () {
-    	// 검색 조건을 가져오기 (이 부분을 필요에 따라 구현)
-    	$(".buttons").removeClass("highlighted");
 
-        // 클릭한 버튼에 "highlighted" 클래스 추가
-        $("#allButton").addClass("highlighted");
-        
-    	sellStateButton2 = "검색";
-    	sellStateButton1 = sellStateButton2;
-    	
-        var searchParams = {
-            outCode: $("#outCode").val(),
-            prodName: $("#prodName9999").val(),
-            clientCompany: $("#clientCompany9999").val(),
-            outCode: $("#outCode").val(),
-            prodName: $("#prodName9999").val(),
-            clientCompany: $("#clientCompany9999").val(),
-              
-            sellState: sellStateButton2,
-        };
-		console.log(searchParams);
-        loadSellList(searchParams);
-    });
-    
-    // 취소 버튼 클릭 시 검색입력값 초기화
-    $("#resetButton").click(function () {
-    	$(".buttons").removeClass("highlighted");
+ // sellDateCell의 내용을 가져와서 날짜 객체로 변환
+ var sellDateText = document.getElementById("sellDateType").textContent;
+ var sellDate = new Date(sellDateText);
 
-        // 클릭한 버튼에 "highlighted" 클래스 추가
-        $("#allButton").addClass("highlighted");
-    	
-        sellStateButton2 = "전체";
-    	sellStateButton1 = sellStateButton2;
-        
-    	$("#sellCode").val('');
-        $("#clientCode").val('');
-        $("#clientCompany9999").val('');
-        $("#prodCode9999").val('');
-        $("#prodName9999").val('');
-        $("#sellDate").val('');
-        $("#sellDuedate").val('');
-        
-        firstLoadSellList();
-    });
+ // 날짜를 "yyyy-mm-dd" 형식으로 직접 변환
+ var year = sellDate.getFullYear();
+ var month = String(sellDate.getMonth() + 1).padStart(2, '0');
+ var day = String(sellDate.getDate()).padStart(2, '0');
+ var formattedDate = year + "-" + month + "-" + day;
 
-	// 검색입력란에서 Enter키 눌러도 검색 폼 안넘어가게
-    $("#sellCode, #clientCode, #clientCompany9999, #prodCode9999, #prodName9999, #sellDate, #sellDuedate").on('keydown', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // 엔터 키 기본 동작을 막음 (폼 제출 방지)
-            $("#searchButton").click(); // 검색 버튼 클릭
-        }
-    }); */
+ // 변환된 날짜를 다시 sellDateCell에 표시
+ document.getElementById("sellDateType").textContent = formattedDate;
  </script>
 </body>
 </html>

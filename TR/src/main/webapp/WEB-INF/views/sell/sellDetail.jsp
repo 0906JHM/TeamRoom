@@ -22,11 +22,11 @@
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
 <label>수주 코드</label>
-			<label>수주 코드</label>
-			<input type="text" name="prodCode" value="${sellDTO.sellCode}" readonly>
+			
+			<input type="text" name="sellCode" value="${sellDTO.sellCode}" readonly>
 			<br>
 			<label>처리 상태</label>
-			<input type="text" name="prodCode" value="${sellDTO.sellState}" readonly>
+			<input type="text" name="sellState" value="${sellDTO.sellState}" readonly>
 			<br>
 			<label>거래처</label>
 			<input type="text" name="clientCode" value="${sellDTO.clientCode}" readonly >
