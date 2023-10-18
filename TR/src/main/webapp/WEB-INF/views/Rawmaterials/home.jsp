@@ -135,7 +135,7 @@ $(document).ready(function() {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+<!-- 거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()"> -->
 <input type="submit" value="검색">
 </form>
 
@@ -148,7 +148,7 @@ $(document).ready(function() {
 <td>종류</td>
 <td>단위</td>
 <td>매입단가</td>
-<td>거래처</td>
+<!-- <td>거래처</td> -->
 <td>창고명</td>
 <td>창고수량</td>
 <td>비고</td>
@@ -163,7 +163,7 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawType}</td>
 <td>${rawmaterialsDTO.rawUnit}</td>
 <td>${rawmaterialsDTO.rawPrice}</td>
-<td>${rawmaterialsDTO.clientCode}</td>
+<%-- <td>${rawmaterialsDTO.clientCode}</td> --%>
 <td>${rawmaterialsDTO.whseCode}</td>
 <td>${rawmaterialsDTO.whseCount}</td>
 
