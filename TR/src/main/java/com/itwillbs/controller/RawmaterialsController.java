@@ -26,12 +26,6 @@ public class RawmaterialsController {
 	private RawmaterialsService rawmaterialsService;
 
 	// 가상주소 http://localhost:8080/leeweb/Rawmaterials/home
-	@GetMapping("/main")
-	public String main() {
-		return "Rawmaterials/main";
-	}
-	
-	// 가상주소 http://localhost:8080/leeweb/Rawmaterials/home
 	// @GetMapping("/home")
 	// public String home(Model model) {
 					

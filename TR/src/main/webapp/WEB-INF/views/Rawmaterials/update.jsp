@@ -12,10 +12,10 @@
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 
-function openPopup1() {
-	window.name = "update";
-	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
-}
+// function openPopup1() {
+// 	window.name = "update";
+// 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
+// }
 
 function openPopup2() {
 	window.name = "update";
@@ -43,8 +43,8 @@ function openPopup2() {
     <td><input type="text" name="rawUnit" value="${rawmaterialsDTO.rawUnit}"></td></tr>
 <tr><td>매입단가</td>
     <td><input type="text" name="rawPrice" value="${rawmaterialsDTO.rawPrice}"></td></tr>
-<tr><td>거래처</td>
-    <td><input type="text" name="clientCode" id="pInput" value="${rawmaterialsDTO.clientCode}"> <input type="button" value="목록" onclick="openPopup1()"></td></tr>
+<!-- <tr><td>거래처</td> -->
+<%--     <td><input type="text" name="clientCode" id="pInput" value="${rawmaterialsDTO.clientCode}"> <input type="button" value="목록" onclick="openPopup1()"></td></tr> --%>
 <tr><td>창고명</td>
     <td><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}"> <input type="button" value="목록" onclick="openPopup2()"></td></tr>
 <tr><td>비고</td>

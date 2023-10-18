@@ -21,7 +21,7 @@
 <tr><td>종류</td>		<td>${rawmaterialsDTO.rawType}</td></tr>
 <tr><td>단위</td>		<td>${rawmaterialsDTO.rawUnit}</td></tr>
 <tr><td>매입단가</td>	<td>${rawmaterialsDTO.rawPrice}</td></tr>
-<tr><td>거래처</td>	<td>${rawmaterialsDTO.clientCode}</td></tr>
+<%-- <tr><td>거래처</td>	<td>${rawmaterialsDTO.clientCode}</td></tr> --%>
 <tr><td>창고명</td>	<td>${rawmaterialsDTO.whseCode}</td></tr>
 <tr><td>비고</td>		<td>${rawmaterialsDTO.rawMemo}</td></tr>
 </table>

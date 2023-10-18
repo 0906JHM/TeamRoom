@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.InMaterialDTO;
 import com.itwillbs.service.InMaterialService;
 
@@ -41,13 +43,13 @@ public class InMaterialController {
 	// 입고처리 버튼 => 입고상태, 담당자, 날짜 업데이트해야함
 	@PostMapping("/inMaterialUpdate")
 	@ResponseBody
-	public void inMaterialUpdate(@RequestBody InMaterialDTO inMaterialDTO, HttpServletRequest response) {
+	public void inMaterialUpdate(@RequestBody InMaterialDTO inMaterialDTO, HttpServletRequest response, HttpSession session, HttpServletRequest request) {
 		System.out.println("inMaterialController inMaterialUpdate");
 		
 		inMaterialService.inMaterialContent(inMaterialDTO.getInNum());
 
 		//미입고 => 입고완료
-		inMaterialService.updateInState(inMaterialDTO);
+//		inMaterialService.updateInState(inMaterialDTO);
 		
 		// 현재 시간을 Timestamp로 가져오기
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -58,14 +60,33 @@ public class InMaterialController {
 		String current = dateFormat.format(currentDate);
 		//입고일 세팅
 		inMaterialDTO.setInDate(current);
+		
+		if (session != null) {
+            // 세션으로부터 사용자 아이디 가져오기
+            String inEmpId = (String) session.getAttribute("empId");
+            inMaterialDTO.setInEmpId(inEmpId);
+//            inMaterialService.updateInEmpId(inMaterialDTO);
+        } else {
+            // 세션이 없을 경우 예외 처리
+        }
+		
 		//입고일 업데이트
-		inMaterialService.updateInDate(inMaterialDTO);
+//		inMaterialService.updateInDate(inMaterialDTO);
 		
 		//재고 테이블에서 원자재코드로 입고한만큼 개수 증가
 		inMaterialService.updateWhseCount(inMaterialDTO);
 		
+		//담당자 입고상태, 입고일 업데이트
+		inMaterialService.updateInMaterial(inMaterialDTO);
+		
+		//담당자 세션값 가져오기
+		session = request.getSession(false); // 세션이 없으면 새로 생성하지 않음
+	    System.out.println("세션값"+session.getAttribute("empId"));
+
+		
 		
 	}
+	
 
 
 

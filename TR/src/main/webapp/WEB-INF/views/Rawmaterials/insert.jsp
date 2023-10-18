@@ -27,7 +27,7 @@
 			</select><br>
 단위 : 		<input type="text" name="rawUnit" value="EA"><br>
 매입단가 : 	<input type="number" name="rawPrice"><br>
-거래처 :		<input type="text" name="clientCode" id="pInput"> <input type="button" value="목록" onclick="openPopup1()"><br>
+<!-- 거래처 :		<input type="text" name="clientCode" id="pInput"> <input type="button" value="목록" onclick="openPopup1()"><br> -->
 창고명 : 		<input type="text" name="whseCode" id="pInput2"> <input type="button" value="목록" onclick="openPopup2()"><br>
 비고 : 		<input type="text" name="rawMemo"><br>
 <input type="submit" value="품목추가">
@@ -44,12 +44,12 @@
 
 let openWin;
 
-function openPopup1() {
-	// window.name = "부모창 이름";
-	window.name = "insert";
-	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
-}
+// function openPopup1() {
+// 	// window.name = "부모창 이름";
+// 	window.name = "insert";
+// 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
+// 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
+// }
 
 function openPopup2() {
 	window.name = "insert";
