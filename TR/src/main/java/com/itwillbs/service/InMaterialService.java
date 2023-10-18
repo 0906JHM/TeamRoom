@@ -69,7 +69,7 @@ public class InMaterialService {
 		inMaterialDTO.setRawCode(ordermanagementDTO.getRawCode());
 		inMaterialDTO.setClientCode(ordermanagementDTO.getClientCode());
 		inMaterialDTO.setInState("미입고");
-
+		inMaterialDTO.setBuyNum(ordermanagementDTO.getBuyNum());
 		
 		System.out.println("OrderManagementService insertOrderManagement()");
 		

@@ -33,7 +33,7 @@
 	
 	<select id="getClient" resultType="com.itwillbs.domain.ClientDTO">
 		SELECT *
-		FROM Clients
+		FROM clients
 	</select>
 	
 	<delete id="deleteSellCalendar">
