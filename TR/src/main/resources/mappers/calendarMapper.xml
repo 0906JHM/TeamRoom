@@ -30,6 +30,17 @@ on s.clientCode = c.clientCode
 left join product p
 on s.prodCode = p.prodCode
 where s.sellState ='중간납품'
+and o.outRedate is null
+union all
+select '중간납품' calendar_title, concat(c.clientCompany,' ',p.prodName,'(',p.prodCode,') ',s.sellCount, '개') calendar_memo, o.outRedate startDate, null endDate,o.outCode code
+from outProduct o left join sell s
+on o.sellCode = s.sellCode
+left join clients c
+on s.clientCode = c.clientCode
+left join product p
+on s.prodCode = p.prodCode
+where s.sellState ='중간납품'
+and o.outRedate is not null
 union all
 select '원자재 발주' calendar_title, concat(c.clientCompany,' ',r.rawName,'(',r.rawCode,') ',b.buyCount, '개') calendar_memo, b.buyDate startDate, null endDate, b.buyNum code
 from buy b left join clients c
