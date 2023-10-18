@@ -49,7 +49,7 @@
 	<!-- 사이드바 -->
 
 	<div class="container">
-		<h2>품목관리</h2>
+		<h2>품목 관리</h2>
 		<hr>
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/product/list"
@@ -59,7 +59,7 @@
 					placeholder="제품명을 입력하세요." name="prodName"> <label>거래처명</label>
 				<input type="text" name="clientCompany" id="sellclientCompany9999"
 					readonly placeholder="거래처를 선택하세요."
-					onclick="searchItem('sellclient','sellclientCode9999')" style="cursor: pointer;">
+					onclick="searchItem('sellclient','sellclientCode9999')" style="cursor: pointer !important;">
 				<!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
 				<button type="submit">조회</button>
 			</form>
@@ -88,14 +88,14 @@
 							<!-- 체크박스 열 추가 -->
 							<th><input type="checkbox" id="select-list-all"
 								name="select-list-all" data-group="select-list"></th>
-							<th>제품코드</th>
+							<th>제품 코드</th>
 							<th>제품명</th>
-							<th>제품단위</th>
+							<th>제품 단위</th>
 							<th>용량</th>
-							<th>향기종류</th>
+							<th>향기 종류</th>
 							<th>거래처명</th>
 							<th>창고명</th>
-							<th>매출단가</th>
+							<th>매출 단가</th>
 							<th>비고</th>
 						</tr>
 					</thead>
@@ -111,11 +111,11 @@
 									<%--                 ${prodDTO.prodCode} --%></td>
 								<td id="prodName">${prodDTO.prodName}</td>
 								<td id="prodUnit">${prodDTO.prodUnit}</td>
-								<td id="prodSize">${prodDTO.prodSize}</td>
+								<td id="prodSize">${prodDTO.prodSize} ml</td>
 								<td id="prodPerfume">${prodDTO.prodPerfume}</td>
 								<td id="clientCompany">${prodDTO.clientCompany}</td>
 								<td id="whseName">${prodDTO.whseName}</td>
-								<td id="prodPrice"><fmt:formatNumber>${prodDTO.prodPrice}</fmt:formatNumber></td>
+								<td id="prodPrice"><fmt:formatNumber>${prodDTO.prodPrice}</fmt:formatNumber>원</td>
 								<c:choose>
 									<c:when test="${not empty prodDTO.prodMemo}">
 										<td class="tg-llyw2"><a href="#"
@@ -389,12 +389,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
       var newWindow = window.open(url, '_blank', popupFeatures); 
   }
   
-//숫자를 ###,### 원 형식으로 포맷하는 함수
-	function formatCurrency(number) {
-		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-				+ '원';
-	}
-
+// 숫자를 ###,### 원 형식으로 포맷하는 함수
+// 	function formatCurrency(number) {
+// 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+// 				+ '원';
+// 	}
+// function formatCurrency(number) {
+//     return parseFloat(number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + '원';
+// }
 
 </script>
 
