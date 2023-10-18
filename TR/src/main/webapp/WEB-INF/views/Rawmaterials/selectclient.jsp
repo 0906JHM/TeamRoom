@@ -31,12 +31,7 @@ function setParentText(){
 <form action="${pageContext.request.contextPath}/Rawmaterials/selectclient" method="get">
 거래처코드	<input type="text" name="search1" placeholder="거래처코드">
 거래처명	<input type="text" name="search2" placeholder="거래처명">
-분류		<select name="search3">
-		<option value="">전체</option>
-		<option value="수주처">수주처</option>
-		<option value="발주처">발주처</option>
-		</select>
-담당자 	<input type="text" name="search4" placeholder="담당자">
+담당자 	<input type="text" name="search3" placeholder="담당자">
 <input type="submit" value="검색">
 </form>
 

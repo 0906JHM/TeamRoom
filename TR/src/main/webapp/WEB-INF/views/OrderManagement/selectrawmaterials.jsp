@@ -106,7 +106,7 @@ function openPopup4(rawCode) {
 <!-- 비고기능 -->
 <td><c:choose>
 <c:when test="${not empty rawmaterialsDTO.rawMemo}">
-<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" target="_blank" style="color:black;">[보기]</a>
+<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" style="color:black;">[보기]</a>
 </c:when>
 <c:otherwise>
 <c:set var="rawMemo" value="" />

@@ -44,9 +44,9 @@
     </div>
     <div class="form-group">
     <p>거래처명</p>
-    <input type="hidden" name="clientCode" id="clientCode9999" onclick="searchItem('sellclient','clientCode9999')" >
-    <input type="text" name="clientCompany" id="clientCompany9999"  readonly
-    	onclick="searchItem('sellclient','clientCode9999')"
+    <input type="hidden" name="clientCode" id="sellclientCode9999" onclick="searchItem('sellclient','sellclientCode9999')" >
+    <input type="text" name="clientCompany" id="sellclientCompany9999"  readonly
+    	onclick="searchItem('sellclient','sellclientCode9999')"
     	 placeholder="거래처를 선텍해 주세요."
     	 style="cursor: pointer;">
     </div>

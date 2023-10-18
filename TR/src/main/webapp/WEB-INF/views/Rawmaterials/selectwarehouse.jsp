@@ -14,12 +14,13 @@
 <body>
 <h1>창고</h1>
 
-<!-- button -->
-창고 <input type="text" placeholder="등록할 창고" id="cInput"> <input type="button" value="등록" onclick="setParentText()">
+<input id="cInput" type="hidden">
 
 <!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
+
+//자식에서 부모페이지로 값 넣기
 function setParentText(){
 	opener.document.getElementById("pInput2").value = document.getElementById("cInput").value
 	window.close();
@@ -30,16 +31,8 @@ function setParentText(){
 <form action="${pageContext.request.contextPath}/Rawmaterials/selectwarehouse" method="get">
 창고코드	<input type="text" name="search1" placeholder="창고코드">
 창고이름	<input type="text" name="search2" placeholder="창고이름">
-창고타입	<select name="search3">
-		<option value="">전체</option>
-		<option value="원자재">원자재</option>
-		<option value="완제품">완제품</option>
-		</select>
-창고주소	<select name="search4">
-		<option value="">전체</option>
-		<option value="서울">서울</option>
-		<option value="부산">부산</option>
-		</select>
+창고주소	<input type="text" name="search3" placeholder="창고주소">
+원자재코드	<input type="text" name="search4" placeholder="창고주소">
 <input type="submit" value="검색">
 </form>
 
