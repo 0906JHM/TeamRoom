@@ -26,7 +26,7 @@
                 <div class="form-group">
 				<p>창고이름</p>
 				<input type="text" name="whseName"
-				value="${warehouseDTO.whseName}" readonly>
+				value="${warehouseDTO.whseName}" >
 				</div>
 
                 <div class="form-group">

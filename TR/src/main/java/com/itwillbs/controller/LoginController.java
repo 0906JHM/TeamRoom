@@ -42,8 +42,6 @@ public class LoginController{
 			session.setAttribute("empDepartment", loginDTO.getEmpDepartment());
 			System.out.println("성공");
 			
-
-		       
 			return "redirect:/main/calendar";
 		}else {
 			response.setContentType("text/html;charset=UTF-8");
@@ -52,13 +50,13 @@ public class LoginController{
 				out = response.getWriter();
 				 // JavaScript 코드를 사용하여 ALERT 창을 표시
 		        out.println("<script>");
-		        out.println("alert('안녕하세요! 이것은 Java로 띄운 ALERT 창입니다.');");
+		        out.println("alert('계정정보가 틀렸습니다');");
+		        out.println("history.back()");
 		        out.println("</script>");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return "redirect:/login/login";
+			return null;
 		}
 	}//loginPro
 

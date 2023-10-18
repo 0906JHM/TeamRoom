@@ -149,5 +149,11 @@
 		from rawMaterial
 		where rawCode = #{rawCode}
 	</select>
+	
+	<select id="getMemo2" resultType="com.itwillbs.domain.ClientDTO">
+		select *
+		from clients
+		where clientCode = #{clientCode}
+	</select>
  	
 </mapper>

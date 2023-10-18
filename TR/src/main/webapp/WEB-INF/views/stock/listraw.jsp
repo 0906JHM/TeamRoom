@@ -25,7 +25,7 @@ function newTabUpdate() {
 		ch = list[i].value;
 		}
 	}
-	window.open("${pageContext.request.contextPath}/stock/update?stockNum="+ch, "수정",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=600,height=500");
+	window.open("${pageContext.request.contextPath}/stock/updateR?stockNum="+ch, "수정",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=600,height=500");
 }
 
 $(document).ready(function() {
@@ -59,7 +59,7 @@ $(function(){
 });
 
 </script>
-	
+	                                            
 <jsp:include page = "../inc/side.jsp"></jsp:include>
 </head>
 <body>
@@ -80,6 +80,11 @@ $(function(){
      <button onclick="newTabUpdate()">수정</button>   
      </div>  
      
+     	<div style="margin-left: 1%; margin-bottom: 1%">
+		<a href="${pageContext.request.contextPath}/stock/listraw"><input type="button" value="원자재" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px"></input></a>
+	    <a href="${pageContext.request.contextPath}/stock/listpro"><input type="button" value="완제품" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px"></input></a>
+	    </div>
+     
       <h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
       
 <div id="list">    
@@ -87,7 +92,7 @@ $(function(){
       <thead>
 		<tr>
 		    <th class="bt1"></th>
-			<th>제품 코드</th>
+			<th>유형</th>
 			<th>원자재 코드</th>
 			<th>창고 코드</th>
 			<th>재고 개수</th>
@@ -95,10 +100,10 @@ $(function(){
 		</tr>
         </thead>
         <tbody>
-		<c:forEach var="stockDTO" items="${boardList}">
+		<c:forEach var="stockDTO" items="${stockListR}">
 			<tr>
 			    <td><input type="checkbox" name="RowCheck" value="${stockDTO.stockNum}"  class="bt1"></td>
-				<td>${stockDTO.prodCode }</td>
+				<td>${stockDTO.stockType }</td>
 				<td>${stockDTO.rawCode }</td>
 				<td>${stockDTO.whseCode }</td>
 				<td>${stockDTO.stockCount }</td>
