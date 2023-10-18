@@ -90,27 +90,31 @@ public class InMaterialService {
 
 	public void updateWhseCount(InMaterialDTO inMaterialDTO) {
 		inMaterialDAO.updateWhseCount(inMaterialDTO);
-		
 	}
 
 
-	public void updateInState(InMaterialDTO inMaterialDTO) {
-		inMaterialDAO.updateInState(inMaterialDTO);
-		
-	}
+//	public void updateInState(InMaterialDTO inMaterialDTO) {
+//		inMaterialDAO.updateInState(inMaterialDTO);
+//		
+//	}
 
-	public void updateInDate(InMaterialDTO inMaterialDTO) {
-		System.out.println("InMaterialService updateInDate");
-		inMaterialDAO.updateInDate(inMaterialDTO);
-		
-	}
+//	public void updateInDate(InMaterialDTO inMaterialDTO) {
+//		System.out.println("InMaterialService updateInDate");
+//		inMaterialDAO.updateInDate(inMaterialDTO);
+//		
+//	}
 
 	public List<InMaterialDTO> getExcelList(InMaterialDTO inMaterialDTO) {
 		return inMaterialDAO.getExcelList(inMaterialDTO);
 	}
 
-	public void updateInEmpId(InMaterialDTO inMaterialDTO) {
-		System.out.println("InMaterialService updateInEmpId");
-		inMaterialDAO.updateInEmpId(inMaterialDTO);
+//	public void updateInEmpId(InMaterialDTO inMaterialDTO) {
+//		System.out.println("InMaterialService updateInEmpId");
+//		inMaterialDAO.updateInEmpId(inMaterialDTO);
+//	}
+
+	public void updateInMaterial(InMaterialDTO inMaterialDTO) {
+		System.out.println("InMaterialService updateInMaterial");
+		inMaterialDAO.updateInMaterial(inMaterialDTO);
 	}
 }
