@@ -93,7 +93,7 @@ public class AjaxCalendarController {
 	                    color = "#ffcc29";
 	            }
 	            
-	            event.setColor(color);
+	            event.setBackgroundColor(color);
 
 	            // 생성한 JSON 객체를 목록에 추가합니다.
 	            calendarEvents.add(event);
