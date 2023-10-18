@@ -91,6 +91,7 @@ public class ClientDAO {
 			data.put("pageSize", pageDTO.getPageSize());
 			data.put("clientCode", clientDTO.getClientCode());
 			data.put("clientCompany", clientDTO.getClientCompany());
+			data.put("clientType", "전체".equals(clientDTO.getClientType()) ? "" : clientDTO.getClientType());
 			
 			return sqlsession.selectList(namespace+".getSearch", data);
 		}

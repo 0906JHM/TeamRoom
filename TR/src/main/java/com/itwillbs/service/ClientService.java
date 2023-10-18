@@ -14,7 +14,10 @@ import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class ClientService {
 
 	@Inject
@@ -87,6 +90,8 @@ public class ClientService {
 		// 디비 startRow - 1
 		pageDTO.setStartRow(startRow - 1);
 		pageDTO.setEndRow(endRow);
+		
+		log.debug("clientType: {}", clientDTO.getClientType());
 		
 		return clientDAO.getSearch(clientDTO, pageDTO);
 	}
