@@ -271,6 +271,7 @@
 		where inNum = #{inNum}
 	</select>
 
+<!-- 	입고버튼 누르면 재고수량 증가 -->
 	<update id="updateWhseCount">
 		update stock
 		SET stockCount = stockCount + #{inCount}
@@ -278,18 +279,31 @@
 	</update>
 
 
-	<update id="updateInState">
-		update inMaterial
-		SET inState = "입고완료"
-		WHERE inNum =
-		#{inNum}
-	</update>
+<!-- 	<update id="updateInState"> -->
+<!-- 		update inMaterial -->
+<!-- 		SET inState = "입고완료" -->
+<!-- 		WHERE inNum = -->
+<!-- 		#{inNum} -->
+<!-- 	</update> -->
 	
-	<update id="updateInDate">
+<!-- 	<update id="updateInDate"> -->
+<!-- 		update inMaterial -->
+<!-- 		SET inDate = #{inDate} -->
+<!-- 		WHERE inNum = -->
+<!-- 		#{inNum} -->
+<!-- 	</update> -->
+<!-- 	 	입고담당자 업데이트  --> 
+<!-- 	<update id="updateInEmpId"> -->
+<!-- 		update inMaterial -->
+<!-- 		set inEmpId = #{inEmpId} -->
+<!-- 		WHERE inNum = #{inNum} -->
+<!-- 	</update> -->
+	
+	<!-- 입고버튼 누르면 입고상태, 입고날짜, 담당자 업데이트 -->
+	<update id="updateInMaterial">
 		update inMaterial
-		SET inDate = #{inDate}
-		WHERE inNum =
-		#{inNum}
+		SET inState = "입고완료", inDate = #{inDate}, inEmpId = #{inEmpId}
+		WHERE inNum = #{inNum}
 	</update>
 	
 	<select id="getExcelList"
@@ -401,5 +415,6 @@
 		ORDER BY i.inNum DESC
 	</select>
 	
+
 
 </mapper>

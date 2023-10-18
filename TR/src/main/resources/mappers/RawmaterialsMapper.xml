@@ -12,13 +12,13 @@
 	</select>
 
 	<insert id="insertRawmaterials">
-		insert into rawMaterial(rawNum,rawCode,rawName,rawType,rawUnit,rawPrice,clientCode,whseCode,rawMemo)
-		values(#{rawNum},#{rawCode},#{rawName},#{rawType},#{rawUnit},#{rawPrice},#{clientCode},#{whseCode},#{rawMemo})
+		insert into rawMaterial(rawNum,rawCode,rawName,rawType,rawUnit,rawPrice,whseCode,rawMemo)
+		values(#{rawNum},#{rawCode},#{rawName},#{rawType},#{rawUnit},#{rawPrice},#{whseCode},#{rawMemo})
 	</insert>
 	
 	<!-- home 페이징처리, 검색기능 -->
 	<select id="getRawmaterialsList" resultType="com.itwillbs.domain.RawmaterialsDTO">
-		select r.rawNum,r.rawCode,r.rawName,r.rawType,r.rawUnit,r.rawPrice,r.clientCode,r.whseCode,w.whseCount,r.rawMemo
+		select r.rawNum,r.rawCode,r.rawName,r.rawType,r.rawUnit,r.rawPrice,r.whseCode,w.whseCount,r.rawMemo
 		from rawMaterial r join warehouse w
 		on r.whseCode = w.whseCode
 		where 1=1
@@ -30,9 +30,6 @@
     	</if>
    		<if test="search3 != null and search3 != ''">
        		and r.rawType = #{search3}
-    	</if>
-    	<if test="search4 != null and search4 != ''">
-    		and r.clientCode like concat('%', #{search4}, '%')
     	</if>
     	order by rawNum desc limit #{startRow}, #{pageSize}
 	</select>
@@ -50,9 +47,6 @@
     	</if>
    		<if test="search3 != null and search3 != ''">
        		and rawType = #{search3}
-    	</if>
-    	<if test="search4 != null and search4 != ''">
-    		and clientCode like concat('%', #{search4}, '%')
     	</if>
     </select>
 	

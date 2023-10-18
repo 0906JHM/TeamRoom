@@ -283,10 +283,15 @@ public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 
 @PostMapping("/sellMainSearch")
 public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sellDTO) {
+	SellDTO sellDTOSearch = sellDTO; // 검색값을 저장해서 검색페이지에서 표시하기위해서 사용
 	
+	// 날짜를 받아와서 분할
 	String daterange1 = request.getParameter("daterange1");
 	String daterange2 = request.getParameter("daterange2");
-	
+	// 검색 날짜를 저장
+	sellDTOSearch.setSellDate(daterange1);
+	sellDTOSearch.setSellDuedate(daterange2);
+	// 날짜가 있는 경우 검색 DTO 저장
 	if(!("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null)) {
 		String sellDate =  daterange1.split(" - ")[0].replaceAll("/", "-");
 		String sellEndDate = daterange1.split(" - ")[1].replaceAll("/", "-");
@@ -299,6 +304,8 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 		sellDTO.setSellDuedate(sellDuedate);
 		sellDTO.setSellEndDuedate(sellEndDuedate);
 	}
+	
+	// 값이 없을 경우 "" 로 변경
 	if("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null) {
 		sellDTO.setSellDate("");
 		sellDTO.setSellEndDate("");
@@ -319,7 +326,10 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 		System.out.println("수주코드 변경");
 		sellDTO.setSellCode("");
 	}
-	
+	if("".equals(sellDTO.getSellState()) || "null".equals(sellDTO.getSellState()) || sellDTO.getSellState() == null) {
+		System.out.println("수주코드 변경");
+		sellDTO.setSellState("");
+	}
 	
 	System.out.println(sellDTO);
 
@@ -327,6 +337,8 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	
 
 	// 글 목록
+	sellDTOSearch.setSellState("");
+	model.addAttribute("sellDTOSearch",sellDTOSearch);
 	model.addAttribute("sellList", sellList);// ("이름", 값)
 	// 페이지
 	

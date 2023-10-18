@@ -35,9 +35,9 @@
 
 	<insert id="insertSell">
 		insert into
-		sell(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,prodName,sellMemo,sellState,clientCode,clientCompany,sellPrice)
-		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},#{prodName},
-		#{sellMemo},#{sellState},#{clientCode},#{clientCompany},#{sellCount}*(SELECT
+		sell(sellCode,sellDate,sellDuedate,sellEmpId,sellCount,prodCode,sellMemo,sellState,clientCode,sellPrice)
+		values(#{sellCode},#{sellDate},#{sellDuedate},#{sellEmpId},#{sellCount},#{prodCode},
+		#{sellMemo},#{sellState},#{clientCode},#{sellCount}*(SELECT
 		prodPrice FROM product WHERE prodCode = #{prodCode}))
 	</insert>
 
@@ -45,6 +45,7 @@
 	select *
 	from sell s
 	left join product p	on s.prodCode = p.prodCode
+	left join clients c on s.clientCode = c.clientCode
 		where sellCode = #{sellCode}
 		
 	</select>
@@ -52,13 +53,8 @@
 	<update id="sellUpdate">
 	update sell
 	set
-	sellCode=#{sellCode},
-	sellState=#{sellState},
 	clientCode=#{clientCode},
-	clientCompany=#{clientCompany},
 	prodCode=#{prodCode},
-	prodName=#{prodName},
-	prodPrice=#{prodPrice},
 	sellCount=#{sellCount},
 	sellPrice=#{sellCount}*(SELECT prodPrice FROM product WHERE prodCode = #{prodCode}),
 	sellDate=#{sellDate},
@@ -94,7 +90,7 @@
 		sellCode = #{sellCode}
 	</update>
 
-	<select id="getSellListSearch" resultType="com.itwillbs.domain.SellDTO">
+	<select id="getSellListAllSearch" resultType="com.itwillbs.domain.SellDTO">
 		select s.sellCode sellCode, s.sellDate sellDate,
 	s.sellDuedate
 	sellDuedate,s.sellEmpId sellEmpId,s.sellCount sellCount,s.sellMemo sellMemo,s.sellState
@@ -129,7 +125,43 @@
 	
 	</select>
 	
+		<select id="getSellListSearch" resultType="com.itwillbs.domain.SellDTO">
+		select s.sellCode sellCode, s.sellDate sellDate,
+	s.sellDuedate
+	sellDuedate,s.sellEmpId sellEmpId,s.sellCount sellCount,s.sellMemo sellMemo,s.sellState
+	sellState,s.clientCode
+	clientCode,s.sellPrice sellPrice,s.prodCode
+	prodCode,
+	p.prodName
+	prodName,p.prodPrice prodPrice
+	from sell s left
+	join product p
+	on
+	s.prodCode = p.prodCode
+	<where>
+		<if test="prodCode != ''">
+			and s.prodCode like concat('%',#{prodCode},'%')
+		</if>
+		<if test="clientCode != ''">
+			and s.clientCode like concat('%',#{clientCode},'%')
+		</if>
+		<if test="sellCode != ''">
+			and s.sellCode like concat('%',#{sellCode},'%')
+		</if>
+		<if test="sellDate != ''">
+			and s.sellDate between #{sellDate} and #{sellEndDate}
+		</if>
+		<if test="sellDuedate != ''">
+			and s.sellDuedate between #{sellDuedate} and #{sellEndDuedate}
+		</if>
+		<if test="sellState != ''">
+			and s.sellState like concat('%',#{sellState},'%')
+		</if>
+	</where>
+	order by sellDate desc
 	
+	
+	</select>
 	
 	
 	

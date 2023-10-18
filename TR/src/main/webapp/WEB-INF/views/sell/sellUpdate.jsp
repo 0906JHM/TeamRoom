@@ -21,44 +21,45 @@
 
 <body>
 <div class="popupContainer">
-<h1>수주 상세정보</h1>
+<h1>수주 정보 수정</h1>
 <div class="horizontal-line"></div>
-    <form action="${pageContext.request.contextPath}/sell/sellAddPro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
+    <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
 
        	<label class="popupLabel">수주 코드 : </label>
       	<input type="text" id="sellCode" name="sellCode" value="${sellDTO.sellCode}" readonly ><br> 
       	
       	<div class="popupSerch">
         <label class="popupLabel">거래처 : </label>
-        <input type="text" id="clientCode9999" name="clientCode" onclick=searchItem('client','clientCode9999'); placeholder="거래처 코드" readonly required>
-        <input type="text" id="clientCompany9999" name="clientCompany" onclick=searchItem('client','clientCode9999'); placeholder="거래처명" readonly required><br>
+        <input type="text" id="clientCode9999" name="clientCode"  value="${sellDTO.clientCode}" onclick=searchItem('client','clientCode9999'); readonly required>
+        <input type="text" id="clientCompany9999" name="clientCompany" value="${sellDTO.clientCompany}" onclick=searchItem('client','clientCode9999');  readonly required><br>
 		</div>
 		
 		<div class="popupSerch">
  		<label class="popupLabel">제품 : </label>
- 		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품코드" readonly required>
-		<input type="text" name="prodName" id="prodName9999" placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')" required><br>
+ 		<input type="text" name="prodCode" id="prodCode9999" value="${sellDTO.prodCode}" onclick=searchItem('prod','prodCode9999'); readonly required>
+		<input type="text" name="prodName" id="prodName9999" value="${sellDTO.prodName}" readonly onclick="searchItem('prod','prodCode9999')" required><br>
 		</div>
 		
 		<label class="popupLabel">제품 단가 : </label>
-        <input type="text" name="prodPrice" id="prodPrice9999" placeholder="0" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
+        <input type="text" name="prodPrice" id="prodPrice9999" value="${sellDTO.prodPrice}" onclick=searchItem('prod','prodPrice9999'); readonly>원<br>
         
         <label class="popupLabel">수주 수량 : </label>
-        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="0" onchange="calculateSellPrice()" required>개<br>
+        <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" value="${sellDTO.sellCount}" onchange="calculateSellPrice()" required>개<br>
 
  	    <label class="popupLabel">수주 단가 : </label>
-		<input type="text" id="sellPrice" min="0" placeholder="0" value="${formattedSellPrice}" readonly>원<br>    
-     <label class="popupLabel">수주 일자 : </label>
-        <input type="text" id="sellDate" name="sellDate" ><br> 
-
+		<input type="text" id="sellPrice" min="0" value="${formattedSellPrice}" readonly>원<br>    
+		
+    	<label class="popupLabel">수주 일자 : </label>
+        <input type="text" id="sellDate" name="sellDate" value="${sellDTO.sellDate}"readonly><br>
+        
         <label class="popupLabel">납기 일자 : </label>
-        <input type="text" id="sellDuedate" name="sellDuedate" required><br>
+        <input type="text" id="sellDuedate" value="${sellDTO.sellDuedate}" name="sellDuedate" required><br>
 
         <label class="popupLabel">담당자 : </label>
         <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
 
         <label class="popupLabel">비고 : </label><br>
-        <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
+        <textarea id="sellMemo" name="sellMemo"  value="${sellDTO.sellMemo}" style="width: 400px; height: 150px;"></textarea><br>
 		
 		<br>
         <button type="submit" >저장</button>
@@ -73,7 +74,21 @@
 <!----------------------------------------------- 등록버튼 ---------------------------------------------->
 
 <script type="text/javascript">
+// 제품 코드의 값이 변경이 될때 가격 변경
+$(document).ready(function() {
+    // 동적 이벤트 핸들러 등록
+    $(document).on('change', '#prodCode9999', function() {
+    	console.log("change 이벤트");
+        calculateSellPrice();
+    });
+});
 
+
+
+
+</script>
+
+<script>
 //팝업 옵션
 const popupOpt = "top=60,left=140,width=720,height=600";
 
