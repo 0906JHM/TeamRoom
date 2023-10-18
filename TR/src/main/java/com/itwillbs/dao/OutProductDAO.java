@@ -107,4 +107,8 @@ public class OutProductDAO {
 		}
 	}
 
+	public void updateList(OutProductDTO outProductDTO) {
+		sqlSession.update(namespace + "updateList", outProductDTO);
+	}
+
 }

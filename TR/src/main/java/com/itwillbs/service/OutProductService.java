@@ -128,5 +128,19 @@ public class OutProductService {
 		System.out.println("aaaaaaaaaaaaaa");
 		outProductDAO.deleteSell(checked);
 	}
+	
+	public void updateList(SellDTO sellDTO) {
+//		제품 단가 가져오기
+		String prodCode = sellDTO.getProdCode();
+		int price = sellDTO.getSellCount() * outProductDAO.getProdPrice(prodCode);
+		
+		OutProductDTO outProductDTO = new OutProductDTO();
+		outProductDTO.setProdCode(prodCode);
+		outProductDTO.setOutPrice(price);
+		outProductDTO.setSellCode(sellDTO.getSellCode());
+		
+		outProductDAO.updateList(outProductDTO);
+		
+	}
 
 }
