@@ -29,7 +29,7 @@
 		<div id="searchForm">
 				<label>출고 번호</label><input type="text" name="outCode" id="outCode" placeholder="출고 번호를 입력하세요">
 				<label>제품명</label><input type="text" name="prodName" id="prodName9999" placeholder="제품명을 입력하세요" onclick="searchItem('prod','prodCode9999')">
-				<label>거래처명</label><input type="text" name="clientCompany" id="clientCompany9999" placeholder="거래처명을 입력하세요" onclick="searchItem('client','clientCode9999')">
+				<label>거래처명</label><input type="text" name="clientCompany" id="sellclientCompany9999" placeholder="거래처명을 입력하세요" onclick="searchItem('sellclient','sellclientCode9999')">
 				<input type="button" value="검색" id="searchButton">
 				<input type="button" value="초기화" id="resetButton">
 		</div>

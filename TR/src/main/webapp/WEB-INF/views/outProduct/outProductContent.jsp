@@ -18,7 +18,7 @@
 <body>
 
 	<h2>출고 상세정보</h2>
-	<form action="${pageContext.request.contextPath}/outProduct/outProductUpdate" method="POST">
+	<form action="${pageContext.request.contextPath}/outProduct/outProductUpdate" id="updateForm" method="POST">
 		<table>
 			<tbody>
 				<tr>
@@ -108,7 +108,7 @@
 		</table>
 		<div id="buttons">
 		<c:if test="${outProductDTO.sellState != '출고완료' }">
-				<input type="submit" value="출고">
+				<input type="button" id="updateButton" value="출고">
 		</c:if>
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
@@ -127,6 +127,50 @@
 		    // 재고 입력란 업데이트
 		    whseCountInput.value = initialWhseCount + initialOutCount - outCount;
 		}
+		
+		
+		$(document).ready(function() {
+			// "출고" 버튼 클릭 시 Ajax 요청을 보냅니다.
+			$("#updateButton").click(function() {
+				// 폼 데이터를 수집
+				var formData = $("#updateForm").serialize();
+
+				$.ajax({
+					type: "POST",
+					url: "${pageContext.request.contextPath}/outProduct/outProductUpdate",
+					data: formData,
+					success: function(response) {
+						console.log(response);
+						if(response === 'success'){
+							Swal.fire({
+							    text: '출고 완료',
+							    icon: 'success',
+							    confirmButtonText: '확인',
+							});
+							window.opener.location.reload();
+// 							window.close();
+						}else{
+							Swal.fire({
+							    text: '재고가 충분하지 않습니다.',
+							    icon: 'warning',
+							    confirmButtonText: '확인',
+							});
+							window.opener.location.reload();
+// 							window.close();
+						}
+					},
+					error: function(xhr, status, error) {
+						// 에러 처리
+						console.log("에러: " + error);
+					}
+				});
+			});
+
+			// "닫기" 버튼 클릭 시 창을 닫습니다.
+			$("#closeButton").click(function() {
+				window.close();
+			});
+		});
 	</script>
 </body>
 </html>
