@@ -86,12 +86,12 @@ function openPopup2(url) {
 }
 
 // selectclient 페이지 팝업창
-function openPopup3() {
-	// window.name = "부모창 이름";
-	window.name = "home";
-	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
-}
+// function openPopup3() {
+// 	// window.name = "부모창 이름";
+// 	window.name = "home";
+// 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
+// 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
+// }
 
 // memo 페이지 팝업창
 function openPopup4(rawCode) {
