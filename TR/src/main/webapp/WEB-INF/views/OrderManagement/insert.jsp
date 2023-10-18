@@ -20,6 +20,7 @@
 종류 : 		<input type="text" name="rawType" id="rTInput"><br>
 매입단가 : 	<input type="number" name="rawPrice" id="rPInput"><br>
 거래처명 : 	<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
+창고코드 : 	<input type="text" name="whseCode" id="wNInput"><br>
 창고수량 : 	<input type="number" name="whseCount" id="wCInput"><br>
 발주수량 : 	<input type="number" name="buyCount"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>

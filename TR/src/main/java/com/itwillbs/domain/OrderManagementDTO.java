@@ -16,6 +16,7 @@ public class OrderManagementDTO {
 	private String rawName;
 	private String rawType;
 	private String clientCode;
+	private String whseCode;
 	private int whseCount;
 	private int buyCount;
 	private float rawPrice;

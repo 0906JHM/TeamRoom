@@ -136,6 +136,7 @@ $(document).ready(function() {
 <td>품명</td>
 <td>종류</td>
 <td>거래처명</td>
+<td>창고코드</td>
 <td>창고수량</td>
 <td>발주수량</td>
 <td>납입단가</td>
@@ -153,6 +154,7 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.rawName}</td>
 <td>${ordermanagementDTO.rawType}</td>
 <td>${ordermanagementDTO.clientCode}</td>
+<td>${ordermanagementDTO.whseCode}</td>
 <td>${ordermanagementDTO.whseCount}</td>
 <td>${ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.rawPrice}</td>
