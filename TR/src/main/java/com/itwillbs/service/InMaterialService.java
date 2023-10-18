@@ -65,7 +65,7 @@ public class InMaterialService {
 //		int price = Integer.parseInt(ordermanagementDTO.getRawPrice()) * ordermanagementDTO.getBuyCount();
 //		int price = ordermanagementDTO.getRawPrice() * ordermanagementDTO.getBuyCount();
 		inMaterialDTO.setInPrice(price);
-		
+		inMaterialDTO.setWhseCode(ordermanagementDTO.getWhseCode());
 		inMaterialDTO.setRawCode(ordermanagementDTO.getRawCode());
 		inMaterialDTO.setClientCode(ordermanagementDTO.getClientCode());
 		inMaterialDTO.setInState("미입고");
@@ -117,4 +117,24 @@ public class InMaterialService {
 		System.out.println("InMaterialService updateInMaterial");
 		inMaterialDAO.updateInMaterial(inMaterialDTO);
 	}
+
+	public void updateList(OrderManagementDTO ordermanagementDTO) {
+		
+		InMaterialDTO inMaterialDTO = new InMaterialDTO();
+		inMaterialDTO.setInCount(ordermanagementDTO.getBuyCount());
+		inMaterialDTO.setRawPrice(ordermanagementDTO.getRawPrice());
+		int price = (int) (ordermanagementDTO.getRawPrice() * ordermanagementDTO.getBuyCount());
+		inMaterialDTO.setInPrice(price);
+		inMaterialDTO.setWhseCode(ordermanagementDTO.getWhseCode());
+		inMaterialDTO.setRawCode(ordermanagementDTO.getRawCode());
+		inMaterialDTO.setClientCode(ordermanagementDTO.getClientCode());
+		inMaterialDTO.setBuyNum(ordermanagementDTO.getBuyNum());
+		
+		inMaterialDAO.updateList(inMaterialDTO);
+	}
+
+	public void deleteSell(String checked) {
+		inMaterialDAO.deleteSell(checked);
+	}
+
 }

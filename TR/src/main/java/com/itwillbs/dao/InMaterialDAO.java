@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -104,6 +105,15 @@ public class InMaterialDAO {
 	public void updateInMaterial(InMaterialDTO inMaterialDTO) {
 		System.out.println("InMaterialDAO updateInMaterial");
 		sqlSession.update(namespace+".updateInMaterial",inMaterialDTO);
+		
+	}
+
+	public void updateList(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace + ".updateList", inMaterialDTO);
+	}
+
+	public void deleteSell(String checked) {
+			sqlSession.delete(namespace + ".deleteSell", checked);
 		
 	}
 }
