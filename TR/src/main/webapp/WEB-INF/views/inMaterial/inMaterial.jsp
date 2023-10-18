@@ -34,12 +34,12 @@
 
 
 	<div id="con">
-		<h2>입고관리</h2>
+		<h2>입고 관리</h2>
 		<hr>
 		<div id="searchForm">
-			<label>입고번호</label> <input type="text" name="inNum" id="inNum"
-				placeholder="입고 번호를 입력하세요."> <label>품명</label> <input
-				type="text" name="rawName" id="rawName9999" placeholder="품명을 입력하세요."
+			<label>입고 코드</label> <input type="text" name="inNum" id="inNum"
+				placeholder="입고 번호를 입력하세요."> <label>원자재명</label> <input
+				type="text" name="rawName" id="rawName9999" placeholder="원자재명을 입력하세요."
 				onclick="searchItem('raw','rawCode9999')"> <label>거래처명</label>
 			<input type="text" name="clientCompany" id="clientCompany9999"
 				placeholder="거래처를 선택하세요."

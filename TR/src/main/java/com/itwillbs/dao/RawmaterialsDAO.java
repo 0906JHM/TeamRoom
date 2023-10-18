@@ -88,5 +88,10 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 		System.out.println("RawmaterialsDAO getMemo()");
 		return sqlSession.selectOne(namespace+".getMemo", rawCode);
 	}
+
+	public ClientDTO getMemo2(String clientCode) {
+		System.out.println("RawmaterialsDAO getMemo2()");
+		return sqlSession.selectOne(namespace+".getMemo2", clientCode);
+	}
 	
 }

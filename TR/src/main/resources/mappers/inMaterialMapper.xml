@@ -415,6 +415,17 @@
 		ORDER BY i.inNum DESC
 	</select>
 	
+	<update id="updateList">
+		update inMaterial
+		set inCount = #{inCount}, rawCode = #{rawCode}, clientCode = #{clientCode}, 
+			inPrice = #{inPrice} 
+		where buyNum = #{buyNum}
+	</update>
+
+	<delete id="deleteSell">
+		delete from inMaterial
+		where buyNum = #{checked}
+	</delete>
 
 
 </mapper>

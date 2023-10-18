@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itwillbs.domain.ClientDTO;
@@ -131,6 +132,7 @@ public class OrderManagementController {
         int size = ajaxMsg.length;
         for(int i=0; i<size; i++) {
         	ordermanagementService.delete(ajaxMsg[i]);
+        	inMaterialService.deleteSell(ajaxMsg[i]);
         }
         return "redirect:/OrderManagement/home";
     }
@@ -173,6 +175,7 @@ public class OrderManagementController {
 		
 		// insert, update 등은 DB에서 작업하고 끝낼거라 리턴할필요 없음 
 		// 따라서 boardDTO = boardService.updateBoard(boardDTO);처럼 boardDTO에 받아올 필요없고, Service랑 DAO에서 void 쓰고 return 안함
+		inMaterialService.updateList(ordermanagementDTO);
 		ordermanagementService.updateOrderManagement(ordermanagementDTO);
 		return "redirect:/OrderManagement/home";
 	}

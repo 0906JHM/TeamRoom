@@ -31,28 +31,43 @@ public class StockDAO {
 		sqlSession.insert(namespace+".insertBoard", stockDTO);
 	} // insertBoard()
 
-	public List<StockDTO> getBoardList(PageDTO pageDTO) {
-		System.out.println("StockDAO getBoardList()");
-		
-		return sqlSession.selectList(namespace+".getBoardList",pageDTO);
-	} // getBoardList()
 
-	public int getBoardCount() {
-		System.out.println("StockDAO getBoardCount()");
-		
-		return sqlSession.selectOne(namespace+".getBoardCount");
-	} // getBoardCount()
-
-	public StockDTO getBoard(int stockNum) {
-		System.out.println("StockDAO getBoard()");
-		
-		return sqlSession.selectOne(namespace+".getBoard", stockNum);
-	} // getBoard
 
 	public void updateBoard(StockDTO stockDTO) {
 		System.out.println("StockDAO updateBoard()");
 		sqlSession.update(namespace+".updateBoard", stockDTO);
 	} // updateBoard
+
+	public List<StockDTO> getstockListR(PageDTO pageDTO) {
+System.out.println("StockDAO getBoardList()");
+		
+		return sqlSession.selectList(namespace+".getstockListR",pageDTO);
+	}
+
+	public List<StockDTO> getstockListP(PageDTO pageDTO) {
+		
+		return sqlSession.selectList(namespace+".getstockListP",pageDTO);
+	}
+
+	public int getStockCountR() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+".getStockCountR");
+	}
+
+	public int getStockCountP() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+".getStockCountP");
+	}
+
+	public StockDTO getBoardR(int stockNum) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+".getBoardR", stockNum);
+	}
+
+	public StockDTO getBoardP(int stockNum) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+".getBoardP", stockNum);
+	}
 
 
 }

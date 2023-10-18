@@ -23,8 +23,18 @@ public class StockService {
 	} // insertBoard()
 
 
-    // List 페이징
-	public List<StockDTO> getBoardList(PageDTO pageDTO) {
+
+
+
+
+
+	public void updateBoard(StockDTO stockDTO) {
+		System.out.println("StockService updateBoard()");
+		stockDAO.updateBoard(stockDTO);
+	} // updateboard
+
+
+	public List<StockDTO> getstockListR(PageDTO pageDTO) {
 		System.out.println("StockService getBoardList()");
 		// 시작하는 행번호
 		int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
@@ -35,26 +45,55 @@ public class StockService {
 		pageDTO.setStartRow(startRow-1);
 		pageDTO.setEndRow(endRow);
 		
-		return stockDAO.getBoardList(pageDTO);
-	} // getBoardList
-	
-	public int getBoardCount(PageDTO pageDTO) {
-		System.out.println("StockService getBoardCount");
-		return stockDAO.getBoardCount();
-	} // getBoardCount
+		return stockDAO.getstockListR(pageDTO);
+	}
+
+
+	public List<StockDTO> getstockListP(PageDTO pageDTO) {
+		System.out.println("StockService getBoardList()");
+		// 시작하는 행번호
+		int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
+		// 끝나느 행번호
+		int endRow = startRow + pageDTO.getPageSize()-1;
+		
+		// 디비작업 startRow -1
+		pageDTO.setStartRow(startRow-1);
+		pageDTO.setEndRow(endRow);
+		
+		return stockDAO.getstockListP(pageDTO);
+	}
+
+
+	public int getStockCountR(PageDTO pageDTO) {
+		// TODO Auto-generated method stub
+		return stockDAO.getStockCountR();
+	}
 
 
 
-	public StockDTO getBoard(int stockNum) {
-		System.out.println("StockService getBoard");
-		return stockDAO.getBoard(stockNum);
-	} // getBoard
+
+	public int getStockCountP(PageDTO pageDTO) {
+		// TODO Auto-generated method stub
+		return stockDAO.getStockCountP();
+	}
 
 
 
-	public void updateBoard(StockDTO stockDTO) {
-		System.out.println("StockService updateBoard()");
-		stockDAO.updateBoard(stockDTO);
-	} // updateboard
+
+	public StockDTO getBoardR(int stockNum) {
+		// TODO Auto-generated method stub
+		return stockDAO.getBoardR(stockNum);
+	}
+
+
+
+
+
+
+
+	public StockDTO getBoardP(int stockNum) {
+		// TODO Auto-generated method stub
+		return stockDAO.getBoardP(stockNum);
+	}
 
 } // StockService

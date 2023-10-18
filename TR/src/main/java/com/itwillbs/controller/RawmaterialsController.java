@@ -170,8 +170,6 @@ public class RawmaterialsController {
 		System.out.println("search2 : " + search2);
 		String search3 = request.getParameter("search3");
 		System.out.println("search3 : " + search3);
-		String search4 = request.getParameter("search4");
-		System.out.println("search4 : " + search4);
  		
         int pageSize = 10;
         String pageNum=request.getParameter("pageNum");
@@ -187,7 +185,6 @@ public class RawmaterialsController {
         pageDTO.setSearch1(search1); // 검색어저장
 	    pageDTO.setSearch2(search2);
 	    pageDTO.setSearch3(search3);
-	    pageDTO.setSearch4(search4);
         
         // 거래처 내용 뿌려주기
         List<ClientDTO> clientList= rawmaterialsService.getClientList(pageDTO);
@@ -268,6 +265,7 @@ public class RawmaterialsController {
         return "Rawmaterials/selectwarehouse";
     }
   	
+  	// selectrawmaterials 비고
   	@GetMapping("/memo")
   	public String memo(HttpServletRequest request, Model model) {
   		System.out.println("RawmaterialsController memo()");
@@ -280,5 +278,19 @@ public class RawmaterialsController {
   		
   		return "Rawmaterials/memo";
   	}
+  	
+  	// selectclient 비고
+   	@GetMapping("/memo2")
+   	public String memo2(HttpServletRequest request, Model model) {
+   		System.out.println("RawmaterialsController memo2()");
+   		
+   		String clientCode = request.getParameter("clientCode");
+   		
+   		// memo 가져오기
+   		ClientDTO clientDTO = rawmaterialsService.getMemo2(clientCode);
+   		model.addAttribute("clientDTO",clientDTO);
+   		
+   		return "Rawmaterials/memo2";
+   	}
 
 }

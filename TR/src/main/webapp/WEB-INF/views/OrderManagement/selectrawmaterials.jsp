@@ -19,6 +19,7 @@
 <input id="rTInput" type="hidden">
 <input id="rPInput" type="hidden">
 <input id="wCInput" type="hidden">
+<input id="wNInput" type="hidden">
 
 <!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -31,17 +32,18 @@ function setParentText(){
 	opener.document.getElementById("rTInput").value = document.getElementById("rTInput").value;
 	opener.document.getElementById("rPInput").value = document.getElementById("rPInput").value;
 	opener.document.getElementById("wCInput").value = document.getElementById("wCInput").value;
+	opener.document.getElementById("wNInput").value = document.getElementById("wNInput").value;
 	window.close();
 }
 
 // selectclient 페이지 팝업창
-function openPopup3() {
-    var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
-    // 팝업 창닫기 버튼 클릭시 창닫기
-    popupWindow.onbeforeunload = function() {
-        popupWindow.close();
-    };
-}
+// function openPopup3() {
+//     var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
+//     // 팝업 창닫기 버튼 클릭시 창닫기
+//     popupWindow.onbeforeunload = function() {
+//         popupWindow.close();
+//     };
+// }
 
 // memo 페이지 팝업창
 function openPopup4(rawCode) {
@@ -70,7 +72,7 @@ function openPopup4(rawCode) {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처	<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()">
+<!-- 거래처	<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()"> -->
 <input type="submit" value="검색">
 </form>
 
@@ -83,28 +85,28 @@ function openPopup4(rawCode) {
 <td>종류</td>
 <td>단위</td>
 <td>매입단가</td>
-<td>거래처</td>
-<td>창고명</td>
+<!-- <td>거래처</td> -->
+<td>창고코드</td>
 <td>창고수량</td>
 <td>비고</td>
 </tr>
 
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
-<tr onclick="if(event.target.tagName!='A'){document.getElementById('rCInput').value = '${rawmaterialsDTO.rawCode}'; document.getElementById('rNInput').value = '${rawmaterialsDTO.rawName}'; document.getElementById('rTInput').value = '${rawmaterialsDTO.rawType}'; document.getElementById('rPInput').value = '${rawmaterialsDTO.rawPrice}'; document.getElementById('wCInput').value = '${rawmaterialsDTO.whseCount}'; setParentText();}">
+<tr onclick="if(event.target.tagName!='A'){document.getElementById('rCInput').value = '${rawmaterialsDTO.rawCode}'; document.getElementById('rNInput').value = '${rawmaterialsDTO.rawName}'; document.getElementById('rTInput').value = '${rawmaterialsDTO.rawType}'; document.getElementById('rPInput').value = '${rawmaterialsDTO.rawPrice}'; document.getElementById('wCInput').value = '${rawmaterialsDTO.whseCount}'; document.getElementById('wNInput').value = '${rawmaterialsDTO.whseCode}'; setParentText();}">
 <td>${rawmaterialsDTO.rawNum}</td>
 <td>${rawmaterialsDTO.rawCode}</td>
 <td>${rawmaterialsDTO.rawName}</td>
 <td>${rawmaterialsDTO.rawType}</td>
 <td>${rawmaterialsDTO.rawUnit}</td>
 <td>${rawmaterialsDTO.rawPrice}</td>
-<td>${rawmaterialsDTO.clientCode}</td>
+<%-- <td>${rawmaterialsDTO.clientCode}</td> --%>
 <td>${rawmaterialsDTO.whseCode}</td>
 <td>${rawmaterialsDTO.whseCount}</td>
 
 <!-- 비고기능 -->
 <td><c:choose>
 <c:when test="${not empty rawmaterialsDTO.rawMemo}">
-<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" target="_blank" style="color:black;">[보기]</a>
+<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" style="color:black;">[보기]</a>
 </c:when>
 <c:otherwise>
 <c:set var="rawMemo" value="" />

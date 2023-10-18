@@ -22,6 +22,7 @@ public class InMaterialDTO {
 	private String clientCompany;
 	private int stockCount;
 	private String inState;
+	private String whseCode;
 //	비고 필요없나
 	private String inMemo;
 	
