@@ -2,6 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
 
+<!DOCTYPE html>
+<html>
+<head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- sweetalert -->
 
@@ -15,10 +18,10 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
 
-<%-- <c:if test="${empty sessionScope.id}">
-    <c:redirect url="/smmain/smMain" />
-</c:if> --%>
 
+<!-- /page content -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- 모달창 script -->
 	<script>
       //modal창에 열기 위한 이벤트 헨들러
@@ -691,7 +694,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </script>
 
 
-
+</head>
 
 <body>
 <!-- 모달창 -->
@@ -819,7 +822,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	<div style="float:left;">
 	<button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/workorder/workOrderList?nowPage=1&cntPerPage=100&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}'">
     테이블 전체 보기</button>
-	<button id="excelDownload" class="Button">엑셀⬇️</button>
+	<button id="excelDownload" class="button">엑셀⬇️</button>
 		
 	<script type="text/javascript">
     
@@ -997,7 +1000,6 @@ button.style.color = "#999999";
 	
 </div>
 </body>
+</html>
 
-<!-- /page content -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+

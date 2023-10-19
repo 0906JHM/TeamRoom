@@ -13,9 +13,21 @@
 <!-- SweetAlert  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+<%
+// 관리자 또는 자재팀 출고 상세 페이지 열람 가능 게시판 접근 가능
+String department = "";
+if (session.getAttribute("empDepartment") != null) {
+    department = (String) session.getAttribute("empDepartment");
+}
+
+// 상수 정의
+final String ADMIN_DEPARTMENT = "자재팀";
+%>
+
 <title>출고 상세 페이지</title>
 </head>
 <body>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
 
 	<h2>출고 상세정보</h2>
 	<form action="${pageContext.request.contextPath}/outProduct/outProductUpdate" id="updateForm" method="POST">
@@ -76,20 +88,20 @@
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
 				<td colspan="2">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
-					<c:if test="${outProductDTO.whseCount == null || outProductDTO.whseCount == 0}">
+					<c:if test="${outProductDTO.stockCount == null || outProductDTO.stockCount == 0}">
    						<input type="number" name="outCount" value="0" readonly="readonly">
     					<script type="text/javascript">
         					console.log("재고가 0개");
     					</script>
 					</c:if>
-					<c:if test="${outProductDTO.whseCount != null && outProductDTO.whseCount > 0}">
+					<c:if test="${outProductDTO.stockCount != null && outProductDTO.stockCount > 0}">
     					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
 					</c:if>
 
 				</td>
 				<td colspan="2">
-					<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
-					<input type="number" name="whseCount" value="${outProductDTO.whseCount }" min="0" readonly="readonly">
+					<input type="hidden" id="initialstockCount" value="${outProductDTO.stockCount}">
+					<input type="number" name="stockCount" value="${outProductDTO.stockCount }" min="0" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -116,26 +128,38 @@
 			</tr>
 		</table>
 		<div id="buttons">
-		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.whseCount != 0 }">
+		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.stockCount != 0 }">
 				<input type="button" id="updateButton" value="출고">
 		</c:if>
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
 	</form>
+</c:if>
+	
+	<script type="text/javascript">
+		var department = "<%= department %>";
+		var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
+		console.log("직책 : "+department);
+		if (department !== ADMIN_DEPARTMENT && department !== "관리자") {
+		    // 세션 값이 허용되지 않는 경우 리다이렉트
+		    window.opener.location.href = "<%= request.getContextPath() %>/main/calendar";
+		    window.close();
+		}
+	</script>
 	
 	<script type="text/javascript">
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var outCountInput = document.querySelector('input[name="outCount"]');
-		    var whseCountInput = document.querySelector('input[name="whseCount"]');
+		    var stockCountInput = document.querySelector('input[name="stockCount"]');
 		    
 		    // 현재 출력해야되는 재고값 계산
-		    var initialWhseCount = parseInt(document.getElementById('initialWhseCount').value, 10);
+		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10);
 		    var initialOutCount = parseInt(document.getElementById('initialOutCount').value, 10);
 		    var outCount = parseInt(outCountInput.value, 10);
 		    
 		    // 재고 입력란 업데이트
-		    whseCountInput.value = initialWhseCount + initialOutCount - outCount;
+		    stockCountInput.value = initialstockCount + initialOutCount - outCount;
 		}
 		
 		
@@ -152,22 +176,20 @@
 					success: function(response) {
 						console.log(response);
 						if(response === 'success'){
-							Swal.fire({
-							    text: '출고 완료',
-							    icon: 'success',
-							    confirmButtonText: '확인',
-							});
-							window.opener.location.reload();
-// 							window.close();
-						}else{
-							Swal.fire({
-							    text: '재고가 충분하지 않습니다.',
-							    icon: 'warning',
-							    confirmButtonText: '확인',
-							});
-							window.opener.location.reload();
-// 							window.close();
-						}
+		                    Swal.fire({
+		                        text: '출고 완료',
+		                        icon: 'success',
+		                        confirmButtonText: '확인',
+		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+		                    });
+		                } else {
+		                    Swal.fire({
+		                        text: '재고가 충분하지 않습니다.',
+		                        icon: 'warning',
+		                        confirmButtonText: '확인',
+		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+		                    });
+		                }
 					},
 					error: function(xhr, status, error) {
 						// 에러 처리
@@ -181,6 +203,11 @@
 				window.close();
 			});
 		});
+		
+		function reloadParentAndCurrentPage() {
+		    window.opener.location.reload(); // 부모 창 새로고침
+		    window.location.reload(); // 현재 창 새로고침
+		}
 	</script>
 </body>
 </html>

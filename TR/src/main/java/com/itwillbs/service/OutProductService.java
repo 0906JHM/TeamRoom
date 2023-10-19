@@ -143,4 +143,9 @@ public class OutProductService {
 		
 	}
 
+	public void updateClientSale(OutProductDTO outProductDTO) {
+		outProductDAO.updateClientSale(outProductDTO);
+	}
+
+
 }
