@@ -337,7 +337,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 						
 						        // confirm 창을 띄워 입고 처리 여부를 확인
 						        var confirmation = confirm("입고 처리하시겠습니까?");
-						
+//-------------------------------------------------------------------------------						
 						        // 확인 버튼이 눌렸을 경우에만 작업 수행
 						        if (confirmation) {
 						            if (dataItem.hasOwnProperty('inState')) {
@@ -371,6 +371,42 @@ final String ADMIN_DEPARTMENT = "자재팀";
 						                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
 						            }
 						        }
+//-------------------------------------------------------------------------------
+// 						        if (confirmation) {
+// 						            if (dataItem.hasOwnProperty('inState')) {
+// 						                dataItem.inState = "입고완료";
+// 						                console.log("변경된 inState 값: " + dataItem.inState);
+
+// 						                // SweetAlert 대화상자 표시
+// 						                Swal.fire({
+// 						                    text: '입고처리하시겠습니까?',
+// 						                    icon: 'warning',
+// 						                    confirmButtonText: '확인',
+// 						                }).then((result) => {
+// 						                    // 확인 버튼을 클릭하면 작업을 수행합니다.
+// 						                    if (result.isConfirmed) {
+// 						                        // 서버에 변경된 값을 저장하기 위한 Ajax 요청
+// 						                        $.ajax({
+// 						                            type: 'POST',
+// 						                            url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
+// 						                            data: JSON.stringify(dataItem),
+// 						                            contentType: 'application/json',
+// 						                            success: function(response) {
+// 						                                console.log('데이터가 성공적으로 업데이트되었습니다.', response);
+// 						                                // 데이터 업데이트 후 페이지 새로고침
+// 						                                location.reload();
+// 						                            },
+// 						                            error: function(error) {
+// 						                                console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
+// 						                            }
+// 						                        });
+// 						                    }
+// 						                });
+// 						            } else {
+// 						                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
+// 						            }
+// 						        }
+//-------------------------------------------------------------------------------
 						    });
 						    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
 						    if (dataItem.inState === '입고완료') {
