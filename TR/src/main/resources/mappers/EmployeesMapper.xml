@@ -5,8 +5,8 @@
   <mapper namespace = "com.itwillbs.Mappers.EmployeesMapper">
   
   <insert id="insertEmployees">
-  	insert into employees(empId,empPass,empName,empDepartment,empPosition,empEmail,empTel,empHiredate,empState)
-  	values(#{empId},#{empPass},#{empName},#{empDepartment},#{empPosition},#{empEmail},#{empTel},#{empHiredate},#{empState})
+  	insert into employees(empId,empPass,empName,empDepartment,empPosition,empEmail,empTel,empHiredate,empState,empFile)
+  	values(#{empId},#{empPass},#{empName},#{empDepartment},#{empPosition},#{empEmail},#{empTel},#{empHiredate},#{empState},#{empFile})
   </insert>
   
   <select id="getEmployeesList" resultType="com.itwillbs.domain.EmployeesDTO">
