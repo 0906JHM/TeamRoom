@@ -36,7 +36,9 @@
     </div>
     <div class="form-group">
     <p>용량(ml)</p>
-    <input type="text" name="prodSize"  placeholder="용량을 입력해 주세요.">
+    <input type="text" name="prodSize"  placeholder="용량을 입력해 주세요."
+    oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+    <!--     정수 숫자만 입력 -->
     </div>
     <div class="form-group">
     <p>향기</p>
@@ -47,7 +49,7 @@
     <input type="hidden" name="clientCode" id="sellclientCode9999" onclick="searchItem('sellclient','sellclientCode9999')" >
     <input type="text" name="clientCompany" id="sellclientCompany9999"  readonly
     	onclick="searchItem('sellclient','sellclientCode9999')"
-    	 placeholder="거래처를 선텍해 주세요."
+    	 placeholder="거래처를 선택해 주세요."
     	 style="cursor: pointer;">
     </div>
     <div class="form-group">
@@ -59,7 +61,9 @@
     </div>
     <div class="form-group">
     <p>매출 단가(원)</p>
-    <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요.">
+    <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요."
+    oninput="this.value = this.value.replace(/[^0-9.]/g, ''); if(this.value.indexOf('.') !== -1){if(this.value.split('.')[1].length > 2){this.value = this.value.slice(0, -1)}};">
+<!--     소수점아래 두자리수까지 숫자입력 -->
     </div>
     <p class="memo">비고</p>
      <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols=""></textarea>

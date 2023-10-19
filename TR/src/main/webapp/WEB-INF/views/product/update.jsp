@@ -37,7 +37,9 @@
 			</div>
 			<div class="form-group">
 				<p>용량(ml)</p>
-				<input type="text" name="prodSize" value="${prodDTO.prodSize}">
+				<input type="text" name="prodSize" value="${prodDTO.prodSize}"
+				oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+				<!--     정수 숫자만 입력 -->
 			</div>
 			<div class="form-group">
 				<p>향기</p>
@@ -61,7 +63,9 @@
 			<div class="form-group">
 				<p>매출 단가(원)</p>
 				<input type="number" step="0.01" name="prodPrice"
-					value="${prodDTO.prodPrice}">
+					value="${prodDTO.prodPrice}"
+					oninput="this.value = this.value.replace(/[^0-9.]/g, ''); if(this.value.indexOf('.') !== -1){if(this.value.split('.')[1].length > 2){this.value = this.value.slice(0, -1)}};">
+					<!--     소수점아래 두자리수까지 숫자만 입력 -->
 			</div>
 			<p class="memo">비고</p>
 			<%--     <input type="text" name="prodMemo" value="${prodDTO.prodMemo}"> --%>
