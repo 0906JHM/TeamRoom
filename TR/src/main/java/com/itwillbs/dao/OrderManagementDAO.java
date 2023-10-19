@@ -58,6 +58,7 @@ public class OrderManagementDAO {
 		return sqlSession.selectList(namespace+".getOrderManagementList2");
 	}
 
+	// buyDate가 오늘 또는 이전인 경우, buyInstate가 '신청완료'에서 '발주완료'로 변경
 	public void updateBuyInstate(Date today) {
 		sqlSession.update(namespace+".updateBuyInstate", today);
 	}

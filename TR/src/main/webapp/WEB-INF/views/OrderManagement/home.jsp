@@ -8,6 +8,8 @@
 <head> 
 <meta charset="UTF-8">  
 <title>Insert title here</title>
+
+<!-- 엑셀 -->
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
@@ -162,8 +164,8 @@ $(document).ready(function() {
 <td>납입단가</td>
 <td>단가총계</td>
 <td>발주신청일</td>
-<td>담당자</td>
 <td>입고상태</td>
+<td>담당자</td>
 <td></td>
 </tr>
 </thead>
@@ -182,8 +184,8 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.rawPrice}</td>
 <td>${ordermanagementDTO.rawPrice * ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.buyDate}</td>
-<td>${ordermanagementDTO.buyEmpId}</td>
 <td>${ordermanagementDTO.buyInstate}</td>
+<td>${ordermanagementDTO.buyEmpId}</td>
 <td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
 </tr>
 </c:forEach>
@@ -204,15 +206,15 @@ $(document).ready(function() {
 <script type="text/javascript">
 
 // 엑셀
-function getToday() {
-	var date = new Date();
-	var year = date.getFullYear();
-	var month = ("0" + (1 + date.getMonth())).slice(-2);
-	var day = ("0" + date.getDate()).slice(-2);
-	return year + "-" + month + "-" + day;
-}
+// function getToday() {
+// 	var date = new Date();
+// 	var year = date.getFullYear();
+// 	var month = ("0" + (1 + date.getMonth())).slice(-2);
+// 	var day = ("0" + date.getDate()).slice(-2);
+// 	return year + "-" + month + "-" + day;
+// }
 
-const excelDownload = document.querySelector('#excelDownload');
+// const excelDownload = document.querySelector('#excelDownload');
 
 document.addEventListener('DOMContentLoaded', ()=> {
 	excelDownload.addEventListener('click', exportExcel);
@@ -233,13 +235,14 @@ function exportExcel() {
 
 var excelHandler = {
     getExcelFileName : function() {
-        return 'performanceList'+getToday()+'.xlsx'; // 파일명
+     	// return 'rawmaterialsList'+getToday()+'.xlsx'; 파일명
+        return 'rawmaterials.xlsx';
     },
     getSheetName : function() {
-        return 'Performance Sheet'; // 시트명
+        return 'rawmaterials'; // 시트명
     },
     getExcelData : function() {
-        return document.getElementById('data-table'); // table id
+        return document.getElementById('rawmaterialsList'); // table id
     },
     getWorksheet : function() {
         return XLSX.utils.table_to_sheet(this.getExcelData());

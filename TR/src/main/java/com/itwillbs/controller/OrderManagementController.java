@@ -296,7 +296,7 @@ public class OrderManagementController {
   	@GetMapping("/download")
   	public void download(HttpServletResponse response) throws IOException {
   	    Workbook workbook = new XSSFWorkbook();
-  	    Sheet sheet = workbook.createSheet("Orders");
+  	    Sheet sheet = workbook.createSheet("rawmaterialsList");
   	    Row header = sheet.createRow(0);
   	    header.createCell(0).setCellValue("발주번호");
   	    header.createCell(1).setCellValue("품번");
@@ -332,7 +332,7 @@ public class OrderManagementController {
   	        row.createCell(11).setCellValue(order.getBuyInstate());
   	    }
   	    response.setContentType("application/vnd.ms-excel");
-  	    response.setHeader("Content-Disposition", "attachment; filename=orders.xlsx");
+  	    response.setHeader("Content-Disposition", "attachment; filename=rawmaterialsList.xlsx");
   	    workbook.write(response.getOutputStream());
   	    workbook.close();
   	}
