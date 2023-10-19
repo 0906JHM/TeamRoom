@@ -310,7 +310,7 @@
 		        		pagingUL.empty(); // 기존 페이징 데이터를 비웁니다.
 
 		        		if (data[i].startPage > data[i].pageBlock) {
-		        		    var prevLink = $("<a href='javascript:void(0);'>Prev</a>");
+		        		    var prevLink = $("<a href='javascript:void(0);'><</a>");
 		        		    var prevListItem = $("<li>").append(prevLink);
 		        		    prevListItem.click(function() {
 		        		        loadPage(outCode, prodName, clientCompany, prev);
@@ -328,7 +328,7 @@
 		        		}
 
 		        		if (data[i].endPage < data[i].pageCount) {
-		        		    var nextLink = $("<a href='javascript:void(0);'>Next</a>");
+		        		    var nextLink = $("<a href='javascript:void(0);'>></a>");
 		        		    var nextListItem = $("<li>").append(nextLink);
 		        		    nextListItem.click(function() {
 		        		        loadPage(outCode, prodName, clientCompany, next);

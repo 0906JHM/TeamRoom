@@ -96,7 +96,7 @@ public class AjaxOutProductController {
 //		전체페이지 구하기 
 //		글개수 50 한화면에 보여줄 글 개수 10 => 페이지수 5
 //		count%pageBlock == 0 ? count/pageBlock : count/pageBlock+1;
-		int pageCount = count%pageBlock == 0 ? count/pageBlock : count/pageBlock+1 ;
+		int pageCount = count%pageSize == 0 ? count/pageSize : count/pageSize+1 ;
 		if(endPage > pageCount ) {
 				endPage = pageCount;
 		}
