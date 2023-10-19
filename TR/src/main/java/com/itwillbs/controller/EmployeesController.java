@@ -1,7 +1,10 @@
 package com.itwillbs.controller;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,11 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.EmployeesDTO;
@@ -26,6 +30,9 @@ public class EmployeesController {
 	
 	@Inject
 	private EmployeesService employeesService;
+	
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 
 	@GetMapping("/employees")
 	public String employees(HttpServletRequest request,Model model) {
@@ -66,7 +73,12 @@ public class EmployeesController {
 	}
 	
 	@PostMapping("/insertPro")
-	public String insertPro(EmployeesDTO employeesDTO) {
+	public String insertPro(EmployeesDTO employeesDTO,HttpServletRequest request, MultipartFile file) throws Exception{
+		UUID uuid = UUID.randomUUID();
+		String filename=uuid.toString()+"_"+file.getOriginalFilename();
+		FileCopyUtils.copy(file.getBytes(), new File(uploadPath,filename) );
+		employeesDTO.setEmpFile(filename);
+		
 		employeesService.insertEmployees(employeesDTO);
 		return "redirect:/employees/employees";
 	}

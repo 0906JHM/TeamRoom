@@ -36,7 +36,9 @@
     </div>
     <div class="form-group">
     <p>용량(ml)</p>
-    <input type="text" name="prodSize"  placeholder="용량을 입력해 주세요.">
+    <input type="text" name="prodSize"  placeholder="용량을 입력해 주세요."
+    oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+    <!--     정수 숫자만 입력 -->
     </div>
     <div class="form-group">
     <p>향기</p>
@@ -47,7 +49,7 @@
     <input type="hidden" name="clientCode" id="sellclientCode9999" onclick="searchItem('sellclient','sellclientCode9999')" >
     <input type="text" name="clientCompany" id="sellclientCompany9999"  readonly
     	onclick="searchItem('sellclient','sellclientCode9999')"
-    	 placeholder="거래처를 선텍해 주세요."
+    	 placeholder="거래처를 선택해 주세요."
     	 style="cursor: pointer;">
     </div>
     <div class="form-group">
@@ -59,12 +61,15 @@
     </div>
     <div class="form-group">
     <p>매출 단가(원)</p>
-    <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요.">
+    <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요."
+    oninput="this.value = this.value.replace(/[^0-9.]/g, ''); if(this.value.indexOf('.') !== -1){if(this.value.split('.')[1].length > 2){this.value = this.value.slice(0, -1)}};">
+<!--     소수점아래 두자리수까지 숫자입력 -->
     </div>
     <p class="memo">비고</p>
      <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols=""></textarea>
     <div id="button">
     <input type="submit" value="확인">
+    <input type="button" value="닫기" onclick="closeWindow()">
     </div>
     </form>
 </div>
@@ -113,9 +118,31 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 //--------------------------------------------------------------------------
+//닫기버튼 누르면 창 닫힘
+		  function closeWindow() {
+        window.close();
+    }
 
+//--------------------------------------------------------------------------
+//창뜨면 제품명에 포커스
 document.addEventListener('DOMContentLoaded', function() {
         document.getElementsByName("prodName")[0].focus();
+    });
+    
+ //모든 값 입력해야함
+  document.querySelector('form').addEventListener('submit', function(event) {
+        const prodName = document.getElementsByName("prodName")[0].value;
+        const prodUnit = document.getElementsByName("prodUnit")[0].value;
+        const prodSize = document.getElementsByName("prodSize")[0].value;
+        const prodPerfume = document.getElementsByName("prodPerfume")[0].value;
+        const clientCompany = document.getElementsByName("clientCompany")[0].value;
+        const whseName = document.getElementsByName("whseName")[0].value;
+        const prodPrice = document.getElementsByName("prodPrice")[0].value;
+
+        if (!prodName || !prodUnit || !prodSize || !prodPerfume || !clientCompany || !whseName || !prodPrice) {
+            event.preventDefault();
+            alert("모든 값을 입력해주세요.");
+        }
     });
 
 </script>

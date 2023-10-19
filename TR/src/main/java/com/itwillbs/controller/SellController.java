@@ -57,11 +57,11 @@ public class SellController {
 	 * 
 	 * // 페이지 번호 => 정수형 변경 int currentPage = Integer.parseInt(pageNum);
 	 * 
-	 * //DTO에 담을 정보 SellDTO sellPageDTO = new SellDTO();
-	 * sellPageDTO.setPageSize(pageSize); sellPageDTO.setPageNum(pageNum);
-	 * sellPageDTO.setCurrentPage(currentPage);
+	 * //DTO에 담을 정보 SellDTO sellDTO = new SellDTO();
+	 * sellDTO.setPageSize(pageSize); sellDTO.setPageNum(pageNum);
+	 * sellDTO.setCurrentPage(currentPage);
 	 * 
-	 * List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
+	 * List<SellDTO>sellList= sellService.getSellList(sellDTO);
 	 * System.out.println(sellList); // 전체 글개수 가져오기 int count =
 	 * sellService.getSellCount(); // 한화면에 보여줄 페이지 개수 설정 int pageBlock = 5; // 시작하는
 	 * 페이지 번호 int startPage=(currentPage-1)/pageBlock*pageBlock+1; // 끝나는 페이지 번호 int
@@ -69,12 +69,12 @@ public class SellController {
 	 * count/pageSize+(count%pageSize==0?0:1); // 끝나는 페이지 번호 전체페이지 개수 비교 //=> 끝나는
 	 * 페이지 번호가 크면 전체페이지 개수로 변경 if(endPage > pageCount) { endPage = pageCount; }
 	 * 
-	 * sellPageDTO.setCount(count); sellPageDTO.setPageBlock(pageBlock);
-	 * sellPageDTO.setStartPage(startPage); sellPageDTO.setEndPage(endPage);
-	 * sellPageDTO.setPageCount(pageCount);
+	 * sellDTO.setCount(count); sellDTO.setPageBlock(pageBlock);
+	 * sellDTO.setStartPage(startPage); sellDTO.setEndPage(endPage);
+	 * sellDTO.setPageCount(pageCount);
 	 * 
 	 * // 글 목록 model.addAttribute("sellList", sellList);// ("이름", 값) // 페이지
-	 * model.addAttribute("sellPageDTO", sellPageDTO);
+	 * model.addAttribute("sellDTO", sellDTO);
 	 * 
 	 * log.debug("페이지번호"+pageNum); // center/notice.jsp //
 	 * WEB-INF/views/center/notice.jsp return "sell/sellMain"; }//sellMain
@@ -287,15 +287,16 @@ public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 //------------------------------------------------------- 수주 조회 -----------------------------------------------
 @GetMapping("/sellMain")
 public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sellDTO) {
-	SellDTO sellDTOSearch = sellDTO; // 검색값을 저장해서 검색페이지에서 표시하기위해서 사용
+	/* SellDTO sellDTOSearch = sellDTO; */ // 검색값을 저장해서 검색페이지에서 표시하기위해서 사용
 	System.out.println(sellDTO.getSellCode());
 	
 	// 날짜를 받아와서 분할
 	String daterange1 = request.getParameter("daterange1");
 	String daterange2 = request.getParameter("daterange2");
 	// 검색 날짜를 저장
-	sellDTOSearch.setSellDate(daterange1);
-	sellDTOSearch.setSellDuedate(daterange2);
+	/*
+	 * sellDTO.setSellDate(daterange1); sellDTO.setSellDuedate(daterange2);
+	 */
 	
 	// 날짜가 있는 경우 검색 DTO 저장
 	if(!("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null)) {
@@ -339,33 +340,37 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	
 	System.out.println(sellDTO);
 
-	List<SellDTO>sellList= sellService.getSellListSearch(sellDTO);
-	
-
-	// 글 목록
-	/* sellDTOSearch.setSellState(""); */
-	model.addAttribute("sellDTO",sellDTOSearch);
-	model.addAttribute("sellList", sellList);// ("이름", 값)
-	//	return "sell/sellMain";
-	
-	//------------------------------ 수주 조회 페이징 -----------------------------------	
+		//------------------------------ 수주 조회 페이징 -----------------------------------	
 	// 한 화면에 보여줄 글 개수 설정
+	String cntPerPageParam = request.getParameter("cntPerPage");
 	int pageSize = 10;
+
+	if (cntPerPageParam != null && !cntPerPageParam.isEmpty()) {
+	    try {
+	        int cntPerPage = Integer.parseInt(cntPerPageParam);
+	        pageSize = cntPerPage;
+	    } catch (NumberFormatException e) {
+	        // Handle the case where the parameter is not a valid integer
+	        // You might want to set a default value or show an error message to the user
+	    }
+	}
 	// 현재 페이지 번호 가져오기
 	String pageNum = request.getParameter("pageNum");
+	System.out.println(pageNum);
 	// 페이지 번호가 없을 경우 "1"로 설정
 	if (pageNum == null) {
 	    pageNum = "1";
 	}
-
+	System.out.println(pageNum);
 	// 페이지 번호를 정수로 변경
 	int currentPage = Integer.parseInt(pageNum);
+	int startRow = (currentPage-1) * pageSize;
 
 	// DTO에 담을 정보
-	SellDTO sellPageDTO = new SellDTO();
-	sellPageDTO.setPageSize(pageSize);
-	sellPageDTO.setPageNum(pageNum);
-	sellPageDTO.setCurrentPage(currentPage);
+	sellDTO.setPageSize(pageSize);
+	sellDTO.setPageNum(pageNum);
+	sellDTO.setCurrentPage(currentPage);
+	sellDTO.setStartRow(startRow);
 
 	// ...
 
@@ -374,7 +379,7 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	System.out.println(count+"카운트");
 	// 전체 페이지 수 계산
 	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-
+	
 	// 한 번에 보일 페이지 블록 수 설정
 	int pageBlock = 5;
 
@@ -387,14 +392,24 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	    endPage = pageCount;
 	}
 
-	sellPageDTO.setCount(count);
-	sellPageDTO.setPageBlock(pageBlock);
-	sellPageDTO.setStartPage(startPage);
-	sellPageDTO.setEndPage(endPage);
-	sellPageDTO.setPageCount(pageCount);
+	sellDTO.setCount(count);
+	sellDTO.setPageBlock(pageBlock);
+	sellDTO.setStartPage(startPage);
+	sellDTO.setEndPage(endPage);
+	sellDTO.setPageCount(pageCount);
+	
+List<SellDTO>sellList= sellService.getSellListSearch(sellDTO);
+	
+
+	// 글 목록
+	/* sellDTOSearch.setSellState(""); *//*
+											 * model.addAttribute("sellDTO",sellDTOSearch);
+											 */
+	model.addAttribute("sellList", sellList);// ("이름", 값)
+	//	return "sell/sellMain";
 
 	// 페이지
-	model.addAttribute("sellPageDTO", sellPageDTO);
+	model.addAttribute("sellDTO", sellDTO);
 	
 	return "sell/sellMain";
 	

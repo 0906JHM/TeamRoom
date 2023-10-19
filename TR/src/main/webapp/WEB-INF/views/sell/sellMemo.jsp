@@ -7,20 +7,28 @@
 <head>
 <%--     <jsp:include page="test4.jsp"></jsp:include> --%>
     <title>Sell/sellMemo.jsp</title>
-    <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <%--     <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"> --%>
 <%--  <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css"> --%>
 <link href="${pageContext.request.contextPath}/resources/css/popup.css" rel="stylesheet" type="text/css">
-<%
-// 관리자 또는 영업팀 출고 상세 페이지 열람 가능 게시판 접근 가능
-String department = "";
-if (session.getAttribute("empDepartment") != null) {
-    department = (String) session.getAttribute("empDepartment");
-}
-
-// 상수 정의
-final String ADMIN_DEPARTMENT = "영업팀";
-%>
+<script>
+$(document).ready(function () {
+	//--------------------------------------------------- 페이지 권한 ----------------------
+                
+/*--------------------------------- 페이지 권한 ----------------------------------------  */
+    var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+    if (team === "생산팀" || team === "관리자") {
+		  
+			$('#modify').show();
+	   }
+	  else if (team ===""){
+		  window.close();
+	  }
+	  else{
+		  
+	  }
+})
+</script>
 </head>
 
 <!---------------------------------------------------- 상단 조회 및 버튼 ----------------------------------------------------->
@@ -34,9 +42,7 @@ final String ADMIN_DEPARTMENT = "영업팀";
 		<textarea id="sellMemo" readonly="readonly" style="width: 350px; height: 250px;">${sellDTO.sellMemo}</textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		
-		<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}">
-		<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellMemotype?sellCode=${sellDTO.sellCode}&memotype=modify'" id="modify" >수정</button>
-        </c:if>
+		<button style="display: none;" type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellMemotype?sellCode=${sellDTO.sellCode}&memotype=modify'" id="modify" >수정</button>
         <button type="button" onclick="window.close()">닫기</button>
     </form>
 </div>
@@ -49,14 +55,7 @@ final String ADMIN_DEPARTMENT = "영업팀";
         
 </c:choose>
 <!---------------------------------------------- javascript ---------------------------------------------->
-<script type="text/javascript">
-var department = "<%= department %>";
-var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
-var sellStateButton1 = "전체";
-if (department null ) {
-		window.location.href = "<%= request.getContextPath() %>/login/login";
-}
- </script>
+
 
 
 

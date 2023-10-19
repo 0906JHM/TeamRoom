@@ -83,7 +83,10 @@
                 var team = "${sessionScope.empDepartment}";
 
                 if (team === "" || (team !== "관리자" && team !== "영업팀")) {
-                    window.location.href = "${pageContext.request.contextPath}/login/logout";
+                    // 창을 닫습니다.
+                    window.close(); // 이 코드는 창을 닫으려고 시도합니다.
+                    // 또는 에러 페이지로 리디렉션할 수 있습니다.
+                    // window.location.href = "${pageContext.request.contextPath}/error";
                 }
    //--------------------------------------------------- 제품가격에 따라 수주가격 자동 변경  ----------------------
 // 제품 코드의 값이 변경이 될때 가격 변경
