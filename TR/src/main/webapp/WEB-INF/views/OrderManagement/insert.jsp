@@ -15,8 +15,8 @@
 
 <!-- form -->
 <form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post">
-원자재코드 : 	<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
-원자재명 : 		<input type="text" name="rawName" id="rNInput"><br>
+품번 : 		<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
+품명 : 		<input type="text" name="rawName" id="rNInput"><br>
 종류 : 		<input type="text" name="rawType" id="rTInput"><br>
 매입단가 : 		<input type="number" name="rawPrice" id="rPInput"><br>
 거래처명 : 		<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
@@ -25,9 +25,8 @@
 발주수량 : 		<input type="number" name="buyCount"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
 담당자 : 		<input type="text" name="buyEmpId" value="${sessionScope.empId}"><br>
-입고상태 : 	
-<input type="radio" name="buyInstate" value="신청완료" checked>신청완료
-<input type="radio" name="buyInstate" value="발주완료">발주완료<br>
+발주상태 : 		<input type="radio" name="buyInstate" value="신청완료" checked>신청완료
+			<input type="radio" name="buyInstate" value="발주완료">발주완료<br>
 
 <input type="submit" value="발주등록">
 </form>

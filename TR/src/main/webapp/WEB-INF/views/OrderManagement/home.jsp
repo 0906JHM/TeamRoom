@@ -161,10 +161,10 @@ $(document).ready(function() {
 <td>창고코드</td>
 <td>창고수량</td>
 <td>발주수량</td>
-<td>납입단가</td>
+<td>매입단가</td>
 <td>단가총계</td>
 <td>발주신청일</td>
-<td>입고상태</td>
+<td>발주상태</td>
 <td>담당자</td>
 <td></td>
 </tr>
