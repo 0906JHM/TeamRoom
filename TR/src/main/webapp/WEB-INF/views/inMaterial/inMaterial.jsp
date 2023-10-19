@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>입고 관리</title>
 <meta charset="UTF-8">
 <!-- 사이드바 css-->
 <link href="${pageContext.request.contextPath }/resources/css/side.css"
@@ -24,7 +25,9 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <script type="text/javascript">
-<title>inMaterial</title>
+
+
+
 </head>
 <body>
 
