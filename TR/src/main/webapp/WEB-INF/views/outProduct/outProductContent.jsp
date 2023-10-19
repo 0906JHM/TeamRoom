@@ -13,9 +13,21 @@
 <!-- SweetAlert  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+<%
+// 관리자 또는 자재팀 출고 상세 페이지 열람 가능 게시판 접근 가능
+String department = "";
+if (session.getAttribute("empDepartment") != null) {
+    department = (String) session.getAttribute("empDepartment");
+}
+
+// 상수 정의
+final String ADMIN_DEPARTMENT = "자재팀";
+%>
+
 <title>출고 상세 페이지</title>
 </head>
 <body>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
 
 	<h2>출고 상세정보</h2>
 	<form action="${pageContext.request.contextPath}/outProduct/outProductUpdate" id="updateForm" method="POST">
@@ -122,6 +134,18 @@
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
 	</form>
+</c:if>
+	
+	<script type="text/javascript">
+		var department = "<%= department %>";
+		var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
+		console.log("직책 : "+department);
+		if (department !== ADMIN_DEPARTMENT && department !== "관리자") {
+		    // 세션 값이 허용되지 않는 경우 리다이렉트
+		    window.opener.location.href = "<%= request.getContextPath() %>/main/calendar";
+		    window.close();
+		}
+	</script>
 	
 	<script type="text/javascript">
 		function updateInventory() {
