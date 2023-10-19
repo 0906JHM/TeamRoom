@@ -68,6 +68,7 @@
 			<textarea name="prodMemo" class="prodMemo" rows="5" cols="">${prodDTO.prodMemo}</textarea>
 			<div id="button">
 				<input type="submit" value="수정">
+				<input type="button" value="닫기" onclick="closeWindow()">
 			</div>
 		</form>
 	</div>
@@ -85,6 +86,25 @@
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
 		//--------------------------------------------------------------------------
+		//닫기버튼 누르면 창 닫힘
+		  function closeWindow() {
+        window.close();
+    }
+		//--------------------------------------------------------------------------
+		  document.querySelector('form').addEventListener('submit', function(event) {
+        const prodName = document.getElementsByName("prodName")[0].value;
+        const prodUnit = document.getElementsByName("prodUnit")[0].value;
+        const prodSize = document.getElementsByName("prodSize")[0].value;
+        const prodPerfume = document.getElementsByName("prodPerfume")[0].value;
+        const clientCompany = document.getElementsByName("clientCompany")[0].value;
+        const whseName = document.getElementsByName("whseName")[0].value;
+        const prodPrice = document.getElementsByName("prodPrice")[0].value;
+
+        if (!prodName || !prodUnit || !prodSize || !prodPerfume || !clientCompany || !whseName || !prodPrice) {
+            event.preventDefault();
+            alert("모든 값을 입력해주세요.");
+        }
+    });
 	</script>
 
 </body>

@@ -65,6 +65,7 @@
      <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols=""></textarea>
     <div id="button">
     <input type="submit" value="확인">
+    <input type="button" value="닫기" onclick="closeWindow()">
     </div>
     </form>
 </div>
@@ -113,12 +114,18 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 //--------------------------------------------------------------------------
+//닫기버튼 누르면 창 닫힘
+		  function closeWindow() {
+        window.close();
+    }
 
+//--------------------------------------------------------------------------
+//창뜨면 제품명에 포커스
 document.addEventListener('DOMContentLoaded', function() {
         document.getElementsByName("prodName")[0].focus();
     });
     
- //모든 값 입력
+ //모든 값 입력해야함
   document.querySelector('form').addEventListener('submit', function(event) {
         const prodName = document.getElementsByName("prodName")[0].value;
         const prodUnit = document.getElementsByName("prodUnit")[0].value;
