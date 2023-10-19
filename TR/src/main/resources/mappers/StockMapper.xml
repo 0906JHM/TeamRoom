@@ -17,18 +17,15 @@
   </insert>
   
   <select id="getstockListR" resultType="com.itwillbs.domain.StockDTO">
-      select * from stock
+       select * from stock
       where stockType = '원자재'
       <if test="search1 != null and search1 != ''">
-        	and prodCode like concat('%', #{search1}, '%')
+        	and rawCode like concat('%', #{search1}, '%')
     	</if>
     	<if test="search2 != null and search2 != ''">
         	and rawCode like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseCode like concat('%', #{search3}, '%')
-    	</if>
-           order by stockNum limit #{startRow}, #{pageSize}
+          limit #{startRow}, #{pageSize}
   </select>
   
     <select id="getstockListP" resultType="com.itwillbs.domain.StockDTO">
@@ -39,9 +36,6 @@
     	</if>
     	<if test="search2 != null and search2 != ''">
         	and rawCode like concat('%', #{search2}, '%')
-    	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseCode like concat('%', #{search3}, '%')
     	</if>
      order by stockNum limit #{startRow}, #{pageSize}
   </select>
@@ -55,9 +49,6 @@
     	<if test="search2 != null and search2 != ''">
         	and rawCode like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseCode like concat('%', #{search3}, '%')
-    	</if>
   </select>
   
     <select id="getStockCountP" resultType="java.lang.Integer">
@@ -68,9 +59,6 @@
     	</if>
     	<if test="search2 != null and search2 != ''">
         	and rawCode like concat('%', #{search2}, '%')
-    	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseCode like concat('%', #{search3}, '%')
     	</if>
   </select>
   

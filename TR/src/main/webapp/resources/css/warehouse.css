@@ -14,7 +14,19 @@ h2 {
 	font-weight: bold;
 	padding-left: 1%;
 }
+.x_title{
+display: flex;
+width:1570px;
+box-sizing: border-box;
+align-items: center;
+justify-content: space-between;
 
+}
+.x_total{
+margin-left: 1%;
+display: flex;
+align-items: center;
+}
 .tab{
 	border: 1px solid rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 }
