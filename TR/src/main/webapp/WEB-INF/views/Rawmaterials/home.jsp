@@ -138,7 +138,7 @@ $(document).ready(function() {
 						<option value="라벨">라벨</option>
 						<option value="포장재">포장재</option>
 						</select>
-<input type="submit" value="조회" id="searchbtn">
+<input type="submit" value="조회">
 </form>
 </div>
 <hr>

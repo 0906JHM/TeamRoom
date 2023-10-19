@@ -8,11 +8,13 @@
 <head>
 <meta charset="UTF-8"> 
 <title>Insert title here</title>
+<link href="${pageContext.request.contextPath }/resources/css/Rawmaterialspop.css" rel="stylesheet" type="text/css">
 </head>
 
 <!-- body -->
 <body>
-<h1>상세보기</h1> 
+<div class="content">
+<h2>상세보기</h2>
 
 <!-- table -->
 <table border="1">
@@ -21,7 +23,6 @@
 <tr><td>종류</td>		<td>${rawmaterialsDTO.rawType}</td></tr>
 <tr><td>단위</td>		<td>${rawmaterialsDTO.rawUnit}</td></tr>
 <tr><td>매입단가</td>	<td>${rawmaterialsDTO.rawPrice}</td></tr>
-<%-- <tr><td>거래처</td>	<td>${rawmaterialsDTO.clientCode}</td></tr> --%>
 <tr><td>창고명</td>	<td>${rawmaterialsDTO.whseCode}</td></tr>
 <tr><td>비고</td>		<td>${rawmaterialsDTO.rawMemo}</td></tr>
 </table>
@@ -29,6 +30,6 @@
 <!-- button -->
 <input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/update?rawCode=${rawmaterialsDTO.rawCode}'">
 <input type="button" value="목록" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/home'">
-
+</div>
 </body>
 </html>

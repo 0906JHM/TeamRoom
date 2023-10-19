@@ -51,20 +51,8 @@ input[type="text"], select {
 	padding-left: 10px;
 }
 
-/* 검색버튼 */
-#searchbtn {
-	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-	width: 100px;
-	height: 40px;
-	border-radius: 5px;
-	color: #FFFFFF;
-	border: 0;
-	text-align: center;
-	font: 500 20px/20px "Inter", sans-serif;
-}
-
 /* 버튼 */
-input[type="button"], .excelbtn {
+input[type="button"], input[type="submit"], .excelbtn {
 	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
 	width: 100px;
 	height: 40px;
@@ -75,7 +63,7 @@ input[type="button"], .excelbtn {
 	font: 500 20px/20px "Inter", sans-serif;
 }
 
-input[type="button"]:hover, .custom-button:hover {
+input[type="button"]:hover, input[type="submit"] {
 	cursor: pointer; /* 손가락 모양 */
 }
 
