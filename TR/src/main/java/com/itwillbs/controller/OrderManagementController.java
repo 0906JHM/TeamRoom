@@ -2,6 +2,7 @@ package com.itwillbs.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -73,7 +74,13 @@ public class OrderManagementController {
 		        
 		// 품목추가한 내용 뿌려주기
 		List<OrderManagementDTO> ordermanagementList= ordermanagementService.getOrderManagementList(pageDTO);
-		        
+		   
+		// 오늘 날짜를 가져옵니다.
+	    Date today = java.sql.Date.valueOf(LocalDate.now());
+
+	    // buyDate가 오늘 또는 이전이고 buyInstate가 '신청완료'인 경우 '발주완료'로 변경합니다.
+	    ordermanagementService.updateBuyInstate(today);
+		
 		int count = ordermanagementService.getOrderManagementCount(pageDTO);
 		int pageBlock = 10;
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
