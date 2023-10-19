@@ -1,18 +1,28 @@
 @charset "UTF-8";
 
+html, body {
+/*     height: 100%; */
+/*     display:flex; */
+/*     flex-direction: row; */
+}
+
 .sidebar {
 	margin: 0;
 	padding: 0;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	position: relative;
+	height: 100%;
+	
 }
 
 .sidebody {
+	display:block;
 	background: white;
 	font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
 	float: left;
-	height: 1000px;
+	height: 800px;
 	background-color: white;
 	width: 15%;
 	border-right: 1px solid;
@@ -191,3 +201,5 @@ h1 .sidea {
 	text-align: left;
 	vertical-align: top
 }
+
+
