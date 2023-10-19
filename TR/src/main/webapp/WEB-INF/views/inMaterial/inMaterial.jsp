@@ -38,7 +38,7 @@
 		<hr>
 		<div id="searchForm">
 			<label>입고 코드</label> <input type="text" name="inNum" id="inNum"
-				placeholder="입고 번호를 입력하세요."> <label>원자재명</label> <input
+				placeholder="입고 코드를 입력하세요."> <label>원자재명</label> <input
 				type="text" name="rawName" id="rawName9999" placeholder="원자재명을 입력하세요."
 				onclick="searchItem('raw','rawCode9999')"> <label>거래처명</label>
 			<input type="text" name="clientCompany" id="clientCompany9999"
@@ -61,12 +61,12 @@
 			<table id="inMaterialTable">
 				<thead>
 					<tr>
-						<th>입고 번호</th>
-						<th>발주 번호</th>
+						<th>입고 코드</th>
+						<th>발주 코드</th>
 						<th>입고 창고</th>
 						<th>거래처명</th>
-						<th>품번</th>
-						<th>품명</th>
+						<th>원자재 코드</th>
+						<th>원자재명</th>
 						<th>발주 수량</th>
 						<th>재고 수량</th>
 						<th>단가</th>
@@ -314,6 +314,8 @@ var inNum = data[i].inNum;
 (function(dataItem) {
     var button = $("<input type='button' value='입고'>");
     button.click(function() {
+    	
+    	
         // 버튼 클릭 시 처리할 동작을 여기에 추가
         console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
 
@@ -367,15 +369,12 @@ var inNum = data[i].inNum;
 })(data[i]);
 					
 					
-					
-					
-					
 					//--------------------------------------------------------------------------------------------
 					//	tbody에 행을 추가합니다.
 					tbody.append(row);
 				} else if (i == data.length - 1) {// 마지막에 페이징 처리데이터가 들어가있다
 					// 마지막 행은 페이징 정보를 추가합니다.
-					var inNum = data[i].inNum; //검색한 입고번호
+					var inNum = data[i].inNum; //검색한 입고코드
 					var rawName = data[i].rawName; //검색한 상품이름
 					var clientCompany = data[i].clientCompany; //검색한 거래처이름
 					var inState = data[i].inState; //검색한 입고 상태
@@ -472,14 +471,14 @@ var inNum = data[i].inNum;
 				            // 데이터 가공
 							var modifiedData = data.map(function (item) {
 							    return {
-							        '입고번호': item.inNum,
-							        '발주번호': item.buyNum,
-							        '입고창고': item.whseCode,
+							        '입고 코드': item.inNum,
+							        '발주 코드': item.buyNum,
+							        '입고 창고': item.whseCode,
 							        '거래처명': item.clientCompany,
-							        '품번': item.rawCode,
-							        '품명': item.rawName,
-							        '발주수량': item.inCount,
-							        '재고수량': item.stock,
+							        '원자재 코드': item.rawCode,
+							        '원자재명': item.rawName,
+							        '발주 수량': item.inCount,
+							        '재고 수량': item.stock,
 							        '단가': item.rawPrice,
 							        '총액': item.inPrice,
 							        '입고일': item.inDate,
