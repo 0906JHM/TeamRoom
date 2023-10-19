@@ -29,8 +29,6 @@ public class StockController {
 		System.out.println("search1 : " + search1);
 		String search2 = request.getParameter("search2");
 		System.out.println("search2 : " + search2);
-		String search3 = request.getParameter("search3");
-		System.out.println("search3 : " + search3);
 		
 		int pageSize = 10;
 		String pageNum = request.getParameter("pageNum");
@@ -45,7 +43,6 @@ public class StockController {
 		pageDTO.setCurrentPage(currentPage);
 		pageDTO.setSearch1(search1); // 검색어저장
 		pageDTO.setSearch2(search2);
-		pageDTO.setSearch3(search3);
 		
 		List<StockDTO> stockListR=stockService.getstockListR(pageDTO);
 		
@@ -79,8 +76,6 @@ public class StockController {
 		System.out.println("search1 : " + search1);
 		String search2 = request.getParameter("search2");
 		System.out.println("search2 : " + search2);
-		String search3 = request.getParameter("search3");
-		System.out.println("search3 : " + search3);
 		
 		int pageSize = 10;
 		String pageNum = request.getParameter("pageNum");
@@ -95,7 +90,6 @@ public class StockController {
 		pageDTO.setCurrentPage(currentPage);
 		pageDTO.setSearch1(search1); // 검색어저장
 		pageDTO.setSearch2(search2);
-		pageDTO.setSearch3(search3);
 		
 		List<StockDTO> stockListP=stockService.getstockListP(pageDTO);
 		

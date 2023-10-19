@@ -111,9 +111,8 @@ function deleteValue(){
 <div id="searchform">
     <form action="${pageContext.request.contextPath}/Warehouse/list" method="get" id="selected">
     <label>창고코드</label> <input type="text" name="search1" placeholder="창고코드">
-    <label>제품코드</label> <input type="text" name="search2" placeholder="제품코드">
-    <label>창고이름</label> <input type="text" name="search3" placeholder="창고이름">
-    <label>창고타입</label> <select name="search4">
+    <label>창고이름</label> <input type="text" name="search2" placeholder="창고이름">
+    <label>창고타입</label> <select name="search3">
                     <option value="">전체</option>
                     <option value="원자재">원자재</option>
 		            <option value="완제품">완제품</option>
@@ -122,15 +121,19 @@ function deleteValue(){
     </form>
     </div>
     <hr>
-<div class="buttons"> 
+    
+<div class="x_title">
+
+<div class="x_total">
+ <h3>총 ${pageDTO.count}건</h3>
+     </div>
+     <div>
    <button onclick="newTabInsert()">추가</button>
    <button onclick="newTabUpdate()">수정</button>
    <button onclick="deleteValue();">삭제</button>
-<!--     <input type="button" value="추가" onclick="newTabInsert()"> -->
-<!--     <input type="button" value="수정" onclick="newTabUpdate()"> -->
-<!--     <input type="button" value="삭제" onclick="deleteValue();"> -->
 </div>    
-    <h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
+</div>
+   
     
     <div id="list">
     <table class="tab"  id="warehouseTable">
