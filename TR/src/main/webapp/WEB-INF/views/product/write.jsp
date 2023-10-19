@@ -117,6 +117,22 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 document.addEventListener('DOMContentLoaded', function() {
         document.getElementsByName("prodName")[0].focus();
     });
+    
+ //모든 값 입력
+  document.querySelector('form').addEventListener('submit', function(event) {
+        const prodName = document.getElementsByName("prodName")[0].value;
+        const prodUnit = document.getElementsByName("prodUnit")[0].value;
+        const prodSize = document.getElementsByName("prodSize")[0].value;
+        const prodPerfume = document.getElementsByName("prodPerfume")[0].value;
+        const clientCompany = document.getElementsByName("clientCompany")[0].value;
+        const whseName = document.getElementsByName("whseName")[0].value;
+        const prodPrice = document.getElementsByName("prodPrice")[0].value;
+
+        if (!prodName || !prodUnit || !prodSize || !prodPerfume || !clientCompany || !whseName || !prodPrice) {
+            event.preventDefault();
+            alert("모든 값을 입력해주세요.");
+        }
+    });
 
 </script>
 </body>
