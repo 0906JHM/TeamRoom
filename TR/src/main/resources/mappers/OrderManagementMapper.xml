@@ -74,4 +74,11 @@
 		from buy
 	</select>
 	
+	<update id="updateBuyInstate">
+    UPDATE buy
+    SET buyInstate = '발주완료'
+    WHERE buyDate &lt;= #{today} AND buyInstate = '신청완료'
+</update>
+	
+	
 </mapper>

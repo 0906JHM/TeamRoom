@@ -4,7 +4,7 @@ body {
 	background-color: #F5F6FA;
 }
 
-hr {
+/* hr {
 	background: #adb5bb;
 	width: 100%;
 	height: 2px;
@@ -12,7 +12,7 @@ hr {
 	position: relative;
 	transform-origin: 0 0;
 	transform: rotate(0deg) scale(1, -1);
-}
+} */
 
 h2 {
 	font-size: 30px;
@@ -24,16 +24,27 @@ label {
 	font: 500 18px/18px "Inter", sans-serif;
 }
 
-input[type="text"] {
+/* input[type="text"] {
 	border: 1px solid #adb5bb;
 	border-radius: 5px;
 	width: 300px;
 	height: 35px;
 	font: 500 18px/18px "Inter", sans-serif;
 	padding-left: 10px;
+} */
+input[type="text"] {
+	border: 1px solid #A6A6A6; /* 테두리 색 설정 */
+	background-color: #FFFFFF; /* 배경색 설정 */
+	border-radius: 3px;
+	margin-bottom: 10px;
+	width: 200px;
+	height:25px;
+	font: 500 18px/18px "Inter", sans-serif;
+	padding-left: 10px;
+	color:#384855;
 }
 
-input[type="button"] {
+/* input[type="button"] {
 	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
 	width: 100px;
 	height: 40px;
@@ -42,10 +53,23 @@ input[type="button"] {
 	border: 0;
 	text-align: center;
 	font: 500 20px/20px "Inter", sans-serif;
+} */
+input[type="button"] {
+	width: 100px;
+	height: 40px;
+	background-color: #5EC397;
+	color: #FFFFFF;
+	border: none;
+	border-radius: 3px;
+	text-align: center;
+	font: 500 20px/20px "Inter", sans-serif;
+	/* margin-bottom: 10px; */
 }
 
 input[type="button"]:hover {
 	cursor: pointer; /* pointer 커서는 일반적으로 손가락 모양입니다 */
+	 background-color: #31433B;
+    color: white;
 }
 
 #outProductList {
@@ -58,7 +82,7 @@ input[type="button"]:hover {
 	width: 98%;
 	margin: 0 auto;
 }
-
+/*---------------------------------------- 테이블 ----------------------------------*/
 table {
 	border: 1px solid rgba(221, 221, 221, 0.78);
 	margin: 0 auto;
@@ -66,19 +90,26 @@ table {
 	max-width: 1570px;
 	font: 500 18px/18px "Inter", sans-serif;
 	text-align: center;
+	background-color : white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */
 }
 
 table th, table td {
 	min-width: 100px;
 	white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
 	padding: 0 15px;
+	border: none;
 }
 
 table thead tr {
-	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
-	width: 1570px;
+/* 	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+ */	width: 1570px;
 	height: 40px;
 	font: 500 20px/20px "Inter", sans-serif;
+	border-bottom: 1px solid #EAEBEA;
+	background-color : #D9D9D9;
+	color:#384855;
+	border: none;
 }
 
 table td {
@@ -105,14 +136,14 @@ table td {
 	padding-left: 1%;
 	gap: 1%;
 }
-
+/* 
 table tbody tr:nth-child(even) {
-	background-color: #f2f2f2; /* 짝수 행의 백그라운드 색상 설정 */
+	background-color: #f2f2f2; 짝수 행의 백그라운드 색상 설정
 }
 
 table tbody tr:nth-child(odd) {
-	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
-}
+	background-color: #ffffff; 홀수 행의 백그라운드 색상 설정
+} */
 
 #paging_ul {
 	list-style-type: none; /* 목록 항목 앞에 기본 목록 표시 제거 */

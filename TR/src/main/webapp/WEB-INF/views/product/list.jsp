@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
@@ -7,79 +6,63 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-<link href="${pageContext.request.contextPath }/resources/css/side.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="${pageContext.request.contextPath }/resources/css/product.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/resources/css/product.css" rel="stylesheet" type="text/css">
 
 
 <head>
-
-
-
-<%--     <jsp:include page="test4.jsp"></jsp:include> --%>
-<title>roomair</title>
-<script
-	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-<!-- J쿼리 호출 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="../resources/js/scripts.js"></script>
-
-<!-- <script src="../resources/js/productList_im.js"></script> -->
-<!-- 		추가안되면 사이드바에 있는 이거^때문임 -->
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<!-- SheetJS -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
-<!--FileSaver [savaAs 함수 이용] -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-
+	<title>품목 관리</title>
+	
+	<!-- sweetalert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- J쿼리 호출 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="../resources/js/scripts.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<!-- SheetJS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+	<!--FileSaver [savaAs 함수 이용] -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 </head>
 
 
 <body>
-
-	<!-- 사이드바 -->
-	<jsp:include page="../inc/side.jsp"></jsp:include>
-	<!-- 사이드바 -->
+<!-- 사이드바 -->
+<jsp:include page="../inc/side.jsp"></jsp:include>
+<!-- 사이드바 -->
 
 	<div class="container">
+		
 		<h2>품목 관리</h2>
+		
 		<hr>
+		
 		<div id="searchform">
-			<form action="${pageContext.request.contextPath}/product/list"
-				method="get" id="selectedProId">
-				<label>품번</label> <input type="text" placeholder="제품코드를 입력하세요."
-					name="prodCode"> <label>품명</label> <input type="text"
-					placeholder="제품명을 입력하세요." name="prodName"> <label>거래처명</label>
+			<form action="${pageContext.request.contextPath}/product/list" method="get" id="selectedProId">
+				<label>제품 코드</label>
+				<input type="text" placeholder="제품 코드를 입력하세요." name="prodCode">
+				<label>제품명</label>
+				<input type="text" placeholder="제품명을 입력하세요." name="prodName"> 
+				<label>거래처명</label>
 				<input type="text" name="clientCompany" id="sellclientCompany9999"
 					readonly placeholder="거래처를 선택하세요."
 					onclick="searchItem('sellclient','sellclientCode9999')"
 					style="cursor: pointer !important;">
-				<!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
 				<button type="submit">조회</button>
 			</form>
 		</div>
+		
 		<hr>
-		<%--     <form action="${pageContext.request.contextPath}/product/write" method="post"> --%>
-		<c:if
-			test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
+		
+		<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' 
+			|| sessionScope.empDepartment eq '자재팀')}">
 			<div class="buttons">
-				<button id="add"
-					onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
-				<!-- 			<button id="modify">수정</button> -->
-				<!--     <button id="delete" onclick="deleteSelectedProducts()">삭제</button> -->
+				<button id="add" onclick="openPopup1('${pageContext.request.contextPath}/product/write')">추가</button>
 				<button id="delete">삭제</button>
-				<!-- 			<button id="cancel">취소</button> -->
-				<!-- 			<button id="save">저장</button> -->
-<!-- 				<button id="excelDownload" class="buttons">엑셀⬇</button> -->
 			</div>
 		</c:if>
+		
 		<h3 style="padding-left: 1%;">
 			목록 <small>총 ${pageDTO.count}건</small>
 		</h3>
@@ -112,8 +95,7 @@
 								<!-- 체크박스 열 -->
 
 								<td id="prodCode">
-									<!-- 								<a href="#" --> <%-- 									onclick="openPopup2('${pageContext.request.contextPath}/product/update?prodCode=${prodDTO.prodCode}')"> --%>
-									<%-- 									${prodDTO.prodCode}</a> --%> <c:choose>
+									 <c:choose>
 										<c:when
 											test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
 											<a href="#"

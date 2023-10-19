@@ -386,10 +386,10 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	int currentPage = Integer.parseInt(pageNum);
 
 	// DTO에 담을 정보
-	SellPageDTO sellSearchPageDTO = new SellPageDTO();
-	sellSearchPageDTO.setPageSize(pageSize);
-	sellSearchPageDTO.setPageNum(pageNum);
-	sellSearchPageDTO.setCurrentPage(currentPage);
+	SellDTO sellPageDTO = new SellDTO();
+	sellPageDTO.setPageSize(pageSize);
+	sellPageDTO.setPageNum(pageNum);
+	sellPageDTO.setCurrentPage(currentPage);
 
 	// ...
 
@@ -411,16 +411,16 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	    endPage = pageCount;
 	}
 
-	sellSearchPageDTO.setCount(count);
-	sellSearchPageDTO.setPageBlock(pageBlock);
-	sellSearchPageDTO.setStartPage(startPage);
-	sellSearchPageDTO.setEndPage(endPage);
-	sellSearchPageDTO.setPageCount(pageCount);
+	sellPageDTO.setCount(count);
+	sellPageDTO.setPageBlock(pageBlock);
+	sellPageDTO.setStartPage(startPage);
+	sellPageDTO.setEndPage(endPage);
+	sellPageDTO.setPageCount(pageCount);
 
 	// 페이지
-	model.addAttribute("sellSearchPageDTO", sellSearchPageDTO);
+	model.addAttribute("sellSearchPageDTO", sellPageDTO);
 	
-	return "sell/sellMain";
+	return "sell/sellMainSearch";
 	
 }//sellMainSearch
 	

@@ -116,8 +116,7 @@
 	order by sellCode desc
 	
 	</select>
-	
-	
+		
     <select id="getSellListSearch"
 	resultType="com.itwillbs.domain.SellDTO">
 	select s.sellCode sellCode, s.sellDate sellDate,
