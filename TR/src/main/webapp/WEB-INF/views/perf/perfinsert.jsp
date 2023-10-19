@@ -12,13 +12,108 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<style>
+
+table{
+border: 1px solid rgba(221, 221, 221, 0.78);
+    border-collapse: collapse;
+    margin: 0 auto;
+    color: #000000;
+    width: 450px;
+    max-width: 450px;
+    font: 300 16px/16px "Inter", sans-serif;
+    text-align: center;
+    border-radius: 10px;
+
+}
+
+table th, table td {
+	min-width: 100px;
+	white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+	padding: 0 15px;
+	border: none;
+}
+
+
+table th{
+    background-color: rgba(94, 195, 151, 0.6);
+    height: 30px;
+    border: 1px solid rgba(221, 221, 221, 0.78);
+
+}
+
+table td{
+min-width: 100px;
+    white-space: nowrap;
+    padding: 0 15px;
+    height: 30px;
+    border: 1px solid rgba(221, 221, 221, 0.78);
+}
+
+input[type="text"] {
+    /* border: 1px solid #adb5bb; */
+    /* border-radius: 5px; */
+    border: none;
+    width: 90%;
+    height: 25px;
+    font: 300 15px/15px "Inter", sans-serif;
+    text-align: center;
+    background-color: inherit;
+    }
+    
+ #inputnum {
+        border: 1px solid rgba(94, 195, 151, 1);
+    border-radius: 5px;
+    text-align: center;
+    }
+    
+    input[type="number"]{
+	border:none;
+	width: 90%;
+	height: 20px;
+	font: 300 15px/15px "Inter", sans-serif;
+	text-align: center;
+	background-color: inherit;
+}
+
+.footerbtn{
+
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    
+}
+.h2head {
+ text-align: center;
+
+}
+
+input[type="button"], input[type="submit"] {
+    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 0;
+    text-align: center;
+    font: 300 18px/18px "Inter", sans-serif;
+}
+
+.cdbox{
+
+width: 150px !important;
+border: 1px solid black !important;
+border-radius:  5px;
+}
+
+</style>
+
 </head>
 <body>
 <div class="perfdetail">
 <h1 class="perfinserthaed"> 생산실적 추가</h1>
 <hr>
 <div class="perfcd">
-
 <div class="perfcd1">
 라인코드: <input type="text" id="lineCode2" name="lineCode2"  class="cdbox">
 </div>
@@ -27,57 +122,80 @@
 제품코드: <input type="text" id="prodCode2" name="prodCode2"  placeholder="제품코드" class="cdbox" onclick="">
 </div>
 
-<div class="perfcd1">
- 지시일자: <input type="text" id="workdate1" name="workdate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="workdate2	" class="form-control" placeholder="날짜 선택" readonly>
-</div>
+<!-- <div class="perfcd1">
+ 지시일자: <input type="text" id="workdate1" name="workdate1" class="cdbox" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="workdate2	" class="cdbox" placeholder="날짜 선택" readonly>
+</div> -->
 
 </div> <!--  perfcd -->
 <hr> <!--  경계선 -->
+
 <form action="${pageContext.request.contextPath}/perf/perfinsertPro" id="perfinsert" method="POST">
- 	<table class="ct" id="ct">	
-			<thead>
-				<tr class="cthead">
-				    <th>생산실적코드</th>
+ 	<table>	 
+ 	<tbody>
+				<tr>
+				    <th> 실적코드</th>
+				    <td><input type="text" id="perfCode" name="perfCode"></td>
+				    </tr>
+				    
+				    <tr>
 					<th>작업지시코드</th><!-- worklist에서 받아옴 -->
-					<th>제품코드</th><!-- worklist에서 받아옴 -->
+					<td> <input type="text" id="workCode" name="workCode"></td>
+					</tr>
+					
+					<tr>
 					<th>라인코드</th><!-- worklist에서 받아옴 -->
-					<th >실적일</th>
+					<td ><input type="text" id="lineCode" name="lineCode"></td> <!--  작업지시코드 -->
+					</tr>
+					
+					<tr>
+					<th> 제품코드 </th>
+					<td ><input type="text" id="prodCode" name="prodCode"></td> <!--  제품코드 -->
+					</tr>
+					
+					<tr> 
+					<th> 실적일 </th>
+					<td ><input type="text" id="perfDate" name="perfDate"></td> <!-- 실적일자(자동생성) -->			
+					</tr>
+					<tr>
+					
 					<th> 담당자 </th> <!--  세션으로 넘겨받음 -->
-					<th >실적수량</th><!-- worklist에서 받아옴 -->
-					<th >양품수</th><!-- worklist에서 받아옴 -->
-					<th >불량수</th>
-					<th >불량사유</th>
-					<th>불량사유(기타)</th>
-					<th >비고</th>
-					<th >현황</th> <!-- worklist에서 받아옴 -->
+				<td ><input type="text" id="perfEmpId" name="perfEmpId"></td> <!--  담당자아이디(세션으로처리) -->
 				</tr>
-			</thead> 
-			<tbody>
-					<tr class="ctcontents">
-					    <td ><input type="text" id="perfCode" name="perfCode"></td> <!--  생산실적코드 -->
-						<td ><input type="text" id="workCode" name="workCode"></td> <!--  작업지시코드 -->
-						<td ><input type="text" id="prodCode" name="prodCode"></td> <!--  제품코드 -->
-						<td ><input type="text" id="lineCode" name="lineCode"></td> <!--  제품코드 -->
-						<td ><input type="text" id="perfDate" name="perfDate"></td> <!-- 실적일자(자동생성) -->
-						<td ><input type="text" id="perfEmpId" name="perfEmpId"></td> <!--  담당자아이디(세션으로처리) -->
-				        <td ><input type="number" id="perfAmount" name="perfAmount" required></td> <!-- 실적수량 -->
-						<td ><input type="number" id="perfFair" name="perfFair" required></td> <!-- 양품수-->
-						<td ><input type="number" id="perfDefect" name="perfDefect"></td> <!-- 불량수 -->
-						
-						<td ><select id="perfDefectreason" name="perfDefectreason">
+				</tbdoy>
+				</table>
+				<br>
+				<table>
+				 <tr>
+    <th colspan=2>실적수</th>
+    <th colspan=2>양품수</th>
+    <th colspan=2 >불량수</th>
+
+  </tr>
+  <tr>
+    <td colspan=2> <input type="number" id="perfAmount" name="perfAmount"> </td>
+    <td  colspan=2> <input type="number" id="perfFair"  name="perfFair"> </td>
+   <td  colspan=2> <input type="number" id="perfDefect"   name="perfDefect"></td>
+  </tr>
+  
+  <tr>
+  <th colspan=2> 불량사유 </th>
+  <th colspan=2> 불량내역 </th>
+    <th colspan=2> 비고 </th>
+  
+  </tr>
+  
+  <tr>
+    <td  colspan=2><select id="perfDefectreason" name="perfDefectreason" >
 	                    	    <option value="무결함">무결함</option>
 		                      	<option value="파손">파손</option> <!-- 병깨짐 , 포장박스 꾸겨진거 등 -->
 								<option value="누락">누락</option> <!--  포장 박스에 물건이 없다던가 포장이 안된다던가 -->
 								<option value="기타">기타</option>
-						       </select>                                                          </td>  <!-- 불량사유 -->
-						       
-						<td ><input type="text" id="perfDefectmemo" name="perfDefectmemo"></td>  <!--기타 불량사유 -->
-						<td ><input type="text" id="perfMemo" name="perfMemo"></td> <!-- 비고 -->
-						<td ><input type="text" id="lineProcess" name="perfStatus"></td> <!-- 라인상테 -->
-					</tr>
-			</tbody> 
-			</table>
-			
+						       </select>        </td>
+  <td colspan=2>   <input type="text" id="perfDefectmemo" name="perfDefectreasonmemo"></td>
+  <td colspan=2><input type="text" id="perfmemo" name="perfmemo"></td>
+  </tr>
+</table>
+	
 			<div class="footerbtn">
 			<input type="submit" id="btn" class="btn" value="등록">
 			<input type="button" id="closebtn" class="btn" value="닫기">
@@ -158,7 +276,7 @@
        
 
         function openLinePopup() {
-            var popupUrl = '${pageContext.request.contextPath}/perf/linelist';
+            var popupUrl = '${pageContext.request.contextPath}/search/line?input=lineCode2';
             window.open(
                 popupUrl,
                 '_blank',
@@ -167,7 +285,8 @@
         }
 
         function openProductPopup() {
-            var popupUrl = '${pageContext.request.contextPath}/perf/prodlist';
+        	
+            var popupUrl = '${pageContext.request.contextPath}/search/product?input=prodCode2';
             window.open(
                 popupUrl,
                 '_blank',
@@ -204,7 +323,7 @@
             document.getElementById('lineCode').value = parsedData.lineCode; //지시코드
             document.getElementById('prodCode').value = parsedData.prodCode; //제품코드
             document.getElementById('perfAmount').value = parsedData.workAmount;//지시수량
-            document.getElementById('lineProcess').value = parsedData.lineProcess; //라인상태
+          
 
              
         } // 라인코드 , 라인코드  값 받아오기 제어 끝**********************************
@@ -279,15 +398,17 @@
                         icon: 'error'
                     });
                     perfDefectInput.value = ''; // 불량수 초기화
-                } else if(defectCount + fairCount > perfAmount) {
+                } else  {
+                	console.log("total: " + total);
+                    console.log("perfAmount: " + perfAmount);
                     Swal.fire({
                         title: '입력 오류',
-                        text: '양품수와 불량품수의 합은 ' + perfAmount + ' 이하여야 합니다.',
+                        text: '양품수와 불량품수의 합이 ' + perfAmount + ' 보다 작습니다.',
                         icon: 'error'
                     });
                     perfDefectInput.value = ''; // 불량수 초기화
                     perfFairInput.value = ''; // 양품수 초기화
-                }
+                    }
             }  
         }// 지시수량 양품수 불량수 제어 끝 ********************************
         

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 라이브러리 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
 
@@ -79,9 +80,9 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
 <body>
 
 <h2 class="headh">거래처 정보</h2>
-<form id="clientsub" action="${pageContext.request.contextPath}/client/clientupdatePro" method="post">
+<form id="clientsub">
 <table id="clientDetail">
-<tr><td>구분</td><td><input type="text" name="clientType" class="upform" ${clientDTO.clientType}"></td></tr>
+<tr><td>구분</td><td><input type="text" name="clientType" class="upform" value="${clientDTO.clientType}"></td></tr>
 <tr><td>거래처코드</td><td><input type="text" name="clientCode" value="${clientDTO.clientCode}" class="upform"></td></tr>
 <tr><td>거래처명</td><td><input type="text" name="clientCompany" value="${clientDTO.clientCompany}" class="upform"></td></tr>
 <tr><td>사업자번호</td><td><input type="text" name="clientNumber" value="${clientDTO.clientNumber}" class="upform"></td></tr>
@@ -102,12 +103,24 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
 <tr><td>이메일</td><td><input type="email" name="clientEmail" value="${clientDTO.clientEmail}" class="upform"></td></tr>  
 <tr><td>비고</td><td><input type="text" name="clientMemo" value="${clientDTO.clientMemo}" class="upform"> </td></tr>  
 <c:if test="${clientDTO.clientType eq '수주처'}">
-<tr><td>매출액</td><td>${clientDTO.clientSale}</td></tr>  
+    <tr>
+        <td>매출액</td>
+        <td>
+            <c:choose>
+                <c:when test="${clientDTO.clientSale eq 0}">
+                    0
+                </c:when>
+                <c:otherwise>
+                    ${clientDTO.clientSale}
+                </c:otherwise>
+            </c:choose>
+        </td>
+    </tr>  
 </c:if>
 </table>
 
 <div class="btngroup">
-        <input type="submit" value="수정" class="footbtn" id="updatesubmit">
+        <button type="button" value="수정" class="footbtn" id="updatesubmit"> 수정</button>
  <button type="button" class="deletebtn" onclick="clientdelete('${clientDTO.clientCompany}')">삭제</button>
 </div>
 
@@ -121,8 +134,36 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
 function clientdelete(clientCompany) {
     if (confirm("정말로 삭제하시겠습니까?")) {
         // 확인을 선택한 경우 삭제 요청을 보냅니다.
-        location.href = '${pageContext.request.contextPath}/client/delete?clientCompany=' + clientCompany;
-         console.log(clientCompany);
+        $.ajax({
+            url: '${pageContext.request.contextPath}/client/delete',
+            type: 'GET',
+            data: { clientCompany: clientCompany },
+            success: function(response) {
+                // 삭제 성공 시 SweetAlert2로 메시지 표시
+                Swal.fire({
+                    icon: 'success',
+                    title: '삭제되었습니다!',
+                    confirmButtonText: '확인'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 부모 창 새로고침
+                        window.opener.location.reload();
+
+                        // 현재 창 닫기
+                        window.close();
+                    }
+                });
+            },
+            error: function(error) {
+                // 삭제 실패 시 SweetAlert2로 오류 메시지 표시
+                Swal.fire({
+                    icon: 'error',
+                    title: '삭제 실패!',
+                    text: '서버와 통신 중 문제가 발생했습니다.',
+                    confirmButtonText: '확인'
+                });
+            }
+        });
     }
 }
 
@@ -154,31 +195,61 @@ function sample4_execDaumPostcode() {
     }).open();
 }
 
+$(document).ready(function() {
+    $('#updatesubmit').click(function(event) {
+        // 폼 데이터 수집
+        var formData = new FormData($('#clientsub')[0]);
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 수정 버튼 클릭 이벤트 처리
-    document.getElementById('clientsub').addEventListener('submit', function(event) {
-        event.preventDefault(); // 폼 기본 동작 막기
-        
-        // SweetAlert2로 확인 메시지 띄우기
-        Swal.fire({
-            title: '수정하시겠습니까?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: '예',
-            cancelButtonText: '아니오'
-        }).then((result) => {
-            if (result.isConfirmed) {
-            	 // 폼 제출
-                document.getElementById('clientsub').submit(); // 폼 제출
-                Swal.fire('수정 되었습니다!', '', 'success').then(() => {
-                    // SweetAlert2에서 확인 버튼을 누른 후 페이지를 새로고침합니다.
-                    window.location.reload();
+        // AJAX 요청 보내기
+        $.ajax({
+            url: '${pageContext.request.contextPath}/client_ajax/clientupdatePro',
+            type: 'POST',
+            data: formData,
+            processData: false, // 데이터를 query string으로 변환하지 않음
+            contentType: false, // Content-Type 헤더를 설정하지 않음
+            success: function(response) {
+                // 성공적으로 응답을 받았을 때 실행할 코드 작성
+                console.log('서버 응답:', response);
+
+                // SweetAlert2로 성공 메시지 표시
+                Swal.fire({
+                    icon: 'success',
+                    title: '수정되었습니다!',
+                    confirmButtonText: '확인'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 부모 창 다시 로드
+                        window.opener.location.reload();
+
+                        // 현재 창 닫기
+                        window.close();
+                    }
+                });
+            },
+            error: function(error) {
+                // 요청이 실패했을 때 실행할 코드 작성
+                console.error('오류 발생:', error);
+
+                // SweetAlert2로 오류 메시지 표시
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류 발생!',
+                    text: '서버와 통신 중 문제가 발생했습니다.',
+                    confirmButtonText: '확인'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 부모 창 다시 로드
+                        window.opener.location.reload();
+
+                        // 현재 창 닫기
+                        window.close();
+                    }
                 });
             }
         });
     });
 });
+
 
 
 </script>

@@ -7,7 +7,7 @@
 <head>
 <%--     <jsp:include page="test4.jsp"></jsp:include> --%>
     <title>Sell/updateSellMemo.jsp</title>
-    <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <%--     <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"> --%>
 <%--  <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css"> --%>
 <link href="${pageContext.request.contextPath}/resources/css/popup.css" rel="stylesheet" type="text/css">
@@ -31,10 +31,21 @@
     </form>
 </div>
 <!---------------------------------------------- javascript ---------------------------------------------->
-
-<!----------------------------------------------- 수정 버튼 ---------------------------------------------->
-
-
+<script type="text/javascript">
+$(document).ready(function () {
+	//--------------------------------------------------- 페이지 권한 ----------------------
+                
+/*--------------------------------- 페이지 권한 ----------------------------------------  */
+    var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+		
+    if (team === "" || (team !== "관리자" && team !== "영업팀")) {
+        // 창을 닫습니다.
+        window.close(); // 이 코드는 창을 닫으려고 시도합니다.
+        // 또는 에러 페이지로 리디렉션할 수 있습니다.
+        // window.location.href = "${pageContext.request.contextPath}/error";
+    }
+}
+</script>
 
 	
 

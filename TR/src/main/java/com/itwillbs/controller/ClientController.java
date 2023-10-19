@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -80,12 +81,12 @@ System.out.println("BoardController list()");
 			clientList = clientService.getclientList(pageDTO);
 			count = clientService.getclientCount(pageDTO);
 			System.out.println("ClientController 널임");
-		}
+		}        
 
 		
 		int pageBlock = 5;
 		// 시작하는 페이지 번호
-		int startPage = (pageDTO.getCurrentPage()-1)/pageBlock*pageBlock+1;
+		int startPage = (currentPage-1)/pageBlock*pageBlock+1;
 		// 끝나는 페이지 번호
 		int endPage = startPage + pageBlock -1;
 		
@@ -169,38 +170,7 @@ System.out.println("BoardController list()");
 		return "client/clientdetail";
 	}
 	
-	@GetMapping("/clientupdate")
-	public String clientupdate(HttpServletRequest req , Model model) {
-		
-		String clientCompany = req.getParameter("clientCompany");
-		
-		ClientDTO clientDTO = clientService.clientdetail(clientCompany);
-		
-		model.addAttribute("clientDTO",clientDTO);
-		
-		return "client/clientupdate";
-		
-	}
-	
-	@PostMapping("/clientupdatePro")
 
-	public String clinetupdatePro( @RequestBody ClientDTO clientDTO) {
-
-		
-		try {
-			
-			clientService.clientupdate(clientDTO);
-			
-			 return "true";
-			 
-		} catch (Exception e) {
-			   log.error("Error during buy insertion: {}", e.getMessage());
-	            
-	            return "false"; // 실패 시 "false" 반환
-		}
-		
-	}
-	
 	
 	@GetMapping("/delete")
 	public String clientdelete(String clientCompany) {

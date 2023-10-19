@@ -59,14 +59,19 @@ $.ajax({
 <div class="form-group"><p>라인명:</p><input type="text" name="lineName" class="lineName"></div>
 <div class="form-group"><p>사용여부:</p>
 <select name="lineUse" class="lineUse select">
-    <option value="1">1</option>
     <option value="0">0</option>
+    <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
 </select></div>
 <div class="form-group"><p>등록자:</p><select name="lineEmpId" class="lineEmpId select"></select></div>
 <div class="form-group"><p>등록일:</p><input type="date" name="lineInsertDate" class="lineInsertDate"></div>
-<div class="form-group"><p>공정:</p><input type="text" name="lineProcess" class="lineProcess"></div>
+<div class="form-group"><p>공정:</p>
+<select name="lineProcess" class="lineProcess select">
+<option value="1차공정">1차공정</option>
+<option value="2차공정">2차공정</option>
+<option value="3차공정">3차공정</option>
+</select></div>
 <button onclick="save">저장하기</button>
 
 </form>

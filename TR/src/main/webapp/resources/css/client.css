@@ -68,9 +68,6 @@ body{
 
 
 
-
-
-
 .ct {
 border: 1px solid rgba(221, 221, 221, 0.78);
     margin: 0 auto;
@@ -169,4 +166,31 @@ hr{
 .ct tbody tr:nth-child(odd) {
 	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
 }
+
+.page{
+	    display: flex;
+    flex-direction: row;
+    margin: 25px 0;
+    justify-content: space-between;
+    align-items: center;
+	
+}
+.a{
+
+		margin: 0; /* 목록 항목 간격 제거 */
+	padding: 0; /* 목록 항목 내부 간격 제거 */
+	background-color: rgba(94, 195, 151, 1);
+	border-radius: 5px;
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	font-size: 20px;
+	cursor: pointer; /* 커서 모양 변경 */
+	text-decoration: none; /* 하이퍼링크 스타일 제거 */
+	cursor: pointer; /* 커서 모양 변경 */
+	color: #fff; /* 원래 텍스트 색상으로 변경 */
+}
+}
+	
 

@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+
 import com.itwillbs.dao.OpenlistDAO;
 import com.itwillbs.dao.RequirementDAO;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
@@ -196,7 +198,22 @@ public class OpenlistService {
 				  
 				   public List<WarehouseDTO> getWhseList(WarehouseDTO dto,
 				  RequirementPageDTO pdto) throws Exception { return pdao.readWhseList(dto, pdto); }
-			 
+
+				   
+				   ////////////////////////////////////////////////
+				   
+				   //라인 목록 갯수 검사
+				public int countline(LineDTO dto) {
+					
+					return pdao.countline(dto);
+				}
+
+
+				public List<LineDTO> getlineList(RequirementPageDTO pdto) throws Exception {
+					
+					return pdao.readlinelist(pdto);
+					
+				}
 
 				
 		 

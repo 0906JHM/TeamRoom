@@ -50,15 +50,7 @@ public class PerformanceController {
 		
 		          //검색어 가져오기
 				String search = request.getParameter("search");
-				String lineCode= request.getParameter("lineCode");
-				String prodCode=request.getParameter("prodCode");
 
-				
-				
-				
-				
-				perfDTO.setLineCode(lineCode);
-				perfDTO.setProdCode(prodCode);
 				
 				
 				

@@ -29,7 +29,6 @@ body{
 }
 
 .tableform{
-	background-color: white;
 padding-bottom: 50px;
 	
 }
@@ -69,13 +68,16 @@ ct{
 
 
 .ct {
-	border-collapse: collapse;
-	border-spacing: 0;
+	border: 1px solid rgba(221, 221, 221, 0.78);
+    margin: 0 auto;
+    color: #000000;
+    max-width: 1570px;
+    font: 500 18px/18px "Inter", sans-serif;
+    text-align: center;
 }
 
 .ct .ctth {
-	border-color: black;
-	border-style: solid;
+
 	border-width: 1px;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
@@ -87,8 +89,6 @@ ct{
 }
 
 .ct .cttg {
-	border-color: black;
-	border-style: solid;
 	border-width: 1px;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
@@ -150,6 +150,32 @@ font-size:16px;
 
 }
 
+.entrytable{
+	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 0;
+    text-align: center;
+    font: 500 24px/24px "Inter", sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.exceldown{
+background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 0;
+    text-align: center;
+    font: 500 24px/24px "Inter", sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .cdbox{
 width:200px;
 height:15px;
@@ -164,11 +190,49 @@ font-size:15px;
 	
 }
 
-.chart{
-	background-color: white;
+.footlo{
+	display: flex;
+    justify-content: space-between;
 	
+}
+.excel{
+	width: 350px;
+    margin-top: 5px;
+}
+
+.page{
+	    display: flex;
+    flex-direction: row;
+    margin: 25px 0;
+    justify-content: space-between;
+    align-items: center;
+	
+}
+
+.a{
+	
+	margin: 0; /* 목록 항목 간격 제거 */
+	padding: 0; /* 목록 항목 내부 간격 제거 */
+	background-color: rgba(94, 195, 151, 1);
+	border-radius: 5px;
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	font-size: 20px;
+	cursor: pointer; /* 커서 모양 변경 */
+	text-decoration: none; /* 하이퍼링크 스타일 제거 */
+	cursor: pointer; /* 커서 모양 변경 */
+	color: #fff; /* 원래 텍스트 색상으로 변경 */
 }
 .chart .chart1haed {
 	text-align: center !important;
 	
+}
+.ct tbody tr:nth-child(even) {
+	background-color: #f2f2f2; /* 짝수 행의 백그라운드 색상 설정 */
+}
+
+.ct tbody tr:nth-child(odd) {
+	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
 }

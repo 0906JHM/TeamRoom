@@ -106,8 +106,9 @@ public class PerformanceDAO {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("startRow", pageDTO.getStartRow());
 		data.put("pageSize", pageDTO.getPageSize());
-		data.put("prodCode", perfDTO.getProdCode());
 		data.put("lineCode", perfDTO.getLineCode());
+		data.put("prodCode", perfDTO.getProdCode());
+		
 		
 		/*
 		 * data.put("perfDate1", perfDTO.getPerfDate()); data.put("perfDate2",

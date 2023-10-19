@@ -77,13 +77,11 @@
 
 	<update id="clientupdate">
 		UPDATE clients
-		SET clientCode=#{clientCode}
-		,clientNumber=#{clientNumber},
+		SET clientNumber=#{clientNumber},
 		clientDetail=#{clientDetail},clientCeo=#{clientCeo},clientName=#{clientName},
 		clientAddr1=#{clientAddr1}, clientAddr2=#{clientAddr2},
 		clientTel=#{clientTel},clientPhone=#{clientPhone},clientFax=#{clientFax},
 		clientEmail=#{clientEmail},clientMemo=#{clientMemo}
-
 		where
 		clientCode=#{clientCode}
 

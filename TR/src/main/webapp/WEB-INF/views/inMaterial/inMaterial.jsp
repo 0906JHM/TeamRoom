@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>입고 관리</title>
 <meta charset="UTF-8">
 <!-- 사이드바 css-->
 <link href="${pageContext.request.contextPath }/resources/css/side.css"
@@ -27,7 +27,18 @@
 <script type="text/javascript">
 
 
+<%
+//관리자 또는 자재팀 출고 상세 페이지 열람 가능 게시판 접근 가능
+String department = "";
+if (session.getAttribute("empDepartment") != null) {
+department = (String) session.getAttribute("empDepartment");
+}
 
+//상수 정의
+final String ADMIN_DEPARTMENT = "자재팀";
+%>
+
+<title>inMaterial</title>
 </head>
 <body>
 
@@ -41,7 +52,7 @@
 		<hr>
 		<div id="searchForm">
 			<label>입고 코드</label> <input type="text" name="inNum" id="inNum"
-				placeholder="입고 코드를 입력하세요."> <label>원자재명</label> <input
+				placeholder="입고 번호를 입력하세요."> <label>원자재명</label> <input
 				type="text" name="rawName" id="rawName9999" placeholder="원자재명을 입력하세요."
 				onclick="searchItem('raw','rawCode9999')"> <label>거래처명</label>
 			<input type="text" name="clientCompany" id="clientCompany9999"
@@ -64,12 +75,12 @@
 			<table id="inMaterialTable">
 				<thead>
 					<tr>
-						<th>입고 코드</th>
-						<th>발주 코드</th>
+						<th>입고 번호</th>
+						<th>발주 번호</th>
 						<th>입고 창고</th>
 						<th>거래처명</th>
-						<th>원자재 코드</th>
-						<th>원자재명</th>
+						<th>품번</th>
+						<th>품명</th>
 						<th>발주 수량</th>
 						<th>재고 수량</th>
 						<th>단가</th>
@@ -77,7 +88,9 @@
 						<th>입고일</th>
 						<th>담당자</th>
 						<th>상태</th>
-						<th>처리</th>
+						<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
+							<th>처리</th>
+						</c:if>
 					</tr>
 				</thead>
 				<tbody>
@@ -92,7 +105,9 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var inStateButton1 = "전체";
+	var department = "<%= department %>";
+	var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
+	var inStateButton1 = "전체";
 
 		$(document).ready(
 				function() {
@@ -172,34 +187,34 @@
 						loadinMaterialList(searchParams);
 					});
 
-					// 미입고 버튼 클릭 시
+					// 미출고 버튼 클릭 시
 					$("#non_inButton").click(function() {
-						// 미입고 버튼에 대한 동작을 추가하고,
+						// 미출고 버튼에 대한 동작을 추가하고,
 						inStateButton2 = "미입고";
 						inStateButton1 = inStateButton2;
-						// 검색 조건을 설정하고 미입고 목록을 가져오도록 수정
+						// 검색 조건을 설정하고 미출고 목록을 가져오도록 수정
 						var searchParams = {
 							inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
 							clientCompany : $("#clientCompany9999").val(),
 							inState : inStateButton2
-						// 미입고 조건 추가
+						// 미출고 조건 추가
 						};
 						loadinMaterialList(searchParams);
 					});
 
-					// 입고완료 버튼 클릭 시
+					// 출고완료 버튼 클릭 시
 					$("#inButton").click(function() {
-						// 입고완료 버튼에 대한 동작을 추가하고,
+						// 출고완료 버튼에 대한 동작을 추가하고,
 						inStateButton2 = "입고완료";
 						inStateButton1 = inStateButton2;
-						// 검색 조건을 설정하고 입고완료 목록을 가져오도록 수정
+						// 검색 조건을 설정하고 출고완료 목록을 가져오도록 수정
 						var searchParams = {
 							inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
 							clientCompany : $("#clientCompany9999").val(),
 							inState : inStateButton2
-						// 미입고 조건 추가
+						// 미출고 조건 추가
 						};
 						loadinMaterialList(searchParams);
 					});
@@ -309,67 +324,104 @@
 							+ "</td>");
 
 
+					if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {				
+						// 입고 버튼 추가 
+						var contextPath = "${pageContext.request.contextPath}";
+						var inNum = data[i].inNum;
+						
+						(function(dataItem) {
+						    var button = $("<input type='button' value='입고'>");
+						    button.click(function() {
+						        // 버튼 클릭 시 처리할 동작을 여기에 추가
+						        console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
+						
+						        // confirm 창을 띄워 입고 처리 여부를 확인
+						        var confirmation = confirm("입고 처리하시겠습니까?");
+//-------------------------------------------------------------------------------						
+						        // 확인 버튼이 눌렸을 경우에만 작업 수행
+						        if (confirmation) {
+						            if (dataItem.hasOwnProperty('inState')) {
+						                dataItem.inState = "입고완료";
+						                // 변경된 inState 값을 출력하여 확인
+						                console.log("변경된 inState 값: " + dataItem.inState);
+						
+						                // 서버에 변경된 값을 저장하기 위한 Ajax 요청
+						                $.ajax({
+						                    type: 'POST',
+						                    url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
+						                    data: JSON.stringify(dataItem),
+						                    contentType: 'application/json',
+						                    success: function(response) {
+						                        console.log('데이터가 성공적으로 업데이트되었습니다.', response);
+						                        
+						                        
+						                     // 데이터 업데이트 후 페이지 새로고침
+						                        location.reload();
+						                     
+						                     // 버튼을 비활성화하고 색상을 회색으로 변경
+						//                         button.attr('disabled', 'disabled');
+						//                         button.css('background-color', 'grey');
+						                        
+						                    },
+						                    error: function(error) {
+						                        console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
+						                    }
+						                });
+						            } else {
+						                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
+						            }
+						        }
+//-------------------------------------------------------------------------------
+// 						        if (confirmation) {
+// 						            if (dataItem.hasOwnProperty('inState')) {
+// 						                dataItem.inState = "입고완료";
+// 						                console.log("변경된 inState 값: " + dataItem.inState);
+
+// 						                // SweetAlert 대화상자 표시
+// 						                Swal.fire({
+// 						                    text: '입고처리하시겠습니까?',
+// 						                    icon: 'warning',
+// 						                    confirmButtonText: '확인',
+// 						                }).then((result) => {
+// 						                    // 확인 버튼을 클릭하면 작업을 수행합니다.
+// 						                    if (result.isConfirmed) {
+// 						                        // 서버에 변경된 값을 저장하기 위한 Ajax 요청
+// 						                        $.ajax({
+// 						                            type: 'POST',
+// 						                            url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
+// 						                            data: JSON.stringify(dataItem),
+// 						                            contentType: 'application/json',
+// 						                            success: function(response) {
+// 						                                console.log('데이터가 성공적으로 업데이트되었습니다.', response);
+// 						                                // 데이터 업데이트 후 페이지 새로고침
+// 						                                location.reload();
+// 						                            },
+// 						                            error: function(error) {
+// 						                                console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
+// 						                            }
+// 						                        });
+// 						                    }
+// 						                });
+// 						            } else {
+// 						                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
+// 						            }
+// 						        }
+//-------------------------------------------------------------------------------
+						    });
+						    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
+						    if (dataItem.inState === '입고완료') {
+						        button.prop('disabled', true);
+						        button.css('background-color', 'grey');
+						    }
+						
+						
+						 // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
+						 var buttonCell = $("<td>").append(button);
+						 row.append(buttonCell);
+						})(data[i]);
+					}		
 					
-// 입고 버튼 추가 
-var contextPath = "${pageContext.request.contextPath}";
-var inNum = data[i].inNum;
-
-(function(dataItem) {
-    var button = $("<input type='button' value='입고'>");
-    button.click(function() {
-    	
-    	
-        // 버튼 클릭 시 처리할 동작을 여기에 추가
-        console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
-
-        // confirm 창을 띄워 입고 처리 여부를 확인
-        var confirmation = confirm("입고 처리하시겠습니까?");
-
-        // 확인 버튼이 눌렸을 경우에만 작업 수행
-        if (confirmation) {
-            if (dataItem.hasOwnProperty('inState')) {
-                dataItem.inState = "입고완료";
-                // 변경된 inState 값을 출력하여 확인
-                console.log("변경된 inState 값: " + dataItem.inState);
-
-                // 서버에 변경된 값을 저장하기 위한 Ajax 요청
-                $.ajax({
-                    type: 'POST',
-                    url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
-                    data: JSON.stringify(dataItem),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        console.log('데이터가 성공적으로 업데이트되었습니다.', response);
-                        
-                        
-                     // 데이터 업데이트 후 페이지 새로고침
-                        location.reload();
-                     
-                     // 버튼을 비활성화하고 색상을 회색으로 변경
-//                         button.attr('disabled', 'disabled');
-//                         button.css('background-color', 'grey');
-                        
-                    },
-                    error: function(error) {
-                        console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
-                    }
-                });
-            } else {
-                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
-            }
-        }
-    });
-    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
-    if (dataItem.inState === '입고완료') {
-        button.prop('disabled', true);
-        button.css('background-color', 'grey');
-    }
-
-
- // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
- var buttonCell = $("<td>").append(button);
- row.append(buttonCell);
-})(data[i]);
+					
 					
 					
 					//--------------------------------------------------------------------------------------------
@@ -377,10 +429,10 @@ var inNum = data[i].inNum;
 					tbody.append(row);
 				} else if (i == data.length - 1) {// 마지막에 페이징 처리데이터가 들어가있다
 					// 마지막 행은 페이징 정보를 추가합니다.
-					var inNum = data[i].inNum; //검색한 입고코드
+					var inNum = data[i].inNum; //검색한 출고번호
 					var rawName = data[i].rawName; //검색한 상품이름
 					var clientCompany = data[i].clientCompany; //검색한 거래처이름
-					var inState = data[i].inState; //검색한 입고 상태
+					var inState = data[i].inState; //검색한 출고 상태
 					var prev = data[i].startPage - data[i].pageBlock;
 					var next = data[i].startPage + data[i].pageBlock;
 
@@ -454,10 +506,13 @@ var inNum = data[i].inNum;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
 		
+
+		
 		   // 버튼 클릭 시 실행
 		   // 클라이언트에서 서버로 데이터 요청
 				document.getElementById('exportButton').addEventListener('click', function () {
-				    // 엑셀로 내보낼 데이터
+					if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {	
+					// 엑셀로 내보낼 데이터
 				    var searchParams = {
 				    		inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
@@ -474,14 +529,14 @@ var inNum = data[i].inNum;
 				            // 데이터 가공
 							var modifiedData = data.map(function (item) {
 							    return {
-							        '입고 코드': item.inNum,
-							        '발주 코드': item.buyNum,
-							        '입고 창고': item.whseCode,
+							        '입고번호': item.inNum,
+							        '발주번호': item.buyNum,
+							        '입고창고': item.whseCode,
 							        '거래처명': item.clientCompany,
-							        '원자재 코드': item.rawCode,
-							        '원자재명': item.rawName,
-							        '발주 수량': item.inCount,
-							        '재고 수량': item.stock,
+							        '품번': item.rawCode,
+							        '품명': item.rawName,
+							        '발주수량': item.inCount,
+							        '재고수량': item.stock,
 							        '단가': item.rawPrice,
 							        '총액': item.inPrice,
 							        '입고일': item.inDate,
@@ -503,6 +558,13 @@ var inNum = data[i].inNum;
 				            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
 				        }
 				    });
+					}else {
+						 Swal.fire({
+		                        text: '자재팀만 가능',
+		                        icon: 'warning',
+		                        confirmButtonText: '확인',
+		                    });
+					}
 				});
 				
 				// ArrayBuffer 만들어주는 함수

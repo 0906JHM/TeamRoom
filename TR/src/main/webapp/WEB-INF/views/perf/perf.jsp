@@ -9,25 +9,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/perf.css">
-
-	
-	<link href="${pageContext.request.contextPath }/resources/css/side.css"
-	rel="stylesheet" type="text/css">
-
-	<script src="https://kit.fontawesome.com/25ef23e806.js"
-	crossorigin="anonymous"></script>
-	
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <script src="https://kit.fontawesome.com/25ef23e806.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/perf.css">
+	<link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
+	
+	 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/datepicker.css"> 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 	
 </head>
@@ -39,22 +39,21 @@
 		<h1 class="toptitle">생산실적 관리</h1>
 
 <hr>
+
 <div class="perfcd">
+<form method ="get">
 <div class="perfcd1">
-라인코드: <input type="text" id="lineCode" name="lineCode" onclick="" class="cdbox" readonly>
+라인코드: <input type="text" id="lineCode2" name="lineCode" onclick="" class="cdbox" readonly> 제품코드: <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
+
+
+
 </div>
-
-<div class="perfcd1">
-제품코드: <input type="text" id="prodCode" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly>
-</div>
-
-
 <!-- <div class="perfcd1">
  실적일: <input type="text" id="workdate1" name="perfDate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="perfDate2" class="form-control" placeholder="날짜 선택" readonly>
-</div> -->
+</div>  -->
 
-
-
+<input type="submit" value="조회" class="subbtn">
+</form>
 </div> <!--  perfcd -->
 <hr> <!--  경계선 -->
 	
@@ -102,36 +101,39 @@
 						<td class="cttg">${perfDTO.perfDefect}</td>
 						<td class="cttg">${perfDTO.perfDefectreason}</td>
 						<td class="cttg">${perfDTO.perfMemo}</td>
-						<td class="cttg">${perfDTO.perfStatus}</td>
-						
+						<td class="cttg">${perfDTO.perfStatus}</td>				
 					</tr>
 					</c:forEach>
 			</tbody> 
 
 		</table>
 		
-		
-		<div class="exceldown">
-		 <input type="button" id="entrytable" class="entrytable" value="전체테이블">
-		  <input type="button" id="exceldown" class="exceldown" value="액셀다운">
-		 </div>
-		 
-		 	<div class="page"> <!--  페이징 영역 -->
+		<div class="footlo">
+		<div class="excel">
+
+		 <button type="button" id="entrytable" class="entrytable" onclick="window.location.href='${pageContext.request.contextPath}/perf/perf?pageNum=1&endPage=100&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}'">전체 보기</button>
+		  <button type="button" id="exceldownload" class="exceldown" >액셀 다운 </button>
+		  </div>
+		  <div class="page"> <!--  페이징 영역 -->
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
-					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}">Prev</a>
+					<a class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}">Prev</a>
 				</c:if>
 				
 
 				<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${i}&lineCode=${perfDTO.perfCode}&prodCode=${perfDTO.prodCode}">${i}</a>
+					<a  class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${i}&lineCode=${perfDTO.perfCode}&prodCode=${perfDTO.prodCode}">${i}</a>
 				</c:forEach>
 
 
 				<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
-					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${perfDTO.prodCode}">Next</a>
+					<a class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${perfDTO.prodCode}">Next</a>
 				</c:if>
 				
 			</div> <!--  페이징영역 -->
+		 </div>
+		 </div>
+		 
+		 	
 		
 		
 		
@@ -163,7 +165,7 @@
 		</div>
 		 
 
-		 
+
 	
 		 </div> <!--  chartbody -->
 		 </div> <!--  chart -->
@@ -181,7 +183,7 @@ $(document).ready(function() {
         window.open(
             '${pageContext.request.contextPath}/perf/perfinsert',
             '_blank',
-            'width=1200px, height=800px, left=500px, top=100px'
+            'width=600px, height=800px, left=500px, top=100px'
         );
     });
 
@@ -196,6 +198,58 @@ $(document).ready(function() {
             window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=600px,height=400px');
         });
     });
+    
+    $(document).ready(function() {
+   	 // lineCode2 input box 클릭 이벤트 처리
+       $('#lineCode2').click(function() {
+       	console.log("라인코드 클릭");
+           openLinePopup(); // 라인 팝업 열기
+       });
+
+       // prodCode2 input box 클릭 이벤트 처리
+       $('#prodCode2').click(function() {
+       	console.log("제품코드 클릭");
+           openProductPopup(); // 제품 팝업 열기
+       });
+       
+       function openLinePopup() {
+           var popupUrl = '${pageContext.request.contextPath}/search/line?input=lineCode2';
+           window.open(
+               popupUrl,
+               '_blank',
+               'width=800px, height=800px, left=900px, top=100px'
+           );
+       }
+       
+    function openProductPopup() {
+    	
+        var popupUrl = '${pageContext.request.contextPath}/search/product?input=prodCode2';
+        window.open(
+            popupUrl,
+            '_blank',
+            'width=800px, height=800px, left=900px, top=100px'
+        );
+    }
+    
+    function openWorkOrderPopup() {
+        var popupUrl = '${pageContext.request.contextPath}/perf/worklist';
+        window.open(
+            popupUrl,
+            '_blank',
+            'width=800px, height=800px, left=900px, top=100px'
+        );
+    }
+    
+    function selectLineCode(lineCode) {
+        window.opener.setLineCodeAndClosePopup(lineCode2);
+    }
+
+    function selectProdCode(prodCode) {
+        window.opener.setProdCodeAndClosePopup(prodCode2);
+    }
+    
+    });
+    
 
     // 라인 코드 리스트
     var lineCode = ["L101", "L102", "L103"];
@@ -308,56 +362,104 @@ $(document).ready(function() {
             }
         });
     }
+      
+		//엑셀
+			 const excelDownload = document.querySelector('#exceldownload');
+					excelDownload.addEventListener('click', exportExcel);
+					function exportExcel() {
+					    // 1. 워크북 생성
+					    var wb = XLSX.utils.book_new();
+					    // 2. 워크시트 생성
+					    var newWorksheet = excelHandler.getWorksheet();
+					    // 3. 워크시트를 워크북에 추가
+					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+					    // 4. 엑셀 파일 생성
+					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+					    // 5. 엑셀 파일 내보내기
+					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+					}
+
+					// 현재 날짜를 가져오는 함수
+					function getToday() {
+						
+					    var date = new Date();
+					    var year = date.getFullYear();
+					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+					    return year + month + day;
+					}
+
+			var excelHandler = {
+			getExcelFileName : function() {
+				return 'PerformanceList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'Performance Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('ct'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+			
+			function s2ab(s) {
+				
+				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+				var view = new Uint8Array(buf);  
+				for(var i=0; i<s.length; i++) {
+					view[i] = s.charCodeAt(i) & 0xFF;
+				}
+				alert("이까지 옴");
+				return buf;
+			}
+	
     
-    Chart.plugins.register({
-        afterDatasetsDraw: function(chart) {
-            var ctx = chart.ctx;
-            var totalValue = chart.data.datasets[0].data.reduce((total, value) => total + value, 0); // 데이터 총합 계산
-
-            chart.data.datasets.forEach(function(dataset, datasetIndex) {
-                var meta = chart.getDatasetMeta(datasetIndex);
-                if (!meta.hidden) {
-                    meta.data.forEach(function(element, index) {
-                        // 데이터 레이블의 텍스트 가져오기
-                        var dataLabel = dataset.data[index].toString();
-
-                        // 데이터 레이블의 좌표 가져오기
-                        var model = element._model;
-                        var x = model.x;
-                        var y = model.y;
-
-                        // 데이터 레이블의 스타일 설정
-                        ctx.fillStyle = 'black'; // 텍스트 색상
-                        ctx.font = 'bold 15px Arial'; // 폰트 스타일 및 크기
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-
-                        // 데이터 레이블 그리기
-                        ctx.fillText(dataLabel, x, y);
-
-                        // 테두리 그리기 (borderWidth 설정)
-                        ctx.lineWidth = 10;
-                        ctx.strokeStyle = 'black';
-                        ctx.strokeRect(x - model.innerRadius, y, model.innerRadius * 2, model.innerRadius * 2);
-                    });
-                }
-            });
-
-            // 차트 중앙 좌표 가져오기
-            var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
-            var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-
-            // 데이터 레이블의 스타일 설정 (total 밸류값 출력)
-            ctx.fillStyle = 'black'; // 텍스트 색상
-            ctx.font = 'bold 15px Arial'; // 폰트 스타일 및 크기
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-
-            // 데이터 레이블 그리기 (total 밸류값 출력)
-            ctx.fillText(totalValue.toFixed(2), centerX, centerY);
-        }
-    });
     
+   /*  $(function() {
+        $("#workdate1").datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dayNames: ['일','월','화','수','목','금','토'],
+            dayNamesShort: ['일','월','화','수','목','금','토'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년',
+
+            // 여기에 데이트피커에서 날짜를 선택했을 때 실행할 코드 작성
+            onSelect: function(selectedDate) {
+                console.log("선택한 날짜: " + selectedDate);
+            }
+     
+    }); // datekpicker1 끝
+          
+          
+          $(function() {
+              $("#workdate2").datepicker({
+                  dateFormat: 'yy-mm-dd',
+                  prevText: '이전 달',
+                  nextText: '다음 달',
+                  monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                  monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                  dayNames: ['일','월','화','수','목','금','토'],
+                  dayNamesShort: ['일','월','화','수','목','금','토'],
+                  dayNamesMin: ['일','월','화','수','목','금','토'],
+                  showMonthAfterYear: true,
+                  yearSuffix: '년',
+
+                  // 데이트피커의 onSelect 이벤트 핸들러 설정
+                  onSelect: function(selectedDate) {
+                      // 여기에 데이트피커에서 날짜를 선택했을 때 실행할 코드 작성
+                      console.log("선택한 날짜: " + selectedDate);
+                  }
+              });
+          }); // datepicker2 끝  */
+   
+   
 });
 </script>	
 			

@@ -92,17 +92,17 @@
 		
 		<div class="page"> <!--  페이징 영역 -->
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
-					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">Prev</a>
+					<a class="a" href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">Prev</a>
 				</c:if>
 				
 
 				<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-					<a href="${pageContext.request.contextPath}/client/client?pageNum=${i}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">${i}</a>
+					<a class="a" href="${pageContext.request.contextPath}/client/client?pageNum=${i}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">${i}</a>
 				</c:forEach>
 
 
 				<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
-					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">Next</a>
+					<a  class="a" href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">Next</a>
 				</c:if>
 				
 			</div> <!--  페이징영역 -->
@@ -122,7 +122,7 @@
 						.open(
 								'${pageContext.request.contextPath}/client/clientinsert',
 								'_blank',
-								'width=450px, height=600px, left=600px, top=300px');
+								'width=450px, height=700px, left=400px, top=200px');
 			}
 			
 			// 클라이언트 회사 이름을 클릭했을 때 실행될 함수

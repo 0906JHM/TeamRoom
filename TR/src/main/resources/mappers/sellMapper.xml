@@ -112,12 +112,17 @@
 		<if test="sellDuedate != ''">
 			and s.sellDuedate between #{sellDuedate} and #{sellEndDuedate}
 		</if>
+		<if test="sellState != ''">
+			and s.sellState like concat('%',#{sellState},'%')
+		</if>
 	</where>
 	order by sellCode desc
-	
+	limit
+	#{startRow},
+	#{pageSize}
 	</select>
 		
-    <select id="getSellListSearch"
+   <!--  <select id="getSellListSearch"
 	resultType="com.itwillbs.domain.SellDTO">
 	select s.sellCode sellCode, s.sellDate sellDate,
 	s.sellDuedate
@@ -150,17 +155,38 @@
 			and s.sellDuedate between #{sellDuedate} and
 			#{sellEndDuedate}
 		</if>
+		
+	</where>
+	order by sellDate desc
+	
+</select> -->
+	
+	<select id="getSellSearchCount" resultType="java.lang.Integer">
+		select count(*)
+	from sell s
+	left join product p
+	on s.prodCode = p.prodCode
+	<where>
+		<if test="prodCode != ''">
+			and s.prodCode like concat('%',#{prodCode},'%')
+		</if>
+		<if test="clientCode != ''">
+			and s.clientCode like concat('%',#{clientCode},'%')
+		</if>
+		<if test="sellCode != ''">
+			and s.sellCode like concat('%',#{sellCode},'%')
+		</if>
+		<if test="sellDate != ''">
+			and s.sellDate between #{sellDate} and #{sellEndDate}
+		</if>
+		<if test="sellDuedate != ''">
+			and s.sellDuedate between #{sellDuedate} and
+			#{sellEndDuedate}
+		</if>
 		<if test="sellState != ''">
 			and s.sellState like concat('%',#{sellState},'%')
 		</if>
 	</where>
-	order by sellDate desc
-	
-</select>
-	
-	<select id="getSellSearchCount" resultType="java.lang.Integer">
-		select count(*)
-		from sell
 	</select>
 
 	

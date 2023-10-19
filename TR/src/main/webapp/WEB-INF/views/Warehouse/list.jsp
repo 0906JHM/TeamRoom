@@ -117,7 +117,7 @@ function deleteValue(){
                     <option value="원자재">원자재</option>
 		            <option value="완제품">완제품</option>
                 </select>
-    <button type="submit" >조회</button>      
+    <button class="aaa" type="submit" >조회</button>      
     </form>
     </div>
     <hr>
@@ -175,7 +175,7 @@ function deleteValue(){
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/Warehouse/list?pageNum=${i}">${i}</a> 
+<a href="${pageContext.request.contextPath}/Warehouse/list?pageNum=${i}&search3=${pageDTO.search3}">${i}</a> 
 </c:forEach>
 
 <c:if test="${pageDTO.endPage < pageDTO.pageCount}">

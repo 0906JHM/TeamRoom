@@ -93,6 +93,14 @@ public class ProdDAO {
 		sqlSession.update(namespace + ".updateProdMemo", prodDTO);
 	}// updateProdMemo
 
+	//엑셀
+	public List<ProdDTO> getExcelList(ProdDTO prodDTO) {
+		return sqlSession.selectList(namespace + ".getExcelList", prodDTO);
+	}
+	
+	
+	
+
 }
 
 

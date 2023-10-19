@@ -20,7 +20,7 @@
 <!------------------------------------------------------ 본문 ---------------------------------------------------->
 
 <body>
-<div class="popupContainer">
+<div class="popupContainer" id="body">
 <h1>수주 등록</h1>
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellAddPro" id=sellAdd class="popup"  method="post"> <!-- onsubmit="checkForm()" --> 
@@ -103,10 +103,20 @@ function formCheck() {
         $('#sellAdd').submit();    
     }
 }
-//---------------------------------------------- 수주 단가 계산 함수 -----------------------------------------
-// 제품 코드의 값이 변경이 될때 가격 자동 변경
-$(document).ready(function() {
-    // 동적 이벤트 핸들러 등록
+$(document).ready(function () {
+		//--------------------------------------------------- 페이지 권한 ----------------------
+	                
+	/*--------------------------------- 페이지 권한 ----------------------------------------  */
+        var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+ 		
+        if (team === "" || (team !== "관리자" && team !== "영업팀")) {
+            // 창을 닫습니다.
+            window.close(); // 이 코드는 창을 닫으려고 시도합니다.
+            // 또는 에러 페이지로 리디렉션할 수 있습니다.
+            // window.location.href = "${pageContext.request.contextPath}/error";
+        }
+	//---------------------------------------------- 수주 단가 계산 함수 -----------------------------------------
+	// 제품 코드의 값이 변경이 될때 가격 자동 변경
     $(document).on('change', '#prodCode9999', function() {
     	console.log("change 이벤트");
         calculateSellPrice();
