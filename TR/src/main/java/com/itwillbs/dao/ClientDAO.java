@@ -89,7 +89,6 @@ public class ClientDAO {
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			data.put("startRow", pageDTO.getStartRow());
 			data.put("pageSize", pageDTO.getPageSize());
-			data.put("clientCode", clientDTO.getClientCode());
 			data.put("clientCompany", clientDTO.getClientCompany());
 			data.put("clientType", "전체".equals(clientDTO.getClientType()) ? "" : clientDTO.getClientType());
 			
@@ -101,6 +100,9 @@ public class ClientDAO {
 
 
 		public int getSearchcount(ClientDTO clientDTO) {
+			
+			String clientType = "전체".equals(clientDTO.getClientType()) ? "" : clientDTO.getClientType();
+			clientDTO.setClientType(clientType); // clientDTO 객체의 clientType을 빈 문자열("") 또는 값으로 설정
 			
 			return sqlsession.selectOne(namespace+".getSearchcount",clientDTO);
      	}

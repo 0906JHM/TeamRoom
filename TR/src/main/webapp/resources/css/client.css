@@ -27,7 +27,6 @@ body{
 }
 
 .tableform{
-	background-color: white;
 	padding:5px;
 	padding-bottom:60px;
 	
@@ -45,71 +44,63 @@ body{
 }
 
 .cthead{
-	
 	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	width:1570px;
 	height:45px;
 	font: 500 24px/24px "Inter", sans-serif;
 }
 
-.ctcontents{
-background-color:#ffffff;
-	width:1570px;
-	height:45px;
-	font: 500 24px/24px "Inter", sans-serif;	
+
+.ct .ctnum {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 5px;
+	width: 170px;
+}
+
+.ct .ctno{
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 5px;
+	width: 120px;
 	
 }
 
-ct{
-	
-	background-color:#ffffff;
-	width:1570px;
-	height:45px;
-	font: 500 24px/24px "Inter", sans-serif;
-}
+
+
+
 
 
 .ct {
-	border-collapse: collapse;
-	border-spacing: 0;
+border: 1px solid rgba(221, 221, 221, 0.78);
+    margin: 0 auto;
+    color: #000000;
+    max-width: 1570px;
+    font: 500 18px/18px "Inter", sans-serif;
+    text-align: center;
 }
 
-.ct .ctth {
-	border-color: black;
-	border-style: solid;
-	border-width: 1px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	overflow: hidden;
-	padding: 10px 5px;
-	word-break: normal;
-	width:800px;
-}
+
 
 .ct .cttg {
-	border-color: black;
-	border-style: solid;
-	border-width: 1px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	overflow: hidden;
-	padding: 10px 5px;
-	word-break: normal;
-	border-color: inherit;	
-	text-align: left;
-	vertical-align: top;
-	text-align: center;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 10px 5px;
+    border-color: inherit;
+    text-align: left;
+    text-align: center;
 }
 
 hr{
 	 background: #adb5bb;
-  width: 1500px;
+  width: 1700px;
   height: 2px;
   border: 0;
   position: relative;
   transform-origin: 0 0;
   transform: rotate(0deg) scale(1, -1);
+  
 	
 }
 
@@ -119,11 +110,21 @@ hr{
 }
 
 .search{
-	margin: 10px;
-	height: 20px;
+	height: 40px;
 	display: flex;
     align-items: center;
+    margin: 25px 0;
     
+}
+
+#clientCompany{
+	border: 1px solid #adb5bb;
+    border-radius: 5px;
+    width: 300px;
+    height: 40px;
+    font: 500 18px/18px "Inter", sans-serif;
+    padding-left: 10px;
+	
 }
 
 .addbutton {
@@ -135,6 +136,38 @@ hr{
     border: 0;
     text-align: center;
     font: 500 24px/24px "Inter", sans-serif;
-    margin-right: 15px;
+    margin-right: 150px;
+  
+}
+
+#clientType{
+	 background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 0;
+    text-align: center;
+    font: 500 24px/24px "Inter", sans-serif;
+}
+
+.searchbtn{
+	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 0;
+    text-align: center;
+    font: 500 24px/24px "Inter", sans-serif;
+	
+}
+
+.ct tbody tr:nth-child(even) {
+	background-color: #f2f2f2; /* 짝수 행의 백그라운드 색상 설정 */
+}
+
+.ct tbody tr:nth-child(odd) {
+	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
 }
 

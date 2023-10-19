@@ -6,56 +6,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 
 <h1>거래처 정보</h1>
+<form id="clientsub" action="${pageContext.request.contextPath}/client/clientupdatePro" method="post">
 <table id="clientDetail">
 <tr><td>구분</td><td>${clientDTO.clientType}</td></tr>
 <tr><td>거래처코드</td><td>${clientDTO.clientCode}</td></tr>
-<tr><td>거래처명</td><td>${clientDTO.clientCompany}</td></tr>
+<tr><td>거래처명</td><td><input type="text" name="clientCompany" value="${clientDTO.clientCompany}"></td></tr>
 <tr><td>사업자번호</td><td>${clientDTO.clientNumber}</td></tr>
 <tr><td>업태</td><td>${clientDTO.clientDetail}</td></tr>
-<tr><td>대표자</td><td>${clientDTO.clientCeo}</td></tr>
-<tr><td>담당자</td><td>${clientDTO.clientName}</td></tr>  
-<tr><td>거래처주소</td><td>${clientDTO.clientAddr1}</td></tr>  
-<tr><td>상세주소</td><td>${clientDTO.clientAddr2}</td></tr>  
-<tr><td>거래처번호</td><td>${clientDTO.clientTel}</td></tr>  
-<tr><td>휴대폰번호</td><td>${clientDTO.clientPhone}</td></tr>  
-<tr><td>팩스번호</td><td>${clientDTO.clientFax}</td></tr>  
-<tr><td>이메일</td><td>${clientDTO.clientEmail}</td></tr>  
-<tr><td>비고</td><td>${clientDTO.clientMemo}</td></tr>  
+<tr><td>대표자</td><td><input type="text" name="clientCeo" value="${clientDTO.clientCeo}"></td></tr>
+<tr><td>담당자</td><td><input type="text" name="clientName" value="${clientDTO.clientName}"></td></tr>  
+<tr><td>거래처주소</td><td><input  type="text" id="sample4_roadAddress" placeholder="도로명주소"
+			name="clientAddr1" value="${clientDTO.clientAddr1}" readonly required>  <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" required>
+          </td></tr>  
+<tr><td>상세주소</td><td><input type="text" id="sample4_extraAddress" placeholder="상세주소"
+			name="clientAddr2" size="60" value="${clientDTO.clientAddr2}"required></td></tr>  
+<tr><td>거래처번호</td><td><input type="text" name="clientTel" value="${clientDTO.clientTel}"></td></tr>  
+<tr><td>휴대폰번호</td><td><input type="tel" name="clientPhone" value="${clientDTO.clientPhone}"> </td></tr>  
+<tr><td>팩스번호</td><td><input type="tel" name="clientFax" value="${clientDTO.clientFax}"> </td></tr>  
+<tr><td>이메일</td><td><input type="email" name="clientEmail" value="${clientDTO.clientEmail}"></td></tr>  
+<tr><td>비고</td><td><input type="text" name="clientMemo" value="${clientDTO.clientMemo}"> </td></tr>  
 </table>
+</form>
 
+			
 <div class="btngroup">
-        <input type="button" value="수정" id="updateButton" >
+        <input type="submit" value="수정제출">
  <button type="button" class="deletebtn" onclick="clientdelete('${clientDTO.clientCompany}')">삭제</button>
 </div>
 
-<c:choose>
-    <c:when test="${clientDTO.clientType eq '발주처'}">
-        <!-- 발주처인 경우 rawDetail 테이블 출력 -->
-        <h1>거래 정보</h1>
-        <table id="rawDetail">
-            <tr><td>원자재코드</td><td>${rawmaterialsDTO.rawCode}</td></tr>
-            <tr><td>원자재명</td><td>${rawmaterialsDTO.rawName}</td></tr>
-            <tr><td>종류</td><td>${rawmaterialsDTO.rawType}</td></tr>
-            <tr><td>단위</td><td>${rawmaterialsDTO.rawUnit}</td></tr>
-            <tr><td>가격</td><td>${rawmaterialsDTO.rawPrice}</td></tr>
-        </table>
-    </c:when>
-    <c:when test="${clientDTO.clientType eq '수주처'}">
-        <!-- 수주처인 경우 sellDetail 테이블 출력 -->
-        <h1>거래 정보</h1>
-        <table id="sellDetail">
-            <tr><td>제품코드</td><td>${prodDTO.prodCode}</td></tr>
-            <tr><td>제품명</td><td>${prodDTO.prodName}</td></tr>
-        </table>
-    </c:when>
-    <c:otherwise>
-        <!-- 그 외의 경우 아무 내용도 출력하지 않음 또는 처리할 내용 추가 -->
-    </c:otherwise>
-</c:choose>
 
 <script>
 document.getElementById("updateButton").addEventListener("click", function() {
@@ -70,6 +53,34 @@ function clientdelete(clientCompany) {
         location.href = '${pageContext.request.contextPath}/client/delete?clientCompany=' + clientCompany;
          console.log(clientCompany);
     }
+}
+
+function sample4_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            var roadAddr = data.roadAddress;
+            var extraRoadAddr = '';
+
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
+            }
+
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            document.getElementById("sample4_roadAddress").value = roadAddr;
+            if(roadAddr !== ''){
+                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+            } else {
+                document.getElementById("clientAddr2").value = '';
+            }
+        }
+    }).open();
 }
 
 

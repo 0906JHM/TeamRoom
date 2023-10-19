@@ -25,10 +25,10 @@
 		select * FROM clients	
 		<where>
  			<if test="clientCompany != null and clientCompany !=''">
-				 clientCompany = #{clientCompany}
+				and clientCompany like concat ('%' ,#{clientCompany}, '%')
 			</if> 
 			<if test="clientType != null and clientType != ''">
-				AND clientType= #{clientType}
+				AND clientType like concat ('%' ,#{clientType} , '%')
 			</if>
 		</where>
 		order by clientCode desc
@@ -40,10 +40,10 @@
 		FROM clients
 		<where>
  	 		<if test="clientCompany != null and clientCompany !=''">
-				 clientCompany like concat ('%' ,#{clientCompany}, '%')
+				 and clientCompany like concat ('%' ,#{clientCompany}, '%')
 			</if> 
 			<if test="clientType != null and clientType != ''">
-				AND clientType= #{clientType}
+				AND clientType like concat ('%' ,#{clientType} , '%')
 			</if>
 		</where>
 		order by clientCode desc
@@ -57,8 +57,7 @@
 	  select clientCode from clients where clientType=#{clientType} order by clientCode desc limit 1;
 	</select>
 
-	<select id="clientdetail"
-		resultType="com.itwillbs.domain.ClientDTO">
+	<select id="clientdetail" resultType="com.itwillbs.domain.ClientDTO">
 		select * from clients where clientCompany=#{clientCompany}
 	</select>
 

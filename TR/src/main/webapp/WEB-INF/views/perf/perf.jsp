@@ -327,7 +327,7 @@ $(document).ready(function() {
                         var y = model.y;
 
                         // 데이터 레이블의 스타일 설정
-                        ctx.fillStyle = 'white'; // 텍스트 색상
+                        ctx.fillStyle = 'black'; // 텍스트 색상
                         ctx.font = 'bold 15px Arial'; // 폰트 스타일 및 크기
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
@@ -337,7 +337,7 @@ $(document).ready(function() {
 
                         // 테두리 그리기 (borderWidth 설정)
                         ctx.lineWidth = 10;
-                        ctx.strokeStyle = 'white';
+                        ctx.strokeStyle = 'black';
                         ctx.strokeRect(x - model.innerRadius, y, model.innerRadius * 2, model.innerRadius * 2);
                     });
                 }
@@ -348,7 +348,7 @@ $(document).ready(function() {
             var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
 
             // 데이터 레이블의 스타일 설정 (total 밸류값 출력)
-            ctx.fillStyle = 'white'; // 텍스트 색상
+            ctx.fillStyle = 'black'; // 텍스트 색상
             ctx.font = 'bold 15px Arial'; // 폰트 스타일 및 크기
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
