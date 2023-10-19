@@ -39,7 +39,7 @@
     		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
     		<input type="button" class="buttons " value="중간납품" id="interim_deliveryButton">
     		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
-    		<input type="button" value="엑셀" id="exportButton">
+    		
 		</div>
 		<h3 style="padding-left:1%;">목록 <small id="listCount">총 3건</small></h3>
 		<div id="outProductList">
@@ -69,6 +69,7 @@
 			</table>
 		</div>
 		<div id="paging">
+			<input type="button" value="엑셀⬇️" id="exportButton">
    			<ul id="paging_ul">
     		</ul>
 		</div>
@@ -310,7 +311,7 @@
 		        		pagingUL.empty(); // 기존 페이징 데이터를 비웁니다.
 
 		        		if (data[i].startPage > data[i].pageBlock) {
-		        		    var prevLink = $("<a href='javascript:void(0);'>Prev</a>");
+		        		    var prevLink = $("<a href='javascript:void(0);'><</a>");
 		        		    var prevListItem = $("<li>").append(prevLink);
 		        		    prevListItem.click(function() {
 		        		        loadPage(outCode, prodName, clientCompany, prev);
@@ -328,7 +329,7 @@
 		        		}
 
 		        		if (data[i].endPage < data[i].pageCount) {
-		        		    var nextLink = $("<a href='javascript:void(0);'>Next</a>");
+		        		    var nextLink = $("<a href='javascript:void(0);'>></a>");
 		        		    var nextListItem = $("<li>").append(nextLink);
 		        		    nextListItem.click(function() {
 		        		        loadPage(outCode, prodName, clientCompany, next);

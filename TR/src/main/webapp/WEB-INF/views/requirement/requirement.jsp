@@ -40,9 +40,14 @@
             
         	// 클릭한 요소의 오른쪽 아래 모서리의 화면 좌표를 "x"와 "y" 변수에 저장합니다.
         	// 이것은 모달 창을 클릭한 요소의 위치에 배치하는 데 사용됩니다.
-            var x = rect.left;
-            var y = rect.top;
-           
+            var xr = rect.right;
+            var xl = rect.left;
+            var yt = rect.top;
+            var yb = rect.bottom; 
+            var xg = (xr-xl)/2;
+            var yg = (yt-yb)/2;
+            var x =  xl+xg;
+            var y = yb+yg;
             //클릭후에 모달창을 생성하는 위치를 조정
             myModal.style.left = x + "px";
             myModal.style.top = y + "px";
@@ -296,9 +301,16 @@ function deleteRow() {
 	
 	
 $(document).ready(function() {
-	    	$('#add').show();
+	 var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+		
+	  if (team === "생산팀" || team === "관리자") {
+		  $('#add').show();
 			$('#modify').show();
 			$('#delete').show();
+	   }
+	  else if (team ===""){
+		  window.location.href = "${pageContext.request.contextPath}/login/logout";
+	  }
 		
 	// 추가 시 필요한 변수들
 
@@ -663,7 +675,7 @@ $(document).ready(function() {
 <!-- page content -->
 <div class="right_col">
 
-	<h2 style="margin-left: 1%;" onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'">소요량 관리</h2>
+	<h2 style="margin-left: 1%; cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'">소요량 관리</h2>
 	<hr>
 	<div class="input_value" style="margin: 1% 1%;">	
 		<form method="get">
@@ -687,7 +699,7 @@ $(document).ready(function() {
 				<div class="x_title">
 					
 					<div class="x_total">
-					<h2><small>총 ${paging.total} 건</small></h2>
+					<h3>총 ${paging.total} 건</h3>
 						
 					</div>
 					<div>
@@ -742,12 +754,12 @@ $(document).ready(function() {
 						</thead>
 							<tr style='display: none;'></tr>
 						<c:forEach var="dto" items="${reqList}">
-							<tr>
+							<tr class="contents">
 								<td></td>
 								<td id="reqCode">${dto.reqCode }</td>
 								<td style='display: none;'>${dto.prodCode }</td>
-								<td><div style="display: flex; justify-content: center; align-items: center;">${dto.prod.prodName }<div class="search-icon" onclick="openModal(this)" id="${dto.prodCode }" name="prodName" value="${dto.prod.prodName }"></div></div></td>
-								<td><div style="display: flex; justify-content: center; align-items: center;">${dto.raw.rawName }<div class="search-icon" onclick="openModal(this)" id="${dto.rawCode }" name="rawName" value="${dto.raw.rawName }"></div></div></td>
+								<td style='cursor: pointer;' onclick="openModal(this)" id="${dto.prodCode }" name="prodName" value="${dto.prod.prodName }">${dto.prod.prodName }</td>
+								<td style='cursor: pointer;' onclick="openModal(this)" id="${dto.rawCode }" name="rawName" value="${dto.raw.rawName }">${dto.raw.rawName }</td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
 								<td id="rawCode" style='display: none;'>${dto.rawCode }</td>
