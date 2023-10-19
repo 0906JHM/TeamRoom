@@ -21,7 +21,7 @@
 					</a>
 				</div>
 				<!-- 			로고자리 -->
-				<p class="loginhi">${sessionScope.empId}님안녕하세요</p>
+				<p class="loginhi">${sessionScope.empId}님 안녕하세요</p>
 			</div>
 			<ul id="sideaccordion" class="sideaccordion">
 				<li>

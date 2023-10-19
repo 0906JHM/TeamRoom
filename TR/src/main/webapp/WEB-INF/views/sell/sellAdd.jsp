@@ -20,7 +20,7 @@
 <!------------------------------------------------------ 본문 ---------------------------------------------------->
 
 <body>
-<div class="popupContainer">
+<div class="popupContainer" id="body">
 <h1>수주 등록</h1>
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellAddPro" id=sellAdd class="popup"  method="post"> <!-- onsubmit="checkForm()" --> 
@@ -106,11 +106,15 @@ function formCheck() {
 
 $(document).ready(function() {
 	/*--------------------------------- 페이지 권한 ----------------------------------------  */
-	var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
-	
-	  if (team ===""){
-		  window.location.href = "${pageContext.request.contextPath}/login/logout";
-	  }
+        var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+ 		
+		  if (team === "영업팀" || team === "관리자") {
+			  
+				$('#body').show();
+		   }
+		  else {
+			  window.location.href = "${pageContext.request.contextPath}/login/logout";
+		  }
 	//---------------------------------------------- 수주 단가 계산 함수 -----------------------------------------
 	// 제품 코드의 값이 변경이 될때 가격 자동 변경
     $(document).on('change', '#prodCode9999', function() {

@@ -88,7 +88,13 @@
     		<input type="submit" id="exportButton" value="엑셀">
 		</div>
 		</form>
-
+ <label for="perPageSelect" style ="bottom:2px;">항목 수:</label>
+<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${paging.cntPerPage}">
+    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+</select>
 		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
 		<small>총 ${sellPageDTO.count}건</small>
 
@@ -255,9 +261,7 @@ $(document).ready(function() {
         window.opener.location.reload(); // 부모창 새로고침
         window.close(); // 현재창 닫기
     }
-});
-<!--------------------------------------------------- 목록 전체 선택 ----------------------------------------->
-$(document).ready(function() {
+
 $('#select-list-all').click(function() {
 			var checkAll = $(this).is(":checked");
 			
@@ -547,7 +551,22 @@ function openSellDetail(sellCode) {
     $("#sellState").val('');
      firstLoadSellList();
  });
+//----------------------------------- 페이지 항목 수 설정 -----------------------------------
+/* function applyFilters() {
+        var perPageValue = document.getElementById("perPageSelect").value;
+        var searchLine = "${search.search_line}";
+        var fromDate = "${search.search_fromDate}";
+        var toDate = "${search.search_toDate}";
+        var place = "${search.search_place}";
+        var prod = "${search.search_prod}";
 
+        var url = '${pageContext.request.contextPath}/sell/sellList?nowPage=1&cntPerPage=' + perPageValue +
+            '&search_line=' + searchLine + '&search_fromDate=' + fromDate +
+            '&search_toDate=' + toDate + '&search_place=' + place + '&search_prod=' + prod;
+
+        // Redirect to the generated URL
+        window.location.href = url;
+    } */
 
  </script>
 </body>
