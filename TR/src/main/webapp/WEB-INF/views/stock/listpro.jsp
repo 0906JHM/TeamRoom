@@ -66,13 +66,7 @@
 <body>
 	<div class="container">
 		<h2>재고 관리</h2>
-		<br>
-		<div style="margin-left: 1%; margin-bottom: 1%">
-			<a href="${pageContext.request.contextPath}/stock/listraw"><input
-				type="button" value="원자재" class="ab1"></input></a> <a
-				href="${pageContext.request.contextPath}/stock/listpro"><input
-				type="button" value="완제품" class="ab1"></input></a>
-		</div>
+		
 		<hr>
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/stock/listpro"
@@ -81,10 +75,16 @@
 					placeholder="제품코드"> 
 					<label>창고코드</label> <input type="text"
 					name="search2" placeholder="창고코드">
-				<button type="submit">조회</button>
+				<button  class="aaa" type="submit">조회</button>
 			</form>
 		</div>
 		<hr>
+		<div style="margin-left: 1%; margin-bottom: 1%">
+			<a href="${pageContext.request.contextPath}/stock/listraw"><input
+				type="button" value="원자재" class="ab1"></input></a> <a
+				href="${pageContext.request.contextPath}/stock/listpro"><input
+				type="button" value="완제품" class="ab1"></input></a>
+		</div>
 
 		<div class="x_title">
 
