@@ -13,6 +13,16 @@
 	href="${pageContext.request.contextPath }/resources/css/product.css"
 	rel="stylesheet" type="text/css">
 
+<%
+//관리자 또는 자재팀 출고 상세 페이지 열람 가능 게시판 접근 가능 (권한)
+String department = "";
+if (session.getAttribute("empDepartment") != null) {
+department = (String) session.getAttribute("empDepartment");
+}
+
+//상수 정의
+final String ADMIN_DEPARTMENT = "자재팀";
+%>
 
 <head>
 
@@ -77,7 +87,7 @@
 				<button id="delete">삭제</button>
 				<!-- 			<button id="cancel">취소</button> -->
 				<!-- 			<button id="save">저장</button> -->
-<!-- 				<button id="excelDownload" class="buttons">엑셀⬇</button> -->
+				<!-- 				<button id="excelDownload" class="buttons">엑셀⬇</button> -->
 			</div>
 		</c:if>
 		<h3 style="padding-left: 1%;">
@@ -152,7 +162,7 @@
 				</table>
 			</div>
 			<div class="page">
-			<button id="excelDownload" class="buttons">엑셀⬇</button>
+				<button id="excelDownload" class="buttons">엑셀⬇</button>
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
 					<a
 						href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Prev</a>
@@ -177,7 +187,9 @@
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";
-
+// 권한
+var department = "<%= department %>";
+var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
 
 <!-------------------------- 목록 전체선택 -------------------------->
 
@@ -318,9 +330,12 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 //--------------------------------------------------------------------------
   $(document).ready(function () {
 		//엑셀
+		
 			 const excelDownload = document.querySelector('#excelDownload');
 					excelDownload.addEventListener('click', exportExcel);
+					
 					function exportExcel() {
+						if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {
 					    // 1. 워크북 생성
 					    var wb = XLSX.utils.book_new();
 					    // 2. 워크시트 생성
@@ -331,8 +346,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 					    // 5. 엑셀 파일 내보내기
 					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+						}else {
+							 Swal.fire({
+			                        text: '자재팀만 가능',
+			                        icon: 'warning',
+			                        confirmButtonText: '확인',
+			                    });
+						}
 					}
-
 					// 현재 날짜를 가져오는 함수
 					function getToday() {
 						
