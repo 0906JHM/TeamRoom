@@ -169,34 +169,34 @@
 						loadinMaterialList(searchParams);
 					});
 
-					// 미출고 버튼 클릭 시
+					// 미입고 버튼 클릭 시
 					$("#non_inButton").click(function() {
-						// 미출고 버튼에 대한 동작을 추가하고,
+						// 미입고 버튼에 대한 동작을 추가하고,
 						inStateButton2 = "미입고";
 						inStateButton1 = inStateButton2;
-						// 검색 조건을 설정하고 미출고 목록을 가져오도록 수정
+						// 검색 조건을 설정하고 미입고 목록을 가져오도록 수정
 						var searchParams = {
 							inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
 							clientCompany : $("#clientCompany9999").val(),
 							inState : inStateButton2
-						// 미출고 조건 추가
+						// 미입고 조건 추가
 						};
 						loadinMaterialList(searchParams);
 					});
 
-					// 출고완료 버튼 클릭 시
+					// 입고완료 버튼 클릭 시
 					$("#inButton").click(function() {
-						// 출고완료 버튼에 대한 동작을 추가하고,
+						// 입고완료 버튼에 대한 동작을 추가하고,
 						inStateButton2 = "입고완료";
 						inStateButton1 = inStateButton2;
-						// 검색 조건을 설정하고 출고완료 목록을 가져오도록 수정
+						// 검색 조건을 설정하고 입고완료 목록을 가져오도록 수정
 						var searchParams = {
 							inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
 							clientCompany : $("#clientCompany9999").val(),
 							inState : inStateButton2
-						// 미출고 조건 추가
+						// 미입고 조건 추가
 						};
 						loadinMaterialList(searchParams);
 					});
@@ -375,10 +375,10 @@ var inNum = data[i].inNum;
 					tbody.append(row);
 				} else if (i == data.length - 1) {// 마지막에 페이징 처리데이터가 들어가있다
 					// 마지막 행은 페이징 정보를 추가합니다.
-					var inNum = data[i].inNum; //검색한 출고번호
+					var inNum = data[i].inNum; //검색한 입고번호
 					var rawName = data[i].rawName; //검색한 상품이름
 					var clientCompany = data[i].clientCompany; //검색한 거래처이름
-					var inState = data[i].inState; //검색한 출고 상태
+					var inState = data[i].inState; //검색한 입고 상태
 					var prev = data[i].startPage - data[i].pageBlock;
 					var next = data[i].startPage + data[i].pageBlock;
 
@@ -451,59 +451,6 @@ var inNum = data[i].inNum;
 					+ type + "&input=" + inputId;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
-		
-// 	  $(document).ready(function () {
-// 		//엑셀
-// 			 const excelDownload = document.querySelector('#excelDownload');
-// 					excelDownload.addEventListener('click', exportExcel);
-// 					function exportExcel() {
-// 					    // 1. 워크북 생성
-// 					    var wb = XLSX.utils.book_new();
-// 					    // 2. 워크시트 생성
-// 					    var newWorksheet = excelHandler.getWorksheet();
-// 					    // 3. 워크시트를 워크북에 추가
-// 					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-// 					    // 4. 엑셀 파일 생성
-// 					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-// 					    // 5. 엑셀 파일 내보내기
-// 					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
-// 					}
-
-// 					// 현재 날짜를 가져오는 함수
-// 					function getToday() {
-// 					    var date = new Date();
-// 					    var year = date.getFullYear();
-// 					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
-// 					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
-// 					    return year + month + day;
-// 					}
-
-// 			var excelHandler = {
-// 			getExcelFileName : function() {
-// 				return 'inMaterialList'+getToday()+'.xlsx'; //파일명
-// 			},
-// 			getSheetName : function() {
-// 				return 'inMaterial Sheet'; //시트명
-// 			},
-// 			getExcelData : function() {
-// 				return document.getElementById('inMaterialTable'); //table id
-// 			},
-// 			getWorksheet : function() {
-// 				return XLSX.utils.table_to_sheet(this.getExcelData());
-// 			}
-// 		} //excelHandler
-			
-// 			function s2ab(s) {
-				
-// 				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-// 				var view = new Uint8Array(buf);  
-// 				for(var i=0; i<s.length; i++) {
-// 					view[i] = s.charCodeAt(i) & 0xFF;
-// 				}
-// 				alert("이까지 옴");
-// 				return buf;
-// 			}
-// 	  });
 		
 		   // 버튼 클릭 시 실행
 		   // 클라이언트에서 서버로 데이터 요청
