@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+body {
+	background-color: #F5F6FA;
+}
+
+/* 내용묶기 */
+#content {
+	display: flex;
+	flex-direction: column;
+}
+
+/* 품목관리 */
+h2 {
+	font-size: 30px;
+	font-weight: bold;
+	padding-left: 1%;
+}
+
+/* 경계선 */
+hr {
+	background: #adb5bb;
+	width: 110%;
+	height: 2px;
+	border: 0;
+	position: relative;
+	transform-origin: 0 0;
+	transform: rotate(0deg) scale(1, -1);
+}
+
+/* 검색창 */
+#searchForm {
+	display: flex;
+	align-items: center;
+	padding-left: 1%;
+	gap: 1%;
+	height: 40px;
+	margin: 25px 0;
+}
+
+label {
+	font: 500 18px/18px "Inter", sans-serif;
+}
+
+input[type="text"], select {
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 200px;
+	height: 35px;
+	font: 500 18px/18px "Inter", sans-serif;
+	padding-left: 10px;
+}
+
+/* 버튼 */
+input[type="button"], input[type="submit"], .excelbtn {
+	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	width: 100px;
+	height: 40px;
+	border-radius: 5px;
+	color: #FFFFFF;
+	border: 0;
+	text-align: center;
+	font: 500 20px/20px "Inter", sans-serif;
+}
+
+input[type="button"]:hover, input[type="submit"] {
+	cursor: pointer; /* 손가락 모양 */
+}
+
+/* 추가 및 삭제버튼 */
+#buttons, .excelbtn {
+	margin-top: 15px;
+	margin-bottom: 5px;
+	padding-left: 1%;
+	gap: 1%;
+}
+
+/* table */
+#rawmaterialsList {
+	overflow-x: auto; /* 가로 스크롤바 활성화 */
+	width: 98%;
+	margin: 0 auto;
+}
+
+table {
+	border: 1px solid rgba(221, 221, 221, 0.78);
+	margin: 0 auto;
+	color: #000000;
+	max-width: 1570px;
+	font: 500 18px/18px "Inter", sans-serif;
+	text-align: center;
+}
+
+table td {
+	min-width: 100px;
+	height: 40px;
+	white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+	padding: 0 15px;
+}
+
+table thead tr {
+	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width: 1570px;
+	height: 40px;
+	font: 500 20px/20px "Inter", sans-serif;
+}
+
+table tbody tr:nth-child(even) {
+	background-color: #f2f2f2; /* 짝수 행의 백그라운드 색상 설정 */
+}
+
+table tbody tr:nth-child(odd) {
+	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
+}

@@ -15,18 +15,19 @@
 
 <!-- table -->
 <table border="1">
-<tr><td>발주번호</td>	<td>${ordermanagementDTO.buyNum}</td></tr>
+<tr><td>발주코드</td>	<td>${ordermanagementDTO.buyNum}</td></tr>
 <tr><td>품번</td>		<td>${ordermanagementDTO.rawCode}</td></tr>
 <tr><td>품명</td>		<td>${ordermanagementDTO.rawName}</td></tr>
 <tr><td>종류</td>		<td>${ordermanagementDTO.rawType}</td></tr>
-<tr><td>거래처명</td>	<td>${ordermanagementDTO.clientCode}</td></tr>
+<tr><td>거래처코드</td>	<td>${ordermanagementDTO.clientCode}</td></tr>
+<tr><td>창고코드</td>	<td>${ordermanagementDTO.whseCode}</td></tr>
 <tr><td>창고수량</td>	<td>${ordermanagementDTO.whseCount}</td></tr>
 <tr><td>발주수량</td>	<td>${ordermanagementDTO.buyCount}</td></tr>
-<tr><td>납입단가</td>	<td>${ordermanagementDTO.rawPrice}</td></tr>
+<tr><td>매입단가</td>	<td>${ordermanagementDTO.rawPrice}</td></tr>
 <tr><td>단가총계</td>	<td>${ordermanagementDTO.rawPrice * ordermanagementDTO.buyCount}</td></tr>
 <tr><td>발주신청일</td>	<td>${ordermanagementDTO.buyDate}</td></tr>
+<tr><td>발주상태</td>	<td>${ordermanagementDTO.buyInstate}</td></tr>
 <tr><td>담당자</td>	<td>${ordermanagementDTO.buyEmpId}</td></tr>
-<tr><td>입고상태</td>	<td>${ordermanagementDTO.buyInstate}</td></tr>
 </table>
 
 <!-- button -->

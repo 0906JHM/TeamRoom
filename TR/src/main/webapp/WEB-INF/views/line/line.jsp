@@ -11,6 +11,15 @@
 <link href="${pageContext.request.contextPath}/resources/css/employees.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
+
+function openCenteredWindow(url) {
+    var width = 500;
+    var height = 550;
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2 - 50; // 화면 중앙보다 조금 더 위로 올립니다.
+    window.open(url, '_blank', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
+}
+
 //체크박스 선택/해제
 $(function(){
    var chkObj = document.getElementsByName("RowCheck");
@@ -99,6 +108,7 @@ function deleteValue(){
 </form>
 </div>
 <hr>
+<small>총 ${pageDTO.count}건</small>
 <table id="lineTable">
 <thead>
 <tr>
@@ -108,10 +118,11 @@ function deleteValue(){
 <th>등록자</th>
 <th>등록일</th>
 <th>공정</th>
+<th></th>
 </tr>
 </thead>
 <c:forEach var="lineDTO" items="${lineList }">
-<tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}' === 'true') { window.open('update?lineCode=${lineDTO.lineCode}', '_blank', 'width=800,height=600'); } else { event.preventDefault(); }">
+<tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}' === 'true') { openCenteredWindow('update?lineCode=${lineDTO.lineCode}'); } else { event.preventDefault(); }">
     <td>${lineDTO.lineCode}</td>
     <td>${lineDTO.lineName}</td>
     <td>${lineDTO.lineUse}</td>
@@ -128,7 +139,7 @@ function deleteValue(){
 
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
 <input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
-<button onclick="window.open('line2', '_blank', 'width=800,height=600')" id="btnSell">등록</button>
+<button onclick="openCenteredWindow('line2')" id="btnSell">등록</button>
 </c:if>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 

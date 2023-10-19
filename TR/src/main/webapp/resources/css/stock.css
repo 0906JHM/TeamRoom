@@ -9,14 +9,20 @@ body {
 	flex-direction: column;
 }
 
+.aaa{
+	margin-left : 10px;
+	
+}
+
 h2 {
 	font-size: 30px;
 	font-weight: bold;
 	padding-left: 1%;
 }
 
-.tab{
-	border: 1px solid rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+.tab {
+	border: 1px solid
+		rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 }
 
 label {
@@ -31,6 +37,19 @@ hr {
 	position: relative;
 	transform-origin: 0 0;
 	transform: rotate(0deg) scale(1, -1);
+}
+.x_title{
+display: flex;
+width:1570px;
+box-sizing: border-box;
+align-items: center;
+justify-content: space-between;
+
+}
+.x_total{
+margin-left: 1%;
+display: flex;
+align-items: center;
 }
 
 #selected input {
@@ -51,8 +70,8 @@ hr {
 	padding-left: 10px;
 }
 
-.bt1{
-	width : 20px;
+.bt1 {
+	width: 20px;
 }
 
 #con {
@@ -71,6 +90,18 @@ button {
 	font: 500 20px/20px "Inter", sans-serif
 }
 
+.ab1 {
+	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	height: 35px;
+	border-radius: 5px;
+	color: #FFFFFF;
+	border: 0;
+	text-align: center;
+	width: 95px;
+	font-weight: 500;
+	font-size: 20px;
+}
+
 table {
 	border: 1px solid rgba(221, 221, 221, 0.78);
 	margin: 0 auto;
@@ -82,12 +113,13 @@ table {
 }
 
 /* 사이드바랑 겹치는거 */
-tr td{
+tr td {
 	font: 500 18px/18px "Inter", sans-serif !important;
 }
-tr th{
+
+tr th {
 	font-weight: bold !important;
-/* 	font: 500 20px/20px "Inter", sans-serif !important; */
+	/* 	font: 500 20px/20px "Inter", sans-serif !important; */
 	padding: 0 15px !important;
 	border: 1px solid #F5F6FA !important;
 }
@@ -96,8 +128,6 @@ tr th{
 #stockTable th:first-child, #stockTable td:first-child {
 	min-width: 20px !important;
 }
-
-
 
 table th, table td {
 	min-width: 100px;
@@ -168,7 +198,7 @@ h3 {
 	color: #FFFFFF; /* 링크의 텍스트 색상 설정 */
 }
 
-.page{
+.page {
 	margin: 25px 0;
 	display: flex;
 	padding-right: 1%;

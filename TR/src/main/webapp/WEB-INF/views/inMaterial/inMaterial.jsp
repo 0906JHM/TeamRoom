@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +25,19 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <script type="text/javascript">
+
+
+<%
+//관리자 또는 자재팀 출고 상세 페이지 열람 가능 게시판 접근 가능
+String department = "";
+if (session.getAttribute("empDepartment") != null) {
+department = (String) session.getAttribute("empDepartment");
+}
+
+//상수 정의
+final String ADMIN_DEPARTMENT = "자재팀";
+%>
+
 <title>inMaterial</title>
 </head>
 <body>
@@ -74,7 +88,9 @@
 						<th>입고일</th>
 						<th>담당자</th>
 						<th>상태</th>
-						<th>처리</th>
+						<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
+							<th>처리</th>
+						</c:if>
 					</tr>
 				</thead>
 				<tbody>
@@ -89,7 +105,9 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var inStateButton1 = "전체";
+	var department = "<%= department %>";
+	var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
+	var inStateButton1 = "전체";
 
 		$(document).ready(
 				function() {
@@ -306,66 +324,66 @@
 							+ "</td>");
 
 
-					
-// 입고 버튼 추가 
-var contextPath = "${pageContext.request.contextPath}";
-var inNum = data[i].inNum;
-
-(function(dataItem) {
-    var button = $("<input type='button' value='입고'>");
-    button.click(function() {
-        // 버튼 클릭 시 처리할 동작을 여기에 추가
-        console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
-
-        // confirm 창을 띄워 입고 처리 여부를 확인
-        var confirmation = confirm("입고 처리하시겠습니까?");
-
-        // 확인 버튼이 눌렸을 경우에만 작업 수행
-        if (confirmation) {
-            if (dataItem.hasOwnProperty('inState')) {
-                dataItem.inState = "입고완료";
-                // 변경된 inState 값을 출력하여 확인
-                console.log("변경된 inState 값: " + dataItem.inState);
-
-                // 서버에 변경된 값을 저장하기 위한 Ajax 요청
-                $.ajax({
-                    type: 'POST',
-                    url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
-                    data: JSON.stringify(dataItem),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        console.log('데이터가 성공적으로 업데이트되었습니다.', response);
-                        
-                        
-                     // 데이터 업데이트 후 페이지 새로고침
-                        location.reload();
-                     
-                     // 버튼을 비활성화하고 색상을 회색으로 변경
-//                         button.attr('disabled', 'disabled');
-//                         button.css('background-color', 'grey');
-                        
-                    },
-                    error: function(error) {
-                        console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
-                    }
-                });
-            } else {
-                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
-            }
-        }
-    });
-    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
-    if (dataItem.inState === '입고완료') {
-        button.prop('disabled', true);
-        button.css('background-color', 'grey');
-    }
-
-
- // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
- var buttonCell = $("<td>").append(button);
- row.append(buttonCell);
-})(data[i]);
-					
+					if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {				
+						// 입고 버튼 추가 
+						var contextPath = "${pageContext.request.contextPath}";
+						var inNum = data[i].inNum;
+						
+						(function(dataItem) {
+						    var button = $("<input type='button' value='입고'>");
+						    button.click(function() {
+						        // 버튼 클릭 시 처리할 동작을 여기에 추가
+						        console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
+						
+						        // confirm 창을 띄워 입고 처리 여부를 확인
+						        var confirmation = confirm("입고 처리하시겠습니까?");
+						
+						        // 확인 버튼이 눌렸을 경우에만 작업 수행
+						        if (confirmation) {
+						            if (dataItem.hasOwnProperty('inState')) {
+						                dataItem.inState = "입고완료";
+						                // 변경된 inState 값을 출력하여 확인
+						                console.log("변경된 inState 값: " + dataItem.inState);
+						
+						                // 서버에 변경된 값을 저장하기 위한 Ajax 요청
+						                $.ajax({
+						                    type: 'POST',
+						                    url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
+						                    data: JSON.stringify(dataItem),
+						                    contentType: 'application/json',
+						                    success: function(response) {
+						                        console.log('데이터가 성공적으로 업데이트되었습니다.', response);
+						                        
+						                        
+						                     // 데이터 업데이트 후 페이지 새로고침
+						                        location.reload();
+						                     
+						                     // 버튼을 비활성화하고 색상을 회색으로 변경
+						//                         button.attr('disabled', 'disabled');
+						//                         button.css('background-color', 'grey');
+						                        
+						                    },
+						                    error: function(error) {
+						                        console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
+						                    }
+						                });
+						            } else {
+						                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
+						            }
+						        }
+						    });
+						    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
+						    if (dataItem.inState === '입고완료') {
+						        button.prop('disabled', true);
+						        button.css('background-color', 'grey');
+						    }
+						
+						
+						 // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
+						 var buttonCell = $("<td>").append(button);
+						 row.append(buttonCell);
+						})(data[i]);
+					}		
 					
 					
 					
@@ -452,63 +470,13 @@ var inNum = data[i].inNum;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
 		
-// 	  $(document).ready(function () {
-// 		//엑셀
-// 			 const excelDownload = document.querySelector('#excelDownload');
-// 					excelDownload.addEventListener('click', exportExcel);
-// 					function exportExcel() {
-// 					    // 1. 워크북 생성
-// 					    var wb = XLSX.utils.book_new();
-// 					    // 2. 워크시트 생성
-// 					    var newWorksheet = excelHandler.getWorksheet();
-// 					    // 3. 워크시트를 워크북에 추가
-// 					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-// 					    // 4. 엑셀 파일 생성
-// 					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-// 					    // 5. 엑셀 파일 내보내기
-// 					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
-// 					}
 
-// 					// 현재 날짜를 가져오는 함수
-// 					function getToday() {
-// 					    var date = new Date();
-// 					    var year = date.getFullYear();
-// 					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
-// 					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
-// 					    return year + month + day;
-// 					}
-
-// 			var excelHandler = {
-// 			getExcelFileName : function() {
-// 				return 'inMaterialList'+getToday()+'.xlsx'; //파일명
-// 			},
-// 			getSheetName : function() {
-// 				return 'inMaterial Sheet'; //시트명
-// 			},
-// 			getExcelData : function() {
-// 				return document.getElementById('inMaterialTable'); //table id
-// 			},
-// 			getWorksheet : function() {
-// 				return XLSX.utils.table_to_sheet(this.getExcelData());
-// 			}
-// 		} //excelHandler
-			
-// 			function s2ab(s) {
-				
-// 				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-// 				var view = new Uint8Array(buf);  
-// 				for(var i=0; i<s.length; i++) {
-// 					view[i] = s.charCodeAt(i) & 0xFF;
-// 				}
-// 				alert("이까지 옴");
-// 				return buf;
-// 			}
-// 	  });
 		
 		   // 버튼 클릭 시 실행
 		   // 클라이언트에서 서버로 데이터 요청
 				document.getElementById('exportButton').addEventListener('click', function () {
-				    // 엑셀로 내보낼 데이터
+					if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {	
+					// 엑셀로 내보낼 데이터
 				    var searchParams = {
 				    		inNum : $("#inNum").val(),
 							rawName : $("#rawName9999").val(),
@@ -554,6 +522,13 @@ var inNum = data[i].inNum;
 				            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
 				        }
 				    });
+					}else {
+						 Swal.fire({
+		                        text: '자재팀만 가능',
+		                        icon: 'warning',
+		                        confirmButtonText: '확인',
+		                    });
+					}
 				});
 				
 				// ArrayBuffer 만들어주는 함수

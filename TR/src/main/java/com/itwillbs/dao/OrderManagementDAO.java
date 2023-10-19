@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -55,6 +56,11 @@ public class OrderManagementDAO {
 	// 엑셀
 	public List<OrderManagementDTO> getOrderManagementList2() {
 		return sqlSession.selectList(namespace+".getOrderManagementList2");
+	}
+
+	// buyDate가 오늘 또는 이전인 경우, buyInstate가 '신청완료'에서 '발주완료'로 변경
+	public void updateBuyInstate(Date today) {
+		sqlSession.update(namespace+".updateBuyInstate", today);
 	}
 	
 }

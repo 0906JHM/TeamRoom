@@ -19,7 +19,10 @@
 		<textarea id="prodMemo" style="width: 350px; height: 250px;" readonly="readonly">${prodDTO.prodMemo}</textarea><br>
 		<input type="hidden" name="ProdCode" value="${prodDTO.prodCode}" />
 		
-		<button type="button" onclick="location.href='${pageContext.request.contextPath}/product/memotype?prodCode=${prodDTO.prodCode}&memotype=modify'">수정</button>
+		<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
+<button type="button" onclick="location.href='${pageContext.request.contextPath}/product/memotype?prodCode=${prodDTO.prodCode}&memotype=modify'">수정</button>
+
+</c:if>
         <button type="button" onclick="window.close()">닫기</button>
     </form>
 </div>

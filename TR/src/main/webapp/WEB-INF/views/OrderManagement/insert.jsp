@@ -14,18 +14,19 @@
 <h1>발주등록</h1>
 
 <!-- form -->
-<form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post">
-원자재코드 : 	<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
-원자재명 : 		<input type="text" name="rawName" id="rNInput"><br>
+<form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post" onsubmit="return validateForm()">
+품번 : 		<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
+품명 : 		<input type="text" name="rawName" id="rNInput"><br>
 종류 : 		<input type="text" name="rawType" id="rTInput"><br>
 매입단가 : 		<input type="number" name="rawPrice" id="rPInput"><br>
-거래처명 : 		<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
+거래처코드 : 		<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
 창고코드 : 		<input type="text" name="whseCode" id="wNInput"><br>
 창고수량 : 		<input type="number" name="whseCount" id="wCInput"><br>
 발주수량 : 		<input type="number" name="buyCount"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
 담당자 : 		<input type="text" name="buyEmpId" value="${sessionScope.empId}"><br>
-입고상태 : 	<input type="radio" name="buyInstate" value="발주완료" checked>발주완료<br>
+발주상태 : 		<input type="radio" name="buyInstate" value="신청완료" checked>신청완료
+			<input type="radio" name="buyInstate" value="발주완료">발주완료<br>
 <input type="submit" value="발주등록">
 </form>
 
@@ -61,6 +62,17 @@ $('form').on('submit', function(e) {
     $('#rPInput').val(rawPriceFloat); // 변환된 rawPrice 값을 form에 다시 설정
     this.submit();					  // form 제출
 });
+
+function validateForm() {
+    var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].value == '') {
+            alert('모든 항목을 채워주세요.');
+            return false;
+        }
+    }
+    return true;
+}
 </script>
 </body>
 </html>

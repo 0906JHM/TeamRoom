@@ -23,6 +23,7 @@ private String clientPhone;
 private String clientFax;
 private String clientEmail;
 private String clientMemo;
+private int clientSale;
 
 
 }

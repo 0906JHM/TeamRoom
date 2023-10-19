@@ -65,28 +65,30 @@ $(function(){
 <body>
 <div class="container">
       <h2>재고 관리</h2>
+      
       <hr>
       <div id="searchform">
       <form action="${pageContext.request.contextPath}/stock/listraw" method="get"  id="selected">
-      <label>제품코드</label> <input type="text" name="search1" placeholder="제품코드">
-      <label>원자재코드</label> <input type="text" name="search2" placeholder="원자재코드">
-      <label>창고코드</label> <input type="text" name="search3" placeholder="창고코드">
-      <button type="submit">조회</button>
+      <label>원자재코드</label> <input type="text" name="search1" placeholder="원자재코드">
+      <label>창고코드</label> <input type="text" name="search2" placeholder="창고코드">
+      <button class="aaa" type="submit">조회</button>
       </form>
       </div>
       <hr>
-      
-<div class="buttons"> 
-     <button onclick="newTabUpdate()">수정</button>   
-     </div>  
-     
-     	<div style="margin-left: 1%; margin-bottom: 1%">
-		<a href="${pageContext.request.contextPath}/stock/listraw"><input type="button" value="원자재" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px"></input></a>
-	    <a href="${pageContext.request.contextPath}/stock/listpro"><input type="button" value="완제품" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px"></input></a>
+      <div style="margin-left: 1%; margin-bottom: 1%">
+		<a href="${pageContext.request.contextPath}/stock/listraw"><input type="button" value="원자재"  class="ab1"></input></a>
+	    <a href="${pageContext.request.contextPath}/stock/listpro"><input type="button" value="완제품" class="ab1"></input></a>
 	    </div>
-     
-      <h3 style="padding-left:1%;">목록 <small>총 ${pageDTO.count}건</small></h3>
       
+<div class="x_title">
+
+<div class="x_total">
+ <h3>총 ${pageDTO.count}건</h3>
+     </div>
+     <div>
+     <button onclick="newTabUpdate()">수정</button>   
+     </div>
+     </div>
 <div id="list">    
       <table  class="tab" id="stockTable">
       <thead>
@@ -116,16 +118,16 @@ $(function(){
 
 	<div class="page">
 <c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
-	<a href="${pageContext.request.contextPath}/stock/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}">Prev</a>
+	<a href="${pageContext.request.contextPath}/stock/listraw?pageNum=${pageDTO.startPage - pageDTO.pageBlock}">Prev</a>
 </c:if>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/stock/list?pageNum=${i}">${i}</a> 
+<a href="${pageContext.request.contextPath}/stock/listraw?pageNum=${i}">${i}</a> 
 </c:forEach>
 
 <c:if test="${pageDTO.endPage < pageDTO.pageCount}">
-	<a href="${pageContext.request.contextPath}/stock/list?pageNum=${pageDTO.startPage + pageDTO.pageBlock}">Next</a>
+	<a href="${pageContext.request.contextPath}/stock/listraw?pageNum=${pageDTO.startPage + pageDTO.pageBlock}">Next</a>
 </c:if>
 
 </div>

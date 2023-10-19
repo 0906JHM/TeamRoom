@@ -15,93 +15,167 @@
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<style>
+	body{
+	background-color: #f5f6fa;
+	}
+	.clinentinsert{
+	      text-align: center;
+	}
+	
+	td{
+	font-size:20px;
+	}
+	
+	.clientType{
+	width: 65px;
+    height: 35px;
+    margin-left: 10px;
+	
+	}
+	
+	.insertbox{
+	width: 150px;
+    margin-left: 10px;
+    height: 20px;
+	}
+	.addbox{
+	    background-color: whitesmoke;
+    border: 1px solid;
+    width: 100px;
+    margin-left: 5px;
+    height: 27px;
+    border-radius: 5px;
+	}
+	
+	.longbox{
+	width: 270px;
+    margin-left: 10px;
+    height: 20px;
+	
+	}
+	
+	.subbtn{
+	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 0;
+    text-align: center;
+    font: 500 24px/24px "Inter", sans-serif;
+	
+	}
+	
+	.footbtn{
+	display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    
+	}
+	
+	.headh2{
+	text-align: center;
+	}
+	</style>
 </head>
 <body>
 <body class="sb-nav-fixed">
+<h2 class="headh2">
+			거래처 등록
+		</h2>
 	<!-- 내용들어가는곳 -->
 	<form action="${pageContext.request.contextPath}/client/insertPro"
 		id="clientInsert" name="clientInsert" method="POST" enctype="multipart/form-data" >
-		<h1>
-			<b>거래처 등록</b>
-		</h1>
-
+		
+		
+      <table id="clientinsert">
 		<br>
 		<!-- 거래처구분 -->
-		<label for="clientType_label"><b>구분</b> </label> 
-		<select id="clientType" name="clientType">
+		<tr><td><label for="clientType_label"><b>구분</b> </label></td>
+		<td><select id="clientType" name="clientType" class="clientType">
 		    <option value="선택">선택</option>
 			<option value="수주처">수주처</option>
 			<option value="발주처">발주처</option>
-		</select> <br> <span id="clientType_msg"></span> <br>
+		</select> <br> <span id="clientType_msg"></span>  </td></tr> 
+	
 		<!-- 거래처 코드 -->
-		<label for="clientCode_label"><b>거래처코드</b></label> <input type="text"
-			name="clientCode" id="clientCode" readonly> <br> <span
-			id="clientCode_msg"></span> <br>
-
-		<!-- 거래처명 -->
-		<label for="clientCompany_label"><b>거래처명</b> </label> <input
-			type="text" name="clientCompany" id="clientCompany"> <br>
-		<span id="clientCompany_msg"></span> <br>
+		<tr><td> <label for="clientCode_label"><b>거래처코드</b></label>  </td>
+		<td> <input type="text" name="clientCode" id="clientCode" readonly class="insertbox"> <br> 
+		<span id="clientCode_msg"></span> </td></tr>
+	
+			
+			<!-- 거래처명 -->
+			<tr><td> <label for="clientCompany_label"><b>거래처명</b> </label></td>
+			<td><input type="text" name="clientCompany" id="clientCompany" class="insertbox" > <br>
+	       	<span id="clientCompany_msg"></span></td></tr>
+	
 
 		<!-- 사업자번호 -->
-		<label for="clientNumber_label"><b>사업자번호</b> </label> <input
-			type="text" name="clientNumber" id="clientNumber"> <br>
-		<span id="clientNumber_msg"></span> <br>
+		<tr><td> <label for="clientNumber_label"><b>사업자번호</b> </label> </td>
+		 <td> <input type="text" name="clientNumber" id="clientNumber" class="insertbox"> <br>
+		<span id="clientNumber_msg"></span></td></tr> 
+	
 
 		<!-- 업태 -->
-		<label for="clientDetail_label"><b>업태</b> </label> <input type="text"
-			name="clientDetail" id="clientDetail"> <br> <span
-			id="clientDetail_msg"></span> <br>
+		<tr><td><label for="clientDetail_label"><b>업태</b> </label></td>
+		<td> <input type="text" name="clientDetail" id="clientDetail" class="insertbox"> <br> <span id="clientDetail_msg"></span> </td></tr>
+		 
 
 
 		<!-- 거래처 대표자명 -->
-		<label for="clientCeo_label"><b>대표자</b></label> <input type="text"
-			name="clientCeo" id="clientCeo"> <br> <span
-			id="clientCeo_msg"></span> <br>
+		<tr><td> <label for="clientCeo_label"><b>대표자</b></label></td>
+		 <td> <input type="text" name="clientCeo" id="clientCeo" class="insertbox"> <br> <span id="clientCeo_msg"></span></td></tr>
+	
 
 		<!-- 거래처담당자이름-->
-		<label for="clientName_label"><b>거래담당자</b></label> <input type="text"
-			name="clientName" id="clientName"> <br> <span
-			id="clientName_msg"></span> <br>
+		<tr><td> <label for="clientName_label"><b>거래담당자</b></label> </td>
+		<td><input type="text" name="clientName" id="clientName" class="insertbox"> <br> <span id="clientName_msg"></span> </td></tr>
+
 
 		<!-- 주소 -->
-		<label for="clientAddress_label"><b>도로명주소</b></label> <input
-			type="text" id="sample4_roadAddress" placeholder="도로명주소"
-			name="clientAddr1" readonly required> <input type="button"
-			onclick="sample4_execDaumPostcode()" value="우편번호 찾기" required><br>
-		<input type="text" id="sample4_extraAddress" placeholder="상세주소"
-			name="clientAddr2" size="60" required><br>
-
-
+		<tr><td><label for="clientAddress_label"><b>도로명주소</b></label></td>
+		<td> <input type="text" id="sample4_roadAddress" placeholder="도로명주소"
+			name="clientAddr1" readonly required class="insertbox">  <input type="button"
+			onclick="sample4_execDaumPostcode()" value="우편번호 찾기" required class="addbox"></td></tr>
+			<br>
+		<tr><td><label for="clientAddress_label"><b>상세주소</b></label></td>
+		<td> <input type="text" id="sample4_extraAddress" placeholder="상세주소" name="clientAddr2" size="60" required class="longbox">
+		<span id="clientName_msg"></span>
+		</td></tr>
+		
+	
 
 		<!-- 거래처 번호 -->
-		<label for="clientTel"><b>거래처번호</b></label> <input type="text"
-			name="clientTel" id="clientTel"> <br> <span
-			id="clientTel_msg"></span> <br>
+		<tr><td><label for="clientTel"><b>거래처번호</b></label></td>
+		<td> <input type="text" name="clientTel" id="clientTel" class="insertbox"> <br> <span id="clientTel_msg"></span> </td></tr>
+	
 
 		<!-- 거래담당자 번호 -->
-		<label for="clientPhone"><b>담당자번호</b></label> <input type="text"
-			name="clientPhone" id="clientPhone"> <br> <span
-			id="clientPhone_msg"></span> <br>
+		<tr><td> <label for="clientPhone"><b>담당자번호</b></label></td>
+		 <td> <input type="text" name="clientPhone" id="clientPhone" class="insertbox"> <br> <span id="clientPhone_msg"></span>   </td></tr>
+		  
 
 		<!--  팩스번호 -->
-		<label for="clientFax"><b>팩스자번호</b></label> <input type="text"
-			name="clientFax" id="clientFax"> <br> <span
-			id="clientFax_msg"></span> <br>
+		<tr><td> <label for="clientFax"><b>팩스자번호</b></label> </td>
+		<td><input type="text" name="clientFax" id="clientFax" class="insertbox"> <br> <span id="clientFax_msg"></span>
 
 
 		<!-- 거래처 이메일 -->
-		<label for="clientEmail"><b>이메일</b></label> <input type="text"
-			name="clientEmail" id="clientEmail"> <br> <span
-			id="clientEmail_msg"></span> <br> <label for="clientMemo_label"><b>비고</b>
-		</label> <input type="text" name="clientMemo" id="clientMemo"> <br>
-		<span id="clientMemo_msg"></span> <br>
+		<tr><td><label for="clientEmail"><b>이메일</b></label> </td>
+		<td> <input type="text" name="clientEmail" id="clientEmail" class="insertbox"> <br> <span id="clientEmail_msg"></span> </td></tr>
+		
+		<!--  비고 -->
+		<tr><td><label for="clientMemo_label"><b>비고</b></label>  </td>
+		<td> <input type="text" name="clientMemo" id="clientMemo" class="insertbox"> <br> <span id="clientMemo_msg"></span>
 
-		<!-- 등록 버튼 -->
-		<div id="btn">
-			<input type="submit" id="btn" value="등록">
+		
+     </table>
+     <!-- 등록 버튼 -->
+		<div class="footbtn">
+			<input type="submit" id="btn" value="등록" class="subbtn">
 		</div>
-
 	</form>
 
 
@@ -334,7 +408,7 @@ function sample4_execDaumPostcode() {
     
 }   
 </script>
-	-->
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>

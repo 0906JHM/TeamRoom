@@ -31,7 +31,7 @@
 		LEFT JOIN stock
 		ON
 		o.prodCode =
-		stock.prodCode
+		stock.prodCode 
 		ORDER BY o.outCode DESC
 		LIMIT
 		#{startRow},
@@ -352,7 +352,7 @@
 		outCode = #{outCode}
 	</update>
 
-	<update id="updatestockCount">
+	<update id="updateWhseCount">
 		UPDATE stock
 		SET stockCount = stockCount -
 		#{outCount}
@@ -551,5 +551,11 @@
 		UPDATE outProduct
 		SET prodCode =#{prodCode}, outPrice = #{outPrice}
 		WHERE sellCode = #{sellCode}
+	</update>
+	
+	<update id="updateClientSale">
+		UPDATE clients
+		SET clientSale = clientSale + #{clientSale}
+		WHERE clientCode = #{clientCode}
 	</update>
 </mapper>

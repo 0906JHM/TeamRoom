@@ -5,10 +5,13 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -180,13 +183,24 @@ System.out.println("BoardController list()");
 	}
 	
 	@PostMapping("/clientupdatePro")
-	public void clinetupdatePro(ClientDTO clientDTO) {
+
+	public String clinetupdatePro( @RequestBody ClientDTO clientDTO) {
+
 		
-		System.out.println("ClientController updatePro요청");
-		System.out.println(clientDTO);
-		clientService.clientupdate(clientDTO);
+		try {
+			
+			clientService.clientupdate(clientDTO);
+			
+			 return "true";
+			 
+		} catch (Exception e) {
+			   log.error("Error during buy insertion: {}", e.getMessage());
+	            
+	            return "false"; // 실패 시 "false" 반환
+		}
 		
 	}
+	
 	
 	@GetMapping("/delete")
 	public String clientdelete(String clientCompany) {

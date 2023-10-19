@@ -11,6 +11,15 @@
 <link href="${pageContext.request.contextPath}/resources/css/employees.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
+
+function openCenteredWindow(url) {
+    var width = 600;
+    var height = 740;
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2 - 50;
+    window.open(url, '_blank', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
+}
+
 //체크박스 선택/해제
 $(function(){
    var chkObj = document.getElementsByName("RowCheck");
@@ -100,10 +109,11 @@ function deleteValue(){
 </form>
 </div>
 <hr>
+<small>총 ${pageDTO.count}명</small>
     <table id="employeeTable">
     <thead>
         <tr>
-<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
             <th>사원번호</th>
             <th>비밀번호</th>
 </c:if>
@@ -114,11 +124,12 @@ function deleteValue(){
             <th>전화번호</th>
             <th>입사일자</th>
             <th>재직구분</th>
+            <th></th>
         </tr>
         </thead>
 <c:forEach var="employeesDTO" items="${employeesList }">
-<tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}' === 'true') { window.open('update?empId=${employeesDTO.empId}', '_blank', 'width=800,height=600'); } else { event.preventDefault(); }">
-<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
+<tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}' === 'true') { openCenteredWindow('update?empId=${employeesDTO.empId}'); } else { event.preventDefault(); }">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
     <td>${employeesDTO.empId}</td>
     <td>${employeesDTO.empPass}</td>
 </c:if>
@@ -129,7 +140,7 @@ function deleteValue(){
     <td>${employeesDTO.empTel}</td>
     <td>${employeesDTO.empHiredate}</td>
     <td>${employeesDTO.empState}</td>
-    <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">
+    <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
     <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
 	</c:if>
 </tr>
@@ -137,9 +148,9 @@ function deleteValue(){
     </table>
     </div>
     
-<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사과')}">    
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">    
     <input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
-    <button onclick="window.open('employees2', '_blank', 'width=800,height=600')" id="btnSell">등록</button>
+<button onclick="openCenteredWindow('employees2')" id="btnSell">등록</button>
 </c:if>
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
