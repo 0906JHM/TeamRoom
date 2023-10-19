@@ -41,8 +41,14 @@
             
         	// 클릭한 요소의 오른쪽 아래 모서리의 화면 좌표를 "x"와 "y" 변수에 저장합니다.
         	// 이것은 모달 창을 클릭한 요소의 위치에 배치하는 데 사용됩니다.
-            var x = rect.left;
-            var y = rect.top;
+            var xr = rect.right;
+            var xl = rect.left;
+            var yt = rect.top;
+            var yb = rect.bottom; 
+            var xg = (xr-xl)/2;
+            var yg = (yt-yb)/2;
+            var x =  xl+xg;
+            var y = yb+yg;
            
             //클릭후에 모달창을 생성하는 위치를 조정
             myModal.style.left = x + "px";
@@ -696,9 +702,9 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 <!-- page content -->
 <div class="right_col">
 
-	<h2 style="margin-left: 1%;" onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'">작업지시 관리</h2>
+	<h2 style="margin-left: 1%; cursor: pointer; " onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'">작업지시 관리</h2>
 	
-	<div style="margin: 1% 1%;">
+	
 		<hr>
 		<div class="input_value" style="margin: 1% 1%;">	
 		<form method="get">
@@ -720,11 +726,10 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				
 			
 		</div>
-		</fieldset>
+		</fieldset>	
 		</form>
 		</div>
 		<hr>
-	</div>
 
 
 	<div class="col-md-12 col-sm-12">	
@@ -732,37 +737,21 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		
 				<div class="x_title">
 				<div class="x_total">
-					<h2><small>총 ${paging.total } 건</small></h2>
+					<h3>총 ${paging.total } 건</h3>
 					</div>
 					<div>
 				    <!-- 버튼 제어 -->
 						<button style="display: none;" id="add" class="button">추가</button>
 						<button style="display: none;" id="modify" class="button">수정</button>
 						<button style="display: none;" id="delete" class="button">삭제</button>
-						<button style="display: none;" onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'" id="cancle" class="button">취소</button>
+						<button style="display: none;" id="cancle" onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'" id="cancle" class="button">취소</button>
 						<button style="display: none;" type="submit" id="save" class="button">저장</button>
 						</div>
 						</div>
 					
 				
 					<script>
-					    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 					
-					   /*  if (team === "생산팀" || team === "관리자") { */
-					        document.getElementById("add").disabled = false;
-					        document.getElementById("modify").disabled = false;
-					        document.getElementById("delete").disabled = false;
-					        document.getElementById("cancle").disabled = false;
-					        document.getElementById("save").disabled = false;
-					        document.querySelector("[onclick^='location.href']").disabled = false;
-					   /*  } else {
-					        document.getElementById("add").hidden = true;
-					        document.getElementById("modify").hidden = true;
-					        document.getElementById("delete").hidden = true;
-					        document.getElementById("cancle").hidden = true;
-					        document.getElementById("save").hidden = true;
-					        document.querySelector("[onclick^='location.href']").hidden = true;
-					    } */
 					</script>
 					<!-- 버튼 제어 -->
 					
@@ -793,13 +782,13 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				</thead>
 				<tr style='display: none;'></tr>
 				<c:forEach var="w" items="${workList }">
-					<tr>
+					<tr class="contents">
 						<td></td>
 						<td id="workCode">${w.workCode }</td>
 						<td id="lineCode">${w.lineCode }</td>
-						<td><div style="display: flex; justify-content: center; align-items: center;">${w.sellCode }<div class="search-icon" onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}"></div></div></td>
+						<td style='cursor: pointer;' onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</td>
 						<td style='display: none;' id="prodCode">${w.prodCode }</td>
-						<td><div style="display: flex; justify-content: center; align-items: center;">${w.prodName }<div class="search-icon" onclick="openModal(this)" id="${w.prodCode }" name="prodName" value="${w.prodName }"></div></div></td>
+						<td style='cursor: pointer;' onclick="openModal(this)" id="${w.prodCode }" name="prodName" value="${w.prodName }">${w.prodName }</td>
 								
 						<c:choose>
     <c:when test="${not empty w.workDatechange}">
@@ -837,6 +826,20 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
     // 페이지 로드 시 실행되는 함수
     $(document).ready(function () {
+    	
+    	 var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+ 		
+		  if (team === "자재팀" || team === "관리자") {
+			  $('#add').show();
+				$('#modify').show();
+				$('#delete').show();
+		   }
+		  else if (team ===""){
+			  window.location.href = "${pageContext.request.contextPath}/login/logout";
+		  }
+    	 
+		 
+        
     	 $("[name='magamBtn']").on("click", function(event) {
     	        event.preventDefault(); // 기존 링크 동작을 막음
 
@@ -881,9 +884,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
     		$(this).find('td:first').text(((num-1)*num2) + index-1);
     		num3 = ((num-1)*num2) + index;
     	});
-    	$('#add').show();
-		$('#modify').show();
-		$('#delete').show();
+    	
 		
     	var button = document.getElementById("allButton");
     	    <c:if test="${search.search_place == '1차공정'}">

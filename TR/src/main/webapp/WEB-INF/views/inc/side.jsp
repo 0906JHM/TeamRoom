@@ -106,7 +106,7 @@
 
 			<div class="logininfo" style="text-align: center; margin-top: 600px;">
 				<p>
-					<a a href="${pageContext.request.contextPath}/login/login"
+					<a a href="${pageContext.request.contextPath}/login/logout"
 						style="color: #929FA8; text-decoration: none;">로그아웃</a>
 				<p>
 			</div>
