@@ -13,128 +13,109 @@
 	<div class="sidebar">
 		<div class="sidebody">
 			<div class="logininfo">
-				<!------------------------------ 로고 ------------------------->
+				<!-- 			로고자리 -->
+				<%-- 				<a href="${pageContext.request.contextPath }/main/calendar" style="font-size: 40px; padding: 30px;" >ROOMAIR</a> --%>
 				<div id="logo">
-					<a href="${pageContext.request.contextPath }/main/calendar"> 
-					<%-- <img src="${pageContext.request.contextPath }/resources/img/blackLogo.png" id="logoImage"> --%>
-					 <img src="${pageContext.request.contextPath }/resources/img/whiteLogo.png" id="logoImage"> 
+					<a href="${pageContext.request.contextPath }/main/calendar"> <img
+						src="${pageContext.request.contextPath }/resources/img/logo.png">
 					</a>
 				</div>
-			
-				<!------------------------------ 사원 사진 ------------------------->
-				 <div class="profile-pic">
-				<img src="${pageContext.request.contextPath }/resources/img/photo.jpg">
-				</div>
-				
-				<!------------------------------ 로그인 이름 ------------------------->
-				<p class="loginName"><span class="empId">${sessionScope.empId}</span> 님</p>
-
-				
+				<!-- 			로고자리 -->
+				<p class="loginhi">${sessionScope.empId}님 안녕하세요</p>
 			</div>
-			
-			<!------------------------------ 목록 탭(기준정보 관리)------------------------->
 			<ul id="sideaccordion" class="sideaccordion">
 				<li>
 					<div class="sidelink">
-						 <i class="fa-solid fa-chart-simple"></i> 
-						기준정보 관리
+						<i class="fa-solid fa-chart-simple"></i> 기준정보관리
 					</div>
 					<ul class="submenu">
 						<li><a
 							href="${pageContext.request.contextPath }/requirement/reqDetail"
-							class="sidea">소요량 관리</a></li>
+							class="sidea">소요량관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/product/list"
-							class="sidea">품목 관리</a></li>
+							class="sidea">품목관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/Rawmaterials/home"
-							class="sidea">원자재 관리</a></li>
+							class="sidea">원자재관리</a></li>
 					</ul>
 				</li>
-				<!------------------------------  목록 탭(생산 관리)------------------------->
 				<li>
 					<div class="sidelink">
-					 <i class="fa-solid fa-bars"></i>
-						생산 관리
+						<i class="fa-solid fa-bars"></i>생산관리
 					</div>
 					<ul class="submenu">
 
 						<li><a
 							href="${pageContext.request.contextPath }/workorder/workOrderList"
-							class="sidea">작업지시 관리</a></li>
+							class="sidea">작업지시관리</a></li>
 						<li><a href="${pageContext.request.contextPath }/line/line"
-							class="sidea">라인 관리</a></li>
+							class="sidea">라인관리</a></li>
 						<li><a href="${pageContext.request.contextPath }/perf/perf"
-							class="sidea">생산실적 관리</a></li>
+							class="sidea">생산실적관리</a></li>
 					</ul>
 				</li>
-				<!------------------------------  목록 탭(자재 관리)------------------------->
 				<li>
 					<div class="sidelink">
-						 <i class="fa-solid fa-warehouse"></i>
-						자재 관리
-						<!-- <i class="fa-solid fa-angle-down"></i> -->
+						<i class="fa-solid fa-warehouse"></i>자재관리<i
+							class="fa-solid fa-angle-down"></i>
 					</div>
 					<ul class="submenu">
 						<li><a
 							href="${pageContext.request.contextPath }/stock/listraw"
-							class="sidea">재고 관리</a></li>
+							class="sidea">재고관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/inMaterial/list"
-							class="sidea">입고 관리</a></li>
+							class="sidea">입고관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/outProduct/list"
 							class="sidea">출고관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/Warehouse/list"
-							class="sidea">창고 관리</a></li>
+							class="sidea">창고관리</a></li>
 					</ul>
 				</li>
-				<!------------------------------  목록 탭(영업 관리)------------------------->
 				<li>
 					<div class="sidelink">
-						 <i class="fa-solid fa-pen"></i>
-						 영업 관리
+						<i class="fa-solid fa-pen"></i>영업관리
 					</div>
 					<ul class="submenu">
-					<li><a
-							href="${pageContext.request.contextPath}/client/client"
-							class="sidea">거래처 관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/sell/sellMain"
-							class="sidea">수주 관리</a></li>
+							class="sidea">수주관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/OrderManagement/home"
-							class="sidea">발주 관리</a></li>
-						
+							class="sidea">발주관리</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/client/client"
+							class="sidea">거래처관리</a></li>
 					</ul>
-				</li>
-				<!------------------------------  목록 탭(인사 관리)------------------------->
-				<li>
 					<div class="sidelink">
-						 <i class="fa-solid fa-pen"></i>
-						인사 관리
+						<i class="fa-solid fa-pen"></i>인사관리
 					</div>
 					<ul class="submenu">
 						<li><a
 							href="${pageContext.request.contextPath }/employees/employees"
-							class="sidea">사원 관리</a></li>
+							class="sidea">사원관리</a></li>
 					</ul>
 				</li>
 			</ul>
-			<div class="logoutDiv">
-				
-					<a href="${pageContext.request.contextPath}/login/logout" class="logout" >로그아웃</a>
-				
+			<div class="logininfo" style="text-align: center;">
+				<p>
+					<a href="${pageContext.request.contextPath}/login/logout"
+						style="color: #929FA8; text-decoration: none;">로그아웃</a>
+				<p>
 			</div>
 		</div>
-		
+
+
+
+
+
 	</div>
-	
-	
-<!--#################################################### script #################################################  -->
+
 	<script>
-	   $(document).ready(function () {
+	  $(document).ready(function () {
             var bodyHeight = $("body").height();
             var sidebody = $('.sidebody');
             var sidebar = $('.sidebar');
@@ -161,33 +142,7 @@
 
                 sidebar.css('top', newTop + 'px');
             });
-        }); 
-       /*  $(document).ready(function () {
-            var sidebody = $('.sidebody');
-            var sidebar = $('.sidebar');
-            var screenHeight = window.innerHeight; // 현재 보고 있는 화면의 높이
-            var bodyHeight = $("body").height();
-
-            if (bodyHeight < screenHeight) {
-                sidebody.css('height', screenHeight + 'px');
-                bodyHeight = screenHeight;
-            }
-
-            console.log("bodyHeight: " + bodyHeight);
-            console.log("sidebar: " + sidebody.height());
-
-            $(window).on('scroll', function () {
-                var scrollTop = $(this).scrollTop();
-                var newTop = scrollTop;
-
-                sidebar.css('top', newTop + 'px');
-            });
-        }); */
- 
-
-
-
-
+        });
 
     $(function () {
         var Accordion = function (el, multiple) {
