@@ -37,6 +37,10 @@ public class CalendarDAO {
 	public List<ChartDTO> getPerfList() {
 		return sqlSession.selectList(namespace+"getPerfList");
 	}
+	
+	public List<ChartDTO> getLinePerfList() {
+		return sqlSession.selectList(namespace+"getLinePerfList");
+	}
 
 	public void insertSellCalendar(CalendarDTO calendarDTO) {
 		sqlSession.selectList(namespace+"insertSellCalendar", calendarDTO);
@@ -55,5 +59,7 @@ public class CalendarDAO {
 			sqlSession.delete(namespace + "deleteSellCalendar", code);
 		}
 	}
+
+	
 
 }

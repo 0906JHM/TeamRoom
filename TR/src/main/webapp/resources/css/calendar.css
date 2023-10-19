@@ -12,7 +12,7 @@ body {
 	margin-right: auto;
 }
 
-#con_1, #con_2 {
+#con_1, #con_2, #con_3 {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -36,9 +36,12 @@ body {
 	width: 40%;
 }
 #chart_2 {
-	width: 33%;
+	width: 45%;
 }
-
+#chart_3{
+	width:45%;
+	height:45%;
+}
 #pie_chart_size {
 	margin : 0 auto;
 	width: 70%;
@@ -57,3 +60,23 @@ body {
 	font-size: 10px;
 }
 
+.chart-header {
+    display: flex; /* Flexbox를 사용하여 내부 요소를 가로로 나란히 배치 */
+    justify-content: center; /* 요소 사이에 공간 배분 */
+    gap:5%;
+}
+
+.chart-header h3 {
+    border: 1px solid black; 
+    padding: 5px 10px; 
+    cursor: pointer; 
+    margin: 0; 
+}
+
+.chart-header h3:hover {
+    background-color: #555; 
+}
+
+.chart-header-item.selected {
+	 border: 1px solid rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1); 
+}

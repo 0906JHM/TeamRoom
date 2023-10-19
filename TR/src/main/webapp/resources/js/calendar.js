@@ -173,8 +173,14 @@ function createPieChart(data, chartId) {
 // bar형 차트 그리는 함수
 
 function createBarChart(data, chartId) {
-    var colors = ["#4b77a9", "#5f255f", "#d21243", "#ff5733", "#ffcc29", "#6bf178", "#854c6f", "#ff9933", "#6699cc", "#ff6666"];
-
+	var colors = [
+    "#4b77a9", "#5f255f", "#d21243", "#ff5733", "#ffcc29", 
+    "#6bf178", "#854c6f", "#ff9933", "#6699cc", "#ff6666", 
+    "#00a8cc", "#ffae42", "#7c83fd", "#fa7e61", "#a95be8", 
+    "#ffd700", "#4a90e2", "#ff6e40", "#93c6e0", "#5bc0de",
+    "#ff99cc", "#00cc66", "#99ccff", "#ccff99", "#cc99ff",
+    "#cc9966", "#6699ff", "#99ffcc", "#66cc99", "#ff6699"];
+    
     var bar_ctx = document.getElementById(chartId).getContext('2d');
 
 	// 이전 차트를 제거합니다.
@@ -226,7 +232,7 @@ function createBarChart(data, chartId) {
                 align: 'top',
                 offset: 0,
                 font: {
-                    size: 20
+                    size: 15
                 }
             },
             legend: {

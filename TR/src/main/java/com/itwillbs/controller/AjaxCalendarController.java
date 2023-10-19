@@ -133,7 +133,7 @@ public class AjaxCalendarController {
 	}
 	@RequestMapping(value = "/main/linePerfList", method = RequestMethod.POST)
 	public ResponseEntity<List<ChartDTO>> linePerfList() {
-		List<ChartDTO> perfList = calendarService.getPerfList();
+		List<ChartDTO> perfList = calendarService.getLinePerfList();
 		
 		ResponseEntity<List<ChartDTO>> entity = new ResponseEntity<>(perfList, HttpStatus.OK);
 		

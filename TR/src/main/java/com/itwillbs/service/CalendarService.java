@@ -37,6 +37,10 @@ public class CalendarService {
 		return calendarDAO.getPerfList();
 	}
 
+	public List<ChartDTO> getLinePerfList() {
+		return calendarDAO.getLinePerfList();
+	}
+	
 	public void insertSellCalendar(SellDTO sellDTO) {
 		
 		CalendarDTO calendarDTO = new CalendarDTO();
@@ -71,6 +75,8 @@ public class CalendarService {
 	public void deleteSellCalendar(List<String> checked) {
 		calendarDAO.deleteSellCalendar(checked);
 	}
+
+	
 	
 	
 }
