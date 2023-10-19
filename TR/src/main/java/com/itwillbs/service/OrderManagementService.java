@@ -1,5 +1,6 @@
 package com.itwillbs.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -67,6 +68,10 @@ public class OrderManagementService {
 	// 엑셀
 	public List<OrderManagementDTO> getOrderManagementList2() {
 		return ordermanagementDAO.getOrderManagementList2();
+	}
+
+	public void updateBuyInstate(Date today) {
+		ordermanagementDAO.updateBuyInstate(today);
 	}
 
 }

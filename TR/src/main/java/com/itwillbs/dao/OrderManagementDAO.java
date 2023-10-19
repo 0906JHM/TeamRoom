@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -55,6 +56,10 @@ public class OrderManagementDAO {
 	// 엑셀
 	public List<OrderManagementDTO> getOrderManagementList2() {
 		return sqlSession.selectList(namespace+".getOrderManagementList2");
+	}
+
+	public void updateBuyInstate(Date today) {
+		sqlSession.update(namespace+".updateBuyInstate", today);
 	}
 	
 }

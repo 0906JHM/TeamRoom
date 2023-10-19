@@ -8,10 +8,13 @@
 <head>
 <meta charset="UTF-8"> 
 <title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-<link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
+
+<!-- css -->
+<link href="${pageContext.request.contextPath}/resources/css/side.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/Rawmaterials.css" rel="stylesheet" type="text/css">
 
 <!-- javascript --> 
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 
 // 체크박스로 삭제
@@ -89,14 +92,6 @@ function openPopup2(url) {
 	myWindow.focus();
 }
 
-// selectclient 페이지 팝업창
-// function openPopup3() {
-// 	// window.name = "부모창 이름";
-// 	window.name = "home";
-// 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-// 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
-// }
-
 // memo 페이지 팝업창
 function openPopup4(rawCode) {
 	// 팝업창 속성
@@ -125,26 +120,38 @@ $(document).ready(function() {
 <!-- body -->
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<h1>품목관리</h1>
+
+<div id="content">
+<h2>품목관리</h2>
+<hr>
 
 <!-- form(검색) -->
+<div id="searchForm">
 <form action="${pageContext.request.contextPath}/Rawmaterials/home" method="get">
-원자재코드	<input type="text" name="search1" placeholder="원자재코드">
-원자재명	<input type="text" name="search2" placeholder="원자재명">
-종류		<select name="search3">
-		<option value="">전체</option>
-		<option value="향기">향기</option>
-		<option value="용기">용기</option>
-		<option value="스틱">스틱</option>
-		<option value="라벨">라벨</option>
-		<option value="포장재">포장재</option>
-		</select>
-<!-- 거래처	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()"> -->
-<input type="submit" value="검색">
+<label>원자재코드</label>	<input type="text" name="search1" placeholder="원자재코드">
+<label>원자재명</label>		<input type="text" name="search2" placeholder="원자재명">
+<label>종류</label>		<select name="search3">
+						<option value="">전체</option>
+						<option value="향기">향기</option>
+						<option value="용기">용기</option>
+						<option value="스틱">스틱</option>
+						<option value="라벨">라벨</option>
+						<option value="포장재">포장재</option>
+						</select>
+<input type="submit" value="조회" id="searchbtn">
 </form>
+</div>
+<hr>
+
+<!-- button -->
+<div id="buttons">
+<input type="button" value="추가" onclick="openPopup1()">
+<input type="button" value="삭제" onclick="deleteValue();">
+</div>
 
 <!-- table -->
-<table border="1">
+<table id="rawmaterialsList">
+<thead>
 <tr>
 <td>번호</td>
 <td>원자재코드</td>
@@ -152,13 +159,14 @@ $(document).ready(function() {
 <td>종류</td>
 <td>단위</td>
 <td>매입단가</td>
-<!-- <td>거래처</td> -->
 <td>창고명</td>
 <td>창고수량</td>
 <td>비고</td>
 <td></td>
 </tr>
+</thead>
 
+<tbody>
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
 <tr>
 <td>${rawmaterialsDTO.rawNum}</td>
@@ -167,7 +175,6 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawType}</td>
 <td>${rawmaterialsDTO.rawUnit}</td>
 <td>${rawmaterialsDTO.rawPrice}</td>
-<%-- <td>${rawmaterialsDTO.clientCode}</td> --%>
 <td>${rawmaterialsDTO.whseCode}</td>
 <td>${rawmaterialsDTO.whseCount}</td>
 
@@ -185,11 +192,9 @@ $(document).ready(function() {
 <td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
 </tr>
 </c:forEach>
+</tbody>
 </table>
-
-<!-- button -->
-<input type="button" value="추가" onclick="openPopup1()">
-<input type="button" value="삭제" onclick="deleteValue();">
+</div>
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
