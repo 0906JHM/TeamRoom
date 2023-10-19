@@ -820,11 +820,31 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </div>
 
 	<div style="float:left;">
-	<button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/workorder/workOrderList?nowPage=1&cntPerPage=100&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}'">
-    테이블 전체 보기</button>
+ <label for="perPageSelect" style ="bottom:2px;">항목 수:</label>
+<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${paging.cntPerPage}">
+    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+</select>
 	<button id="excelDownload" class="button">엑셀⬇️</button>
-		
+	</div>	
 	<script type="text/javascript">
+	function applyFilters() {
+        var perPageValue = document.getElementById("perPageSelect").value;
+        var searchLine = "${search.search_line}";
+        var fromDate = "${search.search_fromDate}";
+        var toDate = "${search.search_toDate}";
+        var place = "${search.search_place}";
+        var prod = "${search.search_prod}";
+
+        var url = '${pageContext.request.contextPath}/workorder/workOrderList?nowPage=1&cntPerPage=' + perPageValue +
+            '&search_line=' + searchLine + '&search_fromDate=' + fromDate +
+            '&search_toDate=' + toDate + '&search_place=' + place + '&search_prod=' + prod;
+
+        // Redirect to the generated URL
+        window.location.href = url;
+    }
     
 
     // 페이지 로드 시 실행되는 함수
@@ -958,7 +978,7 @@ button.style.color = "#999999";
 			return buf;
 		} //s2ab(s)
 	</script>
-	</div>
+	
 	
 	<div id="pagination" class="page_wrap">
 			<div class="page_nation">
@@ -977,13 +997,6 @@ button.style.color = "#999999";
         </c:otherwise>
     </c:choose>
 </c:forEach>
-					<%-- 
-						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-						
-							<a class="a" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p }</a>
-						
-						</c:forEach>
-					 --%>
 						<c:if test="${paging.endPage != paging.lastPage}">
 							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.endPage + 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
 						</c:if>

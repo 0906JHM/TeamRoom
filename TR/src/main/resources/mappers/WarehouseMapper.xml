@@ -13,13 +13,10 @@ where 1=1
         	and whseCode like concat('%', #{search1}, '%')
     	</if>
     	<if test="search2 != null and search2 != ''">
-        	and prodCode like concat('%', #{search2}, '%')
+        	and whseName like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseName like concat('%', #{search3}, '%')
-    	</if>
-    	<if test="search4 != null and search4 != ''">
-    		and whseType = #{search4}
+    	<if test="search3 != null and search3 != ''">
+    		and whseType = #{search3}
     	</if>
     	order by whseCode limit #{startRow}, #{pageSize}
   </select>
@@ -32,13 +29,10 @@ where 1=1
         	and whseCode like concat('%', #{search1}, '%')
     	</if>
     	<if test="search2 != null and search2 != ''">
-        	and prodCode like concat('%', #{search2}, '%')
+        	and whseName like concat('%', #{search2}, '%')
     	</if>
-   		<if test="search3 != null and search3 != ''">
-       		and whseName like concat('%', #{search3}, '%')
-    	</if>
-    	<if test="search4 != null and search4 != ''">
-    		and whseType = #{search4}
+    	<if test="search3 != null and search3 != ''">
+    		and whseType = #{search3}
     	</if>
   </select>
   

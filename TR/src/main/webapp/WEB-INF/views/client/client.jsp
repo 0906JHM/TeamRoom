@@ -122,13 +122,13 @@
 						.open(
 								'${pageContext.request.contextPath}/client/clientinsert',
 								'_blank',
-								'width=600px, height=600px, left=600px, top=300px');
+								'width=450px, height=600px, left=600px, top=300px');
 			}
 			
 			// 클라이언트 회사 이름을 클릭했을 때 실행될 함수
 		    function openClientDetail(clientCompany) {
 		        var url = '${pageContext.request.contextPath}/client/clientdetail?clientCompany=' + clientCompany;
-		        window.open(url, '_blank', 'width=600px, height=600px, left=600px, top=100px');
+		        window.open(url, '_blank', 'width=470px, height=650px, left=600px, top=100px');
 		    }
 			
 			

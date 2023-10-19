@@ -775,11 +775,18 @@ $(document).ready(function() {
 				</div>
 				<div>
 	<div style="float:left;">
-<button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/requirement/reqDetail?nowPage=1&cntPerPage=100&reqCode=${dto.reqCode}&prodCode=${dto.prodCode}&rawCode=${dto.rawCode}'">테이블 전체 보기</button>
-<button id="excelDownload" class ="button">엑셀⬇️</button>
+	 <label for="perPageSelect" style ="bottom:2px;">항목 수:</label>
+<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${paging.cntPerPage}">
+    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+</select>
+	<button id="excelDownload" class="button">엑셀⬇️</button>
+	</div>	
+<%-- <button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/requirement/reqDetail?nowPage=1&cntPerPage=100&reqCode=${dto.reqCode}&prodCode=${dto.prodCode}&rawCode=${dto.rawCode}'">테이블 전체 보기</button>
+<button id="excelDownload" class ="button">엑셀⬇️</button> --%>
 
-	</div>
-	
 		<div id="pagination" class="page_wrap">
 			<div class="page_nation">
 						<c:if test="${paging.startPage != 1 }">
@@ -804,7 +811,25 @@ $(document).ready(function() {
 	</div>
 	</div>
 
+
 </body>
+<%-- <button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/requirement/reqDetail?nowPage=1&cntPerPage=100&reqCode=${dto.reqCode}&prodCode=${dto.prodCode}&rawCode=${dto.rawCode}'">테이블 전체 보기</button>
+<button id="excelDownload" class ="button">엑셀⬇️</button> --%>
+<script type="text/javascript">
+	function applyFilters() {
+        var perPageValue = document.getElementById("perPageSelect").value;
+        var reqCode = "${dto.reqCode}";
+        var prodCode = "${dto.prodCode}";
+        var rawCode = "${dto.rawCode}";
+
+        var url = '${pageContext.request.contextPath}/requirement/reqDetail?nowPage=1&cntPerPage=' + perPageValue +
+            '&reqCode=' + reqCode + '&prodCode=' + prodCode +
+            '&rawCode=' + rawCode;
+
+        // Redirect to the generated URL
+        window.location.href = url;
+    }
+	</script>
 </html>
 
 
