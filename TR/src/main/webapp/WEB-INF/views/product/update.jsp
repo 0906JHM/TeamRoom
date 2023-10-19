@@ -37,7 +37,9 @@
 			</div>
 			<div class="form-group">
 				<p>용량(ml)</p>
-				<input type="text" name="prodSize" value="${prodDTO.prodSize}">
+				<input type="text" name="prodSize" value="${prodDTO.prodSize}"
+				oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+				<!--     정수 숫자만 입력 -->
 			</div>
 			<div class="form-group">
 				<p>향기</p>
@@ -61,13 +63,16 @@
 			<div class="form-group">
 				<p>매출 단가(원)</p>
 				<input type="number" step="0.01" name="prodPrice"
-					value="${prodDTO.prodPrice}">
+					value="${prodDTO.prodPrice}"
+					oninput="this.value = this.value.replace(/[^0-9.]/g, ''); if(this.value.indexOf('.') !== -1){if(this.value.split('.')[1].length > 2){this.value = this.value.slice(0, -1)}};">
+					<!--     소수점아래 두자리수까지 숫자만 입력 -->
 			</div>
 			<p class="memo">비고</p>
 			<%--     <input type="text" name="prodMemo" value="${prodDTO.prodMemo}"> --%>
 			<textarea name="prodMemo" class="prodMemo" rows="5" cols="">${prodDTO.prodMemo}</textarea>
 			<div id="button">
 				<input type="submit" value="수정">
+				<input type="button" value="닫기" onclick="closeWindow()">
 			</div>
 		</form>
 	</div>
@@ -85,6 +90,25 @@
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()
 		//--------------------------------------------------------------------------
+		//닫기버튼 누르면 창 닫힘
+		  function closeWindow() {
+        window.close();
+    }
+		//--------------------------------------------------------------------------
+		  document.querySelector('form').addEventListener('submit', function(event) {
+        const prodName = document.getElementsByName("prodName")[0].value;
+        const prodUnit = document.getElementsByName("prodUnit")[0].value;
+        const prodSize = document.getElementsByName("prodSize")[0].value;
+        const prodPerfume = document.getElementsByName("prodPerfume")[0].value;
+        const clientCompany = document.getElementsByName("clientCompany")[0].value;
+        const whseName = document.getElementsByName("whseName")[0].value;
+        const prodPrice = document.getElementsByName("prodPrice")[0].value;
+
+        if (!prodName || !prodUnit || !prodSize || !prodPerfume || !clientCompany || !whseName || !prodPrice) {
+            event.preventDefault();
+            alert("모든 값을 입력해주세요.");
+        }
+    });
 	</script>
 
 </body>
