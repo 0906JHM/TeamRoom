@@ -165,7 +165,7 @@
             	scrollLimit = 0;
             }
             
-//             $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
+             $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
             
 			console.log("bodyHeight : "+bodyHeight);
 			console.log("sidebar : "+sidebody.height());
