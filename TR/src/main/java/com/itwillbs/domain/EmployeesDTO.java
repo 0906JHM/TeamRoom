@@ -18,5 +18,6 @@ public class EmployeesDTO {
 	private String empTel;
 	private String empHiredate;
 	private String empState;
+	private String empFile;
 
 }

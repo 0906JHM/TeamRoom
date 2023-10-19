@@ -11,7 +11,7 @@
 <style type="text/css">
 body {
 	font-family: Arial, sans-serif;
-	background-color: #F5F6FA;
+	background-color: #EAFDFC;
 	margin: 0;
 	padding: 0;
 	display: flex;
@@ -30,8 +30,9 @@ body {
 	height: 500px;
 }
 
-h2 {
-	color: #384855;
+h1 {
+	color: black;
+	margin-bottom: 20px;
 }
 
 .input-group {
@@ -45,31 +46,44 @@ input[type="text"], input[type="password"] {
 	outline: none;
 	border: 1px solid #A6A6A6; /* 테두리 색 설정 */
 	background-color: #FFFFFF; /* 배경색 설정 */
+	font-size:20px; 
 }
 
 button {
-	width: 55px;
-	height: 35px;
-	background-color: #5EC397;
-	color: #FFFFFF;
+	width: 80px;
+	height: 40px;
+	background-color: #FFEEBB;
+	color: #4D4D4D;
 	border: none;
 	border-radius: 3px;
+	margin-top: 50px;
 	margin-bottom: 10px;
-}
+	font-size:20px; 
+/* 	font-weight: bolder;
+ */}
 
 button:hover {
-	background-color: #31433B;
-	color: white;
+	background-color: #9AC5F4;
 }
-
-
+#logo{
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom:60px;
+}
+#logoImage{
+	width: 300px; 
+	display: inline-block;
+}
 </style>
 </head>
 <body>
 	<div class="login-container">
-	<img src="${pageContext.request.contextPath }/resources/img/logo.png" style="margin-top: 30px; margin-bottom: 30px;">
-	
-		<h2>로그인</h2>
+	<div id="logo">
+					
+					<img src="${pageContext.request.contextPath }/resources/img/blackLogo.png" id="logoImage"> 
+					
+				</div>
+		<h1>로그인</h1>
 		<form action="${pageContext.request.contextPath}/login/loginPro" id="login" method="post">
 			
 			<div class="input-group">

@@ -164,12 +164,10 @@ function getToday() {
 				var wb = XLSX.utils.book_new();
 				//2. 시트 만들기
 				var newWorksheet = excelHandler.getWorksheet();
-				alert(newWorksheet);
 				//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
 				XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
 				//4. 엑셀 파일 만들기
 				var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-				alert(wbout);
 				//5. 엑셀 파일 내보내기
 				saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
 			} //exportExcel()
@@ -196,7 +194,6 @@ function getToday() {
 				for(var i=0; i<s.length; i++) {
 					view[i] = s.charCodeAt(i) & 0xFF;
 				}
-				alert("이까지 옴");
 				return buf;
 			}
     });
@@ -711,30 +708,7 @@ $(document).ready(function() {
 					</div>						
 				</div>
 				
-				<!-- 버튼 제어 -->
-			
-				<script>
-					var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-
-					/* if (team === "물류팀" || team === "관리자") { */
-						document.getElementById("add").disabled = false;
-						document.getElementById("modify").disabled = false;
-						document.getElementById("delete").disabled = false;
-						document.getElementById("cancle").disabled = false;
-						document.getElementById("save").disabled = false;
-						document
-								.querySelector("[onclick^='location.href']").disabled = false;
-					/* } */ /* else {
-						document.getElementById("add").hidden = true;
-						document.getElementById("modify").hidden = true;
-						document.getElementById("delete").hidden = true;
-						document.getElementById("cancle").hidden = true;
-						document.getElementById("save").hidden = true;
-						document
-								.querySelector("[onclick^='location.href']").hidden = true;
-					} */
-				</script>
-				<!-- 버튼 제어 -->
+				
 		<div class="x_content">
 			<div class="table-responsive">
 				<div class="table-wrapper" >
