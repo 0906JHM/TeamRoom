@@ -40,6 +40,7 @@
 <option value="휴직">휴직</option>
 <option value="퇴사">퇴사</option>
 </select></div>
+<div class="form-group"><p>프로필사진:</p><input type="file" name="file" ></div>
 <button onclick="save">저장하기</button>
 
 </form>
