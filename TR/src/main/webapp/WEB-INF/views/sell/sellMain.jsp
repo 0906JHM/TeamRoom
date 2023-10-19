@@ -44,8 +44,9 @@
 		<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
 	
 		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
+		<form action="${pageContext.request.contextPath}/sell/sellMain"	method="get">
 		<div id="searchform">
-			<form action="${pageContext.request.contextPath}/sell/sellMain"	method="get">
+			
 				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode" value="${sellDTO.sellCode}"> 
 				
 				<label>거래처</label> 
@@ -74,10 +75,7 @@
 		</div>
 		<br>
 		<!------------------------------------------------------- 추가, 수정, 삭제 버튼 ---------------------------------------------------->
-		<div class="buttons">
-			<button  style="display: none;" id="add" onclick="openSellAdd()">추가</button>
-			<button  style="display: none;" id="delete">삭제</button>
-		</div>
+		
 		
 		<!------------------------------------------------------- 수주 상태 검색, 엑셀---------------------------------------------------->
 		<div id="buttons">
@@ -88,15 +86,19 @@
     		<input type="submit" id="exportButton" value="엑셀">
 		</div>
 		</form>
+		<div class="buttons">
+			<button  style="display: none;" id="add" onclick="openSellAdd()">추가</button>
+			<button  style="display: none;" id="delete">삭제</button>
+		</div>
  <label for="perPageSelect" style ="bottom:2px;">항목 수:</label>
-<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${paging.cntPerPage}">
-    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
-    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
-    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
-    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${sellDTO.pageSize}">
+    <option value="10" ${sellDTO.pageSize == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${sellDTO.pageSize == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${sellDTO.pageSize == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${sellDTO.pageSize == 9999 ? 'selected' : ''}>전체 보기</option>
 </select>
 		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
-		<small>총 ${sellPageDTO.count}건</small>
+		<small>총 ${sellDTO.count}건</small>
 
 		<form id="selltList">
 			<div id="sellList">
@@ -127,7 +129,7 @@
 					<tbody>
 						<c:forEach var="sellDTO" items="${sellList}">
 							<tr>
-								<td><input type="checkbox" id="select-list"
+								<td><input type="checkbox"
 									value="${sellDTO.sellCode}" name="selectedSellCode"
 									data-group="select-list"></td>
 
@@ -158,19 +160,26 @@
 								
 								
 								<c:choose>
-									<c:when test="${not empty sellDTO.sellMemo}">
-										<td class="tg-llyw2"><a href="#"
-											onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();"
-											style="color: red;">[보기]</a></td>
-									</c:when>
-									<c:otherwise >
-									
-										<td class="tg-llyw2" ><a href="#"
-											onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();"
-											style="color: #384855;" style="display: none;" id="memoAdd">[입력]</a></td>
-											
-									</c:otherwise>
-								</c:choose>
+    <c:when test="${not empty sellDTO.sellMemo}">
+        <td class="tg-llyw2">
+            <a href="#" onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color: red;">[보기]</a>
+        </td>
+    </c:when>
+    <c:otherwise>
+        <c:set var="team" value="${sessionScope.empDepartment}" />
+        <c:choose>
+            <c:when test="${team eq '영업팀' or team eq '관리자'}">
+                <td class="tg-llyw2">
+                    <a href="#" onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color: #384855;" style="display: none;" id="memoAdd">[입력]</a>
+                </td>
+            </c:when>
+            <c:otherwise>
+                <td class="tg-llyw2"></td>
+            </c:otherwise>
+        </c:choose>
+    </c:otherwise>
+</c:choose>
+
 								
 								
 
@@ -183,24 +192,24 @@
 			</div>
 			<!------------------------------------------------- 페이징 ------------------------------------------>
 			
-			<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
+			<c:if test="${sellDTO.startPage > sellDTO.pageBlock}">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellDTO.startPage - sellDTO.pageBlock}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
 					style="text-decoration: none; color: #5EC397;">◀</a>
 			</c:if>
 			
 			
-			<c:forEach var="i" begin="${sellPageDTO.startPage}"
-				end="${sellPageDTO.endPage}" step="1">
+			<c:forEach var="i" begin="${sellDTO.startPage}"
+				end="${sellDTO.endPage}" step="1">
 				<a
 					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
 					style="text-decoration: none; color: #5EC397;">${i}</a>
 			</c:forEach>
 
 
-			<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
+			<c:if test="${sellDTO.endPage < sellDTO.pageCount}">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellDTO.startPage + sellDTO.pageBlock}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
 					style="text-decoration: none; color: #5EC397;">▶</a>
 			</c:if>
 
@@ -256,11 +265,11 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 //팝업창에서 작업 완료후 닫고 새로고침
 $(document).ready(function() {
-	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+	/* var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
     if (refreshAndClose) {
         window.opener.location.reload(); // 부모창 새로고침
         window.close(); // 현재창 닫기
-    }
+    } */
 
 $('#select-list-all').click(function() {
 			var checkAll = $(this).is(":checked");
@@ -552,21 +561,22 @@ function openSellDetail(sellCode) {
      firstLoadSellList();
  });
 //----------------------------------- 페이지 항목 수 설정 -----------------------------------
-/* function applyFilters() {
+ function applyFilters() {
         var perPageValue = document.getElementById("perPageSelect").value;
-        var searchLine = "${search.search_line}";
-        var fromDate = "${search.search_fromDate}";
-        var toDate = "${search.search_toDate}";
-        var place = "${search.search_place}";
-        var prod = "${search.search_prod}";
+        var sellCode = "${sellDTO.sellCode}";
+        var prodCode = "${sellDTO.prodCode}";
+        var clientCode = "${sellDTO.clientCode}";
+        var sellDate = "$${sellDTO.sellDate}";
+        var sellDuedate = "${sellDTO.sellDuedate}";
+        var sellState = "${sellDTO.sellState}";
 
-        var url = '${pageContext.request.contextPath}/sell/sellList?nowPage=1&cntPerPage=' + perPageValue +
-            '&search_line=' + searchLine + '&search_fromDate=' + fromDate +
-            '&search_toDate=' + toDate + '&search_place=' + place + '&search_prod=' + prod;
+        var url = '${pageContext.request.contextPath}/sell/sellMain?pageNum=1&cntPerPage=' + perPageValue +
+            '&sellCode=' + sellCode + '&prodCode=' + prodCode +
+            '&clientCode=' + clientCode + '&sellDate=' + sellDate + '&sellDuedate=' + sellDuedate + '&sellState' + sellState;
 
         // Redirect to the generated URL
         window.location.href = url;
-    } */
+    }
 
  </script>
 </body>
