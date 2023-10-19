@@ -4,6 +4,13 @@ body {
 	background-color: #F5F6FA;
 }
 
+/* 내용묶기 */
+.content {
+    max-width: 600px;
+    border: 1px solid rgba(221, 221, 221, 0.78); /* 테두리 설정 */
+    padding: 20px;
+}
+
 /* 상세보기 */
 h2 {
 	display: block; 
@@ -13,16 +20,29 @@ h2 {
 	margin: 0 0 20px;
 }
 
-.content {
-    max-width: 600px;
-    border: 1px solid rgba(221, 221, 221, 0.78); /* 테두리 설정 */
-    padding: 20px;
+/* table */
+table {
+	border: 1px solid rgba(221, 221, 221, 0.78);
+	margin: 0 auto;
+	color: #000000;
+	max-width: 1570px;
+	font: 500 18px/18px "Inter", sans-serif;
+	text-align: center;
 }
 
 table td {
 	font: 500 16px/16px "Inter", sans-serif;
 	font-weight: bold;
 }
+
+table tr {
+	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width: 1570px;
+	height: 40px;
+	font: 500 20px/20px "Inter", sans-serif;
+}
+
+/* 여기서부터 수정해야함 */
 
 .form-group {
     display: flex;

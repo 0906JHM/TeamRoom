@@ -108,6 +108,7 @@ function deleteValue(){
 </form>
 </div>
 <hr>
+<small>총 ${pageDTO.count}건</small>
 <table id="lineTable">
 <thead>
 <tr>

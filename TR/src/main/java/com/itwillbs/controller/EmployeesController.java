@@ -109,7 +109,6 @@ public class EmployeesController {
 		List<EmployeesDTO> employeesList = employeesService.getEmployeesList2();
 		ResponseEntity<List<EmployeesDTO>> entity = new 
 		ResponseEntity<List<EmployeesDTO>>(employeesList, HttpStatus.OK);
-		System.out.println(employeesList);
         return entity;
 	}
 	
