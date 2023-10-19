@@ -362,7 +362,7 @@
 	<update id="updateOutProductContent">
 		UPDATE outProduct
 		SET outCount = #{outCount}, outMemo
-		= #{outMemo}
+		= #{outMemo}, outEmpId = #{outEmpId}
 		WHERE outCode = #{outCode}
 	</update>
 

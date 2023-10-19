@@ -47,7 +47,7 @@
 				</tr>
 				<tr>
 					<th>담당자</th>
-					<td><input type="text" name="outEmpId" value="${outProductDTO.outEmpId }" readonly="readonly"></td>
+					<td><input type="text" name="outEmpId" value="${sessionScope.id}" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th>출고 상태</th>

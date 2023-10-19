@@ -28,7 +28,7 @@ input[type="text"] {
 	border: 1px solid #adb5bb;
 	border-radius: 5px;
 	width: 300px;
-	height: 40px;
+	height: 35px;
 	font: 500 18px/18px "Inter", sans-serif;
 	padding-left: 10px;
 }
@@ -77,12 +77,12 @@ table th, table td {
 table thead tr {
 	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	width: 1570px;
-	height: 45px;
+	height: 40px;
 	font: 500 20px/20px "Inter", sans-serif;
 }
 
 table td {
-	height: 45px;
+	height: 40px;
 }
 
 #con {
@@ -119,7 +119,7 @@ table tbody tr:nth-child(odd) {
 	padding: 0; /* 내부 간격 제거 */
 	display: flex; /* 수평 정렬을 위해 Flexbox 사용 */
 	justify-content: flex-end; /* 가운데 정렬 */
-	margin: 25px 0;
+/* 	margin: 25px 0; */
 	padding-right: 1%;
 }
 
@@ -153,4 +153,16 @@ table tbody tr:nth-child(odd) {
 .buttons.highlighted {
 	background-color: #ff5733; /* 변경할 색상을 여기에 지정하세요 */
 	color: white; /* 텍스트 색상을 변경할 경우 지정하세요 */
+}
+
+#paging{
+	display:flex;
+	flex-direction:row;
+	margin:25px 0;
+	justify-content: space-between;
+	align-items: center;
+	
+}
+#exportButton{
+	margin-left : 1%;
 }
