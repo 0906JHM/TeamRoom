@@ -40,9 +40,9 @@
 		
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/product/list" method="get" id="selectedProId">
-				<label>품번</label>
-				<input type="text" placeholder="제품코드를 입력하세요." name="prodCode">
-				<label>품명</label>
+				<label>제품 코드</label>
+				<input type="text" placeholder="제품 코드를 입력하세요." name="prodCode">
+				<label>제품명</label>
 				<input type="text" placeholder="제품명을 입력하세요." name="prodName"> 
 				<label>거래처명</label>
 				<input type="text" name="clientCompany" id="sellclientCompany9999"
