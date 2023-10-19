@@ -70,6 +70,8 @@ public class ClientService {
 
 	public void clientupdate(ClientDTO clientDTO) {
 		
+		System.out.println("ClientService update 요청: +++" + clientDTO);
+		
 		clientDAO.clientupdate(clientDTO);
 		
 	}

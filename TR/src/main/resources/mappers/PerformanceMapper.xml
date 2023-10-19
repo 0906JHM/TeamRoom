@@ -25,11 +25,11 @@
  <select id="getSearch" resultType="PerformanceDTO">
 		select * FROM performance	
 		<where>
-			<if test="lineCode !=''">
-				lineCode like concat ('%', #{lineCode}, '%')
+			<if test=" lineCode != null and lineCode !=''">
+				 and lineCode like concat ('%', #{lineCode}, '%')
 			</if>
 
-			<if test="prodCode !=''">
+			<if test="prodCode != null and prodCode !=''">
 				and prodCode like concat ('%', #{prodCode}, '%')
 			</if>			 
 		</where>
@@ -41,11 +41,11 @@
 		SELECT count(*)
 		FROM performance
 		<where>
-			<if test="lineCode !=''">
+			<if test="lineCode != null and lineCode !=''">
 				lineCode like concat ('%', #{lineCode}, '%')
 			</if>
 
-			<if test="prodCode !=''">
+			<if test="lineCode != null and prodCode !=''">
 				and prodCode like concat ('%', #{prodCode}, '%')
 			</if>
 		</where>

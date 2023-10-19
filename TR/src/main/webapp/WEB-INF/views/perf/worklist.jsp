@@ -50,8 +50,8 @@
 	        		    workCode: selectedRow.find('td:eq(0)').text(),
 	        		    lineCode:selectedRow.find('td:eq(1)').text(),
 	        		    prodCode: selectedRow.find('td:eq(3)').text(),
-	        		    workAmount: selectedRow.find('td:eq(5)').text(),
-	        		    lineProcess: selectedRow.find('td:eq(6)').text()
+	        		    workAmount: selectedRow.find('td:eq(5)').text()
+	        		   
 	        };
 	        window.opener.receiveSelectedLineData(JSON.stringify(rowData)); // JSON 형식으로 변환하여 부모 창의 함수 호출
 	        window.close(); // 자식 창 닫기
