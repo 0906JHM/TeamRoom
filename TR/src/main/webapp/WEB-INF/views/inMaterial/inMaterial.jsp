@@ -52,7 +52,7 @@
 			<input type="button" value="전체" id="allButton" class="buttons highlighted"> 
 			<input type="button" value="입고" id="inButton" class="buttons"> 
 			<input type="button" value="미입고" id="non_inButton" class="buttons">
-			<input type="button" value="엑셀" id="exportButton">
+			
 		</div>
 		<h3 style="padding-left: 1%;">
 			목록 <small id="listCount">총 3건</small>
@@ -83,6 +83,7 @@
 			</table>
 		</div>
 		<div id="paging">
+		<input type="button" value="엑셀" id="exportButton">
 			<ul id="paging_ul">
 			</ul>
 		</div>

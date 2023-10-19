@@ -162,17 +162,6 @@ System.out.println("BoardController list()");
 		ClientDTO clientDTO = clientService.clientdetail(clientCompany);
 		model.addAttribute("clientDTO",clientDTO);
 		
-		String clientCode = req.getParameter("clientCode");		
-		// clientCode에 따라 분기 처리
-		 if (clientCode != null && clientCode.startsWith("CL")) {
-		        // CL로 시작하는 경우 sell 테이블 데이터 가져오기
-		        ProdDTO prodDTO = clientService.selldetail(clientCode);
-		        model.addAttribute("prodDTO", prodDTO);
-		    } else if (clientCode != null && clientCode.startsWith("OR")) {
-		        // OR로 시작하는 경우 rawMaterial 테이블 데이터 가져오기
-		        RawmaterialsDTO rawmaterialsDTO = clientService.rawmaterialsdetail(clientCode);
-		        model.addAttribute("rawmaterialsDTO", rawmaterialsDTO);
-		    }
 		 
 		return "client/clientdetail";
 	}
@@ -194,7 +183,6 @@ System.out.println("BoardController list()");
 	public void clinetupdatePro(ClientDTO clientDTO) {
 		
 		System.out.println("ClientController updatePro요청");
-		log.debug("거래처추가로직");
 		System.out.println(clientDTO);
 		clientService.clientupdate(clientDTO);
 		
