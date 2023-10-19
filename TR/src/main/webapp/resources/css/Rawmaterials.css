@@ -64,7 +64,7 @@ input[type="text"], select {
 }
 
 /* 버튼 */
-input[type="button"] {
+input[type="button"], .excelbtn {
 	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
 	width: 100px;
 	height: 40px;
@@ -75,12 +75,12 @@ input[type="button"] {
 	font: 500 20px/20px "Inter", sans-serif;
 }
 
-input[type="button"]:hover {
+input[type="button"]:hover, .custom-button:hover {
 	cursor: pointer; /* 손가락 모양 */
 }
 
 /* 추가 및 삭제버튼 */
-#buttons {
+#buttons, .excelbtn {
 	margin-top: 15px;
 	margin-bottom: 5px;
 	padding-left: 1%;

@@ -10,10 +10,13 @@
 <title>Insert title here</title>
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+
+<!-- css -->
 <link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/Rawmaterials.css" rel="stylesheet" type="text/css">
 
 <!-- javascript -->
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 
 // 체크박스로 삭제
@@ -114,26 +117,39 @@ $(document).ready(function() {
 <!-- body -->
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<h1>발주관리</h1>
+
+<div id="content">
+<h2>발주관리</h2>
+<hr>
 
 <!-- form(검색) -->
+<div id="searchForm">
 <form action="${pageContext.request.contextPath}/OrderManagement/home" method="get">
-발주번호	<input type="text" name="search1" placeholder="발주번호">
-품번		<input type="text" name="search2" placeholder="품번">
-종류		<select name="search3">
-		<option value="">전체</option>
-		<option value="향기">향기</option>
-		<option value="용기">용기</option>
-		<option value="스틱">스틱</option>
-		<option value="라벨">라벨</option>
-		<option value="포장재">포장재</option>
-		</select>
-거래처		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
-<input type="submit" value="검색">
+<label>발주번호</label>		<input type="text" name="search1" placeholder="발주번호">
+<label>품번</label>		<input type="text" name="search2" placeholder="품번">
+<label>종류</label>		<select name="search3">
+						<option value="">전체</option>
+						<option value="향기">향기</option>
+						<option value="용기">용기</option>
+						<option value="스틱">스틱</option>
+						<option value="라벨">라벨</option>
+						<option value="포장재">포장재</option>
+						</select>
+<label>거래처</label>		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+<input type="submit" value="조회" id="searchbtn">
 </form>
+</div>
+<hr>
+
+<!-- button -->
+<div id="buttons">
+<input type="button" value="추가" onclick="openPopup1()">
+<input type="button" value="삭제" onclick="deleteValue();">
+</div>
 
 <!-- table -->
-<table border="1" id="data-table">
+<table id="rawmaterialsList">
+<thead>
 <tr>
 <td>발주번호</td>
 <td>품번</td>
@@ -150,7 +166,9 @@ $(document).ready(function() {
 <td>입고상태</td>
 <td></td>
 </tr>
+</thead>
 
+<tbody>
 <c:forEach var="ordermanagementDTO" items="${ordermanagementList}">
 <tr>
 <td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/OrderManagement/detail?buyNum=${ordermanagementDTO.buyNum}')">${ordermanagementDTO.buyNum}</a></td>
@@ -169,11 +187,9 @@ $(document).ready(function() {
 <td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
 </tr>
 </c:forEach>
+</tbody>
 </table>
-
-<!-- button -->
-<input type="button" value="추가" onclick="openPopup1()">
-<input type="button" value="삭제" onclick="deleteValue();">
+</div>
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
@@ -181,8 +197,8 @@ $(document).ready(function() {
 </c:forEach>
 
 <!-- button -->
-<button id="excelDownload">엑셀 ⬇️</button>
-<button onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체엑셀 ⬇️</button>
+<button class="excelbtn" id="excelDownload">엑셀 ⬇️</button>
+<button class="excelbtn" onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체 ⬇️</button>
 				
 <!-- javascript -->
 <script type="text/javascript">
