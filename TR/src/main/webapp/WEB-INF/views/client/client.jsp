@@ -21,18 +21,25 @@
 		<h1 class="toptitle">거래처 관리</h1>
 
 <hr>
+<form method ="GET">
 	<div class="search">
-		<label for="search-box"> <strong>검색</strong>
-		</label> <input type="search" id="search-box">
+		<label for="search-box"> <strong>거래처명</strong> <input type="text" id="clientCompany" name="clientCompany">
+		</label> 
 		</div>
 <hr>		
-
-	
-<!--  본문 내용  -->
+	<div class="typetab">
+	<p class="typetabhead"> 구분 </p> 
+	<input type="submit" id="clientType" name="clientType"  value= "전체">
+	<input type="submit" id="clientType" name="clientType" value="수주처">
+	<input type="submit" id="clientType" name="clientType" value="발주처">
+	</div>
+	</form>
+	<!--  본문 내용  -->
 	<div class="clientbody1">
 	<div class="tableform"> 
+	
 			<div class="clienttotal">
-			 <h2> 거래처 목록: 총 x 건 &nbsp;&nbsp;<span class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</span></h2>
+			 <h2> 총  ${pageDTO.count} 건 &nbsp;&nbsp;<span class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</span></h2>
 			
 			<div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"
@@ -41,11 +48,10 @@
 			
 			
 			</div>
-
+            
 		<table class="ct" id="ct">
 			<thead>
 				<tr class="cthead">
-				    <th class="ctth">번호</th>
 					<th class="ctth">구분</th>
 					<th class="ctth">거래처코드</th>
 					<th class="ctth">거래처명</th>
@@ -64,7 +70,6 @@
 			<tbody>
 				<c:forEach var="clientDTO" items="${clientList}">
 					<tr class="ctcontents">
-					    <td class="cttg">아직없음.</td>
 						<td class="cttg">${clientDTO.clientType}</td>
 						<td class="cttg">${clientDTO.clientCode}</td>
 						<td class="cttg"
@@ -87,17 +92,17 @@
 		
 		<div class="page"> <!--  페이징 영역 -->
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
-					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&clientCode=${clientDTO.clientCode}&clientCompany=${clientDTO.clientCompany}">Prev</a>
+					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">Prev</a>
 				</c:if>
 				
 
 				<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-					<a href="${pageContext.request.contextPath}/client/client?pageNum=${i}&clientCode=${clientDTO.clientCode}&clientCompany=${clientDTO.clientCompany}">${i}</a>
+					<a href="${pageContext.request.contextPath}/client/client?pageNum=${i}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">${i}</a>
 				</c:forEach>
 
 
 				<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
-					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&clientCode=${clientDTO.clientCode}&clientCompany=${clientDTO.clientCompany}">Next</a>
+					<a href="${pageContext.request.contextPath}/client/client?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&clientCompany=${clientDTO.clientCompany}&clientType=${clientDTO.clientType}">Next</a>
 				</c:if>
 				
 			</div> <!--  페이징영역 -->

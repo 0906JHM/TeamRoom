@@ -38,7 +38,7 @@
 	</select>
 	
 	<select id="getSearchcount" resultType="java.lang.Integer">
-		SELECT count(#{perfCode})
+		SELECT count(*)
 		FROM performance
 		<where>
 			<if test="lineCode !=''">

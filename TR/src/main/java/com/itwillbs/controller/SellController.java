@@ -1,11 +1,13 @@
 package com.itwillbs.controller;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +45,6 @@ public class SellController {
 	private SellService sellService;
 	@Inject 
 	private OutProductService outProductService;
-	@Inject
-	private CalendarService calendarService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
@@ -53,7 +53,7 @@ public class SellController {
 public String sellList(HttpServletRequest request,Model model) {
 	System.out.println("SellController sellMain()");
 	//한 화면에 보여줄 글개수 설정
-	int pageSize = 8;
+	int pageSize = 10;
 	// 현 페이지 번호 가져오기
 	String pageNum=request.getParameter("pageNum");
 	// 페이지 번호가 없을 경우 => "1"로 설정
@@ -75,7 +75,7 @@ public String sellList(HttpServletRequest request,Model model) {
 	// 전체 글개수 가져오기
 	int count = sellService.getSellCount();
 	// 한화면에 보여줄 페이지 개수 설정
-	int pageBlock = 8;
+	int pageBlock = 10;
 	// 시작하는 페이지 번호
 	int startPage=(currentPage-1)/pageBlock*pageBlock+1;
 	// 끝나는 페이지 번호
@@ -103,7 +103,7 @@ public String sellList(HttpServletRequest request,Model model) {
 	// center/notice.jsp
 	// WEB-INF/views/center/notice.jsp
 	return "sell/sellMain";
-}//
+}//sellMain
 	
 
 //----------------------------------------------------- 수주 추가 ---------------------------------------
@@ -115,7 +115,7 @@ public String sellAdd() {
 }//sellAdd
 
 @PostMapping("/sellAddPro")
-public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
+public void sellAddPro(SellDTO sellDTO, HttpServletResponse response) {
 	System.out.println("SellController sellAddPro()");
 	System.out.println(sellDTO);
 	
@@ -132,24 +132,35 @@ public ResponseEntity<String> sellAddPro(SellDTO sellDTO) {
     
 	outProductService.insertList(sellDTO);		
 	sellService.insertSell(sellDTO);			
-	calendarService.insertSellCalendar(sellDTO);
-	/*
-	 sellCode 수주코드, 
-	 sellDate 수주일자, 
-	 sellDuedate납기일자, 
-	 sellEmpId 수주담당직원, 
-	 sellCount 수주수량, 
-	 prodCode 제품코드, 
-	 prodName 제품명,
-	 sellFile 수주파일, 
-	 sellMemo 수주비고, 
-	 sellState 수주상태(현황), 
-	 clientCode 거래처코드, 
-	 sellPrice 수주단가
-	 prodPrice 제품단가 1ea
-	 */
 
-	return ResponseEntity.ok("<script>window.close();</script>");
+//	String sellCode 수주코드
+//	String sellDate 수주일자
+//	String sellDuedate 납기일자
+//	String sellEmpId 수주담당직원 ID
+//	int sellCount 수주 수량
+//	String prodCode 제품코드
+//	String prodName 제품명
+//	String sellMemo 수주 비고
+//	String sellState 수주상태
+//	String clientCode 거래처코드
+//	int sellNum 수주번호
+//	String sellPrice 수주단가	
+//	pString prodPrice 제품단가 1ea
+//	String clientCompany 거래처명
+//	String sellEndDate 수주일자(daterange 기간 설정 끝나는 날)
+//	String sellEndDuedate 납기일자(daterange 기간 설정 끝나는 날)
+
+	response.setContentType("text/html;charset=UTF-8");
+	PrintWriter out;
+	try {
+		out = response.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("window.close();");
+		out.println("</script>");
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
 }//sellAddPro
 
 //-------------------------------------------------- 수주 상세정보 ------------------------------------------
@@ -182,15 +193,23 @@ public String sellDetail(HttpServletRequest request, Model model) {
 	}//sellUpdate
 
 	@PostMapping("/sellUpdatePro")
-	public ResponseEntity<String> sellUpdatePro(SellDTO sellDTO) {
+	public void sellUpdatePro(SellDTO sellDTO, HttpServletResponse response) {
 		System.out.println("SellController sellUpdatePro()");
 		// 수정
 		outProductService.updateList(sellDTO);
 		sellService.sellUpdate(sellDTO);
 
-		//return "redirect:/sell/sellMain";
-		
-		return ResponseEntity.ok("<script>window.close();</script>");
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println("<script>");
+			out.println("window.opener.location.reload();");
+			out.println("window.close();");
+			out.println("</script>");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}//sellUpdatePro
 	
 //-------------------------------------------------- 수주 삭제 ---------------------------------------------
@@ -200,7 +219,6 @@ public String sellDetail(HttpServletRequest request, Model model) {
 		System.out.println("넘어온 데이터 "+checked);
 		
 		int result = sellService.sellDelete(checked);
-		calendarService.deleteSellCalendar(checked);
 		outProductService.deleteSell(checked);
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
@@ -245,12 +263,22 @@ public String sellMemoAdd(HttpServletRequest request, Model model) {
 }//sellMemotype
 
 @PostMapping("/sellMemotypePro")
-public ResponseEntity<String> sellMemoAddPro(SellDTO sellDTO) {
+public void sellMemotypePro(SellDTO sellDTO, HttpServletResponse response) {
 	System.out.println("SellController sellMemotypePro()");
 	System.out.println(sellDTO);
 	sellService.insertSellMemo(sellDTO);
-	return ResponseEntity.ok("<script>window.close();</script>");
-
+	
+	response.setContentType("text/html;charset=UTF-8");
+	PrintWriter out;
+	try {
+		out = response.getWriter();
+		out.println("<script>");
+		out.println("window.opener.location.reload();");
+		out.println("window.close();");
+		out.println("</script>");
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
 }//sellMemotypePro	
 
 //----------------------------------------------------- 비고 수정 ---------------------------------------
@@ -272,6 +300,7 @@ public String updateSellMemo(HttpServletRequest request,Model model) {
 	return "sell/updateSellMemo";
 }//sellMemoUpdate
 	
+//----------------------------------------------------- 비고 수정 ---------------------------------------
 @PostMapping("/sellMemoUpdatePro")
 public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 	System.out.println("SellController sellMemoUpdatePro()");
@@ -281,6 +310,7 @@ public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 	return ResponseEntity.ok("<script>window.close();</script>");
 }//sellMemoUpdatePro
 
+//------------------------------------------------------- 수주 조회 -----------------------------------------------
 @PostMapping("/sellMainSearch")
 public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sellDTO) {
 	SellDTO sellDTOSearch = sellDTO; // 검색값을 저장해서 검색페이지에서 표시하기위해서 사용
@@ -340,14 +370,62 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	sellDTOSearch.setSellState("");
 	model.addAttribute("sellDTOSearch",sellDTOSearch);
 	model.addAttribute("sellList", sellList);// ("이름", 값)
-	// 페이지
+	//	return "sell/sellMain";
 	
-	// center/notice.jsp
-	// WEB-INF/views/center/notice.jsp
+	//------------------------------ 수주 조회 페이징 -----------------------------------	
+	// 한 화면에 보여줄 글 개수 설정
+	int pageSize = 10;
+	// 현재 페이지 번호 가져오기
+	String pageNum = request.getParameter("pageNum");
+	// 페이지 번호가 없을 경우 "1"로 설정
+	if (pageNum == null) {
+	    pageNum = "1";
+	}
+
+	// 페이지 번호를 정수로 변경
+	int currentPage = Integer.parseInt(pageNum);
+
+	// DTO에 담을 정보
+	SellPageDTO sellSearchPageDTO = new SellPageDTO();
+	sellSearchPageDTO.setPageSize(pageSize);
+	sellSearchPageDTO.setPageNum(pageNum);
+	sellSearchPageDTO.setCurrentPage(currentPage);
+
+	// ...
+
+	// 전체 글 개수 가져오기
+	int count = sellService.getSellSearchCount();
+
+	// 전체 페이지 수 계산
+	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+
+	// 한 번에 보일 페이지 블록 수 설정
+	int pageBlock = 5;
+
+	// 페이지 블록의 시작과 끝 설정
+	int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+	int endPage = startPage + pageBlock - 1;
+
+	// 끝 페이지 번호가 전체 페이지 수보다 크면 조정
+	if (endPage > pageCount) {
+	    endPage = pageCount;
+	}
+
+	sellSearchPageDTO.setCount(count);
+	sellSearchPageDTO.setPageBlock(pageBlock);
+	sellSearchPageDTO.setStartPage(startPage);
+	sellSearchPageDTO.setEndPage(endPage);
+	sellSearchPageDTO.setPageCount(pageCount);
+
+	// 페이지
+	model.addAttribute("sellSearchPageDTO", sellSearchPageDTO);
+	
 	return "sell/sellMain";
 	
-}
+}//sellMainSearch
 	
+	
+
 	
 	
 	

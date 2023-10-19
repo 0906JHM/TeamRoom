@@ -18,8 +18,8 @@
 		sellState,
 		s.clientCode clientCode, c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice prodPrice,
-		stockTestTest.whseCount
-		whseCount
+		stock.stockCount
+		stockCount
 		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
@@ -28,10 +28,10 @@
 		LEFT JOIN
 		product p
 		ON o.prodCode = p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON
 		o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		ORDER BY o.outCode DESC
 		LIMIT
 		#{startRow},
@@ -50,8 +50,8 @@
 		sellState,
 		s.clientCode clientCode, c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice prodPrice,
-		stockTestTest.whseCount
-		whseCount
+		stock.stockCount
+		stockCount
 		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
@@ -60,10 +60,10 @@
 		LEFT JOIN
 		product p
 		ON o.prodCode = p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON
 		o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		<where>
 			<if test="sellState == '검색'">
 				<if test="outCode != ''">
@@ -115,8 +115,8 @@
 		sellState,
 		s.clientCode clientCode, c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice prodPrice,
-		stockTestTest.whseCount
-		whseCount
+		stock.stockCount
+		stockCount
 		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
@@ -125,10 +125,10 @@
 		LEFT JOIN
 		product p
 		ON o.prodCode = p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON
 		o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		<where>
 			<if test="outCode != ''">
 				AND o.outCode like CONCAT('%', #{outCode}, '%')
@@ -166,7 +166,7 @@
 		c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice
 		prodPrice,
-		stockTestTest.whseCount whseCount
+		stock.stockCount stockCount
 		FROM outProduct o LEFT JOIN
 		sell s
 		ON o.sellCode = s.sellCode
@@ -176,9 +176,9 @@
 		LEFT JOIN product p
 		ON o.prodCode =
 		p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		) AS subquery;
 	</select>
 
@@ -200,7 +200,7 @@
 		c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice
 		prodPrice,
-		stockTestTest.whseCount whseCount
+		stock.stockCount stockCount
 		FROM outProduct o LEFT JOIN
 		sell s
 		ON o.sellCode = s.sellCode
@@ -210,9 +210,9 @@
 		LEFT JOIN product p
 		ON o.prodCode =
 		p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		<where>
 
 			<if test="sellState == '검색'">
@@ -269,7 +269,7 @@
 		c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice
 		prodPrice,
-		stockTestTest.whseCount whseCount
+		stock.stockCount stockCount
 		FROM outProduct o LEFT JOIN
 		sell s
 		ON o.sellCode = s.sellCode
@@ -279,9 +279,9 @@
 		LEFT JOIN product p
 		ON o.prodCode =
 		p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		<where>
 			<if test="outCode != ''">
 				AND o.outCode like CONCAT('%', #{outCode}, '%')
@@ -314,8 +314,8 @@
 		sellState,
 		s.clientCode clientCode, c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice prodPrice,
-		stockTestTest.whseCount
-		whseCount
+		stock.stockCount
+		stockCount
 		FROM outProduct o LEFT JOIN sell s
 		ON o.sellCode =
 		s.sellCode
@@ -324,10 +324,10 @@
 		LEFT JOIN
 		product p
 		ON o.prodCode = p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON
 		o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		WHERE outCode = #{outCode}
 	</select>
 
@@ -352,9 +352,9 @@
 		outCode = #{outCode}
 	</update>
 
-	<update id="updateWhseCount">
-		UPDATE stockTestTest
-		SET whseCount = whseCount -
+	<update id="updatestockCount">
+		UPDATE stock
+		SET stockCount = stockCount -
 		#{outCount}
 		WHERE prodCode = #{prodCode}
 	</update>
@@ -362,7 +362,7 @@
 	<update id="updateOutProductContent">
 		UPDATE outProduct
 		SET outCount = #{outCount}, outMemo
-		= #{outMemo}
+		= #{outMemo}, outEmpId = #{outEmpId}
 		WHERE outCode = #{outCode}
 	</update>
 
@@ -404,7 +404,7 @@
 		c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice
 		prodPrice,
-		stockTestTest.whseCount whseCount
+		stock.stockCount stockCount
 		FROM outProduct
 		o LEFT JOIN sell s
 		ON o.sellCode =
@@ -415,11 +415,11 @@
 		product p
 		ON o.prodCode =
 		p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON
 		o.prodCode
 		=
-		stockTestTest.prodCode
+		stock.prodCode
 		ORDER BY o.outCode DESC
 	</select>
 
@@ -439,7 +439,7 @@
 		c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice
 		prodPrice,
-		stockTestTest.whseCount whseCount
+		stock.stockCount stockCount
 		FROM outProduct
 		o LEFT JOIN sell s
 		ON o.sellCode =
@@ -450,10 +450,10 @@
 		product p
 		ON o.prodCode =
 		p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON
 		o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		<where>
 			<if test="outCode != ''">
 				AND o.outCode like CONCAT('%', #{outCode}, '%')
@@ -489,7 +489,7 @@
 		c.clientCompany clientCompany,
 		p.prodName prodName, p.prodPrice
 		prodPrice,
-		stockTestTest.whseCount whseCount
+		stock.stockCount stockCount
 		FROM outProduct
 		o LEFT JOIN sell s
 		ON o.sellCode =
@@ -500,10 +500,10 @@
 		product p
 		ON o.prodCode =
 		p.prodCode
-		LEFT JOIN stockTestTest
+		LEFT JOIN stock
 		ON
 		o.prodCode =
-		stockTestTest.prodCode
+		stock.prodCode
 		<where>
 			<if test="sellState == '검색'">
 				<if test="outCode != ''">

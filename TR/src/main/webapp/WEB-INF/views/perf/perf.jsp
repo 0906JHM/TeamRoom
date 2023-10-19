@@ -64,7 +64,7 @@
 	<div class="clientbody1">
 	<div class="tableform"> 
 			<div class="clienttotal">
-			 <h2> 생산실적: 총 x 건 </h2>
+			 <h2> 총 ${pageDTO.count} 건 </h2>
 			
 			<div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"
@@ -267,7 +267,7 @@ $(document).ready(function() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                cutout: 100,
+                cutout: 120,
                 chartArea: {
                     // 차트 영역 크기 조절
                     left: 50,

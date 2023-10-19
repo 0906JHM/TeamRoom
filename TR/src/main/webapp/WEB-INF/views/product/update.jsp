@@ -19,12 +19,12 @@
 <body>
 
 	<div class="container">
-		<h2>제품 추가</h2>
+		<h2>품목 추가</h2>
 
 		<form action="${pageContext.request.contextPath}/product/updatePro"
 			method="post">
 			<div class="form-group">
-				<p>제품코드</p>
+				<p>제품 코드</p>
 				<input type="text" name="prodCode" value="${prodDTO.prodCode}">
 			</div>
 			<div class="form-group">
@@ -32,11 +32,11 @@
 				<input type="text" name="prodName" value="${prodDTO.prodName}">
 			</div>
 			<div class="form-group">
-				<p>제품단위</p>
+				<p>제품 단위</p>
 				<input type="text" name="prodUnit" value="${prodDTO.prodUnit}">
 			</div>
 			<div class="form-group">
-				<p>용량</p>
+				<p>용량(ml)</p>
 				<input type="text" name="prodSize" value="${prodDTO.prodSize}">
 			</div>
 			<div class="form-group">
@@ -59,11 +59,11 @@
 					value="${prodDTO.whseName}" style="cursor: pointer;">
 			</div>
 			<div class="form-group">
-				<p>매출단가</p>
+				<p>매출 단가(원)</p>
 				<input type="number" step="0.01" name="prodPrice"
 					value="${prodDTO.prodPrice}">
 			</div>
-			<p>비고</p>
+			<p class="memo">비고</p>
 			<%--     <input type="text" name="prodMemo" value="${prodDTO.prodMemo}"> --%>
 			<textarea name="prodMemo" class="prodMemo" rows="5" cols="">${prodDTO.prodMemo}</textarea>
 			<div id="button">

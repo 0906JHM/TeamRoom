@@ -22,15 +22,15 @@
 		<table>
 			<tbody>
 				<tr>
-					<th>출고코드</th>
+					<th>출고 코드</th>
 					<td><input type="text" name="outCode" value="${outProductDTO.outCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>수주코드</th>
+					<th>수주 코드</th>
 					<td><input type="text" name="sellCode" value="${outProductDTO.sellCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>거래처코드</th>
+					<th>거래처 코드</th>
 					<td><input type="text" name="clientCode" value="${outProductDTO.clientCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
@@ -38,19 +38,19 @@
 					<td><input type="text" name="clientCompany" value="${outProductDTO.clientCompany }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>상품코드</th>
+					<th>제품 코드</th>
 					<td><input type="text" name="prodCode" value="${outProductDTO.prodCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>상품이름</th>
+					<th>제품명</th>
 					<td><input type="text" name="prodName" value="${outProductDTO.prodName }" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th>담당자</th>
-					<td><input type="text" name="outEmpId" value="${outProductDTO.outEmpId }" readonly="readonly"></td>
+					<td><input type="text" name="outEmpId" value="${sessionScope.id}" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>출고상태</th>
+					<th>출고 상태</th>
 					<td><input type="text" name="sellState" value="${outProductDTO.sellState }" readonly="readonly"></td>
 				</tr>
 			</tbody>
@@ -58,7 +58,7 @@
 		<br>
 		<table class="outProductTable">
 			<tr>
-				<th colspan="2">납품예정일</th>
+				<th colspan="2">납품 예정일</th>
 				<th colspan="2">출고일</th>
 				<th colspan="2">재출고일</th>
 			</tr>
@@ -68,20 +68,24 @@
 				<td colspan="2"><input type="text" name="outRedate" value="${outProductDTO.outRedate }" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th colspan="2">수주개수</th>
-				<th colspan="2">출고개수</th>
-				<th colspan="2">재고개수</th>
+				<th colspan="2">수주 개수</th>
+				<th colspan="2">출고 개수</th>
+				<th colspan="2">재고 개수</th>
 			</tr>
 			<tr> 
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
 				<td colspan="2">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
-					<c:if test="${outProductDTO.whseCount == 0} ">
-						<input type="number" name="outCount" value="${outProductDTO.outCount }" readonly="readonly" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+					<c:if test="${outProductDTO.whseCount == null || outProductDTO.whseCount == 0}">
+   						<input type="number" name="outCount" value="0" readonly="readonly">
+    					<script type="text/javascript">
+        					console.log("재고가 0개");
+    					</script>
 					</c:if>
-					<c:if test="${outProductDTO.whseCount > 0} ">
-						<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+					<c:if test="${outProductDTO.whseCount != null && outProductDTO.whseCount > 0}">
+    					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
 					</c:if>
+
 				</td>
 				<td colspan="2">
 					<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
@@ -90,7 +94,7 @@
 			</tr>
 			<tr>
 				<th colspan="3">납품가</th>
-				<th colspan="3">출고가격</th>
+				<th colspan="3">출고 가격</th>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -105,7 +109,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th colspan="6">출고비고</th>
+				<th colspan="6">비고</th>
 			</tr>
 			<tr>
 				<td colspan="6"><input type="text" name="outMemo" value="${outProductDTO.outMemo }" id="inputMemo" placeholder="비고 입력"></td>
@@ -118,6 +122,7 @@
 			<input type="button" value="닫기" onclick="window.close()">
 		</div>
 	</form>
+	
 	<script type="text/javascript">
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다

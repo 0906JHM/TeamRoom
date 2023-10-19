@@ -25,18 +25,27 @@ function setParentText(){
 	opener.document.getElementById("pInput").value = document.getElementById("cInput").value
 	window.close();
 }
+
+//memo 페이지 팝업창
+function openPopup4(clientCode) {
+	// 팝업창 속성
+	var popupWidth = 450;
+	var popupHeight = 500;
+	var left = (window.innerWidth - popupWidth) / 2;
+	var top = (window.innerHeight - popupHeight) / 2;
+	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
+	// 새창을 열기 위한 URL 설정
+	var url = '${pageContext.request.contextPath}/Rawmaterials/memo2?clientCode=' + clientCode;
+	// 팝업창 열고 속성 설정
+	var newWindow = window.open(url, '_blank', popupFeatures);       
+}
 </script>
 
 <!-- form(검색) -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/selectclient" method="get">
 거래처코드	<input type="text" name="search1" placeholder="거래처코드">
 거래처명	<input type="text" name="search2" placeholder="거래처명">
-분류		<select name="search3">
-		<option value="">전체</option>
-		<option value="수주처">수주처</option>
-		<option value="발주처">발주처</option>
-		</select>
-담당자 	<input type="text" name="search4" placeholder="담당자">
+담당자 	<input type="text" name="search3" placeholder="담당자">
 <input type="submit" value="검색">
 </form>
 
@@ -60,7 +69,7 @@ function setParentText(){
 </tr>
 
 <c:forEach var="clientDTO" items="${clientList}">
-<tr onclick="document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();">
+<tr onclick="if(event.target.tagName!='A'){document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();}">
 <td>${clientDTO.clientType}</td>
 <td>${clientDTO.clientCode}</td>
 <td>${clientDTO.clientCompany}</td>
@@ -74,7 +83,17 @@ function setParentText(){
 <td>${clientDTO.clientPhone}</td>
 <td>${clientDTO.clientFax}</td>
 <td>${clientDTO.clientEmail}</td>
-<td>${clientDTO.clientMemo}</td>
+
+<!-- 비고기능 -->
+<td><c:choose>
+<c:when test="${not empty clientDTO.clientMemo}">
+<a href="#" onclick="openPopup4('${clientDTO.clientCode}');" style="color:black;">[보기]</a>
+</c:when>
+<c:otherwise>
+<c:set var="clientMemo" value="" />
+</c:otherwise>
+</c:choose></td>
+
 </tr>
 </c:forEach>
 </table>

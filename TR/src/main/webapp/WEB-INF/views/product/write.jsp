@@ -23,7 +23,7 @@
     <form action="${pageContext.request.contextPath}/product/writePro" method="post">
     
     <div class="form-group">
-    <p>제품코드</p>
+    <p>제품 코드</p>
     <input type="text" name="prodCode" value="${prodDTO.prodCode }" readonly="readonly">
     </div>
     <div class="form-group">
@@ -31,11 +31,11 @@
     <input type="text" name="prodName" placeholder="제품명을 입력해 주세요">
     </div>
     <div class="form-group">
-    <p>제품단위</p>
+    <p>제품 단위</p>
     <input type="text" name="prodUnit"  placeholder="제품 단위를 입력해 주세요." value="EA">
     </div>
     <div class="form-group">
-    <p>용량</p>
+    <p>용량(ml)</p>
     <input type="text" name="prodSize"  placeholder="용량을 입력해 주세요.">
     </div>
     <div class="form-group">
@@ -58,10 +58,10 @@
     style="cursor: pointer;" readonly>
     </div>
     <div class="form-group">
-    <p>매출단가</p>
+    <p>매출 단가(원)</p>
     <input type="number" step="0.01" name="prodPrice" placeholder="매출 단가를 입력해 주세요.">
     </div>
-    <p>비고</p>
+    <p class="memo">비고</p>
      <textarea name="prodMemo" class="prodMemo" placeholder="비고를 입력해 주세요." rows="5" cols=""></textarea>
     <div id="button">
     <input type="submit" value="확인">
