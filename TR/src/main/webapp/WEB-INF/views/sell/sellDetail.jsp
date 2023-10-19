@@ -11,13 +11,23 @@
 <%--     <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"> --%>
 <%--  <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css"> --%>
 <link href="${pageContext.request.contextPath}/resources/css/popup.css" rel="stylesheet" type="text/css">
+<%
+// 관리자 또는 영업팀 출고 상세 페이지 열람 가능 게시판 접근 가능
+String department = "";
+if (session.getAttribute("empDepartment") != null) {
+    department = (String) session.getAttribute("empDepartment");
+}
 
+// 상수 정의
+final String ADMIN_DEPARTMENT = "영업팀";
+%>
 </head>
 
 <!------------------------------------------------------ 본문 ---------------------------------------------------->
-
 <body>
-<div class="popupContainer">
+ <c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
+<div class="popupContainer" id="body">
 <h1>수주 상세정보</h1>
 <div class="horizontal-line"></div>
     <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
@@ -60,17 +70,32 @@
 			<br>
 			
 			<c:if test="${sessionScope.empId == sellDTO.sellEmpId}">
-				<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'">수정</button>
+				<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'" >수정</button>
 			</c:if>
 			<button type="button" onclick="window.close()">닫기</button>
 	</form>
 
 </div>
+</c:when>
+  <c:otherwise >
+
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        
+</c:choose>
+
 <!--  ************************************************ javaScript *************************************************************-->
 
 <!----------------------------------------------- 등록버튼 ---------------------------------------------->
  
 <script type="text/javascript">
+var department = "<%= department %>";
+var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
+var sellStateButton1 = "전체";
+if (department null ) {
+		window.location.href = "<%= request.getContextPath() %>/login/login";
+}
 
 //팝업 옵션
 const popupOpt = "top=60,left=140,width=720,height=600";
@@ -91,13 +116,7 @@ function openPopup(url) {
     var popupWindow = window.open(url, '_blank', "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
     popupWindow.focus();
 }
-/* $(document).ready(function() {
-}); */
 
-
-// 이벤트 리스너 등록
-// document.getElementById('sellCount').addEventListener('input', calculateSellPrice);
-// document.getElementById('prodPrice9999').addEventListener('input', calculateSellPrice);
 
 // 초기화 함수
 calculateSellPrice();

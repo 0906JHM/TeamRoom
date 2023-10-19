@@ -41,55 +41,60 @@
 
 	<!------------------------------------------------------- 본문 타이틀 ---------------------------------------------------->
 	<div class="container">
-				<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
-
+		<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
 	
 		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
 		<div id="searchform">
-			<form action="${pageContext.request.contextPath}/sell/sellMainSearch"
-				method="post" id="selectedProId">
-				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode"> 
+			<form action="${pageContext.request.contextPath}/sell/sellMain"	method="get">
+				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode" value="${sellDTO.sellCode}"> 
 				
 				<label>거래처</label> 
-	        <input type="text" id="sellclientCode9999" name="clientCode" value="${sellDTOSearch.clientCode}" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" readonly >
-        	<input type="text" id="sellclientCompany9999" name="clientCompany" placeholder="거래처명" value="${sellDTOSearch.clientCompany}" onclick=searchItem('sellclient','sellclientCode9999'); readonly >
+	        <input type="text" id="sellclientCode9999" name="clientCode" value="${sellDTO.clientCode}" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" readonly >
+        	<input type="text" id="sellclientCompany9999" name="clientCompany" placeholder="거래처명" value="${sellDTO.clientCompany}" onclick=searchItem('sellclient','sellclientCode9999'); readonly >
 		
 				<br>
 				
 				<label>제품</label>  
-	        <input type="text" name="prodCode" id="prodCode9999" value="${sellDTOSearch.prodCode}"  onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
-	      	<input type="text" name="prodName" id="prodName9999" value="${sellDTOSearch.prodName}"  placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')">
+	        <input type="text" name="prodCode" id="prodCode9999" value="${sellDTO.prodCode}"  onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드" readonly>
+	      	<input type="text" name="prodName" id="prodName9999" value="${sellDTO.prodName}"  placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')">
 	      
 				<br>
 				
 				<label for="startDate">수주 일자</label> 
-	       		<input type="text" id="sellDate" name="daterange1" value="${sellDTOSearch.sellDate}" class="daterange" >
+	       		<input type="text" id="sellDate" name="daterange1" value="${sellDTO.sellDate}" class="daterange" >
 				
 				<label for="startDate">납기일자</label> 
-				<input type="text" id="sellDuedate" name="daterange2" value="${sellDTOSearch.sellDuedate}" class="daterange">
+				<input type="text" id="sellDuedate" name="daterange2" value="${sellDTO.sellDuedate}" class="daterange">
 				
-				<input type="hidden" id="sellState" name="sellState" value="${sellDTOSearch.sellState}">
+				<input type="hidden" id="sellState" name="sellState" value="${sellDTO.sellState}">
 			
 				<input type="submit" value="조회" id="searchButton">
 				<input type="button" value="취소" id="resetButton">
-			</form>
+			
 		</div>
 		<br>
 		<!------------------------------------------------------- 추가, 수정, 삭제 버튼 ---------------------------------------------------->
 		<div class="buttons">
-			<button id="add" onclick="openSellAdd()">추가</button>
-			<button id="delete">삭제</button>
+			<button  style="display: none;" id="add" onclick="openSellAdd()">추가</button>
+			<button  style="display: none;" id="delete">삭제</button>
 		</div>
 		
 		<!------------------------------------------------------- 수주 상태 검색, 엑셀---------------------------------------------------->
 		<div id="buttons">
-			<input type="button" class="buttons highlighted" value="전체" id="allButton">
-    		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
-    		<input type="button" class="buttons " value="중간납품" id="interim_deliveryButton">
-    		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
-    		<input type="button" id="exportButton" value="엑셀">
+			<input type="submit" class="buttons highlighted" value="전체" id="allButton">
+    		<input type="submit" class="buttons " value="미출고" id="non_deliveryButton">
+    		<input type="submit" class="buttons " value="중간납품" id="interim_deliveryButton">
+    		<input type="submit" class="buttons " value="출고완료" id="deliveryButton">
+    		<input type="submit" id="exportButton" value="엑셀">
 		</div>
-
+		</form>
+ <label for="perPageSelect" style ="bottom:2px;">항목 수:</label>
+<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${paging.cntPerPage}">
+    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+</select>
 		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
 		<small>총 ${sellPageDTO.count}건</small>
 
@@ -151,20 +156,23 @@
 								
 								<td>${sellDTO.sellEmpId}</td><!-- 수주담당직원 -->
 								
-
+								
 								<c:choose>
 									<c:when test="${not empty sellDTO.sellMemo}">
 										<td class="tg-llyw2"><a href="#"
 											onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();"
 											style="color: red;">[보기]</a></td>
 									</c:when>
-									<c:otherwise>
-
-										<td class="tg-llyw2"><a href="#"
+									<c:otherwise >
+									
+										<td class="tg-llyw2" ><a href="#"
 											onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();"
-											style="color: #384855;">[입력]</a></td>
+											style="color: #384855;" style="display: none;" id="memoAdd">[입력]</a></td>
+											
 									</c:otherwise>
 								</c:choose>
+								
+								
 
 
 							</tr>
@@ -174,23 +182,25 @@
 				</table>
 			</div>
 			<!------------------------------------------------- 페이징 ------------------------------------------>
+			
+			<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
+				<a
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
+					style="text-decoration: none; color: #5EC397;">◀</a>
+			</c:if>
+			
+			
 			<c:forEach var="i" begin="${sellPageDTO.startPage}"
 				end="${sellPageDTO.endPage}" step="1">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
 					style="text-decoration: none; color: #5EC397;">${i}</a>
 			</c:forEach>
-
-			<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
-				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
-					style="text-decoration: none; color: #5EC397;">◀</a>
-			</c:if>
 
 
 			<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
 					style="text-decoration: none; color: #5EC397;">▶</a>
 			</c:if>
 
@@ -201,9 +211,11 @@
 
 	<!--################################################################ script ###################################################################-->
 	
+
 	
 	<script type="text/javascript">
 
+	 
 	$(function() {
 	    // 클래스로 daterangepicker 초기화
 	    $('.daterange').daterangepicker({
@@ -230,11 +242,8 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	<script>
 
-var contextPath = "${pageContext.request.contextPath}";
-
-
+<script>
 <!------------------------------------------------- 팝업창 옵션 ------------------------------------------>
 //팝업 옵션
 const popupOpt = "top=60,left=140,width=720,height=600";
@@ -252,9 +261,7 @@ $(document).ready(function() {
         window.opener.location.reload(); // 부모창 새로고침
         window.close(); // 현재창 닫기
     }
-});
-<!--------------------------------------------------- 목록 전체 선택 ----------------------------------------->
-$(document).ready(function() {
+
 $('#select-list-all').click(function() {
 			var checkAll = $(this).is(":checked");
 			
@@ -420,22 +427,26 @@ function openSellDetail(sellCode) {
         var newWindow = window.open(url, '_blank', popupFeatures); 
     }
     
- // 팝업창에서 작업 완료후 닫고 새로고침
-    $(document).ready(function() {
-//     	var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
-//         if (refreshAndClose) {
-//             window.opener.location.reload(); // 부모창 새로고침
-//             window.close(); // 현재창 닫기
-//         }
-           
-        document.addEventListener('DOMContentLoaded', ()=> {
-        	exportButton.addEventListener('click', exportExcel);
-       	});
-    });
 
-    <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
+    
     $(document).ready(function () {
-		//엑셀
+    	<!--------------------------------------------------- 페이지 권한 ----------------------------------------->
+    	var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+			
+		  if (team === "영업팀" || team === "관리자") {
+			  $('#add').show();
+				
+				$('#delete').show();
+				$('#memoAdd').show();
+		   }
+		  else if (team ===""){
+			  window.location.href = "${pageContext.request.contextPath}/login/logout";
+		  }
+		  <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
+		document.addEventListener('DOMContentLoaded', ()=> {
+           	exportButton.addEventListener('click', exportExcel);
+          	});
+		
 			 const exportButton = document.querySelector('#exportButton');
 			 exportButton.addEventListener('click', exportExcel);
 					function exportExcel() {
@@ -497,7 +508,7 @@ function openSellDetail(sellCode) {
 	  
 	    allButton.addEventListener('click', function () {
 	        // 전체 버튼을 클릭할 때, input 태그의 값을 변경
-	        sellStateInput.value = "전체";
+	        sellStateInput.value = "";
 // 	        $('#selectedProId').submit();
 	    });
 
@@ -540,9 +551,22 @@ function openSellDetail(sellCode) {
     $("#sellState").val('');
      firstLoadSellList();
  });
+//----------------------------------- 페이지 항목 수 설정 -----------------------------------
+/* function applyFilters() {
+        var perPageValue = document.getElementById("perPageSelect").value;
+        var searchLine = "${search.search_line}";
+        var fromDate = "${search.search_fromDate}";
+        var toDate = "${search.search_toDate}";
+        var place = "${search.search_place}";
+        var prod = "${search.search_prod}";
 
+        var url = '${pageContext.request.contextPath}/sell/sellList?nowPage=1&cntPerPage=' + perPageValue +
+            '&search_line=' + searchLine + '&search_fromDate=' + fromDate +
+            '&search_toDate=' + toDate + '&search_place=' + place + '&search_prod=' + prod;
 
-
+        // Redirect to the generated URL
+        window.location.href = url;
+    } */
 
  </script>
 </body>

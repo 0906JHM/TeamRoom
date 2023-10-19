@@ -9,6 +9,11 @@ body {
 	flex-direction: column;
 }
 
+.aaa{
+	margin-left : 10px;
+	
+}
+
 h2 {
 	font-size: 30px;
 	font-weight: bold;
@@ -87,12 +92,12 @@ button {
 
 .ab1 {
 	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-	height: 40px;
+	height: 35px;
 	border-radius: 5px;
 	color: #FFFFFF;
 	border: 0;
 	text-align: center;
-	width: 8%;
+	width: 95px;
 	font-weight: 500;
 	font-size: 20px;
 }

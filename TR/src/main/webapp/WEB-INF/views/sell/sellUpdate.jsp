@@ -14,11 +14,10 @@
     <%-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --%>
 <%--     <link href="${pageContext.request.contextPath}/resources/css/daterange.css" rel="stylesheet" type="text/css"> --%>
 <%--  <link href="${pageContext.request.contextPath}/resources/css/sell.css" rel="stylesheet" type="text/css"> --%>
- 
+
 </head>
 
 <!------------------------------------------------------ 본문 ---------------------------------------------------->
-
 <body>
 <div class="popupContainer">
 <h1>수주 정보 수정</h1>
@@ -69,16 +68,25 @@
 	</form>
 
 </div>
+
+
+
 <!--  ************************************************ javaScript *************************************************************-->
 
 
 
 <script type="text/javascript">
 
-//--------------------------------------------------- 제품가격에 따라 수주가격 자동 변경  ----------------------
+
+  $(document).ready(function () {
+	//--------------------------------------------------- 페이지 권한 ----------------------
+                var team = "${sessionScope.empDepartment}";
+
+                if (team === "" || (team !== "관리자" && team !== "영업팀")) {
+                    window.location.href = "${pageContext.request.contextPath}/login/logout";
+                }
+   //--------------------------------------------------- 제품가격에 따라 수주가격 자동 변경  ----------------------
 // 제품 코드의 값이 변경이 될때 가격 변경
-$(document).ready(function() {
-    // 동적 이벤트 핸들러 등록
     $(document).on('change', '#prodCode9999', function() {
     	console.log("change 이벤트");
         calculateSellPrice();
@@ -105,8 +113,7 @@ function openPopup(url) {
     var popupWindow = window.open(url, '_blank', "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
     popupWindow.focus();
 }
-$(document).ready(function() {
-});
+
 
 //--------------------------------------------------- 수주가격 구하는 함수 (=제품가격*수주수량) ----------------------
 function calculateSellPrice() {

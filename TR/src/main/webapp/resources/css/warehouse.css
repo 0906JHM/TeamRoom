@@ -27,6 +27,10 @@ margin-left: 1%;
 display: flex;
 align-items: center;
 }
+.aaa{
+	margin-left : 10px;
+	
+}
 .tab{
 	border: 1px solid rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 }
@@ -57,7 +61,7 @@ hr {
 #selected select {
 	border: 1px solid #adb5bb;
 	border-radius: 5px;
-	width: 100px;
+	width: 150px;
 	height: 40px;
 	font: 500 18px/18px "Inter", sans-serif;
 	padding-left: 10px;

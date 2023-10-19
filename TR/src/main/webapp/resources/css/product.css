@@ -58,7 +58,7 @@ button {
 	font: 500 20px/20px "Inter", sans-serif
 }
 
-button#excelDownload {
+button#exportButton {
     align-items: center;
     /* font-size: 18px; */
     /* text-align: center; */

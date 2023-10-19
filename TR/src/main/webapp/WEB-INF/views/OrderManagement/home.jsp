@@ -127,7 +127,7 @@ $(document).ready(function() {
 <!-- form(검색) -->
 <div id="searchForm">
 <form action="${pageContext.request.contextPath}/OrderManagement/home" method="get">
-<label>발주번호</label>		<input type="text" name="search1" placeholder="발주번호">
+<label>발주코드</label>		<input type="text" name="search1" placeholder="발주번호">
 <label>품번</label>		<input type="text" name="search2" placeholder="품번">
 <label>종류</label>		<select name="search3">
 						<option value="">전체</option>
@@ -137,8 +137,8 @@ $(document).ready(function() {
 						<option value="라벨">라벨</option>
 						<option value="포장재">포장재</option>
 						</select>
-<label>거래처</label>		<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
-<input type="submit" value="조회" id="searchbtn">
+<label>거래처코드</label>	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+<input type="submit" value="조회">
 </form>
 </div>
 <hr>
@@ -153,11 +153,11 @@ $(document).ready(function() {
 <table id="rawmaterialsList">
 <thead>
 <tr>
-<td>발주번호</td>
+<td>발주코드</td>
 <td>품번</td>
 <td>품명</td>
 <td>종류</td>
-<td>거래처명</td>
+<td>거래처코드</td>
 <td>창고코드</td>
 <td>창고수량</td>
 <td>발주수량</td>
@@ -179,7 +179,16 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.rawType}</td>
 <td>${ordermanagementDTO.clientCode}</td>
 <td>${ordermanagementDTO.whseCode}</td>
-<td>${ordermanagementDTO.whseCount}</td>
+<td>
+<c:choose>
+<c:when test="${ordermanagementDTO.whseCount < 10}">
+<span style="color:red;">${ordermanagementDTO.whseCount}</span>
+</c:when>
+<c:otherwise>
+${ordermanagementDTO.whseCount}
+</c:otherwise>
+</c:choose>
+</td>
 <td>${ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.rawPrice}</td>
 <td>${ordermanagementDTO.rawPrice * ordermanagementDTO.buyCount}</td>

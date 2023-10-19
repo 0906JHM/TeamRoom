@@ -31,10 +31,16 @@
     </form>
 </div>
 <!---------------------------------------------- javascript ---------------------------------------------->
-
-<!----------------------------------------------- 수정 버튼 ---------------------------------------------->
-
-
+<script type="text/javascript">
+$(document).ready(function() {
+	/*--------------------------------- 페이지 권한 ----------------------------------------  */
+	var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+	
+	  if (team ==="" || team !== "관리자" || team !== "영업팀"){
+		  window.location.href = "${pageContext.request.contextPath}/login/logout";
+	  }
+});
+</script>
 
 	
 
