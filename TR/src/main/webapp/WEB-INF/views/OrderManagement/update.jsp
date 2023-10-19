@@ -39,8 +39,8 @@
 <tr><td>담당자</td>
     <td><input type="text" name="buyEmpId" value="${ordermanagementDTO.buyEmpId}"></td></tr>
 <tr><td>입고상태</td>
-    <td><input type="radio" name="buyInstate" value="발주완료" checked>발주완료
-    	<input type="radio" name="buyInstate" value="입고완료">입고완료</td></tr>
+    <td><input type="radio" name="buyInstate" value="신청완료" checked>신청완료
+		<input type="radio" name="buyInstate" value="발주완료">발주완료</td></tr>
 </table>
 
 <input type="submit" value="수정">
