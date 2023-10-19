@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.SellDTO;
-import com.itwillbs.domain.SellPageDTO;
 
 @Repository
 public class SellDAO {
@@ -23,10 +22,10 @@ public class SellDAO {
 	private static final Logger logger = LoggerFactory.getLogger(SellDAO.class);;
 	
 //----------------------------------------------------- 수주 목록 --------------------------------------------------------	
-	public List<SellDTO> getSellList(SellPageDTO sellPageDTO) {
+	public List<SellDTO> getSellList(SellDTO sellDTO) {
 		System.out.println("SellDAO getSellList()");
 
-		return sqlSession.selectList(namespace + ".getSellList", sellPageDTO);
+		return sqlSession.selectList(namespace + ".getSellList", sellDTO);
 	}// getSellList
 
 //----------------------------------------------------- 수주 개수 --------------------------------------------------------
@@ -95,18 +94,19 @@ public class SellDAO {
 		
 		//---------------------------------------------- 수주 조회 목록 ------------------------------------------------
 		public List<SellDTO> getSellListSearch(SellDTO sellDTO) {
-			if("전체".equals(sellDTO.getSellState())) {
+			/*if("전체".equals(sellDTO.getSellState())) {*/
 				return sqlSession.selectList(namespace + ".getSellListAllSearch", sellDTO);
-			}else {
-				return sqlSession.selectList(namespace + ".getSellListSearch", sellDTO);
-			}
+				/*
+				 * }else { return sqlSession.selectList(namespace + ".getSellListSearch",
+				 * sellDTO); }
+				 */
 		}//getSellListSearch
 
 	//----------------------------------------------------- 수주 조회 개수 --------------------------------------------------------
-		public int getSellSearchCount() {
+		public int getSellSearchCount(SellDTO sellDTO) {
 			System.out.println("SellDAO getSellSearchCount()");
 
-			return sqlSession.selectOne(namespace + ".getSellSearchCount");
+			return sqlSession.selectOne(namespace + ".getSellSearchCount", sellDTO);
 		}//getSellSearchCount
 		
 		

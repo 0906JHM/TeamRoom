@@ -26,7 +26,8 @@ body {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	padding: 20px;
-	width: 300px;
+	width: 500px;
+	height: 500px;
 }
 
 h2 {
@@ -38,7 +39,7 @@ h2 {
 }
 
 input[type="text"], input[type="password"] {
-	width: 80%;
+	width: 40%;
 	padding: 10px;
 	border-radius: 3px;
 	outline: none;
@@ -48,7 +49,7 @@ input[type="text"], input[type="password"] {
 
 button {
 	width: 55px;
-	height: 25px;
+	height: 35px;
 	background-color: #5EC397;
 	color: #FFFFFF;
 	border: none;
@@ -66,6 +67,8 @@ button:hover {
 </head>
 <body>
 	<div class="login-container">
+	<img src="${pageContext.request.contextPath }/resources/img/logo.png" style="margin-top: 30px; margin-bottom: 30px;">
+	
 		<h2>로그인</h2>
 		<form action="${pageContext.request.contextPath}/login/loginPro" id="login" method="post">
 			

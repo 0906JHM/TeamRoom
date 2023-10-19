@@ -60,7 +60,7 @@
 			<br>
 			
 			<c:if test="${sessionScope.empId == sellDTO.sellEmpId}">
-				<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'">수정</button>
+				<button type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'" style="display: none;">수정</button>
 			</c:if>
 			<button type="button" onclick="window.close()">닫기</button>
 	</form>
@@ -91,8 +91,18 @@ function openPopup(url) {
     var popupWindow = window.open(url, '_blank', "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
     popupWindow.focus();
 }
-/* $(document).ready(function() {
-}); */
+ $(document).ready(function() {
+	 var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+		
+	  if (team === "영업팀" || team === "관리자") {
+		  $('#add').show();
+			
+			$('#delete').show();
+	   }
+	  else if (team ===""){
+		  window.location.href = "${pageContext.request.contextPath}/login/logout";
+	  }
+}); 
 
 
 // 이벤트 리스너 등록
