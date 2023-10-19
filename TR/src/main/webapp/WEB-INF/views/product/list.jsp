@@ -77,7 +77,7 @@
 				<button id="delete">삭제</button>
 				<!-- 			<button id="cancel">취소</button> -->
 				<!-- 			<button id="save">저장</button> -->
-				<button id="excelDownload" class="buttons">엑셀⬇</button>
+<!-- 				<button id="excelDownload" class="buttons">엑셀⬇</button> -->
 			</div>
 		</c:if>
 		<h3 style="padding-left: 1%;">
@@ -152,6 +152,7 @@
 				</table>
 			</div>
 			<div class="page">
+			<button id="excelDownload" class="buttons">엑셀⬇</button>
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
 					<a
 						href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Prev</a>
@@ -334,6 +335,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 					// 현재 날짜를 가져오는 함수
 					function getToday() {
+						
 					    var date = new Date();
 					    var year = date.getFullYear();
 					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
