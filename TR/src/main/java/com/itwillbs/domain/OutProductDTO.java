@@ -25,8 +25,8 @@ public class OutProductDTO {
 	private String clientCompany;		// 거래처명
 	private String prodName;			// 상품이름
 	private float prodPrice;			// 상품 EA 가격
-	private int whseCount;				// 재고개수
-	
+	private int stockCount;				// 재고개수
+	private int clientSale;				// 수정될 매출액
 //	페이징 처리를 위한 DTO 
 	private int pageSize;	//표현할 게시물 수
 	private String pageNum;	//현재페이지

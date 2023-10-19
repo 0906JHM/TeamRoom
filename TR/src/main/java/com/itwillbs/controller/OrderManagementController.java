@@ -2,6 +2,7 @@ package com.itwillbs.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,14 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.OrderManagementDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
-import com.itwillbs.service.CalendarService;
 import com.itwillbs.service.InMaterialService;
 import com.itwillbs.service.OrderManagementService;
 import com.itwillbs.service.RawmaterialsService;
@@ -73,7 +72,11 @@ public class OrderManagementController {
 		        
 		// 품목추가한 내용 뿌려주기
 		List<OrderManagementDTO> ordermanagementList= ordermanagementService.getOrderManagementList(pageDTO);
-		        
+		
+		// buyDate가 오늘 또는 이전인 경우, buyInstate가 '신청완료'에서 '발주완료'로 변경
+	    Date today = java.sql.Date.valueOf(LocalDate.now()); // 오늘 날짜 가져옴
+	    ordermanagementService.updateBuyInstate(today);
+		
 		int count = ordermanagementService.getOrderManagementCount(pageDTO);
 		int pageBlock = 10;
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
@@ -293,7 +296,7 @@ public class OrderManagementController {
   	@GetMapping("/download")
   	public void download(HttpServletResponse response) throws IOException {
   	    Workbook workbook = new XSSFWorkbook();
-  	    Sheet sheet = workbook.createSheet("Orders");
+  	    Sheet sheet = workbook.createSheet("rawmaterialsList");
   	    Row header = sheet.createRow(0);
   	    header.createCell(0).setCellValue("발주번호");
   	    header.createCell(1).setCellValue("품번");
@@ -329,7 +332,7 @@ public class OrderManagementController {
   	        row.createCell(11).setCellValue(order.getBuyInstate());
   	    }
   	    response.setContentType("application/vnd.ms-excel");
-  	    response.setHeader("Content-Disposition", "attachment; filename=orders.xlsx");
+  	    response.setHeader("Content-Disposition", "attachment; filename=rawmaterialsList.xlsx");
   	    workbook.write(response.getOutputStream());
   	    workbook.close();
   	}

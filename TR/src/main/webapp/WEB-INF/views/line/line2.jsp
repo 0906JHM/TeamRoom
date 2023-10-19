@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>라인등록</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/employees2.css" rel="stylesheet" type="text/css">
 </head>
 <script type="text/javascript">
 
@@ -50,24 +51,25 @@ $.ajax({
 
 </script>
 <body>
-<h1>라인등록</h1>
+<div class="container">
+<h2>라인등록</h2>
 <form action="${pageContext.request.contextPath}/line/insertPro" id="join" method="post">
 
-라인코드:<input type="text" name="lineCode" class="lineCode"><br>
-라인명:<input type="text" name="lineName" class="lineName"><br>
-사용여부:
-<select name="lineUse" class="lineUse">
-    <option value="사용">사용</option>
-    <option value="미사용">미사용</option>
-    <option value="점검">점검</option>
-    <option value="고장">고장</option>
-</select><br>
-등록자:<select name="lineEmpId" class="lineEmpId"></select><br>
-등록일:<input type="date" name="lineInsertDate" class="lineInsertDate"><br>
-공정:<input type="text" name="lineProcess" class="lineProcess"><br>
+<div class="form-group"><p>라인코드:</p><input type="text" name="lineCode" class="lineCode"></div>
+<div class="form-group"><p>라인명:</p><input type="text" name="lineName" class="lineName"></div>
+<div class="form-group"><p>사용여부:</p>
+<select name="lineUse" class="lineUse select">
+    <option value="1">1</option>
+    <option value="0">0</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+</select></div>
+<div class="form-group"><p>등록자:</p><select name="lineEmpId" class="lineEmpId select"></select></div>
+<div class="form-group"><p>등록일:</p><input type="date" name="lineInsertDate" class="lineInsertDate"></div>
+<div class="form-group"><p>공정:</p><input type="text" name="lineProcess" class="lineProcess"></div>
 <button onclick="save">저장하기</button>
 
 </form>
-
+</div>
 </body>
 </html>
