@@ -246,7 +246,7 @@
 	<insert id="insertList">
 		INSERT INTO inMaterial
 		VALUES (#{inNum}, default,
-		#{inCount}, #{rawCode},#{buyNum}, default, #{clientCode}, default,
+		#{inCount}, #{rawCode},#{buyNum}, default, #{clientCode},
 		#{inState}, #{inPrice})
 	</insert>
 
