@@ -115,45 +115,6 @@
 	</div>
 
 	<script>
-		
-// 	$(document).ready(function () {
-// 	    var bodyHeight = $("body").height(); // 본문 요소의 높이를 가져옵니다.
-// 	    var sidebody = $('.sidebody'); // 올바른 변수 이름
-
-// 	    console.log(bodyHeight);
-// 	    console.log(bodyHeight);
-// 	    console.log(bodyHeight);
-// 	    if(bodyHeight>800){
-// 		    sidebody.css('height', bodyHeight + 'px'); // 올바른 변수 이름을 사용하여 사이드바의 높이를 본문의 높이와 일치시킵니다.
-// 	    }
-// 	});
-// 		$(document).ready(function() {
-// 		    var bodyHeight = $("body").height();
-// 		    var scrollLimit = 0;
-		    
-// 		    var sidebar = $('.sidebar');
-// 		    var initialSidebarTop = sidebar.offset().top;
-		    
-// 		    if(bodyHeight>800){ // body의 높이가 클때 바디의 높이 - 사이드바 높이한 만큼 사이드바가 움직이게
-// 		   		scrollLimit = Math.max(0, bodyHeight - sidebar.height()); // 음수를 방지하기 위해 Math.max를 사용
-// 		    }else{
-// 		    	scrollLimit = 0;
-// 		    }
-		    
-// // 		    var scrollLimit = 400; // 스크롤 제한을 조절할 값 (픽셀 단위)
-
-// 		    $(window).on('scroll', function() {
-// 		        var scrollTop = $(this).scrollTop();
-// 		        var newTop = initialSidebarTop + scrollTop;
-
-// 		        // 스크롤을 scrollLimit 이하로 제한
-// 		        if (scrollTop > scrollLimit) {
-// 		            newTop = initialSidebarTop + scrollLimit;
-// 		        }
-
-// 		        sidebar.css('top', newTop + 'px');
-// 		    });
-// 		});
 	  $(document).ready(function () {
             var bodyHeight = $("body").height();
             var sidebody = $('.sidebody');
@@ -165,7 +126,7 @@
             	scrollLimit = 0;
             }
             
-             $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
+            $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
             
 			console.log("bodyHeight : "+bodyHeight);
 			console.log("sidebar : "+sidebody.height());

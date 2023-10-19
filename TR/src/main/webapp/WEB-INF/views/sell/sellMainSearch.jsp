@@ -41,8 +41,7 @@
 
 	<!------------------------------------------------------- 본문 타이틀 ---------------------------------------------------->
 	<div class="container">
-				<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
-
+		<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
 	
 		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
 		<div id="searchform">
@@ -177,20 +176,20 @@
 			<c:forEach var="i" begin="${sellPageDTO.startPage}"
 				end="${sellPageDTO.endPage}" step="1">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}"
+					href="${pageContext.request.contextPath}/sell/sellMainSearch?pageNum=${i}"
 					style="text-decoration: none; color: #5EC397;">${i}</a>
 			</c:forEach>
 
 			<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
+					href="${pageContext.request.contextPath}/sell/sellMainSearch?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
 					style="text-decoration: none; color: #5EC397;">◀</a>
 			</c:if>
 
 
 			<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}"
+					href="${pageContext.request.contextPath}/sell/sellMainSearch?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}"
 					style="text-decoration: none; color: #5EC397;">▶</a>
 			</c:if>
 
@@ -233,7 +232,6 @@
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";
-
 
 <!------------------------------------------------- 팝업창 옵션 ------------------------------------------>
 //팝업 옵션
