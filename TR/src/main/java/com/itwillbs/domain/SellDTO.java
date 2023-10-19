@@ -29,5 +29,17 @@ public class SellDTO {
 	private String sellEndDate;//수주일자(daterange 기간 설정 끝나는 날)
 	private String sellEndDuedate;//납기일자(daterange 기간 설정 끝나는 날)
 	
+	// sellSearchPage
+	private int pageSize;
+	private String pageNum;
+	private int currentPage;
+	private int startRow;
+	private int endRow;
+	
+	private int count;
+	private int pageBlock;
+	private int startPage;
+	private int endPage;
+	private int pageCount;
 
 }//class
