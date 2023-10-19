@@ -103,10 +103,16 @@ function formCheck() {
         $('#sellAdd').submit();    
     }
 }
-//---------------------------------------------- 수주 단가 계산 함수 -----------------------------------------
-// 제품 코드의 값이 변경이 될때 가격 자동 변경
+
 $(document).ready(function() {
-    // 동적 이벤트 핸들러 등록
+	/*--------------------------------- 페이지 권한 ----------------------------------------  */
+	var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+	
+	  if (team ===""){
+		  window.location.href = "${pageContext.request.contextPath}/login/logout";
+	  }
+	//---------------------------------------------- 수주 단가 계산 함수 -----------------------------------------
+	// 제품 코드의 값이 변경이 될때 가격 자동 변경
     $(document).on('change', '#prodCode9999', function() {
     	console.log("change 이벤트");
         calculateSellPrice();

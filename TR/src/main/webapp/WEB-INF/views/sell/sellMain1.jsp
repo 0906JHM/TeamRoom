@@ -41,12 +41,13 @@
 
 	<!------------------------------------------------------- 본문 타이틀 ---------------------------------------------------->
 	<div class="container">
-		<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
+				<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
+
 	
 		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/sell/sellMainSearch"
-				method="post" id="selectedProId">
+				method="get" id="selectedProId">
 				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode"> 
 				
 				<label>거래처</label> 
@@ -176,20 +177,20 @@
 			<c:forEach var="i" begin="${sellPageDTO.startPage}"
 				end="${sellPageDTO.endPage}" step="1">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMainSearch?pageNum=${i}"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}"
 					style="text-decoration: none; color: #5EC397;">${i}</a>
 			</c:forEach>
 
 			<c:if test="${sellPageDTO.startPage > sellPageDTO.pageBlock}">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMainSearch?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage - sellPageDTO.pageBlock}"
 					style="text-decoration: none; color: #5EC397;">◀</a>
 			</c:if>
 
 
 			<c:if test="${sellPageDTO.endPage < sellPageDTO.pageCount}">
 				<a
-					href="${pageContext.request.contextPath}/sell/sellMainSearch?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${sellPageDTO.startPage + sellPageDTO.pageBlock}"
 					style="text-decoration: none; color: #5EC397;">▶</a>
 			</c:if>
 
@@ -232,6 +233,7 @@
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";
+
 
 <!------------------------------------------------- 팝업창 옵션 ------------------------------------------>
 //팝업 옵션
@@ -495,7 +497,7 @@ function openSellDetail(sellCode) {
 	  
 	    allButton.addEventListener('click', function () {
 	        // 전체 버튼을 클릭할 때, input 태그의 값을 변경
-	        sellStateInput.value = "전체";
+	        sellStateInput.value = "";
 // 	        $('#selectedProId').submit();
 	    });
 

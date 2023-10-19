@@ -83,7 +83,18 @@ $(document).ready(function() {
     	console.log("change 이벤트");
         calculateSellPrice();
     });
-});
+  
+ /* //----------------------------- 페이지 권한 ------------------------------
+ String department = "";
+ if (session.getAttribute("empDepartment") != null) {
+     department = (String) session.getAttribute("empDepartment");
+ }
+
+ // 상수 정의
+ final String ADMIN_DEPARTMENT = "영업팀";
+ 
+
+}); */
 
 //--------------------------------------------------- 팝업옵션 ----------------------
 //팝업 옵션

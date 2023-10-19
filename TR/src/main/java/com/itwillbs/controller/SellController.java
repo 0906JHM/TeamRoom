@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.SellDTO;
-import com.itwillbs.domain.SellPageDTO;
 import com.itwillbs.service.CalendarService;
 import com.itwillbs.service.OutProductService;
 import com.itwillbs.service.SellService;
@@ -49,62 +48,37 @@ public class SellController {
 	private static final Logger logger = LoggerFactory.getLogger(SellController.class);
 
 //----------------------------------------------------- 수주 목록 ---------------------------------------
-@GetMapping("/sellMain")
-public String sellList(HttpServletRequest request,Model model) {
-	System.out.println("SellController sellMain()");
-	//한 화면에 보여줄 글개수 설정
-	int pageSize = 10;
-	// 현 페이지 번호 가져오기
-	String pageNum=request.getParameter("pageNum");
-	// 페이지 번호가 없을 경우 => "1"로 설정
-	if(pageNum == null) {
-		pageNum = "1";
-	}
-	
-	// 페이지 번호 => 정수형 변경
-	int currentPage = Integer.parseInt(pageNum);
-	
-	//DTO에 담을 정보
-	SellPageDTO sellPageDTO = new SellPageDTO();
-	sellPageDTO.setPageSize(pageSize);
-	sellPageDTO.setPageNum(pageNum);
-	sellPageDTO.setCurrentPage(currentPage);
-	
-	List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
-	System.out.println(sellList);
-	// 전체 글개수 가져오기
-	int count = sellService.getSellCount();
-	// 한화면에 보여줄 페이지 개수 설정
-	int pageBlock = 10;
-	// 시작하는 페이지 번호
-	int startPage=(currentPage-1)/pageBlock*pageBlock+1;
-	// 끝나는 페이지 번호
-	int endPage = startPage + pageBlock -1;
-	// 전체페이지 개수
-	int pageCount = count/pageSize+(count%pageSize==0?0:1);
-	// 끝나는 페이지 번호  전체페이지 개수 비교 
-	//=> 끝나는 페이지 번호가 크면 전체페이지 개수로 변경
-	if(endPage > pageCount) {
-		endPage = pageCount;
-	}
-	
-	sellPageDTO.setCount(count);
-	sellPageDTO.setPageBlock(pageBlock);
-	sellPageDTO.setStartPage(startPage);
-	sellPageDTO.setEndPage(endPage);
-	sellPageDTO.setPageCount(pageCount);
-
-	// 글 목록
-	model.addAttribute("sellList", sellList);// ("이름", 값)
-	// 페이지
-	model.addAttribute("sellPageDTO", sellPageDTO);
-	
-	log.debug("페이지번호"+pageNum);
-	// center/notice.jsp
-	// WEB-INF/views/center/notice.jsp
-	return "sell/sellMain";
-}//sellMain
-	
+	/*
+	 * @GetMapping("/sellMain") public String sellList(HttpServletRequest
+	 * request,Model model) { System.out.println("SellController sellMain()"); //한
+	 * 화면에 보여줄 글개수 설정 int pageSize = 10; // 현 페이지 번호 가져오기 String
+	 * pageNum=request.getParameter("pageNum"); // 페이지 번호가 없을 경우 => "1"로 설정
+	 * if(pageNum == null) { pageNum = "1"; }
+	 * 
+	 * // 페이지 번호 => 정수형 변경 int currentPage = Integer.parseInt(pageNum);
+	 * 
+	 * //DTO에 담을 정보 SellDTO sellPageDTO = new SellDTO();
+	 * sellPageDTO.setPageSize(pageSize); sellPageDTO.setPageNum(pageNum);
+	 * sellPageDTO.setCurrentPage(currentPage);
+	 * 
+	 * List<SellDTO>sellList= sellService.getSellList(sellPageDTO);
+	 * System.out.println(sellList); // 전체 글개수 가져오기 int count =
+	 * sellService.getSellCount(); // 한화면에 보여줄 페이지 개수 설정 int pageBlock = 5; // 시작하는
+	 * 페이지 번호 int startPage=(currentPage-1)/pageBlock*pageBlock+1; // 끝나는 페이지 번호 int
+	 * endPage = startPage + pageBlock -1; // 전체페이지 개수 int pageCount =
+	 * count/pageSize+(count%pageSize==0?0:1); // 끝나는 페이지 번호 전체페이지 개수 비교 //=> 끝나는
+	 * 페이지 번호가 크면 전체페이지 개수로 변경 if(endPage > pageCount) { endPage = pageCount; }
+	 * 
+	 * sellPageDTO.setCount(count); sellPageDTO.setPageBlock(pageBlock);
+	 * sellPageDTO.setStartPage(startPage); sellPageDTO.setEndPage(endPage);
+	 * sellPageDTO.setPageCount(pageCount);
+	 * 
+	 * // 글 목록 model.addAttribute("sellList", sellList);// ("이름", 값) // 페이지
+	 * model.addAttribute("sellPageDTO", sellPageDTO);
+	 * 
+	 * log.debug("페이지번호"+pageNum); // center/notice.jsp //
+	 * WEB-INF/views/center/notice.jsp return "sell/sellMain"; }//sellMain
+	 */	
 
 //----------------------------------------------------- 수주 추가 ---------------------------------------
 @GetMapping("/sellAdd")
@@ -311,9 +285,10 @@ public ResponseEntity<String> sellMemoUpdatePro(SellDTO sellDTO) {
 }//sellMemoUpdatePro
 
 //------------------------------------------------------- 수주 조회 -----------------------------------------------
-@PostMapping("/sellMainSearch")
+@GetMapping("/sellMain")
 public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sellDTO) {
 	SellDTO sellDTOSearch = sellDTO; // 검색값을 저장해서 검색페이지에서 표시하기위해서 사용
+	System.out.println(sellDTO.getSellCode());
 	
 	// 날짜를 받아와서 분할
 	String daterange1 = request.getParameter("daterange1");
@@ -321,6 +296,7 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	// 검색 날짜를 저장
 	sellDTOSearch.setSellDate(daterange1);
 	sellDTOSearch.setSellDuedate(daterange2);
+	
 	// 날짜가 있는 경우 검색 DTO 저장
 	if(!("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null)) {
 		String sellDate =  daterange1.split(" - ")[0].replaceAll("/", "-");
@@ -367,8 +343,8 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	
 
 	// 글 목록
-	sellDTOSearch.setSellState("");
-	model.addAttribute("sellDTOSearch",sellDTOSearch);
+	/* sellDTOSearch.setSellState(""); */
+	model.addAttribute("sellDTO",sellDTOSearch);
 	model.addAttribute("sellList", sellList);// ("이름", 값)
 	//	return "sell/sellMain";
 	
@@ -394,8 +370,8 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	// ...
 
 	// 전체 글 개수 가져오기
-	int count = sellService.getSellSearchCount();
-
+	int count = sellService.getSellSearchCount(sellDTO);
+	System.out.println(count+"카운트");
 	// 전체 페이지 수 계산
 	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
 
@@ -418,9 +394,9 @@ public String sellMainSearch(Model model,HttpServletRequest request, SellDTO sel
 	sellPageDTO.setPageCount(pageCount);
 
 	// 페이지
-	model.addAttribute("sellSearchPageDTO", sellPageDTO);
+	model.addAttribute("sellPageDTO", sellPageDTO);
 	
-	return "sell/sellMainSearch";
+	return "sell/sellMain";
 	
 }//sellMainSearch
 	

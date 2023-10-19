@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.itwillbs.dao.SellDAO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.SellDTO;
-import com.itwillbs.domain.SellPageDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,18 +24,18 @@ public class SellService {
 	private SellDAO sellDAO;
 
 	//----------------------------------------------------- 수주 목록 --------------------------------------------------------	
-	public List<SellDTO> getSellList(SellPageDTO sellPageDTO) {
+	public List<SellDTO> getSellList(SellDTO sellDTO) {
 		System.out.println("SellService getSellList()");
 		// 10개씩 가져올때 현페이지에 대한 시작하는 행번호 구하기
-		int startRow = (sellPageDTO.getCurrentPage()-1)*sellPageDTO.getPageSize() + 1;
+		int startRow = (sellDTO.getCurrentPage()-1)*sellDTO.getPageSize() + 1;
 		// 끝나는 행번호 구하기
-		int endRow = startRow + sellPageDTO.getPageSize() - 1;
+		int endRow = startRow + sellDTO.getPageSize() - 1;
 
 		// 디비 startRow - 1
-		sellPageDTO.setStartRow(startRow - 1);
-		sellPageDTO.setEndRow(endRow);
+		sellDTO.setStartRow(startRow - 1);
+		sellDTO.setEndRow(endRow);
 
-		return sellDAO.getSellList(sellPageDTO);
+		return sellDAO.getSellList(sellDTO);
 	}//getSellList
 
 	//----------------------------------------------------- 수주 개수 --------------------------------------------------------
@@ -97,10 +96,10 @@ public class SellService {
 	}//getSellListSearch
 
 	//----------------------------------------------------- 수주 조회 개수 --------------------------------------------------------
-	public int getSellSearchCount() {
+	public int getSellSearchCount(SellDTO sellDTO) {
 		System.out.println("SellService getSellSearchCount()");
 
-		return sellDAO.getSellSearchCount();
+		return sellDAO.getSellSearchCount(sellDTO);
 	}//getSellSearchCount
 
 	
