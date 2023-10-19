@@ -18,7 +18,7 @@
 
 <!-- table -->
 <table border="1">
-<tr><td>발주번호</td>
+<tr><td>발주코드</td>
 	<td><input type="text" name="buyNum" value="${ordermanagementDTO.buyNum}" readonly></td></tr>
 <tr><td>품번</td>
     <td><input type="text" name="rawCode" value="${ordermanagementDTO.rawCode}"></td></tr>
@@ -26,7 +26,7 @@
     <td><input type="text" name="rawName" value="${ordermanagementDTO.rawName}"></td></tr>
 <tr><td>종류</td>
     <td><input type="text" name="rawType" value="${ordermanagementDTO.rawType}"></td></tr>
-<tr><td>거래처명</td>
+<tr><td>거래처코드</td>
     <td><input type="text" name="clientCode" value="${ordermanagementDTO.clientCode}"></td></tr>
 <tr><td>창고수량</td>
     <td><input type="text" name="whseCount" value="${ordermanagementDTO.whseCount}"></td></tr>

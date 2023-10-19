@@ -45,7 +45,7 @@ label {
 input[type="text"], select {
 	border: 1px solid #adb5bb;
 	border-radius: 5px;
-	width: 300px;
+	width: 200px;
 	height: 35px;
 	font: 500 18px/18px "Inter", sans-serif;
 	padding-left: 10px;
