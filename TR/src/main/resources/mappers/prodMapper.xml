@@ -143,6 +143,21 @@
 		where
 		prodCode = #{prodCode}
 	</update>
+	
+	<select id="getExcelList" resultType="com.itwillbs.domain.ProdDTO">
+		select p.prodCode,
+		p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
+		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		from product p
+		left
+		join clients c
+		on c.clientCode = p.clientCode
+		left join warehouse w
+		on
+		p.whseCode = w.whseCode
+		order by p.prodCode desc
+<!-- 		limit #{startRow}, #{pageSize} -->
+	</select>
 </mapper>
 
 
