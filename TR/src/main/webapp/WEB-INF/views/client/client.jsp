@@ -23,12 +23,12 @@
 <hr>
 <form method ="GET">
 	<div class="search">
-		<label for="search-box"> <strong>거래처명</strong> <input type="text" id="clientCompany" name="clientCompany">
-		</label> 
+		 <label class="searchlabel">거래처명&nbsp;&nbsp;</label><input type="text" id="clientCompany" name="clientCompany">
+		  &nbsp;&nbsp; <input type="submit"  class="searchbtn" value="조회">
+		
 		</div>
 <hr>		
 	<div class="typetab">
-	<p class="typetabhead"> 구분 </p> 
 	<input type="submit" id="clientType" name="clientType"  value= "전체">
 	<input type="submit" id="clientType" name="clientType" value="수주처">
 	<input type="submit" id="clientType" name="clientType" value="발주처">
@@ -50,30 +50,30 @@
 			</div>
             
 		<table class="ct" id="ct">
-			<thead>
-				<tr class="cthead">
-					<th class="ctth">구분</th>
-					<th class="ctth">거래처코드</th>
-					<th class="ctth">거래처명</th>
-					<th class="ctth">사업자번호</th>
-					<th class="ctth">업태</th>
-					<th class="ctth">대표자</th>
-					<th class="ctth">담당자</th>
-					<th class="ctth">거래처주소</th>
-					<th class="ctth">거래처번호</th>
-					<th class="ctth">휴대폰번호</th>
-					<th class="ctth">팩스번호</th>
-					<th class="ctth">이메일</th>
-					<th class="ctth">비고</th>
+			<thead class="cthead">
+				<tr>
+					<th class="ctno"><label> 구분</label></th>
+					<th class="ctno"><label>거래처코드</label></th>
+					<th class="ctnum"><label> 거래처명</label></th>
+					<th class="ctno"><label>사업자번호</label></th>
+					<th class="ctno"><label>업태</label></th>
+					<th class="ctno"><label>대표자</label></th>
+					<th class="ctno"><label>담당자</label></th>
+					<th class="ctno"><label>거래처주소</label></th>
+					<th class="ctnum"><label>거래처번호</label></th>
+					<th class="ctnum"><label>휴대폰번호</label></th>
+					<th class="ctnum"><label>팩스번호</label></th>
+					<th class="ctnum"><label>이메일</label></th>
+					<th class="ctno"><label>비고</label></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="clientDTO" items="${clientList}">
-					<tr class="ctcontents">
+					<tr>
 						<td class="cttg">${clientDTO.clientType}</td>
 						<td class="cttg">${clientDTO.clientCode}</td>
 						<td class="cttg"
-							onclick="location.href='${pageContext.request.contextPath}/client/clientdetail?clientCompany=${clientDTO.clientCompany}&clientCode=${clientDTO.clientCode}'">${clientDTO.clientCompany}</td>
+							 onclick="openClientDetail('${clientDTO.clientCompany}')">${clientDTO.clientCompany}</td>
 						<td class="cttg">${clientDTO.clientNumber}</td>
 						<td class="cttg">${clientDTO.clientDetail}</td>
 						<td class="cttg">${clientDTO.clientCeo}</td>
@@ -116,43 +116,24 @@
 			</div> <!--  CLIENTBODY -->
 			
 
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-				// 검색창 element를 id값으로 가져오기
-				const payrollSearch = document.querySelector('#search-box');
-				// 테이블의 tbody element를 id값으로 가져오기
-				const payrollTable = document.querySelector('#ct tbody');
-
-				//검색창 element에 keyup 이벤트 세팅. 글자 입력 시 마다 발생.
-				payrollSearch.addEventListener('keyup', function() {
-					// 사용자가 입력한 검색어의 value값을 가져와 소문자로 변경하여 filterValue에 저장
-					const filterValue = payrollSearch.value.toLowerCase();
-					console.log('검색어:', filterValue); // 검색어를 콘솔에 출력
-
-					// 현재 tbody안에 있는 모든 tr element를 가져와 rows에 저장
-					const rows = payrollTable.querySelectorAll('tr');
-
-					//tr들 for문으로 순회
-					for (var i = 0; i < rows.length; i++) {
-						// 현재 순회중인 tr의 textContent를 소문자로 변경하여 rowText에 저장
-						var rowText = rows[i].textContent.toLowerCase();
-						// rowText가 filterValue를 포함하면, 해당 tr은 보여지게 하고, 그렇지 않으면 숨긴다.
-						if (rowText.includes(filterValue)) {
-							rows[i].style.display = '';
-						} else {
-							rows[i].style.display = 'none';
-						}
-					}
-				});
-			});
-
+		<script>	
 			function perfInsert() {
 				window
 						.open(
 								'${pageContext.request.contextPath}/client/clientinsert',
 								'_blank',
-								'width=600px, height=1000px, left=600px, top=300px');
+								'width=600px, height=600px, left=600px, top=300px');
 			}
+			
+			// 클라이언트 회사 이름을 클릭했을 때 실행될 함수
+		    function openClientDetail(clientCompany) {
+		        var url = '${pageContext.request.contextPath}/client/clientdetail?clientCompany=' + clientCompany;
+		        window.open(url, '_blank', 'width=600px, height=600px, left=600px, top=100px');
+		    }
+			
+			
+			
+			
 		</script>
 </body>
 </html>
