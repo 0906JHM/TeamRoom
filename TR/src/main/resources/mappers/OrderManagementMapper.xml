@@ -74,11 +74,11 @@
 		from buy
 	</select>
 	
+	<!-- buyDate가 오늘 또는 이전인 경우, buyInstate가 '신청완료'에서 '발주완료'로 변경 -->
 	<update id="updateBuyInstate">
-    UPDATE buy
-    SET buyInstate = '발주완료'
-    WHERE buyDate &lt;= #{today} AND buyInstate = '신청완료'
-</update>
-	
+    	update buy
+    	set buyInstate = '발주완료'
+    	where buyDate &lt;= #{today} and buyInstate = '신청완료'
+	</update>
 	
 </mapper>
