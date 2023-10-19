@@ -117,13 +117,13 @@ function createPieChart(data, chartId) {
       plugins: {
         tooltip: {
           titleFont: {
-            size: 20
+            size: 15
           },
           bodyFont: {
-            size: 20
+            size: 15
           },
           footerFont: {
-            size: 20
+            size: 15
           },
           mode: "nearest",
           intersect: true
@@ -137,7 +137,7 @@ function createPieChart(data, chartId) {
           align: "start",
           offset: 0,
           font: {
-            size: 20
+            size: 15
           }
         },
         legend: {
@@ -145,7 +145,7 @@ function createPieChart(data, chartId) {
           position: "bottom",
           labels: {
             font: {
-              size: 16
+              size: 13
             }
           }
         }

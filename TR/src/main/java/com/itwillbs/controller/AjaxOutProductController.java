@@ -78,7 +78,7 @@ public class AjaxOutProductController {
 		int count = outProductService.getOutProductListCount(outProductDTO);
 		
 //		한화면에 보여줄 페이지 개수 설정
-		int pageBlock =10;
+		int pageBlock =5;
 //		시작하는 페이지 번호
 //		currentPage 			pageBlock => startPage
 //		1~10(0~9)/10 = 0		    10    => 0*10+1  => 1

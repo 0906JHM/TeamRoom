@@ -29,11 +29,14 @@ body {
 }
 
 #con_1>#calendar {
-	width: 37%;
+	width: 40%;
 }
 
-#chart_1, #chart_2, #chart_3 {
-	width: 37%;
+#chart_1 {
+	width: 40%;
+}
+#chart_2 {
+	width: 33%;
 }
 
 #pie_chart_size {
@@ -50,4 +53,7 @@ body {
  	gap: 1%;
 }
 
+.fc-event-main {
+	font-size: 10px;
+}
 
