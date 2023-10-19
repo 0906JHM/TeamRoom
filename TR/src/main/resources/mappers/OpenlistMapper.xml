@@ -412,6 +412,15 @@
 
 	</select>
 	
+	<select id="countline" resultType="int">
+	select count(*) from line
+	</select>
+	
+	<select id="readline" resultType="LineDTO">
+	select * from line
+	
+	</select>
+	
 
 	<!-- //////////////////////////////////////////////////////////////// -->
 

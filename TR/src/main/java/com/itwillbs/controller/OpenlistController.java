@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.service.OpenlistService;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
@@ -422,6 +423,37 @@ public class OpenlistController {
 				  return "openlist/whselist";
 				  
 				  }
+				  
+				  //////////////////////////////////////// LineList뽑아오기 
+				  @RequestMapping(value = "/line", method = RequestMethod.GET)
+				  public String lineGET(Model model, LineDTO dto, RequirementPageDTO pdto,
+				  
+				  @RequestParam(value = "nowPage", required = false) String nowPage,
+				  
+				  @RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+				  
+				  @RequestParam(value = "input", required = false) String input) throws Exception {
+
+
+			  
+				  logger.debug("DTO : " + dto);
+				  
+				  int total = service.countline(dto);
+				  System.out.println(total + "total개수");
+				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
+				  List<LineDTO> linelist = service.getlineList(pdto);
+				  model.addAttribute("linelist", linelist);
+				  model.addAttribute("paging", pdto);
+				  model.addAttribute("DTO", dto);
+				  logger.debug("pdto : " + pdto);
+				  logger.debug("DTO : " + dto);
+			 
+				  return "openlist/linelist";
+				  
+				  }
+				
+				  
+
 	// 소요량관리
 	// http://localhost:8088/requirement/reqdetail
 	/*

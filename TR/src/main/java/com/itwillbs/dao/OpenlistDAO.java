@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.controller.RequirementController;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
@@ -234,20 +235,20 @@ public class OpenlistDAO {
 			    
 			    // ==========================================================================
 				
-				// 창고목록 리스트 총 갯수
+				//  1 창고목록 리스트 총 갯수
 				 
 				public int countWhse() {
 					logger.debug(" 창고목록 리스트 갯수 확인 ");
 					return sqlSession.selectOne(NAMESPACE + ".countWhse");
 				}
 				
-				// 창고목록 전체 리스트
+				//  2 창고목록 전체 리스트
 				
 				    public List<WarehouseDTO> readWhseList(RequirementPageDTO pdto) throws
 				  Exception { logger.debug(" 창고목록 전체리스트 DAO "); return
 				  sqlSession.selectList(NAMESPACE + ".readWhse", pdto); }
 				  
-				  // 창고목록 검색 갯수
+				  // 3 창고목록 검색 갯수
 				  
 				    public int countWhse(WarehouseDTO dto) { HashMap<String, Object>
 				  data = new HashMap<String, Object>();
@@ -257,7 +258,7 @@ public class OpenlistDAO {
 				  
 				  return sqlSession.selectOne(NAMESPACE + ".countSearchWhse", data); }
 				  
-				  // 창고목록 검색리스트
+				  //  4 창고목록 검색리스트
 				  
 				    public List<WarehouseDTO> readWhseList(WarehouseDTO dto,
 				  RequirementPageDTO pdto) throws Exception { HashMap<String, Object> data = new
@@ -268,6 +269,39 @@ public class OpenlistDAO {
 				  data.put("whseName", dto.getWhseName());
 				  
 				  return sqlSession.selectList(NAMESPACE + ".readSearchWhse", data); }
+
+
+				    
+				    /////////// 라인리스트 추가 
+				    
+				//  1 창고목록 리스트 총 갯수
+					 
+					public int countline(LineDTO dto) {
+						logger.debug(" 창고목록 리스트 갯수 확인 ");
+						
+						return sqlSession.selectOne(NAMESPACE + ".countline");
+					}
+					
+					//  2 창고목록 전체 리스트
+
+
+						public List<LineDTO> readlinelist( RequirementPageDTO pdto) {
+                     logger.debug(" 창고목록 전체리스트 DAO ");
+					    	
+					    	return sqlSession.selectList(NAMESPACE + ".readline", pdto); 
+
+						}
+
+
+					  
+					
+					//////////////////////////////////////////////////////////////////////////////////
+					
+	
+
+
+				    
+				
 
 
 	// ==========================================================================

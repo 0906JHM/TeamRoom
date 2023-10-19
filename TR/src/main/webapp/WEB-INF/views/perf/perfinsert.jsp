@@ -158,7 +158,7 @@
        
 
         function openLinePopup() {
-            var popupUrl = '${pageContext.request.contextPath}/perf/linelist';
+            var popupUrl = '${pageContext.request.contextPath}/search/line?input=lineCode2';
             window.open(
                 popupUrl,
                 '_blank',
@@ -167,7 +167,8 @@
         }
 
         function openProductPopup() {
-            var popupUrl = '${pageContext.request.contextPath}/perf/prodlist';
+        	
+            var popupUrl = '${pageContext.request.contextPath}/search/product?input=prodCode2';
             window.open(
                 popupUrl,
                 '_blank',

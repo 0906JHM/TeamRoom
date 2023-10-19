@@ -102,7 +102,19 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
 <tr><td>이메일</td><td><input type="email" name="clientEmail" value="${clientDTO.clientEmail}" class="upform"></td></tr>  
 <tr><td>비고</td><td><input type="text" name="clientMemo" value="${clientDTO.clientMemo}" class="upform"> </td></tr>  
 <c:if test="${clientDTO.clientType eq '수주처'}">
-<tr><td>매출액</td><td>${clientDTO.clientSale}</td></tr>  
+    <tr>
+        <td>매출액</td>
+        <td>
+            <c:choose>
+                <c:when test="${clientDTO.clientSale eq 0}">
+                    0
+                </c:when>
+                <c:otherwise>
+                    ${clientDTO.clientSale}
+                </c:otherwise>
+            </c:choose>
+        </td>
+    </tr>  
 </c:if>
 </table>
 

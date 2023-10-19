@@ -13,6 +13,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/perf.css">
 
@@ -102,36 +104,39 @@
 						<td class="cttg">${perfDTO.perfDefect}</td>
 						<td class="cttg">${perfDTO.perfDefectreason}</td>
 						<td class="cttg">${perfDTO.perfMemo}</td>
-						<td class="cttg">${perfDTO.perfStatus}</td>
-						
+						<td class="cttg">${perfDTO.perfStatus}</td>				
 					</tr>
 					</c:forEach>
 			</tbody> 
 
 		</table>
 		
-		
-		<div class="exceldown">
-		 <input type="button" id="entrytable" class="entrytable" value="전체테이블">
-		  <input type="button" id="exceldown" class="exceldown" value="액셀다운">
-		 </div>
-		 
-		 	<div class="page"> <!--  페이징 영역 -->
+		<div class="footlo">
+		<div class="excel">
+
+		 <button type="button" id="entrytable" class="entrytable" onclick="window.location.href='${pageContext.request.contextPath}/perf/perf?pageNum=1&endPage=100&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}'">전체 보기</button>
+		  <button type="button" id="exceldownload" class="exceldown" >액셀 다운 </button>
+		  </div>
+		  <div class="page"> <!--  페이징 영역 -->
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
-					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}">Prev</a>
+					<a class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}">Prev</a>
 				</c:if>
 				
 
 				<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${i}&lineCode=${perfDTO.perfCode}&prodCode=${perfDTO.prodCode}">${i}</a>
+					<a  class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${i}&lineCode=${perfDTO.perfCode}&prodCode=${perfDTO.prodCode}">${i}</a>
 				</c:forEach>
 
 
 				<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
-					<a href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${perfDTO.prodCode}">Next</a>
+					<a class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${perfDTO.prodCode}">Next</a>
 				</c:if>
 				
 			</div> <!--  페이징영역 -->
+		 </div>
+		 </div>
+		 
+		 	
 		
 		
 		
@@ -309,7 +314,7 @@ $(document).ready(function() {
         });
     }
     
-    Chart.plugins.register({
+   /*  Chart.plugins.register({
         afterDatasetsDraw: function(chart) {
             var ctx = chart.ctx;
             var totalValue = chart.data.datasets[0].data.reduce((total, value) => total + value, 0); // 데이터 총합 계산
@@ -356,7 +361,61 @@ $(document).ready(function() {
             // 데이터 레이블 그리기 (total 밸류값 출력)
             ctx.fillText(totalValue.toFixed(2), centerX, centerY);
         }
-    });
+    }); */
+    
+    $(document).ready(function () {
+		//엑셀
+			 const excelDownload = document.querySelector('#exceldownload');
+					excelDownload.addEventListener('click', exportExcel);
+					function exportExcel() {
+					    // 1. 워크북 생성
+					    var wb = XLSX.utils.book_new();
+					    // 2. 워크시트 생성
+					    var newWorksheet = excelHandler.getWorksheet();
+					    // 3. 워크시트를 워크북에 추가
+					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+					    // 4. 엑셀 파일 생성
+					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+					    // 5. 엑셀 파일 내보내기
+					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+					}
+
+					// 현재 날짜를 가져오는 함수
+					function getToday() {
+						
+					    var date = new Date();
+					    var year = date.getFullYear();
+					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+					    return year + month + day;
+					}
+
+			var excelHandler = {
+			getExcelFileName : function() {
+				return 'PerformanceList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'Performance Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('ct'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+			
+			function s2ab(s) {
+				
+				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+				var view = new Uint8Array(buf);  
+				for(var i=0; i<s.length; i++) {
+					view[i] = s.charCodeAt(i) & 0xFF;
+				}
+				alert("이까지 옴");
+				return buf;
+			}
+	  });
     
 });
 </script>	
