@@ -76,20 +76,20 @@
 				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
 				<td colspan="2">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
-					<c:if test="${outProductDTO.whseCount == null || outProductDTO.whseCount == 0}">
+					<c:if test="${outProductDTO.stockCount == null || outProductDTO.stockCount == 0}">
    						<input type="number" name="outCount" value="0" readonly="readonly">
     					<script type="text/javascript">
         					console.log("재고가 0개");
     					</script>
 					</c:if>
-					<c:if test="${outProductDTO.whseCount != null && outProductDTO.whseCount > 0}">
+					<c:if test="${outProductDTO.stockCount != null && outProductDTO.stockCount > 0}">
     					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
 					</c:if>
 
 				</td>
 				<td colspan="2">
-					<input type="hidden" id="initialWhseCount" value="${outProductDTO.whseCount}">
-					<input type="number" name="whseCount" value="${outProductDTO.whseCount }" min="0" readonly="readonly">
+					<input type="hidden" id="initialstockCount" value="${outProductDTO.stockCount}">
+					<input type="number" name="stockCount" value="${outProductDTO.stockCount }" min="0" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -116,7 +116,7 @@
 			</tr>
 		</table>
 		<div id="buttons">
-		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.whseCount != 0 }">
+		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.stockCount != 0 }">
 				<input type="button" id="updateButton" value="출고">
 		</c:if>
 			<input type="button" value="닫기" onclick="window.close()">
@@ -127,15 +127,15 @@
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var outCountInput = document.querySelector('input[name="outCount"]');
-		    var whseCountInput = document.querySelector('input[name="whseCount"]');
+		    var stockCountInput = document.querySelector('input[name="stockCount"]');
 		    
 		    // 현재 출력해야되는 재고값 계산
-		    var initialWhseCount = parseInt(document.getElementById('initialWhseCount').value, 10);
+		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10);
 		    var initialOutCount = parseInt(document.getElementById('initialOutCount').value, 10);
 		    var outCount = parseInt(outCountInput.value, 10);
 		    
 		    // 재고 입력란 업데이트
-		    whseCountInput.value = initialWhseCount + initialOutCount - outCount;
+		    stockCountInput.value = initialstockCount + initialOutCount - outCount;
 		}
 		
 		
@@ -152,22 +152,20 @@
 					success: function(response) {
 						console.log(response);
 						if(response === 'success'){
-							Swal.fire({
-							    text: '출고 완료',
-							    icon: 'success',
-							    confirmButtonText: '확인',
-							});
-							window.opener.location.reload();
-// 							window.close();
-						}else{
-							Swal.fire({
-							    text: '재고가 충분하지 않습니다.',
-							    icon: 'warning',
-							    confirmButtonText: '확인',
-							});
-							window.opener.location.reload();
-// 							window.close();
-						}
+		                    Swal.fire({
+		                        text: '출고 완료',
+		                        icon: 'success',
+		                        confirmButtonText: '확인',
+		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+		                    });
+		                } else {
+		                    Swal.fire({
+		                        text: '재고가 충분하지 않습니다.',
+		                        icon: 'warning',
+		                        confirmButtonText: '확인',
+		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+		                    });
+		                }
 					},
 					error: function(xhr, status, error) {
 						// 에러 처리
@@ -181,6 +179,11 @@
 				window.close();
 			});
 		});
+		
+		function reloadParentAndCurrentPage() {
+		    window.opener.location.reload(); // 부모 창 새로고침
+		    window.location.reload(); // 현재 창 새로고침
+		}
 	</script>
 </body>
 </html>

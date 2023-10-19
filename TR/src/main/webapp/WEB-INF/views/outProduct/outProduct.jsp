@@ -269,7 +269,7 @@
 			            row.append("<td>" + (data[i].prodName ? data[i].prodName : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellCount ? data[i].sellCount : '-') + "</td>");
 			            row.append("<td>" + (data[i].outCount ? data[i].outCount : '-') + "</td>");
-			            row.append("<td>" + (data[i].whseCount ? data[i].whseCount : '-') + "</td>");
+			            row.append("<td>" + (data[i].stockCount ? data[i].stockCount : '-') + "</td>");
 			            row.append("<td>" + (data[i].outPrice ? formatCurrency(data[i].outPrice) : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellDuedate ? data[i].sellDuedate : '-') + "</td>");
 			            row.append("<td>" + (data[i].outDate ? data[i].outDate : '-') + "</td>");
@@ -411,7 +411,7 @@
 					        '재출고일': item.outRedate,
 					        '납품개수': item.sellCount,
 					        '출고개수': item.outCount,
-					        '재고개수': item.whseCount,
+					        '재고개수': item.stockCount,
 					        '납품단가': item.prodPrice,
 					        '출고가': item.outPrice,
 					        '비고': item.outMemo

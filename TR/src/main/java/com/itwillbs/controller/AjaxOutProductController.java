@@ -157,7 +157,7 @@ public class AjaxOutProductController {
 		System.out.println("클라이언트에 저장된 내용" + outProductDTO);
 		System.out.println("디비에 저장된 내용" + outProductDTO2);
 //		저장된 재고의 개수와 출고할 개수를 비교해서 실행
-		if (outProductDTO2.getWhseCount() >= outProductDTO.getOutCount() && outProductDTO.getOutCount() != 0) {
+		if (outProductDTO2.getStockCount() >= (outProductDTO.getOutCount()-outProductDTO2.getOutCount()) && outProductDTO.getOutCount() != 0) {
 			// sellState 변경
 			if (outProductDTO.getOutCount() < outProductDTO.getSellCount()) {
 				if (outProductDTO.getOutCount() == 0) {
@@ -187,9 +187,13 @@ public class AjaxOutProductController {
 				outProductDTO.setOutRedate(current);
 				outProductService.updateOutRedate(outProductDTO);
 			}
-			// 3차 출고 테이블 출고개수 출고비고 업데이트 / 나중에 담당자도 업뎃
+			// 3차 출고 테이블 출고개수 출고비고 업데이트 / 나중에 담당자도 업뎃 / 매출액 계산해서 업데이트 
 			outProductService.updateOutProductContent(outProductDTO);
-
+			int price = (outProductDTO.getOutCount()- outProductDTO2.getOutCount()) * (int)outProductDTO.getProdPrice();
+			
+			outProductDTO.setClientSale(price);
+			outProductService.updateClientSale(outProductDTO);
+			
 			// 4차
 			// 재고 테이블에서 제품코드로 출고한만큼 개수 감소
 			if (outProductDTO2.getOutCount() < outProductDTO.getOutCount()) {
