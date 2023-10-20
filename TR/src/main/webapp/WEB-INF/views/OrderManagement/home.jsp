@@ -121,7 +121,7 @@ $(document).ready(function() {
 <jsp:include page="../inc/side.jsp"></jsp:include>
 
 <div id="content">
-<h2>발주관리</h2>
+<h2>발주 관리</h2>
 <hr>
 
 <!-- form(검색) -->
