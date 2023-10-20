@@ -153,7 +153,7 @@
 		FROM (
 		SELECT o.outCode outCode, o.prodCode prodCode,
 		DATE_FORMAT(o.outDate,
-		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		'%Y-%m-%d') outDate, o.outEmpId outEmpId,
 		o.outMemo outMemo,
 		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
 		o.outCount outCount,
@@ -187,7 +187,7 @@
 		FROM (
 		SELECT o.outCode outCode, o.prodCode prodCode,
 		DATE_FORMAT(o.outDate,
-		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		'%Y-%m-%d') outDate, o.outEmpId outEmpId,
 		o.outMemo outMemo,
 		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
 		o.outCount outCount,
@@ -256,7 +256,7 @@
 		FROM (
 		SELECT o.outCode outCode, o.prodCode prodCode,
 		DATE_FORMAT(o.outDate,
-		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		'%Y-%m-%d') outDate, o.outEmpId outEmpId,
 		o.outMemo outMemo,
 		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
 		o.outCount outCount,
@@ -391,7 +391,7 @@
 		SELECT
 		o.outCode outCode, o.prodCode prodCode,
 		DATE_FORMAT(o.outDate,
-		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		'%Y-%m-%d') outDate, o.outEmpId outEmpId,
 		o.outMemo outMemo,
 		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
 		o.outCount outCount,
@@ -426,7 +426,7 @@
 	<select id="getExcelListAllSearch" resultType="com.itwillbs.domain.OutProductDTO">
 		SELECT o.outCode outCode, o.prodCode prodCode,
 		DATE_FORMAT(o.outDate,
-		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		'%Y-%m-%d') outDate, o.outEmpId outEmpId,
 		o.outMemo outMemo,
 		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
 		o.outCount outCount,
@@ -476,7 +476,7 @@
 		SELECT
 		o.outCode outCode, o.prodCode prodCode,
 		DATE_FORMAT(o.outDate,
-		'%Y-%m-d') outDate, o.outEmpId outEmpId,
+		'%Y-%m-%d') outDate, o.outEmpId outEmpId,
 		o.outMemo outMemo,
 		DATE_FORMAT(o.outRedate , '%Y-%m-%d') outRedate,
 		o.outCount outCount,
