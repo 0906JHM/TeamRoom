@@ -104,5 +104,27 @@ public class RawmaterialsService implements RawmaterialsService2 {
 		System.out.println("RawmaterialsService getMemo2()");
 		return rawmaterialsDAO.getMemo2(clientCode);
 	}
+
+	// 종류 선택하면 자동으로 원자재코드 값 생성
+	public int getRawCodesPE() {
+		System.out.println("RawmaterialsService getRawCodesPE()");
+		return rawmaterialsDAO.getRawCodesPE();
+	}
+
+	public int getRawCodesGL() {
+		return rawmaterialsDAO.getRawCodesGL();
+	}
+	
+	public int getRawCodesST() {
+		return rawmaterialsDAO.getRawCodesST();
+	}
+	
+	public int getRawCodesLB() {
+		return rawmaterialsDAO.getRawCodesLB();
+	}
+	
+	public int getRawCodesPC() {
+		return rawmaterialsDAO.getRawCodesPC();
+	}
 	
 }

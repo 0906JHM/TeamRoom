@@ -155,5 +155,36 @@
 		from clients
 		where clientCode = #{clientCode}
 	</select>
+	
+	<!-- 종류 선택하면 자동으로 원자재코드 값 생성 -->
+	<select id="getRawCodesPE" resultType="java.lang.Integer">
+		select count(*)
+		from rawMaterial
+		where rawCode like 'PE%'
+	</select>
+	
+	<select id="getRawCodesGL" resultType="java.lang.Integer">
+		select count(*)
+		from rawMaterial
+		where rawCode like 'GL%'
+	</select>
+	
+	<select id="getRawCodesST" resultType="java.lang.Integer">
+		select count(*)
+		from rawMaterial
+		where rawCode like 'ST%'
+	</select>
+	
+	<select id="getRawCodesLB" resultType="java.lang.Integer">
+		select count(*)
+		from rawMaterial
+		where rawCode like 'LB%'
+	</select>
+	
+	<select id="getRawCodesPC" resultType="java.lang.Integer">
+		select count(*)
+		from rawMaterial
+		where rawCode like 'PC%'
+	</select>
  	
 </mapper>
