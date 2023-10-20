@@ -155,18 +155,20 @@ public class AjaxInMaterialController {
 	}
 	
 	
-	
+
+//	public String inMaterialUpdate(InMaterialDTO inMaterialDTO,HttpServletRequest request, HttpServletResponse response) {
 	
 //	페이지 세부정보 에서 출고처리 버튼
 	@PostMapping("/inMaterialUpdate")
-	public String inMaterialUpdate(InMaterialDTO inMaterialDTO,HttpServletRequest request, HttpServletResponse response) {
+
+	public void inMaterialUpdate(InMaterialDTO inMaterialDTO,HttpServletRequest request, HttpServletResponse response) {
 //		디비에 저장된 inMaterial2 		업데이트된 내용이 들어있는inMaterialDTO
 		InMaterialDTO inMaterialDTO2 = inMaterialService.inMaterialContent(inMaterialDTO.getInNum());
 		System.out.println("클라이언트에 저장된 내용" + inMaterialDTO);
 		System.out.println("디비에 저장된 내용" + inMaterialDTO2);
 //		발주의 수량을 넘어선 입고의 개수가 입력이 되면 
 		if(inMaterialDTO.getInCount() < inMaterialDTO.getInCount() || inMaterialDTO.getInCount() < inMaterialDTO2.getInCount()) {
-			return "error1";
+//			return "error1";
 		}
 //		저장된 재고의 개수와 출고할 개수를 비교해서 실행
 //		if (inMaterialDTO2.getStockCount() >= (inMaterialDTO.getOutCount()-outProductDTO2.getOutCount()) && outProductDTO.getOutCount() != 0) {
@@ -221,10 +223,9 @@ public class AjaxInMaterialController {
 				System.out.println("6 디비에 저장된 값 "+inMaterialDTO2.getInCount());
 				System.out.println("7 뺄 값 "+inMaterialDTO.getInCount());
 				System.out.println("8 뺄 값 "+inMaterialDTO.getInCount());
-			//이건 일단 보류 (하긴해야함!!!)?
 				inMaterialService.updateWhseCount(inMaterialDTO);
 			}
-			return "success";
+//			return "success";
 	
 	}
 }

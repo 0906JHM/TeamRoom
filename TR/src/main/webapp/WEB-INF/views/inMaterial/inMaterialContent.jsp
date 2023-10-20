@@ -273,6 +273,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				
 				console.log("입력 받은 값 "+inCountInput.value);
 				console.log("서버에서 받아온 값 "+inCount);
+				if(inCount < inCountInput.value){
 				$.ajax({
 					type: "POST",
 					url: "${pageContext.request.contextPath}/inMaterial/inMaterialUpdate",
@@ -308,7 +309,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 						console.log("에러: " + error);
 					}
 				});
-			});
 		}else {
 			console.log("이거 뭐지");
 			 Swal.fire({
@@ -318,12 +318,12 @@ final String ADMIN_DEPARTMENT = "자재팀";
                     onClose: reloadParentAndCurrentPage
                 });
 		}
-	});
+	});//$("#updateButton").click(function() 
 			// "닫기" 버튼 클릭 시 창을 닫습니다.
 			$("#closeButton").click(function() {
 				window.close();
 			});
-		});
+		});//documentready
 		
 		function reloadParentAndCurrentPage() {
 		    window.opener.location.reload(); // 부모 창 새로고침
