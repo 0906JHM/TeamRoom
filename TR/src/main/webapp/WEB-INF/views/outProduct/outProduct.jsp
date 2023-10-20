@@ -62,9 +62,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 						<th>출고 코드</th>
 						<th>수주 코드</th>
 						<th>거래처 코드</th>
-						<th>거래처명</th>
+<!-- 						<th>거래처명</th> -->
 						<th>제품 코드</th>
-						<th>제품명</th>
+<!-- 						<th>제품명</th> -->
 						<th>주문 수량</th>
 						<th>출고 수량</th>
 						<th>재고 수량</th>
@@ -281,9 +281,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			            row.append("<td>" + (data[i].outCode ? data[i].outCode : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellCode ? data[i].sellCode : '-') + "</td>");
 			            row.append("<td>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
-			            row.append("<td>" + (data[i].clientCompany ? data[i].clientCompany : '-') + "</td>");
+// 			            row.append("<td>" + (data[i].clientCompany ? data[i].clientCompany : '-') + "</td>");
 			            row.append("<td>" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
-			            row.append("<td>" + (data[i].prodName ? data[i].prodName : '-') + "</td>");
+// 			            row.append("<td>" + (data[i].prodName ? data[i].prodName : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellCount ? data[i].sellCount : '-') + "</td>");
 			            row.append("<td>" + (data[i].outCount ? data[i].outCount : '-') + "</td>");
 			            row.append("<td>" + (data[i].stockCount ? data[i].stockCount : '-') + "</td>");
@@ -303,7 +303,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		  			        var button = $("<input type='button' value='상세정보'>");
 		  			        button.click(function () {
 		  			            // 버튼 클릭 시 처리할 동작을 여기에 추가
-		  			            window.open(contextPath + "/outProduct/outProductContent?outCode=" + outCode, "출고 상세정보", "width=500,height=700,toolbar=no,location=no,resizable=yes");
+		  			            window.open(contextPath + "/outProduct/outProductContent?outCode=" + outCode, "출고 상세정보", "width=500,height=730,toolbar=no,location=no,resizable=yes");
 		  			        });
 		
 		  			        // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
@@ -404,11 +404,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    	var popup = window.open(url, "", popupOpt);
 		    } //openWindow()
 		 	
-		    // 		   	엑셀
 
-
-    // 버튼 클릭 시 실행
-   // 클라이언트에서 서버로 데이터 요청
+		//엑셀
+		// 버튼 클릭 시 실행
+		// 클라이언트에서 서버로 데이터 요청
 		document.getElementById('exportButton').addEventListener('click', function () {
 			
 				// 엑셀로 내보낼 데이터
@@ -471,9 +470,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
 		    return buf;
 		}
-		
-	
-			
 		
 	</script>
 	

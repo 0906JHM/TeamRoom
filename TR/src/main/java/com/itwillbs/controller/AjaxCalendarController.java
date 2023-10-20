@@ -74,14 +74,13 @@ public class AjaxCalendarController {
 //	            String color = (calendarDTO.getCalendar_title().equals("수주")) ? "blue"
 //	                    : ((calendarDTO.getCalendar_title().equals("발주")) ? "red" : "orange");
 	            String color;
-
 	            if (calendarDTO.getCalendar_title().contains("수주")) {
 	                color = "#4b77a9";
-	            } else if (calendarDTO.getCalendar_title().equals("출고")) {
+	            } else if (calendarDTO.getCalendar_title().contains("출고")) {
 	                color = "#5f255f";
-	            } else if (calendarDTO.getCalendar_title().equals("원자재 발주")) {
+	            } else if (calendarDTO.getCalendar_title().contains("원자재 발주")) {
 	                color = "#d21243";
-	            } else if (calendarDTO.getCalendar_title().equals("원자재 입고")) {
+	            } else if (calendarDTO.getCalendar_title().contains("원자재 입고")) {
 	                color = "#ff5733";
 	            } else {
 	                color = "#ffcc29";

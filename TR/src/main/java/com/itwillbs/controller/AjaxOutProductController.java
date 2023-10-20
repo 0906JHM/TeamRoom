@@ -48,7 +48,7 @@ public class AjaxOutProductController {
 			outProductDTO.setClientCompany("");
 		}
 		if("".equals(outProductDTO.getSellState()) || "null".equals(outProductDTO.getSellState()) || outProductDTO.getSellState() == null) {
-			System.out.println("거래처 이름 변경");
+			System.out.println("출고 상태");
 			outProductDTO.setSellState("");
 		}
 		
@@ -143,7 +143,7 @@ public class AjaxOutProductController {
 //		게시판 전체 글 개수 구하기
 		List<OutProductDTO> outProductList = outProductService.getExcelList(outProductDTO);
 		
-		
+		System.out.println("엑셀 출력 데이터 "+outProductList);
 		ResponseEntity<List<OutProductDTO>> entity = new ResponseEntity<>(outProductList, HttpStatus.OK);
 		return entity;
 	}
@@ -157,7 +157,7 @@ public class AjaxOutProductController {
 		System.out.println("클라이언트에 저장된 내용" + outProductDTO);
 		System.out.println("디비에 저장된 내용" + outProductDTO2);
 //		수주의 수량을 넘어선 출고의 개수가 입력이 되면 
-		if(outProductDTO.getSellCount() < outProductDTO.getOutCount()) {
+		if(outProductDTO.getSellCount() < outProductDTO.getOutCount() || outProductDTO.getOutCount() < outProductDTO2.getOutCount()) {
 			return "error1";
 		}
 //		저장된 재고의 개수와 출고할 개수를 비교해서 실행

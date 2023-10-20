@@ -30,7 +30,7 @@
         <img id="profilePic" src="${pageContext.request.contextPath}/resources/img/${sessionScope.empFile}">
     </c:when>
     <c:otherwise>
-        <img src="${pageContext.request.contextPath}/resources/img/photo.jpg">
+        <img src="${pageContext.request.contextPath}/resources/img/default.jpg">
     </c:otherwise>
 </c:choose>
 
@@ -148,7 +148,7 @@
 	window.onload = function() {
         var img = document.getElementById('profilePic');
         img.onerror = function() {
-            this.src = '${pageContext.request.contextPath }/resources/img/photo.jpg'; // 기본 이미지 경로
+            this.src = '${pageContext.request.contextPath }/resources/img/default.jpg'; // 기본 이미지 경로
         }
     }
 	

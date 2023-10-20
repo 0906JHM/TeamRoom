@@ -65,7 +65,11 @@ public class InMaterialDAO {
 		sqlSession.selectOne(namespace + ".insertList", inMaterialDTO);
 	}
 
+//	public List<InMaterialDTO> inMaterialContent(InMaterialDTO inMaterialDTO) {
+//	public List<InMaterialDTO> inMaterialContent(String inNum) {
 	public InMaterialDTO inMaterialContent(String inNum) {
+//		return sqlSession.selectOne(namespace + ".inMaterialContent", inNum);
+//		return sqlSession.selectList(namespace + ".inMaterialContent", inNum);
 		return sqlSession.selectOne(namespace + ".inMaterialContent", inNum);
 	}
 

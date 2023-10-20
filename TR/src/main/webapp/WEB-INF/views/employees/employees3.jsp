@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,10 +44,59 @@
     <option value="퇴사" ${employeesDTO.empState == '퇴사' ? 'selected' : ''}>퇴사</option>
   </select>
 </div>
-<div class="form-group"><p>프로필사진</p><input type="file" name="file" ></div>
-<button onclick="save">수정하기</button>
+<div class="form-group">
+    <p>프로필사진</p>
+    <button id="upload-button" type="button">사진 변경</button>
+    <button id="delete-button" type="button">사진 삭제</button>
+<!--     새로운 파일, 미리보기 -->
+    <input type="file" id="file" name="file" accept="image/*" onchange="previewImage()" style="display: none;" />
+<!--     기존파일 -->
+    <input type="hidden" id="oldfile" name="oldfile" value="${employeesDTO.empFile}">
+</div>
+<div class="form-group">
+    <p></p>
+    <c:choose>
+    <c:when test="${employeesDTO.empFile != null}">
+        <img src="${pageContext.request.contextPath}/resources/img/${employeesDTO.empFile}" id="preview" />
+    </c:when>
+    <c:otherwise>
+        <img src="${pageContext.request.contextPath}/resources/img/default.jpg" id="preview" />
+    </c:otherwise>
+</c:choose>
+
+</div>
+<button id="save-button" onclick="save">저장하기</button>
 
 </form>
 </div>
+<script>
+document.getElementById('delete-button').addEventListener('click', function() {
+//     사진 삭제 누르면 기본이미지 보여줌
+    document.getElementById('preview').src = "${pageContext.request.contextPath}/resources/img/default.jpg";
+    
+    // 파일 입력 필드를 초기화합니다.
+    document.getElementById('file').value = '';
+    document.getElementById('oldfile').value = '';
+});
+// 파일 업로드 버튼 누르면 input file 클릭됨
+document.getElementById('upload-button').addEventListener('click', function() {
+    document.getElementById('file').click();
+});
+// 업로드된 파일 미리보기+버튼 숨기기
+function previewImage() {
+    var file = document.getElementById("file").files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+        document.getElementById("preview").src = reader.result;
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById("preview").src = "";
+    }
+}
+</script>
 </body>
 </html>

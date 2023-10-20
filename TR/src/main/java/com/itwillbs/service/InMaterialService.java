@@ -59,7 +59,7 @@ public class InMaterialService {
 		
 		
 		inMaterialDTO.setInNum(inNum);
-		inMaterialDTO.setInCount(ordermanagementDTO.getBuyCount());
+		inMaterialDTO.setBuyCount(ordermanagementDTO.getBuyCount());
 		inMaterialDTO.setRawPrice(ordermanagementDTO.getRawPrice());
 		int price = (int) (ordermanagementDTO.getRawPrice() * ordermanagementDTO.getBuyCount());
 //		int price = Integer.parseInt(ordermanagementDTO.getRawPrice()) * ordermanagementDTO.getBuyCount();
@@ -84,7 +84,10 @@ public class InMaterialService {
 		return String.format("%s%04d", code_id, ++num);
 	}
 
+//	public List<InMaterialDTO> inMaterialContent(InMaterialDTO inMaterialDTO) {
+//	public List<InMaterialDTO> inMaterialContent(String inNum) {
 	public InMaterialDTO inMaterialContent(String inNum) {
+//		return inMaterialDAO.inMaterialContent(inMaterialDTO);
 		return inMaterialDAO.inMaterialContent(inNum);
 	}
 
@@ -121,7 +124,7 @@ public class InMaterialService {
 	public void updateList(OrderManagementDTO ordermanagementDTO) {
 		
 		InMaterialDTO inMaterialDTO = new InMaterialDTO();
-		inMaterialDTO.setInCount(ordermanagementDTO.getBuyCount());
+		inMaterialDTO.setBuyCount(ordermanagementDTO.getBuyCount());
 		inMaterialDTO.setRawPrice(ordermanagementDTO.getRawPrice());
 		int price = (int) (ordermanagementDTO.getRawPrice() * ordermanagementDTO.getBuyCount());
 		inMaterialDTO.setInPrice(price);
