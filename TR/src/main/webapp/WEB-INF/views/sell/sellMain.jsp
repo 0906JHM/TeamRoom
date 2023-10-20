@@ -40,7 +40,7 @@
 		<h2><a href="${pageContext.request.contextPath}/sell/sellMain" style=" text-decoration: none; color:black;">수주 관리</a></h2>
 
 		<!------------------------------------------------------- 상단 검색란 ---------------------------------------------------->
-		<form action="${pageContext.request.contextPath}/sell/sellMain"	method="get">
+		<form action="${pageContext.request.contextPath}/sell/sellMain"	method="get" id="searchBox">
 		<div id="searchform" style="border-radius: 5px;">
 			
 				<label>수주 코드</label> <input type="text" id="sellCode" name="sellCode" value="${sellDTO.sellCode}"> 
@@ -71,32 +71,37 @@
 		</div>
 		<br>
 		<!------------------------------------------------------- 추가, 수정, 삭제 버튼 ---------------------------------------------------->
-		
-			<div class="buttons">
-			<input type="submit" id="exportButton" value="엑셀">
-			<button  style="display: none;" id="add" onclick="openSellAdd()" class="btn">추가</button>
-			<button  style="display: none;" id="delete" class="btn">삭제</button>
-			</div>
-		<!------------------------------------------------------- 수주 상태---------------------------------------------------->
+		<div id="sample">
 			<div id="buttons">
 			<input type="submit" class="buttons highlighted" value="전체" id="allButton">
     		<input type="submit" class="buttons " value="미출고" id="non_deliveryButton">
     		<input type="submit" class="buttons " value="중간납품" id="interim_deliveryButton">
     		<input type="submit" class="buttons " value="출고완료" id="deliveryButton">
 			</div>
+			
+			<div class="buttons">
+			
+			<button  style="display: none;" id="add" onclick="openSellAdd()" class="btn">추가</button>
+			<button  style="display: none;" id="delete" class="btn">삭제</button>
+			</div>
+		<!------------------------------------------------------- 수주 상태---------------------------------------------------->
+		</div>
 		</form>
 	<div class="total-items">
- <label>총 ${sellDTO.count}건
- <div class="PageSelect">
- <label for="perPageSelect" style ="bottom:2px;">항목 수
-<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${sellDTO.pageSize}">
-    <option value="10" ${sellDTO.pageSize == 10 ? 'selected' : ''}>10개씩</option>
-    <option value="50" ${sellDTO.pageSize == 50 ? 'selected' : ''}>50개씩</option>
-    <option value="100" ${sellDTO.pageSize == 100 ? 'selected' : ''}>100개씩</option>
-    <option value="9999" ${sellDTO.pageSize == 9999 ? 'selected' : ''}>전체</option>
-</select></label></div>
+		 <div>
+			 <label>총 ${sellDTO.count}건</label>
+		 </div>
+		 <div class="PageSelect">
+ 			<label for="perPageSelect" style ="bottom:2px;">항목 수</label>
+			<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${sellDTO.pageSize}">
+			    <option value="10" ${sellDTO.pageSize == 10 ? 'selected' : ''}>10개씩</option>
+			    <option value="50" ${sellDTO.pageSize == 50 ? 'selected' : ''}>50개씩</option>
+			    <option value="100" ${sellDTO.pageSize == 100 ? 'selected' : ''}>100개씩</option>
+			    <option value="9999" ${sellDTO.pageSize == 9999 ? 'selected' : ''}>전체</option>
+			</select>
+		</div>
+	</div>
 
-</label></div>
 		<!------------------------------------------------------- 수주 목록 ---------------------------------------------------->
 		
 
@@ -189,6 +194,7 @@
 			
 			<!------------------------------------------------- 페이징 ------------------------------------------>
 			<div id="pagination" class="page_wrap">
+			<input type="submit" id="exportButton" value="엑셀">
 			<div class="page_nation">
 			<c:if test="${sellDTO.startPage > sellDTO.pageBlock}">
 				<a class="arrow prev"
@@ -197,13 +203,21 @@
 			</c:if>
 			
 			
-			<c:forEach var="i" begin="${sellDTO.startPage}"
-				end="${sellDTO.endPage}" step="1">
-				<a class="a active"
+<c:forEach var="i" begin="${sellDTO.startPage}"	end="${sellDTO.endPage}" step="1">
+  <c:choose>
+        <c:when test="${i eq sellDTO.currentPage}">
+            <a class="a active"
 					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
-					style="text-decoration: none; color: #5EC397;">${i}</a>
-			</c:forEach>
-
+					>${i}</a>
+			 		 </c:when>
+					 <c:otherwise>
+			
+				<a class="a"
+					href="${pageContext.request.contextPath}/sell/sellMain?pageNum=${i}&sellCode=${sellDTO.sellCode}&prodCode=${sellDTO.prodCode}&clientCode=${sellDTO.clientCode}&sellDate=${sellDTO.sellDate}&sellDuedate=${sellDTO.sellDuedate}&sellState=${sellDTO.sellState}"
+					>${i}</a>
+			 </c:otherwise>
+</c:choose>
+</c:forEach>
 
 			<c:if test="${sellDTO.endPage < sellDTO.pageCount}">
 				<a class="arrow next"

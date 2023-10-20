@@ -85,7 +85,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			</tr>
 			<tr> 
 				<td colspan="3"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
-				<td colspan="3"><input type="number" value="${outProductDTO.sellCount - outProductDTO.outCount}" readonly="readonly"></td>
+				<td colspan="3"><input type="number" name="remainder" id="remainder" value="${outProductDTO.sellCount - outProductDTO.outCount}" readonly="readonly"></td>
+				
 				
 			</tr>
 			<tr>
@@ -152,10 +153,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	
 	<script type="text/javascript">
 		
+		
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var outCountInput = document.querySelector('input[name="outCount"]');
 		    var stockCountInput = document.querySelector('input[name="stockCount"]');
+		    var remainder = document.querySelector('input[name="remainder"]');
+		    var sellCount = document.querySelector('input[name="sellCount"]');
 		    
 		    // 현재 출력해야되는 재고값 계산
 		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10);
@@ -164,6 +168,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    
 		    // 재고 입력란 업데이트
 		    stockCountInput.value = initialstockCount + initialOutCount - outCount;
+		    
+		    remainder.value = sellCount.value - outCount;
 		}
 		
 		
@@ -182,6 +188,29 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		        outCountInput.setAttribute('max', sellCount);
 		    }
 		
+		    
+		    document.getElementById("inputNum").addEventListener("keyup", function(event) {
+				if (event.key === "Enter") {
+			        event.preventDefault();
+
+			        // 입력된 출고 개수 가져오기
+			        var inputCount = parseInt(outCountInput.value);
+
+			        // 현재 outCount의 max 값 가져오기
+			        var maxCount = parseInt(outCountInput.max);
+
+			        // 만약 입력된 값이 max 값보다 크면 max 값으로 설정
+			        if (inputCount > maxCount) {
+			        	outCountInput.value = maxCount;
+			        }
+
+			        // 여기에서 원하는 동작을 수행하세요.
+			        updateInventory();
+			    }
+			});
+		    
+		    
+		    
 			
 			// "출고" 버튼 클릭 시 Ajax 요청을 보냅니다.
 			$("#updateButton").click(function() {
@@ -245,6 +274,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		function reloadParentAndCurrentPage() {
 		    window.opener.location.reload(); // 부모 창 새로고침
 		    window.location.reload(); // 현재 창 새로고침
+		    window.close();
 		}
 	</script>
 </body>
