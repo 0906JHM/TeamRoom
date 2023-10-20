@@ -12,7 +12,6 @@
 <!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
-
 function openPopup2() {
 	window.name = "update";
 	openWin = window.open("selectwarehouse.html", "selectwarehouse", "height=600,width=1300");
@@ -46,6 +45,7 @@ function openPopup2() {
 	<td id="tdup"><textarea name="rawMemo" rows="10" cols="15">${rawmaterialsDTO.rawMemo}</textarea></td></tr>
 </table>
 
+<!-- button -->
 <div id="buttons">
 <input type="submit" value="수정">
 </div>

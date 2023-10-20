@@ -16,7 +16,7 @@
 
 // update 페이지 팝업창
 function openPopup1(rawCode) {
-	var popupWidth = 550;
+	var popupWidth = 450;
 	var popupHeight = 665;
 	var popupX = (window.screen.width / 2) - (popupWidth / 2);
 	var popupY = (window.screen.height / 2) - (popupHeight / 2);
