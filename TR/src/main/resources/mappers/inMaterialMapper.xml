@@ -324,30 +324,9 @@
 		resultType="com.itwillbs.domain.InMaterialDTO">
 
 		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode, r.rawName, i.inCount, s.stockCount,
+		i.rawCode, r.rawName, b.buyCount,i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		i.inDate, i.inEmpId, i.inState
-		FROM inMaterial
-		i left join rawMaterial
-		r
-		on i.rawCode = r.rawCode
-		left join stock s
-		on
-		i.rawCode = s.rawCode
-		left join clients c
-		on i.clientCode = c.clientCode
-		order by i.inNum desc
-
-	</select>
-	
-<select id="getExcelListAllSearch"
-		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode,
-		r.rawName, i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice,
-		i.inDate,
-		i.inEmpId, i.inState
+		i.inDate, i.inRedate, i.inEmpId, i.inState, i.inMemo
 		FROM inMaterial i
 		left join rawMaterial r
 		on
@@ -358,6 +337,30 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
+		JOIN buy b 
+		ON i.buyNum = b.buyNum
+		order by i.inNum desc
+
+	</select>
+	
+<select id="getExcelListAllSearch"
+		resultType="com.itwillbs.domain.InMaterialDTO">
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode, r.rawName, b.buyCount,i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate, i.inRedate, i.inEmpId, i.inState, i.inMemo
+		FROM inMaterial i
+		left join rawMaterial r
+		on
+		i.rawCode = r.rawCode
+		left join stock s
+		on
+		i.rawCode = s.rawCode
+		left
+		join clients c
+		on i.clientCode = c.clientCode
+		JOIN buy b 
+		ON i.buyNum = b.buyNum
 		<where>
 			<if test="inNum != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
@@ -378,11 +381,9 @@
 	<select id="getExcelListSearch"
 		resultType="com.itwillbs.domain.InMaterialDTO">
 		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode,
-		r.rawName, i.inCount, s.stockCount,
+		i.rawCode, r.rawName, b.buyCount,i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		i.inDate,
-		i.inEmpId, i.inState
+		i.inDate, i.inRedate, i.inEmpId, i.inState, i.inMemo
 		FROM inMaterial i
 		left join rawMaterial r
 		on
@@ -393,6 +394,8 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
+		JOIN buy b 
+		ON i.buyNum = b.buyNum
 		<where>
 			<if test="inState == '검색'">
 				<if test="inNum != ''">
