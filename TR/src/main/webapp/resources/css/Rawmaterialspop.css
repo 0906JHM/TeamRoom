@@ -36,10 +36,32 @@ table td {
 }
 
 table tr {
-	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	width: 1570px;
 	height: 40px;
 	font: 500 20px/20px "Inter", sans-serif;
+}
+
+#td1 {
+	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	font: 500 16px/16px "Inter", sans-serif;
+	font-weight: bold;
+	width: 150px;
+}
+#td21, #td22 {
+	font: 500 16px/16px "Inter", sans-serif;
+	width: 150px;
+}
+
+#td21:nth-child(n+1) {
+	background-color: #ffffff;
+}
+#td22:nth-child(3n+2) {
+	background-color: #f2f2f2;
+}
+
+
+#buttons {
+  text-align: center;
 }
 
 /* 여기서부터 수정해야함 */
