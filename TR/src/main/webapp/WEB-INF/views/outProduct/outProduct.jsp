@@ -303,7 +303,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		  			        var button = $("<input type='button' value='상세정보'>");
 		  			        button.click(function () {
 		  			            // 버튼 클릭 시 처리할 동작을 여기에 추가
-		  			            window.open(contextPath + "/outProduct/outProductContent?outCode=" + outCode, "출고 상세정보", "width=500,height=700,toolbar=no,location=no,resizable=yes");
+		  			            window.open(contextPath + "/outProduct/outProductContent?outCode=" + outCode, "출고 상세정보", "width=500,height=730,toolbar=no,location=no,resizable=yes");
 		  			        });
 		
 		  			        // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
@@ -404,11 +404,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    	var popup = window.open(url, "", popupOpt);
 		    } //openWindow()
 		 	
-		    // 		   	엑셀
 
-
-    // 버튼 클릭 시 실행
-   // 클라이언트에서 서버로 데이터 요청
+		//엑셀
+		// 버튼 클릭 시 실행
+		// 클라이언트에서 서버로 데이터 요청
 		document.getElementById('exportButton').addEventListener('click', function () {
 			
 				// 엑셀로 내보낼 데이터
@@ -471,9 +470,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
 		    return buf;
 		}
-		
-	
-			
 		
 	</script>
 	

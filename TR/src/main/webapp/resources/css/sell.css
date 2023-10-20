@@ -1,123 +1,276 @@
 @charset "UTF-8";
 
-
-<!----------------------------------------------------- sell.css -------------------------------------------------->
-
+/*--------------------------------- 본문 ----------------------------------------*/
 body {
-	background-color: #F5F6FA;
+	background-color: #F5F6FA; /*연한 그레이*/
+	margin:0;
 }
 
-.horizontal-line {
-	width: 1000px;
-	height: 1px;
-	background-color: #B8B8B8;
-	margin-bottom: 20px;
+.container {
+	display: flex;
+	flex-direction: column;
 }
-
+/*-------------------------------- 제목(ㅇㅇ관리) --------------------------------------------*/
 h2 {
+	margin-left:30px; 
 	font-size: 30px;
 	font-weight: bold;
+	padding-left: 1%;
 }
-
-.tg {
-	border-collapse: collapse;
-	border-spacing: 0;
+/*-------------------------------- 상단 조회바 --------------------------------------------*/
+/* 거래처코드, 거래처명 등 */
+#searchform label{
+margin-left : 30px;
+font-weight: bold;
 }
-
-.tg td {
-	border-color: black;
-	border-style: solid;
-	border-width: 1px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	overflow: hidden;
-	padding: 10px 5px;
-	word-break: normal;
-}
-
-.tg th {
-	border-color: black;
-	border-style: solid;
-	border-width: 1px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	overflow: hidden;
-	padding: 10px 5px;
-	word-break: normal;
-}
-
-.tg .tg-zrve {
-	background-color: #0949f7;
-	border-color: #3531ff;
-	text-align: center;
-	vertical-align: top
-}
-
-.tg .tg-llyw {
-	background-color: #D9D9D9;
-	border-color: inherit;
-	text-align: left;
-	vertical-align: top
-}
-
-.tg .tg-llyw2 {
-	background-color: #ffffff;
-	border-color: inherit;
-	text-align: left;
-	vertical-align: top
-}
-
-.tg .tg-0pky {
-	border-color: inherit;
-	text-align: left;
-	vertical-align: top
-}
-
-/*-------------------------------------------------- 버튼 ------------------------------------------------------------*/
-
-#btnSell {
-	width: 40px;
-	height: 25px;
-	background-color: #5EC397;
-	color: #FFFFFF;
-	border: none;
-	border-radius: 3px;
-	margin-bottom: 10px;
-}
-
-
-/*------------------------------------------ 테이블 ------------------------------------------*/
-#sellTable {
-	border-collapse: collapse;
-	width: 1220px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */
-}
-
-#sellTable tr {
-	border-bottom: 1px solid #EAEBEA;
-}
-
-#sellTable th, #sellTable td {
-	border: none;
-}
-
+/* 거래처코드, 거래처명 등 입력할 요소 */
 input[type="text"] {
 	border: 1px solid #A6A6A6; /* 테두리 색 설정 */
 	background-color: #FFFFFF; /* 배경색 설정 */
 	border-radius: 3px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
+	width: 150px;
+	height:25px;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
 }
-/* 
-.outer-container {
-	display: flex;
-} */
-
-.main-content {
-	flex: 1;
-	padding: 20px;
-	background-color: #F5F6FA;
-	display:flex;
-	flex-direction: column;
+/* 조회 폼 틀*/
+#searchform {
+	margin-left:30px;
+	background-color: white; 
+	width: 1100px; 
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */"
+	border-radius: 5px; /*css 파일에서 안먹힘 -> jsp본문에 추가 */
+	padding-top: 20px;"
+}
+/* 조회폼 안에서 마지막 입력 요소*/
+#searchform input:last-child {
+    margin-bottom: 20px;
+}
+/* 조회 버튼*/
+#searchButton {
+	color: white;
+    background-color: #9AC5F4;
+	width: 50px;
+	height: 30px;
+	border-radius: 5px;
+	border: 0;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
+	margin-left : 220px;
+	margin-right: 5px;
+	font-weight: bold;
+}
+/* 조회 초기화 버튼 */
+#resetButton{
+	color: white;
+    background-color:  #4D4D4D;
+	width: 50px;
+	height: 30px;
+	border-radius: 5px;
+	border: 0;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
+	font-weight: bold;
+}
+/* 조회, 초기화 버튼 hover */
+#searchButton:hover, #resetButton:hover {
+	color: white;
+    background-color: #1D5D9B;
+}
+/*-------------------------------- 추가, 삭제, 엑셀 버튼 --------------------------------------------*/
+/* 엑셀버튼 */
+#exportButton{
+	color: white;
+    background-color: #9AC5F4;
+	width: 50px;
+	height: 30px;
+	border-radius: 5px;
+	border: 0;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
+	margin-top:30px;
+	margin-left : 920px;
+	margin-right: 5px;
+	font-weight: bold;
+}
+/* 추가버튼 */
+#add{
+	color: white;
+    background-color: #9AC5F4;
+	width: 50px;
+	height: 30px;
+	border-radius: 5px;
+	border: 0;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
+	font-weight: bold;
+	margin-right: 5px;
+}
+/* 삭제버튼 */
+#delete{
+	color: white;
+    background-color:  #4D4D4D;
+	width: 50px;
+	height: 30px;
+	border-radius: 5px;
+	border: 0;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
+	margin-right: 5px;
+	font-weight: bold;
+}
+/* 추가, 삭제 버튼 hover */
+#add:hover, #delete:hover {
+	color: white;
+    background-color: #1D5D9B;
+}
+/* 엑셀 버튼 hover */
+#exportButton:hover {
+    color:white;
+    background-color:  #1D5D9B;
+}
+/*-------------------------------- 전체, 출고, 미출고, 중간납품 버튼 --------------------------------------------*/
+#allButton{
+	color: white;
+    background-color:  #4D4D4D;
+	width: 70px;
+	height: 30px;
+	border-radius: 5px;
+	border: 0;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
+	margin-top:30px;
+	margin-left : 50px;
+	margin-right: 5px;
+	margin-bottom : 10px;
+	font-weight: bold;
+} 
+#non_deliveryButton, #interim_deliveryButton, #deliveryButton{
+	color: white;
+    background-color: #9AC5F4;
+	width: 70px;
+	height: 30px;
+	border-radius: 5px;
+	border: 0;
+	text-align: center;
+	font: 500 15px/20px "Inter", sans-serif;
+	margin-right: 5px;	
+	font-weight: bold;
+}
+/* 전체, 미출고, 중간납품, 출고완료 버튼 hover */
+#allButton:hover,#non_deliveryButton:hover,#interim_deliveryButton:hover,#deliveryButton:hover {
+    color: white;
+	background-color: #1D5D9B;
+}
+/*----------------------- 총 몇 건(리스트 개수), 항목수 선택-------------------*/
+.listCount{
+	font-size: 15px;
+	font-weight: normal;
+	margin-left: 30px;
+	width: 100px;
+}
+/*----------------------------- 항목 수 선택 ----------------------------- */
+.PageSelect{
+	margin-left: 1090px;
+	font-size: 15px;
+	font-weight: normal;
+	width: 100px;
+}
+/*--------------------------------------- 테이블 -------------------------------  */
+#sellTable {
+	margin-top: 10px;
+	margin-left:30px;
+	border-collapse: collapse;
+	width: 1220px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */
+	text-align: center;
+	border-right: 1px solid #D9D9D9; /* 수직 줄의 색상 설정 */
+    border-bottom: 1px solid #D9D9D9; /* 가로 줄의 스타일을 변경 */
+}
+/* 테이블 틀 */
+.tg {
+	margin-top: 10px;
+	margin-left:30px;
+	width: 1100px; 
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */
+	border-radius: 5px; /*css 파일에서 안먹힘 -> jsp본문에 추가 */
+	/* padding: 10px 10px 10px 10px; */
+	background-color: white;
+	text-align: center;
+	
 }
 
+.tg thead {
+    background-color: #D9D9D9; 
+    height: 30px;
+    
+}
+.tg tbody {
+    background-color: white; 
+    height: 30px;  
+    
+}
+#sellTable tr {
+	border-right: 1px solid #D9D9D9; 
+    border-bottom: 1px solid #D9D9D9;
+    height: 35px;
+}
+
+/*--------------------------------------- 페이징 -------------------------------  */
+ /* 번호위치 */
+ .page_wrap {
+	text-align:center;
+	margin-top : 20px;
+	margin-right: 400px;
+ }
+ /* 오른쪽 배치 */
+.page_nation {
+	display:inline-block;
+	float:right;
+}
+/* 페이지 < > 감추기 */
+.page_nation .none {
+	display:none;
+}
+/*선택안된 페이지 번호 */
+.page_nation a {
+	display:block;
+	margin:0 3px;
+	float:left;
+	border:1px solid #D9D9D9;
+	width:30px;
+	height:30px;
+	line-height:30px;
+	text-align:center;	
+	font-size:15px;	
+	text-decoration:none;
+	background-color:white;
+	color:#4D4D4D;	
+	border-radius:3px;
+}
+/* 현재 선택된 페이지 번호*/
+.page_nation a.active {	
+	background-color:#fff;
+	color:#999999;}
+.page_nation .arrow {
+	border:1px solid #ccc;
+}
+.page_nation .pprev {
+	background:#f8f8f8 url('img/page_pprev.png') no-repeat center center;
+	margin-left:0;
+}
+.page_nation .prev {
+	background:#f8f8f8 url('img/page_prev.png') no-repeat center center;
+	margin-right:7px;
+	border-radius:5px;
+}
+.page_nation .next {
+	background:#f8f8f8 url('img/page_next.png') no-repeat center center;
+	margin-left:7px;
+	border-radius:5px;
+}
+.page_nation .nnext {
+	background:#f8f8f8 url('img/page_nnext.png') no-repeat center center;
+	margin-right:0;
+}
