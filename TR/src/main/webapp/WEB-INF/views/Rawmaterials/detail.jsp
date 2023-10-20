@@ -28,8 +28,11 @@
 </table>
 
 <!-- button -->
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자')}">
 <input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/update?rawCode=${rawmaterialsDTO.rawCode}'">
+</c:if>
 <input type="button" value="목록" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/home'">
 </div>
+
 </body>
 </html>

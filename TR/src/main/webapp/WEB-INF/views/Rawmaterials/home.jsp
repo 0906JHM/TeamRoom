@@ -145,8 +145,10 @@ $(document).ready(function() {
 
 <!-- button -->
 <div id="buttons">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자')}">
 <input type="button" value="추가" onclick="openPopup1()">
 <input type="button" value="삭제" onclick="deleteValue();">
+</c:if>
 </div>
 
 <!-- table -->
