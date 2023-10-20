@@ -23,10 +23,10 @@ public class InMaterialDTO {
 	private int stockCount;
 	private String inState;
 	private String whseCode;
-//	비고 필요없나
 	private String inMemo;
 	private int buyCount;
 	private String inRedate;
+	private int remainder;//입고 부족 개수
 	
 	
 	

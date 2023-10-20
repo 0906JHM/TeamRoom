@@ -1,3 +1,4 @@
+<%@page import="com.itwillbs.domain.InMaterialDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -29,6 +30,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 <body>
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
 
+<%
+	InMaterialDTO inMaterialDTO;
+%>
 	<h2>입고 상세정보</h2>
 	<form action="${pageContext.request.contextPath}/inMaterial/inMaterialUpdate" id="updateForm" method="POST">
 		<table>
@@ -73,11 +77,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 <!-- 				<th colspan="2">납품 예정일</th> -->
 				<th colspan="2">입고일</th>
 				<th colspan="2">재입고일</th>
+				<th colspan="2">입고 부족</th>
 			</tr>
 			<tr>
 <%-- 				<td colspan="2"><input type="text" name="sellDuedate" value="${inMaterialDTO.sellDuedate }" readonly="readonly"></td> --%>
-				<td colspan="2"><input type="text" name="inDate" value="${inMaterialDTO.inDate }" readonly="readonly"></td>
-				<td colspan="2"><input type="text" name="inRedate" value="${inMaterialDTO.inRedate }" readonly="readonly"></td>
+				<td colspan="2"><input type="text" name="inDate" value="${inMaterialDTO.inDate }" readonly></td>
+				<td colspan="2"><input type="text" name="inRedate" value="${inMaterialDTO.inRedate }" readonly></td>
+				<td colspan="2"><input type="number" name="remainder" value="${inMaterialDTO.remainder }" readonly onchange="updateRemainder()"></td>
 			</tr>
 			<tr>
 				<th colspan="2">발주 개수</th>
@@ -92,7 +98,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
    						<input type="number" name="inCount" value="0" readonly="readonly">
 					</c:if>
 					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}">
-    					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" onchange="updateInventory()">
+    					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" min=0 onchange="updateInventory()">
 					</c:if>
 
 				</td>
@@ -210,6 +216,15 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    window.opener.location.reload(); // 부모 창 새로고침
 		    window.location.reload(); // 현재 창 새로고침
 		}
+		
+
+var buyCount = parseInt(document.getElementsByName('buyCount')[0].value);
+
+    function updateRemainder() {
+        var inCount = parseInt(document.getElementById('inputNum').value, 10);
+        var updatedValue = buyCount - inCount;
+        document.getElementsByName('remainder')[0].value = updatedValue;
+    }
 	</script>
 </body>
 </html>
