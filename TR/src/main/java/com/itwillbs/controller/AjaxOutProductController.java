@@ -143,7 +143,7 @@ public class AjaxOutProductController {
 //		게시판 전체 글 개수 구하기
 		List<OutProductDTO> outProductList = outProductService.getExcelList(outProductDTO);
 		
-		
+		System.out.println("엑셀 출력 데이터 "+outProductList);
 		ResponseEntity<List<OutProductDTO>> entity = new ResponseEntity<>(outProductList, HttpStatus.OK);
 		return entity;
 	}
