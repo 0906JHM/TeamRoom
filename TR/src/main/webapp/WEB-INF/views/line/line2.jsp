@@ -32,23 +32,6 @@ $.ajax({
     }
 });
 
-// $(document).ready(function() {
-//     $(".lineEmpId").change(function() {
-//         var empId = $(this).val();
-
-//         $.ajax({
-//             url: '${pageContext.request.contextPath}/employees/empIdCheck',
-//             data:{'empId': empId},
-//             success: function(data) {
-//                 if (data == false) {
-//                     alert('유효하지 않은 empId입니다.');
-//                 }
-//             }
-//         });
-//     });
-    
-// });
-
 </script>
 <body>
 <div class="container">

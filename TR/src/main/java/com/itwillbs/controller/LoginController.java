@@ -40,6 +40,7 @@ public class LoginController{
 		if(loginDTO != null) {
 			session.setAttribute("empId", loginDTO.getEmpId());
 			session.setAttribute("empDepartment", loginDTO.getEmpDepartment());
+			session.setAttribute("empFile", loginDTO.getEmpFile());
 			System.out.println("성공");
 			
 			return "redirect:/main/calendar";
