@@ -59,7 +59,7 @@
 			</div>
 			<div id="chart_2">
 				<div class="chart-header">
-					<h3 class="chart-header-item selected" id="linePerfChartHeader">라인별 생산량</h3>
+					<h3 class="chart-header-item selected" id="linePerfChartHeader">금일 라인별 생산량</h3>
 					<h3 class="chart-header-item" id="perfChartHeader">최근 생산량</h3>
 				</div>
 

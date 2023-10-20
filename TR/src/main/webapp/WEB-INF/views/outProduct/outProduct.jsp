@@ -320,6 +320,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			            var sellState = data[i].sellState;		  //검색한 출고 상태
 		        		var prev = data[i].startPage - data[i].pageBlock;
 		        		var next = data[i].startPage + data[i].pageBlock;
+		        		var currentPage = data[i].currentPage;
 		        		
 		        		var listCountElement = document.getElementById("listCount");
 		        		listCountElement.textContent = "총 " + data[i].count + "건"; // 내용을 원하는 형식으로 변경
@@ -339,9 +340,20 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		        		for (let page = data[i].startPage; page <= data[i].endPage; page++) {
 		        		    let pageLink = $("<a href='javascript:void(0);'>" + page + "</a>");
 		        		    var pageListItem = $("<li>").append(pageLink);
+		        		    
+// 		        		    // 현재 페이지 표시
+// 		        		    if (page === currentPage) {
+// 		        		        pageLink.addClass("current-page"); 
+// 		        		    }
+		        		    
 		        		    pageListItem.click(function() {
 		        		        loadPage(outCode, prodName, clientCompany, page);
 		        		    });
+		        		 	// 현재 페이지 표시
+		        		    if (page === currentPage) {
+						        pageListItem.attr("id", "current-page");
+						    }
+		        		    
 		        		    pagingUL.append(pageListItem); // 각 페이지 번호를 페이지 목록에 추가하고 li 클릭 시에도 loadPage를 호출합니다.
 		        		}
 
