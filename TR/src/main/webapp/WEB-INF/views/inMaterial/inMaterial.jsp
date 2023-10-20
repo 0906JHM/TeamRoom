@@ -566,6 +566,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							        '거래처명': item.clientCompany,
 							        '품번': item.rawCode,
 							        '품명': item.rawName,
+							        '발주수량':item.buyCount,
 							        '입고수량': item.inCount,
 							        '재고수량': item.stock,
 							        '단가': item.rawPrice,
