@@ -96,16 +96,16 @@ public class InMaterialService {
 	}
 
 
-//	public void updateInState(InMaterialDTO inMaterialDTO) {
-//		inMaterialDAO.updateInState(inMaterialDTO);
-//		
-//	}
+	public void updateInState(InMaterialDTO inMaterialDTO) {
+		inMaterialDAO.updateInState(inMaterialDTO);
+		
+	}
 
-//	public void updateInDate(InMaterialDTO inMaterialDTO) {
-//		System.out.println("InMaterialService updateInDate");
-//		inMaterialDAO.updateInDate(inMaterialDTO);
-//		
-//	}
+	public void updateInDate(InMaterialDTO inMaterialDTO) {
+		System.out.println("InMaterialService updateInDate");
+		inMaterialDAO.updateInDate(inMaterialDTO);
+		
+	}
 
 	public List<InMaterialDTO> getExcelList(InMaterialDTO inMaterialDTO) {
 		return inMaterialDAO.getExcelList(inMaterialDTO);
@@ -139,5 +139,17 @@ public class InMaterialService {
 	public void deleteSell(String checked) {
 		inMaterialDAO.deleteSell(checked);
 	}
+
+	public void updateInRedate(InMaterialDTO inMaterialDTO) {
+		inMaterialDAO.updateInRedate(inMaterialDTO);
+		
+	}
+
+	public void updateInMaterialContent(InMaterialDTO inMaterialDTO) {
+		inMaterialDAO.updateInMaterialContent(inMaterialDTO);
+		
+	}
+
+
 
 }

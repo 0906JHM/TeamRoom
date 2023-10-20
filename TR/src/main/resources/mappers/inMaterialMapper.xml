@@ -277,19 +277,33 @@
 	</update>
 
 
-<!-- 	<update id="updateInState"> -->
-<!-- 		update inMaterial -->
-<!-- 		SET inState = "입고완료" -->
-<!-- 		WHERE inNum = -->
-<!-- 		#{inNum} -->
-<!-- 	</update> -->
+	<update id="updateInState">
+		update inMaterial
+		SET inState = #{inState}
+		WHERE inNum =
+		#{inNum}
+	</update>
 	
-<!-- 	<update id="updateInDate"> -->
-<!-- 		update inMaterial -->
-<!-- 		SET inDate = #{inDate} -->
-<!-- 		WHERE inNum = -->
-<!-- 		#{inNum} -->
-<!-- 	</update> -->
+	<update id="updateInDate">
+		update inMaterial
+		SET inDate = #{inDate}
+		WHERE inNum =
+		#{inNum}
+	</update>
+	
+	<update id="updateOutRedate">
+		update inMaterial
+		SET inRedate = #{inRedate}
+		WHERE inNum =
+		#{inNum}
+	</update>
+	
+	<update id="updateInMaterialContent">
+		update inMaterial
+		set inCount = #{inCount}, inMemo = #{inMemo},
+		where inNum = #{inNum}
+	</update>
+	
 <!-- 	 	입고담당자 업데이트  --> 
 <!-- 	<update id="updateInEmpId"> -->
 <!-- 		update inMaterial -->

@@ -120,7 +120,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="3">
 				<fmt:formatNumber var="inPrice" value="${inMaterialDTO.inPrice }" pattern="###,###"></fmt:formatNumber>
 					<input type="hidden" name="inPrice" value="${inMaterialDTO.inPrice }">
-					<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly">
+					<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly" onchange="updateInventory2()">
 				</td>
 			</tr>
 			<tr>
@@ -156,6 +156,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	</script>
 	
 	<script type="text/javascript">
+	
+// 		재고개수
 		function updateInventory() {
 		    // 입고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var inCountInput = document.querySelector('input[name="inCount"]');
@@ -167,9 +169,23 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    var inCount = parseInt(inCountInput.value, 10);
 		    
 		    // 재고 입력란 업데이트
-		    stockCountInput.value = initialstockCount + initialInCount - inCount;
+		    stockCountInput.value = initialstockCount + initialInCount + inCount;
 		}
 		
+// 		총입고가격 = 입고수량 * 원자재 단가
+// 		function updateInventory2() {
+// 		    // 입고 개수와 총입고가격 입력란의 DOM 요소를 가져옵니다
+// 		    var inCountInput = document.querySelector('input[name="inCount"]');
+// 		    var inPriceInput = document.querySelector('input[name="inPriceInput"]');
+		    
+// 		    // 현재 출력해야되는 총입고가격 계산
+// 		    var initialinPrice = parseInt(document.getElementById('initialinPrice').value, 10);
+// 		    var initialInCount = parseInt(document.getElementById('initialInCount').value, 10);
+// 		    var inCount = parseInt(inCountInput.value, 10);
+		    
+// 		    // 총가격 입력란 업데이트
+// // 		    stockCountInput.value = initialstockCount + initialInCount + inCount;
+// 		}
 		
 		$(document).ready(function() {
 			// "입고" 버튼 클릭 시 Ajax 요청을 보냅니다.
