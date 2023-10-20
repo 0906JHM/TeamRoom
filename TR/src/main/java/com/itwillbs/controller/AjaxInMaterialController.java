@@ -193,7 +193,7 @@ public class AjaxInMaterialController {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String current = dateFormat.format(currentDate);
 
-			// 입고부족이 아니면 출고일세팅
+			// 입고부족이 아니면 입고일세팅
 			if (inMaterialDTO.getInDate() == null || "".equals(inMaterialDTO.getInDate())) {
 				inMaterialDTO.setInDate(current);
 				inMaterialService.updateInDate(inMaterialDTO);

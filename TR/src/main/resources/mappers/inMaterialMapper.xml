@@ -290,7 +290,7 @@
 		#{inNum}
 	</update>
 	
-	<update id="updateOutRedate">
+	<update id="updateInRedate">
 		update inMaterial
 		SET inRedate = #{inRedate}
 		WHERE inNum =
@@ -299,7 +299,7 @@
 	
 	<update id="updateInMaterialContent">
 		update inMaterial
-		set inCount = #{inCount}, inMemo = #{inMemo},
+		set inCount = #{inCount}, inMemo = #{inMemo}
 		where inNum = #{inNum}
 	</update>
 	
