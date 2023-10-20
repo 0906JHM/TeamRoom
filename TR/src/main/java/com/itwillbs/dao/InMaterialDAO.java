@@ -79,14 +79,13 @@ public class InMaterialDAO {
 
 	}
 
-//	public void updateInState(InMaterialDTO inMaterialDTO) {
-//		sqlSession.update(namespace + ".updateInState", inMaterialDTO);
-//	}
+	public void updateInState(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace + ".updateInState", inMaterialDTO);
+	}
 
-//	public void updateInDate(InMaterialDTO inMaterialDTO) {
-//		sqlSession.update(namespace+".updateInDate",inMaterialDTO);
-//		
-//	}
+	public void updateInDate(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace+".updateInDate",inMaterialDTO);
+	}
 
 	public List<InMaterialDTO> getExcelList(InMaterialDTO inMaterialDTO) {
 		if ("전체".equals(inMaterialDTO.getInState())) {
@@ -118,6 +117,16 @@ public class InMaterialDAO {
 
 	public void deleteSell(String checked) {
 			sqlSession.delete(namespace + ".deleteSell", checked);
+		
+	}
+
+	public void updateInRedate(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace + ".updateInRedate", inMaterialDTO);
+		
+	}
+
+	public void updateInMaterialContent(InMaterialDTO inMaterialDTO) {
+		sqlSession.update(namespace + ".updateInMaterialContent", inMaterialDTO);
 		
 	}
 }

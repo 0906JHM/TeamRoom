@@ -56,12 +56,12 @@
 	      	<input type="text" name="prodName" id="prodName9999" value="${sellDTO.prodName}"  placeholder="제품명" readonly onclick="searchItem('prod','prodCode9999')">
 	      
 				
-				<br>
+				
 				<label for="startDate">수주 일자</label> 
-	       		<input type="text" id="sellDate" name="daterange1" value="${sellDTO.sellDate}" class="daterange" style="width:250px;">
+	       		<input type="text" id="sellDate" name="daterange1" value="${sellDTO.sellDate}" class="daterange" style="width:180px;">
 				
 				<label for="startDate">납기일자</label> 
-				<input type="text" id="sellDuedate" name="daterange2" value="${sellDTO.sellDuedate}" class="daterange" style="width:250px;">
+				<input type="text" id="sellDuedate" name="daterange2" value="${sellDTO.sellDuedate}" class="daterange" style="width:180px;">
 				
 				<input type="hidden" id="sellState" name="sellState" value="${sellDTO.sellState}">
 			
@@ -92,7 +92,7 @@
 			 <label>총 ${sellDTO.count}건</label>
 		 </div>
 		 <div class="PageSelect">
- 			<label for="perPageSelect" style ="bottom:2px;">항목 수</label>
+ 			<label for="perPageSelect" style ="bottom:2px;">항목 수 </label>
 			<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${sellDTO.pageSize}">
 			    <option value="10" ${sellDTO.pageSize == 10 ? 'selected' : ''}>10개씩</option>
 			    <option value="50" ${sellDTO.pageSize == 50 ? 'selected' : ''}>50개씩</option>
@@ -164,21 +164,17 @@
 								<c:choose>
     <c:when test="${not empty sellDTO.sellMemo}">
         <td class="tg-llyw2">
-            <a href="#" onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color: red;">[보기]</a>
+            <a href="#" onclick="openSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" 
+            style="color:#C63D2F; text-decoration: none;">보기</a>
         </td>
     </c:when>
     <c:otherwise>
-        <c:set var="team" value="${sessionScope.empDepartment}" />
-        <c:choose>
-            <c:when test="${team eq '영업팀' or team eq '관리자'}">
-                <td class="tg-llyw2">
-                    <a href="#" onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" style="color: #384855;" style="display: none;" id="memoAdd">[입력]</a>
+    <td class="tg-llyw2">
+                    <a href="#" onclick="addSellMemo('${sellDTO.sellCode}'); return sellMemoClose();" 
+                     style="display: none; color: #384855; text-decoration: none;"  class="memoAdd">입력</a>
+                     
                 </td>
-            </c:when>
-            <c:otherwise>
-                <td class="tg-llyw2"></td>
-            </c:otherwise>
-        </c:choose>
+       
     </c:otherwise>
 </c:choose>
 							</tr>
@@ -378,8 +374,8 @@ $('#delete').click(function(event){
 function openSellAdd() {
 
     // 팝업 창 
-    var popupWidth = 500;
-    var popupHeight = 700;
+    var popupWidth = 400;
+    var popupHeight = 670;
     var left = (window.innerWidth - popupWidth) / 2;
     var top = (window.innerHeight - popupHeight) / 2;
     var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight +
@@ -462,7 +458,8 @@ function openSellDetail(sellCode) {
 			  $('#add').show();
 				
 				$('#delete').show();
-				$('#memoAdd').show();
+				$('.memoAdd').show();
+				
 		   }
 		  else if (team ===""){
 			  window.location.href = "${pageContext.request.contextPath}/login/logout";
