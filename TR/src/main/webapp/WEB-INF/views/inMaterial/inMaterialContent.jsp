@@ -90,12 +90,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<input type="hidden" id="initialInCount" value="${inMaterialDTO.inCount}">
 					<c:if test="${inMaterialDTO.stockCount == null || inMaterialDTO.stockCount == 0}">
    						<input type="number" name="inCount" value="0" readonly="readonly">
-    					<script type="text/javascript">
-        					console.log("재고가 0개");
-    					</script>
 					</c:if>
 					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}">
-    					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" min="${inMaterialDTO.inCount }" max="${inMaterialDTO.buyCount }" onchange="updateInventory()">
+    					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" onchange="updateInventory()">
 					</c:if>
 
 				</td>
