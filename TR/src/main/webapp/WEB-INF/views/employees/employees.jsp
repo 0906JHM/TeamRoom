@@ -123,7 +123,9 @@ $(document).ready(function() {
             <th>전화번호</th>
             <th>입사일자</th>
             <th>재직구분</th>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">            
             <th></th>
+</c:if>            
         </tr>
         </thead>
 <c:forEach var="employeesDTO" items="${employeesList }">

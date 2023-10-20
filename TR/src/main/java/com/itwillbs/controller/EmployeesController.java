@@ -77,7 +77,7 @@ public class EmployeesController {
 	
 //	인사등록
 	@PostMapping("/insertPro")
-	public String insertPro(EmployeesDTO employeesDTO,HttpServletRequest request, MultipartFile file) throws Exception{
+	public String insertPro(EmployeesDTO employeesDTO, MultipartFile file) throws Exception{
 		UUID uuid = UUID.randomUUID();
 		String filename=uuid.toString()+"_"+file.getOriginalFilename();
 		FileCopyUtils.copy(file.getBytes(), new File(uploadPath,filename) );
@@ -109,7 +109,12 @@ public class EmployeesController {
 	
 //	인사수정
 	@PostMapping("/updatePro")
-	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr) {
+	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr, MultipartFile file) throws Exception{
+		UUID uuid = UUID.randomUUID();
+		String filename=uuid.toString()+"_"+file.getOriginalFilename();
+		FileCopyUtils.copy(file.getBytes(), new File(uploadPath,filename) );
+		employeesDTO.setEmpFile(filename);
+		
 	    employeesService.updateEmployees(employeesDTO);
 	    rttr.addFlashAttribute("refreshAndClose", true);
 	    return "redirect:/employees/employees";

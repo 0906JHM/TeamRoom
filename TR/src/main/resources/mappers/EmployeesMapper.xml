@@ -42,7 +42,7 @@
   
 <!--   인사수정하기 -->
   <update id="updateEmployees">
-  	update employees set empId = #{empId}, empPass = #{empPass}, empName = #{empName}, empDepartment = #{empDepartment}, empPosition = #{empPosition}, empEmail = #{empEmail}, empTel = #{empTel}, empHiredate = #{empHiredate}, empState = #{empState}
+  	update employees set empId = #{empId}, empPass = #{empPass}, empName = #{empName}, empDepartment = #{empDepartment}, empPosition = #{empPosition}, empEmail = #{empEmail}, empTel = #{empTel}, empHiredate = #{empHiredate}, empState = #{empState}, empFile = #{empFile}
   	where empId = #{empId}
   </update>
   
