@@ -569,11 +569,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							        '발주수량':item.buyCount,
 							        '입고수량': item.inCount,
 							        '재고수량': item.stock,
-							        '단가': item.rawPrice,
-							        '총액': item.inPrice,
+							        '입고단가': item.rawPrice,
+							        '총입고가격': item.inPrice,
 							        '입고일': item.inDate,
+							        '재입고일' : item.inRedate,
 							        '담당자': item.inEmpId,
-							        '상태': item.inState,
+							        '입고상태': item.inState,
+							        '비고': item.inMemo
 							    };
 							});
 				            // 새 워크북을 생성
