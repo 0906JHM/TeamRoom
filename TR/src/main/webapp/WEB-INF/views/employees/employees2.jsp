@@ -45,6 +45,7 @@
     <button id="upload-button" type="button">사진 변경</button>
     <button id="delete-button" type="button">사진 삭제</button> <!-- 사진 삭제 버튼 추가 -->
     <input type="file" id="file" name="file" accept="image/*" onchange="previewImage()" style="display: none;" />
+    <input type="hidden" id="oldfile" name="oldfile" value="${employeesDTO.empFile}">
 </div>
 <div class="form-group">
     <p></p>

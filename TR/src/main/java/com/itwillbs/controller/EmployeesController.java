@@ -78,11 +78,24 @@ public class EmployeesController {
 	
 //	인사등록
 	@PostMapping("/insertPro")
-	public String insertPro(EmployeesDTO employeesDTO, MultipartFile file) throws Exception{
-		UUID uuid = UUID.randomUUID();
-		String filename=uuid.toString()+"_"+file.getOriginalFilename();
-		FileCopyUtils.copy(file.getBytes(), new File(uploadPath,filename) );
-		employeesDTO.setEmpFile(filename);
+	public String insertPro(HttpServletRequest request,EmployeesDTO employeesDTO, MultipartFile file) throws Exception{
+		// 업로드 파일 있는지 없는지 파악
+				if(file.isEmpty()) {
+				    // 첨부파일 없는 경우
+				    String oldfile = request.getParameter("oldfile");
+				    if(oldfile == null || oldfile.isEmpty()) {
+				        // oldfile이 비어있는 경우 => EmpFile에 null 저장
+				        employeesDTO.setEmpFile(null);
+				    } else {
+				        // oldfile이 있는 경우 => oldfile 저장
+				        employeesDTO.setEmpFile(oldfile);
+				    }
+				} else {
+				    UUID uuid = UUID.randomUUID();
+				    String filename = uuid.toString() + "_" + file.getOriginalFilename();
+				    FileCopyUtils.copy(file.getBytes(), new File(uploadPath, filename));
+				    employeesDTO.setEmpFile(filename);
+				}
 		
 		employeesService.insertEmployees(employeesDTO);
 		return "redirect:/employees/employees";
@@ -110,13 +123,26 @@ public class EmployeesController {
 	
 //	인사수정
 	@PostMapping("/updatePro")
-	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr, MultipartFile file, HttpSession session) throws Exception{
-	    if (!file.isEmpty()) {
-	        UUID uuid = UUID.randomUUID();
-	        String filename = uuid.toString() + "_" + file.getOriginalFilename();
-	        FileCopyUtils.copy(file.getBytes(), new File(uploadPath, filename));
-	        employeesDTO.setEmpFile(filename);
-	    }
+	public String updatePro(HttpServletRequest request,EmployeesDTO employeesDTO, MultipartFile file, HttpSession session) throws Exception{
+	 // 업로드 파일 있는지 없는지 파악
+		if(file.isEmpty()) {
+		    // 첨부파일 없는 경우
+		    String oldfile = request.getParameter("oldfile");
+		    if(oldfile == null || oldfile.isEmpty()) {
+		        // oldfile이 비어있는 경우 => EmpFile에 null 저장
+		        employeesDTO.setEmpFile(null);
+		    } else {
+		        // oldfile이 있는 경우 => oldfile 저장
+		        employeesDTO.setEmpFile(oldfile);
+		    }
+		} else {
+		    UUID uuid = UUID.randomUUID();
+		    String filename = uuid.toString() + "_" + file.getOriginalFilename();
+		    FileCopyUtils.copy(file.getBytes(), new File(uploadPath, filename));
+		    employeesDTO.setEmpFile(filename);
+		}
+
+	 		
 	    // 기존 세션에서 empId 값을 확인
 	    String empId = (String) session.getAttribute("empId");
 	    if (empId != null && empId.equals(employeesDTO.getEmpId())) {
@@ -126,6 +152,7 @@ public class EmployeesController {
 	    employeesService.updateEmployees(employeesDTO);
 	    return "redirect:/employees/employees";
 	}
+	
 
 	
 //	라인등록,수정 드랍다운 메뉴
