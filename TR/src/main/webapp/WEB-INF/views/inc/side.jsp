@@ -153,17 +153,20 @@
     }
 	
 	   $(document).ready(function () {
-            var bodyHeight = $("body").height();
-            var sidebody = $('.sidebody');
-            var sidebar = $('.sidebar');
-            var scrollLimit = bodyHeight - sidebody.height(); 
-            var screenHeight = window.innerHeight; // 현재 보고있는 화면의 높이
-            
-            if(scrollLimit <= 0){ // 음수면 움직임을 막기 위해서 0 초기화
-            	scrollLimit = 0;
-            }
-            
-            $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
+		   setTimeout(function() {
+			    // 이 부분에 0.01초 후에 실행할 코드를 작성하세요.
+	            var bodyHeight = $("body").height();
+	            var sidebody = $('.sidebody');
+	            var sidebar = $('.sidebar');
+	            var scrollLimit = bodyHeight - sidebody.height(); 
+	            var screenHeight = window.innerHeight; // 현재 보고있는 화면의 높이
+	            
+	            if(scrollLimit <= 0){ // 음수면 움직임을 막기 위해서 0 초기화
+	            	scrollLimit = 0;
+	            }
+	            
+	            $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
+			}, 10); 
             
 			console.log("bodyHeight : "+bodyHeight);
 			console.log("sidebar : "+sidebody.height());
