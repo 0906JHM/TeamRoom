@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,12 +23,21 @@
 				</div>
 			
 				<!------------------------------ 사원 사진 ------------------------->
-				 <div class="profile-pic">
-				<img src="${pageContext.request.contextPath }/resources/img/${sessionScope.empFile}">
-				</div>
+				<div class="profile-pic">
+				<!-- 				파일 없으면 기본이미지 있으면 본인 이미지 -->
+    <c:choose>
+    <c:when test="${not empty sessionScope.empFile}">
+        <img id="profilePic" src="${pageContext.request.contextPath}/resources/img/${sessionScope.empFile}">
+    </c:when>
+    <c:otherwise>
+        <img src="${pageContext.request.contextPath}/resources/img/photo.jpg">
+    </c:otherwise>
+</c:choose>
+
+</div>
 				
 				<!------------------------------ 로그인 이름 ------------------------->
-				<p class="loginName"><span class="empId">${sessionScope.empId}</span> 님</p>
+				<p class="loginName"><span class="empId">${sessionScope.empName}</span> 님</p>
 
 				
 			</div>
@@ -134,6 +144,14 @@
 	
 <!--#################################################### script #################################################  -->
 	<script>
+	
+	window.onload = function() {
+        var img = document.getElementById('profilePic');
+        img.onerror = function() {
+            this.src = '${pageContext.request.contextPath }/resources/img/photo.jpg'; // 기본 이미지 경로
+        }
+    }
+	
 	   $(document).ready(function () {
             var bodyHeight = $("body").height();
             var sidebody = $('.sidebody');

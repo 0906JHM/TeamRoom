@@ -59,7 +59,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</tr>
 				<tr>
 					<th>담당자</th>
-					<td><input type="text" name="outEmpId" value="${sessionScope.id}" readonly="readonly"></td>
+					<td><input type="text" name="outEmpId" value="${sessionScope.empId}" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th>출고 상태</th>
@@ -89,15 +89,11 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="2">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
 					<c:if test="${outProductDTO.stockCount == null || outProductDTO.stockCount == 0}">
-   						<input type="number" name="outCount" value="0" readonly="readonly">
-    					<script type="text/javascript">
-        					console.log("재고가 0개");
-    					</script>
+   						<input type="number" name="outCount" value="${outProductDTO.outCount}" id="inputNum" readonly="readonly">
 					</c:if>
 					<c:if test="${outProductDTO.stockCount != null && outProductDTO.stockCount > 0}">
-    					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+    						<input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" onchange="updateInventory()">
 					</c:if>
-
 				</td>
 				<td colspan="2">
 					<input type="hidden" id="initialstockCount" value="${outProductDTO.stockCount}">
@@ -105,7 +101,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="3">납품가</th>
+				<th colspan="3">제품 단가</th>
 				<th colspan="3">출고 가격</th>
 			</tr>
 			<tr>
@@ -143,11 +139,12 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		if (department !== ADMIN_DEPARTMENT && department !== "관리자") {
 		    // 세션 값이 허용되지 않는 경우 리다이렉트
 		    window.opener.location.href = "<%= request.getContextPath() %>/main/calendar";
-		    window.close();
+// 		    window.close();
 		}
 	</script>
 	
 	<script type="text/javascript">
+		
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var outCountInput = document.querySelector('input[name="outCount"]');
@@ -164,38 +161,71 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		
 		
 		$(document).ready(function() {
+			 // JavaScript로 max 속성을 설정
+		    var outCountInput = document.getElementById('inputNum');
+		    var stockCount = ${outProductDTO.stockCount}; // stockCount 값을 JSP 표현식으로 가져옴
+		    var sellCount = ${outProductDTO.sellCount}; // sellCount 값을 JSP 표현식으로 가져옴
+			var outCount = ${outProductDTO.outCount};
+			
+		    if (sellCount > stockCount) {
+		        // sellCount가 stockCount보다 큰 경우 max 값을 outCount + stockCount로 설정
+		        outCountInput.setAttribute('max', outCount + stockCount);
+		    } else {
+		        // 그 외의 경우 max 값을 sellCount로 설정
+		        outCountInput.setAttribute('max', sellCount);
+		    }
+		
+			
 			// "출고" 버튼 클릭 시 Ajax 요청을 보냅니다.
 			$("#updateButton").click(function() {
 				// 폼 데이터를 수집
 				var formData = $("#updateForm").serialize();
-
-				$.ajax({
-					type: "POST",
-					url: "${pageContext.request.contextPath}/outProduct/outProductUpdate",
-					data: formData,
-					success: function(response) {
-						console.log(response);
-						if(response === 'success'){
-		                    Swal.fire({
-		                        text: '출고 완료',
-		                        icon: 'success',
-		                        confirmButtonText: '확인',
-		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
-		                    });
-		                } else {
-		                    Swal.fire({
-		                        text: '재고가 충분하지 않습니다.',
-		                        icon: 'warning',
-		                        confirmButtonText: '확인',
-		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
-		                    });
-		                }
-					},
-					error: function(xhr, status, error) {
-						// 에러 처리
-						console.log("에러: " + error);
-					}
-				});
+				
+				console.log("입력 받은 값 "+outCountInput.value);
+				console.log("서버에서 받아온 값 "+outCount);
+				if(outCount < outCountInput.value){
+					$.ajax({
+						type: "POST",
+						url: "${pageContext.request.contextPath}/outProduct/outProductUpdate",
+						data: formData,
+						success: function(response) {
+							console.log(response);
+							if(response === 'success'){
+			                    Swal.fire({
+			                        text: '출고 완료',
+			                        icon: 'success',
+			                        confirmButtonText: '확인',
+			                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+			                    });
+			                } else if(response === 'error1') {
+			                    Swal.fire({
+			                        text: '출고 개수의 입력값이 잘못되었습니다.',
+			                        icon: 'warning',
+			                        confirmButtonText: '확인',
+			                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+			                    });
+			                } else if(response === 'error2') {
+			                    Swal.fire({
+			                        text: '재고가 충분하지 않습니다.',
+			                        icon: 'warning',
+			                        confirmButtonText: '확인',
+			                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+			                    });
+			                }
+						},
+						error: function(xhr, status, error) {
+							// 에러 처리
+							console.log("에러: " + error);
+						}
+					});
+				}else {
+					console.log("이거 뭐지");
+					 Swal.fire({
+	                        text: '출고 개수의 입력값이 잘못되었습니다.',
+	                        icon: 'warning',
+	                        confirmButtonText: '확인',
+	                    });
+				}
 			});
 
 			// "닫기" 버튼 클릭 시 창을 닫습니다.

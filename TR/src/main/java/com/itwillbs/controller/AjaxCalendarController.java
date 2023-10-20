@@ -74,22 +74,16 @@ public class AjaxCalendarController {
 //	            String color = (calendarDTO.getCalendar_title().equals("수주")) ? "blue"
 //	                    : ((calendarDTO.getCalendar_title().equals("발주")) ? "red" : "orange");
 	            String color;
-
-	            switch (calendarDTO.getCalendar_title()) {
-	                case "수주":
-	                    color = "#4b77a9";
-	                    break;
-	                case "출고":
-	                    color = "#5f255f";
-	                    break;
-	                case "원자재 발주":
-	                    color = "#d21243";
-	                    break;
-	                case "원자재 입고":
-	                    color = "#ff5733";
-	                    break;
-	                default:
-	                    color = "#ffcc29";
+	            if (calendarDTO.getCalendar_title().contains("수주")) {
+	                color = "#4b77a9";
+	            } else if (calendarDTO.getCalendar_title().contains("출고")) {
+	                color = "#5f255f";
+	            } else if (calendarDTO.getCalendar_title().contains("원자재 발주")) {
+	                color = "#d21243";
+	            } else if (calendarDTO.getCalendar_title().contains("원자재 입고")) {
+	                color = "#ff5733";
+	            } else {
+	                color = "#ffcc29";
 	            }
 	            
 	            event.setBackgroundColor(color);

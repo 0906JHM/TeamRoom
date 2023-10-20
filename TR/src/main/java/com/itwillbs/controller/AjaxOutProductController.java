@@ -48,7 +48,7 @@ public class AjaxOutProductController {
 			outProductDTO.setClientCompany("");
 		}
 		if("".equals(outProductDTO.getSellState()) || "null".equals(outProductDTO.getSellState()) || outProductDTO.getSellState() == null) {
-			System.out.println("거래처 이름 변경");
+			System.out.println("출고 상태");
 			outProductDTO.setSellState("");
 		}
 		
@@ -156,6 +156,10 @@ public class AjaxOutProductController {
 		OutProductDTO outProductDTO2 = outProductService.outProductContent(outProductDTO.getOutCode());
 		System.out.println("클라이언트에 저장된 내용" + outProductDTO);
 		System.out.println("디비에 저장된 내용" + outProductDTO2);
+//		수주의 수량을 넘어선 출고의 개수가 입력이 되면 
+		if(outProductDTO.getSellCount() < outProductDTO.getOutCount() || outProductDTO.getOutCount() < outProductDTO2.getOutCount()) {
+			return "error1";
+		}
 //		저장된 재고의 개수와 출고할 개수를 비교해서 실행
 		if (outProductDTO2.getStockCount() >= (outProductDTO.getOutCount()-outProductDTO2.getOutCount()) && outProductDTO.getOutCount() != 0) {
 			// sellState 변경
@@ -210,7 +214,7 @@ public class AjaxOutProductController {
 			}
 			return "success";
 		} else {
-			return "error";
+			return "error2";
 		}
 
 	}

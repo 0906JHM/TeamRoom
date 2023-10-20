@@ -54,7 +54,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
     		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
     		
 		</div>
-		<h3 style="padding-left:1%;">목록 <small id="listCount">총 3건</small></h3>
+		<h3 style="padding-left:1%"><small id="listCount">총 3건</small></h3>
 		<div id="outProductList">
 			<table>
 				<thead>
@@ -320,6 +320,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			            var sellState = data[i].sellState;		  //검색한 출고 상태
 		        		var prev = data[i].startPage - data[i].pageBlock;
 		        		var next = data[i].startPage + data[i].pageBlock;
+		        		var currentPage = data[i].currentPage;
 		        		
 		        		var listCountElement = document.getElementById("listCount");
 		        		listCountElement.textContent = "총 " + data[i].count + "건"; // 내용을 원하는 형식으로 변경
@@ -339,9 +340,20 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		        		for (let page = data[i].startPage; page <= data[i].endPage; page++) {
 		        		    let pageLink = $("<a href='javascript:void(0);'>" + page + "</a>");
 		        		    var pageListItem = $("<li>").append(pageLink);
+		        		    
+// 		        		    // 현재 페이지 표시
+// 		        		    if (page === currentPage) {
+// 		        		        pageLink.addClass("current-page"); 
+// 		        		    }
+		        		    
 		        		    pageListItem.click(function() {
 		        		        loadPage(outCode, prodName, clientCompany, page);
 		        		    });
+		        		 	// 현재 페이지 표시
+		        		    if (page === currentPage) {
+						        pageListItem.attr("id", "current-page");
+						    }
+		        		    
 		        		    pagingUL.append(pageListItem); // 각 페이지 번호를 페이지 목록에 추가하고 li 클릭 시에도 loadPage를 호출합니다.
 		        		}
 
@@ -392,11 +404,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    	var popup = window.open(url, "", popupOpt);
 		    } //openWindow()
 		 	
-		    // 		   	엑셀
 
-
-    // 버튼 클릭 시 실행
-   // 클라이언트에서 서버로 데이터 요청
+		//엑셀
+		// 버튼 클릭 시 실행
+		// 클라이언트에서 서버로 데이터 요청
 		document.getElementById('exportButton').addEventListener('click', function () {
 			
 				// 엑셀로 내보낼 데이터
@@ -459,9 +470,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
 		    return buf;
 		}
-		
-	
-			
 		
 	</script>
 	

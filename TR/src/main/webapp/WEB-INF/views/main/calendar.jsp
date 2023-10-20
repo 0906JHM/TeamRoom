@@ -54,12 +54,12 @@
 		</div>
 		<div id="con_2">
 			<div id="chart_2">
-				<h3>창고별 재고</h3>
+				<h3>재고 수량</h3>
 				<canvas id="stockList"></canvas>
 			</div>
 			<div id="chart_2">
 				<div class="chart-header">
-					<h3 class="chart-header-item selected" id="linePerfChartHeader">라인별 생산량</h3>
+					<h3 class="chart-header-item selected" id="linePerfChartHeader">금일 라인별 생산량</h3>
 					<h3 class="chart-header-item" id="perfChartHeader">최근 생산량</h3>
 				</div>
 
