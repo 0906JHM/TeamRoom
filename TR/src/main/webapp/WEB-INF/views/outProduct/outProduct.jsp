@@ -54,7 +54,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
     		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
     		
 		</div>
-		<h3 style="padding-left:1%;">목록 <small id="listCount">총 3건</small></h3>
+		<h3 style="padding-left:1%"><small id="listCount">총 3건</small></h3>
 		<div id="outProductList">
 			<table>
 				<thead>

@@ -90,19 +90,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
 					<c:if test="${outProductDTO.stockCount == null || outProductDTO.stockCount == 0}">
    						<input type="number" name="outCount" value="${outProductDTO.outCount}" readonly="readonly">
-    					<script type="text/javascript">
-        					console.log("재고가 0개");
-    					</script>
 					</c:if>
 					<c:if test="${outProductDTO.stockCount != null && outProductDTO.stockCount > 0}">
-						<c:if test="${outProductDTO.stockCount >= outProductDTO.sellCount}">
-    						<input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
-						</c:if>
-						<c:if test="${outProductDTO.sellCount > outProductDTO.stockCount}">
-    						<input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.outCount + outProductDTO.stockCount }" onchange="updateInventory()">
-						</c:if>
+    						<input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" onchange="updateInventory()">
 					</c:if>
-
 				</td>
 				<td colspan="2">
 					<input type="hidden" id="initialstockCount" value="${outProductDTO.stockCount}">
@@ -153,6 +144,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	</script>
 	
 	<script type="text/javascript">
+		
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var outCountInput = document.querySelector('input[name="outCount"]');
@@ -169,6 +161,21 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		
 		
 		$(document).ready(function() {
+			 // JavaScript로 max 속성을 설정
+		    var outCountInput = document.getElementById('inputNum');
+		    var stockCount = ${outProductDTO.stockCount}; // stockCount 값을 JSP 표현식으로 가져옴
+		    var sellCount = ${outProductDTO.sellCount}; // sellCount 값을 JSP 표현식으로 가져옴
+			var outCount = ${outProductDTO.outCount};
+			
+		    if (sellCount > stockCount) {
+		        // sellCount가 stockCount보다 큰 경우 max 값을 outCount + stockCount로 설정
+		        outCountInput.setAttribute('max', outCount + stockCount);
+		    } else {
+		        // 그 외의 경우 max 값을 sellCount로 설정
+		        outCountInput.setAttribute('max', sellCount);
+		    }
+		
+			
 			// "출고" 버튼 클릭 시 Ajax 요청을 보냅니다.
 			$("#updateButton").click(function() {
 				// 폼 데이터를 수집
