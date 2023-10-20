@@ -26,12 +26,13 @@ $.ajax({
         var dropdown = $('select[name="lineEmpId"]');
         dropdown.empty();
         $.each(data, function(key, entry) {
-            var optionText = '사원번호=' + entry.empId + ', 사원이름=' + entry.empName;
-            dropdown.append($('<option></option>').attr('value', entry.empId).text(optionText));
+            if(entry.empId != 1) {
+                var optionText = '사원번호=' + entry.empId + ', 사원이름=' + entry.empName;
+                dropdown.append($('<option></option>').attr('value', entry.empId).text(optionText));
+            }
         });
     }
 });
-
 </script>
 <body>
 <div class="container">
@@ -42,10 +43,10 @@ $.ajax({
 <div class="form-group"><p>라인명:</p><input type="text" name="lineName" class="lineName"></div>
 <div class="form-group"><p>사용여부:</p>
 <select name="lineUse" class="lineUse select">
-    <option value="0">0</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
+    <option value="미사용">미사용</option>
+    <option value="사용">사용</option>
+    <option value="점검">점검</option>
+    <option value="고장">고장</option>
 </select></div>
 <div class="form-group"><p>등록자:</p><select name="lineEmpId" class="lineEmpId select"></select></div>
 <div class="form-group"><p>등록일:</p><input type="date" name="lineInsertDate" class="lineInsertDate"></div>
