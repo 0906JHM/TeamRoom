@@ -15,7 +15,7 @@
 //팝업창 중앙 생성 및 가로,세로 크기
 function openCenteredWindow(url) {
     var width = 500;
-    var height = 800;
+    var height = 850;
     var left = (screen.width - width) / 2;
     var top = (screen.height - height) / 2 - 50;
     window.open(url, '_blank', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
@@ -157,7 +157,7 @@ $(document).ready(function() {
 <!-- 페이징 처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+<a class="a" href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
 </c:forEach>
 
 

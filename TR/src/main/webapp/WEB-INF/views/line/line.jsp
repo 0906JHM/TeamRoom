@@ -13,8 +13,8 @@
 <script type="text/javascript">
 
 function openCenteredWindow(url) {
-    var width = 500;
-    var height = 550;
+    var width = 460;
+    var height = 520;
     var left = (screen.width - width) / 2;
     var top = (screen.height - height) / 2 - 50; // 화면 중앙보다 조금 더 위로 올립니다.
     window.open(url, '_blank', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
@@ -146,7 +146,7 @@ function deleteValue(){
 
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/line/line?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+<a class="a" href="${pageContext.request.contextPath}/line/line?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
 </c:forEach>
 
 </body>

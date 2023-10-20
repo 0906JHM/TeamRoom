@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -109,16 +110,23 @@ public class EmployeesController {
 	
 //	인사수정
 	@PostMapping("/updatePro")
-	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr, MultipartFile file) throws Exception{
-		UUID uuid = UUID.randomUUID();
-		String filename=uuid.toString()+"_"+file.getOriginalFilename();
-		FileCopyUtils.copy(file.getBytes(), new File(uploadPath,filename) );
-		employeesDTO.setEmpFile(filename);
-		
+	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr, MultipartFile file, HttpSession session) throws Exception{
+	    if (!file.isEmpty()) {
+	        UUID uuid = UUID.randomUUID();
+	        String filename = uuid.toString() + "_" + file.getOriginalFilename();
+	        FileCopyUtils.copy(file.getBytes(), new File(uploadPath, filename));
+	        employeesDTO.setEmpFile(filename);
+	    }
+	    // 기존 세션에서 empId 값을 확인
+	    String empId = (String) session.getAttribute("empId");
+	    if (empId != null && empId.equals(employeesDTO.getEmpId())) {
+	        // empFile을 다음 세션으로 이동
+	        session.setAttribute("empFile", employeesDTO.getEmpFile());
+	    }
 	    employeesService.updateEmployees(employeesDTO);
-	    rttr.addFlashAttribute("refreshAndClose", true);
 	    return "redirect:/employees/employees";
 	}
+
 	
 //	라인등록,수정 드랍다운 메뉴
 	@GetMapping("/empdropdown")
