@@ -8,7 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- sweetalert -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- SheetJS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
 <!--FileSaver [savaAs 함수 이용] -->
@@ -20,7 +21,6 @@
 
 
 <!-- /page content -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- 모달창 script -->
 	<script>
@@ -848,7 +848,9 @@ const popupOpt = "top=60,left=140,width=720,height=600";
     
 
     // 페이지 로드 시 실행되는 함수
-    $(document).ready(function () {
+    
+    $.noConflict();
+jQuery(document).ready(function($){
     	
     	 var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
  		

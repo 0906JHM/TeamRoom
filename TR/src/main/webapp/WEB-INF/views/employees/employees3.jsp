@@ -10,9 +10,9 @@
 <body>
 <div class="container">
 <h2>인사수정</h2>
-<form action="${pageContext.request.contextPath}/employees/updatePro" id="join" method="post">
+<form action="${pageContext.request.contextPath}/employees/updatePro" id="join" method="post" enctype="multipart/form-data">
 
-<div class="form-group"><p>사원번호:</p><input type="text" name="empId" class="empId" value="${employeesDTO.empId}"></div>
+<div class="form-group"><p>사원번호:</p><input type="text" name="empId" class="empId" value="${employeesDTO.empId}" readonly="readonly"></div>
 <div class="form-group"><p>비밀번호:</p><input type="password" name="empPass" class="empPass" value="${employeesDTO.empPass}"></div>
 <div class="form-group"><p>사원명:</p><input type="text" name="empName" class="empName" value="${employeesDTO.empName}"></div>
 <div class="form-group">
@@ -43,6 +43,7 @@
     <option value="퇴사" ${employeesDTO.empState == '퇴사' ? 'selected' : ''}>퇴사</option>
   </select>
 </div>
+<div class="form-group"><p>프로필사진:</p><input type="file" name="file" ></div>
 <button onclick="save">수정하기</button>
 
 </form>

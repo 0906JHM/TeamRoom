@@ -109,12 +109,14 @@ $(document).ready(function () {
 	/*--------------------------------- 페이지 권한 ----------------------------------------  */
         var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
  		
-        if (team === "" || (team !== "관리자" && team !== "영업팀")) {
-            // 창을 닫습니다.
-            window.close(); // 이 코드는 창을 닫으려고 시도합니다.
-            // 또는 에러 페이지로 리디렉션할 수 있습니다.
-            // window.location.href = "${pageContext.request.contextPath}/error";
+        if (team === "") {
+        	 window.location.href = "${pageContext.request.contextPath}/login/login";
+
         }
+        else if ((team !== "관리자" && team !== "영업팀")) {
+       	 window.location.href = "${pageContext.request.contextPath}/main/calendar";
+
+       }
 	//---------------------------------------------- 수주 단가 계산 함수 -----------------------------------------
 	// 제품 코드의 값이 변경이 될때 가격 자동 변경
     $(document).on('change', '#prodCode9999', function() {

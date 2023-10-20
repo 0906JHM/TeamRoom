@@ -17,9 +17,10 @@
 
 </head>
 <body>
-
+<c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
 	<div class="container">
-		<h2>품목 추가</h2>
+		<h2>품목 수정</h2>
 
 		<form action="${pageContext.request.contextPath}/product/updatePro"
 			method="post">
@@ -77,7 +78,13 @@
 		</form>
 	</div>
 
+	</c:when>
+  <c:otherwise >
 
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        </c:choose>
 	<script type="text/javascript">
 		//--------------------------------------------------------------------------
 		//팝업 옵션

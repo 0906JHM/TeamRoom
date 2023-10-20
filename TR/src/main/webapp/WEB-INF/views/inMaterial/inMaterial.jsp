@@ -41,7 +41,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 <title>inMaterial</title>
 </head>
 <body>
-
+// < 로그아웃 상태에서 주소접속 시 빈화면 출력
+<c:choose>
+<c:when test="${!(empty sessionScope.empDepartment)}">
 	<!-- 사이드바 -->
 	<jsp:include page="../inc/side.jsp"></jsp:include>
 	<!-- 사이드바 -->
@@ -104,6 +106,15 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			</ul>
 		</div>
 	</div>
+// 로그아웃 상태에서 주소접속 시 빈화면 출력>	
+	</c:when>
+	  <c:otherwise >
+
+			  <input type="text" hidden=""> 
+		 
+	        </c:otherwise>
+	        </c:choose>
+	        
 	<script type="text/javascript">
 	var department = "<%= department %>";
 	var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -53,7 +54,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 
 
 <body>
-
+<c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
 	<!-- 사이드바 -->
 	<jsp:include page="../inc/side.jsp"></jsp:include>
 	<!-- 사이드바 -->
@@ -183,7 +185,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 
 		</form>
 	</div>
+	</c:when>
+  <c:otherwise >
 
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        </c:choose>
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";

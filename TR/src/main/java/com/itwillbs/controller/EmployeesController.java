@@ -31,9 +31,11 @@ public class EmployeesController {
 	@Inject
 	private EmployeesService employeesService;
 	
+//	파일 업로드
 	@Autowired
 	private String uploadPath;
 
+//	인사관리 홈
 	@GetMapping("/employees")
 	public String employees(HttpServletRequest request,Model model) {
 		String search = request.getParameter("search");
@@ -67,13 +69,15 @@ public class EmployeesController {
 		return "employees/employees";	
 	}
 	
+//	인사등록 홈
 	@GetMapping("/employees2")
 	public String employees2() {	
 		return "employees/employees2";	
 	}
 	
+//	인사등록
 	@PostMapping("/insertPro")
-	public String insertPro(EmployeesDTO employeesDTO,HttpServletRequest request, MultipartFile file) throws Exception{
+	public String insertPro(EmployeesDTO employeesDTO, MultipartFile file) throws Exception{
 		UUID uuid = UUID.randomUUID();
 		String filename=uuid.toString()+"_"+file.getOriginalFilename();
 		FileCopyUtils.copy(file.getBytes(), new File(uploadPath,filename) );
@@ -94,7 +98,7 @@ public class EmployeesController {
         return "redirect:/employees/employees";
     }//delete
     
-    // 인사수정
+    // 인사수정 홈
 	@GetMapping("/update")
 	public String update(HttpServletRequest request,Model model) {
 		String empId = request.getParameter("empId");
@@ -103,19 +107,20 @@ public class EmployeesController {
 		return "employees/employees3";
 	}//update
 	
+//	인사수정
 	@PostMapping("/updatePro")
-	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr) {
+	public String updatePro(EmployeesDTO employeesDTO, RedirectAttributes rttr, MultipartFile file) throws Exception{
+		UUID uuid = UUID.randomUUID();
+		String filename=uuid.toString()+"_"+file.getOriginalFilename();
+		FileCopyUtils.copy(file.getBytes(), new File(uploadPath,filename) );
+		employeesDTO.setEmpFile(filename);
+		
 	    employeesService.updateEmployees(employeesDTO);
 	    rttr.addFlashAttribute("refreshAndClose", true);
 	    return "redirect:/employees/employees";
 	}
 	
-	@GetMapping("/empIdCheck")
-	public ResponseEntity<Boolean> checkEmpId(@RequestParam String empId) {
-	    boolean exists = employeesService.existsById(empId);
-	    return new ResponseEntity<>(exists, HttpStatus.OK);
-	}
-	
+//	라인등록,수정 드랍다운 메뉴
 	@GetMapping("/empdropdown")
     public ResponseEntity<List<EmployeesDTO>> empdropdown() {
 		List<EmployeesDTO> employeesList = employeesService.getEmployeesList2();

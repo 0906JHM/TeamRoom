@@ -4,11 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace = "com.itwillbs.Mappers.EmployeesMapper">
   
+<!--   인사등록 -->
   <insert id="insertEmployees">
   	insert into employees(empId,empPass,empName,empDepartment,empPosition,empEmail,empTel,empHiredate,empState,empFile)
   	values(#{empId},#{empPass},#{empName},#{empDepartment},#{empPosition},#{empEmail},#{empTel},#{empHiredate},#{empState},#{empFile})
   </insert>
   
+<!--   검색,페이징처리 -->
   <select id="getEmployeesList" resultType="com.itwillbs.domain.EmployeesDTO">
   	select * from employees 
   	where 1=1
@@ -18,6 +20,7 @@
   	order by empId desc limit #{startRow}, #{pageSize}
   </select>
   
+<!--   페이지 당 글 갯수 -->
   <select id="getEmployeesCount" resultType="java.lang.Integer">
   	select count(*) from employees
   	where 1=1
@@ -32,19 +35,18 @@
         where empId = #{empId}
   </delete>
   
+<!--   인사수정 값 들고오기 -->
   <select id="getMember" resultType="com.itwillbs.domain.EmployeesDTO">
   	select * from employees where empId = #{empId}
   </select>
   
+<!--   인사수정하기 -->
   <update id="updateEmployees">
-  	update employees set empId = #{empId}, empPass = #{empPass}, empName = #{empName}, empDepartment = #{empDepartment}, empPosition = #{empPosition}, empEmail = #{empEmail}, empTel = #{empTel}, empHiredate = #{empHiredate}, empState = #{empState}
+  	update employees set empId = #{empId}, empPass = #{empPass}, empName = #{empName}, empDepartment = #{empDepartment}, empPosition = #{empPosition}, empEmail = #{empEmail}, empTel = #{empTel}, empHiredate = #{empHiredate}, empState = #{empState}, empFile = #{empFile}
   	where empId = #{empId}
   </update>
   
-  <select id="existsById" resultType="boolean">
-  	select count(*) > 0 from employees where empId = #{empId}
-  </select>
-  
+<!--   라인등록,수정 드랍다운 메뉴 -->
   <select id="getEmployeesList2" resultType="com.itwillbs.domain.EmployeesDTO">
   	select * from employees
   </select>  
