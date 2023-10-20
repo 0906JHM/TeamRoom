@@ -23,6 +23,7 @@ import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.WarehouseDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.RequirementService;
 
 
@@ -291,6 +292,50 @@ public class OpenlistDAO {
 					    	return sqlSession.selectList(NAMESPACE + ".readline", pdto); 
 
 						}
+						
+						///////////////////////////////////////////////
+						
+						// 총작업지시카운트
+						public int countwork() {
+
+							return sqlSession.selectOne(NAMESPACE+ ".countwork");
+						}
+						
+						//작업지시 총 리스트
+						public List<WorkOrderDTO> getworklist(RequirementPageDTO pdto) {
+
+							return sqlSession.selectList(NAMESPACE + ".getworklist", pdto);
+							
+						}
+						
+						//  작업지시 검색 갯수 
+						public int countwork(WorkOrderDTO dto) {
+							
+							HashMap<String, Object> data = new HashMap<String, Object>();
+							  
+							  data.put("lineCode", dto.getLineCode());
+							  data.put("prodName", dto.getProdCode()); 					
+							return sqlSession.selectOne(NAMESPACE + ".searchworkcount",dto);
+						}	
+						
+						//작업지시 검색
+						public List<WorkOrderDTO> getwroklist(WorkOrderDTO dto, RequirementPageDTO pdto) {
+							HashMap<String, Object> data = new HashMap<String, Object>();
+						 	  data.put("start", pdto.getStart());
+						   	  data.put("cntPerPage",pdto.getCntPerPage()); 
+						   	  
+							  data.put("lineCode", dto.getLineCode());
+							  data.put("prodName", dto.getProdCode());
+							  
+						
+							return sqlSession.selectList(NAMESPACE+ ".getsearchworklist" , data );
+						}
+
+
+						
+
+						
+						
 
 
 					  

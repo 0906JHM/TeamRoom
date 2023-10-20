@@ -36,26 +36,29 @@
 				
 		$('#input').val(isPop);
    			
-   		if(isPop) {
+   		if (isPop && !isNaN(Number(isPop))) {
         		
        		$('table tr').click(function(){
+       			
        			$(this).css('background', '#ccc');
-        			
+       			
+        		var workCode =$(this).find('#workCode').text();
+        		var lineCode=$(this).find('#lineCode').text();
        			var prodCode = $(this).find('#prodCode').text();
-     			var prodName = $(this).find('#prodName').text();
-     			var prodPrice = $(this).find('#prodPrice').text();
-     			
+       			var workAmount=$(this).find('#workAmount').text();
+       			
      			var number = isPop.match(/\d+/);
      			if(number !=null){
-     			$('#prodName'+number, opener.document).val(prodName);
+     			$('#workCode2'+number, opener.document).val(workCode);
+     			$('#lineCode'+number, opener.document).val(lineCode);
      			$('#prodCode'+number, opener.document).val(prodCode);
-     			$('#prodPrice'+number, opener.document).val(prodPrice);
-     		     	} else {
-     			$('#prodName', opener.document).val(prodName);
-     			$('#prodCode', opener.document).val(prodCode);
-     			$('#prodPrice', opener.document).val(prodPrice);
-     			$('#search_prod', opener.document).val(prodCode);
-     			   }
+     			$('#workAmount'+number, opener.document).val(workAmount);
+     			} else {
+     			$('#workCode2'+number, opener.document).val(workCode);
+         		$('#lineCode'+number, opener.document).val(lineCode);
+         		$('#prodCode'+number, opener.document).val(prodCode);
+         		$('#workAmount'+number, opener.document).val(workAmount);
+     			}
          		window.close();
          	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
         		
@@ -127,20 +130,21 @@
 			<thead>
 				<tr class="headings">
 					<th>번호</th>
-					<th>코드</th>
-					<th>제품</th>
-					<th>가격</th>
-					
+					<th>생산실적코드</th>
+					<th>라인코드</th>
+					<th>제품코드</th>
+					<th>지시수량</th>
 				</tr>
 			</thead>
 			
 			
-			<c:forEach var="dto" items="${prodList}">
+			<c:forEach var="dto" items="${worklist}">
 					<tr style="font: 500 20px/20px 'Inter', sans-serif;">
 						<td></td>
-         			    <td id="prodCode">${dto.prodCode }</td>
-						<td id="prodName">${dto.prodName }</td>
-						<td id="prodPrice">${dto.prodPrice }</td>
+						<td id="workCode">${dto.workCode }</td>
+         			    <td id="lineCode">${dto.lineCode }</td>
+						<td id="prodCode">${dto.prodCode }</td>
+						<td id="workAmount">${dto.workAmount }</td>
 					</tr>
 			</c:forEach>
 		</table>
@@ -156,17 +160,17 @@
 </div>
 
 <div id="pagination" class="page_wrap" >
-			<div class="page_nation" style="text-align: center; font-size: 0; position: absolute; bottom: 1%; right: 1%;">
+					<div class="page_nation" style="text-align: center; font-size: 0; position: absolute; bottom: 1%; right: 1%;">
 						<c:if test="${paging.startPage != 1 }">
-							<a class="arrow prev" href="${pageContext.request.contextPath}/search/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prodCode=${dto.prodCode }&prodName=${dto.prodName }">◀️</a>
+							<a class="arrow prev" href="${pageContext.request.contextPath}/search/worklist?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&lineCode=${dto.lineCode }&prodName=${dto.prodName }">◀️</a>
 						</c:if>
 					
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/search/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prodCode=${dto.prodCode }&prodName=${dto.prodName }">${p }</a>
+							<a class="active" href="${pageContext.request.contextPath}/search/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&lineCode=${dto.lineCode }&prodName=${dto.prodName }">${p }</a>
 						</c:forEach>
 					
 						<c:if test="${paging.endPage != paging.lastPage}">
-							<a class="arrow next" href="${pageContext.request.contextPath}/search/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prodCode=${dto.prodCode }&prodName=${dto.prodName }">▶️</a>
+							<a class="arrow next" href="${pageContext.request.contextPath}/search/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&lineCode=${dto.lineCode }&prodName=${dto.prodName }">▶️</a>
 						</c:if>
 					</div>
 			</div>
