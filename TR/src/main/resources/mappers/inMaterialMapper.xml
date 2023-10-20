@@ -243,9 +243,6 @@
 		WHERE inNum LIKE CONCAT(#{code}, '%')
 	</select>
 
-<!-- 	<select id="inMaterialContent" resultType="com.itwillbs.domain.InMaterialDTO"> -->
-<!-- 		select i.inNum, i.rawCode, i.inDate, in.inEmpId, in. -->
-<!-- 	</select> -->
 
 	<insert id="insertList">
 		INSERT INTO inMaterial
@@ -270,10 +267,8 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		join buy b
-		on i.rawCode = r.rawCode
+		JOIN buy b ON i.buyNum = b.buyNum
 		where inNum = #{inNum}
-		limit 1
 	</select>
 
 <!-- 	입고버튼 누르면 재고수량 증가 -->
