@@ -404,11 +404,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    	var popup = window.open(url, "", popupOpt);
 		    } //openWindow()
 		 	
-		    // 		   	엑셀
 
-
-    // 버튼 클릭 시 실행
-   // 클라이언트에서 서버로 데이터 요청
+		//엑셀
+		// 버튼 클릭 시 실행
+		// 클라이언트에서 서버로 데이터 요청
 		document.getElementById('exportButton').addEventListener('click', function () {
 			
 				// 엑셀로 내보낼 데이터
@@ -471,9 +470,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
 		    return buf;
 		}
-		
-	
-			
 		
 	</script>
 	

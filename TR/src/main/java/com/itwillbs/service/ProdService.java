@@ -105,8 +105,10 @@ public class ProdService {
 		prodDAO.updateProdMemo(prodDTO);
 	}//updateMemo
 
-	public List<ProdDTO> getExcelList(ProdDTO prodDTO) {
-		return prodDAO.getExcelList(prodDTO);
+
+	public List<ProdDTO> getExcelProdSearch(ProdDTO prodDTO) {
+		return prodDAO.getExcelProdSearch(prodDTO);
 	}
+
 
 }
