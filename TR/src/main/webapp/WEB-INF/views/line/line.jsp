@@ -118,7 +118,9 @@ function deleteValue(){
 <th>등록자</th>
 <th>등록일</th>
 <th>공정</th>
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
 <th></th>
+</c:if>
 </tr>
 </thead>
 <c:forEach var="lineDTO" items="${lineList }">

@@ -14,8 +14,8 @@
 
 //팝업창 중앙 생성 및 가로,세로 크기
 function openCenteredWindow(url) {
-    var width = 600;
-    var height = 740;
+    var width = 500;
+    var height = 800;
     var left = (screen.width - width) / 2;
     var top = (screen.height - height) / 2 - 50;
     window.open(url, '_blank', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
