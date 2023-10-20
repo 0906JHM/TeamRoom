@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,7 +32,9 @@
 </table>
 
 <!-- button -->
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}">
 <input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/OrderManagement/update?buyNum=${ordermanagementDTO.buyNum}'">
+</c:if>
 <input type="button" value="목록" onclick="location.href='${pageContext.request.contextPath}/OrderManagement/home'">
 
 </body>
