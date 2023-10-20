@@ -269,7 +269,6 @@
 		where inNum = #{inNum}
 	</select>
 
-<!-- 	입고버튼 누르면 재고수량 증가 -->
 	<update id="updateWhseCount">
 		update stock
 		SET stockCount = stockCount + #{inCount}

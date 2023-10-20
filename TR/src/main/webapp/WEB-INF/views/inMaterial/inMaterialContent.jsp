@@ -97,9 +97,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<c:if test="${inMaterialDTO.stockCount == null || inMaterialDTO.stockCount == 0}">
    						<input type="number" name="inCount" value="0" readonly="readonly">
 					</c:if>
-					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}">
+<%-- 					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}"> --%>
     					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" min=0 onchange="updateInventory()">
-					</c:if>
+<%-- 					</c:if> --%>
 
 				</td>
 				<td colspan="2">
@@ -108,7 +108,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="3">원자재 입고 단가</th>
+				<th colspan="3">원자재 단가</th>
 				<th colspan="3">입고 가격</th>
 			</tr>
 			<tr>
@@ -206,14 +206,22 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		                        confirmButtonText: '확인',
 		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
 		                    });
-		                } else {
+						} else if(response === 'error1') {
 		                    Swal.fire({
-		                        text: '재고가 충분하지 않습니다.',
+		                        text: '입고 개수의 입력값이 잘못되었습니다.',
 		                        icon: 'warning',
 		                        confirmButtonText: '확인',
 		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
 		                    });
 		                }
+// 						else {
+// 		                    Swal.fire({
+// 		                        text: '재고가 충분하지 않습니다.',
+// 		                        icon: 'warning',
+// 		                        confirmButtonText: '확인',
+// 		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+// 		                    });
+// 		                }
 					},
 					error: function(xhr, status, error) {
 						// 에러 처리
@@ -221,7 +229,16 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					}
 				});
 			});
-
+		}else {
+			console.log("이거 뭐지");
+			 Swal.fire({
+                    text: '입고 개수의 입력값이 잘못되었습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onClose: reloadParentAndCurrentPage
+                });
+		}
+	});
 			// "닫기" 버튼 클릭 시 창을 닫습니다.
 			$("#closeButton").click(function() {
 				window.close();
