@@ -54,7 +54,7 @@
 		</div>
 		<div id="con_2">
 			<div id="chart_2">
-				<h3>창고별 재고</h3>
+				<h3>재고 수량</h3>
 				<canvas id="stockList"></canvas>
 			</div>
 			<div id="chart_2">

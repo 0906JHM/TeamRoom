@@ -89,13 +89,18 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="2">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
 					<c:if test="${outProductDTO.stockCount == null || outProductDTO.stockCount == 0}">
-   						<input type="number" name="outCount" value="0" readonly="readonly">
+   						<input type="number" name="outCount" value="${outProductDTO.outCount}" readonly="readonly">
     					<script type="text/javascript">
         					console.log("재고가 0개");
     					</script>
 					</c:if>
 					<c:if test="${outProductDTO.stockCount != null && outProductDTO.stockCount > 0}">
-    					<input type="number" name="outCount" value="${outProductDTO.outCount }" step="5" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+						<c:if test="${outProductDTO.stockCount >= outProductDTO.sellCount}">
+    						<input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.sellCount }" onchange="updateInventory()">
+						</c:if>
+						<c:if test="${outProductDTO.sellCount > outProductDTO.stockCount}">
+    						<input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" max="${outProductDTO.outCount + outProductDTO.stockCount }" onchange="updateInventory()">
+						</c:if>
 					</c:if>
 
 				</td>
@@ -105,7 +110,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="3">납품가</th>
+				<th colspan="3">제품 단가</th>
 				<th colspan="3">출고 가격</th>
 			</tr>
 			<tr>
@@ -182,7 +187,14 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		                        confirmButtonText: '확인',
 		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
 		                    });
-		                } else {
+		                } else if(response === 'error1') {
+		                    Swal.fire({
+		                        text: '출고 개수의 입력값이 잘못되었습니다.',
+		                        icon: 'warning',
+		                        confirmButtonText: '확인',
+		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+		                    });
+		                } else if(response === 'error2') {
 		                    Swal.fire({
 		                        text: '재고가 충분하지 않습니다.',
 		                        icon: 'warning',
