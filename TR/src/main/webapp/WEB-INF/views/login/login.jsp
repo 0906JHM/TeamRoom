@@ -11,7 +11,7 @@
 <style type="text/css">
 body {
 	font-family: Arial, sans-serif;
-	background-color: #EAFDFC;
+	background-color: #F5F6FA;
 	margin: 0;
 	padding: 0;
 	display: flex;
@@ -52,18 +52,18 @@ input[type="text"], input[type="password"] {
 button {
 	width: 80px;
 	height: 40px;
-	background-color: #FFEEBB;
-	color: #4D4D4D;
+	background-color: #9AC5F4;
+	color: white;
 	border: none;
 	border-radius: 3px;
 	margin-top: 50px;
 	margin-bottom: 10px;
 	font-size:20px; 
-/* 	font-weight: bolder;
- */}
+	font-weight: bolder;
+}
 
 button:hover {
-	background-color: #9AC5F4;
+	background-color: #1D5D9B;
 }
 #logo{
 	text-align: center;

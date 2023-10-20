@@ -93,5 +93,29 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 		System.out.println("RawmaterialsDAO getMemo2()");
 		return sqlSession.selectOne(namespace+".getMemo2", clientCode);
 	}
+
+	// 종류 선택하면 자동으로 원자재코드 값 생성
+	public int getRawCodesPE() {
+		System.out.println("RawmaterialsDAO getRawCodesPE()");
+		return sqlSession.selectOne(namespace+".getRawCodesPE");
+    }
+
+	public int getRawCodesGL() {
+		return sqlSession.selectOne(namespace+".getRawCodesGL");
+	}
+
+	public int getRawCodesST() {
+		return sqlSession.selectOne(namespace+".getRawCodesST");
+	}
+	
+	public int getRawCodesLB() {
+		return sqlSession.selectOne(namespace+".getRawCodesLB");
+	}
+	
+	public int getRawCodesPC() {
+		return sqlSession.selectOne(namespace+".getRawCodesPC");
+	}
+	
+	
 	
 }

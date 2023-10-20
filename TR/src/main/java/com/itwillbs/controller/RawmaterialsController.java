@@ -93,7 +93,21 @@ public class RawmaterialsController {
 	
 	// 가상주소 http://localhost:8080/leeweb/Rawmaterials/insert
 	@GetMapping("/insert")
-	public String insert() {
+	public String insert(Model model) {
+		
+		// 종류 선택하면 자동으로 원자재코드 값 생성
+		int PEcount = rawmaterialsService.getRawCodesPE();
+		int GLcount = rawmaterialsService.getRawCodesGL();
+		int STcount = rawmaterialsService.getRawCodesST();
+		int LBcount = rawmaterialsService.getRawCodesLB();
+		int PCcount = rawmaterialsService.getRawCodesPC();
+		
+		model.addAttribute("PEcount", PEcount);
+		model.addAttribute("GLcount", GLcount);
+		model.addAttribute("STcount", STcount);
+		model.addAttribute("LBcount", LBcount);
+		model.addAttribute("PCcount", PCcount);
+		
 		return "Rawmaterials/insert";
 	}
 	
