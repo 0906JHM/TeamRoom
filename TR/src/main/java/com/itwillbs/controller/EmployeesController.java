@@ -124,15 +124,14 @@ public class EmployeesController {
 //	인사수정
 	@PostMapping("/updatePro")
 	public String updatePro(HttpServletRequest request,EmployeesDTO employeesDTO, MultipartFile file, HttpSession session) throws Exception{
-	 // 업로드 파일 있는지 없는지 파악
+	 // 첨부파일이 비어있으면
 		if(file.isEmpty()) {
-		    // 첨부파일 없는 경우
 		    String oldfile = request.getParameter("oldfile");
+		 // oldfile이 비어있는 경우 => EmpFile에 null 저장
 		    if(oldfile == null || oldfile.isEmpty()) {
-		        // oldfile이 비어있는 경우 => EmpFile에 null 저장
 		        employeesDTO.setEmpFile(null);
+		     // oldfile이 있는 경우 => oldfile 저장
 		    } else {
-		        // oldfile이 있는 경우 => oldfile 저장
 		        employeesDTO.setEmpFile(oldfile);
 		    }
 		} else {
@@ -141,9 +140,7 @@ public class EmployeesController {
 		    FileCopyUtils.copy(file.getBytes(), new File(uploadPath, filename));
 		    employeesDTO.setEmpFile(filename);
 		}
-
-	 		
-	    // 기존 세션에서 empId 값을 확인
+		// 기존 세션에서 empId 값을 확인
 	    String empId = (String) session.getAttribute("empId");
 	    if (empId != null && empId.equals(employeesDTO.getEmpId())) {
 	        // empFile을 다음 세션으로 이동
