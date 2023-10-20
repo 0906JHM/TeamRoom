@@ -1,10 +1,11 @@
 package com.itwillbs.controller;
 
-import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,6 @@ import com.itwillbs.domain.CalendarDTO;
 import com.itwillbs.domain.CalendarEventDTO;
 import com.itwillbs.domain.ChartDTO;
 import com.itwillbs.service.CalendarService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 public class AjaxCalendarController {
@@ -125,6 +124,8 @@ public class AjaxCalendarController {
 	@RequestMapping(value = "/main/perfList", method = RequestMethod.POST)
 	public ResponseEntity<List<ChartDTO>> perfList() {
 		List<ChartDTO> perfList = calendarService.getPerfList();
+		
+		Collections.reverse(perfList);
 		
 		ResponseEntity<List<ChartDTO>> entity = new ResponseEntity<>(perfList, HttpStatus.OK);
 		
