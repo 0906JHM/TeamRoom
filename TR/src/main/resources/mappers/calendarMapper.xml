@@ -112,16 +112,19 @@
 	<!-- 실적 차트 -->
 	<select id="getPerfList"
 		resultType="com.itwillbs.domain.ChartDTO">
-		SELECT DATE_FORMAT(perfdate, '%Y-%m-%d') as label, count as
-		data
-		FROM perf_chart
-		ORDER BY perfdate asc
+		SELECT workDate label, sum(workAmount) data
+		FROM workOrder
+		GROUP BY workDate
+		ORDER BY workDate desc
+		LIMIT 5;
 	</select>
 	<!-- 라인 실적 차트 -->
 	<select id="getLinePerfList"
 		resultType="com.itwillbs.domain.ChartDTO">
-		SELECT stock_name label, count data
-		FROM stock_chart
+		SELECT lineCode label, workAmount data
+		FROM workOrder
+		WHERE
+		workDate = CURDATE()
 	</select>
 
 	<insert id="insertSellCalendar">
