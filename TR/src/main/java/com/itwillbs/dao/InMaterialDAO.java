@@ -105,11 +105,10 @@ public class InMaterialDAO {
 //		sqlSession.update(namespace+".updateInEmpId",inMaterialDTO);
 //	}
 
-	public void updateInMaterial(InMaterialDTO inMaterialDTO) {
-		System.out.println("InMaterialDAO updateInMaterial");
-		sqlSession.update(namespace+".updateInMaterial",inMaterialDTO);
-		
-	}
+//	public void updateInMaterial(InMaterialDTO inMaterialDTO) {
+//		System.out.println("InMaterialDAO updateInMaterial");
+//		sqlSession.update(namespace+".updateInMaterial",inMaterialDTO);
+//	}
 
 	public void updateList(InMaterialDTO inMaterialDTO) {
 		sqlSession.update(namespace + ".updateList", inMaterialDTO);

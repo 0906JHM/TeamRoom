@@ -116,11 +116,6 @@ public class InMaterialService {
 //		inMaterialDAO.updateInEmpId(inMaterialDTO);
 //	}
 
-	public void updateInMaterial(InMaterialDTO inMaterialDTO) {
-		System.out.println("InMaterialService updateInMaterial");
-		inMaterialDAO.updateInMaterial(inMaterialDTO);
-	}
-
 	public void updateList(OrderManagementDTO ordermanagementDTO) {
 		
 		InMaterialDTO inMaterialDTO = new InMaterialDTO();

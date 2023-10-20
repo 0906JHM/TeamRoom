@@ -311,11 +311,11 @@
 <!-- 	</update> -->
 	
 	<!-- 입고버튼 누르면 입고상태, 입고날짜, 담당자 업데이트 -->
-	<update id="updateInMaterial">
-		update inMaterial
-		SET inState = "입고완료", inDate = #{inDate}, inEmpId = #{inEmpId}
-		WHERE inNum = #{inNum}
-	</update>
+<!-- 	<update id="updateInMaterial"> -->
+<!-- 		update inMaterial -->
+<!-- 		SET inState = "입고완료", inDate = #{inDate}, inEmpId = #{inEmpId} -->
+<!-- 		WHERE inNum = #{inNum} -->
+<!-- 	</update> -->
 	
 	
 	

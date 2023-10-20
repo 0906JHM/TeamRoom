@@ -9,23 +9,16 @@
 <!-- 사이드바 css-->
 <link href="${pageContext.request.contextPath }/resources/css/side.css"
 	rel="stylesheet" type="text/css">
-<link
-	href="${pageContext.request.contextPath }/resources/css/outProduct.css"
+<link href="${pageContext.request.contextPath }/resources/css/outProduct.css"
 	rel="stylesheet" type="text/css">
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- sweetalert -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<!-- SheetJS -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
-<!--FileSaver [savaAs 함수 이용] -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-<script type="text/javascript">
 
+<!-- SheetJS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- FileSaver.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<!-- SweetAlert  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <%
 //관리자 또는 자재팀 출고 상세 페이지 열람 가능 게시판 접근 가능
@@ -107,9 +100,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	
 	
 
-//=====================================================================================================	        
+        
 	        
 	<script type="text/javascript">
+//=====================================================================================================	
 	var department = "<%= department %>";
 	var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
 	var inStateButton1 = "전체";
@@ -253,7 +247,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			};
 
 			$.ajax({
-						type : "GET", // GET 또는 POST 등 HTTP 요청 메서드 선택
+						type : "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
 						url : "${pageContext.request.contextPath}/inMaterial/listSearch", // 데이터를 가져올 URL 설정
 						data : searchParams, // 검색 조건 데이터 전달
 						dataType : "json", // 가져올 데이터 유형 (JSON으로 설정)
@@ -273,7 +267,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		function loadinMaterialList(searchParams) {
 
 			$.ajax({
-						type : "GET", // GET 또는 POST 등 HTTP 요청 메서드 선택
+						type : "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
 						url : "${pageContext.request.contextPath}/inMaterial/listSearch", // 데이터를 가져올 URL 설정
 						data : searchParams, // 검색 조건 데이터 전달
 						dataType : "json", // 가져올 데이터 유형 (JSON으로 설정)
@@ -372,7 +366,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					var inState = data[i].inState; //검색한 출고 상태
 					var prev = data[i].startPage - data[i].pageBlock;
 					var next = data[i].startPage + data[i].pageBlock;
-
+					var currentPage = data[i].currentPage;
+					
 					var listCountElement = document.getElementById("listCount");
 					listCountElement.textContent = "총 " + data[i].count + "건"; // 내용을 원하는 형식으로 변경
 
@@ -380,7 +375,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					pagingUL.empty(); // 기존 페이징 데이터를 비웁니다.
 
 					if (data[i].startPage > data[i].pageBlock) {
-						var prevLink = $("<a href='javascript:void(0);'>Prev</a>");
+						  var prevLink = $("<a href='javascript:void(0);'><</a>");
 						var prevListItem = $("<li>").append(prevLink);
 						prevListItem.click(function() {
 							loadPage(inNum, rawName, clientCompany, prev);
@@ -389,17 +384,22 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					}
 
 					for (let page = data[i].startPage; page <= data[i].endPage; page++) {
-						let pageLink = $("<a href='javascript:void(0);'>"
-								+ page + "</a>");
+						let pageLink = $("<a href='javascript:void(0);'>" + page + "</a>");
 						var pageListItem = $("<li>").append(pageLink);
+						
 						pageListItem.click(function() {
 							loadPage(inNum, rawName, clientCompany, page);
 						});
+						// 현재 페이지 표시
+	        		    if (page === currentPage) {
+					        pageListItem.attr("id", "current-page");
+					    }
+						
 						pagingUL.append(pageListItem); // 각 페이지 번호를 페이지 목록에 추가하고 li 클릭 시에도 loadPage를 호출합니다.
 					}
 
 					if (data[i].endPage < data[i].pageCount) {
-						var nextLink = $("<a href='javascript:void(0);'>Next</a>");
+	        		    var nextLink = $("<a href='javascript:void(0);'>></a>");
 						var nextListItem = $("<li>").append(nextLink);
 						nextListItem.click(function() {
 							loadPage(inNum, rawName, clientCompany, next);
@@ -418,8 +418,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			console.log(page);
 
 			var searchParams = {
-				outCode : inNum,
-				prodName : rawName,
+				inNum : inNum,
+				rawName : rawName,
 				clientCompany : clientCompany,
 				pageNum : page,
 				inState : inStateButton1,
@@ -438,7 +438,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 
 		//검색 팝업
 		function searchItem(type, inputId) {
-			var url = "${pageContext.request.contextPath}/search/search?type="
+			var url = "${pageContext.request.contextPath}/search/search?type=" + type + "&input=" + inputId;
 					+ type + "&input=" + inputId;
 			var popup = window.open(url, "", popupOpt);
 		} //openWindow()

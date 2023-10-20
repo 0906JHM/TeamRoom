@@ -34,8 +34,8 @@ public class AjaxInMaterialController {
 //--------------------------------------------------------------
 	
 //	OutProductController 에서 페이지 이동을 하고 ajaxcontroller에서 리스트 불러오는것
-	@RequestMapping(value = "/listSearch", method = RequestMethod.GET)
-	public ResponseEntity<List<InMaterialDTO>> BuyList(InMaterialDTO inMaterialDTO, HttpServletRequest request) {
+	@RequestMapping(value = "/listSearch", method = RequestMethod.POST)
+	public ResponseEntity<List<InMaterialDTO>> inMaterialList(InMaterialDTO inMaterialDTO, HttpServletRequest request) {
 		System.out.println("입고번호"+inMaterialDTO.getInNum());
 		System.out.println("원자재 품명"+inMaterialDTO.getRawName());
 		System.out.println("거래처명"+inMaterialDTO.getClientCompany());
