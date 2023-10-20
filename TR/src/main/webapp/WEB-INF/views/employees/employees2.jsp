@@ -10,7 +10,7 @@
 <body>
 <div class="container"> 
 <h2>인사등록</h2>
-<form action="${pageContext.request.contextPath}/employees/insertPro" id="join" method="post">
+<form action="${pageContext.request.contextPath}/employees/insertPro" id="join" method="post" enctype="multipart/form-data">
 
 <div class="form-group">
 <p>사원번호:</p>

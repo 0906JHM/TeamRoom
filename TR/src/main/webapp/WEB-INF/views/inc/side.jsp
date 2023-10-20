@@ -23,7 +23,7 @@
 			
 				<!------------------------------ 사원 사진 ------------------------->
 				 <div class="profile-pic">
-				<img src="${pageContext.request.contextPath }/resources/img/photo.jpg">
+				<img src="${pageContext.request.contextPath }/resources/img/${sessionScope.empFile}">
 				</div>
 				
 				<!------------------------------ 로그인 이름 ------------------------->

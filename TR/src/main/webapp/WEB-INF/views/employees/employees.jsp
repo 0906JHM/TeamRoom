@@ -12,6 +12,7 @@
 
 <script type="text/javascript">
 
+//팝업창 중앙 생성 및 가로,세로 크기
 function openCenteredWindow(url) {
     var width = 600;
     var height = 740;
@@ -83,18 +84,16 @@ function deleteValue(){
     }
 }
 	
-	// 페이지 로드 후 스크립트 실행
-	$(document).ready(function() {
-	    var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
+// 자식 팝업 창 닫고 부모창 새로 고침
+$(document).ready(function() {
+    var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
 
-	    if (refreshAndClose) {
-	        window.opener.location.reload(); // 부모창 새로 고침
-	        window.close(); // 현재 창 닫기
-	    }
-	});
+    if (refreshAndClose) {
+        window.opener.location.reload(); // 부모창 새로 고침
+        window.close(); // 현재 창 닫기
+    }
+});
 </script>
-
-
 
 </head>
 <body>
@@ -153,6 +152,7 @@ function deleteValue(){
 <button onclick="openCenteredWindow('employees2')" id="btnSell">등록</button>
 </c:if>
 
+<!-- 페이징 처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" 
                    end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
