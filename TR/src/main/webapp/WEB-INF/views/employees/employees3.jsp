@@ -43,10 +43,47 @@
     <option value="퇴사" ${employeesDTO.empState == '퇴사' ? 'selected' : ''}>퇴사</option>
   </select>
 </div>
-<div class="form-group"><p>프로필사진</p><input type="file" name="file" ></div>
-<button onclick="save">수정하기</button>
+<div class="form-group">
+    <p>프로필사진</p>
+    <button id="upload-button" type="button">사진 변경</button>
+    <button id="delete-button" type="button">사진 삭제</button> <!-- 사진 삭제 버튼 추가 -->
+    <input type="file" id="file" name="file" accept="image/*" onchange="previewImage()" style="display: none;" />
+</div>
+<div class="form-group">
+    <p></p>
+    <img id="preview" />
+</div>
+<button id="save-button" onclick="save">저장하기</button>
 
 </form>
 </div>
+<script>
+document.getElementById('delete-button').addEventListener('click', function() {
+    // 이미지 미리보기를 초기화합니다.
+    document.getElementById('preview').src = '';
+    
+    // 파일 입력 필드를 초기화합니다.
+    document.getElementById('file').value = '';
+});
+// 파일 업로드 버튼 누르면 input file 클릭됨
+document.getElementById('upload-button').addEventListener('click', function() {
+    document.getElementById('file').click();
+});
+// 업로드된 파일 미리보기+버튼 숨기기
+function previewImage() {
+    var file = document.getElementById("file").files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+        document.getElementById("preview").src = reader.result;
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById("preview").src = "";
+    }
+}
+</script>
 </body>
 </html>
