@@ -18,7 +18,7 @@
 	<select id="allWorkOrder" resultType="WorkOrderDTO">
 		SELECT *
 		FROM workOrder w
-LEFT JOIN product p on w.prodCode = p.prodCode 
+        LEFT JOIN product p on w.prodCode = p.prodCode 
 		WHERE workCode != '' 
 		ORDER BY workCode DESC 
 		LIMIT #{start}, #{cntPerPage}
