@@ -16,8 +16,6 @@
 
 <!-- form -->
 <form action="${pageContext.request.contextPath}/Rawmaterials/insertPro" method="post">
-원자재코드 : 	<input type="text" name="rawCode" id="rawCodeField"><br>
-원자재명 : 	<input type="text" name="rawName"><br>
 종류 :		<select name="rawType" onchange="updateRawCode()">
 			<option value="">전체</option>
 			<option value="향기">향기</option>
@@ -26,9 +24,11 @@
 			<option value="라벨">라벨</option>
 			<option value="포장재">포장재</option>
 			</select><br>
+원자재코드 : 	<input type="text" name="rawCode" id="rawCodeField" readonly="readonly"><br>
+원자재명 : 	<input type="text" name="rawName"><br>
 단위 : 		<input type="text" name="rawUnit" value="EA"><br>
 매입단가 : 	<input type="number" name="rawPrice"><br>
-창고명 : 		<input type="text" name="whseCode" id="pInput2"> <input type="button" value="목록" onclick="openPopup2()"><br>
+창고명 : 		<input type="text" name="whseCode" id="pInput2" readonly="readonly"> <input type="button" value="목록" onclick="openPopup2()"><br>
 비고 : 		<input type="text" name="rawMemo"><br>
 <input type="submit" value="품목추가">
 </form>
