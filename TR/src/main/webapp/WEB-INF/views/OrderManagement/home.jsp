@@ -181,21 +181,26 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.rawType}</td>
 <td>${ordermanagementDTO.clientCode}</td>
 <td>${ordermanagementDTO.whseCode}</td>
-<td>
-<c:choose>
+<td><c:choose>
 <c:when test="${ordermanagementDTO.whseCount < 10}">
 <span style="color:red;">${ordermanagementDTO.whseCount}</span>
 </c:when>
 <c:otherwise>
 ${ordermanagementDTO.whseCount}
 </c:otherwise>
-</c:choose>
-</td>
+</c:choose></td>
 <td>${ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.rawPrice}</td>
 <td>${ordermanagementDTO.rawPrice * ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.buyDate}</td>
-<td>${ordermanagementDTO.buyInstate}</td>
+<td><c:choose>
+<c:when test="${ordermanagementDTO.buyInstate == '신청완료'}">
+<span style="color:red;">${ordermanagementDTO.buyInstate}</span>
+</c:when>
+<c:otherwise>
+${ordermanagementDTO.buyInstate}
+</c:otherwise>
+</c:choose></td>
 <td>${ordermanagementDTO.buyEmpId}</td>
 <td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
 </tr>
