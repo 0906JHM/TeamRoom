@@ -69,47 +69,76 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<th>입고 상태</th>
 					<td><input type="text" name="inState" value="${inMaterialDTO.inState }" readonly="readonly"></td>
 				</tr>
+				<tr>
+					<fmt:formatNumber var="inPrice" value="${inMaterialDTO.inPrice }" pattern="###,###"></fmt:formatNumber>
+					<th>총 출고가</th>
+					<td>
+						<input type="hidden" name="inPrice" value="${inMaterialDTO.inPrice }">
+						<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly">
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<br>
 		<table class="outProductTable">
 			<tr>
 <!-- 				<th colspan="2">납품 예정일</th> -->
-				<th colspan="2">입고일</th>
-				<th colspan="2">재입고일</th>
-				<th colspan="2">입고 부족</th>
+				<th colspan="3">입고일</th>
+				<th colspan="3">재입고일</th>
+<!-- 				<th colspan="2">입고 부족</th> -->
 			</tr>
 			<tr>
 <%-- 				<td colspan="2"><input type="text" name="sellDuedate" value="${inMaterialDTO.sellDuedate }" readonly="readonly"></td> --%>
-				<td colspan="2"><input type="text" name="inDate" value="${inMaterialDTO.inDate }" readonly></td>
-				<td colspan="2"><input type="text" name="inRedate" value="${inMaterialDTO.inRedate }" readonly></td>
-				<td colspan="2"><input type="number" name="remainder" value="${inMaterialDTO.remainder }" readonly onchange="updateRemainder()"></td>
+				<td colspan="3"><input type="text" name="inDate" value="${inMaterialDTO.inDate }" readonly></td>
+				<td colspan="3"><input type="text" name="inRedate" value="${inMaterialDTO.inRedate }" readonly></td>
+<%-- 				<td colspan="2"><input type="number" name="remainder" value="${inMaterialDTO.remainder }" readonly onchange="updateRemainder()"></td> --%>
 			</tr>
 			<tr>
-				<th colspan="2">발주 개수</th>
-				<th colspan="2">입고 개수</th>
-				<th colspan="2">재고 개수</th>
+				<th colspan="3">총발주 개수</th>
+				<th colspan="3">남은 발주 개수</th>
+<!-- 				<th colspan="2">입고 개수</th> -->
+<!-- 				<th colspan="2">재고 개수</th> -->
 			</tr>
 			<tr> 
-				<td colspan="2"><input type="number" name="buyCount" value="${inMaterialDTO.buyCount }" readonly="readonly"></td>
-				<td colspan="2">
-					<input type="hidden" id="initialInCount" value="${inMaterialDTO.inCount}">
-					<c:if test="${inMaterialDTO.stockCount == null || inMaterialDTO.stockCount == 0}">
-   						<input type="number" name="inCount" value="0" readonly="readonly">
-					</c:if>
+				<td colspan="3"><input type="number" name="buyCount" value="${inMaterialDTO.buyCount }" readonly="readonly"></td>
+				<td colspan="3"><input type="number" name="remainder" id="remainder" value="${inMaterialDTO.buyCount - inMaterialDTO.inCount}" readonly="readonly"></td>
+<!-- 				<td colspan="2"> -->
+<%-- 					<input type="hidden" id="initialInCount" value="${inMaterialDTO.inCount}"> --%>
+<%-- 					<c:if test="${inMaterialDTO.stockCount == null || inMaterialDTO.stockCount == 0}"> --%>
+<!--    						<input type="number" name="inCount" value="0" readonly="readonly"> -->
+<%-- 					</c:if> --%>
 <%-- 					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}"> --%>
-    					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" min=0 onchange="updateInventory()">
+<%--     					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" min=0 onchange="updateInventory()"> --%>
 <%-- 					</c:if> --%>
 
+<!-- 				</td> -->
+<!-- 				<td colspan="2"> -->
+<%-- 					<input type="hidden" id="initialstockCount" value="${inMaterialDTO.stockCount}"> --%>
+<%-- 					<input type="number" name="stockCount" value="${inMaterialDTO.stockCount }" min="0" readonly="readonly"> --%>
+<!-- 				</td> -->
+			</tr>
+			<tr>
+				<th colspan="3">입고 개수</th>
+				<th colspan="3">재고 개수</th>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<input type="hidden" id="initialInCount" value="${inMaterialDTO.inCount}">
+					<c:if test="${inMaterialDTO.stockCount == null || inMaterialDTO.stockCount == 0}">
+   						<input type="number" name="inCount" value="${inMaterialDTO.inCount}" id="inputNum" readonly="readonly">
+					</c:if>
+					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}">
+    						<input type="number" name="inCount" value="${inMaterialDTO.inCount }" id="inputNum" autofocus="autofocus" min="${inMaterialDTO.inCount }" onchange="updateInventory()">
+					</c:if>
 				</td>
-				<td colspan="2">
+				<td colspan="3">
 					<input type="hidden" id="initialstockCount" value="${inMaterialDTO.stockCount}">
 					<input type="number" name="stockCount" value="${inMaterialDTO.stockCount }" min="0" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
 				<th colspan="3">원자재 단가</th>
-				<th colspan="3">입고 가격</th>
+				<th colspan="3">현재 입고가</th>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -118,9 +147,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<input type="text" name="rawPriceFormat" value="${rawPrice }원" readonly="readonly">
 				</td>
 				<td colspan="3">
-				<fmt:formatNumber var="inPrice" value="${inMaterialDTO.inPrice }" pattern="###,###"></fmt:formatNumber>
-					<input type="hidden" name="inPrice" value="${inMaterialDTO.inPrice }">
-					<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly" onchange="updateInventory2()">
+<%-- 				<fmt:formatNumber var="inPrice" value="${inMaterialDTO.inPrice }" pattern="###,###"></fmt:formatNumber> --%>
+<%-- 					<input type="hidden" name="inPrice" value="${inMaterialDTO.inPrice }"> --%>
+<%-- 					<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly" onchange="updateInventory2()"> --%>
+					<input type="text" name="currentInPrice" value="" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -130,13 +160,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="6"><input type="text" name="inMemo" value="${inMaterialDTO.inMemo }" id="inputMemo" placeholder="비고 입력"></td>
 			</tr>
 		</table>
+		
+		
 		<div id="buttons">
-		
-		
-<%-- 		<c:if test="${inMaterialDTO.sellState != '입고완료' && inMaterialDTO.stockCount != 0 }"> --%>
+<%-- 		<c:if test="${inMaterialDTO.inState != '입고완료' && inMaterialDTO.stockCount != 0 }"> --%>
 <!-- buyState가 필요한가? -->
 
-<c:if test="${inMaterialDTO.inState != '입고완료' && inMaterialDTO.stockCount != 0 }">
+		<c:if test="${inMaterialDTO.inState != '입고완료'}">
 				<input type="button" id="updateButton" value="입고">
 		</c:if>
 			<input type="button" value="닫기" onclick="window.close()">
@@ -162,7 +192,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    // 입고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var inCountInput = document.querySelector('input[name="inCount"]');
 		    var stockCountInput = document.querySelector('input[name="stockCount"]');
-		    
+		  	var remainder = document.querySelector('input[name="remainder"]');
+		    var buyCount = document.querySelector('input[name="buyCount"]');
+			//입고단가 원자재단가
+		    var rawPrice = ${inMaterialDTO.rawPrice};
+		    //현재 입고가
+		     var currentInPrice = document.querySelector('input[name="currentInPrice"]');
+		   
 		    // 현재 출력해야되는 재고값 계산
 		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10);
 		    var initialInCount = parseInt(document.getElementById('initialInCount').value, 10);
@@ -170,6 +206,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    
 		    // 재고 입력란 업데이트
 		    stockCountInput.value = initialstockCount + initialInCount + inCount;
+		    currentInPrice.value = formatCurrency(inCount * rawPrice) + '원';
+		    remainder.value = buyCount.value - inCount;
+		}
+		
+		//숫자를 ###,### 원 형식으로 포맷하는 함수
+		function formatCurrency(number) {
+		    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		}
 		
 // 		총입고가격 = 입고수량 * 원자재 단가
@@ -187,12 +230,49 @@ final String ADMIN_DEPARTMENT = "자재팀";
 // // 		    stockCountInput.value = initialstockCount + initialInCount + inCount;
 // 		}
 		
+		
 		$(document).ready(function() {
+			
+			updateInventory();
+			
+			 // JavaScript로 max 속성을 설정
+		    var inCountInput = document.getElementById('inputNum');
+		    var stockCount = ${inMaterialDTO.stockCount}; // stockCount 값을 JSP 표현식으로 가져옴
+		    var buyCount = ${inMaterialDTO.buyCount}; // sellCount 값을 JSP 표현식으로 가져옴
+			var inCount = ${inMaterialDTO.inCount};
+			
+			// maxCount 값을 설정할 때 Math.min 함수를 사용하여 더 작은 값을 선택
+// 		    var maxCount = Math.min(buyCount, inCount + stockCount);
+			//입고수량은 발주수량 초과하면 안되니깐?
+			var maxCount = buyCount;
+		    inCountInput.setAttribute('max', maxCount);
+			
+		    document.getElementById("inputNum").addEventListener("keyup", function(event) {
+				if (event.key === "Enter") {
+			        event.preventDefault();
+
+			        // 입력된 입고 개수 가져오기
+			        var inputCount = parseInt(inCountInput.value);
+
+
+			        // 만약 입력된 값이 max 값보다 크면 max 값으로 설정
+			        if (inputCount > maxCount) {
+			        	inCountInput.value = maxCount;
+			        }
+
+			        // 여기에서 원하는 동작을 수행하세요.
+			        updateInventory();
+			    }
+			});
+		    
+		    
 			// "입고" 버튼 클릭 시 Ajax 요청을 보냅니다.
 			$("#updateButton").click(function() {
 				// 폼 데이터를 수집
 				var formData = $("#updateForm").serialize();
-
+				
+				console.log("입력 받은 값 "+inCountInput.value);
+				console.log("서버에서 받아온 값 "+inCount);
 				$.ajax({
 					type: "POST",
 					url: "${pageContext.request.contextPath}/inMaterial/inMaterialUpdate",
@@ -251,13 +331,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		}
 		
 
-var buyCount = parseInt(document.getElementsByName('buyCount')[0].value);
+// var buyCount = parseInt(document.getElementsByName('buyCount')[0].value);
 
-    function updateRemainder() {
-        var inCount = parseInt(document.getElementById('inputNum').value, 10);
-        var updatedValue = buyCount - inCount;
-        document.getElementsByName('remainder')[0].value = updatedValue;
-    }
+//     function updateRemainder() {
+//         var inCount = parseInt(document.getElementById('inputNum').value, 10);
+//         var updatedValue = buyCount - inCount;
+//         document.getElementsByName('remainder')[0].value = updatedValue;
+//     }
 	</script>
 </body>
 </html>
