@@ -27,11 +27,11 @@ $.ajax({
         var dropdown = $('select[name="lineEmpId"]');
         dropdown.empty();
         $.each(data, function(key, entry) {
-            var optionText = '사원번호=' + entry.empId + ', 사원이름=' + entry.empName;
-            dropdown.append($('<option></option>').attr('value', entry.empId).text(optionText));
+            if(entry.empId != 1) {
+                var optionText = '사원번호=' + entry.empId + ', 사원이름=' + entry.empName;
+                dropdown.append($('<option></option>').attr('value', entry.empId).text(optionText));
+            }
         });
-        // 초기 선택 값을 설정합니다.
-        dropdown.val('${lineDTO.lineEmpId}');
     }
 });
 </script>
@@ -46,10 +46,10 @@ $.ajax({
 <div class="form-group">
   <p>사용여부:</p>
   <select name="lineUse" class="lineUse select">
-    <option value="0" ${lineDTO.lineUse == '0' ? 'selected' : ''}>0</option>
-    <option value="1" ${lineDTO.lineUse == '1' ? 'selected' : ''}>1</option>
-    <option value="2" ${lineDTO.lineUse == '2' ? 'selected' : ''}>2</option>
-    <option value="3" ${lineDTO.lineUse == '3' ? 'selected' : ''}>3</option>
+    <option value="미사용" ${lineDTO.lineUse == '미사용' ? 'selected' : ''}>미사용</option>
+    <option value="사용" ${lineDTO.lineUse == '사용' ? 'selected' : ''}>사용</option>
+    <option value="점검" ${lineDTO.lineUse == '점검' ? 'selected' : ''}>점검</option>
+    <option value="고장" ${lineDTO.lineUse == '고장' ? 'selected' : ''}>고장</option>
   </select>
 </div>
 <div class="form-group"><p>등록자:</p><select name="lineEmpId" class="lineEmpId select"></select></div>

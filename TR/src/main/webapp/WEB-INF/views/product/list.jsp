@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -53,7 +54,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 
 
 <body>
-
+<c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
 	<!-- 사이드바 -->
 	<jsp:include page="../inc/side.jsp"></jsp:include>
 	<!-- 사이드바 -->
@@ -64,13 +66,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/product/list"
 				method="get" id="selectedProId">
-				<label>품번</label> <input type="text" placeholder="제품코드를 입력하세요."
-					name="prodCode" id="prodCode"> <label>품명</label> <input type="text"
-					placeholder="제품명을 입력하세요." name="prodName" id="prodName"> <label>거래처명</label>
-				<input type="text" name="clientCompany" id="sellclientCompany9999"
-					readonly placeholder="거래처를 선택하세요."
-					onclick="searchItem('sellclient','sellclientCode9999')"
-					style="cursor: pointer !important;">
+				<label>품번</label> <input type="text" placeholder="제품코드를 입력하세요." name="prodCode" id="prodCode" value="${prodDTO.prodCode }"> 
+				<label>품명</label> <input type="text" placeholder="제품명을 입력하세요." name="prodName" id="prodName" value="${prodDTO.prodName }"> 
+				<label>거래처명</label> <input type="text" name="clientCompany" id="sellclientCompany9999" value="${prodDTO.clientCompany }" readonly placeholder="거래처를 선택하세요." onclick="searchItem('sellclient','sellclientCode9999')" style="cursor: pointer !important;">
 				<!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
 				<button type="submit">조회</button>
 			</form>
@@ -183,7 +181,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 
 		</form>
 	</div>
+	</c:when>
+  <c:otherwise >
 
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        </c:choose>
 	<script>
 
 var contextPath = "${pageContext.request.contextPath}";
@@ -328,132 +332,131 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	var popup = window.open(url, "", popupOpt);
 } //openWindow()
 //--------------------------------------------------------------------------
-  $(document).ready(function () {
-		//엑셀
+//   $(document).ready(function () {
+// 		//엑셀
 		
-			 const excelDownload = document.querySelector('#exportButton');
-					excelDownload.addEventListener('click', exportExcel);
+// 			 const excelDownload = document.querySelector('#exportButton');
+// 					excelDownload.addEventListener('click', exportExcel);
 					
-					function exportExcel() {
-						//권한
-						if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {
-					    // 1. 워크북 생성
-					    var wb = XLSX.utils.book_new();
-					    // 2. 워크시트 생성
-					    var newWorksheet = excelHandler.getWorksheet();
-					    // 3. 워크시트를 워크북에 추가
-					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-					    // 4. 엑셀 파일 생성
-					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-					    // 5. 엑셀 파일 내보내기
-					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
-						}else {
-							 Swal.fire({
-			                        text: '자재팀만 가능',
-			                        icon: 'warning',
-			                        confirmButtonText: '확인',
-			                    });
-						}
-					}
-					// 현재 날짜를 가져오는 함수
-					function getToday() {
+// 					function exportExcel() {
+// 						//권한
+// 						if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {
+// 					    // 1. 워크북 생성
+// 					    var wb = XLSX.utils.book_new();
+// 					    // 2. 워크시트 생성
+// 					    var newWorksheet = excelHandler.getWorksheet();
+// 					    // 3. 워크시트를 워크북에 추가
+// 					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+// 					    // 4. 엑셀 파일 생성
+// 					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+// 					    // 5. 엑셀 파일 내보내기
+// 					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+// 						}else {
+// 							 Swal.fire({
+// 			                        text: '자재팀만 가능',
+// 			                        icon: 'warning',
+// 			                        confirmButtonText: '확인',
+// 			                    });
+// 						}
+// 					}
+// 					// 현재 날짜를 가져오는 함수
+// 					function getToday() {
 						
-					    var date = new Date();
-					    var year = date.getFullYear();
-					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
-					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
-					    return year + month + day;
-					}
+// 					    var date = new Date();
+// 					    var year = date.getFullYear();
+// 					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+// 					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+// 					    return year + month + day;
+// 					}
 
-			var excelHandler = {
-			getExcelFileName : function() {
-				return 'productList'+getToday()+'.xlsx'; //파일명
-			},
-			getSheetName : function() {
-				return 'product Sheet'; //시트명
-			},
-			getExcelData : function() {
-				return document.getElementById('productTable'); //table id
-			},
-			getWorksheet : function() {
-				return XLSX.utils.table_to_sheet(this.getExcelData());
-			}
-		} //excelHandler
-			
-			function s2ab(s) {
-				
-				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-				var view = new Uint8Array(buf);  
-				for(var i=0; i<s.length; i++) {
-					view[i] = s.charCodeAt(i) & 0xFF;
-				}
-				alert("이까지 옴");
-				return buf;
-			}
-	  });
-
-// //버튼 클릭 시 실행
-// // 클라이언트에서 서버로 데이터 요청
-// 		document.getElementById('exportButton').addEventListener('click', function () {
-// 			if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {	
-// 			// 엑셀로 내보낼 데이터
-// 		    var searchParams = {
-// 		    		prodCode : $("#prodCode").val(),
-// 					prodName : $("#prodName").val(),
-// 					clientCompany : $("#sellclientCompany9999").val(),
-// // 					inState : inStateButton1
-// 		    };
-		
-// 		    $.ajax({
-// 		        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
-// 		        url: "${pageContext.request.contextPath}/product/excel", // 데이터를 가져올 URL 설정
-// 		        data: searchParams, // 검색 조건 데이터 전달
-// 		        dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
-// 		        success: function (data) {
-// 		            // 데이터 가공
-// 					var modifiedData = data.map(function (item) {
-// 					    return {
-// 					        '제품 코드': item.prodCode,
-// 					        '제품명': item.prodName,
-// 					        '제품단위': item.prodUnit,
-// 					        '용량': item.prodSize,
-// 					        '향기 종류': item.prodPerfum,
-// 					        '거래처명': item.clientCompany,
-// 					        '창고명': item.whseName,
-// 					        '매출 단가': item.prodPrice,
-// 					        '비고': item.prodMemo,
-// 					    };
-// 					});
-// 		            // 새 워크북을 생성
-// 		            var wb = XLSX.utils.book_new();
-// 		            // JSON 데이터를 워크시트로 변환
-// 		            var ws = XLSX.utils.json_to_sheet(modifiedData);
-// 		            // 워크북에 워크시트 추가
-// 		            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
-// 		            // Blob 형태로 워크북 생성
-// 		            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-// 		            // 파일 이름 설정 (원하는 파일 이름으로 변경)
-// 		            var fileName = "InMaterial.xlsx";
-// 		            // Blob 파일을 다운로드
-// 		            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
-// 		        }
-// 		    });
-// 			}else {
-// 				 Swal.fire({
-//                      text: '자재팀만 가능',
-//                      icon: 'warning',
-//                      confirmButtonText: '확인',
-//                  });
+// 			var excelHandler = {
+// 			getExcelFileName : function() {
+// 				return 'productList'+getToday()+'.xlsx'; //파일명
+// 			},
+// 			getSheetName : function() {
+// 				return 'product Sheet'; //시트명
+// 			},
+// 			getExcelData : function() {
+// 				return document.getElementById('productTable'); //table id
+// 			},
+// 			getWorksheet : function() {
+// 				return XLSX.utils.table_to_sheet(this.getExcelData());
 // 			}
-// 		});
+// 		} //excelHandler
+			
+// 			function s2ab(s) {
+				
+// 				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+// 				var view = new Uint8Array(buf);  
+// 				for(var i=0; i<s.length; i++) {
+// 					view[i] = s.charCodeAt(i) & 0xFF;
+// 				}
+// 				alert("이까지 옴");
+// 				return buf;
+// 			}
+// 	  });
+
+//버튼 클릭 시 실행
+// 클라이언트에서 서버로 데이터 요청
+		document.getElementById('exportButton').addEventListener('click', function () {
+			if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {	
+			// 엑셀로 내보낼 데이터
+		    var searchParams = {
+		    		prodCode : $("#prodCode").val(),
+					prodName : $("#prodName").val(),
+					clientCompany : $("#sellclientCompany9999").val(),
+		    };
 		
-// 		// ArrayBuffer 만들어주는 함수
-// 		function s2ab(s) {
-// 		    var buf = new ArrayBuffer(s.length); // convert s to arrayBuffer
-// 		    var view = new Uint8Array(buf); // create uint8array as viewer
-// 		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
-// 		    return buf;
-// 		}	
+		    $.ajax({
+		        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+		        url: "${pageContext.request.contextPath}/product/getExcel", // 데이터를 가져올 URL 설정
+		        data: searchParams, // 검색 조건 데이터 전달
+		        dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+		        success: function (data) {
+		            // 데이터 가공
+					var modifiedData = data.map(function (item) {
+					    return {
+					        '제품 코드': item.prodCode,
+					        '제품명': item.prodName,
+					        '제품단위': item.prodUnit,
+					        '용량': item.prodSize,
+					        '향기 종류': item.prodPerfum,
+					        '거래처명': item.clientCompany,
+					        '창고명': item.whseName,
+					        '매출 단가': item.prodPrice,
+					        '비고': item.prodMemo,
+					    };
+					});
+		            // 새 워크북을 생성
+		            var wb = XLSX.utils.book_new();
+		            // JSON 데이터를 워크시트로 변환
+		            var ws = XLSX.utils.json_to_sheet(modifiedData);
+		            // 워크북에 워크시트 추가
+		            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
+		            // Blob 형태로 워크북 생성
+		            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+		            // 파일 이름 설정 (원하는 파일 이름으로 변경)
+		            var fileName = "InMaterial.xlsx";
+		            // Blob 파일을 다운로드
+		            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
+		        }
+		    });
+			}else {
+				 Swal.fire({
+                     text: '자재팀만 가능',
+                     icon: 'warning',
+                     confirmButtonText: '확인',
+                 });
+			}
+		});
+		
+		// ArrayBuffer 만들어주는 함수
+		function s2ab(s) {
+		    var buf = new ArrayBuffer(s.length); // convert s to arrayBuffer
+		    var view = new Uint8Array(buf); // create uint8array as viewer
+		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
+		    return buf;
+		}	
  
 //   <!--------------------------------------------------- 비고 보기 ----------------------------------------->
 

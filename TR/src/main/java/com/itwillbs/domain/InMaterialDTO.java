@@ -25,6 +25,8 @@ public class InMaterialDTO {
 	private String whseCode;
 //	비고 필요없나
 	private String inMemo;
+	private int buyCount;
+	private String inRedate;
 	
 	
 	

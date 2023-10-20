@@ -121,7 +121,7 @@ $(document).ready(function() {
 <jsp:include page="../inc/side.jsp"></jsp:include>
 
 <div id="content">
-<h2>발주관리</h2>
+<h2>발주 관리</h2>
 <hr>
 
 <!-- form(검색) -->
@@ -145,8 +145,10 @@ $(document).ready(function() {
 
 <!-- button -->
 <div id="buttons">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}">
 <input type="button" value="추가" onclick="openPopup1()">
 <input type="button" value="삭제" onclick="deleteValue();">
+</c:if>
 </div>
 
 <!-- table -->
@@ -179,21 +181,26 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.rawType}</td>
 <td>${ordermanagementDTO.clientCode}</td>
 <td>${ordermanagementDTO.whseCode}</td>
-<td>
-<c:choose>
+<td><c:choose>
 <c:when test="${ordermanagementDTO.whseCount < 10}">
 <span style="color:red;">${ordermanagementDTO.whseCount}</span>
 </c:when>
 <c:otherwise>
 ${ordermanagementDTO.whseCount}
 </c:otherwise>
-</c:choose>
-</td>
+</c:choose></td>
 <td>${ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.rawPrice}</td>
 <td>${ordermanagementDTO.rawPrice * ordermanagementDTO.buyCount}</td>
 <td>${ordermanagementDTO.buyDate}</td>
-<td>${ordermanagementDTO.buyInstate}</td>
+<td><c:choose>
+<c:when test="${ordermanagementDTO.buyInstate == '신청완료'}">
+<span style="color:red;">${ordermanagementDTO.buyInstate}</span>
+</c:when>
+<c:otherwise>
+${ordermanagementDTO.buyInstate}
+</c:otherwise>
+</c:choose></td>
 <td>${ordermanagementDTO.buyEmpId}</td>
 <td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
 </tr>

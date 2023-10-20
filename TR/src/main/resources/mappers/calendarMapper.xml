@@ -7,84 +7,43 @@
 	<!-- 달력 -->
 	<select id="getCalendarList"
 		resultType="com.itwillbs.domain.CalendarDTO">
-		select '수주' calendar_title, concat(c.clientCompany,'
-		',p.prodName,'(',p.prodCode,') ',s.sellCount, '개') calendar_memo,
-		s.sellDate startDate, s.sellDuedate endDate, s.sellCode code
-		from sell
-		s left join clients c
-		on s.clientCode = c.clientCode
-		left join product p
-		on s.prodCode = p.prodCode
-		union all
-		select '출고' calendar_title,
-		concat(c.clientCompany,'
-		',p.prodName,'(',p.prodCode,') ',s.sellCount,
-		'개') calendar_memo,
-		o.outDate startDate, null endDate,o.outCode code
-		from outProduct o left join sell s
-		on o.sellCode = s.sellCode
-		left join
-		clients c
-		on s.clientCode = c.clientCode
-		left join product p
-		on
-		s.prodCode = p.prodCode
-		where s.sellState ='출고완료'
-		union all
-		select '중간납품'
-		calendar_title, concat(c.clientCompany,'
-		',p.prodName,'(',p.prodCode,') ',s.sellCount, '개') calendar_memo,
-		o.outDate startDate, null endDate,o.outCode code
-		from outProduct o left
-		join sell s
-		on o.sellCode = s.sellCode
-		left join clients c
-		on
-		s.clientCode = c.clientCode
-		left join product p
-		on s.prodCode =
-		p.prodCode
-		where s.sellState ='중간납품'
-		and o.outRedate is null
-		union all
-		select '중간납품' calendar_title, concat(c.clientCompany,'
-		',p.prodName,'(',p.prodCode,') ',s.sellCount, '개') calendar_memo,
-		o.outRedate startDate, null endDate,o.outCode code
-		from outProduct o
-		left join sell s
-		on o.sellCode = s.sellCode
-		left join clients c
-		on
-		s.clientCode = c.clientCode
-		left join product p
-		on s.prodCode =
-		p.prodCode
-		where s.sellState ='중간납품'
-		and o.outRedate is not null
-		union
-		all
-		select '원자재 발주' calendar_title, concat(c.clientCompany,'
-		',r.rawName,'(',r.rawCode,') ',b.buyCount, '개') calendar_memo,
-		b.buyDate startDate, null endDate, b.buyNum code
-		from buy b left join
-		clients c
-		on b.clientCode = c.clientCode
-		left join rawMaterial r
-		on
-		b.rawCode = r.rawCode
-		union all
-		select '원자재 입고' calendar_title,
-		concat(c.clientCompany,'
-		',r.rawName,'(',r.rawCode,') ',i.inCount, '개')
-		calendar_memo, i.inDate
-		startDate, null endDate, i.inNum code
-		from
-		inMaterial i left join clients c
-		on i.clientCode = c.clientCode
-		left
-		join rawMaterial r
-		on i.rawCode = r.rawCode
-		where i.inState = '입고완료'
+		SELECT CONCAT(c.clientCompany,' 수주') calendar_title, CONCAT(c.clientCompany,' ',p.prodName,'(',p.prodCode, ') ', s.sellCount, '개') calendar_memo, s.sellDate startDate, s.sellDuedate endDate, s.sellCode code
+		FROM sell s
+		LEFT JOIN clients c ON s.clientCode = c.clientCode
+		LEFT JOIN product p ON s.prodCode = p.prodCode 
+		UNION ALL
+		SELECT CONCAT(c.clientCompany,' 출고') calendar_title, CONCAT(c.clientCompany,' ',p.prodName,'(',p.prodCode, ') ', s.sellCount, '개') calendar_memo, o.outDate startDate, NULL endDate, o.outCode code
+		FROM outProduct o
+		LEFT JOIN sell s ON o.sellCode = s.sellCode
+		LEFT JOIN clients c ON s.clientCode = c.clientCode
+		LEFT JOIN product p ON s.prodCode = p.prodCode
+		WHERE s.sellState = '출고완료' 
+		UNION ALL
+		SELECT CONCAT(c.clientCompany,' 중간납품') calendar_title, CONCAT(c.clientCompany,' ',p.prodName,'(',p.prodCode, ') ', s.sellCount, '개') calendar_memo, o.outDate startDate, NULL endDate, o.outCode code
+		FROM outProduct o
+		LEFT JOIN sell s ON o.sellCode = s.sellCode
+		LEFT JOIN clients c ON s.clientCode = c.clientCode
+		LEFT JOIN product p ON s.prodCode = p.prodCode
+		WHERE s.sellState = '중간납품' AND o.outRedate IS NULL 
+		UNION ALL
+		SELECT CONCAT(c.clientCompany,' 중간납품') calendar_title, CONCAT(c.clientCompany,' ',p.prodName,'(',p.prodCode, ') ', s.sellCount, '개') calendar_memo, o.outRedate startDate, NULL endDate, o.outCode code
+		FROM outProduct o
+		LEFT JOIN sell s ON o.sellCode = s.sellCode
+		LEFT JOIN clients c ON s.clientCode = c.clientCode
+		LEFT JOIN product p ON s.prodCode = p.prodCode
+		WHERE s.sellState = '중간납품' AND o.outRedate IS NOT NULL 
+		UNION ALL
+		SELECT CONCAT(c.clientCompany,' 원자재 발주') calendar_title, CONCAT(c.clientCompany,' ',r.rawName,'(',r.rawCode, ') ', b.buyCount, '개') calendar_memo, b.buyDate startDate, NULL endDate, b.buyNum code
+		FROM buy b
+		LEFT JOIN clients c ON b.clientCode = c.clientCode
+		LEFT JOIN rawMaterial r ON b.rawCode = r.rawCode 
+		UNION ALL
+		SELECT CONCAT(c.clientCompany,' 원자재 입고') calendar_title, CONCAT(c.clientCompany,' ',r.rawName,'(',r.rawCode, ') ', i.inCount, '개') calendar_memo, i.inDate startDate, NULL endDate, i.inNum code
+		FROM inMaterial i
+		LEFT JOIN clients c ON i.clientCode = c.clientCode
+		LEFT JOIN rawMaterial r ON i.rawCode = r.rawCode
+		WHERE i.inState = '입고완료'
+		ORDER BY startDate;
 	</select>
 	<!-- 매출 차트 -->
 	<select id="getSalesList"
@@ -112,16 +71,19 @@
 	<!-- 실적 차트 -->
 	<select id="getPerfList"
 		resultType="com.itwillbs.domain.ChartDTO">
-		SELECT DATE_FORMAT(perfdate, '%Y-%m-%d') as label, count as
-		data
-		FROM perf_chart
-		ORDER BY perfdate asc
+		SELECT workDate label, sum(workAmount) data
+		FROM workOrder
+		GROUP BY workDate
+		ORDER BY workDate desc
+		LIMIT 5;
 	</select>
 	<!-- 라인 실적 차트 -->
 	<select id="getLinePerfList"
 		resultType="com.itwillbs.domain.ChartDTO">
-		SELECT stock_name label, count data
-		FROM stock_chart
+		SELECT lineCode label, workAmount data
+		FROM workOrder
+		WHERE
+		workDate = CURDATE()
 	</select>
 
 	<insert id="insertSellCalendar">

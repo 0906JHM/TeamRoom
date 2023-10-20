@@ -86,9 +86,10 @@ function openPopup1() {
 }
 
 // detail 페이지 팝업창
-function openPopup2(url) {
-	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
-	myWindow.moveTo(0, 0);
+function openPopup2(url) {	
+	var popupX = (window.screen.width/2) - (400/2);
+	var popupY = (window.screen.height/2) - (472/2);
+	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=472,left=" + popupX + ",top=" + popupY);
 	myWindow.focus();
 }
 
@@ -122,7 +123,7 @@ $(document).ready(function() {
 <jsp:include page="../inc/side.jsp"></jsp:include>
 
 <div id="content">
-<h2>품목관리</h2>
+<h2>원자재 관리</h2>
 <hr>
 
 <!-- form(검색) -->
@@ -145,8 +146,10 @@ $(document).ready(function() {
 
 <!-- button -->
 <div id="buttons">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자')}">
 <input type="button" value="추가" onclick="openPopup1()">
 <input type="button" value="삭제" onclick="deleteValue();">
+</c:if>
 </div>
 
 <!-- table -->

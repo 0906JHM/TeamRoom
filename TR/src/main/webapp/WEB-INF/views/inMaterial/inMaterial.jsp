@@ -82,15 +82,14 @@ final String ADMIN_DEPARTMENT = "자재팀";
 						<th>품번</th>
 						<th>품명</th>
 						<th>발주 수량</th>
+						<th>입고 수량</th>
 						<th>재고 수량</th>
 						<th>단가</th>
 						<th>총액</th>
 						<th>입고일</th>
 						<th>담당자</th>
 						<th>상태</th>
-						<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
-							<th>처리</th>
-						</c:if>
+						<th>상세정보</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -104,6 +103,12 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			</ul>
 		</div>
 	</div>
+
+	
+	
+
+	        
+	        
 	<script type="text/javascript">
 	var department = "<%= department %>";
 	var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
@@ -302,6 +307,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							+ (data[i].rawName ? data[i].rawName : '-')
 							+ "</td>");
 					row.append("<td>"
+							+ (data[i].buyCount ? data[i].buyCount : '-')
+							+ "</td>");
+					row.append("<td>"
 							+ (data[i].inCount ? data[i].inCount : '-')
 							+ "</td>");
 					row.append("<td>"
@@ -324,53 +332,58 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							+ "</td>");
 
 
-					if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {				
-						// 입고 버튼 추가 
-						var contextPath = "${pageContext.request.contextPath}";
-						var inNum = data[i].inNum;
+// 					if (!(department !== ADMIN_DEPARTMENT && department !== "관리자")) {				
+// 						// 입고 버튼 추가 
+// 						var contextPath = "${pageContext.request.contextPath}";
+// 						var inNum = data[i].inNum;
 						
-						(function(dataItem) {
-						    var button = $("<input type='button' value='입고'>");
-						    button.click(function() {
-						        // 버튼 클릭 시 처리할 동작을 여기에 추가
-						        console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
+// 						(function(dataItem) {
+// 						    var button = $("<input type='button' value='입고'>");
+// 						    button.click(function() {
+// 						        // 버튼 클릭 시 처리할 동작을 여기에 추가
+// 						        console.log("입고 버튼이 클릭되었습니다."); // 버튼 클릭 시 콘솔에 메시지 출력
 						
-						        // confirm 창을 띄워 입고 처리 여부를 확인
-						        var confirmation = confirm("입고 처리하시겠습니까?");
-//-------------------------------------------------------------------------------						
-						        // 확인 버튼이 눌렸을 경우에만 작업 수행
-						        if (confirmation) {
-						            if (dataItem.hasOwnProperty('inState')) {
-						                dataItem.inState = "입고완료";
-						                // 변경된 inState 값을 출력하여 확인
-						                console.log("변경된 inState 값: " + dataItem.inState);
+// 						        // confirm 창을 띄워 입고 처리 여부를 확인
+// 						        var confirmation = confirm("입고 처리하시겠습니까?");
+						        
+						        
+						        
+//-------------------------------------------------------------------------------	
+
+// 						        // 확인 버튼이 눌렸을 경우에만 작업 수행
+// 						        if (confirmation) {
+// 						            if (dataItem.hasOwnProperty('inState')) {
+// 						                dataItem.inState = "입고완료";
+// 						                // 변경된 inState 값을 출력하여 확인
+// 						                console.log("변경된 inState 값: " + dataItem.inState);
 						
-						                // 서버에 변경된 값을 저장하기 위한 Ajax 요청
-						                $.ajax({
-						                    type: 'POST',
-						                    url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
-						                    data: JSON.stringify(dataItem),
-						                    contentType: 'application/json',
-						                    success: function(response) {
-						                        console.log('데이터가 성공적으로 업데이트되었습니다.', response);
+// 						                // 서버에 변경된 값을 저장하기 위한 Ajax 요청
+// 						                $.ajax({
+// 						                    type: 'POST',
+// 						                    url: '${pageContext.request.contextPath}/inMaterial/inMaterialUpdate',
+// 						                    data: JSON.stringify(dataItem),
+// 						                    contentType: 'application/json',
+// 						                    success: function(response) {
+// 						                        console.log('데이터가 성공적으로 업데이트되었습니다.', response);
 						                        
 						                        
-						                     // 데이터 업데이트 후 페이지 새로고침
-						                        location.reload();
+// 						                     // 데이터 업데이트 후 페이지 새로고침
+// 						                        location.reload();
 						                     
-						                     // 버튼을 비활성화하고 색상을 회색으로 변경
-						//                         button.attr('disabled', 'disabled');
-						//                         button.css('background-color', 'grey');
+// 						                     // 버튼을 비활성화하고 색상을 회색으로 변경
+// 						//                         button.attr('disabled', 'disabled');
+// 						//                         button.css('background-color', 'grey');
 						                        
-						                    },
-						                    error: function(error) {
-						                        console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
-						                    }
-						                });
-						            } else {
-						                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
-						            }
-						        }
+// 						                    },
+// 						                    error: function(error) {
+// 						                        console.error('데이터 업데이트 중 오류가 발생했습니다.', error);
+// 						                    }
+// 						                });
+// 						            } else {
+// 						                console.error("inState 속성이 데이터 객체에 존재하지 않습니다.");
+// 						            }
+// 						        }
+						        
 //-------------------------------------------------------------------------------
 // 						        if (confirmation) {
 // 						            if (dataItem.hasOwnProperty('inState')) {
@@ -407,20 +420,38 @@ final String ADMIN_DEPARTMENT = "자재팀";
 // 						            }
 // 						        }
 //-------------------------------------------------------------------------------
-						    });
-						    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
-						    if (dataItem.inState === '입고완료') {
-						        button.prop('disabled', true);
-						        button.css('background-color', 'grey');
-						    }
+
+
+
+// 						    });
+// 						    // inState 값이 '입고완료'인 경우 버튼을 비활성화하고 색상을 회색으로 변경
+// 						    if (dataItem.inState === '입고완료') {
+// 						        button.prop('disabled', true);
+// 						        button.css('background-color', 'grey');
+// 						    }
 						
 						
-						 // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
-						 var buttonCell = $("<td>").append(button);
-						 row.append(buttonCell);
-						})(data[i]);
-					}		
+// 						 // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
+// 						 var buttonCell = $("<td>").append(button);
+// 						 row.append(buttonCell);
+// 						})(data[i]);
+// 					}		
 					
+					 // 상세정보 버튼 추가 
+			            var contextPath = "${pageContext.request.contextPath}";
+		  				var inNum = data[i].inNum;
+		               
+		  				(function(inNum) {
+		  			        var button = $("<input type='button' value='상세정보'>");
+		  			        button.click(function () {
+		  			            // 버튼 클릭 시 처리할 동작을 여기에 추가
+		  			            window.open(contextPath + "/inMaterial/inMaterialContent?inNum=" + inNum, "입고 상세정보", "width=500,height=700,toolbar=no,location=no,resizable=yes");
+		  			        });
+		
+		  			        // 버튼을 새로운 <td> 요소 내에 추가하고, 그 <td>를 행에 추가
+		  			        var buttonCell = $("<td>").append(button);
+		  			        row.append(buttonCell);
+		  			    })(data[i].inNum);
 					
 					
 					
@@ -535,7 +566,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							        '거래처명': item.clientCompany,
 							        '품번': item.rawCode,
 							        '품명': item.rawName,
-							        '발주수량': item.inCount,
+							        '발주수량':item.buyCount,
+							        '입고수량': item.inCount,
 							        '재고수량': item.stock,
 							        '단가': item.rawPrice,
 							        '총액': item.inPrice,

@@ -94,9 +94,11 @@ public class ProdDAO {
 	}// updateProdMemo
 
 	//엑셀
-	public List<ProdDTO> getExcelList(ProdDTO prodDTO) {
-		return sqlSession.selectList(namespace + ".getExcelList", prodDTO);
+
+	public List<ProdDTO> getExcelProdSearch(ProdDTO prodDTO) {
+		return sqlSession.selectList(namespace + ".getExcelProdSearch", prodDTO);
 	}
+
 	
 	
 	

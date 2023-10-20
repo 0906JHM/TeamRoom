@@ -28,6 +28,7 @@ public class LineController {
 	@Inject
 	private LineService lineService;
 	
+//	라인관리 홈
 	@GetMapping("/line")
 	public String line(HttpServletRequest request,Model model) {
 		String search = request.getParameter("search");
@@ -61,11 +62,13 @@ public class LineController {
 		return "line/line";	
 	}
 	
+//	라인등록 홈
 	@GetMapping("/line2")
 	public String line2() {	
 		return "line/line2";	
 	}
 	
+//	라인등록
 	@PostMapping("/insertPro")
 	public String insertPro(LineDTO lineDTO) {
 		lineService.insertLine(lineDTO);
@@ -83,6 +86,7 @@ public class LineController {
         return "redirect:/line/line";
     }//delete
     
+//    라인수정 홈
     @GetMapping("/update")
 	public String update(HttpServletRequest request,Model model) {
 		String lineCode = request.getParameter("lineCode");
@@ -91,6 +95,7 @@ public class LineController {
 		return "line/line3";
 	}//update
     
+//    라인수정
     @PostMapping("/updatePro")
 	public String updatePro(LineDTO lineDTO, RedirectAttributes rttr) {
 	    lineService.updateLine(lineDTO);

@@ -13,6 +13,7 @@ public class LoginDTO {
 	private String empPass;
 	private String empName;
 	private String empDepartment;
+	private String empFile;
 	
 	
 	

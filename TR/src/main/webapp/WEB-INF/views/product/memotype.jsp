@@ -9,6 +9,9 @@
 
 
 </head>
+<!-- // <로그아웃 상태에서 주소접속 시 빈화면 출력 -->
+<c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
 <%
 String memotype = request.getParameter("memotype");
 
@@ -49,6 +52,15 @@ String memotype = request.getParameter("memotype");
     
    
 </div>
+<!-- // 로그아웃 상태에서 주소접속 시 빈화면 출력>	 -->
+	</c:when>
+  <c:otherwise >
+
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        </c:choose>
+
 <!---------------------------------------------- javascript ---------------------------------------------->
 <script type="text/javascript">
 

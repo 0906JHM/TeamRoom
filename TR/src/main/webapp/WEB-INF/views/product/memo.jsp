@@ -11,7 +11,10 @@
 </head>
 
 <body>
-
+<!-- // <로그아웃 상태에서 주소접속 시 빈화면 출력 -->
+<c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
+         
 <div class="popupContainer">
     <h1>비고</h1>
     <div class="horizontal-line"></div>
@@ -27,7 +30,14 @@
     </form>
 </div>
 
+<!-- // 로그아웃 상태에서 주소접속 시 빈화면 출력>	 -->
+	</c:when>
+  <c:otherwise >
 
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        </c:choose>
 
 </body>
 </html>

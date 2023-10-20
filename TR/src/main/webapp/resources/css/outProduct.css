@@ -176,3 +176,7 @@ table tbody tr:nth-child(odd) {
 #exportButton{
 	margin-left : 1%;
 }
+
+#current-page {
+    background-color: #ff5733 !important; /* 현재 페이지의 배경색을 바꿔주세요 */
+}

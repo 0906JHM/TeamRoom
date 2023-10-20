@@ -13,7 +13,7 @@ public class LineDTO {
 	
 	private String lineCode;
 	private String lineName;
-	private int lineUse;
+	private String lineUse;
 	private String lineEmpId;
 	private String lineInsertDate;
 	private String lineProcess;

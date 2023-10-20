@@ -243,21 +243,23 @@
 		WHERE inNum LIKE CONCAT(#{code}, '%')
 	</select>
 
+<!-- 	<select id="inMaterialContent" resultType="com.itwillbs.domain.InMaterialDTO"> -->
+<!-- 		select i.inNum, i.rawCode, i.inDate, in.inEmpId, in. -->
+<!-- 	</select> -->
+
 	<insert id="insertList">
 		INSERT INTO inMaterial
-		VALUES (#{inNum}, default,
+		VALUES (#{inNum}, default, default,
 		#{inCount}, #{rawCode},#{buyNum}, default, #{clientCode},
-		#{inState}, #{inPrice})
+		#{inState}, #{inPrice}, default)
 	</insert>
 
 	<select id="inMaterialContent"
 		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode,
-		r.rawName, i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice,
-		i.inDate,
-		i.inEmpId, i.inState
+		SELECT i.inNum, i.buyNum, i.clientCode, c.clientCompany,
+		i.rawCode, r.rawName, i.inEmpId, i.inState, i.inDate,
+		i.inRedate, b.buyCount, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice, i.inMemo
 		FROM inMaterial i
 		left join rawMaterial r
 		on
@@ -268,7 +270,10 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
+		join buy b
+		on i.rawCode = r.rawCode
 		where inNum = #{inNum}
+		limit 1
 	</select>
 
 <!-- 	입고버튼 누르면 재고수량 증가 -->

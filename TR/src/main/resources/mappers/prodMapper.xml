@@ -158,6 +158,47 @@
 		order by p.prodCode desc
 <!-- 		limit #{startRow}, #{pageSize} -->
 	</select>
+	
+	<select id="getExcelProdSearch" resultType="com.itwillbs.domain.ProdDTO">
+	select p.prodCode, p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
+		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		FROM product p
+		left
+		join clients c
+		on c.clientCode = p.clientCode
+		left join warehouse w
+		on
+		p.whseCode = w.whseCode
+			
+		<where>
+			<if test="prodCode != ''">
+				p.prodCode like concat ('%', #{prodCode}, '%')
+			</if>
+
+			<if test="prodName != ''">
+				and p.prodName like concat ('%', #{prodName}, '%')
+			</if>
+
+			<if test="clientCompany != ''">
+				and c.clientCompany = #{clientCompany}
+			</if>
+		</where>
+		order by p.prodCode desc
+	</select>
+	
+	<select id="getExcelProdList" resultType="com.itwillbs.domain.ProdDTO">
+	select p.prodCode,
+		p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
+		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		from product p
+		left
+		join clients c
+		on c.clientCode = p.clientCode
+		left join warehouse w
+		on
+		p.whseCode = w.whseCode
+		order by p.prodCode desc
+	</select>
 </mapper>
 
 
