@@ -50,22 +50,23 @@
 		<input type="text" id="sellPrice" min="0"  placeholder="수주 단가" value="${formattedSellPrice}" readonly="readonly" >원<br>    
      	
      	<label class="popupLabel">수주 일자 : </label>
-        <input type="text" id="sellDate" name="sellDate" readonly><br> 
+        <input type="text" id="sellDate" name="sellDate" readonly><br>
 
         <label class="popupLabel">납기 일자 : </label>
-        <input type="text" id="sellDuedate" name="sellDuedate"  placeholder="납기 일자를 선택하세요" required><br>
+        <input type="text" id="sellDuedate" name="sellDuedate"  placeholder="선택하세요" required><br>
 
         <label class="popupLabel">담당자 : </label>
         <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
 
         <label class="popupLabel">비고 : </label><br>
-        <textarea id="sellMemo" name="sellMemo" style="width: 400px; height: 150px;"></textarea><br>
+        <textarea id="sellMemo" name="sellMemo" style="width: 300px; height: 150px;"></textarea><br>
 		
 		<br>
-        <button type="button" onclick="formCheck()" >등록</button>
-        <button type="reset">취소</button>
-        <button type="button" onclick="window.close()">닫기</button>
-    
+		<div class="btn">
+        <button type="button" onclick="formCheck()" class="add-btn">등록</button>
+        <button type="reset" class="reset-btn">취소</button>
+        <button type="button" onclick="window.close()" class="close-btn">닫기</button>
+    	</div>
 	</form>
 
 </div>

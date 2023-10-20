@@ -20,7 +20,7 @@ h2 {
 /*-------------------------------- 상단 조회바 --------------------------------------------*/
 /* 거래처코드, 거래처명 등 */
 #searchform label{
-margin-left : 30px;
+margin-left : 25px;
 font-weight: bold;
 }
 /* 거래처코드, 거래처명 등 입력할 요소 */
@@ -29,7 +29,7 @@ input[type="text"] {
 	background-color: #FFFFFF; /* 배경색 설정 */
 	border-radius: 3px;
 	margin-bottom: 20px;
-	width: 150px;
+	width: 105px;
 	height:25px;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
@@ -47,7 +47,7 @@ input[type="text"] {
 	background-color: white; 
 	width: 98%; 
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */"
-	border-radius: 5px; /*css 파일에서 안먹힘 -> jsp본문에 추가 */
+	border-radius: 3px; /*css 파일에서 안먹힘 -> jsp본문에 추가 */
 	padding-top: 20px;"
 }
 
@@ -61,12 +61,12 @@ input[type="text"] {
     background-color: #9AC5F4;
 	width: 50px;
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 3px;
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
-	margin-left : 220px;
-	margin-right: 5px;
+	/* margin-left : 220px; */
+	margin-left: 20px;
 	font-weight: bold;
 }
 /* 조회 초기화 버튼 */
@@ -75,7 +75,7 @@ input[type="text"] {
     background-color:  #4D4D4D;
 	width: 50px;
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 3px;
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
@@ -91,7 +91,7 @@ input[type="text"] {
 	display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 1%;
+     margin: 2% 1% 0;
 }
 /*-------------------------------- 추가, 삭제, 엑셀 버튼 --------------------------------------------*/
 /* 엑셀버튼 */
@@ -100,7 +100,7 @@ input[type="text"] {
     background-color: #9AC5F4;
 	width: 50px;
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 3px;
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
@@ -115,7 +115,7 @@ input[type="text"] {
     background-color: #9AC5F4;
 	width: 50px;
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 3px;
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
@@ -128,7 +128,7 @@ input[type="text"] {
     background-color:  #4D4D4D;
 	width: 50px;
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 3px;
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
@@ -151,7 +151,7 @@ input[type="text"] {
     background-color:  #4D4D4D;
 	width: 70px;
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 3px;
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
@@ -166,7 +166,7 @@ input[type="text"] {
     background-color: #9AC5F4;
 	width: 70px;
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 3px;
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
@@ -177,7 +177,7 @@ input[type="text"] {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 1% 2%;
+    margin: 1% 2% 0%;
     align-items: center;
 }
 
@@ -221,7 +221,7 @@ input[type="text"] {
 	margin-left:30px;
 	width: 1100px; 
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */
-	border-radius: 5px; /*css 파일에서 안먹힘 -> jsp본문에 추가 */
+	border-radius: 3px; /*css 파일에서 안먹힘 -> jsp본문에 추가 */
 	/* padding: 10px 10px 10px 10px; */
 	background-color: white;
 	text-align: center;
@@ -283,8 +283,11 @@ input[type="text"] {
 }
 /* 현재 선택된 페이지 번호*/
 .page_nation a.active {	
-	background-color:black;
-	color:#999999;}
+	background-color:white;
+	color:#9AC5F4;
+	border: 1px solid #D9D9D9;
+	font-weight: bold;
+	}
 .page_nation .arrow {
 	border:1px solid #ccc;
 }
@@ -295,14 +298,20 @@ input[type="text"] {
 .page_nation .prev {
 	background:#f8f8f8 url('img/page_prev.png') no-repeat center center;
 	margin-right:7px;
-	border-radius:5px;
+	border-radius:3px;
 }
 .page_nation .next {
 	background:#f8f8f8 url('img/page_next.png') no-repeat center center;
 	margin-left:7px;
-	border-radius:5px;
+	border-radius:3px;
 }
 .page_nation .nnext {
 	background:#f8f8f8 url('img/page_nnext.png') no-repeat center center;
 	margin-right:0;
 }
+/* 페이징 hover  */
+.page_nation a:hover, .page_nation a.active:hover{
+	background-color: #1D5D9B;
+	color: white;
+}
+
