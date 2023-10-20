@@ -1,3 +1,4 @@
+<%@page import="com.itwillbs.domain.InMaterialDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -29,6 +30,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 <body>
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
 
+<%
+	InMaterialDTO inMaterialDTO;
+%>
 	<h2>입고 상세정보</h2>
 	<form action="${pageContext.request.contextPath}/inMaterial/inMaterialUpdate" id="updateForm" method="POST">
 		<table>
@@ -73,11 +77,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 <!-- 				<th colspan="2">납품 예정일</th> -->
 				<th colspan="2">입고일</th>
 				<th colspan="2">재입고일</th>
+				<th colspan="2">입고 부족</th>
 			</tr>
 			<tr>
 <%-- 				<td colspan="2"><input type="text" name="sellDuedate" value="${inMaterialDTO.sellDuedate }" readonly="readonly"></td> --%>
-				<td colspan="2"><input type="text" name="inDate" value="${inMaterialDTO.inDate }" readonly="readonly"></td>
-				<td colspan="2"><input type="text" name="inRedate" value="${inMaterialDTO.inRedate }" readonly="readonly"></td>
+				<td colspan="2"><input type="text" name="inDate" value="${inMaterialDTO.inDate }" readonly></td>
+				<td colspan="2"><input type="text" name="inRedate" value="${inMaterialDTO.inRedate }" readonly></td>
+				<td colspan="2"><input type="number" name="remainder" value="${inMaterialDTO.remainder }" readonly onchange="updateRemainder()"></td>
 			</tr>
 			<tr>
 				<th colspan="2">발주 개수</th>
@@ -91,9 +97,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<c:if test="${inMaterialDTO.stockCount == null || inMaterialDTO.stockCount == 0}">
    						<input type="number" name="inCount" value="0" readonly="readonly">
 					</c:if>
-					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}">
-    					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" onchange="updateInventory()">
-					</c:if>
+<%-- 					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}"> --%>
+    					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" min=0 onchange="updateInventory()">
+<%-- 					</c:if> --%>
 
 				</td>
 				<td colspan="2">
@@ -102,7 +108,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="3">원자재 입고 단가</th>
+				<th colspan="3">원자재 단가</th>
 				<th colspan="3">입고 가격</th>
 			</tr>
 			<tr>
@@ -114,7 +120,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="3">
 				<fmt:formatNumber var="inPrice" value="${inMaterialDTO.inPrice }" pattern="###,###"></fmt:formatNumber>
 					<input type="hidden" name="inPrice" value="${inMaterialDTO.inPrice }">
-					<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly">
+					<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly" onchange="updateInventory2()">
 				</td>
 			</tr>
 			<tr>
@@ -150,6 +156,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	</script>
 	
 	<script type="text/javascript">
+	
+// 		재고개수
 		function updateInventory() {
 		    // 입고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var inCountInput = document.querySelector('input[name="inCount"]');
@@ -161,9 +169,23 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    var inCount = parseInt(inCountInput.value, 10);
 		    
 		    // 재고 입력란 업데이트
-		    stockCountInput.value = initialstockCount + initialInCount - inCount;
+		    stockCountInput.value = initialstockCount + initialInCount + inCount;
 		}
 		
+// 		총입고가격 = 입고수량 * 원자재 단가
+// 		function updateInventory2() {
+// 		    // 입고 개수와 총입고가격 입력란의 DOM 요소를 가져옵니다
+// 		    var inCountInput = document.querySelector('input[name="inCount"]');
+// 		    var inPriceInput = document.querySelector('input[name="inPriceInput"]');
+		    
+// 		    // 현재 출력해야되는 총입고가격 계산
+// 		    var initialinPrice = parseInt(document.getElementById('initialinPrice').value, 10);
+// 		    var initialInCount = parseInt(document.getElementById('initialInCount').value, 10);
+// 		    var inCount = parseInt(inCountInput.value, 10);
+		    
+// 		    // 총가격 입력란 업데이트
+// // 		    stockCountInput.value = initialstockCount + initialInCount + inCount;
+// 		}
 		
 		$(document).ready(function() {
 			// "입고" 버튼 클릭 시 Ajax 요청을 보냅니다.
@@ -184,14 +206,22 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		                        confirmButtonText: '확인',
 		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
 		                    });
-		                } else {
+						} else if(response === 'error1') {
 		                    Swal.fire({
-		                        text: '재고가 충분하지 않습니다.',
+		                        text: '입고 개수의 입력값이 잘못되었습니다.',
 		                        icon: 'warning',
 		                        confirmButtonText: '확인',
 		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
 		                    });
 		                }
+// 						else {
+// 		                    Swal.fire({
+// 		                        text: '재고가 충분하지 않습니다.',
+// 		                        icon: 'warning',
+// 		                        confirmButtonText: '확인',
+// 		                        onClose: reloadParentAndCurrentPage // 확인 버튼을 누르면 새로고침 함수 호출
+// 		                    });
+// 		                }
 					},
 					error: function(xhr, status, error) {
 						// 에러 처리
@@ -199,7 +229,16 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					}
 				});
 			});
-
+		}else {
+			console.log("이거 뭐지");
+			 Swal.fire({
+                    text: '입고 개수의 입력값이 잘못되었습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onClose: reloadParentAndCurrentPage
+                });
+		}
+	});
 			// "닫기" 버튼 클릭 시 창을 닫습니다.
 			$("#closeButton").click(function() {
 				window.close();
@@ -210,6 +249,15 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    window.opener.location.reload(); // 부모 창 새로고침
 		    window.location.reload(); // 현재 창 새로고침
 		}
+		
+
+var buyCount = parseInt(document.getElementsByName('buyCount')[0].value);
+
+    function updateRemainder() {
+        var inCount = parseInt(document.getElementById('inputNum').value, 10);
+        var updatedValue = buyCount - inCount;
+        document.getElementsByName('remainder')[0].value = updatedValue;
+    }
 	</script>
 </body>
 </html>

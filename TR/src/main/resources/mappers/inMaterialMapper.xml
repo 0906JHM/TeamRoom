@@ -7,51 +7,10 @@
 
 	<select id="getInMaterialList"
 		resultType="com.itwillbs.domain.InMaterialDTO">
-
 		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode, r.rawName, i.inCount, s.stockCount,
+		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		i.inDate, i.inEmpId, i.inState
-		FROM inMaterial
-		i left join rawMaterial
-		r
-		on i.rawCode = r.rawCode
-		left join stock s
-		on
-		i.rawCode = s.rawCode
-		left join clients c
-		on i.clientCode = c.clientCode
-		order by i.inNum desc
-		limit #{startRow}, #{pageSize}
-
-	</select>
-
-	<select id="getInMaterialListCount" resultType="int">
-		SELECT COUNT(*)
-		FROM (
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode, r.rawName, i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice,
-		i.inDate,i.inEmpId, i.inState
-		FROM inMaterial i
-		left join rawMaterial r
-		on i.rawCode = r.rawCode
-		left join stock s
-		on
-		i.rawCode = s.rawCode
-		left join clients c
-		on i.clientCode = c.clientCode
-		) AS subquery
-	</select>
-
-	<select id="getInMaterialListSearch"
-		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode,
-		r.rawName, i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice,
-		i.inDate,
-		i.inEmpId, i.inState
+		i.inDate, i.inRedate, i.inEmpId, i.inState
 		FROM inMaterial i
 		left join rawMaterial r
 		on
@@ -62,6 +21,49 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
+		JOIN buy b ON i.buyNum = b.buyNum
+		order by i.inNum desc
+		limit #{startRow}, #{pageSize}
+	</select>
+
+	<select id="getInMaterialListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM (
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate, i.inRedate, i.inEmpId, i.inState
+		FROM inMaterial i
+		left join rawMaterial r
+		on
+		i.rawCode = r.rawCode
+		left join stock s
+		on
+		i.rawCode = s.rawCode
+		left
+		join clients c
+		on i.clientCode = c.clientCode
+		JOIN buy b ON i.buyNum = b.buyNum
+		) AS subquery
+	</select>
+
+	<select id="getInMaterialListSearch"
+		resultType="com.itwillbs.domain.InMaterialDTO">
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate, i.inRedate, i.inEmpId, i.inState
+		FROM inMaterial i
+		left join rawMaterial r
+		on
+		i.rawCode = r.rawCode
+		left join stock s
+		on
+		i.rawCode = s.rawCode
+		left
+		join clients c
+		on i.clientCode = c.clientCode
+		JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inState == '검색'">
 				<if test="inNum != ''">
@@ -105,23 +107,21 @@
 	<select id="getInMaterialListSearchCount" resultType="int">
 		SELECT count(*)
 		FROM (
-		SELECT i.inNum, i.buyNum, r.whseCode,
-		c.clientCompany,
-		i.rawCode,
-		r.rawName,
-		i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice, i.inDate,
-		i.inEmpId,
-		i.inState
-		FROM inMaterial i left join rawMaterial r
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate, i.inRedate, i.inEmpId, i.inState
+		FROM inMaterial i
+		left join rawMaterial r
 		on
-		i.rawCode =
-		r.rawCode
+		i.rawCode = r.rawCode
 		left join stock s
-		on i.rawCode = s.rawCode
+		on
+		i.rawCode = s.rawCode
 		left
 		join clients c
 		on i.clientCode = c.clientCode
+		JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inState == '검색'">
 				<if test="inNum != ''">
@@ -162,11 +162,9 @@
 	<select id="getInMaterialListAllSearch"
 		resultType="com.itwillbs.domain.InMaterialDTO">
 		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
-		i.rawCode,
-		r.rawName, i.inCount, s.stockCount,
+		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
-		i.inDate,
-		i.inEmpId, i.inState
+		i.inDate, i.inRedate, i.inEmpId, i.inState
 		FROM inMaterial i
 		left join rawMaterial r
 		on
@@ -177,6 +175,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
+		JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inNum != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
@@ -200,23 +199,21 @@
 	<select id="getInMaterialListAllSearchCount" resultType="int">
 		SELECT count(*)
 		FROM (
-		SELECT i.inNum, i.buyNum, r.whseCode,
-		c.clientCompany,
-		i.rawCode,
-		r.rawName,
-		i.inCount, s.stockCount,
-		r.rawPrice, i.inPrice, i.inDate,
-		i.inEmpId,
-		i.inState
-		FROM inMaterial i left join rawMaterial r
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
+		r.rawPrice, i.inPrice,
+		i.inDate, i.inRedate, i.inEmpId, i.inState
+		FROM inMaterial i
+		left join rawMaterial r
 		on
-		i.rawCode =
-		r.rawCode
+		i.rawCode = r.rawCode
 		left join stock s
-		on i.rawCode = s.rawCode
+		on
+		i.rawCode = s.rawCode
 		left
 		join clients c
 		on i.clientCode = c.clientCode
+		JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inNum != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
@@ -251,11 +248,12 @@
 		#{inState}, #{inPrice}, default)
 	</insert>
 
+<!-- i.remainder 넣으니까 안돼서 일단 보류 -->
 	<select id="inMaterialContent"
 		resultType="com.itwillbs.domain.InMaterialDTO">
 		SELECT i.inNum, i.buyNum, i.clientCode, c.clientCompany,
 		i.rawCode, r.rawName, i.inEmpId, i.inState, i.inDate,
-		i.inRedate, b.buyCount, i.inCount, s.stockCount,
+		i.inRedate,  i.inCount, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice, i.inMemo
 		FROM inMaterial i
 		left join rawMaterial r
@@ -271,7 +269,6 @@
 		where inNum = #{inNum}
 	</select>
 
-<!-- 	입고버튼 누르면 재고수량 증가 -->
 	<update id="updateWhseCount">
 		update stock
 		SET stockCount = stockCount + #{inCount}
@@ -279,19 +276,33 @@
 	</update>
 
 
-<!-- 	<update id="updateInState"> -->
-<!-- 		update inMaterial -->
-<!-- 		SET inState = "입고완료" -->
-<!-- 		WHERE inNum = -->
-<!-- 		#{inNum} -->
-<!-- 	</update> -->
+	<update id="updateInState">
+		update inMaterial
+		SET inState = #{inState}
+		WHERE inNum =
+		#{inNum}
+	</update>
 	
-<!-- 	<update id="updateInDate"> -->
-<!-- 		update inMaterial -->
-<!-- 		SET inDate = #{inDate} -->
-<!-- 		WHERE inNum = -->
-<!-- 		#{inNum} -->
-<!-- 	</update> -->
+	<update id="updateInDate">
+		update inMaterial
+		SET inDate = #{inDate}
+		WHERE inNum =
+		#{inNum}
+	</update>
+	
+	<update id="updateOutRedate">
+		update inMaterial
+		SET inRedate = #{inRedate}
+		WHERE inNum =
+		#{inNum}
+	</update>
+	
+	<update id="updateInMaterialContent">
+		update inMaterial
+		set inCount = #{inCount}, inMemo = #{inMemo},
+		where inNum = #{inNum}
+	</update>
+	
 <!-- 	 	입고담당자 업데이트  --> 
 <!-- 	<update id="updateInEmpId"> -->
 <!-- 		update inMaterial -->
@@ -306,6 +317,9 @@
 		WHERE inNum = #{inNum}
 	</update>
 	
+	
+	
+<!-- 엑셀	 -->
 	<select id="getExcelList"
 		resultType="com.itwillbs.domain.InMaterialDTO">
 
@@ -414,6 +428,9 @@
 		</where>
 		ORDER BY i.inNum DESC
 	</select>
+<!-- 엑셀 -->
+	
+	
 	
 	<update id="updateList">
 		update inMaterial

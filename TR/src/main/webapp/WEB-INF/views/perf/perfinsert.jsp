@@ -113,53 +113,40 @@ border-radius:  5px;
 <div class="perfdetail">
 <h1 class="perfinserthaed"> 생산실적 추가</h1>
 <hr>
-<div class="perfcd">
-<div class="perfcd1">
-라인코드: <input type="text" id="lineCode2" name="lineCode2"  class="cdbox">
-</div>
 
-<div class="perfcd1">
-제품코드: <input type="text" id="prodCode2" name="prodCode2"  placeholder="제품코드" class="cdbox" onclick="">
-</div>
 
-<!-- <div class="perfcd1">
- 지시일자: <input type="text" id="workdate1" name="workdate1" class="cdbox" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="workdate2	" class="cdbox" placeholder="날짜 선택" readonly>
-</div> -->
-
-</div> <!--  perfcd -->
-<hr> <!--  경계선 -->
 
 <form action="${pageContext.request.contextPath}/perf/perfinsertPro" id="perfinsert" method="POST">
  	<table>	 
  	<tbody>
 				<tr>
 				    <th> 실적코드</th>
-				    <td><input type="text" id="perfCode" name="perfCode"></td>
+				    <td><input type="text" id="perfCode" name="perfCode" readonly></td>
 				    </tr>
 				    
 				    <tr>
 					<th>작업지시코드</th><!-- worklist에서 받아옴 -->
-					<td> <input type="text" id="workCode" name="workCode"></td>
+					<td> <input type="text" id="workCode2" name="workCode" readonly></td>
 					</tr>
 					
 					<tr>
 					<th>라인코드</th><!-- worklist에서 받아옴 -->
-					<td ><input type="text" id="lineCode" name="lineCode"></td> <!--  작업지시코드 -->
+					<td ><input type="text" id="lineCode" name="lineCode" readonly></td> <!--  작업지시코드 -->
 					</tr>
 					
 					<tr>
 					<th> 제품코드 </th>
-					<td ><input type="text" id="prodCode" name="prodCode"></td> <!--  제품코드 -->
+					<td ><input type="text" id="prodCode" name="prodCode" readonly></td> <!--  제품코드 -->
 					</tr>
 					
 					<tr> 
 					<th> 실적일 </th>
-					<td ><input type="text" id="perfDate" name="perfDate"></td> <!-- 실적일자(자동생성) -->			
+					<td ><input type="text" id="perfDate" name="perfDate" readonly></td> <!-- 실적일자(자동생성) -->			
 					</tr>
 					<tr>
 					
 					<th> 담당자 </th> <!--  세션으로 넘겨받음 -->
-				<td ><input type="text" id="perfEmpId" name="perfEmpId"></td> <!--  담당자아이디(세션으로처리) -->
+				<td ><input type="text" id="perfEmpId" name="perfEmpId" readonly ></td> <!--  담당자아이디(세션으로처리) -->
 				</tr>
 				</tbdoy>
 				</table>
@@ -265,12 +252,13 @@ border-radius:  5px;
             });
             
             // workCode input box 클릭 이벤트 처리
-            $('#workCode').click(function() {	
+            $('#workCode2').click(function() {	
             	console.log("워크코드  클릭");
                 openWorkOrderPopup(); // 제품 팝업 열기
             });
             
-        });
+    
+    });
         
         
        
@@ -295,11 +283,11 @@ border-radius:  5px;
         }
         
         function openWorkOrderPopup() {
-            var popupUrl = '${pageContext.request.contextPath}/perf/worklist';
+            var popupUrl = '${pageContext.request.contextPath}/search/openworklist?input=workCode2';
             window.open(
                 popupUrl,
                 '_blank',
-                'width=800px, height=800px, left=900px, top=100px'
+                'width=1100px, height=800px, left=900px, top=100px'
             );
         }
         
@@ -314,10 +302,10 @@ border-radius:  5px;
         
         
         function selectWorkCode(workCode) {
-            window.opener.setWorkCodeAndClosePopup(workCode);
+            window.opener.setWorkCodeAndClosePopup(workCode2);
         }
         
-        function receiveSelectedLineData(data) {
+      /*  /*  function receiveSelectedLineData(data) {
             var parsedData = JSON.parse(data); // JSON 문자열 파싱
             document.getElementById('workCode').value = parsedData.workCode; //지시코드
             document.getElementById('lineCode').value = parsedData.lineCode; //지시코드
@@ -326,7 +314,7 @@ border-radius:  5px;
           
 
              
-        } // 라인코드 , 라인코드  값 받아오기 제어 끝**********************************
+        } */ // 라인코드 , 라인코드  값 받아오기 제어 끝********************************** */
         
         // 실적코드 자동생성 제어 ******************************
         $(document).ready(function() {
@@ -415,24 +403,24 @@ border-radius:  5px;
         
         
         
-        // 불량사유 제어**************************************************
-        // 불량사유 선택 상자
+     // 불량사유 선택 상자
         var defectReasonSelect = document.getElementById("perfDefectreason");
-        
+
         // 기타 불량사유 입력란
         var defectMemoInput = document.getElementById("perfDefectmemo");
 
         // 불량사유가 변경될 때 호출되는 함수
         function handleDefectReasonChange() {
-        	
             // 선택된 불량사유 값 가져오기
             var selectedValue = defectReasonSelect.value;
 
-            // 만약 불량사유가 "파손" 또는 "누락"인 경우 기타 불량사유 입력란 활성화, 그렇지 않으면 비활성화
-            if (selectedValue === "파손" || selectedValue === "누락" || selectedValue === "무결함" ) {
-                defectMemoInput.disabled = true; // 활성화
+            // 불량사유가 "무결함"인 경우 기타 불량사유 입력란 비활성화 및 배경색 회색으로 설정
+            if (selectedValue === "무결함") {
+                defectMemoInput.disabled = true; // 입력란 비활성화
+                defectMemoInput.style.backgroundColor = "#dddddd"; // 배경색 회색으로 설정
             } else {
-                defectMemoInput.disabled = false; // 비활성화
+                defectMemoInput.disabled = false; // 입력란 활성화
+                defectMemoInput.style.backgroundColor = "white"; // 배경색을 기본 색상으로 설정
             }
         }
 
@@ -488,6 +476,27 @@ document.getElementById("closebtn").addEventListener("click", function() {
         if (perfDefectInput.value === "") {
             perfDefectInput.value = "0"; // 또는 perfDefectInput.value = 0; (문자열이 아닌 정수로 설정)
         }
+    }
+    
+ // 각 입력 필드의 DOM 요소를 가져옵니다.
+    var perfAmountInput = document.getElementById("perfAmount");
+    var perfFairInput = document.getElementById("perfFair");
+    var perfDefectInput = document.getElementById("perfDefect");
+
+    // 각 입력 필드에 대한 input 이벤트 리스너를 추가합니다.
+    perfAmountInput.addEventListener("input", calculateDefect);
+    perfFairInput.addEventListener("input", calculateDefect);
+
+    function calculateDefect() {
+        // 지시수량과 양품수 값을 가져옵니다.
+        var perfAmount = parseInt(perfAmountInput.value) || 0;
+        var perfFair = parseInt(perfFairInput.value) || 0;
+        
+        // 불량수를 계산합니다.
+        var perfDefect = perfAmount - perfFair;
+        
+        // 계산된 불량수를 불량수 입력 필드에 자동으로 채웁니다.
+        perfDefectInput.value = perfDefect;
     }
         
     </script>

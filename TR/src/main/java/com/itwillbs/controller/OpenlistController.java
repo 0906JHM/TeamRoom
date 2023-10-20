@@ -35,6 +35,7 @@ import com.itwillbs.domain.RequirementList;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.WarehouseDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 import com.mysql.cj.Session;
 
 @Controller
@@ -451,6 +452,62 @@ public class OpenlistController {
 				  return "openlist/linelist";
 				  
 				  }
+				  
+				  /////////////////////////////////
+				  
+				// 수주목록 // http://localhost:8088/search/sell
+				  
+				  @RequestMapping(value = "/openworklist", method = RequestMethod.GET)
+				  public String workGET(Model model, WorkOrderDTO dto, RequirementPageDTO pdto,
+				  
+				  @RequestParam(value = "nowPage", required = false) String nowPage,
+				  
+				  @RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+				  
+				  @RequestParam(value = "input", required = false) String input) throws Exception {
+				  
+				  logger.debug("workGET() 호출");
+				  List<WorkOrderDTO> work = new ArrayList<WorkOrderDTO>();
+				  model.addAttribute("work", work);
+				  logger.debug("DTO : " + dto);
+				  
+				  // 라인 수주 제품 코드
+				  if (dto.getLineCode() != null  || dto.getProdName() != null ) {
+				  
+				  logger.debug("if문 호출");
+				  int total = service.countwork(dto);
+				  System.out.println(total + "total개수");
+				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
+				  List<WorkOrderDTO> worklist = service.getworklist(dto, pdto);
+				  model.addAttribute("worklist", worklist);
+				  model.addAttribute("paging", pdto);
+				  model.addAttribute("DTO", dto);
+				  logger.debug("pdto : " + pdto);
+				  logger.debug("DTO : " + dto);
+				  
+				  logger.debug("검색 리스트 가져감");
+				  
+				  // input 추가
+				  if (input != null && !input.equals("")) {
+				  model.addAttribute("input", input);
+				  logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@"); }
+				  }
+				  else {
+					  logger.debug("else문 호출");
+				  int total = service.countwork();
+				  pdto = new RequirementPageDTO(total);
+				  logger.debug("pdto : " + pdto);
+				  List<WorkOrderDTO> worklist = service.getworklist(pdto);
+				  model.addAttribute("worklist", worklist);
+				  model.addAttribute("paging", pdto);
+				  logger.debug(" 모든 리스트 가져감"); }
+				  return "openlist/openworklist";
+				  
+				  }
+				  
+				  
+				  
+				  
 				
 				  
 

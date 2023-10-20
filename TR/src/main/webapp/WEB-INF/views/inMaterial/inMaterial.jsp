@@ -79,13 +79,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 						<th>발주 번호</th>
 						<th>입고 창고</th>
 						<th>거래처명</th>
-						<th>품번</th>
-						<th>품명</th>
+						<th>원자재 코드</th>
+						<th>원자재명</th>
 						<th>발주 수량</th>
 						<th>입고 수량</th>
 						<th>재고 수량</th>
-						<th>단가</th>
-						<th>총액</th>
+						<th>원자재 단가</th>
+						<th>입고 가격</th>
 						<th>입고일</th>
 						<th>담당자</th>
 						<th>상태</th>
@@ -564,16 +564,18 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							        '발주번호': item.buyNum,
 							        '입고창고': item.whseCode,
 							        '거래처명': item.clientCompany,
-							        '품번': item.rawCode,
-							        '품명': item.rawName,
+							        '원자재코드': item.rawCode,
+							        '원자재명': item.rawName,
 							        '발주수량':item.buyCount,
 							        '입고수량': item.inCount,
 							        '재고수량': item.stock,
-							        '단가': item.rawPrice,
-							        '총액': item.inPrice,
+							        '원자재단가': item.rawPrice,
+							        '입고가격': item.inPrice,
 							        '입고일': item.inDate,
+							        '재입고일' : item.inRedate,
 							        '담당자': item.inEmpId,
-							        '상태': item.inState,
+							        '입고상태': item.inState,
+							        '비고': item.inMemo
 							    };
 							});
 				            // 새 워크북을 생성

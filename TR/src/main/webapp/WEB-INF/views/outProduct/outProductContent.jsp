@@ -65,6 +65,14 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<th>출고 상태</th>
 					<td><input type="text" name="sellState" value="${outProductDTO.sellState }" readonly="readonly"></td>
 				</tr>
+				<tr>
+					<fmt:formatNumber var="outPrice" value="${outProductDTO.outPrice }" pattern="###,###"></fmt:formatNumber>
+					<th>총 출고가</th>
+					<td>
+						<input type="hidden" name="outPrice" value="${outProductDTO.outPrice }">
+						<input type="text" name="outPriceFormat" value="${outPrice }원" readonly="readonly">
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<br>
@@ -85,7 +93,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			</tr>
 			<tr> 
 				<td colspan="3"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
-				<td colspan="3"><input type="number" value="${outProductDTO.sellCount - outProductDTO.outCount}" readonly="readonly"></td>
+				<td colspan="3"><input type="number" name="remainder" id="remainder" value="${outProductDTO.sellCount - outProductDTO.outCount}" readonly="readonly"></td>
+				
 				
 			</tr>
 			<tr>
@@ -109,7 +118,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			</tr>
 			<tr>
 				<th colspan="3">제품 단가</th>
-				<th colspan="3">출고 가격</th>
+				<th colspan="3">현재 출고가</th>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -118,9 +127,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<input type="text" name="prodPriceFormat" value="${prodPrice }원" readonly="readonly">
 				</td>
 				<td colspan="3">
-				<fmt:formatNumber var="outPrice" value="${outProductDTO.outPrice }" pattern="###,###"></fmt:formatNumber>
-					<input type="hidden" name="outPrice" value="${outProductDTO.outPrice }">
-					<input type="text" name="outPriceFormat" value="${outPrice }원" readonly="readonly">
+					<input type="text" name="currentOutPrice" value="" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -148,14 +155,21 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    window.opener.location.href = "<%= request.getContextPath() %>/main/calendar";
 // 		    window.close();
 		}
+		 
 	</script>
 	
 	<script type="text/javascript">
-		
+	
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var outCountInput = document.querySelector('input[name="outCount"]');
 		    var stockCountInput = document.querySelector('input[name="stockCount"]');
+		    var remainder = document.querySelector('input[name="remainder"]');
+		    var sellCount = document.querySelector('input[name="sellCount"]');
+		    // 납품 단가
+		    var prodPrice = ${outProductDTO.prodPrice };
+		    // 현재 출고가
+		    var currentOutPrice = document.querySelector('input[name="currentOutPrice"]');
 		    
 		    // 현재 출력해야되는 재고값 계산
 		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10);
@@ -164,24 +178,52 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    
 		    // 재고 입력란 업데이트
 		    stockCountInput.value = initialstockCount + initialOutCount - outCount;
+		    currentOutPrice.value = formatCurrency(outCount * prodPrice) + '원';
+		    remainder.value = sellCount.value - outCount;
+		}
+		
+		
+		//숫자를 ###,### 원 형식으로 포맷하는 함수
+		function formatCurrency(number) {
+		    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		}
 		
 		
 		$(document).ready(function() {
+			
+			updateInventory();
+			
 			 // JavaScript로 max 속성을 설정
 		    var outCountInput = document.getElementById('inputNum');
 		    var stockCount = ${outProductDTO.stockCount}; // stockCount 값을 JSP 표현식으로 가져옴
 		    var sellCount = ${outProductDTO.sellCount}; // sellCount 값을 JSP 표현식으로 가져옴
 			var outCount = ${outProductDTO.outCount};
 			
-		    if (sellCount > stockCount) {
-		        // sellCount가 stockCount보다 큰 경우 max 값을 outCount + stockCount로 설정
-		        outCountInput.setAttribute('max', outCount + stockCount);
-		    } else {
-		        // 그 외의 경우 max 값을 sellCount로 설정
-		        outCountInput.setAttribute('max', sellCount);
-		    }
+			// maxCount 값을 설정할 때 Math.min 함수를 사용하여 더 작은 값을 선택
+		    var maxCount = Math.min(sellCount, outCount + stockCount);
+		    outCountInput.setAttribute('max', maxCount);
 		
+		    
+		    document.getElementById("inputNum").addEventListener("keyup", function(event) {
+				if (event.key === "Enter") {
+			        event.preventDefault();
+
+			        // 입력된 출고 개수 가져오기
+			        var inputCount = parseInt(outCountInput.value);
+
+
+			        // 만약 입력된 값이 max 값보다 크면 max 값으로 설정
+			        if (inputCount > maxCount) {
+			        	outCountInput.value = maxCount;
+			        }
+
+			        // 여기에서 원하는 동작을 수행하세요.
+			        updateInventory();
+			    }
+			});
+		    
+		  
+		    
 			
 			// "출고" 버튼 클릭 시 Ajax 요청을 보냅니다.
 			$("#updateButton").click(function() {
@@ -245,7 +287,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		function reloadParentAndCurrentPage() {
 		    window.opener.location.reload(); // 부모 창 새로고침
 		    window.location.reload(); // 현재 창 새로고침
+		    window.close();
 		}
+		
 	</script>
 </body>
 </html>
