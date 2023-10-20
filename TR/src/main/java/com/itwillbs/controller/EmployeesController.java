@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ public class EmployeesController {
 	@Inject
 	private EmployeesService employeesService;
 	
-	@Resource(name = "uploadPath")
+	@Autowired
 	private String uploadPath;
 
 	@GetMapping("/employees")
