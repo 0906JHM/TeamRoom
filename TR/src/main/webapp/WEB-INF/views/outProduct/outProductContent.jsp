@@ -65,6 +65,14 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<th>출고 상태</th>
 					<td><input type="text" name="sellState" value="${outProductDTO.sellState }" readonly="readonly"></td>
 				</tr>
+				<tr>
+					<fmt:formatNumber var="outPrice" value="${outProductDTO.outPrice }" pattern="###,###"></fmt:formatNumber>
+					<th>총 출고가</th>
+					<td>
+						<input type="hidden" name="outPrice" value="${outProductDTO.outPrice }">
+						<input type="text" name="outPriceFormat" value="${outPrice }원" readonly="readonly">
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<br>
@@ -110,7 +118,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			</tr>
 			<tr>
 				<th colspan="3">제품 단가</th>
-				<th colspan="3">출고 가격</th>
+				<th colspan="3">현재 출고가</th>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -119,9 +127,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<input type="text" name="prodPriceFormat" value="${prodPrice }원" readonly="readonly">
 				</td>
 				<td colspan="3">
-				<fmt:formatNumber var="outPrice" value="${outProductDTO.outPrice }" pattern="###,###"></fmt:formatNumber>
-					<input type="hidden" name="outPrice" value="${outProductDTO.outPrice }">
-					<input type="text" name="outPriceFormat" value="${outPrice }원" readonly="readonly">
+					<input type="text" name="currentOutPrice" value="" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -160,6 +166,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    var stockCountInput = document.querySelector('input[name="stockCount"]');
 		    var remainder = document.querySelector('input[name="remainder"]');
 		    var sellCount = document.querySelector('input[name="sellCount"]');
+		    // 납품 단가
+		    var prodPrice = ${outProductDTO.prodPrice };
+		    // 현재 출고가
+		    var currentOutPrice = document.querySelector('input[name="currentOutPrice"]');
 		    
 		    // 현재 출력해야되는 재고값 계산
 		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10);
@@ -168,10 +178,21 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    
 		    // 재고 입력란 업데이트
 		    stockCountInput.value = initialstockCount + initialOutCount - outCount;
-		    
+		    currentOutPrice.value = formatCurrency(outCount * prodPrice) + '원';
 		    remainder.value = sellCount.value - outCount;
 		}
+		
+		
+		//숫자를 ###,### 원 형식으로 포맷하는 함수
+		function formatCurrency(number) {
+		    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+		
+		
 		$(document).ready(function() {
+			
+			updateInventory();
+			
 			 // JavaScript로 max 속성을 설정
 		    var outCountInput = document.getElementById('inputNum');
 		    var stockCount = ${outProductDTO.stockCount}; // stockCount 값을 JSP 표현식으로 가져옴
