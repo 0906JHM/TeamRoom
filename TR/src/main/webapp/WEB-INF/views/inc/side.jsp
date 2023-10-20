@@ -164,13 +164,13 @@
 	            if(scrollLimit <= 0){ // 음수면 움직임을 막기 위해서 0 초기화
 	            	scrollLimit = 0;
 	            }
+				console.log("bodyHeight : "+bodyHeight);
+				console.log("sidebar : "+sidebody.height());
+				console.log("scrollLimit : "+scrollLimit);
 	            
 	            $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
 			}, 10); 
             
-			console.log("bodyHeight : "+bodyHeight);
-			console.log("sidebar : "+sidebody.height());
-			console.log("scrollLimit : "+scrollLimit);
             $(window).on('scroll', function () {
                 var scrollTop = $(this).scrollTop();
                 var newTop = scrollTop; // 상단에 고정

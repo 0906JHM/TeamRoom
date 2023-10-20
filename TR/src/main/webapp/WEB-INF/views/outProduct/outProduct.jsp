@@ -38,15 +38,15 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	<!-- 사이드바 -->
 	<div id="con">
 		<h2>출고 현황</h2>
-		<hr>
+<!-- 		<hr> -->
 		<div id="searchForm">
-				<label>출고 번호</label><input type="text" name="outCode" id="outCode" placeholder="출고 번호를 입력하세요">
-				<label>제품명</label><input type="text" name="prodName" id="prodName9999" placeholder="제품명을 입력하세요" onclick="searchItem('prod','prodCode9999')">
-				<label>거래처명</label><input type="text" name="clientCompany" id="sellclientCompany9999" placeholder="거래처명을 입력하세요" onclick="searchItem('sellclient','sellclientCode9999')">
-				<input type="button" value="검색" id="searchButton">
+				<label>출고 번호 </label><input type="text" name="outCode" id="outCode">
+				<label>제품명 </label><input type="text" name="prodName" id="prodName9999" placeholder="제품명" onclick="searchItem('prod','prodCode9999')" readonly="readonly">
+				<label>거래처명 </label><input type="text" name="clientCompany" id="sellclientCompany9999" placeholder="거래처명" onclick="searchItem('sellclient','sellclientCode9999')" readonly="readonly">
+				<input type="button" value="조회" id="searchButton">
 				<input type="button" value="초기화" id="resetButton">
 		</div>
-		<hr>
+<!-- 		<hr> -->
 		<div id="buttons">
 			<input type="button" class="buttons highlighted" value="전체" id="allButton">
     		<input type="button" class="buttons " value="미출고" id="non_deliveryButton">
@@ -54,26 +54,27 @@ final String ADMIN_DEPARTMENT = "자재팀";
     		<input type="button" class="buttons " value="출고완료" id="deliveryButton">
     		
 		</div>
-		<h3 style="padding-left:1%"><small id="listCount">총 3건</small></h3>
+<!-- 		<h3 style="padding-left:2%"><small id="listCount">총 3건</small></h3> -->
+		<label style="padding-left:2%" id="listCount">총 3건</label>
 		<div id="outProductList">
 			<table>
 				<thead>
 					<tr>
-						<th>출고 코드</th>
-						<th>수주 코드</th>
-						<th>거래처 코드</th>
+						<td>출고 코드</td>
+						<td>수주 코드</td>
+						<td>거래처 코드</td>
 <!-- 						<th>거래처명</th> -->
-						<th>제품 코드</th>
+						<td>제품 코드</td>
 <!-- 						<th>제품명</th> -->
-						<th>주문 수량</th>
-						<th>출고 수량</th>
-						<th>재고 수량</th>
-						<th>납품가</th>
-						<th>납품 예정일</th>
-						<th>출고 날짜</th>
-						<th>담당자</th>
-						<th>출고 여부</th>
-						<th>상세정보</th>
+						<td>주문 수량</td>
+						<td>출고 수량</td>
+						<td>재고 수량</td>
+						<td>납품가</td>
+						<td>납품 예정일</td>
+						<td>출고 날짜</td>
+						<td>담당자</td>
+						<td>출고 여부</td>
+						<td>상세정보</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -82,7 +83,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			</table>
 		</div>
 		<div id="paging">
-			<input type="button" value="엑셀⬇️" id="exportButton">
+			<input type="button" value="엑셀" id="exportButton">
    			<ul id="paging_ul">
     		</ul>
 		</div>
