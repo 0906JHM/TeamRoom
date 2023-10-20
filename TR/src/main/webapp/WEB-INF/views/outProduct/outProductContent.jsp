@@ -149,11 +149,11 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    window.opener.location.href = "<%= request.getContextPath() %>/main/calendar";
 // 		    window.close();
 		}
+		 
 	</script>
 	
 	<script type="text/javascript">
-		
-		
+	
 		function updateInventory() {
 		    // 출고 개수와 재고 개수 입력란의 DOM 요소를 가져옵니다
 		    var outCountInput = document.querySelector('input[name="outCount"]');
@@ -171,8 +171,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    
 		    remainder.value = sellCount.value - outCount;
 		}
-		
-		
 		$(document).ready(function() {
 			 // JavaScript로 max 속성을 설정
 		    var outCountInput = document.getElementById('inputNum');
@@ -180,13 +178,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    var sellCount = ${outProductDTO.sellCount}; // sellCount 값을 JSP 표현식으로 가져옴
 			var outCount = ${outProductDTO.outCount};
 			
-		    if (sellCount > stockCount) {
-		        // sellCount가 stockCount보다 큰 경우 max 값을 outCount + stockCount로 설정
-		        outCountInput.setAttribute('max', outCount + stockCount);
-		    } else {
-		        // 그 외의 경우 max 값을 sellCount로 설정
-		        outCountInput.setAttribute('max', sellCount);
-		    }
+			// maxCount 값을 설정할 때 Math.min 함수를 사용하여 더 작은 값을 선택
+		    var maxCount = Math.min(sellCount, outCount + stockCount);
+		    outCountInput.setAttribute('max', maxCount);
 		
 		    
 		    document.getElementById("inputNum").addEventListener("keyup", function(event) {
@@ -196,8 +190,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			        // 입력된 출고 개수 가져오기
 			        var inputCount = parseInt(outCountInput.value);
 
-			        // 현재 outCount의 max 값 가져오기
-			        var maxCount = parseInt(outCountInput.max);
 
 			        // 만약 입력된 값이 max 값보다 크면 max 값으로 설정
 			        if (inputCount > maxCount) {
@@ -209,7 +201,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			    }
 			});
 		    
-		    
+		  
 		    
 			
 			// "출고" 버튼 클릭 시 Ajax 요청을 보냅니다.
@@ -276,6 +268,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		    window.location.reload(); // 현재 창 새로고침
 		    window.close();
 		}
+		
 	</script>
 </body>
 </html>
