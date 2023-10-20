@@ -62,9 +62,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 						<th>출고 코드</th>
 						<th>수주 코드</th>
 						<th>거래처 코드</th>
-						<th>거래처명</th>
+<!-- 						<th>거래처명</th> -->
 						<th>제품 코드</th>
-						<th>제품명</th>
+<!-- 						<th>제품명</th> -->
 						<th>주문 수량</th>
 						<th>출고 수량</th>
 						<th>재고 수량</th>
