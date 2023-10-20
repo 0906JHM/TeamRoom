@@ -41,6 +41,8 @@ table tr {
 	font: 500 20px/20px "Inter", sans-serif;
 }
 
+
+
 #td1 {
 	background-color: rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	font: 500 16px/16px "Inter", sans-serif;
@@ -62,6 +64,73 @@ table tr {
 
 #buttons {
   text-align: center;
+}
+
+input[type="text"] {
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 120px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+/* 	margin-bottom: 10px; */
+}
+
+/* update 테이블 */
+#tdup {
+	font: 500 16px/16px "Inter", sans-serif;
+	width: 150px;
+}
+
+textarea{
+	width: 200px;
+	resize: none;
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	font: 500 15px/15px "Inter", sans-serif;
+}
+
+#tdup input[type="text"] {
+  	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 200px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+/* 	margin-bottom: 10px; */
+}
+
+#tdup input[name="whseCode"] {
+  	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 144px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+/* 	margin-bottom: 10px; */
+}
+#tdup input[type="button"]{
+background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	width:50px;
+	height:35px;
+	border-radius:5px;
+	color: #FFFFFF;
+	border: 0;
+	text-align: center;
+	font: 500 15px/15px "Inter", sans-serif;
+	margin-top: 0px;
+}
+
+input[type="button"], input[type="submit"], button{
+background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	width:100px;
+	height:40px;
+	border-radius:5px;
+	color: #FFFFFF;
+	border: 0;
+	text-align: center;
+	font: 500 20px/20px "Inter", sans-serif;
+	margin-top: 20px;
 }
 
 /* 여기서부터 수정해야함 */
@@ -97,80 +166,11 @@ table tr {
 	text-align: center;
 }
 
-input[type="text"] {
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
 
-input[type="number"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
 
-input[type="password"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
 
-input[type="email"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
 
-input[type="date"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
 
-textarea{
-	width: 100%;
-	resize: none;
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	font: 500 15px/15px "Inter", sans-serif;
-}
-
-input[type="button"], input[type="submit"], button{
-background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-	width:100px;
-	height:40px;
-	border-radius:5px;
-	color: #FFFFFF;
-	border: 0;
-	text-align: center;
-	font: 500 20px/20px "Inter", sans-serif;
-	margin-top: 20px;
-}
 
 input[type="button"]:hover, input[type="submit"]:hover {
     cursor: pointer; 
