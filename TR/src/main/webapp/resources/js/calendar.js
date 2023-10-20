@@ -61,9 +61,9 @@ function initializeCalendar(calendarEvents, currentDate) {
 		    var description = info.event.extendedProps.description;
 		    
 		    if (otherDate !== null) {
-		        var message ='<div style="text-align:left; padding-left:10%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br>' + title + ' 내용: ' + description + '</div>';
+		        var message ='<div style="text-align:left; padding-left:10%;">' + title + '<br> 기간: ' + start + ' ~ ' + otherDate + '<br> 내용: ' + description + '</div>';
 		    } else {
-		        var message ='<div style="text-align:left; padding-left:10%;">' + title + '<br> 기간: ' + start + ' ~ ' + start + '<br>' + title + ' 내용: ' + description + '</div>';
+		        var message ='<div style="text-align:left; padding-left:10%;">' + title + '<br> 기간: ' + start + ' ~ ' + start + '<br> 내용: ' + description + '</div>';
 		    }
 		
 		    Swal.fire({
