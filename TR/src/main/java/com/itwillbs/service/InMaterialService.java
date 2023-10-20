@@ -84,7 +84,10 @@ public class InMaterialService {
 		return String.format("%s%04d", code_id, ++num);
 	}
 
+//	public List<InMaterialDTO> inMaterialContent(InMaterialDTO inMaterialDTO) {
+//	public List<InMaterialDTO> inMaterialContent(String inNum) {
 	public InMaterialDTO inMaterialContent(String inNum) {
+//		return inMaterialDAO.inMaterialContent(inMaterialDTO);
 		return inMaterialDAO.inMaterialContent(inNum);
 	}
 
