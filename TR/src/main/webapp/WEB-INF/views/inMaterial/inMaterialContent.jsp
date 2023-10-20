@@ -96,26 +96,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			<tr>
 				<th colspan="3">총발주 개수</th>
 				<th colspan="3">남은 발주 개수</th>
-<!-- 				<th colspan="2">입고 개수</th> -->
-<!-- 				<th colspan="2">재고 개수</th> -->
 			</tr>
 			<tr> 
 				<td colspan="3"><input type="number" name="buyCount" value="${inMaterialDTO.buyCount }" readonly="readonly"></td>
 				<td colspan="3"><input type="number" name="remainder" id="remainder" value="${inMaterialDTO.buyCount - inMaterialDTO.inCount}" readonly="readonly"></td>
-<!-- 				<td colspan="2"> -->
-<%-- 					<input type="hidden" id="initialInCount" value="${inMaterialDTO.inCount}"> --%>
-<%-- 					<c:if test="${inMaterialDTO.stockCount == null || inMaterialDTO.stockCount == 0}"> --%>
-<!--    						<input type="number" name="inCount" value="0" readonly="readonly"> -->
-<%-- 					</c:if> --%>
-<%-- 					<c:if test="${inMaterialDTO.stockCount != null && inMaterialDTO.stockCount > 0}"> --%>
-<%--     					<input type="number" name="inCount" value="${inMaterialDTO.inCount }" step="1" id="inputNum" autofocus="autofocus" max="${inMaterialDTO.buyCount }" min=0 onchange="updateInventory()"> --%>
-<%-- 					</c:if> --%>
-
-<!-- 				</td> -->
-<!-- 				<td colspan="2"> -->
-<%-- 					<input type="hidden" id="initialstockCount" value="${inMaterialDTO.stockCount}"> --%>
-<%-- 					<input type="number" name="stockCount" value="${inMaterialDTO.stockCount }" min="0" readonly="readonly"> --%>
-<!-- 				</td> -->
 			</tr>
 			<tr>
 				<th colspan="3">입고 개수</th>
@@ -244,6 +228,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			// maxCount 값을 설정할 때 Math.min 함수를 사용하여 더 작은 값을 선택
 // 		    var maxCount = Math.min(buyCount, inCount + stockCount);
 			//입고수량은 발주수량 초과하면 안되니깐?
+// 			var maxCount = buyCount;
 			var maxCount = buyCount;
 		    inCountInput.setAttribute('max', maxCount);
 			
@@ -328,16 +313,11 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		function reloadParentAndCurrentPage() {
 		    window.opener.location.reload(); // 부모 창 새로고침
 		    window.location.reload(); // 현재 창 새로고침
+		    window.close();
 		}
 		
 
-// var buyCount = parseInt(document.getElementsByName('buyCount')[0].value);
 
-//     function updateRemainder() {
-//         var inCount = parseInt(document.getElementById('inputNum').value, 10);
-//         var updatedValue = buyCount - inCount;
-//         document.getElementsByName('remainder')[0].value = updatedValue;
-//     }
 	</script>
 </body>
 </html>

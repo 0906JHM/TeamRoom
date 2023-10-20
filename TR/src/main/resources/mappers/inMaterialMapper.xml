@@ -299,7 +299,7 @@
 	
 	<update id="updateInMaterialContent">
 		update inMaterial
-		set inCount = #{inCount}, inMemo = #{inMemo}
+		set inCount = #{inCount}, inMemo = #{inMemo}, inEmpId=#{inEmpId}
 		where inNum = #{inNum}
 	</update>
 	
