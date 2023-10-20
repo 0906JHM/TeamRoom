@@ -183,7 +183,7 @@ $(document).ready(function() {
         window.open(
             '${pageContext.request.contextPath}/perf/perfinsert',
             '_blank',
-            'width=600px, height=800px, left=500px, top=100px'
+            'width=600px, height=800px, left=200px, top=100px'
         );
     });
 
@@ -207,6 +207,12 @@ $(document).ready(function() {
        });
 
        // prodCode2 input box 클릭 이벤트 처리
+       $('#prodCode2').click(function() {
+       	console.log("제품코드 클릭");
+           openProductPopup(); // 제품 팝업 열기
+       });
+       
+    // prodCode2 input box 클릭 이벤트 처리
        $('#prodCode2').click(function() {
        	console.log("제품코드 클릭");
            openProductPopup(); // 제품 팝업 열기

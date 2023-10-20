@@ -23,6 +23,7 @@ import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.WarehouseDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 
 
 @Service
@@ -213,6 +214,35 @@ public class OpenlistService {
 					
 					return pdao.readlinelist(pdto);
 					
+				}
+				
+				//////////////////////////////////// 작업지시 받아오기
+				
+				// 검색 총갯수 
+				public int countwork(WorkOrderDTO dto) {
+				
+					return pdao.countwork(dto);
+				}
+
+				
+				// 검색 리스트
+				
+				public List<WorkOrderDTO> getworklist(WorkOrderDTO dto, RequirementPageDTO pdto) {
+					
+					return pdao.getwroklist(dto,pdto);
+				}
+
+				
+				// 작업지시 총개수 
+				public int countwork() {
+				
+					return pdao.countwork();
+				}
+				
+				//총 작업리스트
+				public List<WorkOrderDTO> getworklist(RequirementPageDTO pdto) {
+				
+					return pdao.getworklist(pdto);
 				}
 
 				
