@@ -8,11 +8,14 @@
 <head>
 <meta charset="UTF-8"> 
 <title>Insert title here</title>
+<link href="${pageContext.request.contextPath}/resources/css/Rawmaterials.css" rel="stylesheet" type="text/css">
 </head>
 
 <!-- body -->
 <body>
-<h1>창고</h1>
+<div id="content">
+<h2>창고</h2>
+<hr>
 
 <input id="cInput" type="hidden">
 
@@ -28,6 +31,7 @@ function setParentText(){
 </script>
 
 <!-- form(검색) -->
+<div id="searchForm">
 <form action="${pageContext.request.contextPath}/Rawmaterials/selectwarehouse" method="get">
 창고코드	<input type="text" name="search1" placeholder="창고코드">
 창고이름	<input type="text" name="search2" placeholder="창고이름">
@@ -35,9 +39,12 @@ function setParentText(){
 원자재코드	<input type="text" name="search4" placeholder="창고주소">
 <input type="submit" value="검색">
 </form>
+</div>
+<hr>
 
 <!-- table -->
-<table border="1">
+<table id="rawmaterialsList">
+<thead>
 <tr>
 <td>창고코드</td>
 <td>창고이름</td>
@@ -50,7 +57,9 @@ function setParentText(){
 <td>창고연락처</td>
 <td>창고관리사원</td>
 </tr>
+</thead>
 
+<tbody>
 <c:forEach var="warehouseDTO" items="${warehouseList}">
 <tr onclick="document.getElementById('cInput').value='${warehouseDTO.whseCode}'; setParentText();">
 <td>${warehouseDTO.whseCode}</td>
@@ -65,7 +74,9 @@ function setParentText(){
 <td>${warehouseDTO.whseEmpId}</td>
 </tr>
 </c:forEach>
+</tbody>
 </table>
+</div>
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
