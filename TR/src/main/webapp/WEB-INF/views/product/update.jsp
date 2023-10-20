@@ -17,7 +17,8 @@
 
 </head>
 <body>
-
+<c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
 	<div class="container">
 		<h2>품목 수정</h2>
 
@@ -77,7 +78,13 @@
 		</form>
 	</div>
 
+	</c:when>
+  <c:otherwise >
 
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        </c:choose>
 	<script type="text/javascript">
 		//--------------------------------------------------------------------------
 		//팝업 옵션

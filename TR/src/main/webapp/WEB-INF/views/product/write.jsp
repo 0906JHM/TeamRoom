@@ -16,7 +16,9 @@
 
 </head>
 <body>
-
+<!-- // <로그아웃 상태에서 주소접속 시 빈화면 출력 -->
+<c:choose>
+         <c:when test="${!(empty sessionScope.empDepartment)}">
 <div class="container"> 
     <h2>제품 추가</h2>
     
@@ -73,6 +75,15 @@
     </div>
     </form>
 </div>
+
+<!-- // 로그아웃 상태에서 주소접속 시 빈화면 출력>	 -->
+	</c:when>
+  <c:otherwise >
+
+		  <input type="text" hidden=""> 
+	 
+        </c:otherwise>
+        </c:choose>
 
 <script type="text/javascript">
 
