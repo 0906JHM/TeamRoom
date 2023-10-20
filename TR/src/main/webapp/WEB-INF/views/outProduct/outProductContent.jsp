@@ -80,13 +80,20 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="2"><input type="text" name="outRedate" value="${outProductDTO.outRedate }" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th colspan="2">수주 개수</th>
-				<th colspan="2">출고 개수</th>
-				<th colspan="2">재고 개수</th>
+				<th colspan="3">총수주 개수</th>
+				<th colspan="3">남은 수주 개수</th>
 			</tr>
 			<tr> 
-				<td colspan="2"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
-				<td colspan="2">
+				<td colspan="3"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
+				<td colspan="3"><input type="number" value="${outProductDTO.sellCount - outProductDTO.outCount}" readonly="readonly"></td>
+				
+			</tr>
+			<tr>
+				<th colspan="3">출고 개수</th>
+				<th colspan="3">재고 개수</th>
+			</tr>
+			<tr>
+				<td colspan="3">
 					<input type="hidden" id="initialOutCount" value="${outProductDTO.outCount}">
 					<c:if test="${outProductDTO.stockCount == null || outProductDTO.stockCount == 0}">
    						<input type="number" name="outCount" value="${outProductDTO.outCount}" id="inputNum" readonly="readonly">
@@ -95,7 +102,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
     						<input type="number" name="outCount" value="${outProductDTO.outCount }" id="inputNum" autofocus="autofocus" min="${outProductDTO.outCount }" onchange="updateInventory()">
 					</c:if>
 				</td>
-				<td colspan="2">
+				<td colspan="3">
 					<input type="hidden" id="initialstockCount" value="${outProductDTO.stockCount}">
 					<input type="number" name="stockCount" value="${outProductDTO.stockCount }" min="0" readonly="readonly">
 				</td>
@@ -224,6 +231,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	                        text: '출고 개수의 입력값이 잘못되었습니다.',
 	                        icon: 'warning',
 	                        confirmButtonText: '확인',
+	                        onClose: reloadParentAndCurrentPage
 	                    });
 				}
 			});
