@@ -19,7 +19,7 @@
 <body>
 
 	<div class="container">
-		<h2>품목 추가</h2>
+		<h2>품목 수정</h2>
 
 		<form action="${pageContext.request.contextPath}/product/updatePro"
 			method="post">
