@@ -9,6 +9,24 @@
 <meta charset="UTF-8"> 
 <title>Insert title here</title>
 <link href="${pageContext.request.contextPath }/resources/css/Rawmaterialspop.css" rel="stylesheet" type="text/css">
+
+<!-- javascript --> 
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript">
+
+// update 페이지 팝업창
+function openPopup1(rawCode) {
+	var popupWidth = 450;
+	var popupHeight = 665;
+	var popupX = (window.screen.width / 2) - (popupWidth / 2);
+	var popupY = (window.screen.height / 2) - (popupHeight / 2);
+	var url = '${pageContext.request.contextPath}/Rawmaterials/update?rawCode=' + rawCode;  
+	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=" + popupWidth + ",height=" + popupHeight + ",left=" + popupX + ",top=" + popupY);
+	myWindow.focus();
+	myWindow.resizeTo(popupWidth, popupHeight); // 팝업창 크기조정
+	myWindow.moveTo(popupX, popupY); // 팝업창 위치조정
+}
+</script>
 </head>
 
 <!-- body -->
@@ -30,7 +48,7 @@
 <!-- button -->
 <div id="buttons">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자')}">
-<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/update?rawCode=${rawmaterialsDTO.rawCode}'">
+<input type="button" value="수정" onclick="openPopup1('${rawmaterialsDTO.rawCode}');">
 </c:if>
 <input type="button" value="목록" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/home'">
 </div>

@@ -1,7 +1,16 @@
 @charset "UTF-8";
 
+/* 공통 -------------------------------------------------------- */
 body {
 	background-color: #F5F6FA;
+}
+
+h2 {
+	display: block; 
+	font-size: 25px;
+	font-weight: bold;
+    text-align: center; 
+	margin: 0 0 20px;
 }
 
 /* 내용묶기 */
@@ -11,16 +20,7 @@ body {
     padding: 20px;
 }
 
-/* 상세보기 */
-h2 {
-	display: block; 
-	font-size: 25px;
-	font-weight: bold;
-    text-align: center; 
-	margin: 0 0 20px;
-}
-
-/* table */
+/* 테이블(공통) -------------------------------------------------------- */
 table {
 	border: 1px solid rgba(221, 221, 221, 0.78);
 	margin: 0 auto;
@@ -30,11 +30,7 @@ table {
 	text-align: center;
 }
 
-table td {
-	font: 500 16px/16px "Inter", sans-serif;
-	font-weight: bold;
-}
-
+/* <tr><td> 제목 </td><td> 내용 </td></tr> */
 table tr {
 	width: 1570px;
 	height: 40px;
@@ -47,6 +43,8 @@ table tr {
 	font-weight: bold;
 	width: 150px;
 }
+
+/* 테이블(detail) -------------------------------------------------------- */
 #td21, #td22 {
 	font: 500 16px/16px "Inter", sans-serif;
 	width: 150px;
@@ -59,105 +57,70 @@ table tr {
 	background-color: #f2f2f2;
 }
 
+/* 테이블(update) -------------------------------------------------------- */
+#tdup {
+	font: 500 16px/16px "Inter", sans-serif;
+	width: 150px;
+}
 
+/* 사용하지 않는 코드 (수정해서 아래꺼 적용함) */
+input[type="text"] {
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 120px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+	/* 	margin-bottom: 10px; */
+}
+
+#tdup input[type="text"] {
+  	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 200px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+	/* 	margin-bottom: 10px; */
+}
+
+#tdup input[name="whseCode"] {
+  	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 144px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+	/* 	margin-bottom: 10px; */
+}
+
+textarea{
+	width: 200px;
+	resize: none;
+	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	font: 500 15px/15px "Inter", sans-serif;
+}
+
+/* 버튼 -------------------------------------------------------- */
 #buttons {
   text-align: center;
-}
-
-/* 여기서부터 수정해야함 */
-
-.form-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.form-group p {
-    flex: 1;
-    margin-right: 5px;
-}
-
-.form-group input[type="text"] {
-    flex: 2;
-}
-.form-group input[type="number"] {
-    flex: 2;
-}
-.form-group input[type="password"] {
-    flex: 2;
-}
-.form-group input[type="email"] {
-    flex: 2;
-}
-.form-group input[type="date"], .form-group select {
-    flex: 2;
 }
 
 #button{
 	text-align: center;
 }
 
-input[type="text"] {
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
+#tdup input[type="button"]{
+background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	width:50px;
+	height:35px;
+	border-radius:5px;
+	color: #FFFFFF;
+	border: 0;
 	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
-
-input[type="number"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
 	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
-
-input[type="password"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
-
-input[type="email"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
-
-input[type="date"]{
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 80%;
-	height: 33px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	margin-bottom: 10px;
-/* 	background-color: inherit; */
-}
-
-textarea{
-	width: 100%;
-	resize: none;
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	font: 500 15px/15px "Inter", sans-serif;
+	margin-top: 0px;
 }
 
 input[type="button"], input[type="submit"], button{
@@ -172,13 +135,11 @@ background-color:rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1
 	margin-top: 20px;
 }
 
+/* 수정필요 -------------------------------------------------------- */
 input[type="button"]:hover, input[type="submit"]:hover {
-    cursor: pointer; 
+    cursor: pointer;
 }
 
-
-
-/* 비고 글자 */
 .memo{
 	text-align: center;
 	margin-bottom: 10px;
@@ -193,4 +154,3 @@ input[type="button"]:hover, input[type="submit"]:hover {
 	text-align: center;
 	margin-bottom: 10px;
 }
-
