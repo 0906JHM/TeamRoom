@@ -678,6 +678,5 @@ function openSellDetail(sellCode) {
 </script>
 
 
- </script>
 </body>
 </html>
