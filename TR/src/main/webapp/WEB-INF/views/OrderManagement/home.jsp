@@ -98,8 +98,11 @@ function openPopup2(url) {
 
 // selectclient 페이지 팝업창
 function openPopup3() {
-    var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
-    // 팝업 창닫기 버튼 클릭시 창닫기
+	var popupX = (window.screen.width/2) - (1700/2);
+	var popupY = (window.screen.height/2) - (500/2);
+	const myWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=1700,height=500,left=" + popupX + ",top=" + popupY);
+	myWindow.focus();
+	// 팝업 창닫기 버튼 클릭시 창닫기
     popupWindow.onbeforeunload = function() {
         popupWindow.close();
     };
