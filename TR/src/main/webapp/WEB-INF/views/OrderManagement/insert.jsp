@@ -46,19 +46,24 @@
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 
+
+
 // 원자재목록 페이지 팝업창
-let openWin;
 function openPopup1() {
-	// window.name = "부모창 이름";
-	window.name = "insert";
-	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-	openWin = window.open("selectrawmaterials.html", "selectrawmaterials", "height=600,width=1300");    
+    var popupX = (window.screen.width / 2) - (1300 / 2);
+    var popupY = (window.screen.height / 2) - (670 / 2);
+    var url = 'selectrawmaterials';
+    var popupFeatures = "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=1300,height=670,left=" + popupX + ",top=" + popupY;
+    const newWindow = window.open(url, '_blank', popupFeatures); 
 }
 
-// 거래처목록 페이지 팝업창
+//거래처목록 페이지 팝업창
 function openPopup2() {
-	window.name = "insert";
-	openWin = window.open("../Rawmaterials/selectclient.html", "selectclient", "height=600,width=1300");    
+    var popupX = (window.screen.width / 2) - (1700 / 2);
+    var popupY = (window.screen.height / 2) - (500 / 2);
+    var url = '../Rawmaterials/selectclient';
+    var popupFeatures = "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=1700,height=500,left=" + popupX + ",top=" + popupY;
+    const newWindow = window.open(url, '_blank', popupFeatures); 
 }
 
 // form 제출전 rawPrice 값을 float로 변환
