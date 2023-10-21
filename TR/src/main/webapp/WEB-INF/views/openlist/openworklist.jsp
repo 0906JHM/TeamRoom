@@ -45,19 +45,19 @@
         		var workCode =$(this).find('#workCode').text();
         		var lineCode=$(this).find('#lineCode').text();
        			var prodCode = $(this).find('#prodCode').text();
-       			var workAmount=$(this).find('#workAmount').text();
+       			/* var workAmount=$(this).find('#workAmount').text(); */
        			
      			var number = isPop.match(/\d+/);
      			if(number !=null){
-     			$('#workCode2'+number, opener.document).val(workCode);
+     			$('#workCode'+number, opener.document).val(workCode);
      			$('#lineCode'+number, opener.document).val(lineCode);
      			$('#prodCode'+number, opener.document).val(prodCode);
-     			$('#workAmount'+number, opener.document).val(workAmount);
+     			/* $('#workAmount'+number, opener.document).val(workAmount); */
      			} else {
-     			$('#workCode2'+number, opener.document).val(workCode);
-         		$('#lineCode'+number, opener.document).val(lineCode);
-         		$('#prodCode'+number, opener.document).val(prodCode);
-         		$('#workAmount'+number, opener.document).val(workAmount);
+     			$('#workCode9999'+number, opener.document).val(workCode);
+         		$('#lineCode9999'+number, opener.document).val(lineCode);
+         		$('#prodCode9999'+number, opener.document).val(prodCode);
+         		/* $('#workAmount'+number, opener.document).val(workAmount); */
      			}
          		window.close();
          	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
@@ -89,7 +89,7 @@
 <body>
 <div class="right_col">
 
-	<h1 style="margin-left: 1%;">제품 목록</h1>
+	<h1 style="margin-left: 1%;">작업지시 목록</h1>
 	
 	
 	<form method="get">
@@ -128,7 +128,7 @@
 			<thead>
 				<tr class="headings">
 					<th>번호</th>
-					<th>생산실적코드</th>
+					<th>작업지시코드</th>
 					<th>라인코드</th>
 					<th>제품코드</th>
 					<th>지시수량</th>

@@ -16,7 +16,6 @@ h2 {
 /* 내용묶기 */
 .content {
     max-width: 600px;
-    border: 1px solid rgba(221, 221, 221, 0.78); /* 테두리 설정 */
     padding: 20px;
 }
 
@@ -79,7 +78,7 @@ input[type="text"] {
 	/* 	margin-bottom: 10px; */
 }
 
-#tdup input[type="text"], #tdup input[type="number"], #tdup select {
+#tdup input[type="text"], #tdup input[type="number"], #tdup input[type="date"], #tdup select {
   	border: 1px solid #adb5bb;
 	border-radius: 5px;
 	width: 200px;

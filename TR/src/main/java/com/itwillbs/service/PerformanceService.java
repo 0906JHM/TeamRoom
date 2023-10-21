@@ -53,10 +53,10 @@ public class PerformanceService {
 		return perfDAO.getworklist();
 	}
 
-	public boolean perfinsert(PerformanceDTO perfDTO) {
+	public void perfinsert(PerformanceDTO perfDTO) {
 		
 		
-		return perfDAO.perfinsert(perfDTO);
+		perfDAO.perfinsert(perfDTO);
 		
 	}
 

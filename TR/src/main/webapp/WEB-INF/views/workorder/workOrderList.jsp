@@ -812,14 +812,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </c:choose>
 						
 						<td id="workAmount">${w.workAmount }</td>
-						<td id="workProcess">${w.workProcess }</td>
+						<td id="workProcess">${w.workProcess }<input type="text" name="workInfo" value="${w.workInfo }"></td>						
 						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
 							<td>
 								<c:if test="${w.workProcess != '마감'}">
-									<a name="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}">공정마감</a>
+									<a name="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}&workInfo=${w.workInfo}&prodCode=${w.prodCode}">공정마감</a>
 								</c:if>
 							</td>
-						<%-- </c:if> --%>
+						<%-- </c:if> --%>						
 					</tr>
 				</c:forEach>
 			</table>

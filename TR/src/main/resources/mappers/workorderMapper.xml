@@ -14,6 +14,11 @@
 		<result property="stockCount" column="stockCount"/>
 	</resultMap>
 	
+	 <insert id="perfinsert">
+    INSERT INTO performance(perfCode,workCode,prodCode,perfDate)                                                        
+    VALUES(#{perfCode},#{workCode},#{prodCode},#{perfDate})
+</insert>
+	
 	<!-- 작업지시 목록 -->
 	<select id="allWorkOrder" resultType="WorkOrderDTO">
 		SELECT *
@@ -65,7 +70,7 @@
 	<select id="selectLine" resultType="String">
 		SELECT lineCode 
 		FROM line 
-		WHERE lineUse=2 
+		WHERE lineUse='미사용' 
 		AND lineProcess='1차공정' 
 		ORDER BY lineCode 
 		LIMIT 1 
@@ -73,8 +78,8 @@
 	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
-		INSERT INTO workOrder (workCode,prodCode,sellCode,workDate,lineCode,workAmount,workEmpId,workProcess)
-		VALUES (#{workCode},#{prodCode},#{sellCode},now(),#{lineCode},#{workAmount},#{workEmpId},'1차공정') 
+		INSERT INTO workOrder (workCode,prodCode,sellCode,workDate,lineCode,workAmount,workEmpId,workProcess,workInfo)
+		VALUES (#{workCode},#{prodCode},#{sellCode},now(),#{lineCode},#{workAmount},#{workEmpId},'1차공정',#{workInfo}) 
 	</insert>
 	
 	
@@ -83,12 +88,16 @@
 	<!-- 생산 들어간 라인 사용여부 변경 -->
 	<update id="updateLine">
 		UPDATE line 
-		SET lineUse=1 
+		SET lineUse='사용' 
 		WHERE lineCode=#{lineCode}
 	</update>
 	<!-- 생산 들어간 라인 사용여부 변경 -->
 	
-	
+	<update id="updateInfo">
+		UPDATE workOrder 
+		SET workInfo=#{workInfo}
+		WHERE lineCode=#{lineCode}
+	</update>
 	
 	<!-- 작업지시 삭제 -->
 	<delete id="deleteWorkOrder">
@@ -98,7 +107,7 @@
 	<update id="lineUseDY">
     UPDATE line l
     INNER JOIN workOrder w ON l.lineCode = w.lineCode
-    SET l.lineUse = 2
+    SET l.lineUse = '미사용'
     WHERE w.workCode = #{workCode}
 </update>
 	
@@ -169,7 +178,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<sql id="selectLine2">
 		(SELECT lineCode 
 		FROM line 
-		WHERE lineUse=2 
+		WHERE lineUse='미사용' 
 		AND lineProcess='2차공정' 
 		ORDER BY lineCode
 		LIMIT 1) 
@@ -177,7 +186,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<sql id="selectLine3">
 		(SELECT lineCode 
 		FROM line 
-		WHERE lineUse=2 
+		WHERE lineUse='미사용' 
 		AND lineProcess='3차공정' 
 		ORDER BY lineCode
 		LIMIT 1) 
@@ -204,7 +213,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<select id="selectLine2" resultType="String">
 		SELECT lineCode 
 		FROM line 
-		WHERE lineUse=2 
+		WHERE lineUse='미사용' 
 		AND lineProcess='2차공정' 
 		ORDER BY lineCode
 		LIMIT 1 
@@ -212,7 +221,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<select id="selectLine3" resultType="String">
 		SELECT lineCode 
 		FROM line 
-		WHERE lineUse=2 
+		WHERE lineUse='미사용' 
 		AND lineProcess='3차공정' 
 		ORDER BY lineCode 
 		LIMIT 1 
@@ -221,7 +230,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<!-- 라인 사용여부 다시 사용가능으로 -->
 	<update id="lineUseY">
 		UPDATE line 
-		SET lineUse=2 
+		SET lineUse='미사용' 
 		WHERE lineCode=#{lineCode}
 	</update>
 	<!-- 라인 사용여부 다시 사용가능으로 -->

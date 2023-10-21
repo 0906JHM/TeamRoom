@@ -126,17 +126,17 @@ border-radius:  5px;
 				    
 				    <tr>
 					<th>작업지시코드</th><!-- worklist에서 받아옴 -->
-					<td> <input type="text" id="workCode2" name="workCode" readonly></td>
+					<td> <input type="text" id="workCode9999" name="workCode" readonly></td>
 					</tr>
 					
 					<tr>
 					<th>라인코드</th><!-- worklist에서 받아옴 -->
-					<td ><input type="text" id="lineCode" name="lineCode" readonly></td> <!--  작업지시코드 -->
+					<td ><input type="text" id="lineCode9999" name="lineCode" readonly></td> <!--  작업지시코드 -->
 					</tr>
 					
 					<tr>
 					<th> 제품코드 </th>
-					<td ><input type="text" id="prodCode" name="prodCode" readonly></td> <!--  제품코드 -->
+					<td ><input type="text" id="prodCode9999" name="prodCode" readonly></td> <!--  제품코드 -->
 					</tr>
 					
 					<tr> 
@@ -240,19 +240,19 @@ border-radius:  5px;
         
         $(document).ready(function() {
         	 // lineCode2 input box 클릭 이벤트 처리
-            $('#lineCode2').click(function() {
+         /*    $('#lineCode9999').click(function() {
             	console.log("라인코드 클릭");
                 openLinePopup(); // 라인 팝업 열기
             });
 
             // prodCode2 input box 클릭 이벤트 처리
-            $('#prodCode2').click(function() {
+            $('#prodCode9999').click(function() {
             	console.log("제품코드 클릭");
                 openProductPopup(); // 제품 팝업 열기
-            });
+            }); */
             
             // workCode input box 클릭 이벤트 처리
-            $('#workCode2').click(function() {	
+            $('#workCode9999').click(function() {	
             	console.log("워크코드  클릭");
                 openWorkOrderPopup(); // 제품 팝업 열기
             });
@@ -263,8 +263,8 @@ border-radius:  5px;
         
        
 
-        function openLinePopup() {
-            var popupUrl = '${pageContext.request.contextPath}/search/line?input=lineCode2';
+      /*   function openLinePopup() {
+            var popupUrl = '${pageContext.request.contextPath}/search/line?input=lineCode9999';
             window.open(
                 popupUrl,
                 '_blank',
@@ -274,37 +274,37 @@ border-radius:  5px;
 
         function openProductPopup() {
         	
-            var popupUrl = '${pageContext.request.contextPath}/search/product?input=prodCode2';
+            var popupUrl = '${pageContext.request.contextPath}/search/product?input=prodCode9999';
             window.open(
                 popupUrl,
                 '_blank',
                 'width=800px, height=800px, left=900px, top=100px'
             );
-        }
+        } */
         
         function openWorkOrderPopup() {
-            var popupUrl = '${pageContext.request.contextPath}/search/openworklist?input=workCode2';
+            var popupUrl = '${pageContext.request.contextPath}/search/openworklist?input=workCode9999';
             window.open(
                 popupUrl,
                 '_blank',
                 'width=1100px, height=800px, left=900px, top=100px'
             );
         }
-        
+       /*  
         function selectLineCode(lineCode) {
-            window.opener.setLineCodeAndClosePopup(lineCode2);
+            window.opener.setLineCodeAndClosePopup(lineCode9999);
         }
 
         function selectProdCode(prodCode) {
-            window.opener.setProdCodeAndClosePopup(prodCode2);
+            window.opener.setProdCodeAndClosePopup(prodCode9999);
         }
         
         
         
         function selectWorkCode(workCode) {
-            window.opener.setWorkCodeAndClosePopup(workCode2);
+            window.opener.setWorkCodeAndClosePopup(workCode9999);
         }
-        
+         */
       /*  /*  function receiveSelectedLineData(data) {
             var parsedData = JSON.parse(data); // JSON 문자열 파싱
             document.getElementById('workCode').value = parsedData.workCode; //지시코드

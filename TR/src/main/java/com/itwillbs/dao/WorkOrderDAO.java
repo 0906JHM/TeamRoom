@@ -11,11 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.StockDTO;
 import com.itwillbs.domain.WorkOrderDTO;
+import com.itwillbs.service.PerformanceService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @Repository
@@ -108,7 +112,16 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 					} //원자재 재고 차감 
 					
 				} //for(stockList)
-				
+
+				// 현재 날짜와 시간을 문자열로 변환
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String currentTime = dateFormat.format(new Date());
+				System.out.println(dto.getLineCode());
+
+				// 작업 정보와 현재 시간을 연결하여 최종 문자열을 만듭니다.
+				String workInfo = dto.getLineCode() + currentTime;
+				System.out.println(workInfo);
+				dto.setWorkInfo(workInfo);
 				//작업지시 등록
 				int result = sqlSession.insert(NAMESPACE + ".insertWorkOrder", dto);
 				logger.debug("##### DAO: insert 결과 ====> " + result);
@@ -141,6 +154,10 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 		
 		String lineCode = sqlSession.selectOne(NAMESPACE + ".selectLine");
 		logger.debug("##### DAO: lineCode ===> " + lineCode);
+		
+		// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+		
+
 		
 		return lineCode;
 	} //getLineCode()
@@ -302,6 +319,21 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 				
 				sqlSession.update(NAMESPACE + ".lineUseY", dto.getLineCode());
 				sqlSession.update(NAMESPACE + ".updateLine", lineCode);
+				System.out.println(lineCode);
+				// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+				String workInfo1 = dto.getWorkInfo();
+				System.out.println(dto.getWorkInfo());
+
+				// 현재 날짜와 시간을 문자열로 변환
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String currentTime = dateFormat.format(new Date());
+
+				// 작업 정보와 현재 시간을 연결하여 최종 문자열을 만듭니다.
+				String workInfo = workInfo1 + lineCode + currentTime;
+				System.out.println(workInfo);
+				dto.setWorkInfo(workInfo);
+				dto.setLineCode(lineCode);
+				sqlSession.update(NAMESPACE + ".updateInfo", dto);
 				
 			}
 		} else if(workProcess.equals("2차공정")) {
@@ -311,13 +343,54 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 				sqlSession.update(NAMESPACE + ".updateStatus", dto);
 				sqlSession.update(NAMESPACE + ".lineUseY", dto.getLineCode());
 				sqlSession.update(NAMESPACE + ".updateLine", lineCode);
+				// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+				System.out.println(lineCode);
+				System.out.println(dto.getWorkInfo());
+				String workInfo1 = dto.getWorkInfo();
+
+				// 현재 날짜와 시간을 문자열로 변환
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String currentTime = dateFormat.format(new Date());
+
+				// 작업 정보와 현재 시간을 연결하여 최종 문자열을 만듭니다.
+				String workInfo = workInfo1 + lineCode + currentTime;
+				System.out.println(workInfo);
+				dto.setWorkInfo(workInfo);
+				dto.setLineCode(lineCode);
+				sqlSession.update(NAMESPACE + ".updateInfo", dto);
 				
 			}
 		}
 		else {
 			sqlSession.update(NAMESPACE + ".updateStatus", dto);
 			sqlSession.update(NAMESPACE + ".lineUseY", dto.getLineCode());
-			lineCode = "없음";
+			// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+			System.out.println(lineCode);
+			System.out.println(dto.getWorkInfo());
+			String workInfo = dto.getWorkInfo();
+
+			// 현재 날짜와 시간을 문자열로 변환
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+			String currentTime = dateFormat.format(new Date());
+			
+			
+			SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
+			String currentTime1 = dateFormat1.format(new Date());
+			
+			PerformanceDTO perfDTO = new PerformanceDTO();
+			String perfCode = "PF"+currentTime1;
+			
+			perfDTO.setPerfCode(perfCode);
+			perfDTO.setPerfDate(currentTime);
+			perfDTO.setProdCode(dto.getProdCode());
+			perfDTO.setWorkCode(dto.getWorkCode());
+			System.out.println(perfDTO);
+			
+			 
+			sqlSession.insert(NAMESPACE+".perfinsert",perfDTO);
+
+			
+			lineCode = "마감";
 			
 			
 		}

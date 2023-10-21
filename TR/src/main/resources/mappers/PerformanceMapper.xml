@@ -6,13 +6,10 @@
  <mapper namespace="com.itwillbs.mappers.PerformanceMapper">
  
  
-  <insert id="perfinsert">
- INSERT INTO performance(perfCode,workCode,prodCode,lineCode,perfDate,perfEmpId,perfAmount,
-                                     perfFair, perfDefect,perfDefectreason,perfDefectmemo,perfMemo,perfStatus)
-                                                                                             
- VALUES(#{perfCode},#{workCode},#{prodCode},#{lineCode},#{perfDate},#{perfEmpId},#{perfAmount},
-                                     #{perfFair}, COALESCE(#{perfDefect}, 0),#{perfDefectreason},#{perfDefectmemo},#{perfMemo},#{perfStatus})
- </insert>
+ <insert id="perfinsert">
+    INSERT INTO performance(perfCode)                                                        
+    VALUES('${perfCode}')
+</insert>
  
  
  
