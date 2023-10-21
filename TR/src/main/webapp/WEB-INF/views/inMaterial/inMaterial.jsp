@@ -61,9 +61,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			
 			
 		</div>
-		<h3 style="padding-left: 1%;">
-			목록 <small id="listCount">총 3건</small>
-		</h3>
+			<label style="padding-left:2%" id="listCount">총 3건</label>
 		<div id="inMaterialList">
 			<table id="inMaterialTable">
 				<thead>
@@ -207,7 +205,11 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			        $("#re_inButton").click(function () {
 			            // 중간납품 버튼에 대한 동작을 추가하고,
 			        	inStateButton2 = "입고부족";
+<<<<<<< HEAD
+			        	inStateButton1 = inStateButton2;
+=======
 			        	inSateButton1 = inStateButton2;
+>>>>>>> branch 'master' of https://github.com/0906JHM/TeamRoom.git
 			            // 검색 조건을 설정하고 중간납품 목록을 가져오도록 수정
 			            var searchParams = {
 			            		inNum : $("#inNum").val(),
