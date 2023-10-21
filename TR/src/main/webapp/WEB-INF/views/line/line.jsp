@@ -11,6 +11,14 @@
 <link href="${pageContext.request.contextPath}/resources/css/employees.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('checkAll').addEventListener('click', function() {
+        var checkboxes = document.querySelectorAll('input.rowCheck');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    });
+});
 
 function openCenteredWindow(url) {
     var width = 460;
@@ -132,7 +140,7 @@ function deleteValue(){
 
 <thead>
 <tr>
-<th></th>
+<th><input type="checkbox" id="checkAll"></th> 
 <th>라인코드</th>
 <th>라인명</th>
 <th>사용여부</th>
@@ -147,7 +155,7 @@ function deleteValue(){
 <c:forEach var="lineDTO" items="${lineList }">
 <tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}' === 'true') { openCenteredWindow('update?lineCode=${lineDTO.lineCode}'); } else { event.preventDefault(); }">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
-    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${lineDTO.lineCode}"></td>
+    <td onclick="event.stopPropagation();"><input type="checkbox" class="rowCheck" name="rowCheck" value="${lineDTO.lineCode}"></td>
     </c:if>
     <td>${lineDTO.lineCode}</td>
     <td>${lineDTO.lineName}</td>
