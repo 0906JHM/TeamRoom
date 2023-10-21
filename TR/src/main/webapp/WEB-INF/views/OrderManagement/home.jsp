@@ -169,7 +169,7 @@ $(document).ready(function() {
 <table class="tg" id="rawmaterialsList" style="border-radius: 5px;">
 <thead>
 <tr>
-<td></td>
+<td><input type="checkbox"></td>
 <td>발주코드</td>
 <td>품번</td>
 <td>품명</td>

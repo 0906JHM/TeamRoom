@@ -171,7 +171,7 @@ $(document).ready(function() {
 <table class="tg" id="rawmaterialsList" style="border-radius: 5px;">
 <thead>
 <tr>
-<td></td>
+<td><input type="checkbox"></td>
 <td>번호</td>
 <td>원자재코드</td>
 <td>원자재명</td>
