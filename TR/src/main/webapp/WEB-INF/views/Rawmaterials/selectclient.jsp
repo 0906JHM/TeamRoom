@@ -32,16 +32,11 @@ function setParentText(){
 
 //memo 페이지 팝업창
 function openPopup4(clientCode) {
-	// 팝업창 속성
-	var popupWidth = 450;
-	var popupHeight = 500;
-	var left = (window.innerWidth - popupWidth) / 2;
-	var top = (window.innerHeight - popupHeight) / 2;
-	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
-	// 새창을 열기 위한 URL 설정
-	var url = '${pageContext.request.contextPath}/Rawmaterials/memo2?clientCode=' + clientCode;
-	// 팝업창 열고 속성 설정
-	var newWindow = window.open(url, '_blank', popupFeatures);       
+    var popupX = (window.screen.width / 2) - (450 / 2);
+    var popupY = (window.screen.height / 2) - (420 / 2);
+    var url = '${pageContext.request.contextPath}/Rawmaterials/memo2?clientCode=' + clientCode;
+    var popupFeatures = "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=450,height=420,left=" + popupX + ",top=" + popupY;
+    const newWindow = window.open(url, '_blank', popupFeatures); 
 }
 </script>
 
