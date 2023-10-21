@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
 body {
-	background-color: #f5f6fa;
+/* 	background-color: #f5f6fa; */
+	background-color: #fff;
 	margin:0;
 }
 
@@ -77,8 +78,16 @@ body {
 .chart-header h3:hover {
     background-color: #9AC5F4; 
     border: 1px solid #9AC5F4;
+    color: black;
 }
 
 .chart-header-item.selected {
 	 border: 1px solid #9AC5F4; 
+	 color: #9AC5F4
 }
+
+/* 달력 바탕색 */
+/* .fc-view-harness-active{ */
+/* 	background-color: #fff; */
+/* } */
+
