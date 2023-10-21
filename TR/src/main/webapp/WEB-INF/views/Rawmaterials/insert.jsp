@@ -58,16 +58,12 @@
 
 let openWin;
 
-// function openPopup1() {
-// 	// window.name = "부모창 이름";
-// 	window.name = "insert";
-// 	// openWin = window.open("open할 window", "자식창 이름", "팝업창 옵션");
-// 	openWin = window.open("selectclient.html", "selectclient", "height=600,width=1300");    
-// }
-
 function openPopup2() {
-	window.name = "insert";
-	openWin = window.open("selectwarehouse.html", "selectwarehouse", "height=600,width=1300");    
+    var popupX = (window.screen.width / 2) - (1500 / 2);
+    var popupY = (window.screen.height / 2) - (680 / 2);
+    var url = 'selectwarehouse';
+    var popupFeatures = "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=1500,height=680,left=" + popupX + ",top=" + popupY;
+    const newWindow = window.open(url, '_blank', popupFeatures); 
 }
 
 // 종류 선택하면 자동으로 원자재코드 값 생성

@@ -190,7 +190,7 @@ $(document).ready(function() {
 <!-- 체크박스로 삭제 -->
 <td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
 <td>${rawmaterialsDTO.rawNum}</td>
-<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}')" class="DetailLink">${rawmaterialsDTO.rawCode}</a></td>
+<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}')" style="text-decoration: none; color: black;" class="DetailLink">${rawmaterialsDTO.rawCode}</a></td>
 <td>${rawmaterialsDTO.rawName}</td>
 <td>${rawmaterialsDTO.rawType}</td>
 <td>${rawmaterialsDTO.rawUnit}</td>

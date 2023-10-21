@@ -42,27 +42,14 @@ function setParentText(){
 	opener.document.getElementById("rUInput").value = document.getElementById("rUInput").value;
 	window.close();
 }
-// selectclient 페이지 팝업창
-// function openPopup3() {
-//     var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
-//     // 팝업 창닫기 버튼 클릭시 창닫기
-//     popupWindow.onbeforeunload = function() {
-//         popupWindow.close();
-//     };
-// }
 
 // memo 페이지 팝업창
 function openPopup4(rawCode) {
-	// 팝업창 속성
-	var popupWidth = 450;
-	var popupHeight = 500;
-	var left = (window.innerWidth - popupWidth) / 2;
-	var top = (window.innerHeight - popupHeight) / 2;
-	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
-	// 새창을 열기 위한 URL 설정
-	var url = '${pageContext.request.contextPath}/Rawmaterials/memo?rawCode=' + rawCode;
-	// 팝업창 열고 속성 설정
-	var newWindow = window.open(url, '_blank', popupFeatures);       
+    var popupX = (window.screen.width / 2) - (450 / 2);
+    var popupY = (window.screen.height / 2) - (420 / 2);
+    var url = '${pageContext.request.contextPath}/Rawmaterials/memo?rawCode=' + rawCode;
+    var popupFeatures = "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=450,height=420,left=" + popupX + ",top=" + popupY;
+    const newWindow = window.open(url, '_blank', popupFeatures); 
 }
 </script>
 

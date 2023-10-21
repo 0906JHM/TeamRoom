@@ -190,7 +190,7 @@ $(document).ready(function() {
 <c:forEach var="ordermanagementDTO" items="${ordermanagementList}">
 <tr>
 <td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
-<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/OrderManagement/detail?buyNum=${ordermanagementDTO.buyNum}')">${ordermanagementDTO.buyNum}</a></td>
+<td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/OrderManagement/detail?buyNum=${ordermanagementDTO.buyNum}')" style="text-decoration: none; color: black;">${ordermanagementDTO.buyNum}</a></td>
 <td>${ordermanagementDTO.rawCode}</td>
 <td>${ordermanagementDTO.rawName}</td>
 <td>${ordermanagementDTO.rawType}</td>

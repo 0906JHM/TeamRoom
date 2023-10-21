@@ -13,8 +13,11 @@
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 function openPopup2() {
-	window.name = "update";
-	openWin = window.open("selectwarehouse.html", "selectwarehouse", "height=600,width=1300");
+    var popupX = (window.screen.width / 2) - (1500 / 2);
+    var popupY = (window.screen.height / 2) - (680 / 2);
+    var url = 'selectwarehouse';
+    var popupFeatures = "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=1500,height=680,left=" + popupX + ",top=" + popupY;
+    const newWindow = window.open(url, '_blank', popupFeatures); 
 }
 </script>
 </head>
@@ -40,7 +43,7 @@ function openPopup2() {
 <tr><td id="td1">매입단가</td>
     <td id="tdup"><input type="text" name="rawPrice" value="${rawmaterialsDTO.rawPrice}"></td></tr>
 <tr><td id="td1">창고코드</td>
-    <td id="tdup"><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}" readonly> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
+    <td id="tdup1"><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}" readonly> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
 <tr><td id="td1">비고</td>
 	<td id="tdup"><textarea name="rawMemo" rows="10" cols="15">${rawmaterialsDTO.rawMemo}</textarea></td></tr>
 </table>
