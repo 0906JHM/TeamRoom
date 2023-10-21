@@ -89,10 +89,12 @@ function openPopup1() {
     window.open('${pageContext.request.contextPath}/OrderManagement/insert', '_blank', 'height=400,width=600');
 }
 
+
 // detail 페이지 팝업창
-function openPopup2(url) {
-	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=700");
-	myWindow.moveTo(0, 0);
+function openPopup2(url) {	
+	var popupX = (window.screen.width/2) - (400/2);
+	var popupY = (window.screen.height/2) - (760/2);
+	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=760,left=" + popupX + ",top=" + popupY);
 	myWindow.focus();
 }
 
