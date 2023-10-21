@@ -29,36 +29,36 @@
       	<input type="text" id="sellCode" name="selCode" required="required" ><br> -->
       	
       	<div class="popupSerch">
-        <label class="popupLabel">거래처 : </label>
+        <label class="popupLabel">거래처</label>
         <input type="text" id="sellclientCode9999" name="clientCode" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처 코드" required="required">
         <input type="text" id="sellclientCompany9999" name="clientCompany" onclick=searchItem('sellclient','sellclientCode9999'); placeholder="거래처명"  required><br>
 		</div>
 		
 		<div class="popupSerch">
- 		<label class="popupLabel">제품 : </label>
+ 		<label class="popupLabel">제품</label>
  		<input type="text" name="prodCode" id="prodCode9999" onclick=searchItem('prod','prodCode9999'); placeholder="제품 코드"  required>
 		<input type="text" name="prodName" id="prodName9999" placeholder="제품명"  onclick="searchItem('prod','prodCode9999')" required><br>
 		</div>
 		
-		<label class="popupLabel">제품 단가 : </label>
+		<label class="popupLabel">제품 단가</label>
         <input type="text" name="prodPrice" id="prodPrice9999" onclick=searchItem('prod','prodPrice9999'); placeholder="제품 단가"  required>원<br>
         
-        <label class="popupLabel">수주 수량 : </label>
+        <label class="popupLabel">수주 수량</label>
         <input type="number" id="sellCount" name="sellCount" min="0" max="10000" step="5" placeholder="0"  required >개<br>
 
- 	    <label class="popupLabel">수주 단가 : </label>
+ 	    <label class="popupLabel">수주 단가</label>
 		<input type="text" id="sellPrice" min="0"  placeholder="수주 단가" value="${formattedSellPrice}" readonly="readonly" >원<br>    
      	
-     	<label class="popupLabel">수주 일자 : </label>
+     	<label class="popupLabel">수주 일자</label>
         <input type="text" id="sellDate" name="sellDate" readonly><br>
 
-        <label class="popupLabel">납기 일자 : </label>
+        <label class="popupLabel">납기 일자</label>
         <input type="text" id="sellDuedate" name="sellDuedate"  placeholder="선택하세요" required><br>
 
-        <label class="popupLabel">담당자 : </label>
+        <label class="popupLabel">담당자</label>
         <input type="text" id="sellEmpId" name="sellEmpId" value="${sessionScope.empId}" readonly="readonly" ><br>
 
-        <label class="popupLabel">비고 : </label><br>
+        <label class="popupLabel">비고</label><br>
         <textarea id="sellMemo" name="sellMemo" style="width: 300px; height: 150px;"></textarea><br>
 		
 		<br>
