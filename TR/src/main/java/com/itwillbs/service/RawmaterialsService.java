@@ -126,5 +126,9 @@ public class RawmaterialsService implements RawmaterialsService2 {
 	public int getRawCodesPC() {
 		return rawmaterialsDAO.getRawCodesPC();
 	}
+
+	public int rawmaterialsCount() {
+		return rawmaterialsDAO.rawmaterialsCount();
+	}
 	
 }

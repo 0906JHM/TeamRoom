@@ -138,7 +138,7 @@
 								
 								<td>${sellDTO.sellState}</td><!-- 처리(출고)상태 -->
 								
-								<td	onclick="openSellDetail('${sellDTO.sellCode}')">${sellDTO.sellCode}</td><!-- 수주코드 -->
+								<td	onclick="openSellDetail('${sellDTO.sellCode}')" class="sellDetailLink">${sellDTO.sellCode}</td><!-- 수주코드 -->
 								
 								<td>${sellDTO.clientCode}</td><!-- 거래처코드 -->
 								

@@ -155,6 +155,7 @@ $(document).ready(function() {
 <table id="rawmaterialsList">
 <thead>
 <tr>
+<td></td>
 <td>발주코드</td>
 <td>품번</td>
 <td>품명</td>
@@ -168,13 +169,13 @@ $(document).ready(function() {
 <td>발주신청일</td>
 <td>발주상태</td>
 <td>담당자</td>
-<td></td>
 </tr>
 </thead>
 
 <tbody>
 <c:forEach var="ordermanagementDTO" items="${ordermanagementList}">
 <tr>
+<td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
 <td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/OrderManagement/detail?buyNum=${ordermanagementDTO.buyNum}')">${ordermanagementDTO.buyNum}</a></td>
 <td>${ordermanagementDTO.rawCode}</td>
 <td>${ordermanagementDTO.rawName}</td>
@@ -202,7 +203,6 @@ ${ordermanagementDTO.buyInstate}
 </c:otherwise>
 </c:choose></td>
 <td>${ordermanagementDTO.buyEmpId}</td>
-<td><input type="checkbox" name="RowCheck" value="${ordermanagementDTO.buyNum}"></td>
 </tr>
 </c:forEach>
 </tbody>
