@@ -17,7 +17,6 @@ public class EmployeesService {
 
 	public void insertEmployees(EmployeesDTO employeesDTO) {
 		employeesDAO.insertEmployees(employeesDTO);
-		
 	}
 
 	public List<EmployeesDTO> getEmployeesList(PageDTO pageDTO) {
@@ -64,6 +63,10 @@ public class EmployeesService {
 	        
 		
 		return newEmployeeId;
+	}
+
+	public String getEmployeesCount2() {
+		return employeesDAO.getEmployeesCount2();
 	}
 
 

@@ -59,7 +59,18 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</tr>
 				<tr>
 					<td class="tableHead">담당자</td>
-					<td><input type="text" name="outEmpId" value="${sessionScope.empId}" id="outEmpId" readonly="readonly"></td>
+					<c:if test="${outProductDTO.outEmpId == null}">
+						<td>
+							<input type="hidden" name="outEmpId" value="${sessionScope.empId}" id="outEmpId" readonly="readonly">
+							<input type="text" name="outEmpId_1" value="${sessionScope.empId}" id="outEmpId_1" readonly="readonly">
+						</td>
+					</c:if>
+					<c:if test="${outProductDTO.outEmpId != null  }">
+						<td>
+							<input type="hidden" name="outEmpId" value="${sessionScope.empId}" id="outEmpId" readonly="readonly">
+							<input type="text" name="outEmpId_2" value="${outProductDTO.outEmpId}" id="outEmpId_1" readonly="readonly">
+						</td>
+					</c:if>
 				</tr>
 				<tr>
 					<td class="tableHead">출고 상태</td>
@@ -146,15 +157,6 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	</form>
 </c:if>
 	
-	
-	<!-- 모달 대화상자 -->
-<!-- 	<div id="myModal" class="modal"> -->
-<!-- 	  <div class="modal-content"> -->
-<!-- 	    <span class="close" id="closeModal">&times;</span> -->
-<!-- 	    <p>모달 내용을 여기에 넣으세요</p> -->
-<!-- 	  </div> -->
-<!-- 	</div> -->
-
 	<!-- 모달 대화상자 -->
 	<div id="myModal" class="modal">
 	  <div class="modal-content">
@@ -174,14 +176,14 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		  var closeModal = document.getElementById('closeModal');
 		
 		  // 입력 요소 가져오기
-		  var inputElement = document.getElementById('outEmpId');
+		  var inputElement = document.getElementById('outEmpId_1');
 		  var modalContent = document.querySelector('.modal-content');
 		
 		  inputElement.addEventListener('click', function(e) {
 			  $.ajax({
 			    type: "POST",
 			    url: "${pageContext.request.contextPath}/outProduct/outProductEmpInfo",
-			    data: { outEmpId: $('#outEmpId').val() },
+			    data: { empId: $('#outEmpId_1').val() },
 			    success: function(data) {
 
 			      var empId = data.empId;
@@ -224,6 +226,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	
 	
 	<script type="text/javascript">
+	
 		var department = "<%= department %>";
 		var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
 		console.log("직책 : "+department);

@@ -8,11 +8,13 @@
 <head>
 <meta charset="UTF-8"> 
 <title>Insert title here</title>
+<link href="${pageContext.request.contextPath}/resources/css/Rawmaterials.css" rel="stylesheet" type="text/css">
 </head>
 
 <!-- body -->
 <body>
-<h1>거래처</h1>
+<div class="content">
+<h2>거래처</h2>
 
 <input id="cInput" type="hidden">
 <input id="cCInput" type="hidden">
@@ -30,29 +32,28 @@ function setParentText(){
 
 //memo 페이지 팝업창
 function openPopup4(clientCode) {
-	// 팝업창 속성
-	var popupWidth = 450;
-	var popupHeight = 500;
-	var left = (window.innerWidth - popupWidth) / 2;
-	var top = (window.innerHeight - popupHeight) / 2;
-	var popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes';
-	// 새창을 열기 위한 URL 설정
-	var url = '${pageContext.request.contextPath}/Rawmaterials/memo2?clientCode=' + clientCode;
-	// 팝업창 열고 속성 설정
-	var newWindow = window.open(url, '_blank', popupFeatures);       
+    var popupX = (window.screen.width / 2) - (450 / 2);
+    var popupY = (window.screen.height / 2) - (420 / 2);
+    var url = '${pageContext.request.contextPath}/Rawmaterials/memo2?clientCode=' + clientCode;
+    var popupFeatures = "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=450,height=420,left=" + popupX + ",top=" + popupY;
+    const newWindow = window.open(url, '_blank', popupFeatures); 
 }
 </script>
 
 <!-- form(검색) -->
-<form action="${pageContext.request.contextPath}/Rawmaterials/selectclient" method="get">
-거래처코드	<input type="text" name="search1" placeholder="거래처코드">
-거래처명	<input type="text" name="search2" placeholder="거래처명">
-담당자 	<input type="text" name="search3" placeholder="담당자">
-<input type="submit" value="검색">
+<form action="${pageContext.request.contextPath}/Rawmaterials/selectclient" method="get" id="searchBox">
+<div id="searchForm" style="border-radius: 5px;">
+<label>거래처코드</label>	<input type="text" name="search1" placeholder="거래처코드">
+<label>거래처명</label>	<input type="text" name="search2" placeholder="거래처명">
+<label>담당자</label> 	<input type="text" name="search3" placeholder="담당자">
+<input type="submit" value="검색" id="searchButton">
+</div>
 </form>
+<br>
 
 <!-- table -->
-<table border="1">
+<table class="tg" id="rawmaterialsList" style="border-radius: 5px;">
+<thead>
 <tr>
 <td>구분</td>
 <td>거래처코드</td>
@@ -69,7 +70,9 @@ function openPopup4(clientCode) {
 <td>이메일</td>
 <td>비고</td>
 </tr>
+</thead>
 
+<tbody>
 <c:forEach var="clientDTO" items="${clientList}">
 <tr onclick="if(event.target.tagName!='A')
 {document.getElementById('cInput').value = '${clientDTO.clientCode}'; document.getElementById('cCInput').value = '${clientDTO.clientCompany}';
@@ -100,12 +103,18 @@ setParentText();}">
 
 </tr>
 </c:forEach>
+</tbody>
 </table>
 
 <!-- 페이징처리 -->
+<div id="pagination" class="page_wrap">
+<div class="page_nation">
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/Rawmaterials/selectclient?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
+</div>
+</div>
+</div>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.itwillbs.controller;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,14 +76,14 @@ public class EmployeesController {
 	@GetMapping("/employees2")
 	public String employees2(Model model ) {	
 		
-		     String newEmployeeId = employeesService.generateNewEmployeeId();
-		     
-		
-		    
-		    String empPass = newEmployeeId;
-		    
-	        model.addAttribute("empId", newEmployeeId);
-	        model.addAttribute("empPass", empPass);
+//		     String newEmployeeId = employeesService.generateNewEmployeeId();
+//		     
+//		
+//		    
+//		    String empPass = newEmployeeId;
+//		    
+//	        model.addAttribute("empId", newEmployeeId);
+//	        model.addAttribute("empPass", empPass);
 	        
 		return "employees/employees2";	
 	}
@@ -106,7 +108,22 @@ public class EmployeesController {
 				    FileCopyUtils.copy(file.getBytes(), new File(uploadPath, filename));
 				    employeesDTO.setEmpFile(filename);
 				}
-		
+				// 날짜 형식을 변환합니다.
+			    DateTimeFormatter originalFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			    DateTimeFormatter targetFormat = DateTimeFormatter.ofPattern("yyMMdd");
+			    String empHiredate = employeesDTO.getEmpHiredate(); 
+			    LocalDate date = LocalDate.parse(empHiredate, originalFormat);
+			    String reformattedDate = date.format(targetFormat);
+
+			    // 사원 수를 4자리 숫자로 변환합니다.
+			    String employeeCountStr = employeesService.getEmployeesCount2();
+			    int employeeCount = Integer.parseInt(employeeCountStr);
+			    String formattedCount = String.format("%04d", employeeCount);
+
+			    // 새로운 사원번호를 생성합니다.
+			    String newEmployeeNumber = reformattedDate + formattedCount;
+			    employeesDTO.setEmpId(newEmployeeNumber);
+			    employeesDTO.setEmpPass(newEmployeeNumber);
 		employeesService.insertEmployees(employeesDTO);
 		return "redirect:/employees/employees";
 	}

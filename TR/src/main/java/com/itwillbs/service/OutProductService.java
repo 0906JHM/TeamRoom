@@ -145,8 +145,8 @@ public class OutProductService {
 		outProductDAO.updateClientSale(outProductDTO);
 	}
 
-	public EmployeesDTO outProductEmpInfo(OutProductDTO outProductDTO) {
-		return outProductDAO.outProductEmpInfo(outProductDTO);
+	public EmployeesDTO outProductEmpInfo(EmployeesDTO employeesDTO) {
+		return outProductDAO.outProductEmpInfo(employeesDTO);
 	}
 
 

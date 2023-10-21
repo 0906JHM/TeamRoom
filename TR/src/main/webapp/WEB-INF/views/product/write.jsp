@@ -21,7 +21,7 @@
          <c:when test="${!(empty sessionScope.empDepartment)}">
 <div class="container"> 
     <h2>제품 추가</h2>
-    
+    <hr>
     <form action="${pageContext.request.contextPath}/product/writePro" method="post">
     
     <div class="form-group">

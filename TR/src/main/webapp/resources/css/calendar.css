@@ -75,9 +75,10 @@ body {
 }
 
 .chart-header h3:hover {
-    background-color: #555; 
+    background-color: #9AC5F4; 
+    border: 1px solid #9AC5F4;
 }
 
 .chart-header-item.selected {
-	 border: 1px solid rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1); 
+	 border: 1px solid #9AC5F4; 
 }

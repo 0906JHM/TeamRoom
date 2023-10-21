@@ -11,6 +11,14 @@
 <link href="${pageContext.request.contextPath}/resources/css/employees.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('checkAll').addEventListener('click', function() {
+        var checkboxes = document.querySelectorAll('input.rowCheck');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    });
+});
 
 //팝업창 중앙 생성 및 가로,세로 크기
 function openCenteredWindow(url) {
@@ -134,7 +142,7 @@ $(document).ready(function() {
         <tr>
        
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
-            <th></th> 
+            <th><input type="checkbox" id="checkAll"></th> 
             <th>사원번호</th>
             <th>비밀번호</th>
 </c:if>
@@ -154,7 +162,7 @@ $(document).ready(function() {
 
 <tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}' === 'true') { openCenteredWindow('update?empId=${employeesDTO.empId}'); } else { event.preventDefault(); }">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
-    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
+    <td onclick="event.stopPropagation();"><input type="checkbox" class="rowCheck" name="rowCheck" value="${employeesDTO.empId}"></td>
     <td>${employeesDTO.empId}</td>
     <td>${employeesDTO.empPass}</td>
 </c:if>

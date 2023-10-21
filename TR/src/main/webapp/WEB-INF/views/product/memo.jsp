@@ -16,17 +16,17 @@
          <c:when test="${!(empty sessionScope.empDepartment)}">
          
 <div class="popupContainer">
-    <h1>비고</h1>
+    <h1>제품 비고</h1>
     <div class="horizontal-line"></div>
     <form class="popup">
 		<textarea id="prodMemo" style="width: 350px; height: 250px;" readonly="readonly">${prodDTO.prodMemo}</textarea><br>
 		<input type="hidden" name="ProdCode" value="${prodDTO.prodCode}" />
 		
 		<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
-<button type="button" onclick="location.href='${pageContext.request.contextPath}/product/memotype?prodCode=${prodDTO.prodCode}&memotype=modify'">수정</button>
+<button type="button" class="modify-btn" onclick="location.href='${pageContext.request.contextPath}/product/memotype?prodCode=${prodDTO.prodCode}&memotype=modify'">수정</button>
 
 </c:if>
-        <button type="button" onclick="window.close()">닫기</button>
+        <button type="button" class="close-btn" onclick="window.close()">닫기</button>
     </form>
 </div>
 

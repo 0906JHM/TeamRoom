@@ -55,6 +55,11 @@
 	SELECT empId FROM employees ORDER BY empId DESC LIMIT 1
 	
 	</select>
+	
+	<select id="getEmployeesCount2" resultType="int">
+    select count(*) from employees
+</select>
+
   
   
   
