@@ -108,11 +108,13 @@ $(document).ready(function() {
 </form>
 </div>
 <hr>
-<small>총 ${pageDTO.count}명</small>
+<h2>총 ${pageDTO.count}명</h2>
     <table id="employeeTable">
     <thead>
         <tr>
+       
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
+            <th></th> 
             <th>사원번호</th>
             <th>비밀번호</th>
 </c:if>
@@ -124,13 +126,14 @@ $(document).ready(function() {
             <th>입사일자</th>
             <th>재직구분</th>
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">            
-            <th></th>
 </c:if>            
         </tr>
         </thead>
 <c:forEach var="employeesDTO" items="${employeesList }">
+
 <tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}' === 'true') { openCenteredWindow('update?empId=${employeesDTO.empId}'); } else { event.preventDefault(); }">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
+    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
     <td>${employeesDTO.empId}</td>
     <td>${employeesDTO.empPass}</td>
 </c:if>
@@ -141,9 +144,6 @@ $(document).ready(function() {
     <td>${employeesDTO.empTel}</td>
     <td>${employeesDTO.empHiredate}</td>
     <td>${employeesDTO.empState}</td>
-    <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
-    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
-	</c:if>
 </tr>
 </c:forEach>    
     </table>
