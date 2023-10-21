@@ -45,6 +45,8 @@
      			var sellCode = $(this).find('#sellCode').text();
      			var prodName = $(this).find('#prodName').text();
      			var prodCode = $(this).find('#prodCode').text();
+     			var workAmount = $(this).find('#workAmount').text();
+     			var sellCount = $(this).find('#sellCount').text();
      			
      			
      			var number = isPop.match(/\d+/);
@@ -53,12 +55,14 @@
      			$('#clientCompany'+number, opener.document).val(clientCompany);
      			$('#prodName'+number, opener.document).val(prodName);
      			$('#prodCode'+number, opener.document).val(prodCode);
+     			$('#workAmount'+number, opener.document).val(workAmount);
+     			$('#sellCount'+number, opener.document).val(sellCount);
      			
      			} else {
      			$('#sellCode8888', opener.document).val(sellCode);
      			$('#clientCompany8888', opener.document).val(clientCompany);
-     			$('#prodName8888', opener.document).val(prodName);
-     			$('#prodCode8888', opener.document).val(prodCode);
+     			$('#workAmount8888', opener.document).val(workAmount);
+     			$('#sellCount8888', opener.document).val(sellCount);
      			}
      			
          		window.close();
@@ -134,6 +138,8 @@
 					<th>코드</th>
 					<th>거래처</th>
 					<th>제품</th>
+					<th>수주수량</th>
+					<th>최소지시수량</th>
 					<th style='display: none;'></th>
 					
 				</tr>
@@ -146,6 +152,17 @@
 						<td id="sellCode">${dto.sellCode }</td>
          			    <td id="clientCompany">${dto.clientCompany }</td>
 						<td id="prodName">${dto.prodName }</td>
+						<td id="sellCount">${dto.sellCount}</td>
+						
+            <c:set var="difference" value="${dto.sellCount - dto.stockCount}" />
+            <c:choose>
+                <c:when test="${difference > 0}">
+                     <td id="workAmount">${difference}</td>
+                </c:when>
+                <c:otherwise>
+                    <td id="workAmount">0</td>
+                </c:otherwise>
+            </c:choose>
 						<td style='display: none;' id="prodCode">${dto.prodCode }</td>
 					</tr>
 			</c:forEach>

@@ -25,6 +25,7 @@ public class SellDTO {
 	private String sellPrice; //수주단가	
 	private String prodPrice;//제품단가 1ea
 	private String clientCompany;//거래처명
+	private int stockCount;
 
 	private String sellEndDate;//수주일자(daterange 기간 설정 끝나는 날)
 	private String sellEndDuedate;//납기일자(daterange 기간 설정 끝나는 날)

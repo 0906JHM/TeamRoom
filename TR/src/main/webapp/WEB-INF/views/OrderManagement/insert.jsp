@@ -32,8 +32,8 @@
 <tr><td id="td1">발주수량</td><td id="tdup"> 		<input type="number" name="buyCount"></td></tr>
 <tr><td id="td1">발주신청일</td><td id="tdup"> 	<input type="date" name="buyDate"></td></tr>
 <tr><td id="td1">담당자</td><td id="tdup">		<input readonly type="text" name="buyEmpId" value="${sessionScope.empId}" id="empName9999"></td></tr>
-<tr><td id="td1">발주상태</td><td id="tdup"> 		<input type="radio" name="buyInstate" value="신청완료" checked>신청완료
-			<input type="radio" name="buyInstate" value="발주완료">발주완료</td></tr>
+
+			
 </table>
 <!-- button -->
 <div id="buttons">

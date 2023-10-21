@@ -4,20 +4,25 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.WorkOrderService;
@@ -161,11 +166,15 @@ public class WorkOrderController {
 		
 	//작업지시 추가
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addWorkOrder(WorkOrderDTO dto, Model model) throws Exception {
+	public String addWorkOrder(WorkOrderDTO dto, Model model,HttpServletRequest request) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: addWorkOrder() 호출");
 		logger.debug("@@@@@ CONTROLLER: dto = " + dto);
+HttpSession session = request.getSession();
+        
+        // 세션에서 아이디 값을 가져옵니다. (예시: "userId"는 세션에 저장된 사용자 아이디 키)
+        String empId = (String) session.getAttribute("empId");
 		
-		dto.setWorkEmpId("임시아이디");
+		dto.setWorkEmpId(empId);
 		
 		//서비스 - 작업지시 등록
 		model.addAttribute("woInsert", wService.regWorkOrder(dto));
@@ -222,5 +231,25 @@ public class WorkOrderController {
 		return lineCode;
 	} //updateStatus()
 	
+	
+	//작업지시 추가
+		@RequestMapping(value = "/checkStock", method = RequestMethod.GET)
+		public ResponseEntity<Map<String, Object>> checkStock(WorkOrderDTO dto, Model model) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: checkStock() 호출");
+			logger.debug("@@@@@ CONTROLLER: dto = " + dto);
+			Map<String, Object> response = new HashMap<>();
+			try {
+	            List<RawmaterialsDTO> shortages = wService.checkStock(dto);
+	            System.out.println(shortages+"뭔값일까");
+	            response.put("status", "success");
+	            response.put("data", shortages);
+	        } catch (Exception e) {
+	            response.put("status", "error");
+	            response.put("message", "부족한 원자재 정보를 가져오는데 실패했습니다.");
+	        }
+		
+			return ResponseEntity.ok(response);
+		} //addWorkOrder()
+		
 	
 } //WorkOrderController

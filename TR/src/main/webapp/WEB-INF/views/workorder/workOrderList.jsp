@@ -232,7 +232,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
-				tbl += "  <input type='text' class='input-row' name='sellCode' id='sellCode8888' required readonly >";
+				tbl += "  <input type='text'  placeholder='수주코드를 선택하세요.' class='input-row' name='sellCode' id='sellCode8888' required readonly >";
 				tbl += " </td>";
 				// 제품코드
 				tbl += " <td style='display: none;'>";
@@ -294,12 +294,41 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 			// 저장 -> form 제출하고 저장함
 			$('#save').click(function() {
 
-				var prodName = $('#prodName').val();
+				var prodName = $('#prodName8888').val();
+				var prodCode = $('#prodCode8888').val();
 				
 				var sellCode = $('#sellCode8888').val();
 				var workAmount = $('#workAmount8888').val();
+				
+				$.ajax({
+				    type: "GET",
+				    url: "${pageContext.request.contextPath}/workorder/checkStock", // 서버의 컨트롤러 매핑 경로
+				    data: {
+				        prodCode: prodCode, // 완제품 코드
+				        workAmount: workAmount // 지시수량
+				    },
+				    success: function(response) {
+				        // 서버에서 받은 응답 처리
+				        if (response.status === "success") {
+				            // 성공적인 응답을 받은 경우
+				            var shortages = response.data.shortages;
+				            for (var i = 0; i < shortages.length; i++) {
+				                var shortage = shortages[i];
+				                alert("부족한 원자재명: " + shortage.rawMaterialName);
+				                alert("부족한 수량: " + shortage.shortageAmount);
+				            }
+				        } else {
+				            // 실패한 경우
+				             alert("부족한 원자재 정보를 가져오는데 실패했습니다.");
+				        }
+				    },
+				    error: function() {
+				        // Ajax 요청 실패 시 처리
+				         alert("Ajax 요청에 실패했습니다.");
+				    }
+				});
 			
-					 if (sellCode == "" || workAmount == "") {
+					/*  if (sellCode == "" || workAmount == "") {
 							Swal.fire({
 								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
 								icon: 'info',
@@ -310,8 +339,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
 							$('#fr').attr("method", "post");
 							$('#fr').submit();
-						 } 
-				});
+						 }  */
+				}); 
 				//save
 		}); //add click
 
@@ -321,6 +350,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		var fromController = urlParams.get("woInsert");
 		
 		if(fromController==0) {
+			
+			
 			
 			Swal.fire({
 				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" +"재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?"+ "</div>",
@@ -712,7 +743,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 			<div class="searchform">
 				<input type="hidden" name="input" id="input" value="${input }">
 				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 입력하세요." style="cursor: pointer;">
-				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요" onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
+				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요." onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
 				<label>지시일자</label> 
 						<input type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
 						<label style="margin:0px"> ~ </label> 
@@ -811,7 +842,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
     </c:otherwise>
 </c:choose>
 						
-						<td id="workAmount">${w.workAmount }</td>
+						<td id="workAmount" >${w.workAmount }</td>
 						<td id="workProcess">${w.workProcess }<input type="text" name="workInfo" value="${w.workInfo }"></td>						
 						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
 							<td>

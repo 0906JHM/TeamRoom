@@ -20,6 +20,7 @@ public class RawmaterialsDTO {
 	private String whseCode;
 	private String whseName;
 	private String rawMemo;
+	private int shortageAmount;
 	
 	// 내가 추가한 변수
 	private int rawNum;

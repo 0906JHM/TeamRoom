@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.PerformanceDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.StockDTO;
@@ -39,6 +40,39 @@ public class WorkOrderDAO{
 		return sqlSession.selectList(NAMESPACE + ".allWorkOrder", pdto);
 	} //readAllWorkOrder()
 
+	
+	public List<RawmaterialsDTO> checkStock(WorkOrderDTO dto) throws Exception{
+		String prodCode = dto.getProdCode();
+		List<RequirementDTO> reqList = sqlSession.selectList(NAMESPACE + ".consumption", prodCode);
+		System.out.println(prodCode+"뭔값일까");
+		List<StockDTO> stockList = new ArrayList<>();
+		System.out.println(stockList);
+
+        List<RawmaterialsDTO> shortages = new ArrayList<>();
+        stockList = sqlSession.selectList(NAMESPACE + ".reqRaw", prodCode);
+
+        for (int i = 0; i < reqList.size(); i++) {
+            RequirementDTO reqDTO = reqList.get(i);
+            System.out.println(reqDTO);
+            StockDTO stockDTO = stockList.get(i);
+            System.out.println(stockDTO);
+            int workAmount = dto.getWorkAmount();
+
+            int requiredAmount = workAmount * Integer.parseInt(reqDTO.getReqAmount());
+            int availableStock = stockDTO.getStockCount();
+
+            if (availableStock < requiredAmount) {
+                int shortageAmount = requiredAmount - availableStock;
+                RawmaterialsDTO shortageDTO = new RawmaterialsDTO();
+                shortageDTO.setRawCode(reqDTO.getRawCode());
+                shortageDTO.setShortageAmount(shortageAmount);
+                shortages.add(shortageDTO);
+            }
+        }
+
+        return shortages;
+    }
+	
 	//작업지시 등록
 
 	public int insertWorkOrder(WorkOrderDTO dto) throws Exception {

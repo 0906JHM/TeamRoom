@@ -14,17 +14,19 @@
 	<!-- home 페이징처리, 검색기능 -->
 	<select id="getOrderManagementList" resultType="com.itwillbs.domain.OrderManagementDTO">
 		SELECT *
-FROM buy b JOIN stock s 
+FROM buy b
+LEFT JOIN stock s 
 ON b.rawCode = s.rawCode
+LEFT JOIN rawMaterial r ON b.rawCode = r.rawCode
 		<where>
    		<if test="search1 != null and search1 != ''">
         	and buyNum like concat('%', #{search1}, '%')
     	</if>
     	<if test="search2 != null and search2 != ''">
-        	and rawCode like concat('%', #{search2}, '%')
+        	and b.rawCode like concat('%', #{search2}, '%')
     	</if>
    		<if test="search3 != null and search3 != ''">
-       		and rawType = #{search3}
+       		and r.rawType = #{search3}
     	</if>
     	<if test="search4 != null and search4 != ''">
     		and clientCode like concat('%', #{search4}, '%')
@@ -32,9 +34,9 @@ ON b.rawCode = s.rawCode
     	</where>
     	
 		<!-- 10/22 2:40 아래 코드 추가 -->
-    	ORDER BY CAST(SUBSTRING(buyNum FROM 3) AS UNSIGNED) DESC
+    	<!-- ORDER BY CAST(SUBSTRING(buyNum FROM 3) AS UNSIGNED) DESC -->
     	
-    	<!-- order by buyNum desc limit #{startRow}, #{pageSize} -->
+    	order by CAST(SUBSTRING(buyNum FROM 3) AS UNSIGNED) desc limit #{startRow}, #{pageSize}
 	</select>
 	
 	<!-- home 페이징처리, 검색기능 -->
@@ -42,20 +44,22 @@ ON b.rawCode = s.rawCode
 		SELECT count(*)
 FROM buy b JOIN stock s 
 ON b.rawCode = s.rawCode
+LEFT JOIN rawMaterial r ON b.rawCode = r.rawCode
      	<where>
    		<if test="search1 != null and search1 != ''">
         	and buyNum like concat('%', #{search1}, '%')
     	</if>
     	<if test="search2 != null and search2 != ''">
-        	and rawCode like concat('%', #{search2}, '%')
+        	and b.rawCode like concat('%', #{search2}, '%')
     	</if>
    		<if test="search3 != null and search3 != ''">
-       		and rawType = #{search3}
+       		and r.rawType = #{search3}
     	</if>
     	<if test="search4 != null and search4 != ''">
     		and clientCode like concat('%', #{search4}, '%')
     	</if>
     	</where>
+    	order by CAST(SUBSTRING(buyNum FROM 3) AS UNSIGNED) desc limit #{startRow}, #{pageSize}
     </select>
 	
 	<!-- 체크박스로 선택삭제 -->
@@ -69,6 +73,7 @@ ON b.rawCode = s.rawCode
 FROM buy b
 LEFT JOIN stock s ON b.rawCode = s.rawCode
 LEFT JOIN warehouse w ON b.whseCode = w.whseCode
+LEFT JOIN rawMaterial r ON b.rawCode = r.rawCode
 		where buyNum = #{buyNum}
 	</select>
 	
@@ -80,10 +85,12 @@ LEFT JOIN warehouse w ON b.whseCode = w.whseCode
 	
 	<!-- 엑셀 -->
 	<select id="getOrderManagementList2" resultType="com.itwillbs.domain.OrderManagementDTO">
-		SELECT *
-FROM buy b JOIN stock s 
+	SELECT *
+FROM buy b
+LEFT JOIN stock s 
 ON b.rawCode = s.rawCode
-		from buy
+LEFT JOIN rawMaterial r ON b.rawCode = r.rawCode
+		
 	</select>
 	
 	<!-- buyDate가 오늘 또는 이전인 경우, buyInstate가 '신청완료'에서 '발주완료'로 변경 -->

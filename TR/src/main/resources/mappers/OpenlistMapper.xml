@@ -303,6 +303,7 @@
 		FROM sell s
 		LEFT JOIN clients c on s.clientCode = c.clientCode
 		LEFT JOIN product p on s.prodCode = p.prodCode
+		LEFT JOIN stock st on p.prodCode = st.prodCode
 		
 		order by 1 desc
 		limit #{start}, #{cntPerPage}
@@ -316,6 +317,7 @@
 		FROM sell s
 		LEFT JOIN clients c on s.clientCode = c.clientCode
 		LEFT JOIN product p on s.prodCode = p.prodCode
+		LEFT JOIN stock st on p.prodCode = st.prodCode
 		<where>
 			<if test="sellCode != ''">
 				sellCode like concat ('%', #{sellCode}, '%')
@@ -334,6 +336,7 @@
 		FROM sell s
 		LEFT JOIN clients c on s.clientCode = c.clientCode
 		LEFT JOIN product p on s.prodCode = p.prodCode
+		LEFT JOIN stock st on p.prodCode = st.prodCode
 		<where>
 			<if test="sellCode != ''">
 				sellCode like concat ('%', #{sellCode}, '%')

@@ -149,6 +149,7 @@ $(document).ready(function() {
 						<option value="포장재">포장재</option>
 						</select>
 <label>거래처코드</label>	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
+<input type="text"  hidden name="search5" placeholder="거래처명" id="cCInput">
 <input type="submit" value="조회" id="searchButton">
 </div>
 
@@ -232,7 +233,7 @@ ${ordermanagementDTO.buyInstate}
 <!-- 페이징처리 -->
 <div class="page_nation">
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-<a href="${pageContext.request.contextPath}/OrderManagement/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
+<a href="${pageContext.request.contextPath}/OrderManagement/home?pageNum=${i}&search1=${pageDTO.search1}&search2=${pageDTO.search2}&search3=${pageDTO.search3}&search4=${pageDTO.search4}">${i}</a> 
 </c:forEach>
 </div>
 </div>

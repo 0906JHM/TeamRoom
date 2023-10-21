@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.WorkOrderDAO;
+import com.itwillbs.domain.RawmaterialsDTO;
+import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
+import com.itwillbs.domain.StockDTO;
 import com.itwillbs.domain.WorkOrderDTO;
 
 
@@ -75,6 +78,12 @@ public class WorkOrderService {
 	public String getLineCode() throws Exception {
 		// DAO - 작업지시 등록 시 1차공정 라인 가져오기
 		return wdao.getLineCode();
+	}
+	
+	
+	public List<RawmaterialsDTO> checkStock(WorkOrderDTO dto) throws Exception {
+		// DAO - 작업지시 등록
+		return wdao.checkStock(dto);
 	}
 
 } //WorkOrderServiceImpl

@@ -59,6 +59,7 @@ public class OrderManagementController {
 		if(pageNum == null) {
 			pageNum = "1";
 		}
+		System.out.println(pageNum);
 		    
 		int currentPage = Integer.parseInt(pageNum);
 		PageDTO pageDTO =new PageDTO();
@@ -70,28 +71,36 @@ public class OrderManagementController {
 		pageDTO.setSearch3(search3);
 		pageDTO.setSearch4(search4);
 		        
-		// 품목추가한 내용 뿌려주기
-		List<OrderManagementDTO> ordermanagementList= ordermanagementService.getOrderManagementList(pageDTO);
-		
+	
 		// buyDate가 오늘 또는 이전인 경우, buyInstate가 '신청완료'에서 '발주완료'로 변경
 	    Date today = java.sql.Date.valueOf(LocalDate.now()); // 오늘 날짜 가져옴
 	    ordermanagementService.updateBuyInstate(today);
 		
+		
+		
+		
+		    
+		
+		
+	
 		int count = ordermanagementService.getOrderManagementCount(pageDTO);
-		int pageBlock = 10;
+		int pageCount = count/pageSize+(count%pageSize==0?0:1);
+		int pageBlock = 5;
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
 		int endPage = startPage + pageBlock -1;
-		int pageCount = count/pageSize+(count%pageSize==0?0:1);
 		if(endPage > pageCount) {
 			endPage = pageCount;
 		}
-		    
+		
 		pageDTO.setCount(count);
+		pageDTO.setPageCount(pageCount);
 		pageDTO.setPageBlock(pageBlock);
 		pageDTO.setStartPage(startPage);
 		pageDTO.setEndPage(endPage);
-		pageDTO.setPageCount(pageCount);
-		model.addAttribute("pageDTO", pageDTO);
+		
+		// 품목추가한 내용 뿌려주기
+		List<OrderManagementDTO> ordermanagementList= ordermanagementService.getOrderManagementList(pageDTO);
+		
 		        
 		// 품목추가한 내용 뿌려주기
 		model.addAttribute("ordermanagementList", ordermanagementList);
