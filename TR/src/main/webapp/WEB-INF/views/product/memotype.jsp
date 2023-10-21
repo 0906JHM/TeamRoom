@@ -29,9 +29,9 @@ String memotype = request.getParameter("memotype");
 		<textarea id="prodMemo" style="width: 350px; height: 250px;" name="prodMemo"></textarea><br>
 		<input type="hidden" name="prodCode" value="${prodDTO.prodCode}" />
 		<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
-		<button type="submit" >등록</button>		
+		<button type="submit" class="add-btn" >등록</button>		
 		</c:if>
-		<button type="button" onclick="window.close();">닫기</button>
+		<button type="button" class="close-btn" onclick="window.close();">닫기</button>
 </form>
         </c:when>
         <c:otherwise>
@@ -41,10 +41,10 @@ String memotype = request.getParameter("memotype");
 		<textarea id="prodMemo" style="width: 350px; height: 250px;" name="prodMemo" >${prodDTO.prodMemo}</textarea><br>
 		<input type="hidden" name="prodCode" value="${prodDTO.prodCode}" />
 		<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
-		<button type="submit" >수정</button>
+		<button type="submit" class="modify-btn">수정</button>
 		</c:if>		
-		<button type="reset">취소</button>
-        <button type="button" onclick="window.close();">닫기</button>
+		<button type="reset" class="reset-btn">취소</button>
+        <button type="button"class="close-btn" onclick="window.close();">닫기</button>
         </form>
             
         </c:otherwise>
