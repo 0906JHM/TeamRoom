@@ -85,10 +85,9 @@
 <body>
 <div class="right_col">
 
-	<h1 style="margin-left: 1%;">수주 목록</h1>
+	<h1 style="margin-left: 1%;">${dto.empDepartment}직원 목록</h1>
 	
-	<div style="margin: 1% 1%;">
-	<hr style="width:680;">
+	
 	<form method="get">
 		<fieldset>
        		
@@ -103,8 +102,7 @@
 
 		</fieldset>
 	</form>
-<hr style="width:680;">
-</div>	
+	
 
 
 
@@ -160,7 +158,16 @@
 						</c:if>
 					
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/search/emp?nowPage=${p }&type2=${dto.empDepartment }&cntPerPage=${paging.cntPerPage}&empName=${dto.empName }&empId=${dto.empId }">${p }</a>
+									<c:choose>
+        <c:when test="${p eq paging.nowPage}">
+            			<a class="active" href="${pageContext.request.contextPath}/search/emp?nowPage=${p }&type2=${dto.empDepartment }&cntPerPage=${paging.cntPerPage}&empName=${dto.empName }&empId=${dto.empId }">${p }</a>
+					 </c:when>
+        <c:otherwise>
+           			<a class="a" href="${pageContext.request.contextPath}/search/emp?nowPage=${p }&type2=${dto.empDepartment }&cntPerPage=${paging.cntPerPage}&empName=${dto.empName }&empId=${dto.empId }">${p }</a>
+					 </c:otherwise>
+    </c:choose>
+							
+				
 						</c:forEach>
 					
 						<c:if test="${paging.endPage != paging.lastPage}">

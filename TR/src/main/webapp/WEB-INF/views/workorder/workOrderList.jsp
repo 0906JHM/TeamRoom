@@ -270,7 +270,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							Swal.fire({
 								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
 								icon: 'info',
-								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								confirmButtonColor: '#9AC5F4',
 								width: '400px',
 							}).then((result) => {
 							    if (result.isConfirmed) {
@@ -303,7 +303,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							Swal.fire({
 								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
 								icon: 'info',
-								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								confirmButtonColor: '#9AC5F4',
 								width: '400px',
 							})
 						} else { 
@@ -359,7 +359,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				 title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "수정할 행을 선택해주세요"+ "</div>",
 				  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 		  icon: 'info', // 아이콘! 느낌표 색? 표시?
-	            confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+	            confirmButtonColor: '#9AC5F4',
 	         });		  
 			$('#delete').hide();
 			$('#modify').hide();
@@ -454,7 +454,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							Swal.fire({
 								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "1이상의 값을 입력해주세요"+ "</div>",
 								icon: 'info',
-								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								confirmButtonColor: '#9AC5F4',
 								width: '400px',
 							})
 							}
@@ -564,7 +564,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 							  icon: 'info', // 아이콘! 느낌표 색? 표시?
 							  showDenyButton: true,
-							   confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+							   confirmButtonColor: '#9AC5F4', // confrim 버튼 색깔 지정
   cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 							  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 	 						  cancelButtonText: 'No', // cancel 버튼 텍스트 지정
@@ -585,7 +585,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 		 							Swal.fire({
 										  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
 										  icon: 'success',
-										  confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+										  confirmButtonColor: '#9AC5F4', // confrim 버튼 색깔 지정
 
 										  width : '400px',
 										}).then((result) => {
@@ -598,7 +598,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 									Swal.fire({
 										title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
 										icon : 'question',
-										confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+										confirmButtonColor: '#9AC5F4', // confrim 버튼 색깔 지정
 
 										width: '400px',
 										});
@@ -608,7 +608,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							  } else if (result.isDenied) {
 									Swal.fire({
 									title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
-									confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+									confirmButtonColor: '#9AC5F4', // confrim 버튼 색깔 지정
 									  
 									icon : 'error',
 									width: '400px',
@@ -621,7 +621,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						Swal.fire({
 							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 							icon : 'warning',
-							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+							confirmButtonColor: '#9AC5F4',
 							width: '400px',
 							});
 					}// 체크 XXX
@@ -705,44 +705,36 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 <!-- page content -->
 <div class="right_col">
 
-	<h2 style="margin-left: 1%; cursor: pointer; " onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'">작업지시 관리</h2>
-	
-	
-		<hr>
-		<div class="input_value" style="margin: 1% 1%;">	
+	<h2 style="cursor: pointer; " onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'">작업지시 관리</h2>
+
+		
 		<form method="get">
-			<fieldset>
+			<div class="searchform">
 				<input type="hidden" name="input" id="input" value="${input }">
 				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 입력하세요." style="cursor: pointer;">
 				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요" onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
 				<label>지시일자</label> 
-						<input style="width:250px;" type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
-						<label style="font: 500 24px/24px 'Inter', sans-serif;">~</label> 
-						<input style="width:250px;"type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
-				<label>지시상태&nbsp;<input type="submit"  class="button" name="search_place" id="allButton" value="전체">
-    		<input type="submit"  name="search_place" class="button" id="oneButton" value="1차공정">
-    		<input type="submit"  name="search_place" class="button" id="twoButton" value="2차공정">
-    		<input type="submit"  name="search_place" class="button" id="threeButton" value="3차공정">
-    		<input type="submit"  name="search_place" class="button" id="finishButton" value="마감" ></label> 
+						<input type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
+						<label style="margin:0px"> ~ </label> 
+						<input style="margin-left:" type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
+				<label><input style="width:70px" type="submit"  class="button" name="search_place" id="allButton" value="전체">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="oneButton" value="1차공정">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="twoButton" value="2차공정">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="threeButton" value="3차공정">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="finishButton" value="마감" ></label> 
 				<div id="button">
 			
 				
 			
 		</div>
-		</fieldset>	
+		</div>	
 		</form>
-		</div>
-		<hr>
 
 
-	<div class="col-md-12 col-sm-12">	
-		<div class="x_panel">
-		
-				<div class="x_title">
-				<div class="x_total">
-					<h3>총 ${paging.total } 건</h3>
-					</div>
-					<div>
+
+	<div class="col-md-12">	
+	<div style ="margin: 2% 0 0 0;"	>
+	<div style="float:right;">
 				    <!-- 버튼 제어 -->
 						<button style="display: none;" id="add" class="button">추가</button>
 						<button style="display: none;" id="modify" class="button">수정</button>
@@ -750,6 +742,23 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<button style="display: none;" id="cancle" onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'" id="cancle" class="button">취소</button>
 						<button style="display: none;" type="submit" id="save" class="button">저장</button>
 						</div>
+						</div>
+		<div class="x_panel">
+		
+				<div class="x_title">
+				
+					<label style="margin:0px">총 ${paging.total } 건</label>
+					<div>
+					<label for="perPageSelect" >항목 수:</label>
+<select id="perPageSelect" class="input_box" style ="top:1.8px; width:100px; height:22px;" onchange="applyFilters()" value="${paging.cntPerPage}">
+    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+</select>
+					</div>
+					
+					
 						</div>
 					
 				
@@ -820,14 +829,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </div>
 
 	<div style="float:left;">
- <label for="perPageSelect" style ="bottom:2px;">항목 수:</label>
-<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${paging.cntPerPage}">
-    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
-    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
-    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
-    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
-</select>
-	<button id="excelDownload" class="button">엑셀⬇️</button>
+ 
+	<button id="excelDownload" class="button">엑셀</button>
 	</div>	
 	<script type="text/javascript">
 	function applyFilters() {
@@ -882,7 +885,7 @@ jQuery(document).ready(function($){
     	            			Swal.fire({
     								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
     								icon: 'info',
-    								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+    								confirmButtonColor: '#9AC5F4',
     								width: '400px',
     							}).then((result) => {
     							    if (result.isConfirmed) {
@@ -924,8 +927,7 @@ var button = document.getElementById("threeButton");
 <c:if test="${search.search_place == '마감'}">
 var button = document.getElementById("finishButton");
 </c:if>
-button.style.backgroundColor = "#fff";
-button.style.color = "#999999";
+button.style.backgroundColor = "#4D4D4D";
 });
     
   
