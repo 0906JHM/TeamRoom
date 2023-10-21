@@ -53,12 +53,7 @@ public class PerformanceService {
 		return perfDAO.getworklist();
 	}
 
-	public void perfinsert(PerformanceDTO perfDTO) {
-		
-		
-		perfDAO.perfinsert(perfDTO);
-		
-	}
+
 
 	public PerformanceDTO getdetail(String perfCode) {
 		
@@ -109,6 +104,12 @@ public class PerformanceService {
          return perfDAO.getdonut(lineCode);
 
      }
+
+	public void updateperf(PerformanceDTO perfDTO) {
+		
+		perfDAO.updateperf(perfDTO);
+		
+	}
 
 	
 

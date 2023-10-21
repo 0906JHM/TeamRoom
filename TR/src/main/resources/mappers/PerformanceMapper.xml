@@ -99,8 +99,8 @@ WHERE p.perfCode = #{perfCode};
  
 <update id="perfupdate">
 UPDATE  performance SET
-perfEmpId=#{perfEmpId}, perfFair=#{perfFair},perfDefect={perfDefect},
-perfDefectReason=#{perfDefectReason},perfDefecmemo=#{perfDefectmemo},perfMemo=#{perfMemo}
+perfEmpId=#{perfEmpId}, perfFair = #{perfFair},perfDefect=#{perfDefect},
+perfDefectreason=#{perfDefectreason},perfDefectmemo=#{perfDefectmemo},perfMemo=#{perfMemo}
 where perfCode=#{perfCode}
 
 
