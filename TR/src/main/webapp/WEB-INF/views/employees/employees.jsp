@@ -99,7 +99,7 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
 <div class="container">
-<h2>인사 관리</h2>
+<h2><a href="${pageContext.request.contextPath}/employees/employees" style=" text-decoration: none; color:black;">인사 관리</a></h2>
 
 <div id="searchForm">
 <form action="${pageContext.request.contextPath}/employees/employees" method="get" id="searchBox">

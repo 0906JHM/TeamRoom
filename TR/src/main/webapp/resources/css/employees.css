@@ -225,6 +225,16 @@ input[type="text"] {
 	border-right: 1px solid #D9D9D9; /* 수직 줄의 색상 설정 */
     border-bottom: 1px solid #D9D9D9; /* 가로 줄의 스타일을 변경 */
 }
+#lineTable {
+/* 	margin-top: 10px; */
+/* 	margin-left:30px; */
+	border-collapse: collapse;
+	width: 96%;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자효과 */
+	text-align: center;
+	border-right: 1px solid #D9D9D9; /* 수직 줄의 색상 설정 */
+    border-bottom: 1px solid #D9D9D9; /* 가로 줄의 스타일을 변경 */
+}
 /* 테이블 틀 */
 .tg {
 	margin-top: 10px;
@@ -249,6 +259,11 @@ input[type="text"] {
     
 }
 #employeeTable tr {
+	border-right: 1px solid #D9D9D9; 
+    border-bottom: 1px solid #D9D9D9;
+    height: 35px;
+}
+#lineTable tr {
 	border-right: 1px solid #D9D9D9; 
     border-bottom: 1px solid #D9D9D9;
     height: 35px;
