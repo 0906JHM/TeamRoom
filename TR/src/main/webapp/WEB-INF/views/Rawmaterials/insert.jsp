@@ -20,7 +20,7 @@
 <form action="${pageContext.request.contextPath}/Rawmaterials/insertPro" method="post">
 <table>
 <tr>
-<td id="td1">종류 :</td>
+<td id="td1">종류</td>
 <td id="tdup">
 <select name="rawType" onchange="updateRawCode()">
 <option value="">전체</option>
@@ -32,12 +32,12 @@
 </select>
 </td>
 </tr>
-<tr><td id="td1">원자재코드 :</td><td id="tdup"><input type="text" name="rawCode" id="rawCodeField" readonly="readonly" required></td></tr>
-<tr><td id="td1">원자재명 :</td><td id="tdup"><input type="text" name="rawName" required></td></tr>
-<tr><td id="td1">단위 :</td><td id="tdup"><input type="text" name="rawUnit" value="EA"></td></tr>
-<tr><td id="td1">매입단가 :</td><td id="tdup"><input type="number" name="rawPrice" required></td></tr>
-<tr><td id="td1">창고명 :</td><td id="tdup"><input type="text" name="whseCode" id="pInput2" readonly="readonly" required> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
-<tr><td id="td1">비고 :</td><td id="tdup"><input type="text" name="rawMemo"></td></tr>
+<tr><td id="td1">원자재코드</td><td id="tdup"><input type="text" name="rawCode" id="rawCodeField" readonly="readonly" required></td></tr>
+<tr><td id="td1">원자재명</td><td id="tdup"><input type="text" name="rawName" required></td></tr>
+<tr><td id="td1">단위</td><td id="tdup"><input type="text" name="rawUnit" value="EA"></td></tr>
+<tr><td id="td1">매입단가</td><td id="tdup"><input type="number" name="rawPrice" required></td></tr>
+<tr><td id="td1">창고명</td><td id="tdup"><input type="text" name="whseCode" id="pInput2" readonly="readonly" required> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
+<tr><td id="td1">비고</td><td id="tdup"><input type="text" name="rawMemo"></td></tr>
 </table>
 
 <!-- button -->

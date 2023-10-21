@@ -8,32 +8,39 @@
 
 <meta charset="UTF-8">  
 <title>Insert title here</title>
-
+<link href="${pageContext.request.contextPath }/resources/css/Rawmaterialspop.css" rel="stylesheet" type="text/css">
 </head>
 
 <!-- body -->
 <body>
-<h1>발주등록</h1>
+<div class="content">
+<h2>발주 등록</h2>
 
 <!-- form -->
 <form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post" onsubmit="return validateForm()">
-품번 : 		<input type="text" name="rawCode" id="rCInput" readonly> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
-품명 : 		<input type="text" name="rawName" id="rNInput" readonly><br>
-종류 : 		<input type="text" name="rawType" id="rTInput" readonly><br>
-매입단가 : 		<input type="number" name="rawPrice" id="rPInput" readonly><br>
-단위 :  <input type="text" name="rawUnit" id="rUInput" readonly><br>
-창고코드 : 		<input type="text" name="whseCode" id="wCInput" readonly><br>
-창고명 : 		<input type="text" name="whseName" id="wNInput" readonly><br>
-재고량 : 		<input type="text" name="stockCount" id="sCInput" readonly><br>
-거래처코드 : 		<input type="text" name="clientCode" id="pInput" readonly> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
-거래처명 : 		<input type="text" name="clientCompany" id="cCInput" readonly><br>
-발주수량 : 		<input type="number" name="buyCount"><br>
-발주신청일 : 	<input type="date" name="buyDate"><br>
-담당자 : 		<input readonly type="text" name="buyEmpId" value="${sessionScope.empId}" id="empName9999"><br>
-발주상태 : 		<input type="radio" name="buyInstate" value="신청완료" checked>신청완료
-			<input type="radio" name="buyInstate" value="발주완료">발주완료<br>
-<input type="submit" value="발주등록">
+<table>
+<tr><td id="td1">품번</td><td id="tdup"> 		<input type="text" name="rawCode" id="rCInput" readonly> <input type="button" value="목록" onclick="openPopup1()" id=btn3></td></tr>
+<tr><td id="td1">품명</td><td id="tdup"> 		<input type="text" name="rawName" id="rNInput" readonly></td></tr>
+<tr><td id="td1">종류</td><td id="tdup"> 		<input type="text" name="rawType" id="rTInput" readonly></td></tr>
+<tr><td id="td1">매입단가</td><td id="tdup">		<input type="number" name="rawPrice" id="rPInput" readonly></td></tr>
+<tr><td id="td1">단위</td><td id="tdup">  <input type="text" name="rawUnit" id="rUInput" readonly></td></tr>
+<tr><td id="td1">창고코드</td><td id="tdup"> 		<input type="text" name="whseCode" id="wCInput" readonly></td></tr>
+<tr><td id="td1">창고명</td><td id="tdup">		<input type="text" name="whseName" id="wNInput" readonly></td></tr>
+<tr><td id="td1">재고량</td><td id="tdup">		<input type="text" name="stockCount" id="sCInput" readonly></td></tr>
+<tr><td id="td1">거래처코드</td><td id="tdup"> 		<input type="text" name="clientCode" id="pInput" readonly> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
+<tr><td id="td1">거래처명</td><td id="tdup"> 		<input type="text" name="clientCompany" id="cCInput" readonly></td></tr>
+<tr><td id="td1">발주수량</td><td id="tdup"> 		<input type="number" name="buyCount"></td></tr>
+<tr><td id="td1">발주신청일</td><td id="tdup"> 	<input type="date" name="buyDate"></td></tr>
+<tr><td id="td1">담당자</td><td id="tdup">		<input readonly type="text" name="buyEmpId" value="${sessionScope.empId}" id="empName9999"></td></tr>
+<tr><td id="td1">발주상태</td><td id="tdup"> 		<input type="radio" name="buyInstate" value="신청완료" checked>신청완료
+			<input type="radio" name="buyInstate" value="발주완료">발주완료</td></tr>
+</table>
+<!-- button -->
+<div id="buttons">
+<input type="submit" value="등록" id=btn1>
+</div>
 </form>
+</div>
 
 <!-- javascript --> 
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>

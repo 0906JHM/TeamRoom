@@ -190,7 +190,7 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.clientCode}</td>
 <td>${ordermanagementDTO.whseCode}</td>
 <td><c:choose>
-<c:when test="${ordermanagementDTO.stockCount < 10}">
+<c:when test="${ordermanagementDTO.stockCount < 500}">
 <span style="color:red;">${ordermanagementDTO.stockCount}</span>
 </c:when>
 <c:otherwise>
