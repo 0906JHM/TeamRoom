@@ -86,8 +86,15 @@ function deleteValue(){
 
 // insert 페이지 팝업창
 function openPopup1() {
-    window.open('${pageContext.request.contextPath}/OrderManagement/insert', '_blank', 'height=400,width=600');
+	var popupX = (window.screen.width/2) - (400/2);
+	var popupY = (window.screen.height/2) - (820/2);
+	const myWindow = window.open('${pageContext.request.contextPath}/OrderManagement/insert', "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=820,left=" + popupX + ",top=" + popupY);
+	myWindow.focus();
 }
+
+// function openPopup1() {
+//     window.open('${pageContext.request.contextPath}/OrderManagement/insert', '_blank', 'height=400,width=600');
+// }
 
 
 // detail 페이지 팝업창

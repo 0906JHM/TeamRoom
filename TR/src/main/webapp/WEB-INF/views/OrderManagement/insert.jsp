@@ -19,7 +19,7 @@
 <!-- form -->
 <form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post" onsubmit="return validateForm()">
 <table>
-<tr><td id="td1">품번</td><td id="tdup"> 		<input type="text" name="rawCode" id="rCInput" readonly> <input type="button" value="목록" onclick="openPopup1()" id=btn3></td></tr>
+<tr><td id="td1">품번</td><td id="tdup1"> 		<input type="text" name="rawCode" id="rCInput" readonly> <input type="button" value="목록" onclick="openPopup1()" id=btn3></td></tr>
 <tr><td id="td1">품명</td><td id="tdup"> 		<input type="text" name="rawName" id="rNInput" readonly></td></tr>
 <tr><td id="td1">종류</td><td id="tdup"> 		<input type="text" name="rawType" id="rTInput" readonly></td></tr>
 <tr><td id="td1">매입단가</td><td id="tdup">		<input type="number" name="rawPrice" id="rPInput" readonly></td></tr>
@@ -27,7 +27,7 @@
 <tr><td id="td1">창고코드</td><td id="tdup"> 		<input type="text" name="whseCode" id="wCInput" readonly></td></tr>
 <tr><td id="td1">창고명</td><td id="tdup">		<input type="text" name="whseName" id="wNInput" readonly></td></tr>
 <tr><td id="td1">재고량</td><td id="tdup">		<input type="text" name="stockCount" id="sCInput" readonly></td></tr>
-<tr><td id="td1">거래처코드</td><td id="tdup"> 		<input type="text" name="clientCode" id="pInput" readonly> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
+<tr><td id="td1">거래처코드</td><td id="tdup1"> 		<input type="text" name="clientCode" id="pInput" readonly> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
 <tr><td id="td1">거래처명</td><td id="tdup"> 		<input type="text" name="clientCompany" id="cCInput" readonly></td></tr>
 <tr><td id="td1">발주수량</td><td id="tdup"> 		<input type="number" name="buyCount"></td></tr>
 <tr><td id="td1">발주신청일</td><td id="tdup"> 	<input type="date" name="buyDate"></td></tr>

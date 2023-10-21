@@ -67,18 +67,7 @@ table tr {
 	width: 150px;
 }
 
-/* 사용하지 않는 코드 (수정해서 아래꺼 적용함) */
-input[type="text"] {
-	border: 1px solid #adb5bb;
-	border-radius: 5px;
-	width: 120px;
-	height: 30px;
-	font: 500 15px/15px "Inter", sans-serif;
-	text-align: center;
-	/* 	margin-bottom: 10px; */
-}
-
-#tdup input[type="text"], #tdup input[type="number"], #tdup input[type="date"], #tdup select {
+#tdup input[type="text"], #tdup input[type="number"] {
   	border: 1px solid #adb5bb;
 	border-radius: 5px;
 	width: 200px;
@@ -88,10 +77,30 @@ input[type="text"] {
 	/* 	margin-bottom: 10px; */
 }
 
-#tdup input[name="whseCode"] {
+#tdup input[type="date"] {
   	border: 1px solid #adb5bb;
 	border-radius: 5px;
-	width: 144px;
+	width: 203px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+	/* 	margin-bottom: 10px; */
+}
+
+#tdup select {
+  	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 206px;
+	height: 30px;
+	font: 500 15px/15px "Inter", sans-serif;
+	text-align: center;
+	/* 	margin-bottom: 10px; */
+}
+
+#tdup1 input[type="text"] {
+  	border: 1px solid #adb5bb;
+	border-radius: 5px;
+	width: 142px;
 	height: 30px;
 	font: 500 15px/15px "Inter", sans-serif;
 	text-align: center;
