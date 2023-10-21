@@ -82,14 +82,17 @@ function deleteValue(){
 
 // insert 페이지 팝업창
 function openPopup1() {
-    window.open('${pageContext.request.contextPath}/Rawmaterials/insert', '_blank', 'height=400,width=600');
+	var popupX = (window.screen.width/2) - (400/2);
+	var popupY = (window.screen.height/2) - (465/2);
+	const myWindow = window.open('${pageContext.request.contextPath}/Rawmaterials/insert', "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=465,left=" + popupX + ",top=" + popupY);
+	myWindow.focus();
 }
 
 // detail 페이지 팝업창
 function openPopup2(url) {	
 	var popupX = (window.screen.width/2) - (400/2);
-	var popupY = (window.screen.height/2) - (472/2);
-	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=472,left=" + popupX + ",top=" + popupY);
+	var popupY = (window.screen.height/2) - (465/2);
+	const myWindow = window.open(url, "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=400,height=465,left=" + popupX + ",top=" + popupY);
 	myWindow.focus();
 }
 
