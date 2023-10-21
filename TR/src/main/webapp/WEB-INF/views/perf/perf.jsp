@@ -38,12 +38,11 @@
 <div class="clientBody">
 		<h1 class="toptitle">생산실적 관리</h1>
 
-<hr>
 
 <div class="perfcd">
 <form method ="get">
 <div class="perfcd1">
-라인코드: <input type="text" id="lineCode2" name="lineCode" onclick="" class="cdbox" readonly> 제품코드: <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
+<label> 라인코드:</label>  <input type="text" id="lineCode2" name="lineCode" onclick="" class="cdbox" readonly> <label>제품코드:</label> <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
 
 
 
@@ -52,10 +51,9 @@
  실적일: <input type="text" id="workdate1" name="perfDate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="perfDate2" class="form-control" placeholder="날짜 선택" readonly>
 </div>  -->
 
-<input type="submit" value="조회" class="subbtn">
 </form>
 </div> <!--  perfcd -->
-<hr> <!--  경계선 -->
+
 	
 
 	
@@ -71,7 +69,7 @@
 			</div>	 <!-- 검색칸 -->	
 			</div>   <!--  생산실적 총:x건 라인-->
 
-		 <table class="ct" id="ct">	
+		 <table class="ct" id="ct" class="ctcl">	
 			<thead>
 				<tr class="cthead">
 				    <th class="ctth">생산실적코드</th>

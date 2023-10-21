@@ -54,18 +54,20 @@ input[type="text"] {
     /* border: 1px solid #adb5bb; */
     /* border-radius: 5px; */
     border: none;
-    width: 90%;
+    width: 95%;
     height: 25px;
     font: 300 15px/15px "Inter", sans-serif;
     text-align: center;
     background-color: inherit;
     }
     
- #inputnum {
+ .inputnum {
         border: 1px solid rgba(94, 195, 151, 1);
     border-radius: 5px;
     text-align: center;
     }
+    
+    
     
     input[type="number"]{
 	border:none;
@@ -104,7 +106,7 @@ input[type="button"], input[type="submit"] {
 </head>
 <body>
 <h2 class="h2head"> 생산실적 내역 </h2>
-<form id="detailform">
+<form id="detailform" >
 <table>
 <tbody>
   <tr>
@@ -117,8 +119,8 @@ input[type="button"], input[type="submit"] {
     <td><input type="text" name="workCode" value="${perfDTO.workCode}" readonly></td>
     </tr>
     <tr>
-    <th> 라인코드 </th>
-    <td><input type="text" name="lineCode" value="${perfDTO.lineCode}"> </td>
+    <th> 라인정보 </th>
+    <td><input type="text" name="lineCode" value="${perfDTO.workInfo}"> </td>
     </tr>
     <tr>
     <th> 제품코드</th>
@@ -140,15 +142,15 @@ input[type="button"], input[type="submit"] {
     
    <table id="tg">
   <tr>
-    <th colspan=2>실적수</th>
+    <th colspan=2>지시수량</th>
     <th colspan=2>양품수</th>
     <th colspan=2 >불량수</th>
 
   </tr>
   <tr>
-    <td colspan=2> <input type="number" id="inputnum" name="perfAmount" value="${perfDTO.perfAmount}"> </td>
-    <td  colspan=2> <input type="number" id="inputnum"  name="perfFair" value="${perfDTO.perfFair}"> </td>
-   <td  colspan=2> <input type="number" id="inputnum"   name="perfDefect" value="${perfDTO.perfDefect}"></td>
+    <td colspan=2> <input type="number" id="workAmount" class="inputnum"  name="workAmount" value="${perfDTO.workAmount}"> </td>
+    <td  colspan=2> <input type="number" id="perfFair" class="inputnum"  name="perfFair" value="${perfDTO.perfFair}"> </td>
+   <td  colspan=2> <input type="number" id="perfDefect"   class="inputnum"  name="perfDefect" value="${perfDTO.perfDefect}"></td>
   </tr>
   
   <tr>
@@ -186,36 +188,128 @@ input[type="button"], input[type="submit"] {
 
 </form>
 <script>
-$('#deletebtn').click(function() {
-    var perfCode = $('#perfCodeDisplay').text();
-    // 서버로 perfCode 값을 전송하여 해당 행을 삭제
-    $.post("${pageContext.request.contextPath}/perfajax/delete", {
-        perfCode: perfCode
-    })
-    .done(function(response) {
-        // 성공 응답을 받은 경우
-        Swal.fire({
-            title: '삭제 성공',
-            text: '성공적으로 삭제되었습니다.',
-            icon: 'success'
-        }).then(function() {
-            location.reload(); // 페이지 새로고침
-            window.opener.location.reload(); // 부모 창 새로고침
+window.onload = function() {
+/*     $('#deletebtn').click(function() {
+        var perfCode = $('#perfCodeDisplay').text();
+        // 서버로 perfCode 값을 전송하여 해당 행을 삭제
+        $.post("${pageContext.request.contextPath}/perfajax/delete", {
+            perfCode: perfCode
+        })
+        .done(function(response) {
+            // 성공 응답을 받은 경우
+            Swal.fire({
+                title: '삭제 성공',
+                text: '성공적으로 삭제되었습니다.',
+                icon: 'success'
+            }).then(function() {
+                location.reload(); // 페이지 새로고침
+                window.opener.location.reload(); // 부모 창 새로고침
+            });
+        })
+        .fail(function(response) {
+            // 실패 응답을 받은 경우
+            Swal.fire({
+                title: '삭제 실패',
+                text: '삭제에 실패하였습니다.',
+                icon: 'error'
+            });
         });
-    })
-    .fail(function(response) {
-        // 실패 응답을 받은 경우
+    }); */
+
+
+}
+
+var defectReasonSelect = document.getElementById("perfDefectreason");
+var defectMemoInput = document.querySelector('input[name="perfDefectreasonmemo"]');
+
+//초기 로딩 시에 change 이벤트 핸들러를 호출하여 필드 상태 설정
+handleChangeEvent();
+
+//불량사유 select 요소에 대한 change 이벤트 핸들러
+defectReasonSelect.addEventListener('change', handleChangeEvent);
+
+// change 이벤트 핸들러 함수
+function handleChangeEvent() {
+    var selectedValue = defectReasonSelect.value;
+    if (selectedValue === "무결함") {
+        defectMemoInput.disabled = true;
+        defectMemoInput.style.backgroundColor = "#eeeeee"; // 회색 배경색 설정
+        defectMemoInput.value = ""; // 불량기타입력칸 내용 초기화
+    } else {
+        defectMemoInput.disabled = false;
+        defectMemoInput.style.backgroundColor = ""; // 기본 배경색으로 설정 (비활성화 해제)
+    }
+}
+
+
+
+//각 입력 필드의 DOM 요소를 가져옵니다.
+var workAmountInput = document.getElementById("workAmount");
+var perfFairInput = document.getElementById("perfFair");
+var perfDefectInput = document.getElementById("perfDefect");
+
+// 양품수 입력 필드에 대한 input 이벤트 리스너를 추가합니다.
+perfFairInput.addEventListener("input", calculateDefect);
+
+
+function calculateDefect() {
+    var workAmount = parseInt(workAmountInput.value) || 0;
+    var perfFair = parseInt(perfFairInput.value) || 0;
+    var perfDefect = workAmount - perfFair;
+
+    if (perfDefect < 0 || perfDefect > workAmount) {
         Swal.fire({
-            title: '삭제 실패',
-            text: '삭제에 실패하였습니다.',
+            title: '입력 오류',
+            text: '양품수와 불량품수의 합은 0 이상, 지시수량 이하이어야 합니다.',
             icon: 'error'
         });
+
+        // 불량수를 0으로 설정하고 입력 필드를 초기화합니다.
+        perfFairInput.value = '';
+        
+    } else {
+    	perfDefectInput.value = perfDefect;
+    }
+}
+
+var updateProUrl = "${pageContext.request.contextPath}/perfajax/updatePro";
+var updateButton = document.getElementById("update2");
+
+updateButton.addEventListener("click", function(event){
+
+    
+    // 폼 데이터를 가져오는 코드 (예: FormData 객체 사용)
+    var formData = $("#detailform").serialize();
+    console.log(formData);
+    
+    // 서버로 데이터를 전송하고 응답을 받는 코드 (jQuery AJAX 사용)
+    $.ajax({
+        type: "POST", // 또는 "GET" 등 HTTP 요청 메서드 선택
+        url: updateProUrl, // 서버 엔드포인트 URL 설정
+        data: formData, // 폼 데이터 전송
+        processData: false, // 폼 데이터를 문자열로 변환하지 않도록 설정 (FormData 사용 시 필요)
+        contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 자동으로 설정하지 않도록 함
+        success: function(response) {
+            // 서버 응답이 성공인 경우
+            Swal.fire({
+                title: '수정 성공',
+                text: '성공적으로 수정되었습니다.',
+                icon: 'success'
+            }).then(function() {
+                // 성공 메시지를 표시한 후 추가적인 동작을 수행하려면 이 부분에 코드를 작성합니다.
+                // 예: 페이지 리로드, 다른 동작 수행 등
+            });
+        },
+        error: function(xhr, status, error) {
+            // 서버 응답이 실패인 경우
+            Swal.fire({
+                title: '수정 실패',
+                text: '수정에 실패하였습니다.',
+                icon: 'error'
+            });
+        }
     });
 });
-
-var selectedValue = document.getElementById("perfDefectreason").value;
-
-
 
 
 </script>

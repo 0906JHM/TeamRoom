@@ -195,20 +195,6 @@ public class PerformanceController {
 		
 	}
 	
-@PostMapping("/perfinsertPro")
-public String perfinsert(PerformanceDTO perfDTO, HttpServletRequest req) {
-	
-	log.debug("insertPro요청");
-	log.debug("받은 값:"+perfDTO);
-
-	String perfDefect = req.getParameter("perfDefect");
-	System.out.println("+++++++++++++++++++++++:"+perfDefect);
-	perfService.perfinsert(perfDTO);
-	
-	return "redirect:/perf/perfinsert";
-	
-	
-}
 
 @GetMapping("/detail")
 public String perfdetail ( HttpServletRequest req , Model model ) {
@@ -222,27 +208,9 @@ public String perfdetail ( HttpServletRequest req , Model model ) {
 	return "perf/perfdetail";
 }
 
-@GetMapping("/perfupdate")
-public String perfupdate(HttpServletRequest req ,Model model) {
-	
-	String perfCode=req.getParameter("perfCode");
-	PerformanceDTO perfDTO = perfService.getdetail(perfCode);
-	model.addAttribute("perfDTO",perfDTO);
-	
-	return "perf/perfupdate";
-	
-	
-}
 
-@PostMapping("/updatePro")
-public String perfupdatePro(PerformanceDTO perfDTO) {
-	
-	System.out.println("받아오는값++++++++++++++"+perfDTO);
-	perfService.perfupdate(perfDTO);
-	
-	return "redirect:/perf/perf";
-	
-}
+
+
 
 
 }
