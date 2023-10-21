@@ -51,6 +51,11 @@
   	select * from employees
   </select>  
   
+  	<select id ="getlastnumber" resultType="String" >
+	SELECT empId FROM employees ORDER BY empId DESC LIMIT 1
+	
+	</select>
+  
   
   
   

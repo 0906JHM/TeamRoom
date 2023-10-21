@@ -56,5 +56,12 @@ public class EmployeesDAO {
 	}
 
 
+	public String getLastEmployeeIdFromDB() {
+		
+		
+		return sqlSession.selectOne(namespace+".getlastnumber");
+	}
+
+
 
 }

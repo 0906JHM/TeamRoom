@@ -33,8 +33,10 @@
     <option value="부장" ${employeesDTO.empPosition == '부장' ? 'selected' : ''}>부장</option>
   </select>
 </div>
-<div class="form-group"><p>이메일</p><input type="email" name="empEmail" class="empEmail" value="${employeesDTO.empEmail}"></div>
-<div class="form-group"><p>전화번호</p><input type="number" name="empTel" class="empTel" value="${employeesDTO.empTel}"></div>
+<div class="form-group"><p>이메일</p><input type="email" id ="empEmail" name="empEmail" class="empEmail" value="${employeesDTO.empEmail}"></div>
+                                                                <span id ="empEmailmsg">  </span> 
+<div class="form-group"><p>전화번호</p><input type="text"  id ="empTel" name="empTel" class="empTel" placeholder="-없이 입력하세요." value="${employeesDTO.empTel}" maxlength=11></div>
+                                                                  <span id ="empTelmsg">  </span> 
 <div class="form-group"><p>입사일자</p><input type="date" name="empHiredate" class="empHiredate" value="${employeesDTO.empHiredate}"></div>
 <div class="form-group">
   <p>재직구분</p>
@@ -97,6 +99,56 @@ function previewImage() {
         document.getElementById("preview").src = "";
     }
 }
+
+
+//////// 정규식 제어 
+var koreanRegex = /^[가-힣]+$/; // 한글만 허용하는 정규식
+// 이메일 정규식
+var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// 휴대폰 번호 정규식 (숫자만 허용하는 가정)
+var phoneNumberRegex = /^(010|011|016|017|019)\d{8}$/;
+
+
+
+document.getElementById("empEmail").addEventListener("input", function() {
+var empEmail = this.value;
+
+// 한글 및 '@', '.' 이외의 특수문자 제거
+empEmail = empEmail.replace(/[ㄱ-ㅎ가-힣]/g, '').replace(/[^a-zA-Z0-9.@]/g, '');
+
+if (empEmail === "") {
+   document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+} else if (!emailRegex.test(empEmail)) {
+   document.getElementById("empEmailmsg").textContent = "올바른 이메일 주소를 입력하세요.";
+} else {
+   document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+}
+// 입력란에 업데이트된 값 설정
+this.value = empEmail;
+});
+
+document.getElementById("empTel").addEventListener("input", function() {
+    var empTel = this.value;
+
+    // 하이픈 제거
+    empTel = empTel.replace(/-/g, '');
+
+    // 정규식에 맞지 않는 문자 제거
+    empTel = empTel.replace(/[^\d]/g, '');
+
+    if (empTel === "") {
+        document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
+    } else if (!phoneNumberRegex.test(empTel)) {
+        document.getElementById("empTelmsg").textContent = "올바른 휴대폰 번호를 입력하세요.";
+    } else if (empTel.length !== 11) {
+        document.getElementById("empTelmsg").textContent = "휴대폰 번호는 11자리여야 합니다.";
+    } else {
+        document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
+    }
+});
+
+
 </script>
 </body>
 </html>
