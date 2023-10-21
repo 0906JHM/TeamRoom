@@ -205,11 +205,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			        $("#re_inButton").click(function () {
 			            // 중간납품 버튼에 대한 동작을 추가하고,
 			        	inStateButton2 = "입고부족";
-<<<<<<< HEAD
 			        	inStateButton1 = inStateButton2;
-=======
-			        	inSateButton1 = inStateButton2;
->>>>>>> branch 'master' of https://github.com/0906JHM/TeamRoom.git
 			            // 검색 조건을 설정하고 중간납품 목록을 가져오도록 수정
 			            var searchParams = {
 			            		inNum : $("#inNum").val(),
@@ -486,10 +482,34 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							        '비고': item.inMemo
 							    };
 							});
+				            
+							// 열의 너비 설정
+							var colWidths = [
+							    { wch: 15 }, // 입고번호
+							    { wch: 15 }, // 발주번호
+							    { wch: 10 }, // 입고창고
+							    { wch: 12 }, // 거래처명
+							    { wch: 10 }, // 원자재코드
+							    { wch: 10 }, // 원자재명
+							    { wch: 10 }, // 발주수량
+							    { wch: 10 }, // 입고수량
+							    { wch: 10 }, // 재고수량
+							    { wch: 10 }, // 원자재단가
+							    { wch: 10 }, // 입고가격
+							    { wch: 15 }, // 입고일
+							    { wch: 15 }, // 재입고일
+							    { wch: 10 }, // 담당자
+							    { wch: 10 }, // 입고상태
+							    { wch: 20 } // 비고
+							];
+				            
+				            
 				            // 새 워크북을 생성
 				            var wb = XLSX.utils.book_new();
 				            // JSON 데이터를 워크시트로 변환
 				            var ws = XLSX.utils.json_to_sheet(modifiedData);
+				      	    // 열 너비 지정
+				            ws['!cols'] = colWidths;
 				            // 워크북에 워크시트 추가
 				            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
 				            // Blob 형태로 워크북 생성

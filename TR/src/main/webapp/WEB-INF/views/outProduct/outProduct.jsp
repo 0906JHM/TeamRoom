@@ -428,29 +428,57 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			            // 데이터 가공
 						var modifiedData = data.map(function (item) {
 						    return {
-						        '출고코드': item.outCode,
-						        '수주코드': item.sellCode,
-						        '거래처코드': item.clientCode,
+						        '출고 코드': item.outCode,
+						        '수주 코드': item.sellCode,
+						        '거래처 코드': item.clientCode,
 						        '거래처명': item.clientCompany,
-						        '제품코드': item.prodCode,
-						        '제품이름': item.prodName,
+						        '제품 코드': item.prodCode,
+						        '제품명': item.prodName,
 						        '담당자': item.outEmpId,
-						        '출고상태': item.sellState,
-						        '납품예정일': item.sellDuedate,
+						        '총 출고가':item.outPrice,
+						        '출고 상태': item.sellState,
+						        '납품 예정일': item.sellDuedate,
 						        '출고일': item.outDate,
 						        '재출고일': item.outRedate,
-						        '납품개수': item.sellCount,
-						        '출고개수': item.outCount,
-						        '재고개수': item.stockCount,
-						        '납품단가': item.prodPrice,
-						        '출고가': item.outPrice,
+						        '납품 개수': item.sellCount,
+						        '남은 납품 개수': item.sellCount - item.outCount,
+						        '출고 개수': item.outCount,
+						        '재고 개수': item.stockCount,
+						        '납품 단가': item.prodPrice,
+						        '현재 출고가': item.prodPrice * item.outCount,
 						        '비고': item.outMemo
 						    };
 						});
+			            
+						// 열의 너비 설정
+			            var colWidths = [
+			            	{ wch: 15 }, // 출고 코드
+			                { wch: 15 }, // 수주 코드
+			                { wch: 10 }, // 거래처 코드
+			                { wch: 12 }, // 거래처명
+			                { wch: 10 }, // 제품 코드
+			                { wch: 10 }, // 제품명
+			                { wch: 10 }, // 담당자
+			                { wch: 15 }, // 총 출고가
+			                { wch: 10 }, // 출고 상태
+			                { wch: 15 }, // 납품 예정일
+			                { wch: 15 }, // 출고일
+			                { wch: 15 }, // 재출고일
+			                { wch: 10 }, // 납품 개수
+			                { wch: 10 }, // 남은 납품 개수
+			                { wch: 10 }, // 출고 개수
+			                { wch: 10 }, // 재고 개수
+			                { wch: 10 }, // 납품 단가
+			                { wch: 15 }, // 현재 출고가
+			                { wch: 20 } // 비고
+			            ];
+						
 			            // 새 워크북을 생성
 			            var wb = XLSX.utils.book_new();
 			            // JSON 데이터를 워크시트로 변환
 			            var ws = XLSX.utils.json_to_sheet(modifiedData);
+			            // 열 너비 지정
+			            ws['!cols'] = colWidths;
 			            // 워크북에 워크시트 추가
 			            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
 			            // Blob 형태로 워크북 생성

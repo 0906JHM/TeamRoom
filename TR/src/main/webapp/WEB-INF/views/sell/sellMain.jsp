@@ -465,59 +465,59 @@ function openSellDetail(sellCode) {
 			  window.location.href = "${pageContext.request.contextPath}/login/logout";
 		  }
 		  <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
-		document.addEventListener('DOMContentLoaded', ()=> {
-           	exportButton.addEventListener('click', exportExcel);
-          	});
+// 		document.addEventListener('DOMContentLoaded', ()=> {
+//            	exportButton.addEventListener('click', exportExcel);
+//           	});
 		
-			 const exportButton = document.querySelector('#exportButton');
-			 exportButton.addEventListener('click', exportExcel);
-					function exportExcel() {
-					    // 1. 워크북 생성
-					    var wb = XLSX.utils.book_new();
-					    // 2. 워크시트 생성
-					    var newWorksheet = excelHandler.getWorksheet();
-					    // 3. 워크시트를 워크북에 추가
-					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-					    // 4. 엑셀 파일 생성
-					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-					    // 5. 엑셀 파일 내보내기
-					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
-					}
+// 			 const exportButton = document.querySelector('#exportButton');
+// 			 exportButton.addEventListener('click', exportExcel);
+// 					function exportExcel() {
+// 					    // 1. 워크북 생성
+// 					    var wb = XLSX.utils.book_new();
+// 					    // 2. 워크시트 생성
+// 					    var newWorksheet = excelHandler.getWorksheet();
+// 					    // 3. 워크시트를 워크북에 추가
+// 					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+// 					    // 4. 엑셀 파일 생성
+// 					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+// 					    // 5. 엑셀 파일 내보내기
+// 					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
+// 					}
 
-					// 현재 날짜를 가져오는 함수
-					function getToday() {
-					    var date = new Date();
-					    var year = date.getFullYear();
-					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
-					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
-					    return year + month + day;
-					}
+// 					// 현재 날짜를 가져오는 함수
+// 					function getToday() {
+// 					    var date = new Date();
+// 					    var year = date.getFullYear();
+// 					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
+// 					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
+// 					    return year + month + day;
+// 					}
 
-			var excelHandler = {
-			getExcelFileName : function() {
-				return '수주 리스트 '+getToday()+'.xlsx'; //파일명
-			},
-			getSheetName : function() {
-				return 'Sell Sheet'; //시트명
-			},
-			getExcelData : function() {
-				return document.getElementById('sellTable'); //table id
-			},
-			getWorksheet : function() {
-				return XLSX.utils.table_to_sheet(this.getExcelData());
-			}
-		} //excelHandler
+// 			var excelHandler = {
+// 			getExcelFileName : function() {
+// 				return '수주 리스트 '+getToday()+'.xlsx'; //파일명
+// 			},
+// 			getSheetName : function() {
+// 				return 'Sell Sheet'; //시트명
+// 			},
+// 			getExcelData : function() {
+// 				return document.getElementById('sellTable'); //table id
+// 			},
+// 			getWorksheet : function() {
+// 				return XLSX.utils.table_to_sheet(this.getExcelData());
+// 			}
+// 		} //excelHandler
 			
-			function s2ab(s) {
+// 			function s2ab(s) {
 				
-				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-				var view = new Uint8Array(buf);  
-				for(var i=0; i<s.length; i++) {
-					view[i] = s.charCodeAt(i) & 0xFF;
-				}
-				/* alert("이까지 옴"); */
-				return buf;
-			}
+// 				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+// 				var view = new Uint8Array(buf);  
+// 				for(var i=0; i<s.length; i++) {
+// 					view[i] = s.charCodeAt(i) & 0xFF;
+// 				}
+// 				/* alert("이까지 옴"); */
+// 				return buf;
+// 			}
 	  });
     
    <!--------------------------------------------------- 상단 조건 검색 ----------------------------------------->
@@ -579,7 +579,7 @@ function openSellDetail(sellCode) {
         var sellCode = "${sellDTO.sellCode}";
         var prodCode = "${sellDTO.prodCode}";
         var clientCode = "${sellDTO.clientCode}";
-        var sellDate = "$${sellDTO.sellDate}";
+        var sellDate = "${sellDTO.sellDate}";
         var sellDuedate = "${sellDTO.sellDuedate}";
         var sellState = "${sellDTO.sellState}";
 
@@ -590,6 +590,103 @@ function openSellDetail(sellCode) {
         // Redirect to the generated URL
         window.location.href = url;
     }
+
+	//엑셀
+	// 버튼 클릭 시 실행
+	// 클라이언트에서 서버로 데이터 요청
+	document.getElementById('exportButton').addEventListener('click', function () {
+		
+			// 엑셀로 내보낼 데이터
+		    var searchParams = {
+		        outCode: $("#outCode").val(),
+		        prodName: $("#prodName9999").val(),
+		        clientCompany: $("#clientCompany9999").val(),
+		        sellState: sellStateButton1 // 전체 조건 추가
+		    };
+		
+		    $.ajax({
+		        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+		        url: "${pageContext.request.contextPath}/outProduct/excel", // 데이터를 가져올 URL 설정
+		        data: searchParams, // 검색 조건 데이터 전달
+		        dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+		        success: function (data) {
+		            // 데이터 가공
+					var modifiedData = data.map(function (item) {
+					    return {
+					        '출고 코드': item.outCode,
+					        '수주 코드': item.sellCode,
+					        '거래처 코드': item.clientCode,
+					        '거래처명': item.clientCompany,
+					        '제품 코드': item.prodCode,
+					        '제품명': item.prodName,
+					        '담당자': item.outEmpId,
+					        '총 출고가':item.outPrice,
+					        '출고 상태': item.sellState,
+					        '납품 예정일': item.sellDuedate,
+					        '출고일': item.outDate,
+					        '재출고일': item.outRedate,
+					        '납품 개수': item.sellCount,
+					        '남은 납품 개수': item.sellCount - item.outCount,
+					        '출고 개수': item.outCount,
+					        '재고 개수': item.stockCount,
+					        '납품 단가': item.prodPrice,
+					        '현재 출고가': item.prodPrice * item.outCount,
+					        '비고': item.outMemo
+					    };
+					});
+		            
+					// 열의 너비 설정
+		            var colWidths = [
+		            	{ wch: 15 }, // 출고 코드
+		                { wch: 15 }, // 수주 코드
+		                { wch: 10 }, // 거래처 코드
+		                { wch: 12 }, // 거래처명
+		                { wch: 10 }, // 제품 코드
+		                { wch: 10 }, // 제품명
+		                { wch: 10 }, // 담당자
+		                { wch: 15 }, // 총 출고가
+		                { wch: 10 }, // 출고 상태
+		                { wch: 15 }, // 납품 예정일
+		                { wch: 15 }, // 출고일
+		                { wch: 15 }, // 재출고일
+		                { wch: 10 }, // 납품 개수
+		                { wch: 10 }, // 남은 납품 개수
+		                { wch: 10 }, // 출고 개수
+		                { wch: 10 }, // 재고 개수
+		                { wch: 10 }, // 납품 단가
+		                { wch: 15 }, // 현재 출고가
+		                { wch: 20 } // 비고
+		            ];
+					
+		            // 새 워크북을 생성
+		            var wb = XLSX.utils.book_new();
+		            // JSON 데이터를 워크시트로 변환
+		            var ws = XLSX.utils.json_to_sheet(modifiedData);
+		            // 열 너비 지정
+		            ws['!cols'] = colWidths;
+		            // 워크북에 워크시트 추가
+		            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
+		            // Blob 형태로 워크북 생성
+		            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+		            // 파일 이름 설정 (원하는 파일 이름으로 변경)
+		            var fileName = "OutProduct.xlsx";
+		            // Blob 파일을 다운로드
+		            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
+		        }
+		    });
+		
+	});
+	
+	// ArrayBuffer 만들어주는 함수
+	function s2ab(s) {
+	    var buf = new ArrayBuffer(s.length); // convert s to arrayBuffer
+	    var view = new Uint8Array(buf); // create uint8array as viewer
+	    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
+	    return buf;
+	}
+	
+</script>
+
 
  </script>
 </body>
