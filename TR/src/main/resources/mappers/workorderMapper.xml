@@ -14,6 +14,11 @@
 		<result property="stockCount" column="stockCount"/>
 	</resultMap>
 	
+	 <insert id="perfinsert">
+    INSERT INTO performance(perfCode,workCode,prodCode,perfDate)                                                        
+    VALUES(#{perfCode},#{workCode},#{prodCode},#{perfDate})
+</insert>
+	
 	<!-- 작업지시 목록 -->
 	<select id="allWorkOrder" resultType="WorkOrderDTO">
 		SELECT *

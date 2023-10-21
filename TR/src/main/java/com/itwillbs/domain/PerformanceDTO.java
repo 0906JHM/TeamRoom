@@ -10,6 +10,15 @@ import lombok.ToString;
 public class PerformanceDTO {
 	
 	private String perfCode;
+	
+	  public String getPerfCode() {
+	        return perfCode;
+	    }
+
+	    public void setPerfCode(String perfCode) {
+	        this.perfCode = perfCode;
+	    }
+
 	private String workCode;
 	private String prodCode;
 	private String lineCode;

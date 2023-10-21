@@ -27,7 +27,6 @@ public class WorkOrderDAO{
 	private static final Logger logger = LoggerFactory.getLogger(WorkOrderDAO.class);
 	
 	private static final String NAMESPACE = "com.itwillbs.mappers.workorderMapper";
-	private static final String namespace1="com.itwillbs.mappers.PerformanceMapper";
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -373,32 +372,22 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 			// 현재 날짜와 시간을 문자열로 변환
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 			String currentTime = dateFormat.format(new Date());
+			
+			
+			SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
+			String currentTime1 = dateFormat1.format(new Date());
+			
 			PerformanceDTO perfDTO = new PerformanceDTO();
-			String perfCode = "PF"+currentTime;
-			System.out.println(perfCode);
+			String perfCode = "PF"+currentTime1;
 			
 			perfDTO.setPerfCode(perfCode);
-			perfDTO.setLineCode("");
-			perfDTO.setPerfAmount(0);
-			perfDTO.setPerfDate("");
-			perfDTO.setPerfDateadd("");
-			perfDTO.setPerfDefect(0);
-			perfDTO.setPerfDefectmemo("");
-			perfDTO.setPerfDefectreason("");
-			perfDTO.setPerfEmpId("");
-			perfDTO.setPerfFair(0);
-			perfDTO.setPerfMemo("");
-			perfDTO.setPerfStatus("");
-			perfDTO.setProdCode("");
-			perfDTO.setTotalAmount(0);
-			perfDTO.setTotalDefect(0);
-			perfDTO.setTotalFair(0);
-			perfDTO.setWorkCode("");
+			perfDTO.setPerfDate(currentTime);
+			perfDTO.setProdCode(dto.getProdCode());
+			perfDTO.setWorkCode(dto.getWorkCode());
 			System.out.println(perfDTO);
-			/*
-			 * PerformanceDAO perfDAO = new PerformanceDAO(); perfDAO.perfinsert(perfCode);
-			 */
-			sqlSession.insert(namespace1+".perfinsert",perfCode);
+			
+			 
+			sqlSession.insert(NAMESPACE+".perfinsert",perfDTO);
 
 			
 			lineCode = "마감";
