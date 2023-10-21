@@ -558,4 +558,10 @@
 		SET clientSale = clientSale + #{clientSale}
 		WHERE clientCode = #{clientCode}
 	</update>
+	
+	<select id="outProductEmpInfo" resultType="com.itwillbs.domain.EmployeesDTO">
+		SELECT empDepartment, empName, empPosition, empId
+        FROM employees
+        WHERE empId = #{outEmpId}
+	</select>
 </mapper>

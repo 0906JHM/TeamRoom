@@ -59,7 +59,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</tr>
 				<tr>
 					<td class="tableHead">담당자</td>
-					<td><input type="text" name="outEmpId" value="${sessionScope.empId}" readonly="readonly"></td>
+					<td><input type="text" name="outEmpId" value="${sessionScope.empId}" id="outEmpId" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<td class="tableHead">출고 상태</td>
@@ -145,6 +145,83 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		</div>
 	</form>
 </c:if>
+	
+	
+	<!-- 모달 대화상자 -->
+<!-- 	<div id="myModal" class="modal"> -->
+<!-- 	  <div class="modal-content"> -->
+<!-- 	    <span class="close" id="closeModal">&times;</span> -->
+<!-- 	    <p>모달 내용을 여기에 넣으세요</p> -->
+<!-- 	  </div> -->
+<!-- 	</div> -->
+
+	<!-- 모달 대화상자 -->
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <span class="close" id="closeModal">&times;</span>
+	    </div>
+	    <div class="modal-body">
+	      <p>모달 내용을 여기에 넣으세요</p>
+	    </div>
+	  </div>
+	</div>
+
+	
+	<script>
+		  // 모달과 닫기 버튼 가져오기
+		  var modal = document.getElementById('myModal');
+		  var closeModal = document.getElementById('closeModal');
+		
+		  // 입력 요소 가져오기
+		  var inputElement = document.getElementById('outEmpId');
+		  var modalContent = document.querySelector('.modal-content');
+		
+		  inputElement.addEventListener('click', function(e) {
+			  $.ajax({
+			    type: "POST",
+			    url: "${pageContext.request.contextPath}/outProduct/outProductEmpInfo",
+			    data: { outEmpId: $('#outEmpId').val() },
+			    success: function(data) {
+
+			      var empId = data.empId;
+			      var empName = data.empName;
+			      var empDepartment = data.empDepartment;
+				  var empPosition = data.empPosition;
+			      // 모달 내부에 데이터를 표시
+			      var modalContent = document.querySelector('.modal-body');
+			      modalContent.innerHTML = "직원 ID: " + empId + "<br>직원 이름: " + empName + "<br>부서: " + empDepartment+ "<br>직책: " + empPosition;
+
+			      // 모달의 위치를 조정
+			      var rect = inputElement.getBoundingClientRect();
+			      var modalX = rect.left;
+			      var modalY = rect.top + rect.height;
+			      modal.style.left = modalX + 'px';
+			      modal.style.top = modalY + 'px';
+
+			      modal.style.display = 'block';
+			    },
+			    error: function(xhr, status, error) {
+			      // 에러 처리
+			      console.log("에러: " + error);
+			    }
+			  });
+			});
+		
+		  // 닫기 버튼을 클릭하면 모달을 숨김
+		  closeModal.addEventListener('click', function() {
+		    modal.style.display = 'none';
+		  });
+		
+		  // 모달 외부를 클릭하면 모달을 숨김
+		  window.addEventListener('click', function(event) {
+		    if (event.target == modal) {
+		      modal.style.display = 'none';
+		    }
+		  });
+</script>
+	
+	
 	
 	<script type="text/javascript">
 		var department = "<%= department %>";
