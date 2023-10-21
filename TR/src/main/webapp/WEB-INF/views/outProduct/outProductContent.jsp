@@ -88,7 +88,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="2"><input type="text" name="outRedate" value="${outProductDTO.outRedate }" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<td class="tableHead" colspan="3">총수주 개수</td>
+				<td class="tableHead" colspan="3">총 수주 개수</td>
 				<td class="tableHead" colspan="3">남은 수주 개수</td>
 			</tr>
 			<tr> 
@@ -141,7 +141,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.stockCount != 0 }">
 				<input type="button" id="updateButton" value="출고">
 		</c:if>
-			<input type="button" value="닫기" onclick="window.close()">
+			<input type="button" value="닫기" id="closeButton" onclick="window.close()">
 		</div>
 	</form>
 </c:if>

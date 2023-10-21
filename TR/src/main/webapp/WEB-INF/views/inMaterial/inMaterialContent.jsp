@@ -153,7 +153,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<c:if test="${inMaterialDTO.inState != '입고완료'}">
 				<input type="button" id="updateButton" value="입고">
 		</c:if>
-			<input type="button" value="닫기" onclick="window.close()">
+			<input type="button" id="closeButton" value="닫기" onclick="window.close()">
 		</div>
 	</form>
 </c:if>
