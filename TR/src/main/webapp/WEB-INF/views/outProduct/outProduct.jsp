@@ -37,7 +37,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	<jsp:include page="../inc/side.jsp"></jsp:include>
 	<!-- 사이드바 -->
 	<div id="con">
-		<h2>출고 현황</h2>
+		<h2><a href="${pageContext.request.contextPath}/outProduct/list" style=" text-decoration: none; color:black;">출고 관리</a></h2>
 <!-- 		<hr> -->
 		<div id="searchForm">
 				<label>출고 번호 </label><input type="text" name="outCode" id="outCode">
