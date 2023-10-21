@@ -158,6 +158,7 @@ $(document).ready(function() {
 <table id="rawmaterialsList">
 <thead>
 <tr>
+<td></td>
 <td>번호</td>
 <td>원자재코드</td>
 <td>원자재명</td>
@@ -167,13 +168,15 @@ $(document).ready(function() {
 <td>창고명</td>
 <td>재고수량</td>
 <td>비고</td>
-<td></td>
+
 </tr>
 </thead>
 
 <tbody>
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
 <tr>
+<!-- 체크박스로 삭제 -->
+<td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
 <td>${rawmaterialsDTO.rawNum}</td>
 <td><a href="#" onclick="openPopup2('${pageContext.request.contextPath}/Rawmaterials/detail?rawCode=${rawmaterialsDTO.rawCode}')">${rawmaterialsDTO.rawCode}</a></td>
 <td>${rawmaterialsDTO.rawName}</td>
@@ -182,7 +185,6 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawPrice}</td>
 <td>${rawmaterialsDTO.whseCode}</td>
 <td>${rawmaterialsDTO.stockCount}</td>
-
 <!-- 비고기능 -->
 <td><c:choose>
 <c:when test="${not empty rawmaterialsDTO.rawMemo}">
@@ -192,9 +194,6 @@ $(document).ready(function() {
 <c:set var="rawMemo" value="" />
 </c:otherwise>
 </c:choose></td>
-
-<!-- 체크박스로 삭제 -->
-<td><input type="checkbox" name="RowCheck" value="${rawmaterialsDTO.rawCode}"></td>
 </tr>
 </c:forEach>
 </tbody>
