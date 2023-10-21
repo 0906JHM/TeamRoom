@@ -88,8 +88,7 @@
 
 	<h1 style="margin-left: 1%;">제품 목록</h1>
 	
-	<div style="margin: 1% 1%;">
-	<hr style="width:680;">
+	
 	<form method="get">
 		<fieldset>
        		
@@ -103,15 +102,11 @@
 
 		</fieldset>
 	</form>
-<hr style="width:680;">
-</div>	
 
-
-
-	<div class="x_panel">
+<div class="x_panel">
 	
 			<div class="x_title" style="width:680;">
-				<h2><small> 총 ${paging.total} 건</small></h2>
+				<label> 총 ${paging.total} 건</label>
 				
 			</div>
 			
@@ -162,7 +157,17 @@
 						</c:if>
 					
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/search/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prodCode=${dto.prodCode }&prodName=${dto.prodName }">${p }</a>
+							
+							 <c:choose>
+        <c:when test="${p eq paging.nowPage}">
+            <a class="active" href="${pageContext.request.contextPath}/search/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prodCode=${dto.prodCode }&prodName=${dto.prodName }">${p }</a>
+					 </c:when>
+        <c:otherwise>
+           <a class="a" href="${pageContext.request.contextPath}/search/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prodCode=${dto.prodCode }&prodName=${dto.prodName }">${p }</a>
+					 </c:otherwise>
+    </c:choose>	
+						
+						
 						</c:forEach>
 					
 						<c:if test="${paging.endPage != paging.lastPage}">
