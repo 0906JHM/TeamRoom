@@ -20,14 +20,14 @@
 <div class="clientBody">
 		<h1 class="toptitle">거래처 관리</h1>
 
-<hr>
+
 <form method ="GET">
 	<div class="search">
 		 <label class="searchlabel">거래처명&nbsp;&nbsp;</label><input type="text" id="clientCompany" name="clientCompany">
 		  &nbsp;&nbsp; <input type="submit"  class="searchbtn" value="조회">
 		
 		</div>
-<hr>		
+	
 	<div class="typetab">
 	<input type="submit" id="clientType" name="clientType"  value= "전체">
 	<input type="submit" id="clientType" name="clientType" value="수주처">
@@ -39,7 +39,7 @@
 	<div class="tableform"> 
 	
 			<div class="clienttotal">
-			 <h2> 총  ${pageDTO.count} 건 &nbsp;&nbsp;<span class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</span></h2>
+			 <h2 class="h2class"> 총  ${pageDTO.count} 건 &nbsp;&nbsp;<span class="notificlient">* 거래처명을 클릭하면 상세하게 볼 수 있습니다.</span></h2>
 			
 			<div style="float: right;">
 				<input type="button" value="추가" id="addButton" class="addbutton"
