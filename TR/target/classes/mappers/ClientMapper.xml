@@ -15,18 +15,49 @@
 		#{clientFax}, #{clientEmail},#{clientMemo})
 	</insert>
 
-	<select id="getclientList"
-		resultType="com.itwillbs.domain.ClientDTO">
-		select * from clients
+	<select id="getclientList" resultType="com.itwillbs.domain.ClientDTO">
+    SELECT * FROM clients
+    order by clientCode desc
+    limit #{startRow}, #{pageSize}
+</select>
 
+<select id="getSearch" resultType="ClientDTO">
+		select * FROM clients	
+		<where>
+ 			<if test="clientCompany != null and clientCompany !=''">
+				and clientCompany like concat ('%' ,#{clientCompany}, '%')
+			</if> 
+			<if test="clientType != null and clientType != ''">
+				AND clientType like concat ('%' ,#{clientType} , '%')
+			</if>
+		</where>
+		order by clientCode desc
+		limit #{startRow}, #{pageSize}
+	</select>
+	
+	<select id="getSearchcount" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM clients
+		<where>
+ 	 		<if test="clientCompany != null and clientCompany !=''">
+				 and clientCompany like concat ('%' ,#{clientCompany}, '%')
+			</if> 
+			<if test="clientType != null and clientType != ''">
+				AND clientType like concat ('%' ,#{clientType} , '%')
+			</if>
+		</where>
+		order by clientCode desc
+	</select>
+
+<select id="getclientCount" resultType="java.lang.Integer">
+	select count(*) from clients
 	</select>
 
 	<select id="getclientCode" resultType="java.lang.String">
 	  select clientCode from clients where clientType=#{clientType} order by clientCode desc limit 1;
 	</select>
 
-	<select id="clientdetail"
-		resultType="com.itwillbs.domain.ClientDTO">
+	<select id="clientdetail" resultType="com.itwillbs.domain.ClientDTO">
 		select * from clients where clientCompany=#{clientCompany}
 	</select>
 
@@ -39,18 +70,20 @@
 		SELECT * FROM product WHERE
 		clientCode = #{clientCode};
 	</select>
+	
+	
+	
+	
 
 	<update id="clientupdate">
 		UPDATE clients
-		SET clientCompany=#{clientCompany}
-		,clientNumber=#{clientNumber},
+		SET clientNumber=#{clientNumber},
 		clientDetail=#{clientDetail},clientCeo=#{clientCeo},clientName=#{clientName},
 		clientAddr1=#{clientAddr1}, clientAddr2=#{clientAddr2},
 		clientTel=#{clientTel},clientPhone=#{clientPhone},clientFax=#{clientFax},
 		clientEmail=#{clientEmail},clientMemo=#{clientMemo}
-
 		where
-		clientCompany=#{clientCompany}
+		clientCode=#{clientCode}
 
 	</update>
 
@@ -59,6 +92,6 @@
 		clientCompany=#{clientCompany}
 
 	</delete>
-
+	
 
 </mapper>
