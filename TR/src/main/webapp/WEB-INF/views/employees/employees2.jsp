@@ -27,8 +27,9 @@
 <div class="form-group"><p>직책</p>
 <select name="empPosition" class="empPosition select">
 <option value="사원">사원</option>
-<option value="팀장">팀장</option>
-<option value="부장">부장</option>
+<option value="선임">선임</option>
+<option value="책임">책임</option>
+<option value="수석">수석</option>
 </select></div>
 <div class="form-group"><p>이메일</p><input type="email" id="empEmail" name="empEmail" class="empEmail"></div>
                                                            <span id ="empEmailmsg">  </span> 
@@ -185,7 +186,7 @@ form.addEventListener("submit", function(event) {
 
     // 이름 유효성 검사
     empName = empName.replace(/[\d`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '');
-    if (empName === "") {
+    if (empName === "" || !koreanRegex.test(empName)) {
         document.getElementById("empNamemsg").textContent = "올바른 한글 이름을 입력하세요.";
         document.getElementById("empNamemsg").style.position = "relative"; // 메시지 표시
         event.preventDefault(); // 폼 제출을 막습니다.
