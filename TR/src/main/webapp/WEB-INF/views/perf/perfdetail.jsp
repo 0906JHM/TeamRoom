@@ -287,9 +287,10 @@ updateButton.addEventListener("click", function(event){
         type: "POST", // 또는 "GET" 등 HTTP 요청 메서드 선택
         url: updateProUrl, // 서버 엔드포인트 URL 설정
         data: formData, // 폼 데이터 전송
-        processData: false, // 폼 데이터를 문자열로 변환하지 않도록 설정 (FormData 사용 시 필요)
-        contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 자동으로 설정하지 않도록 함
+//         processData: false, // 폼 데이터를 문자열로 변환하지 않도록 설정 (FormData 사용 시 필요)
+//         contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 자동으로 설정하지 않도록 함
         success: function(response) {
+        	console.log("ajax 왔다감");
             // 서버 응답이 성공인 경우
             Swal.fire({
                 title: '수정 성공',
