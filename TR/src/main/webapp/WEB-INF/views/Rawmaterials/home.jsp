@@ -166,7 +166,7 @@ $(document).ready(function() {
 <td>종류</td>
 <td>단위</td>
 <td>매입단가</td>
-<td>창고명</td>
+<td>창고코드</td>
 <td>재고수량</td>
 <td>비고</td>
 </tr>

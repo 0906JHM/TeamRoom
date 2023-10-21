@@ -40,14 +40,14 @@ function openPopup2() {
 <tr><td id="td1">매입단가</td>
     <td id="tdup"><input type="text" name="rawPrice" value="${rawmaterialsDTO.rawPrice}"></td></tr>
 <tr><td id="td1">창고코드</td>
-    <td id="tdup"><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}" readonly> <input type="button" value="목록" onclick="openPopup2()"></td></tr>
+    <td id="tdup"><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}" readonly> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
 <tr><td id="td1">비고</td>
 	<td id="tdup"><textarea name="rawMemo" rows="10" cols="15">${rawmaterialsDTO.rawMemo}</textarea></td></tr>
 </table>
 
 <!-- button -->
 <div id="buttons">
-<input type="submit" value="수정">
+<input type="submit" value="수정" id=btn1>
 </div>
 </form>
 </div>

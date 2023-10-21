@@ -48,9 +48,9 @@ function openPopup1(rawCode) {
 <!-- button -->
 <div id="buttons">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자')}">
-<input type="button" value="수정" onclick="openPopup1('${rawmaterialsDTO.rawCode}');">
+<input type="button" value="수정" onclick="openPopup1('${rawmaterialsDTO.rawCode}');" id=btn1>
 </c:if>
-<input type="button" value="목록" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/home'">
+<input type="button" value="목록" onclick="location.href='${pageContext.request.contextPath}/Rawmaterials/home'" id=btn2>
 </div>
 </div>
 
