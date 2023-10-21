@@ -74,7 +74,7 @@ input[type="text"] {
 	/* 	margin-bottom: 10px; */
 }
 
-#tdup input[type="text"] {
+#tdup input[type="text"], #tdup input[type="number"], #tdup select {
   	border: 1px solid #adb5bb;
 	border-radius: 5px;
 	width: 200px;
