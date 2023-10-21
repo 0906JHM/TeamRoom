@@ -141,7 +141,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.stockCount != 0 }">
 				<input type="button" id="updateButton" value="출고">
 		</c:if>
-			<input type="button" value="닫기" onclick="window.close()">
+			<input type="button" value="닫기" id="closeButton" onclick="window.close()">
 		</div>
 	</form>
 </c:if>

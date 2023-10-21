@@ -69,9 +69,11 @@ background-color:#9AC5F4;
 	text-align: center;
 	font: 300 18px/18px "Inter", sans-serif;
 }
-
+#closeButton{
+	background-color:#4D4D4D;
+}
 input[type="button"]:hover, input[type="submit"]:hover {
-	background-color: #4D4D4D;
+	background-color: #1D5D9B !important;
     cursor: pointer; /* pointer 커서는 일반적으로 손가락 모양입니다 */
 }
 

@@ -115,6 +115,7 @@ input[type="button"] {
 
 input[type="button"]:hover {
 	cursor: pointer; 
+	background-color: #1D5D9B !important;
 }
 
 #outProductList {
