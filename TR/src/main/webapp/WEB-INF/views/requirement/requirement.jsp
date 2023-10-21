@@ -738,8 +738,8 @@ $(document).ready(function() {
 								<td></td>
 								<td id="reqCode">${dto.reqCode }</td>
 								<td style='display: none;'>${dto.prodCode }</td>
-								<td style='cursor: pointer;' onclick="openModal(this)" id="${dto.prodCode }" name="prodName" value="${dto.prod.prodName }">${dto.prod.prodName }</td>
-								<td style='cursor: pointer;' onclick="openModal(this)" id="${dto.rawCode }" name="rawName" value="${dto.raw.rawName }">${dto.raw.rawName }</td>
+								<td><label style='cursor: pointer;' onclick="openModal(this)" id="${dto.prodCode }" name="prodName" value="${dto.prod.prodName }">${dto.prod.prodName }</label></td>
+								<td><label style='cursor: pointer;' onclick="openModal(this)" id="${dto.rawCode }" name="rawName" value="${dto.raw.rawName }">${dto.raw.rawName }</label></td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
 								<td id="rawCode" style='display: none;'>${dto.rawCode }</td>

@@ -46,20 +46,18 @@ public class AjaxPerformanceController {
 	    }
 	}
 	
-	@PostMapping("/ajaxinsert")
-	public ResponseEntity<String> ajaxinsert ( PerformanceDTO perfDTO ) {
-		log.debug("perfInsert요청");
-		
-		boolean success = perfService.perfinsert(perfDTO);
-		System.out.println(success);
-		 if (success) {
-		        return ResponseEntity.ok("등록 성공");
-		        
-		    } else {
-		    	
-		        return ResponseEntity.status(500).body("등록 실패"); // 실패 응답, 500은 서버 오류 코드
-		    }
-		}
+	/*
+	 * @PostMapping("/ajaxinsert") public ResponseEntity<String> ajaxinsert (
+	 * PerformanceDTO perfDTO ) { log.debug("perfInsert요청");
+	 * 
+	 * boolean success = perfService.perfinsert(perfDTO);
+	 * System.out.println(success); if (success) { return
+	 * ResponseEntity.ok("등록 성공");
+	 * 
+	 * } else {
+	 * 
+	 * return ResponseEntity.status(500).body("등록 실패"); // 실패 응답, 500은 서버 오류 코드 } }
+	 */
 	
 	@PostMapping("/perfdonut")
 	public ResponseEntity<List<PerformanceDTO>> getdonut(@RequestBody List<String> lineCode) {

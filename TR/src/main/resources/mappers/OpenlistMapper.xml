@@ -480,5 +480,73 @@
     LIMIT #{start}, #{cntPerPage}
 
 	</select>	
+	
+	
+	
+	<!--  ***************** 라인 *************** -->
+	<!-- ****************** 작업지시 ******************** -->
+
+	<!--  총 작업지시 개수 -->	
+	<select id="countwork" resultType="int">
+	 SELECT COUNT(*) FROM workOrder w
+    LEFT JOIN product p ON w.prodCode = p.prodCode
+
+
+	</select>
+	<!--  작업지시 총 리스트 -->
+	<select id="getworklist" resultType="workorderDTO">
+	SELECT w.* , p.prodName FROM workOrder w
+	LEFT JOIN product p on w.prodCode = p.prodCode
+	ORDER BY workCode DESC 
+	LIMIT #{start}, #{cntPerPage}
+
+	</select>
+	<!-- 해쉬맵 설정   -->
+	<resultMap id="work"
+		type="com.itwillbs.domain.WorkOrderDTO">
+
+
+	</resultMap>
+
+	<!--  작업지시 검색 개수  -->
+	<select id="searchworkcount" resultType="int" parameterType="hashMap"  resultMap="work">
+	SELECT count(*) FROM workOrder 
+	LEFT JOIN product p on w.prodCode = p.prodeCode
+	 <where>
+	      <if test="lineCode != null and lineCode=''">
+	     and  lineCode like concat ('%' , #{lineCode} , '%' )
+	         </if>
+	         <if test="prodName != null and prodName=''" >
+	         and prodName like concat ('%' , #{prodName} , '%')
+	          </if>	              	 
+	 </where>	
+	 	order by workCode desc
+		limit #{start},#{cntPerPage}  
+	</select>
+
+	<select id ="getsearchworklist" parameterType="hashMap"  resultMap="work">
+		SELECT w.* , p.prodNaME FROM workOrder w
+	   LEFT JOIN product p on w.prodCode = p.prodCode
+	   <where> 
+	    <if test="lineCode != null and lineCode=''">
+	     and  lineCode like concat ('%' , #{lineCode} , '%' )
+	         </if>
+	         <if test="prodName != null and prodName=''" >
+	         and prodName like concat ('%' , #{prodName} , '%')
+	          </if>	 
+	   </where>
+		 	order by workCode desc
+		limit #{start},#{cntPerPage}  
+	</select> 
+
+	<!-- 
+			SELECT *
+		FROM workOrder w
+        LEFT JOIN product p on w.prodCode = p.prodCode 
+		WHERE workCode != '' 
+		ORDER BY workCode DESC 
+		LIMIT #{start}, #{cntPerPage}
+	
+	 -->
   
   </mapper>

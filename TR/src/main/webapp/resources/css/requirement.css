@@ -103,6 +103,7 @@ color: white;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 .magambutton{

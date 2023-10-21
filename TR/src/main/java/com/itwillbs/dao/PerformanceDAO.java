@@ -63,9 +63,9 @@ public class PerformanceDAO {
 
 
 
-	public boolean perfinsert(PerformanceDTO perfDTO) {
+	public void perfinsert(String perfCode) {
 		
-		return sqlsession.insert(namespace+".perfinsert",perfDTO) > 0;
+		sqlsession.insert(namespace+".perfinsert",perfCode);
 		
 		
 	}

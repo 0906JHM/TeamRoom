@@ -11,11 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.PerformanceDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.StockDTO;
 import com.itwillbs.domain.WorkOrderDTO;
+import com.itwillbs.service.PerformanceService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @Repository
@@ -23,6 +27,7 @@ public class WorkOrderDAO{
 	private static final Logger logger = LoggerFactory.getLogger(WorkOrderDAO.class);
 	
 	private static final String NAMESPACE = "com.itwillbs.mappers.workorderMapper";
+	private static final String namespace1="com.itwillbs.mappers.PerformanceMapper";
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -108,7 +113,16 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 					} //원자재 재고 차감 
 					
 				} //for(stockList)
-				
+
+				// 현재 날짜와 시간을 문자열로 변환
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String currentTime = dateFormat.format(new Date());
+				System.out.println(dto.getLineCode());
+
+				// 작업 정보와 현재 시간을 연결하여 최종 문자열을 만듭니다.
+				String workInfo = dto.getLineCode() + currentTime;
+				System.out.println(workInfo);
+				dto.setWorkInfo(workInfo);
 				//작업지시 등록
 				int result = sqlSession.insert(NAMESPACE + ".insertWorkOrder", dto);
 				logger.debug("##### DAO: insert 결과 ====> " + result);
@@ -141,6 +155,10 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 		
 		String lineCode = sqlSession.selectOne(NAMESPACE + ".selectLine");
 		logger.debug("##### DAO: lineCode ===> " + lineCode);
+		
+		// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+		
+
 		
 		return lineCode;
 	} //getLineCode()
@@ -302,6 +320,21 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 				
 				sqlSession.update(NAMESPACE + ".lineUseY", dto.getLineCode());
 				sqlSession.update(NAMESPACE + ".updateLine", lineCode);
+				System.out.println(lineCode);
+				// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+				String workInfo1 = dto.getWorkInfo();
+				System.out.println(dto.getWorkInfo());
+
+				// 현재 날짜와 시간을 문자열로 변환
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String currentTime = dateFormat.format(new Date());
+
+				// 작업 정보와 현재 시간을 연결하여 최종 문자열을 만듭니다.
+				String workInfo = workInfo1 + lineCode + currentTime;
+				System.out.println(workInfo);
+				dto.setWorkInfo(workInfo);
+				dto.setLineCode(lineCode);
+				sqlSession.update(NAMESPACE + ".updateInfo", dto);
 				
 			}
 		} else if(workProcess.equals("2차공정")) {
@@ -311,13 +344,64 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 				sqlSession.update(NAMESPACE + ".updateStatus", dto);
 				sqlSession.update(NAMESPACE + ".lineUseY", dto.getLineCode());
 				sqlSession.update(NAMESPACE + ".updateLine", lineCode);
+				// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+				System.out.println(lineCode);
+				System.out.println(dto.getWorkInfo());
+				String workInfo1 = dto.getWorkInfo();
+
+				// 현재 날짜와 시간을 문자열로 변환
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String currentTime = dateFormat.format(new Date());
+
+				// 작업 정보와 현재 시간을 연결하여 최종 문자열을 만듭니다.
+				String workInfo = workInfo1 + lineCode + currentTime;
+				System.out.println(workInfo);
+				dto.setWorkInfo(workInfo);
+				dto.setLineCode(lineCode);
+				sqlSession.update(NAMESPACE + ".updateInfo", dto);
 				
 			}
 		}
 		else {
 			sqlSession.update(NAMESPACE + ".updateStatus", dto);
 			sqlSession.update(NAMESPACE + ".lineUseY", dto.getLineCode());
-			lineCode = "없음";
+			// dto.getWorkInfo() 메서드에서 작업 정보를 가져오는 로직을 가정
+			System.out.println(lineCode);
+			System.out.println(dto.getWorkInfo());
+			String workInfo = dto.getWorkInfo();
+
+			// 현재 날짜와 시간을 문자열로 변환
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+			String currentTime = dateFormat.format(new Date());
+			PerformanceDTO perfDTO = new PerformanceDTO();
+			String perfCode = "PF"+currentTime;
+			System.out.println(perfCode);
+			
+			perfDTO.setPerfCode(perfCode);
+			perfDTO.setLineCode("");
+			perfDTO.setPerfAmount(0);
+			perfDTO.setPerfDate("");
+			perfDTO.setPerfDateadd("");
+			perfDTO.setPerfDefect(0);
+			perfDTO.setPerfDefectmemo("");
+			perfDTO.setPerfDefectreason("");
+			perfDTO.setPerfEmpId("");
+			perfDTO.setPerfFair(0);
+			perfDTO.setPerfMemo("");
+			perfDTO.setPerfStatus("");
+			perfDTO.setProdCode("");
+			perfDTO.setTotalAmount(0);
+			perfDTO.setTotalDefect(0);
+			perfDTO.setTotalFair(0);
+			perfDTO.setWorkCode("");
+			System.out.println(perfDTO);
+			/*
+			 * PerformanceDAO perfDAO = new PerformanceDAO(); perfDAO.perfinsert(perfCode);
+			 */
+			sqlSession.insert(namespace1+".perfinsert",perfCode);
+
+			
+			lineCode = "마감";
 			
 			
 		}
