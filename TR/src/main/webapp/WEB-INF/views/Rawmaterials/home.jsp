@@ -163,8 +163,8 @@ $(document).ready(function() {
 </form>
 
 <div class="total-items">
-<%-- <label>총 ${rawmaterialsCount}건</label> --%>
-<label>총 ${pageDTO.count}명</label>
+<%-- <label>총 ${rawmaterialsCount}개</label> --%>
+<label>총 ${pageDTO.count}개</label>
 </div>
 
 <!-- table -->
@@ -196,11 +196,21 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawUnit}</td>
 <td>${rawmaterialsDTO.rawPrice}</td>
 <td>${rawmaterialsDTO.whseCode}</td>
-<td>${rawmaterialsDTO.stockCount}</td>
+
+<td><c:choose>
+<c:when test="${rawmaterialsDTO.stockCount < 500}">
+<span style="color:red;" data-title="500개 미만입니다">${rawmaterialsDTO.stockCount}</span>
+</c:when>
+<c:otherwise>
+${rawmaterialsDTO.stockCount}
+</c:otherwise>
+</c:choose></td>
+
+
 <!-- 비고기능 -->
 <td><c:choose>
 <c:when test="${not empty rawmaterialsDTO.rawMemo}">
-<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" style="color:black;">[보기]</a>
+<a href="#" onclick="openPopup4('${rawmaterialsDTO.rawCode}');" style="text-decoration: none; color: black;">[보기]</a>
 </c:when>
 <c:otherwise>
 <c:set var="rawMemo" value="" />

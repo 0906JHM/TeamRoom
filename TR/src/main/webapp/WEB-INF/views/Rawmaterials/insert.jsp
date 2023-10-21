@@ -36,7 +36,7 @@
 <tr><td id="td1">원자재명</td><td id="tdup"><input type="text" name="rawName" required></td></tr>
 <tr><td id="td1">단위</td><td id="tdup"><input type="text" name="rawUnit" value="EA"></td></tr>
 <tr><td id="td1">매입단가</td><td id="tdup"><input type="number" name="rawPrice" required></td></tr>
-<tr><td id="td1">창고명</td><td id="tdup1"><input type="text" name="whseCode" id="pInput2" readonly="readonly" required> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
+<tr><td id="td1">창고코드</td><td id="tdup1"><input type="text" name="whseCode" id="pInput2" readonly="readonly" required> <input type="button" value="목록" onclick="openPopup2()" id=btn3></td></tr>
 <tr><td id="td1">비고</td><td id="tdup"><input type="text" name="rawMemo"></td></tr>
 </table>
 

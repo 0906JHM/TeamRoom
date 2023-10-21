@@ -177,7 +177,7 @@ $(document).ready(function() {
 <td>종류</td>
 <td>거래처코드</td>
 <td>창고코드</td>
-<td>창고수량</td>
+<td>재고수량</td>
 <td>발주수량</td>
 <td>매입단가</td>
 <td>단가총계</td>
