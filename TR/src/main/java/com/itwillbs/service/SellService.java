@@ -102,6 +102,10 @@ public class SellService {
 		return sellDAO.getSellSearchCount(sellDTO);
 	}//getSellSearchCount
 
+	public List<SellDTO> getExcelList(SellDTO sellDTO) {
+		return sellDAO.getExcelList(sellDTO);
+	}
+
 	
 	
 

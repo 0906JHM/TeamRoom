@@ -108,6 +108,10 @@ public class SellDAO {
 
 			return sqlSession.selectOne(namespace + ".getSellSearchCount", sellDTO);
 		}//getSellSearchCount
+
+		public List<SellDTO> getExcelList(SellDTO sellDTO) {
+			return sqlSession.selectList(namespace + ".getExcelList", sellDTO);
+		}
 		
 		
 

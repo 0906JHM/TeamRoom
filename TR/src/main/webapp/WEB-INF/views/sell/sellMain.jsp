@@ -597,66 +597,56 @@ function openSellDetail(sellCode) {
 	document.getElementById('exportButton').addEventListener('click', function () {
 		
 			// 엑셀로 내보낼 데이터
-		    var searchParams = {
-		        outCode: $("#outCode").val(),
-		        prodName: $("#prodName9999").val(),
-		        clientCompany: $("#clientCompany9999").val(),
-		        sellState: sellStateButton1 // 전체 조건 추가
-		    };
+		   var searchParams = {
+				 sellCode: $("#sellCode").val(),
+				 prodCode: $("#prodCode9999").val(),
+				 clientCode: $("#sellclientCode9999").val(),
+				 daterange1: $("#sellDate").val(),
+				 daterange2: $("#sellDuedate").val(),
+				 sellState: $("#sellState").val()			   
+			};
 		
 		    $.ajax({
 		        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
-		        url: "${pageContext.request.contextPath}/outProduct/excel", // 데이터를 가져올 URL 설정
+		        url: "${pageContext.request.contextPath}/sell/excel", // 데이터를 가져올 URL 설정
 		        data: searchParams, // 검색 조건 데이터 전달
 		        dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
 		        success: function (data) {
 		            // 데이터 가공
 					var modifiedData = data.map(function (item) {
 					    return {
-					        '출고 코드': item.outCode,
+					        '처리 상태': item.sellState,
 					        '수주 코드': item.sellCode,
 					        '거래처 코드': item.clientCode,
 					        '거래처명': item.clientCompany,
 					        '제품 코드': item.prodCode,
 					        '제품명': item.prodName,
-					        '담당자': item.outEmpId,
-					        '총 출고가':item.outPrice,
-					        '출고 상태': item.sellState,
-					        '납품 예정일': item.sellDuedate,
-					        '출고일': item.outDate,
-					        '재출고일': item.outRedate,
-					        '납품 개수': item.sellCount,
-					        '남은 납품 개수': item.sellCount - item.outCount,
-					        '출고 개수': item.outCount,
-					        '재고 개수': item.stockCount,
-					        '납품 단가': item.prodPrice,
-					        '현재 출고가': item.prodPrice * item.outCount,
-					        '비고': item.outMemo
+					        '제품 단가': item.prodPrice,
+					        '수주 수량': item.sellCount,
+					        '수주 단가':item.sellPrice,
+					        '수주 일자': item.sellDate,
+					        '납기 일자': item.sellDuedate,
+					        '담당자': item.sellEmpId,
+					        '비고': item.sellMemo
 					    };
 					});
 		            
 					// 열의 너비 설정
 		            var colWidths = [
-		            	{ wch: 15 }, // 출고 코드
-		                { wch: 15 }, // 수주 코드
-		                { wch: 10 }, // 거래처 코드
-		                { wch: 12 }, // 거래처명
-		                { wch: 10 }, // 제품 코드
-		                { wch: 10 }, // 제품명
-		                { wch: 10 }, // 담당자
-		                { wch: 15 }, // 총 출고가
-		                { wch: 10 }, // 출고 상태
-		                { wch: 15 }, // 납품 예정일
-		                { wch: 15 }, // 출고일
-		                { wch: 15 }, // 재출고일
-		                { wch: 10 }, // 납품 개수
-		                { wch: 10 }, // 남은 납품 개수
-		                { wch: 10 }, // 출고 개수
-		                { wch: 10 }, // 재고 개수
-		                { wch: 10 }, // 납품 단가
-		                { wch: 15 }, // 현재 출고가
-		                { wch: 20 } // 비고
-		            ];
+					    { wch: 10 }, // 처리 상태
+					    { wch: 15 }, // 수주 코드
+					    { wch: 15 }, // 거래처 코드
+					    { wch: 15 }, // 거래처명
+					    { wch: 15 }, // 제품 코드
+					    { wch: 15 }, // 제품명
+					    { wch: 15 }, // 제품 단가
+					    { wch: 10 }, // 수주 수량
+					    { wch: 10 }, // 수주 단가
+					    { wch: 15 }, // 수주 일자
+					    { wch: 15 }, // 납기 일자
+					    { wch: 10 }, // 담당자
+					    { wch: 20 }  // 비고
+					];
 					
 		            // 새 워크북을 생성
 		            var wb = XLSX.utils.book_new();
@@ -669,7 +659,7 @@ function openSellDetail(sellCode) {
 		            // Blob 형태로 워크북 생성
 		            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 		            // 파일 이름 설정 (원하는 파일 이름으로 변경)
-		            var fileName = "OutProduct.xlsx";
+		            var fileName = "sell.xlsx";
 		            // Blob 파일을 다운로드
 		            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
 		        }
