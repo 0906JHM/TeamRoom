@@ -25,5 +25,6 @@ public class RawmaterialsDTO {
 	private int rawNum;
 	private Timestamp date;
 	private int stockCount;
+	private int whseCount;
 	
 }
