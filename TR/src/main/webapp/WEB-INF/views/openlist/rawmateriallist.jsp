@@ -85,11 +85,9 @@
 
 	<h1 style="margin-left: 1%;">원자재 목록</h1>
 	
-	<div style="margin: 1% 1%;">
-	<hr style="width:680;">
+	
 	<form method="get">
 		<fieldset>
-       		
        		<input type="hidden" name="input" id="input" value="${input }">   		
 
        		<label>코드&nbsp;</label>
@@ -97,18 +95,16 @@
         	<label>원자재&nbsp;</label>
         	<input style="width:175; font: 500 15px/15px 'Inter', sans-serif;" class="input_box" type="text" name="rawName" id="searchName" placeholder="원자재를 입력하세요."> &nbsp;&nbsp;
         	<input type="submit" class="button" value="조회">
-
 		</fieldset>
 	</form>
-<hr style="width:680;">
-</div>	
+	
 
 
 
 	<div class="x_panel">
 	
 			<div class="x_title" style="width:680;">
-				<h2><small> 총 ${paging.total} 건</small></h2>
+				<label> 총 ${paging.total} 건</label>
 				
 			</div>
 			
@@ -157,7 +153,16 @@
 						</c:if>
 					
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-							<a class="active" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">${p }</a>
+							 <c:choose>
+        <c:when test="${p eq paging.nowPage}">
+            <a class="active" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">${p }</a>
+					 </c:when>
+        <c:otherwise>
+           <a class="a" href="${pageContext.request.contextPath}/search/rawmaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&rawCode=${dto.rawCode }&rawName=${dto.rawName }">${p }</a>
+					 </c:otherwise>
+    </c:choose>
+							
+							
 						</c:forEach>
 					
 						<c:if test="${paging.endPage != paging.lastPage}">

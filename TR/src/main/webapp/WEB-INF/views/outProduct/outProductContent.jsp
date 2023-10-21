@@ -34,40 +34,40 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<table>
 			<tbody>
 				<tr>
-					<th>출고 코드</th>
+					<td class="tableHead">출고 코드</td>
 					<td><input type="text" name="outCode" value="${outProductDTO.outCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>수주 코드</th>
+					<td class="tableHead">수주 코드</td>
 					<td><input type="text" name="sellCode" value="${outProductDTO.sellCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>거래처 코드</th>
+					<td class="tableHead">거래처 코드</td>
 					<td><input type="text" name="clientCode" value="${outProductDTO.clientCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>거래처명</th>
+					<td class="tableHead">거래처명</td>
 					<td><input type="text" name="clientCompany" value="${outProductDTO.clientCompany }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>제품 코드</th>
+					<td class="tableHead">제품 코드</td>
 					<td><input type="text" name="prodCode" value="${outProductDTO.prodCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>제품명</th>
+					<td class="tableHead">제품명</td>
 					<td><input type="text" name="prodName" value="${outProductDTO.prodName }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>담당자</th>
+					<td class="tableHead">담당자</td>
 					<td><input type="text" name="outEmpId" value="${sessionScope.empId}" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>출고 상태</th>
+					<td class="tableHead">출고 상태</td>
 					<td><input type="text" name="sellState" value="${outProductDTO.sellState }" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<fmt:formatNumber var="outPrice" value="${outProductDTO.outPrice }" pattern="###,###"></fmt:formatNumber>
-					<th>총 출고가</th>
+					<td class="tableHead">총 출고가</td>
 					<td>
 						<input type="hidden" name="outPrice" value="${outProductDTO.outPrice }">
 						<input type="text" name="outPriceFormat" value="${outPrice }원" readonly="readonly">
@@ -78,9 +78,9 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<br>
 		<table class="outProductTable">
 			<tr>
-				<th colspan="2">납품 예정일</th>
-				<th colspan="2">출고일</th>
-				<th colspan="2">재출고일</th>
+				<td class="tableHead" colspan="2">납품 예정일</td>
+				<td class="tableHead" colspan="2">출고일</td>
+				<td class="tableHead" colspan="2">재출고일</td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="text" name="sellDuedate" value="${outProductDTO.sellDuedate }" readonly="readonly"></td>
@@ -88,8 +88,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="2"><input type="text" name="outRedate" value="${outProductDTO.outRedate }" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th colspan="3">총수주 개수</th>
-				<th colspan="3">남은 수주 개수</th>
+				<td class="tableHead" colspan="3">총 수주 개수</td>
+				<td class="tableHead" colspan="3">남은 수주 개수</td>
 			</tr>
 			<tr> 
 				<td colspan="3"><input type="number" name="sellCount" value="${outProductDTO.sellCount }" readonly="readonly"></td>
@@ -98,8 +98,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				
 			</tr>
 			<tr>
-				<th colspan="3">출고 개수</th>
-				<th colspan="3">재고 개수</th>
+				<td class="tableHead" colspan="3">출고 개수</td>
+				<td class="tableHead" colspan="3">재고 개수</td>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -117,8 +117,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="3">제품 단가</th>
-				<th colspan="3">현재 출고가</th>
+				<td class="tableHead" colspan="3">제품 단가</td>
+				<td class="tableHead" colspan="3">현재 출고가</td>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -131,7 +131,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="6">비고</th>
+				<td class="tableHead" colspan="6">비고</td>
 			</tr>
 			<tr>
 				<td colspan="6"><input type="text" name="outMemo" value="${outProductDTO.outMemo }" id="inputMemo" placeholder="비고 입력"></td>
@@ -141,7 +141,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<c:if test="${outProductDTO.sellState != '출고완료' && outProductDTO.stockCount != 0 }">
 				<input type="button" id="updateButton" value="출고">
 		</c:if>
-			<input type="button" value="닫기" onclick="window.close()">
+			<input type="button" value="닫기" id="closeButton" onclick="window.close()">
 		</div>
 	</form>
 </c:if>

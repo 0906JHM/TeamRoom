@@ -246,7 +246,7 @@ function submitForm() {
                     // 이미 존재하는 레코드일 때의 처리
                     Swal.fire({
                         title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "이미 존재하는 항목이 있습니다.",
-                        confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+                        confirmButtonColor: '#9AC5F4',
                         icon: 'success',
                         width: '400px',
                     }).then((result) => {
@@ -273,7 +273,7 @@ function submitForm() {
     } else {
         Swal.fire({
             title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요" + "</div>",
-            confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+            confirmButtonColor: '#9AC5F4',
             icon: 'info',
             width: '400px',
         });
@@ -444,7 +444,7 @@ $(document).ready(function() {
 							  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 					  icon: 'info', // 아이콘! 느낌표 색? 표시?
 					  showDenyButton: true,
-					  confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+					  confirmButtonColor: '#9AC5F4', // confrim 버튼 색깔 지정
 					  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 					  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 //						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
@@ -465,7 +465,7 @@ $(document).ready(function() {
  						success: function () {
  							Swal.fire({
 								  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
-								  confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+								  confirmButtonColor: '#9AC5F4',
 								  icon: 'success',
 								  width : '400px',
 								}).then((result) => {
@@ -478,7 +478,7 @@ $(document).ready(function() {
 							Swal.fire({
 								title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
 								icon : 'question',
-								confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+								confirmButtonColor: '#9AC5F4', // confrim 버튼 색깔 지정
 								  
 								width: '400px',
 								});
@@ -489,7 +489,7 @@ $(document).ready(function() {
 							Swal.fire({
 							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
 							icon : 'error',
-							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)', // confrim 버튼 색깔 지정
+							confirmButtonColor: '#9AC5F4', // confrim 버튼 색깔 지정
 							  
 							width: '400px',
 							});
@@ -501,7 +501,7 @@ $(document).ready(function() {
 				Swal.fire({
 					title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 					icon : 'warning',
-					confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+					confirmButtonColor: '#9AC5F4',
 					width: '400px',
 					});
 			}// 체크 XXX
@@ -533,7 +533,7 @@ $(document).ready(function() {
 			 title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "수정할 행을 선택해주세요"+ "</div>",
 			  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 	  icon: 'info', // 아이콘! 느낌표 색? 표시?
-            confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+            confirmButtonColor: '#9AC5F4',
          });
 
 		//행 하나 클릭했을 때	
@@ -628,7 +628,7 @@ $(document).ready(function() {
 						Swal.fire({
 							title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "1이상의 값을 입력해주세요"+ "</div>",
 							icon: 'info',
-							confirmButtonColor: 'rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1)',
+							confirmButtonColor: '#9AC5F4',
 							width: '400px',
 						})}
 					else{$('#fr').attr("action","${pageContext.request.contextPath}/requirement/reqModify");
@@ -672,45 +672,51 @@ $(document).ready(function() {
 <!-- page content -->
 <div class="right_col">
 
-	<h2 style="margin-left: 1%; cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'">소요량 관리</h2>
-	<hr>
-	<div class="input_value" style="margin: 1% 1%;">	
+	<h2 style="cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'">소요량 관리</h2>
+	
 		<form method="get">
-			<fieldset>
-				<label>소요코드&nbsp;</label> 
-				<input class="input_box" type="text" name="reqCode" onfocus="this.value='RQ'" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
-				<label>제품&nbsp;</label> 
+			<div class="searchform">
+				<label>소요코드</label> 
+				<input class="input_box" type="text" name="reqCode" onfocus="this.value='RQ'" placeholder="소요량코드를 입력하세요.">
+				<label>제품</label> 
 				<input type="hidden"name="prodCode" id="prodCode9999">
-				<input class="input_box" type="text" name="prodName" id="prodName9999" placeholder="제품을 선택하세요." readonly onclick="searchItem('prod','prodCode9999')"> &nbsp;&nbsp;
-				<label>원자재&nbsp;</label>
+				<input class="input_box" type="text" name="prodName" id="prodName9999" placeholder="제품을 선택하세요." readonly onclick="searchItem('prod','prodCode9999')">
+				<label>원자재</label>
 				<input type="hidden" name="rawCode" id="rawCode9999">
-				<input class="input_box" type="text" name="rawName" id="rawName9999"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')"> &nbsp;&nbsp;
-				<input class="button" type="submit" value="조회">
-			</fieldset>
+				<input class="input_box" type="text" name="rawName" id="rawName9999"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')">
+				<input style ="margin: 0 0 0 20px;" class="button" type="submit" value="조회">
+			</div>
 		</form>
-	</div>
-	<hr>
-	<div class="col-md-12 col-sm-12">
-		<div class="x_panel">
-			
-				<div class="x_title">
-					
-					<div class="x_total">
-					<h3>총 ${paging.total} 건</h3>
-						
-					</div>
-					<div>
+	
+	<div class="col-md-12">
+	<div style ="margin: 2% 0 0 0;"	>
+	<div style="float:right;">
 						<button style="display: none;"class="button" id="add" >추가</button>
 						<button style="display: none;"class="button" id="modify" >수정</button>
 						<button style="display: none;"class="button" id="delete" >삭제</button>
 						<button style="display: none;" id ="cancle" onclick="location.href='${pageContext.request.contextPath}/requirement/reqDetail'" class="button">취소</button>
 						<input style="display: none;" class="button" type="submit" value="저장" id="save">
-					</div>						
+					</div>
+					</div>		
+		<div class="x_panel">
+			
+				<div class="x_title">
+					<label style="margin:0px">총 ${paging.total} 건</label>
+					<div>
+					<label for="perPageSelect" >항목 수:</label>
+<select id="perPageSelect" class="input_box" style ="top:1.8px; width:100px; height:22px;" onchange="applyFilters()" value="${paging.cntPerPage}">
+    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+</select>
+</div>
+									
 				</div>
 				
 				
-		<div class="x_content">
-			<div class="table-responsive">
+		
+			
 				<div class="table-wrapper" >
 				<form id="fr" method="post">
 					<table id="reqTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center; ">
@@ -742,24 +748,15 @@ $(document).ready(function() {
 					</table>
 					</form>
 					</div>
-					</div>
-				</div>
+				
 				
 				</div>
 				</div>
 				<div>
 	<div style="float:left;">
-	 <label for="perPageSelect" style ="bottom:2px;">항목 수:</label>
-<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${paging.cntPerPage}">
-    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
-    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
-    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
-    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
-</select>
-	<button id="excelDownload" class="button">엑셀⬇️</button>
+	 
+	<button id="excelDownload" class="button">엑셀</button>
 	</div>	
-<%-- <button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/requirement/reqDetail?nowPage=1&cntPerPage=100&reqCode=${dto.reqCode}&prodCode=${dto.prodCode}&rawCode=${dto.rawCode}'">테이블 전체 보기</button>
-<button id="excelDownload" class ="button">엑셀⬇️</button> --%>
 
 		<div id="pagination" class="page_wrap">
 			<div class="page_nation">
@@ -787,8 +784,6 @@ $(document).ready(function() {
 
 
 </body>
-<%-- <button class="allbutton" onclick="window.location.href='${pageContext.request.contextPath}/requirement/reqDetail?nowPage=1&cntPerPage=100&reqCode=${dto.reqCode}&prodCode=${dto.prodCode}&rawCode=${dto.rawCode}'">테이블 전체 보기</button>
-<button id="excelDownload" class ="button">엑셀⬇️</button> --%>
 <script type="text/javascript">
 	function applyFilters() {
         var perPageValue = document.getElementById("perPageSelect").value;

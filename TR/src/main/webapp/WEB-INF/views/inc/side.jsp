@@ -55,7 +55,7 @@
 							class="sidea">소요량 관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/product/list"
-							class="sidea">품목 관리</a></li>
+							class="sidea">제품 관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/Rawmaterials/home"
 							class="sidea">원자재 관리</a></li>
@@ -94,7 +94,7 @@
 							class="sidea">입고 관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/outProduct/list"
-							class="sidea">출고관리</a></li>
+							class="sidea">출고 관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath }/Warehouse/list"
 							class="sidea">창고 관리</a></li>

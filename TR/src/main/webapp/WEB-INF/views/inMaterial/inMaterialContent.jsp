@@ -38,40 +38,40 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<table>
 			<tbody>
 				<tr>
-					<th>입고 코드</th>
+					<td class="tableHead">입고 코드</td>
 					<td><input type="text" name="inNum" value="${inMaterialDTO.inNum }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>발주 코드</th>
+					<td class="tableHead">발주 코드</td>
 					<td><input type="text" name="buyNum" value="${inMaterialDTO.buyNum}" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>거래처 코드</th>
+					<td class="tableHead">거래처 코드</td>
 					<td><input type="text" name="clientCode" value="${inMaterialDTO.clientCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>거래처명</th>
+					<td class="tableHead">거래처명</td>
 					<td><input type="text" name="clientCompany" value="${inMaterialDTO.clientCompany }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>원자재 코드</th>
+					<td class="tableHead">원자재 코드</td>
 					<td><input type="text" name="rawCode" value="${inMaterialDTO.rawCode }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>원자재명</th>
+					<td class="tableHead">원자재명</td>
 					<td><input type="text" name="rawName" value="${inMaterialDTO.rawName }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>담당자</th>
+					<td class="tableHead">담당자</td>
 					<td><input type="text" name="inEmpId" value="${sessionScope.empId }" readonly="readonly"></td>
 				</tr>
 				<tr>
-					<th>입고 상태</th>
+					<td class="tableHead">입고 상태</td>
 					<td><input type="text" name="inState" value="${inMaterialDTO.inState }" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<fmt:formatNumber var="inPrice" value="${inMaterialDTO.inPrice }" pattern="###,###"></fmt:formatNumber>
-					<th>총 출고가</th>
+					<td class="tableHead">총 입고가</td>
 					<td>
 						<input type="hidden" name="inPrice" value="${inMaterialDTO.inPrice }">
 						<input type="text" name="inPriceFormat" value="${inPrice }원" readonly="readonly">
@@ -82,10 +82,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<br>
 		<table class="outProductTable">
 			<tr>
-<!-- 				<th colspan="2">납품 예정일</th> -->
-				<th colspan="3">입고일</th>
-				<th colspan="3">재입고일</th>
-<!-- 				<th colspan="2">입고 부족</th> -->
+<!-- 				<td class="tableHead" colspan="2">납품 예정일</td> -->
+				<td class="tableHead" colspan="3">입고일</td>
+				<td class="tableHead" colspan="3">재입고일</td>
+<!-- 				<td class="tableHead" colspan="2">입고 부족</td> -->
 			</tr>
 			<tr>
 <%-- 				<td colspan="2"><input type="text" name="sellDuedate" value="${inMaterialDTO.sellDuedate }" readonly="readonly"></td> --%>
@@ -94,16 +94,16 @@ final String ADMIN_DEPARTMENT = "자재팀";
 <%-- 				<td colspan="2"><input type="number" name="remainder" value="${inMaterialDTO.remainder }" readonly onchange="updateRemainder()"></td> --%>
 			</tr>
 			<tr>
-				<th colspan="3">총발주 개수</th>
-				<th colspan="3">남은 발주 개수</th>
+				<td class="tableHead" colspan="3">총발주 개수</td>
+				<td class="tableHead" colspan="3">남은 발주 개수</td>
 			</tr>
 			<tr> 
 				<td colspan="3"><input type="number" name="buyCount" value="${inMaterialDTO.buyCount }" readonly="readonly"></td>
 				<td colspan="3"><input type="number" name="remainder" id="remainder" value="${inMaterialDTO.buyCount - inMaterialDTO.inCount}" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th colspan="3">입고 개수</th>
-				<th colspan="3">재고 개수</th>
+				<td class="tableHead" colspan="3">입고 개수</td>
+				<td class="tableHead" colspan="3">재고 개수</td>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -121,8 +121,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="3">원자재 단가</th>
-				<th colspan="3">현재 입고가</th>
+				<td class="tableHead" colspan="3">원자재 단가</td>
+				<td class="tableHead" colspan="3">현재 입고가</td>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -138,7 +138,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</td>
 			</tr>
 			<tr>
-				<th colspan="6">비고</th>
+				<td class="tableHead" colspan="6">비고</td>
 			</tr>
 			<tr>
 				<td colspan="6"><input type="text" name="inMemo" value="${inMaterialDTO.inMemo }" id="inputMemo" placeholder="비고 입력"></td>
@@ -153,7 +153,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<c:if test="${inMaterialDTO.inState != '입고완료'}">
 				<input type="button" id="updateButton" value="입고">
 		</c:if>
-			<input type="button" value="닫기" onclick="window.close()">
+			<input type="button" id="closeButton" value="닫기" onclick="window.close()">
 		</div>
 	</form>
 </c:if>

@@ -27,7 +27,7 @@ body {
 	text-align: center;
 	padding: 20px;
 	width: 500px;
-	height: 500px;
+	height: 480px;
 }
 
 h1 {
@@ -40,7 +40,7 @@ h1 {
 }
 
 input[type="text"], input[type="password"] {
-	width: 40%;
+	width: 55%;
 	padding: 10px;
 	border-radius: 3px;
 	outline: none;
@@ -50,13 +50,13 @@ input[type="text"], input[type="password"] {
 }
 
 button {
-	width: 80px;
+	width:55%px !important ;
 	height: 40px;
 	background-color: #9AC5F4;
 	color: white;
 	border: none;
 	border-radius: 3px;
-	margin-top: 50px;
+	margin-top: 30px;
 	margin-bottom: 10px;
 	font-size:20px; 
 	font-weight: bolder;
@@ -95,7 +95,7 @@ button:hover {
 				<%-- <input type="hidden" name="empName" value="${loginDTO.empName}" /> --%>
 			</div>
 		
-			<button type="submit">로그인</button>
+			<button type="submit" style="width: 60%">로그인</button>
 		</form>
 	</div>
 	

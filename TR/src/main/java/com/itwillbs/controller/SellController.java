@@ -25,9 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.SellDTO;
-import com.itwillbs.service.CalendarService;
 import com.itwillbs.service.OutProductService;
 import com.itwillbs.service.SellService;
 
@@ -415,7 +413,72 @@ List<SellDTO>sellList= sellService.getSellListSearch(sellDTO);
 	
 }//sellMainSearch
 	
+//OutProductController 에서 페이지 이동을 하고 ajaxcontroller에서 리스트 불러오는것
+@RequestMapping(value = "/excel", method = RequestMethod.POST)
+public ResponseEntity<List<SellDTO>> excelList(SellDTO sellDTO, HttpServletRequest request) {
 	
+	/* SellDTO sellDTOSearch = sellDTO; */ // 검색값을 저장해서 검색페이지에서 표시하기위해서 사용
+	System.out.println(sellDTO.getSellCode());
+	
+	// 날짜를 받아와서 분할
+	String daterange1 = request.getParameter("daterange1");
+	String daterange2 = request.getParameter("daterange2");
+	// 검색 날짜를 저장
+	/*
+	 * sellDTO.setSellDate(daterange1); sellDTO.setSellDuedate(daterange2);
+	 */
+	
+	// 날짜가 있는 경우 검색 DTO 저장
+	if(!("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null)) {
+		String sellDate =  daterange1.split(" - ")[0].replaceAll("/", "-");
+		String sellEndDate = daterange1.split(" - ")[1].replaceAll("/", "-");
+		sellDTO.setSellDate(sellDate);
+		sellDTO.setSellEndDate(sellEndDate);
+	}
+	if(!("".equals(daterange2) || "null".equals(daterange2) || daterange2 == null)) {
+		String sellDuedate =  daterange2.split(" - ")[0].replaceAll("/", "-");
+		String sellEndDuedate = daterange2.split(" - ")[1].replaceAll("/", "-");
+		sellDTO.setSellDuedate(sellDuedate);
+		sellDTO.setSellEndDuedate(sellEndDuedate);
+	}
+	
+	// 값이 없을 경우 "" 로 변경
+	if("".equals(daterange1) || "null".equals(daterange1) || daterange1 == null) {
+		sellDTO.setSellDate("");
+		sellDTO.setSellEndDate("");
+	}
+	if("".equals(daterange2) || "null".equals(daterange2) || daterange2 == null) {
+		sellDTO.setSellDuedate("");
+		sellDTO.setSellEndDuedate("");
+	}
+	if("".equals(sellDTO.getProdCode()) || "null".equals(sellDTO.getProdCode()) || sellDTO.getProdCode() == null) {
+		System.out.println("제품 변경");
+		sellDTO.setProdCode("");
+	}
+	if("".equals(sellDTO.getClientCode()) || "null".equals(sellDTO.getClientCode()) || sellDTO.getClientCode() == null) {
+		System.out.println("거래처 변경");
+		sellDTO.setClientCode("");
+	}
+	if("".equals(sellDTO.getSellCode()) || "null".equals(sellDTO.getSellCode()) || sellDTO.getSellCode() == null) {
+		System.out.println("수주코드 변경");
+		sellDTO.setSellCode("");
+	}
+	if("".equals(sellDTO.getSellState()) || "null".equals(sellDTO.getSellState()) || sellDTO.getSellState() == null) {
+		System.out.println("수주상태 변경");
+		sellDTO.setSellState("");
+	}
+	
+	System.out.println(sellDTO);
+
+
+	
+//	게시판 전체 글 개수 구하기
+	List<SellDTO> sellList = sellService.getExcelList(sellDTO);
+	
+	System.out.println("엑셀 출력 데이터 "+sellList);
+	ResponseEntity<List<SellDTO>> entity = new ResponseEntity<>(sellList, HttpStatus.OK);
+	return entity;
+}
 
 	
 	
