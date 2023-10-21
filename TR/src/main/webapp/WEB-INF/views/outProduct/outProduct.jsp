@@ -40,7 +40,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<h2><a href="${pageContext.request.contextPath}/outProduct/list" style=" text-decoration: none; color:black;">출고 관리</a></h2>
 <!-- 		<hr> -->
 		<div id="searchForm">
-				<label>출고 번호 </label><input type="text" name="outCode" id="outCode">
+				<label>출고 코드 </label><input type="text" name="outCode" id="outCode">
 				<label>제품명 </label><input type="text" name="prodName" id="prodName9999" placeholder="제품명" onclick="searchItem('prod','prodCode9999')" readonly="readonly">
 				<label>거래처명 </label><input type="text" name="clientCompany" id="sellclientCompany9999" placeholder="거래처명" onclick="searchItem('sellclient','sellclientCode9999')" readonly="readonly">
 				<input type="button" value="조회" id="searchButton">
