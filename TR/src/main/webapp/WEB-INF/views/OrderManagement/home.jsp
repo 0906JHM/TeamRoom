@@ -124,8 +124,8 @@ $(document).ready(function() {
 <h2>발주 관리</h2>
 
 <!-- form(검색) -->
-<div id="searchForm">
-<form action="${pageContext.request.contextPath}/OrderManagement/home" method="get">
+<form action="${pageContext.request.contextPath}/OrderManagement/home" method="get" id="searchBox">
+<div id="searchForm" style="border-radius: 5px;">
 <label>발주코드</label>		<input type="text" name="search1" placeholder="발주번호">
 <label>품번</label>		<input type="text" name="search2" placeholder="품번">
 <label>종류</label>		<select name="search3">
@@ -137,20 +137,24 @@ $(document).ready(function() {
 						<option value="포장재">포장재</option>
 						</select>
 <label>거래처코드</label>	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
-<input type="submit" value="조회">
-</form>
+<input type="submit" value="조회" id="searchButton">
 </div>
 
 <!-- button -->
 <div id="buttons">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}">
-<input type="button" value="추가" onclick="openPopup1()">
-<input type="button" value="삭제" onclick="deleteValue();">
+<input type="button" value="추가" onclick="openPopup1()" id="add">
+<input type="button" value="삭제" onclick="deleteValue();" id="delete">
 </c:if>
+</div>
+</form>
+
+<div class="total-items">
+<label>총 ${pageDTO.count}건</label>
 </div>
 
 <!-- table -->
-<table id="rawmaterialsList">
+<table class="tg" id="rawmaterialsList" style="border-radius: 5px;">
 <thead>
 <tr>
 <td></td>
@@ -206,14 +210,19 @@ ${ordermanagementDTO.buyInstate}
 </tbody>
 </table>
 
+<!-- button -->
+<div id="pagination" class="page_wrap2">
+<div id="excel">
+<button class="excelbtn" id="excelDownload">엑셀</button>
+<button class="excelbtn" onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체</button>
+</div>
+
 <!-- 페이징처리 -->
+<div class="page_nation">
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/OrderManagement/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
-
-<!-- button -->
-<button class="excelbtn" id="excelDownload">엑셀 ⬇️</button>
-<button class="excelbtn" onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체 ⬇️</button>
+</div>
 </div>
 
 <!-- javascript -->

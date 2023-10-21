@@ -76,7 +76,7 @@ input[type="text"], select {
 	border: 0;
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
-	margin-left: 20px;
+	margin-right: 5px;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -194,15 +194,19 @@ input[type="button"]:hover, #searchButton:hover, .excelbtn:hover {
 .page_wrap {
     display: flex;
     flex-direction: row;
+    justify-content: right;
+    margin: 1% 2%;
+ }
+ 
+/* 번호위치 */
+.page_wrap2 {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     margin: 1% 2%;
  }
  
-/* 오른쪽 배치 */
-.page_nation {
-	/* 	display:inline-block; */
-	/* 	float:right; */
-}
+
 
 /* 선택안된 페이지 번호 */
 .page_nation a {
