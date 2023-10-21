@@ -28,9 +28,9 @@
 		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo" >${sellDTO.sellMemo}</textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
 		
-		<button type="submit" >수정</button>		
+		<button type="submit" class="modify-btn">수정</button>		
 		<!-- <button type="reset">취소</button> -->
-        <button type="button" onclick="window.close();">닫기</button>
+        <button type="button" class="close-btn" onclick="window.close();">닫기</button>
     </form>
 </div>
 <!---------------------------------------------- javascript ---------------------------------------------->

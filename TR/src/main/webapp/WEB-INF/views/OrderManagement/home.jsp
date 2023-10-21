@@ -98,8 +98,11 @@ function openPopup2(url) {
 
 // selectclient 페이지 팝업창
 function openPopup3() {
-    var popupWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "_blank", "height=600,width=1300");
-    // 팝업 창닫기 버튼 클릭시 창닫기
+	var popupX = (window.screen.width/2) - (1700/2);
+	var popupY = (window.screen.height/2) - (500/2);
+	const myWindow = window.open("${pageContext.request.contextPath}/Rawmaterials/selectclient", "DetailPopup", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=1700,height=500,left=" + popupX + ",top=" + popupY);
+	myWindow.focus();
+	// 팝업 창닫기 버튼 클릭시 창닫기
     popupWindow.onbeforeunload = function() {
         popupWindow.close();
     };
@@ -120,13 +123,12 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
 
-<div id="content">
+<div class="content">
 <h2>발주 관리</h2>
-<hr>
 
 <!-- form(검색) -->
-<div id="searchForm">
-<form action="${pageContext.request.contextPath}/OrderManagement/home" method="get">
+<form action="${pageContext.request.contextPath}/OrderManagement/home" method="get" id="searchBox">
+<div id="searchForm" style="border-radius: 5px;">
 <label>발주코드</label>		<input type="text" name="search1" placeholder="발주번호">
 <label>품번</label>		<input type="text" name="search2" placeholder="품번">
 <label>종류</label>		<select name="search3">
@@ -138,21 +140,24 @@ $(document).ready(function() {
 						<option value="포장재">포장재</option>
 						</select>
 <label>거래처코드</label>	<input type="text" name="search4" placeholder="거래처" id="pInput" onclick="openPopup3()">
-<input type="submit" value="조회">
-</form>
+<input type="submit" value="조회" id="searchButton">
 </div>
-<hr>
 
 <!-- button -->
 <div id="buttons">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '영업팀')}">
-<input type="button" value="추가" onclick="openPopup1()">
-<input type="button" value="삭제" onclick="deleteValue();">
+<input type="button" value="추가" onclick="openPopup1()" id="add">
+<input type="button" value="삭제" onclick="deleteValue();" id="delete">
 </c:if>
+</div>
+</form>
+
+<div class="total-items">
+<label>총 ${pageDTO.count}건</label>
 </div>
 
 <!-- table -->
-<table id="rawmaterialsList">
+<table class="tg" id="rawmaterialsList" style="border-radius: 5px;">
 <thead>
 <tr>
 <td></td>
@@ -207,17 +212,22 @@ ${ordermanagementDTO.buyInstate}
 </c:forEach>
 </tbody>
 </table>
+
+<!-- button -->
+<div id="pagination" class="page_wrap2">
+<div id="excel">
+<button class="excelbtn" id="excelDownload">엑셀</button>
+<button class="excelbtn" onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체</button>
 </div>
 
 <!-- 페이징처리 -->
+<div class="page_nation">
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/OrderManagement/home?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
+</div>
+</div>
 
-<!-- button -->
-<button class="excelbtn" id="excelDownload">엑셀 ⬇️</button>
-<button class="excelbtn" onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체 ⬇️</button>
-				
 <!-- javascript -->
 <script type="text/javascript">
 

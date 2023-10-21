@@ -15,7 +15,8 @@
 
 <div class="form-group"><p>사원번호</p><input type="text" name="empId" class="empId" value="${employeesDTO.empId}" readonly="readonly"></div>
 <div class="form-group"><p>비밀번호</p><input type="password" name="empPass" class="empPass" value="${employeesDTO.empPass}"></div>
-<div class="form-group"><p>사원명</p><input type="text" name="empName" class="empName" value="${employeesDTO.empName}"></div>
+<div class="form-group"><p>사원명</p><input type="text" id="empName" name="empName" class="empName" value="${employeesDTO.empName}"></div>
+<span id ="empNamemsg">  </span> 
 <div class="form-group">
   <p>부서</p>
   <select name="empDepartment" class="empDepartment select">
@@ -29,8 +30,9 @@
   <p>직책</p>
   <select name="empPosition" class="empPosition select">
     <option value="사원" ${employeesDTO.empPosition == '사원' ? 'selected' : ''}>사원</option>
-    <option value="팀장" ${employeesDTO.empPosition == '팀장' ? 'selected' : ''}>팀장</option>
-    <option value="부장" ${employeesDTO.empPosition == '부장' ? 'selected' : ''}>부장</option>
+    <option value="선임" ${employeesDTO.empPosition == '선임' ? 'selected' : ''}>선임</option>
+    <option value="책임" ${employeesDTO.empPosition == '책임' ? 'selected' : ''}>책임</option>
+    <option value="수석" ${employeesDTO.empPosition == '수석' ? 'selected' : ''}>수석</option>
   </select>
 </div>
 <div class="form-group"><p>이메일</p><input type="email" id ="empEmail" name="empEmail" class="empEmail" value="${employeesDTO.empEmail}"></div>
@@ -103,29 +105,50 @@ function previewImage() {
 
 //////// 정규식 제어 
 var koreanRegex = /^[가-힣]+$/; // 한글만 허용하는 정규식
-// 이메일 정규식
-var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+     // 이메일 정규식
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// 휴대폰 번호 정규식 (숫자만 허용하는 가정)
-var phoneNumberRegex = /^(010|011|016|017|019)\d{8}$/;
-
+ // 휴대폰 번호 정규식 (숫자만 허용하는 가정)
+    var phoneNumberRegex = /^(010|011|016|017|019)\d{8}$/;
+    
+document.getElementById("empName").addEventListener("input", function() {
+    var empName = this.value;
+    
+    // 숫자와 특수문자 제거
+    empName = empName.replace(/[\d`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '');
+    
+    if (empName === "") {
+        document.getElementById("empNamemsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empNamemsg").style.position = "absolute"; // 메시지 숨기기
+    } else if (!koreanRegex.test(empName)) {
+        document.getElementById("empNamemsg").textContent = "올바른 한글 이름을 입력하세요.";
+        document.getElementById("empNamemsg").style.position = "relative"; // 메시지 표시
+    } else {
+        document.getElementById("empNamemsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empNamemsg").style.position = "absolute"; // 메시지 숨기기
+    }
+    
+    this.value = empName;
+});
 
 
 document.getElementById("empEmail").addEventListener("input", function() {
-var empEmail = this.value;
+    var empEmail = this.value;
+    
+    empEmail = empEmail.replace(/[ㄱ-ㅎ가-힣]/g, '').replace(/[^a-zA-Z0-9.@]/g, '');
 
-// 한글 및 '@', '.' 이외의 특수문자 제거
-empEmail = empEmail.replace(/[ㄱ-ㅎ가-힣]/g, '').replace(/[^a-zA-Z0-9.@]/g, '');
-
-if (empEmail === "") {
-   document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
-} else if (!emailRegex.test(empEmail)) {
-   document.getElementById("empEmailmsg").textContent = "올바른 이메일 주소를 입력하세요.";
-} else {
-   document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
-}
-// 입력란에 업데이트된 값 설정
-this.value = empEmail;
+    if (empEmail === "") {
+        document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empEmailmsg").style.position = "absolute"; // 메시지 숨기기
+    } else if (!emailRegex.test(empEmail)) {
+        document.getElementById("empEmailmsg").textContent = "올바른 이메일 주소를 입력하세요.";
+        document.getElementById("empEmailmsg").style.position = "relative"; // 메시지 표시
+    } else {
+        document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empEmailmsg").style.position = "absolute"; // 메시지 숨기기
+    }
+ // 입력란에 업데이트된 값 설정
+    this.value = empEmail;
 });
 
 document.getElementById("empTel").addEventListener("input", function() {
@@ -134,15 +157,62 @@ document.getElementById("empTel").addEventListener("input", function() {
     // 하이픈 제거
     empTel = empTel.replace(/-/g, '');
 
-    // 정규식에 맞지 않는 문자 제거
+    // 숫자만 남기기
     empTel = empTel.replace(/[^\d]/g, '');
 
     if (empTel === "") {
         document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empTelmsg").style.position = "absolute"; // 메시지 숨기기
     } else if (!phoneNumberRegex.test(empTel)) {
         document.getElementById("empTelmsg").textContent = "올바른 휴대폰 번호를 입력하세요.";
-    } else if (empTel.length !== 11) {
-        document.getElementById("empTelmsg").textContent = "휴대폰 번호는 11자리여야 합니다.";
+        document.getElementById("empTelmsg").style.position = "relative"; // 메시지 표시
+    } else {
+        document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empTelmsg").style.position = "absolute"; // 메시지 숨기기
+    }
+    
+ // 입력란에 업데이트된 값 설정 (하이픈이 없는 숫자만 남김)
+    this.value = empTel;
+ 
+});
+
+var form = document.getElementById("join"); // 폼 엘리먼트의 ID를 지정해야 합니다.
+
+form.addEventListener("submit", function(event) {
+    var empName = document.getElementById("empName").value;
+    var empEmail = document.getElementById("empEmail").value;
+    var empTel = document.getElementById("empTel").value;
+
+    // 이름 유효성 검사
+    empName = empName.replace(/[\d`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '');
+    if (empName === "" || !koreanRegex.test(empName)) {
+        document.getElementById("empNamemsg").textContent = "올바른 한글 이름을 입력하세요.";
+        document.getElementById("empNamemsg").style.position = "relative"; // 메시지 표시
+        event.preventDefault(); // 폼 제출을 막습니다.
+        return;
+    } else {
+        document.getElementById("empNamemsg").textContent = ""; // 메시지 초기화
+    }
+
+    // 이메일 유효성 검사
+    empEmail = empEmail.replace(/[ㄱ-ㅎ가-힣]/g, '').replace(/[^a-zA-Z0-9.@]/g, '');
+    if (!emailRegex.test(empEmail)) {
+        document.getElementById("empEmailmsg").textContent = "올바른 이메일 주소를 입력하세요.";
+        document.getElementById("empEmailmsg").style.position = "relative"; // 메시지 표시
+        event.preventDefault(); // 폼 제출을 막습니다.
+        return;
+    } else {
+        document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+    }
+
+    // 휴대폰 번호 유효성 검사
+    empTel = empTel.replace(/-/g, '');
+    empTel = empTel.replace(/[^\d]/g, '');
+    if (!phoneNumberRegex.test(empTel) || empTel.length !== 11) {
+        document.getElementById("empTelmsg").textContent = "올바른 휴대폰 번호를 입력하세요.";
+        document.getElementById("empTelmsg").style.position = "relative"; // 메시지 표시
+        event.preventDefault(); // 폼 제출을 막습니다.
+        return;
     } else {
         document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
     }

@@ -44,22 +44,26 @@ String memotype = request.getParameter("memotype");
             <h1>수주 비고 등록</h1>
     <div class="horizontal-line"></div>
      <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemotypePro">
-		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo"></textarea><br>
+		<textarea id="sellMemo" style="width: 300px; height: 250px;" name="sellMemo"></textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
-		<button type="submit" >등록</button>		
-		<!-- <button type="reset">취소</button> -->
-		<button type="button" onclick="window.close();">닫기</button>
+		<div class="btn">
+			<button class="add-btn" type="submit" >등록</button>		
+			<button class="close-btn"type="button" onclick="window.close();">닫기</button>
+		</div>
 </form>
         </c:when>
         <c:otherwise>
             <h1>수주 비고 수정</h1>
     <div class="horizontal-line"></div>
         <form class="popup" method="post" action="${pageContext.request.contextPath}/sell/sellMemoUpdatePro">
-		<textarea id="sellMemo" style="width: 350px; height: 250px;" name="sellMemo" >${sellDTO.sellMemo}</textarea><br>
+		<textarea id="sellMemo" style="width: 300px; height: 250px;" name="sellMemo" >${sellDTO.sellMemo}</textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
-		<button type="submit" >저장</button>		
-		<button type="reset">취소</button>
-        <button type="button" onclick="window.close();">닫기</button>
+		
+		<div class="btn">
+			<button class="modify-btn"type="submit" >저장</button>		
+			<button class="reset-btn"type="reset">취소</button>
+        	<button class="close-btn"type="button" onclick="window.close();">닫기</button>
+       	</div>
         </form>
             
         </c:otherwise>

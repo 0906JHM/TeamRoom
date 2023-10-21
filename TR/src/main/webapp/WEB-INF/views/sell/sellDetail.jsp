@@ -42,7 +42,7 @@ $(document).ready(function () {
     <form action="${pageContext.request.contextPath}/sell/sellUpdatePro" id="popup" class="popup"  method="post" onsubmit="checkForm()" >
 <label>수주 코드</label>
 			
-			<input type="text" name="sellCode" value="${sellDTO.sellCode}" readonly>
+			<input type="text" style="width:130px;"name="sellCode" value="${sellDTO.sellCode}" readonly>
 			<br>
 			<label>처리 상태</label>
 			<input type="text" name="sellState" value="${sellDTO.sellState}" readonly>
@@ -77,11 +77,12 @@ $(document).ready(function () {
 			<br>
 			<textarea id="sellMemo" readonly="readonly" style="width: 400px; height: 150px;">${sellDTO.sellMemo}</textarea>
 			<br>
-			
+			<div class="btn">
 			<c:if test="${sellDTO.sellState == '미출고'}">
-				<button id="modify" style="display: none;" type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'" >수정</button>
+				<button id="modify" class="modify-btn" style="display: none;" type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellUpdate?sellCode=${sellDTO.sellCode}'">수정</button>
 			</c:if>
-			<button type="button" onclick="window.close()">닫기</button>
+			<button type="button" onclick="window.close()" class="close-btn">닫기</button>
+			</div>
 	</form>
 
 </div>

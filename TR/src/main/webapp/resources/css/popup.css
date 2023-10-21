@@ -29,7 +29,7 @@ h1 {
 }
 /*------------- 내용 양옆 마진 --------*/
 form.popup {
-    margin-left: 20px; /* form 태그 왼쪽 마진 설정 */
+    margin: auto;
 }
 
 .popupLabel {
@@ -61,6 +61,12 @@ input[type="text"] {
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
 }
+#sellMemo{
+	border: 1px solid #A6A6A6; /* 테두리 색 설정 */
+	background-color: #FFFFFF; /* 배경색 설정 */
+	border-radius: 3px;
+}
+
 /*---------------------------------------------- 버튼 ----------------------------------------------*/
 .btn {
   display: flex; /* 버튼을 수평으로 나란히 배치하려면 flex 사용 */
@@ -73,7 +79,7 @@ input[type="text"] {
  margin: 10px 5px 5px 5px; /* 버튼 사이의 간격 설정, 원하는 간격으로 조정하세요. */
 }
 /*--------------------- 추가, 취소 버튼 -------------------------*/
-.add-btn, .reset-btn {
+.add-btn, .reset-btn, .modify-btn{
 	color: white !important;
 	background-color: #9AC5F4 !important;
 	border-radius: 3px !important;

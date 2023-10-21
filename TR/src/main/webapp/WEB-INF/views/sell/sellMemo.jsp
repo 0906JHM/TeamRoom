@@ -13,8 +13,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/popup.css" rel="stylesheet" type="text/css">
 <script>
 $(document).ready(function () {
-	//--------------------------------------------------- 페이지 권한 ----------------------
-                
+         
 /*--------------------------------- 페이지 권한 ----------------------------------------  */
     var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
     if (team === "생산팀" || team === "관리자") {
@@ -39,11 +38,12 @@ $(document).ready(function () {
     <h1>수주 비고</h1>
     <div class="horizontal-line"></div>
     <form class="popup">
-		<textarea id="sellMemo" readonly="readonly" style="width: 350px; height: 250px;">${sellDTO.sellMemo}</textarea><br>
+		<textarea id="sellMemo" readonly="readonly" style="width: 300px; height: 250px;">${sellDTO.sellMemo}</textarea><br>
 		<input type="hidden" name="sellCode" value="${sellDTO.sellCode}" />
-		
-		<button style="display: none;" type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellMemotype?sellCode=${sellDTO.sellCode}&memotype=modify'" id="modify" >수정</button>
-        <button type="button" onclick="window.close()">닫기</button>
+		<div class="btn">
+		<button class="modify-btn"style="display: none;" type="button" onclick="location.href='${pageContext.request.contextPath}/sell/sellMemotype?sellCode=${sellDTO.sellCode}&memotype=modify'" id="modify" >수정</button>
+        <button class="close-btn"type="button" onclick="window.close()">닫기</button>
+        </div>
     </form>
 </div>
 </c:when>

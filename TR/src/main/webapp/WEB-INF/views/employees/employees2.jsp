@@ -13,11 +13,8 @@
 <h2>인사등록</h2>
 <form action="${pageContext.request.contextPath}/employees/insertPro" id="join" method="post" enctype="multipart/form-data">
 
-<div class="form-group">
-<p>사원번호</p>
-<input type="text" id="empId" name="empId" class="empId" value="${empId}" readonly="readonly">
-</div>
-<div class="form-group"><p>비밀번호</p><input type="password" name="empPass" class="empPass" value="${empPass}"></div>
+<input type="text" id="empId" name="empId" class="empId" style="display: none;">
+<input type="password" name="empPass" class="empPass" style="display: none;">
 <div class="form-group"><p>사원명</p><input type="text" id="empName" name="empName" class="empName"> <br>     </div>          
                                                            <span id ="empNamemsg">  </span> 
 <div class="form-group"><p>부서</p>
@@ -30,8 +27,9 @@
 <div class="form-group"><p>직책</p>
 <select name="empPosition" class="empPosition select">
 <option value="사원">사원</option>
-<option value="팀장">팀장</option>
-<option value="부장">부장</option>
+<option value="선임">선임</option>
+<option value="책임">책임</option>
+<option value="수석">수석</option>
 </select></div>
 <div class="form-group"><p>이메일</p><input type="email" id="empEmail" name="empEmail" class="empEmail"></div>
                                                            <span id ="empEmailmsg">  </span> 
@@ -188,8 +186,9 @@ form.addEventListener("submit", function(event) {
 
     // 이름 유효성 검사
     empName = empName.replace(/[\d`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '');
-    if (empName === "") {
+    if (empName === "" || !koreanRegex.test(empName)) {
         document.getElementById("empNamemsg").textContent = "올바른 한글 이름을 입력하세요.";
+        document.getElementById("empNamemsg").style.position = "relative"; // 메시지 표시
         event.preventDefault(); // 폼 제출을 막습니다.
         return;
     } else {
@@ -200,6 +199,7 @@ form.addEventListener("submit", function(event) {
     empEmail = empEmail.replace(/[ㄱ-ㅎ가-힣]/g, '').replace(/[^a-zA-Z0-9.@]/g, '');
     if (!emailRegex.test(empEmail)) {
         document.getElementById("empEmailmsg").textContent = "올바른 이메일 주소를 입력하세요.";
+        document.getElementById("empEmailmsg").style.position = "relative"; // 메시지 표시
         event.preventDefault(); // 폼 제출을 막습니다.
         return;
     } else {
@@ -211,6 +211,7 @@ form.addEventListener("submit", function(event) {
     empTel = empTel.replace(/[^\d]/g, '');
     if (!phoneNumberRegex.test(empTel) || empTel.length !== 11) {
         document.getElementById("empTelmsg").textContent = "올바른 휴대폰 번호를 입력하세요.";
+        document.getElementById("empTelmsg").style.position = "relative"; // 메시지 표시
         event.preventDefault(); // 폼 제출을 막습니다.
         return;
     } else {

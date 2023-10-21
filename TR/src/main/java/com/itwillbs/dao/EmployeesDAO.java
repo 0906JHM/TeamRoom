@@ -63,5 +63,11 @@ public class EmployeesDAO {
 	}
 
 
+	public String getEmployeesCount2() {
+	    int count = sqlSession.selectOne(namespace+".getEmployeesCount2");
+	    return Integer.toString(count);
+	}
+
+
 
 }
