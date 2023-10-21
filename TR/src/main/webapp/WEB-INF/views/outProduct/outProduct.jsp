@@ -19,14 +19,10 @@
 <!-- SweetAlert  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <%
-// 관리자 또는 자재팀 출고 상세 페이지 열람 가능 게시판 접근 가능
-String department = "";
-if (session.getAttribute("empDepartment") != null) {
-    department = (String) session.getAttribute("empDepartment");
+String empId = "";
+if (session.getAttribute("empId") != null) {
+	empId = (String) session.getAttribute("empId");
 }
-
-// 상수 정의
-final String ADMIN_DEPARTMENT = "자재팀";
 %>
 
 
@@ -89,12 +85,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		</div>
 	</div>
 		<script type="text/javascript">
-			var department = "<%= department %>";
-			var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
-		    var sellStateButton1 = "전체";
-		    if (department !== ADMIN_DEPARTMENT && department !== "관리자") {
+			var empId = "<%= empId %>";
+		    if (empId == '') {
 		   		window.location.href = "<%= request.getContextPath() %>/login/login";
 		    }
+		    
+		    
+		    var sellStateButton1 = "전체";
 		    $(document).ready(function () {
 		        var sellStateButton2 = "전체"
 		    	// 페이지 로드 시 초기 게시판 데이터를 가져오기 위한 함수 호출

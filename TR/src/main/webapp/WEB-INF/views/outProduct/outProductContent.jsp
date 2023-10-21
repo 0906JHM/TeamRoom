@@ -229,11 +229,10 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	
 		var department = "<%= department %>";
 		var ADMIN_DEPARTMENT = "<%= ADMIN_DEPARTMENT %>";
-		console.log("직책 : "+department);
 		if (department !== ADMIN_DEPARTMENT && department !== "관리자") {
 		    // 세션 값이 허용되지 않는 경우 리다이렉트
 		    window.opener.location.href = "<%= request.getContextPath() %>/main/calendar";
-// 		    window.close();
+		    window.close();
 		}
 		 
 	</script>

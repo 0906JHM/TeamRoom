@@ -33,6 +33,13 @@
 
 <!-- SweetAlert  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<%
+String empId = "";
+if (session.getAttribute("empId") != null) {
+	empId = (String) session.getAttribute("empId");
+}
+%>
+
 <title>Roomair</title>
 
 </head>
@@ -72,7 +79,13 @@
 	</div>
 
 	<script type="text/javascript">
-		
+			var empId = "<%= empId %>";
+		    if (empId == '') {
+		   		window.location.href = "<%= request.getContextPath() %>/login/login";
+		    }	
+	
+	
+	
 		$(document).ready(function() {
 			var calendar_compare = null; // 달력 비교 함수 
 			var sales_compare = null; // 매출 차트와 비교할 변수

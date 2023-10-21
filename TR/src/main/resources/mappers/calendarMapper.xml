@@ -71,10 +71,16 @@
 	<!-- 실적 차트 -->
 	<select id="getPerfList"
 		resultType="com.itwillbs.domain.ChartDTO">
-		SELECT workDate label, sum(workAmount) data
-		FROM workOrder
-		GROUP BY workDate
-		ORDER BY workDate desc
+<!-- 		SELECT workDate label, sum(workAmount) data -->
+<!-- 		FROM workOrder -->
+<!-- 		GROUP BY workDate -->
+<!-- 		ORDER BY workDate desc -->
+<!-- 		LIMIT 5; -->
+		SELECT w.workDate label, SUM(p.perfFair) data
+		FROM workOrder w left join performance p
+        ON p.workCode = w.workCode
+		GROUP BY w.workDate
+		ORDER BY w.workDate DESC
 		LIMIT 5;
 	</select>
 	<!-- 라인 실적 차트 -->
