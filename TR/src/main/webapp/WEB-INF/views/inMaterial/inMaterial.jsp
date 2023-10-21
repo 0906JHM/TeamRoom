@@ -44,11 +44,13 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		<h2>입고 관리</h2>
 		<div id="searchForm">
 			<label>입고 코드</label> <input type="text" name="inNum" id="inNum"
-				placeholder="입고 번호를 입력하세요."> <label>원자재명</label> <input
-				type="text" name="rawName" id="rawName9999" placeholder="원자재명을 입력하세요."
-				onclick="searchItem('raw','rawCode9999')"> <label>거래처명</label>
+				placeholder="입고 코드" > 
+				<label>원자재명</label> <input
+				type="text" name="rawName" id="rawName9999" placeholder="원자재명"
+				onclick="searchItem('raw','rawCode9999')" style="cursor: pointer;"> 
+				<label>거래처명</label>
 			<input type="text" name="clientCompany" id="clientCompany9999"
-				placeholder="거래처를 선택하세요."
+				placeholder="거래처" style="cursor: pointer;"
 				onclick="searchItem('client','clientCode9999')"> <input
 				type="button" value="조회" id="searchButton">
 				<input type="button" value="초기화" id="resetButton">
