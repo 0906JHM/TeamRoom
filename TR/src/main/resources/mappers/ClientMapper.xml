@@ -92,6 +92,6 @@
 		clientCompany=#{clientCompany}
 
 	</delete>
-
+	
 
 </mapper>
