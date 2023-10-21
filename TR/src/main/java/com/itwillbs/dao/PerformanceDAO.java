@@ -142,4 +142,15 @@ public class PerformanceDAO {
 	
 }
 
+
+
+
+	public void updateperf(PerformanceDTO perfDTO) {
+		
+		sqlsession.update(namespace+".perfupdate",perfDTO);
+		
+		
+		
+	}
+
 }

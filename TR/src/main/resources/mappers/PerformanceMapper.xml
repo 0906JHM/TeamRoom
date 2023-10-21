@@ -87,16 +87,25 @@ SELECT * FROM product
  </select>
  
  <select id="getdetail" resultType="PerformanceDTO">
- select * from performance where perfCode=#{perfCode}
+SELECT p.perfCode, w.workCode, w.prodCode, p.perfDate, p.perfEmpId, w.workAmount,
+       p.perfFair, p.perfDefect, p.perfDefectreason, p.perfDefectmemo, p.perfmemo,
+       w.workProcess, w.workInfo
+FROM performance p
+JOIN workOrder w ON p.workCode = w.workCode
+WHERE p.perfCode = #{perfCode};
+
  
  </select>
  
- <update id="perfupdate">
- update performance set 
- perfFair=#{perfFair}, perfDefect=#{perfDefect}, perfDefectreason=#{perfDefectreason},perfDefectmemo=#{perfDefectmemo},
- perfMemo=#{perfMemo},perfStatus=#{perfStatus}
- where perfCode=#{perfCode}
- </update>
+<update id="perfupdate">
+UPDATE  performance SET
+perfEmpId=#{perfEmpId}, perfFair=#{perfFair},perfDefect={perfDefect},
+perfDefectReason=#{perfDefectReason},perfDefecmemo=#{perfDefectmemo},perfMemo=#{perfMemo}
+where perfCode=#{perfCode}
+
+
+
+</update>
  
  <delete id="perfdelete">
  delete from performance where perfCode=#{perfCode}
