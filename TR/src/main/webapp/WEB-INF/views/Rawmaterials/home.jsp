@@ -151,7 +151,8 @@ $(document).ready(function() {
 </form>
 
 <div class="total-items">
-<label>총 ${rawmaterialsCount}건</label>
+<%-- <label>총 ${rawmaterialsCount}건</label> --%>
+<label>총 ${pageDTO.count}명</label>
 </div>
 
 <!-- table -->
