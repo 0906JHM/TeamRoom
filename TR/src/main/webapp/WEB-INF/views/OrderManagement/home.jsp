@@ -198,7 +198,7 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.whseCode}</td>
 <td><c:choose>
 <c:when test="${ordermanagementDTO.stockCount < 500}">
-<span style="color:red;">${ordermanagementDTO.stockCount}</span>
+<span style="color:red;" data-title="500개 미만입니다">${ordermanagementDTO.stockCount}</span>
 </c:when>
 <c:otherwise>
 ${ordermanagementDTO.stockCount}

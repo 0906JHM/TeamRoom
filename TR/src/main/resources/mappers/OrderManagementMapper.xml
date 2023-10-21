@@ -30,6 +30,10 @@ ON b.rawCode = s.rawCode
     		and clientCode like concat('%', #{search4}, '%')
     	</if>
     	</where>
+    	
+		<!-- 10/22 2:40 아래 코드 추가 -->
+    	ORDER BY CAST(SUBSTRING(buyNum FROM 3) AS UNSIGNED) DESC
+    	
     	<!-- order by buyNum desc limit #{startRow}, #{pageSize} -->
 	</select>
 	

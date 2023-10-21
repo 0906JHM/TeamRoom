@@ -270,3 +270,37 @@ input[type="button"]:hover, #searchButton:hover, .excelbtn:hover {
 	background-color: #1D5D9B;
 	color: white;
 }
+
+
+
+span[data-title] {
+  position: relative;
+}
+
+span[data-title]:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  
+  width: 150px; /* 가로 길이 */
+  height: 23px; /* 세로 길이 */
+ 
+  
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4D4D4D; /* 투명한 흰색 */
+  color: white; /* 빨간색 */
+  padding: .5em; /* 툴팁의 패딩과 모서리 둥근 정도를 설정 */
+  border-radius: .3em;
+  opacity: 0; /* 기본적으로 툴팁은 보이지 않게 */
+  pointer-events: none; /* 마우스 이벤트도 받지 않는다 */
+  transition: opacity .05s; /* 조절 가능한 부분 */
+  
+  z-index: 1; /* 툴팁을 다른 요소보다 위에 나타나게 합니다 */
+}
+
+span[data-title]:hover::after {
+  opacity: 1;
+}
+
+
