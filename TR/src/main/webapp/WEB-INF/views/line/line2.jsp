@@ -56,7 +56,7 @@ $.ajax({
 <option value="2차공정">2차공정</option>
 <option value="3차공정">3차공정</option>
 </select></div>
-<button onclick="save">저장하기</button>
+<button onclick="save" id="save-button">저장하기</button>
 
 </form>
 </div>

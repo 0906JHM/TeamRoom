@@ -62,7 +62,7 @@ $.ajax({
     <option value="3차공정" ${lineDTO.lineProcess == '3차공정' ? 'selected' : ''}>3차공정</option>
   </select>
 </div>
-<button onclick="save">수정하기</button>
+<button onclick="save" id="save-button">수정하기</button>
 
 </form>
 </div>

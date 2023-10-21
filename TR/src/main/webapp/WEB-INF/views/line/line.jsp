@@ -14,7 +14,7 @@
 
 function openCenteredWindow(url) {
     var width = 460;
-    var height = 520;
+    var height = 550;
     var left = (screen.width - width) / 2;
     var top = (screen.height - height) / 2 - 50; // 화면 중앙보다 조금 더 위로 올립니다.
     window.open(url, '_blank', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
@@ -70,7 +70,7 @@ function deleteValue(){
                 success: function(jdata){
                     if(jdata = 1) {
                         alert("삭제 성공");
-                        location.replace("employees")
+                        location.replace("line")
                     }
                     else{
                         alert("삭제 실패");
@@ -98,20 +98,41 @@ function deleteValue(){
 
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<div id="con">
-<h2>라인 관리</h2>
-<hr>
+<div class="container">
+<h2><a href="${pageContext.request.contextPath}/line/line" style=" text-decoration: none; color:black;">라인 관리</a></h2>
+
 <div id="searchForm">
-<form action="${pageContext.request.contextPath}/line/line" method="get">
-<span class="styled-text">search</span><input type="text" name="search" placeholder="search">
-<input type="submit" value="검색" id="btnSell">
+<form action="${pageContext.request.contextPath}/line/line" method="get" id="searchBox">
+<div id="searchform" style="border-radius: 5px;">
+<label>통합 검색</label><input type="text" name="search">
+<input type="submit" value="조회" id="searchButton">
+</div>
 </form>
 </div>
-<hr>
-<small>총 ${pageDTO.count}건</small>
-<table id="lineTable">
+
+<div id="sample">
+
+<div id="buttons">
+</div>
+
+<div class="buttons">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
+<!-- <input type="button" value="삭제" onclick="deleteValue();" id="btnSell"> -->
+<button onclick="deleteValue();" id="add">삭제</button>
+<button onclick="openCenteredWindow('line2')" id="delete">등록</button>
+</c:if>
+</div>
+</div>
+
+<label>총 ${pageDTO.count}건</label>
+
+<form id="selltList">
+<div id="sellList">
+<table class="tg" id="lineTable" style="border-radius: 5px;">
+
 <thead>
 <tr>
+<th></th>
 <th>라인코드</th>
 <th>라인명</th>
 <th>사용여부</th>
@@ -119,35 +140,52 @@ function deleteValue(){
 <th>등록일</th>
 <th>공정</th>
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
-<th></th>
 </c:if>
 </tr>
 </thead>
+<tbody>
 <c:forEach var="lineDTO" items="${lineList }">
 <tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}' === 'true') { openCenteredWindow('update?lineCode=${lineDTO.lineCode}'); } else { event.preventDefault(); }">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
+    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${lineDTO.lineCode}"></td>
+    </c:if>
     <td>${lineDTO.lineCode}</td>
     <td>${lineDTO.lineName}</td>
     <td>${lineDTO.lineUse}</td>
     <td>${lineDTO.lineEmpId}</td>
     <td>${lineDTO.lineInsertDate}</td>
     <td>${lineDTO.lineProcess}</td>
-    <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
-    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${lineDTO.lineCode}"></td>
-    </c:if>
 </tr>
 </c:forEach>
+</tbody>
 </table>
 </div>
+</form>
 
-<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '생산팀')}">
-<input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
-<button onclick="openCenteredWindow('line2')" id="btnSell">등록</button>
-</c:if>
+<%-- <c:forEach var="i" begin="${pageDTO.startPage}"  --%>
+<%--                    end="${pageDTO.endPage}" step="1"> --%>
+<%-- <a class="a" href="${pageContext.request.contextPath}/line/line?pageNum=${i}&search=${pageDTO.search}">${i}</a>  --%>
+<%-- </c:forEach> --%>
 
-<c:forEach var="i" begin="${pageDTO.startPage}" 
-                   end="${pageDTO.endPage}" step="1">
-<a class="a" href="${pageContext.request.contextPath}/line/line?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+<!-- 페이징 처리 -->
+<div id="pagination" class="page_wrap">
+<div class="page_nation">
+<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
+<c:choose>
+
+<c:when test="${i eq pageDTO.currentPage}">
+<a class="a active" href="${pageContext.request.contextPath}/line/line?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+</c:when>
+
+<c:otherwise>
+<a class="a" href="${pageContext.request.contextPath}/line/line?pageNum=${i}&search=${pageDTO.search}">${i}</a>
+</c:otherwise>
+
+</c:choose>
 </c:forEach>
 
+</div>
+</div>
+</div>
 </body>
 </html>

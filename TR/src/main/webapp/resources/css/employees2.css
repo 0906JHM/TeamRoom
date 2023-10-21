@@ -161,7 +161,8 @@ input[type="button"]:hover, input[type="submit"]:hover {
 }
 
 #upload-button {
-    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+	color: white;
+    background-color: #9AC5F4;
     width: 150px;
     height: 40px;
     border-radius: 5px;
@@ -171,9 +172,11 @@ input[type="button"]:hover, input[type="submit"]:hover {
     font: 500 20px/20px "Inter", sans-serif;
     margin-top: 0px;
     margin-right: 10px;
+    cursor: pointer;
 }
 #delete-button {
-    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    color: white;
+    background-color: #9AC5F4;
     width: 150px;
     height: 40px;
     border-radius: 5px;
@@ -183,10 +186,12 @@ input[type="button"]:hover, input[type="submit"]:hover {
     font: 500 20px/20px "Inter", sans-serif;
     margin-top: 0px;
     margin-right: 2px;
+    cursor: pointer;
 }
 
 #save-button {
-    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
+    color: white;
+    background-color: #9AC5F4;
     width: 100px;
     height: 40px;
     border-radius: 5px;
@@ -195,12 +200,20 @@ input[type="button"]:hover, input[type="submit"]:hover {
     text-align: center;
     font: 500 20px/20px "Inter", sans-serif;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 span {
 margin-left : 110px;
 color: red;	
 	}
+
+#empNamemsg,#empEmailmsg,#empTelmsg {
+    position: absolute;
+    top: -10px;
+}
+
+
 
 
 

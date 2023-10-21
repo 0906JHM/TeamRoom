@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
 
 @Repository
@@ -114,6 +116,10 @@ public class OutProductDAO {
 	public void updateClientSale(OutProductDTO outProductDTO) {
 		sqlSession.update(namespace + "updateClientSale", outProductDTO);
 		
+	}
+
+	public EmployeesDTO outProductEmpInfo(OutProductDTO outProductDTO) {
+		return sqlSession.selectOne(namespace + "outProductEmpInfo", outProductDTO); 
 	}
 
 }

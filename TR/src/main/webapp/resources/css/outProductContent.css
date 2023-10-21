@@ -145,9 +145,33 @@ table th {
 }
 
 
+/* 모달 스타일 */
+.modal {
+  display: none;
+  position: absolute; /* position 속성을 absolute로 변경 */
+  z-index: 1;
+  background-color: transparent; /* 배경색을 투명으로 변경 */
+}
 
+.modal-content {
+	font-size: 15px;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #888;
+  width: 200px;
+  position: fixed; /* 모달 내용도 position을 absolute로 변경 */
+}
 
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
+.close:hover {
+  cursor: pointer;
+}
 
 
 

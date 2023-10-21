@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.OutProductDAO;
+import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
 import com.itwillbs.domain.SellDTO;
 
@@ -122,10 +124,6 @@ public class OutProductService {
 	}
 
 	public void deleteSell(List<String> checked) {
-		System.out.println("aaaaaaaaaaaaaa");
-		System.out.println("aaaaaaaaaaaaaa");
-		System.out.println("aaaaaaaaaaaaaa");
-		System.out.println("aaaaaaaaaaaaaa");
 		outProductDAO.deleteSell(checked);
 	}
 	
@@ -145,6 +143,10 @@ public class OutProductService {
 
 	public void updateClientSale(OutProductDTO outProductDTO) {
 		outProductDAO.updateClientSale(outProductDTO);
+	}
+
+	public EmployeesDTO outProductEmpInfo(OutProductDTO outProductDTO) {
+		return outProductDAO.outProductEmpInfo(outProductDTO);
 	}
 
 

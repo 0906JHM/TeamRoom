@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
 import com.itwillbs.service.OutProductService;
 
@@ -217,6 +219,12 @@ public class AjaxOutProductController {
 			return "error2";
 		}
 
+	}
+	@PostMapping("/outProductEmpInfo")
+	public EmployeesDTO OutProductEmpInfo(OutProductDTO outProductDTO) {
+		EmployeesDTO employeesDTO = outProductService.outProductEmpInfo(outProductDTO);
+		
+		return employeesDTO;
 	}
 	
 }

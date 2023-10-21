@@ -169,19 +169,20 @@
 				console.log("scrollLimit : "+scrollLimit);
 	            
 	            $('.sidebody').css('height', screenHeight + 'px'); // 사이드 바의 높이를 지정
+	           
+	            $(window).on('scroll', function () {
+	                var scrollTop = $(this).scrollTop();
+	                var newTop = scrollTop; // 상단에 고정
+	
+	                // 스크롤을 scrollLimit 이하로 제한
+	                if (scrollTop > scrollLimit) {
+	                    newTop = scrollLimit;
+	                }
+	
+	                sidebar.css('top', newTop + 'px');
+	            });
 			}, 10); 
             
-            $(window).on('scroll', function () {
-                var scrollTop = $(this).scrollTop();
-                var newTop = scrollTop; // 상단에 고정
-
-                // 스크롤을 scrollLimit 이하로 제한
-                if (scrollTop > scrollLimit) {
-                    newTop = scrollLimit;
-                }
-
-                sidebar.css('top', newTop + 'px');
-            });
         }); 
        /*  $(document).ready(function () {
             var sidebody = $('.sidebody');
