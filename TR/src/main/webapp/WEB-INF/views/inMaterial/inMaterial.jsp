@@ -206,8 +206,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					// 중간납품 버튼 클릭 시
 			        $("#re_inButton").click(function () {
 			            // 중간납품 버튼에 대한 동작을 추가하고,
-			        	sellStateButton2 = "입고부족";
-			        	sellStateButton1 = sellStateButton2;
+			        	inStateButton2 = "입고부족";
+			        	inSateButton1 = inStateButton2;
 			            // 검색 조건을 설정하고 중간납품 목록을 가져오도록 수정
 			            var searchParams = {
 			            		inNum : $("#inNum").val(),
