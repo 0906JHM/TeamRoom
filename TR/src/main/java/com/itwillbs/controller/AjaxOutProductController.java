@@ -221,10 +221,12 @@ public class AjaxOutProductController {
 
 	}
 	@PostMapping("/outProductEmpInfo")
-	public EmployeesDTO OutProductEmpInfo(OutProductDTO outProductDTO) {
-		EmployeesDTO employeesDTO = outProductService.outProductEmpInfo(outProductDTO);
+	public EmployeesDTO OutProductEmpInfo(EmployeesDTO employeesDTO) {
+		System.out.println(employeesDTO);
 		
-		return employeesDTO;
+		EmployeesDTO employeesDTO2 = outProductService.outProductEmpInfo(employeesDTO);
+		
+		return employeesDTO2;
 	}
 	
 }

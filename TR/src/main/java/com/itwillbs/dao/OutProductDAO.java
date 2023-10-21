@@ -118,8 +118,8 @@ public class OutProductDAO {
 		
 	}
 
-	public EmployeesDTO outProductEmpInfo(OutProductDTO outProductDTO) {
-		return sqlSession.selectOne(namespace + "outProductEmpInfo", outProductDTO); 
+	public EmployeesDTO outProductEmpInfo(EmployeesDTO employeesDTO) {
+		return sqlSession.selectOne(namespace + "outProductEmpInfo", employeesDTO); 
 	}
 
 }
