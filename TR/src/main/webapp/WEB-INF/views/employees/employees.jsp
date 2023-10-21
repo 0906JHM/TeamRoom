@@ -98,21 +98,43 @@ $(document).ready(function() {
 </head>
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
-<div id="con">
-<h2>인사 관리</h2>
-<hr>
+<div class="container">
+<h2><a href="${pageContext.request.contextPath}/employees/employees" style=" text-decoration: none; color:black;">인사 관리</a></h2>
+
 <div id="searchForm">
-<form action="${pageContext.request.contextPath}/employees/employees" method="get">
-<span class="styled-text">search</span><input type="text" name="search" placeholder="search">
-<input type="submit" value="검색" id="btnSell">
+<form action="${pageContext.request.contextPath}/employees/employees" method="get" id="searchBox">
+<div id="searchform" style="border-radius: 5px;">
+<label>통합 검색</label><input type="text" name="search">
+<input type="submit" value="조회" id="searchButton">
+</div>
 </form>
 </div>
-<hr>
-<small>총 ${pageDTO.count}명</small>
-    <table id="employeeTable">
+
+<div id="sample">
+
+<div id="buttons">
+</div>
+
+<div class="buttons">
+<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">    
+<!-- <input type="button" value="삭제" onclick="deleteValue();" id="btnSell"> -->
+<button onclick="deleteValue();" id="add">삭제</button>
+<button onclick="openCenteredWindow('employees2')" id="delete">등록</button>
+</c:if>
+</div>
+</div>
+
+<label>총 ${pageDTO.count}명</label>
+
+<form id="selltList">
+<div id="sellList">
+    <table class="tg" id="employeeTable" style="border-radius: 5px;">
+
     <thead>
         <tr>
+       
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
+            <th></th> 
             <th>사원번호</th>
             <th>비밀번호</th>
 </c:if>
@@ -124,13 +146,15 @@ $(document).ready(function() {
             <th>입사일자</th>
             <th>재직구분</th>
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">            
-            <th></th>
 </c:if>            
         </tr>
         </thead>
+        <tbody>
 <c:forEach var="employeesDTO" items="${employeesList }">
+
 <tr onclick="if('${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}' === 'true') { openCenteredWindow('update?empId=${employeesDTO.empId}'); } else { event.preventDefault(); }">
 <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
+    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
     <td>${employeesDTO.empId}</td>
     <td>${employeesDTO.empPass}</td>
 </c:if>
@@ -141,25 +165,35 @@ $(document).ready(function() {
     <td>${employeesDTO.empTel}</td>
     <td>${employeesDTO.empHiredate}</td>
     <td>${employeesDTO.empState}</td>
-    <c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">
-    <td onclick="event.stopPropagation();"><input type="checkbox" name="RowCheck" value="${employeesDTO.empId}"></td>
-	</c:if>
 </tr>
-</c:forEach>    
+</c:forEach> 
+</tbody>   
     </table>
-    </div>
-    
-<c:if test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '인사팀')}">    
-    <input type="button" value="삭제" onclick="deleteValue();" id="btnSell">
-<button onclick="openCenteredWindow('employees2')" id="btnSell">등록</button>
-</c:if>
+</div>    
+</form>
+
 
 <!-- 페이징 처리 -->
-<c:forEach var="i" begin="${pageDTO.startPage}" 
-                   end="${pageDTO.endPage}" step="1">
-<a class="a" href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+<div id="pagination" class="page_wrap">
+<div class="page_nation">
+<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
+<c:choose>
+
+<c:when test="${i eq pageDTO.currentPage}">
+<a class="a active" href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a> 
+</c:when>
+
+<c:otherwise>
+<a class="a" href="${pageContext.request.contextPath}/employees/employees?pageNum=${i}&search=${pageDTO.search}">${i}</a>
+</c:otherwise>
+
+</c:choose>
 </c:forEach>
 
+</div>
+</div>
+
+</div>
 
 </body>
 

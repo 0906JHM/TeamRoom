@@ -103,3 +103,9 @@ input[type="button"]:hover, input[type="submit"]:hover {
     border: 1px solid rgba(221, 221, 221, 0.78); /* 테두리 설정 */
     padding: 20px;
 }
+
+span{
+	margin-left: 135px;
+    color: red;
+	
+}

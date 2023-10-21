@@ -53,6 +53,19 @@ public class EmployeesService {
 		return employeesDAO.getEmployeesList2();
 	}
 
+	public String generateNewEmployeeId() {
+		
+		    String lastEmployeeId = employeesDAO.getLastEmployeeIdFromDB();
+		    
+		    int lastNumber = Integer.parseInt(lastEmployeeId.substring(lastEmployeeId.length() - 4)) + 1;
+        
+	        // 새로운 사원번호 생성 (예: 1907010002 -> 1907010003)
+	        String newEmployeeId = lastEmployeeId.substring(0, lastEmployeeId.length() - 4) + String.format("%04d", lastNumber);
+	        
+		
+		return newEmployeeId;
+	}
+
 
 
 }

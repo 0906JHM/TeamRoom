@@ -72,7 +72,17 @@ public class EmployeesController {
 	
 //	인사등록 홈
 	@GetMapping("/employees2")
-	public String employees2() {	
+	public String employees2(Model model ) {	
+		
+		     String newEmployeeId = employeesService.generateNewEmployeeId();
+		     
+		
+		    
+		    String empPass = newEmployeeId;
+		    
+	        model.addAttribute("empId", newEmployeeId);
+	        model.addAttribute("empPass", empPass);
+	        
 		return "employees/employees2";	
 	}
 	

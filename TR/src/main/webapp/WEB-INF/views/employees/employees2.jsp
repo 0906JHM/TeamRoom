@@ -15,10 +15,11 @@
 
 <div class="form-group">
 <p>사원번호</p>
-<input type="number" name="empId" class="empId">
+<input type="text" id="empId" name="empId" class="empId" value="${empId}" readonly="readonly">
 </div>
-<div class="form-group"><p>비밀번호</p><input type="password" name="empPass" class="empPass"></div>
-<div class="form-group"><p>사원명</p><input type="text" name="empName" class="empName"></div>
+<div class="form-group"><p>비밀번호</p><input type="password" name="empPass" class="empPass" value="${empPass}"></div>
+<div class="form-group"><p>사원명</p><input type="text" id="empName" name="empName" class="empName"> <br>     </div>          
+                                                           <span id ="empNamemsg">  </span> 
 <div class="form-group"><p>부서</p>
 <select name="empDepartment" class="empDepartment select">
 <option value="인사팀">인사팀</option>
@@ -32,9 +33,11 @@
 <option value="팀장">팀장</option>
 <option value="부장">부장</option>
 </select></div>
-<div class="form-group"><p>이메일</p><input type="email" name="empEmail" class="empEmail"></div>
-<div class="form-group"><p>전화번호</p><input type="number" name="empTel" class="empTel"></div>
-<div class="form-group"><p>입사일자</p><input type="date" name="empHiredate" class="empHiredate"></div>
+<div class="form-group"><p>이메일</p><input type="email" id="empEmail" name="empEmail" class="empEmail"></div>
+                                                           <span id ="empEmailmsg">  </span> 
+<div class="form-group"><p>전화번호</p><input type="text" id="empTel" name="empTel" class="empTel" placeholder="- 없이 입력하세요" maxlength=11></div>
+																<span id ="empTelmsg">  </span> 
+<div class="form-group"><p>입사일자</p><input type="date" name="empHiredate" class="empHiredate" required></div>
 <div class="form-group"><p>재직구분</p>
 <select name="empState" class="empState select">
 <option value="재직">재직</option>
@@ -91,6 +94,134 @@ function previewImage() {
         document.getElementById("preview").src = "";
     }
 }
+
+/* // 입력상자 제어 
+
+function validateInputs() {
+    var koreanRegex = /^[가-힣]+$/; // 한글만 허용하는 정규식
+    var phoneNumberRegex = /^\d+$/; // 숫자만 허용하는 정규식
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 형식만 허용하는 정규식
+
+    var empName = document.getElementById("empName").value;
+    var empTel = document.getElementById("empTel").value;
+    var empEmail = document.getElementById("empEmail").value; */
+
+    
+    var koreanRegex = /^[가-힣]+$/; // 한글만 허용하는 정규식
+     // 이메일 정규식
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+ // 휴대폰 번호 정규식 (숫자만 허용하는 가정)
+    var phoneNumberRegex = /^(010|011|016|017|019)\d{8}$/;
+    
+document.getElementById("empName").addEventListener("input", function() {
+    var empName = this.value;
+    
+    // 숫자와 특수문자 제거
+    empName = empName.replace(/[\d`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '');
+    
+    if (empName === "") {
+        document.getElementById("empNamemsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empNamemsg").style.position = "absolute"; // 메시지 숨기기
+    } else if (!koreanRegex.test(empName)) {
+        document.getElementById("empNamemsg").textContent = "올바른 한글 이름을 입력하세요.";
+        document.getElementById("empNamemsg").style.position = "relative"; // 메시지 표시
+    } else {
+        document.getElementById("empNamemsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empNamemsg").style.position = "absolute"; // 메시지 숨기기
+    }
+    
+    this.value = empName;
+});
+
+
+document.getElementById("empEmail").addEventListener("input", function() {
+    var empEmail = this.value;
+    
+    empEmail = empEmail.replace(/[ㄱ-ㅎ가-힣]/g, '').replace(/[^a-zA-Z0-9.@]/g, '');
+
+    if (empEmail === "") {
+        document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empEmailmsg").style.position = "absolute"; // 메시지 숨기기
+    } else if (!emailRegex.test(empEmail)) {
+        document.getElementById("empEmailmsg").textContent = "올바른 이메일 주소를 입력하세요.";
+        document.getElementById("empEmailmsg").style.position = "relative"; // 메시지 표시
+    } else {
+        document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empEmailmsg").style.position = "absolute"; // 메시지 숨기기
+    }
+ // 입력란에 업데이트된 값 설정
+    this.value = empEmail;
+});
+
+document.getElementById("empTel").addEventListener("input", function() {
+    var empTel = this.value;
+
+    // 하이픈 제거
+    empTel = empTel.replace(/-/g, '');
+
+    // 숫자만 남기기
+    empTel = empTel.replace(/[^\d]/g, '');
+
+    if (empTel === "") {
+        document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empTelmsg").style.position = "absolute"; // 메시지 숨기기
+    } else if (!phoneNumberRegex.test(empTel)) {
+        document.getElementById("empTelmsg").textContent = "올바른 휴대폰 번호를 입력하세요.";
+        document.getElementById("empTelmsg").style.position = "relative"; // 메시지 표시
+    } else {
+        document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
+        document.getElementById("empTelmsg").style.position = "absolute"; // 메시지 숨기기
+    }
+    
+ // 입력란에 업데이트된 값 설정 (하이픈이 없는 숫자만 남김)
+    this.value = empTel;
+ 
+});
+
+var form = document.getElementById("join"); // 폼 엘리먼트의 ID를 지정해야 합니다.
+
+form.addEventListener("submit", function(event) {
+    var empName = document.getElementById("empName").value;
+    var empEmail = document.getElementById("empEmail").value;
+    var empTel = document.getElementById("empTel").value;
+
+    // 이름 유효성 검사
+    empName = empName.replace(/[\d`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/g, '');
+    if (empName === "") {
+        document.getElementById("empNamemsg").textContent = "올바른 한글 이름을 입력하세요.";
+        event.preventDefault(); // 폼 제출을 막습니다.
+        return;
+    } else {
+        document.getElementById("empNamemsg").textContent = ""; // 메시지 초기화
+    }
+
+    // 이메일 유효성 검사
+    empEmail = empEmail.replace(/[ㄱ-ㅎ가-힣]/g, '').replace(/[^a-zA-Z0-9.@]/g, '');
+    if (!emailRegex.test(empEmail)) {
+        document.getElementById("empEmailmsg").textContent = "올바른 이메일 주소를 입력하세요.";
+        event.preventDefault(); // 폼 제출을 막습니다.
+        return;
+    } else {
+        document.getElementById("empEmailmsg").textContent = ""; // 메시지 초기화
+    }
+
+    // 휴대폰 번호 유효성 검사
+    empTel = empTel.replace(/-/g, '');
+    empTel = empTel.replace(/[^\d]/g, '');
+    if (!phoneNumberRegex.test(empTel) || empTel.length !== 11) {
+        document.getElementById("empTelmsg").textContent = "올바른 휴대폰 번호를 입력하세요.";
+        event.preventDefault(); // 폼 제출을 막습니다.
+        return;
+    } else {
+        document.getElementById("empTelmsg").textContent = ""; // 메시지 초기화
+    }
+});
+
+
+
+
+
 </script>
 </body>
 </html>

@@ -115,6 +115,10 @@ public class RawmaterialsDAO implements RawmaterialsDAO2 {
 	public int getRawCodesPC() {
 		return sqlSession.selectOne(namespace+".getRawCodesPC");
 	}
+
+	public int rawmaterialsCount() {
+		return sqlSession.selectOne(namespace+".rawmaterialsCount");
+	}
 	
 	
 	

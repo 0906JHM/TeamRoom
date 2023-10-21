@@ -67,7 +67,9 @@ public class RawmaterialsController {
 	        
 	    // 품목추가한 내용 뿌려주기
 	    List<RawmaterialsDTO> rawmaterialsList= rawmaterialsService.getRawmaterialsList(pageDTO);
-	        
+	    // 전체 행 갯수 구하기
+	    int rawmaterialsCount = rawmaterialsService.rawmaterialsCount();
+	    
 	    int count = rawmaterialsService.getRawmaterialsCount(pageDTO);
 	    int pageBlock = 10;
 	    int startPage=(currentPage-1)/pageBlock*pageBlock+1;
@@ -86,6 +88,8 @@ public class RawmaterialsController {
 	        
 	    // 품목추가한 내용 뿌려주기
 	    model.addAttribute("rawmaterialsList", rawmaterialsList);
+	    // 전체 행 갯수 뿌려주기
+	    model.addAttribute("rawmaterialsCount", rawmaterialsCount);
 		model.addAttribute("pageDTO", pageDTO);
 	    
 	    return "Rawmaterials/home";
