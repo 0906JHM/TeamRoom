@@ -61,19 +61,17 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	<!-- 사이드바 -->
 
 	<div class="container">
-		<h2>품목 관리</h2>
-		<hr>
+		<h2>제품 관리</h2>
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/product/list"
 				method="get" id="selectedProId">
-				<label>품번</label> <input type="text" placeholder="제품코드를 입력하세요." name="prodCode" id="prodCode" value="${prodDTO.prodCode }"> 
-				<label>품명</label> <input type="text" placeholder="제품명을 입력하세요." name="prodName" id="prodName" value="${prodDTO.prodName }"> 
-				<label>거래처명</label> <input type="text" name="clientCompany" id="sellclientCompany9999" value="${prodDTO.clientCompany }" readonly placeholder="거래처를 선택하세요." onclick="searchItem('sellclient','sellclientCode9999')" style="cursor: pointer !important;">
+				<label>제품 코드</label> <input type="text" placeholder="제품코드" name="prodCode" id="prodCode" value="${prodDTO.prodCode }"> 
+				<label>제품명</label> <input type="text" placeholder="제품명" name="prodName" id="prodName" value="${prodDTO.prodName }"> 
+				<label>거래처명</label> <input type="text" name="clientCompany" id="sellclientCompany9999" value="${prodDTO.clientCompany }" readonly placeholder="거래처명" onclick="searchItem('sellclient','sellclientCode9999')" style="cursor: pointer !important;">
 				<!--         <input type="text" placeholder="거래처를 선택하세요." name="a3"> -->
 				<button type="submit">조회</button>
 			</form>
 		</div>
-		<hr>
 		<%--     <form action="${pageContext.request.contextPath}/product/write" method="post"> --%>
 		<c:if
 			test="${!(empty sessionScope.empDepartment) && (sessionScope.empDepartment eq '관리자' || sessionScope.empDepartment eq '자재팀')}">
@@ -88,9 +86,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<!-- 				<button id="excelDownload" class="buttons">엑셀⬇</button> -->
 			</div>
 		</c:if>
-		<h3 style="padding-left: 1%;">
-			목록 <small>총 ${pageDTO.count}건</small>
-		</h3>
+		
+			<label style="padding-left: 1%;" id="listCount">총 ${pageDTO.count}건</label> 
 
 		<form id="productList">
 			<div id="productList">
@@ -160,7 +157,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				</table>
 			</div>
 			<div class="page">
-				<button id="exportButton" class="buttons">엑셀⬇</button>
+<!-- 				<button id="exportButton" class="buttons">엑셀</button> -->
+				<input type="button"  id="exportButton"  class="buttons" value="엑셀">
 				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
 					<a
 						href="${pageContext.request.contextPath}/product/list?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&prodCode=${prodDTO.prodCode}&prodName=${prodDTO.prodName}&clientCompany=${prodDTO.clientCompany}">Prev</a>
