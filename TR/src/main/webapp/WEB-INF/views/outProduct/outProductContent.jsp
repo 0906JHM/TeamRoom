@@ -88,7 +88,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				<td colspan="2"><input type="text" name="outRedate" value="${outProductDTO.outRedate }" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<td class="tableHead" colspan="3">총수주 개수</td>
+				<td class="tableHead" colspan="3">총 수주 개수</td>
 				<td class="tableHead" colspan="3">남은 수주 개수</td>
 			</tr>
 			<tr> 
