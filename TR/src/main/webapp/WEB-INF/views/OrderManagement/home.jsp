@@ -120,9 +120,8 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/side.jsp"></jsp:include>
 
-<div id="content">
+<div class="content">
 <h2>발주 관리</h2>
-<hr>
 
 <!-- form(검색) -->
 <div id="searchForm">
@@ -141,7 +140,6 @@ $(document).ready(function() {
 <input type="submit" value="조회">
 </form>
 </div>
-<hr>
 
 <!-- button -->
 <div id="buttons">
@@ -207,7 +205,6 @@ ${ordermanagementDTO.buyInstate}
 </c:forEach>
 </tbody>
 </table>
-</div>
 
 <!-- 페이징처리 -->
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
@@ -217,7 +214,8 @@ ${ordermanagementDTO.buyInstate}
 <!-- button -->
 <button class="excelbtn" id="excelDownload">엑셀 ⬇️</button>
 <button class="excelbtn" onclick="window.location.href='${pageContext.request.contextPath}/OrderManagement/download'">전체 ⬇️</button>
-				
+</div>
+
 <!-- javascript -->
 <script type="text/javascript">
 
