@@ -189,4 +189,9 @@
 		where rawCode like 'PC%'
 	</select>
  	
+ 	<select id="rawmaterialsCount" resultType="java.lang.Integer">
+		select count(*)
+      	from rawMaterial
+    </select>
+ 	
 </mapper>

@@ -152,6 +152,8 @@ $(document).ready(function() {
 </c:if>
 </div>
 
+총 ${rawmaterialsCount}건
+
 <!-- table -->
 <table id="rawmaterialsList">
 <thead>
