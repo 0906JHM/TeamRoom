@@ -75,16 +75,11 @@ public class AjaxPerformanceController {
 		System.out.println("실적 업데이트 데이터 "+perfDTO);
 		System.out.println("실적 업데이트 데이터 "+perfDTO);
 		System.out.println("실적 업데이트 데이터 "+perfDTO);
-//		try {
-//			
-////			perfService.updateperf(perfDTO);
-//			
-//			return new ResponseEntity<>("true", HttpStatus.OK); // 성공 시 "true" 반환
-//			
-//		} catch (Exception e) {
-//			 return new ResponseEntity<>("false: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//			
-//		}
+	
+			
+			perfService.updateperf(perfDTO);
+			
+	
 		return "true";
 	}
 }
