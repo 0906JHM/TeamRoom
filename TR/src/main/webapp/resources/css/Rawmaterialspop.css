@@ -20,6 +20,11 @@ h2 {
     padding: 20px;
 }
 
+.memo-content {
+    max-width: 600px;
+    padding: 20px;
+}
+
 /* 테이블(공통) -------------------------------------------------------- */
 table {
 	border: 1px solid rgba(221, 221, 221, 0.78);
@@ -175,3 +180,12 @@ input[type="button"]:hover, input[type="submit"]:hover {
 	text-align: center;
 	margin-bottom: 10px;
 }
+
+#memo2 {
+	margin: 0 auto;
+	color: #000000;
+	max-width: 1570px;
+	font: 500 18px/18px "Inter", sans-serif;
+	text-align: center;
+}
+	
