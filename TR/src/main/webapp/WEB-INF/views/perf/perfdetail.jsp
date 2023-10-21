@@ -292,14 +292,17 @@ updateButton.addEventListener("click", function(event){
         success: function(response) {
         	console.log("ajax 왔다감");
             // 서버 응답이 성공인 경우
-            Swal.fire({
-                title: '수정 성공',
-                text: '성공적으로 수정되었습니다.',
-                icon: 'success'
-            }).then(function() {
-                // 성공 메시지를 표시한 후 추가적인 동작을 수행하려면 이 부분에 코드를 작성합니다.
-                // 예: 페이지 리로드, 다른 동작 수행 등
-            });
+            if(response === 'true'){
+            	
+	            Swal.fire({
+	                title: '수정 성공',
+	                text: '성공적으로 수정되었습니다.',
+	                icon: 'success'
+	            }).then(function() {
+	                // 성공 메시지를 표시한 후 추가적인 동작을 수행하려면 이 부분에 코드를 작성합니다.
+	                // 예: 페이지 리로드, 다른 동작 수행 등
+	            });
+            }
         },
         error: function(xhr, status, error) {
             // 서버 응답이 실패인 경우
