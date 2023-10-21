@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.itwillbs.dao.OpenlistDAO;
 import com.itwillbs.dao.RequirementDAO;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
@@ -23,7 +24,6 @@ import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.WarehouseDTO;
-import com.itwillbs.domain.WorkOrderDTO;
 
 
 @Service
@@ -215,40 +215,37 @@ public class OpenlistService {
 					return pdao.readlinelist(pdto);
 					
 				}
-				
-				//////////////////////////////////// 작업지시 받아오기
-				
-				// 검색 총갯수 
-				public int countwork(WorkOrderDTO dto) {
-				
-					return pdao.countwork(dto);
-				}
-
-				
-				// 검색 리스트
-				
-				public List<WorkOrderDTO> getworklist(WorkOrderDTO dto, RequirementPageDTO pdto) {
-					
-					return pdao.getwroklist(dto,pdto);
-				}
-
-				
-				// 작업지시 총개수 
-				public int countwork() {
-				
-					return pdao.countwork();
-				}
-				
-				//총 작업리스트
-				public List<WorkOrderDTO> getworklist(RequirementPageDTO pdto) {
-				
-					return pdao.getworklist(pdto);
-				}
 
 				
 		 
 	// ==========================================================================
+				// ==========================================================================
 
+				// 직원목록 총 갯수
+				
+				public int countEmp() {
+					return pdao.countEmp();
+				}
+
+				
+				  // 직원목록 전체 리스트
+				  
+				   public List<EmployeesDTO> getEmpList(RequirementPageDTO pdto) throws Exception
+				   { return pdao.readEmpList(pdto);
+				  }
+
+				
+				  // 직원목록 검색 갯수
+				  
+				   public int countEmp(EmployeesDTO dto) { return
+				  pdao.countEmp(dto); }
+				 
+				
+				  // 직원목록 검색 리스트
+				  
+				   public List<EmployeesDTO> getEmpList(EmployeesDTO dto,
+				  RequirementPageDTO pdto) throws Exception { return pdao.readEmpList(dto, pdto); }
+				   
 	/*
 	 * // 소요량관리 게시물 총 갯수
 	 * 

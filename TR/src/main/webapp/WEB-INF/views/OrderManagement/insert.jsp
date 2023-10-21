@@ -5,8 +5,10 @@
 
 <!-- head -->
 <head>
+
 <meta charset="UTF-8">  
 <title>Insert title here</title>
+
 </head>
 
 <!-- body -->
@@ -15,16 +17,19 @@
 
 <!-- form -->
 <form action="${pageContext.request.contextPath}/OrderManagement/insertPro" method="post" onsubmit="return validateForm()">
-품번 : 		<input type="text" name="rawCode" id="rCInput"> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
-품명 : 		<input type="text" name="rawName" id="rNInput"><br>
-종류 : 		<input type="text" name="rawType" id="rTInput"><br>
-매입단가 : 		<input type="number" name="rawPrice" id="rPInput"><br>
-거래처코드 : 		<input type="text" name="clientCode" id="pInput"> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
-창고코드 : 		<input type="text" name="whseCode" id="wNInput"><br>
-창고수량 : 		<input type="number" name="whseCount" id="wCInput"><br>
+품번 : 		<input type="text" name="rawCode" id="rCInput" readonly> <input type="button" value="원자재목록" onclick="openPopup1()"><br>
+품명 : 		<input type="text" name="rawName" id="rNInput" readonly><br>
+종류 : 		<input type="text" name="rawType" id="rTInput" readonly><br>
+매입단가 : 		<input type="number" name="rawPrice" id="rPInput" readonly><br>
+단위 :  <input type="text" name="rawUnit" id="rUInput" readonly><br>
+창고코드 : 		<input type="text" name="whseCode" id="wCInput" readonly><br>
+창고명 : 		<input type="text" name="whseName" id="wNInput" readonly><br>
+재고량 : 		<input type="text" name="stockCount" id="sCInput" readonly><br>
+거래처코드 : 		<input type="text" name="clientCode" id="pInput" readonly> <input type="button" value="거래처목록" onclick="openPopup2()"><br>
+거래처명 : 		<input type="text" name="clientCompany" id="cCInput" readonly><br>
 발주수량 : 		<input type="number" name="buyCount"><br>
 발주신청일 : 	<input type="date" name="buyDate"><br>
-담당자 : 		<input type="text" name="buyEmpId" value="${sessionScope.empId}"><br>
+담당자 : 		<input readonly type="text" name="buyEmpId" value="${sessionScope.empId}" id="empName9999"><br>
 발주상태 : 		<input type="radio" name="buyInstate" value="신청완료" checked>신청완료
 			<input type="radio" name="buyInstate" value="발주완료">발주완료<br>
 <input type="submit" value="발주등록">

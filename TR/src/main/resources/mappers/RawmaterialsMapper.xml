@@ -18,9 +18,11 @@
 	
 	<!-- home 페이징처리, 검색기능 -->
 	<select id="getRawmaterialsList" resultType="com.itwillbs.domain.RawmaterialsDTO">
-		select r.rawNum,r.rawCode,r.rawName,r.rawType,r.rawUnit,r.rawPrice,r.whseCode,w.whseCount,r.rawMemo
-		from rawMaterial r join warehouse w
+		select *
+		from rawMaterial r
+		left join warehouse w
 		on r.whseCode = w.whseCode
+		left join stock s on r.rawCode = s.rawCode
 		where 1=1
    		<if test="search1 != null and search1 != ''">
         	and r.rawCode like concat('%', #{search1}, '%')

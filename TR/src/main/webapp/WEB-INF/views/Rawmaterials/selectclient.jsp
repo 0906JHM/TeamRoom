@@ -15,6 +15,7 @@
 <h1>거래처</h1>
 
 <input id="cInput" type="hidden">
+<input id="cCInput" type="hidden">
 
 <!-- javascript -->
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -23,6 +24,7 @@
 // 자식에서 부모페이지로 값 넣기
 function setParentText(){
 	opener.document.getElementById("pInput").value = document.getElementById("cInput").value
+	opener.document.getElementById("cCInput").value = document.getElementById("cCInput").value
 	window.close();
 }
 
@@ -69,7 +71,9 @@ function openPopup4(clientCode) {
 </tr>
 
 <c:forEach var="clientDTO" items="${clientList}">
-<tr onclick="if(event.target.tagName!='A'){document.getElementById('cInput').value = '${clientDTO.clientCode}'; setParentText();}">
+<tr onclick="if(event.target.tagName!='A')
+{document.getElementById('cInput').value = '${clientDTO.clientCode}'; document.getElementById('cCInput').value = '${clientDTO.clientCompany}';
+setParentText();}">
 <td>${clientDTO.clientType}</td>
 <td>${clientDTO.clientCode}</td>
 <td>${clientDTO.clientCompany}</td>

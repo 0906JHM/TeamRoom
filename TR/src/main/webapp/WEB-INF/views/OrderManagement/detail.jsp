@@ -6,9 +6,11 @@
 
 <!-- head -->
 <head>
+
 <meta charset="UTF-8">  
 <title>Insert title here</title>
 </head>
+
 
 <!-- body -->
 <body>
@@ -22,7 +24,8 @@
 <tr><td>종류</td>		<td>${ordermanagementDTO.rawType}</td></tr>
 <tr><td>거래처코드</td>	<td>${ordermanagementDTO.clientCode}</td></tr>
 <tr><td>창고코드</td>	<td>${ordermanagementDTO.whseCode}</td></tr>
-<tr><td>창고수량</td>	<td>${ordermanagementDTO.whseCount}</td></tr>
+<tr><td>창고명</td>	<td>${ordermanagementDTO.whseName}</td></tr>
+<tr><td>재고수량</td>	<td>${ordermanagementDTO.stockCount}</td></tr>
 <tr><td>발주수량</td>	<td>${ordermanagementDTO.buyCount}</td></tr>
 <tr><td>매입단가</td>	<td>${ordermanagementDTO.rawPrice}</td></tr>
 <tr><td>단가총계</td>	<td>${ordermanagementDTO.rawPrice * ordermanagementDTO.buyCount}</td></tr>

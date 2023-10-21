@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.service.OpenlistService;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
@@ -35,7 +36,6 @@ import com.itwillbs.domain.RequirementList;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.WarehouseDTO;
-import com.itwillbs.domain.WorkOrderDTO;
 import com.mysql.cj.Session;
 
 @Controller
@@ -49,7 +49,7 @@ public class OpenlistController {
 	private static final Logger logger = LoggerFactory.getLogger(OpenlistController.class);
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String popUpGET(@RequestParam("input") String input, @RequestParam("type") String type) throws Exception {
+	public String popUpGET(@RequestParam("input") String input, @RequestParam("type") String type, @RequestParam(value = "type2", required = false) String type2) throws Exception {
 
 		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
 		logger.debug("@#@#@# C : type = " + type);
@@ -77,7 +77,9 @@ public class OpenlistController {
 		else if (type.equals("sellclient")) {
 			return "redirect:/search/sellclient?input=" + input;
 		}
-
+		else if (type.equals("emp")) {
+			return "redirect:/search/emp?input=" + input + "&type2" + type2;
+		}
 		return "";
 
 	}
@@ -199,7 +201,7 @@ public class OpenlistController {
 		  model.addAttribute("client", client);
 		  logger.debug("DTO : " + dto);
 		  
-		  if (dto.getClientCode() != null || dto.getClientCompany() != null) {
+		  if (dto.getClientCode() != null || dto.getClientName() != null) {
 		  
 		  logger.debug("if문 호출"); int total = service.countClient(dto);
 		  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
@@ -246,7 +248,7 @@ public class OpenlistController {
 		  model.addAttribute("client", client);
 		  logger.debug("DTO : " + dto);
 		  
-		  if (dto.getClientCode() != null || dto.getClientCompany() != null) {
+		  if (dto.getClientCode() != null || dto.getClientName() != null) {
 		  
 		  logger.debug("if문 호출"); int total = service.buycountClient(dto);
 		  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
@@ -442,6 +444,7 @@ public class OpenlistController {
 				  int total = service.countline(dto);
 				  System.out.println(total + "total개수");
 				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
+				  
 				  List<LineDTO> linelist = service.getlineList(pdto);
 				  model.addAttribute("linelist", linelist);
 				  model.addAttribute("paging", pdto);
@@ -452,34 +455,35 @@ public class OpenlistController {
 				  return "openlist/linelist";
 				  
 				  }
+				
+				// 직원목록 // http://localhost:8088/search/emp
 				  
-				  /////////////////////////////////
-				  
-				// 수주목록 // http://localhost:8088/search/sell
-				  
-				  @RequestMapping(value = "/openworklist", method = RequestMethod.GET)
-				  public String workGET(Model model, WorkOrderDTO dto, RequirementPageDTO pdto,
+				  @RequestMapping(value = "/emp", method = RequestMethod.GET)
+				  public String empGET(Model model, EmployeesDTO dto, RequirementPageDTO pdto,
 				  
 				  @RequestParam(value = "nowPage", required = false) String nowPage,
 				  
 				  @RequestParam(value = "cntPerPage", required = false) String cntPerPage,
 				  
-				  @RequestParam(value = "input", required = false) String input) throws Exception {
+				  @RequestParam(value = "input", required = false) String input,
 				  
-				  logger.debug("workGET() 호출");
-				  List<WorkOrderDTO> work = new ArrayList<WorkOrderDTO>();
-				  model.addAttribute("work", work);
+				  @RequestParam(value = "type2", required = false) String type2) throws Exception {
+				  
+					  
+				  logger.debug("empGET() 호출");
+				  List<EmployeesDTO> emp = new ArrayList<EmployeesDTO>();
+				  model.addAttribute("emp", emp);
 				  logger.debug("DTO : " + dto);
-				  
-				  // 라인 수주 제품 코드
-				  if (dto.getLineCode() != null  || dto.getProdName() != null ) {
-				  
+				  dto.setEmpDepartment(type2);
+				 /* if (dto.getEmpId() != null || dto.getEmpName() != null) {
+				 */ 
 				  logger.debug("if문 호출");
-				  int total = service.countwork(dto);
+				  int total = service.countEmp(dto);
 				  System.out.println(total + "total개수");
 				  pdto = new RequirementPageDTO(total, pdto.getNowPage(), pdto.getCntPerPage());
-				  List<WorkOrderDTO> worklist = service.getworklist(dto, pdto);
-				  model.addAttribute("worklist", worklist);
+				  
+				  List<EmployeesDTO> list = service.getEmpList(dto, pdto);
+				  model.addAttribute("empList", list);
 				  model.addAttribute("paging", pdto);
 				  model.addAttribute("DTO", dto);
 				  logger.debug("pdto : " + pdto);
@@ -490,25 +494,18 @@ public class OpenlistController {
 				  // input 추가
 				  if (input != null && !input.equals("")) {
 				  model.addAttribute("input", input);
+				  model.addAttribute("dto", dto);
 				  logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@"); }
-				  }
-				  else {
-					  logger.debug("else문 호출");
-				  int total = service.countwork();
-				  pdto = new RequirementPageDTO(total);
-				  logger.debug("pdto : " + pdto);
-				  List<WorkOrderDTO> worklist = service.getworklist(pdto);
-				  model.addAttribute("worklist", worklist);
-				  model.addAttribute("paging", pdto);
-				  logger.debug(" 모든 리스트 가져감"); }
-				  return "openlist/openworklist";
+				/* } */
+					/*
+					 * else { logger.debug("else문 호출"); int total = service.countEmp(); pdto = new
+					 * RequirementPageDTO(total); dto.setEmpDepartment(type2);
+					 * logger.debug("pdto : " + pdto); List<EmployeesDTO> list =
+					 * service.getEmpList(pdto); model.addAttribute("empList", list);
+					 * model.addAttribute("paging", pdto); logger.debug(" 모든 리스트 가져감"); }
+					 */				  return "openlist/emplist";
 				  
 				  }
-				  
-				  
-				  
-				  
-				
 				  
 
 	// 소요량관리
