@@ -213,7 +213,7 @@ $(document).ready(function() {
        });
        
     // prodCode2 input box 클릭 이벤트 처리
-       $('#prodCode2').click(function() {
+       $('#workCode2').click(function() {
        	console.log("제품코드 클릭");
            openProductPopup(); // 제품 팝업 열기
        });
@@ -238,7 +238,7 @@ $(document).ready(function() {
     }
     
     function openWorkOrderPopup() {
-        var popupUrl = '${pageContext.request.contextPath}/perf/worklist';
+        var popupUrl = '${pageContext.request.contextPath}/search/openworklisti?input=workCode2';
         window.open(
             popupUrl,
             '_blank',

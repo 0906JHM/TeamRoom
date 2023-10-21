@@ -11,7 +11,7 @@ body{
 .clientBody{
 	display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 83%;
     padding-left: 1.2%;
 	
 	
@@ -35,7 +35,6 @@ body{
 }
 
 .clienttotal{
-	width: 1500px;
 	display:flex;
 	margin-top : 15px;
 	box-sizing: border-box;
@@ -45,9 +44,8 @@ body{
 
 .cthead{
 	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
-	width:1570px;
-	height:45px;
-	font: 500 24px/24px "Inter", sans-serif;
+height: 30px;
+
 }
 
 
@@ -69,26 +67,23 @@ body{
 
 
 .ct {
-border: 1px solid rgba(221, 221, 221, 0.78);
-    margin: 0 auto;
-    color: #000000;
-    max-width: 1570px;
-    font: 500 18px/18px "Inter", sans-serif;
+   border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: center;
+    border-right: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
 }
 
 
 
-.ct .cttg {
-    border-width: 1px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    padding: 10px 5px;
-    border-color: inherit;
-    text-align: left;
-    text-align: center;
-}
 
+
+.ct tr{
+	border-right: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+    height: 35px;
+	
+}
 hr{
 	 background: #adb5bb;
   width: 1700px;
@@ -107,90 +102,128 @@ hr{
 }
 
 .search{
-	height: 40px;
-	display: flex;
-    align-items: center;
-    margin: 25px 0;
+	
+    margin: 0 auto;
+    background-color: white;
+    width: 98%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    padding-top: 20px;
+    
     
 }
 
 #clientCompany{
-	border: 1px solid #adb5bb;
-    border-radius: 5px;
-    width: 300px;
-    height: 40px;
-    font: 500 18px/18px "Inter", sans-serif;
-    padding-left: 10px;
+	border: 1px solid #A6A6A6;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    width: 105px;
+    height: 25px;
+    text-align: center;
+    font: 500 15px/20px "Inter", sans-serif;
 	
 }
 
 .addbutton {
-	    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
-    color: #FFFFFF;
+	    color: white;
+    background-color: #9AC5F4;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
     border: 0;
     text-align: center;
-    font: 500 24px/24px "Inter", sans-serif;
+    font: 500 15px/20px "Inter", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
   
 }
 
 #clientType{
-	 background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
-    color: #FFFFFF;
+    color: white;
+    background-color: #9AC5F4;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
     border: 0;
     text-align: center;
-    font: 500 24px/24px "Inter", sans-serif;
+    font: 500 15px/20px "Inter", sans-serif;
+    /* margin-right: 5px; */
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.searchbtn{
-	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
-    color: #FFFFFF;
-    border: 0;
-    text-align: center;
-    font: 500 24px/24px "Inter", sans-serif;
+#clientType:hover, .addbutton:hover, .searchbtn:hover {
+	
+	    color: white;
+    background-color: #1D5D9B;
+}
+
+.searchlabel {
+	    margin-left: 25px;
+    font-weight: bold;
+}
+
+.h2class{
+	margin-left: 15px;
 	
 }
 
-.ct tbody tr:nth-child(even) {
-	background-color: #f2f2f2; /* 짝수 행의 백그라운드 색상 설정 */
+.typetab{
+    margin: 2% 1% 0;
 }
 
-.ct tbody tr:nth-child(odd) {
-	background-color: #ffffff; /* 홀수 행의 백그라운드 색상 설정 */
+.searchbtn{
+	color: white;
+    background-color: #9AC5F4;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
+    border: 0;
+    text-align: center;
+    font: 500 15px/20px "Inter", sans-serif;
+    /* margin-right: 5px; */
+    font-weight: bold;
+    cursor: pointer;
+	
 }
+
+
 
 .page{
 	    display: flex;
     flex-direction: row;
     margin: 25px 0;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: end;
+
 	
 }
 .a{
+		display: block;
+    margin: 0 3px;
+    float: left;
+    border: 1px solid #D9D9D9;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 15px;
+    text-decoration: none;
+    background-color: white;
+    color: #4D4D4D;
+    border-radius: 3px;
+    cursor: pointer;
+    float:right;
+}
 
-		margin: 0; /* 목록 항목 간격 제거 */
-	padding: 0; /* 목록 항목 내부 간격 제거 */
-	background-color: rgba(94, 195, 151, 1);
-	border-radius: 5px;
-	width: 35px;
-	height: 35px;
-	line-height: 35px;
-	text-align: center;
-	font-size: 20px;
-	cursor: pointer; /* 커서 모양 변경 */
-	text-decoration: none; /* 하이퍼링크 스타일 제거 */
-	cursor: pointer; /* 커서 모양 변경 */
-	color: #fff; /* 원래 텍스트 색상으로 변경 */
+.page .a {
+	
+	background-color: white;
+    color: #9AC5F4;
+    border: 1px solid #D9D9D9;
+    font-weight: bold;
+    cursor: pointer;
 }
-}
+
 	
 

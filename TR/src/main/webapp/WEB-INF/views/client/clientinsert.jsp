@@ -56,15 +56,33 @@
 	
 	}
 	
-	.subbtn{
-	background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
-    color: #FFFFFF;
+	#btn{
+	color: white;
+    background-color: #9AC5F4;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
     border: 0;
     text-align: center;
-    font: 500 24px/24px "Inter", sans-serif;
+    font: 500 15px/20px "Inter", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 15px;
+	
+	}
+	
+	#closebtn{
+		color: white;
+    background-color: #9AC5F4;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
+    border: 0;
+    text-align: center;
+    font: 500 15px/20px "Inter", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 15px;
 	
 	}
 	
@@ -78,6 +96,14 @@
 	.headh2{
 	text-align: center;
 	}
+	
+	span{
+	font-size:13px;
+	font-weight: bold;
+	
+	}
+	
+	
 	</style>
 </head>
 <body>
@@ -88,10 +114,7 @@
 	<!-- 내용들어가는곳 -->
 	<form action="${pageContext.request.contextPath}/client/insertPro"
 		id="clientInsert" name="clientInsert" method="POST" enctype="multipart/form-data" >
-		
-		
       <table id="clientinsert">
-		<br>
 		<!-- 거래처구분 -->
 		<tr><td><label for="clientType_label"><b>구분</b> </label></td>
 		<td><select id="clientType" name="clientType" class="clientType">
@@ -103,7 +126,7 @@
 		<!-- 거래처 코드 -->
 		<tr><td> <label for="clientCode_label"><b>거래처코드</b></label>  </td>
 		<td> <input type="text" name="clientCode" id="clientCode" readonly class="insertbox"> <br> 
-		<span id="clientCode_msg"></span> </td></tr>
+		<span id="clientCode_msg"></span> </td> </tr>
 	
 			
 			<!-- 거래처명 -->
@@ -120,25 +143,24 @@
 
 		<!-- 업태 -->
 		<tr><td><label for="clientDetail_label"><b>업태</b> </label></td>
-		<td> <input type="text" name="clientDetail" id="clientDetail" class="insertbox"> <br> <span id="clientDetail_msg"></span> </td></tr>
+		<td> <input type="text" name="clientDetail" id="clientDetail" class="insertbox" maxlength="10" > <br> <span id="clientDetail_msg"></span> </td></tr>
 		 
 
 
 		<!-- 거래처 대표자명 -->
 		<tr><td> <label for="clientCeo_label"><b>대표자</b></label></td>
-		 <td> <input type="text" name="clientCeo" id="clientCeo" class="insertbox"> <br> <span id="clientCeo_msg"></span></td></tr>
+		 <td> <input type="text" name="clientCeo" id="clientCeo" class="insertbox"  maxlength="10" > <br> <span id="clientCeo_msg"></span></td></tr>
 	
 
 		<!-- 거래처담당자이름-->
 		<tr><td> <label for="clientName_label"><b>거래담당자</b></label> </td>
-		<td><input type="text" name="clientName" id="clientName" class="insertbox"> <br> <span id="clientName_msg"></span> </td></tr>
+		<td><input type="text" name="clientName" id="clientName" class="insertbox"  maxlength="10" > <br> <span id="clientName_msg"></span> </td></tr>
 
 
 		<!-- 주소 -->
 		<tr><td><label for="clientAddress_label"><b>도로명주소</b></label></td>
 		<td> <input type="text" id="sample4_roadAddress" placeholder="도로명주소"
-			name="clientAddr1" readonly required class="insertbox">  <input type="button"
-			onclick="sample4_execDaumPostcode()" value="우편번호 찾기" required class="addbox"></td></tr>
+			name="clientAddr1" readonly required class="insertbox" onclick="sample4_execDaumPostcode()"></td></tr>
 			<br>
 		<tr><td><label for="clientAddress_label"><b>상세주소</b></label></td>
 		<td> <input type="text" id="sample4_extraAddress" placeholder="상세주소" name="clientAddr2" size="60" required class="longbox">
@@ -149,17 +171,17 @@
 
 		<!-- 거래처 번호 -->
 		<tr><td><label for="clientTel"><b>거래처번호</b></label></td>
-		<td> <input type="text" name="clientTel" id="clientTel" class="insertbox"> <br> <span id="clientTel_msg"></span> </td></tr>
+		<td> <input type="text" name="clientTel" id="clientTel" class="insertbox" maxlength="12" > <br> <span id="clientTel_msg"></span> </td></tr>
 	
 
 		<!-- 거래담당자 번호 -->
 		<tr><td> <label for="clientPhone"><b>담당자번호</b></label></td>
-		 <td> <input type="text" name="clientPhone" id="clientPhone" class="insertbox"> <br> <span id="clientPhone_msg"></span>   </td></tr>
+		 <td> <input type="text" name="clientPhone" id="clientPhone" class="insertbox" maxlength="13" > <br> <span id="clientPhone_msg"></span>   </td></tr>
 		  
 
 		<!--  팩스번호 -->
 		<tr><td> <label for="clientFax"><b>팩스자번호</b></label> </td>
-		<td><input type="text" name="clientFax" id="clientFax" class="insertbox"> <br> <span id="clientFax_msg"></span>
+		<td><input type="text" name="clientFax" id="clientFax" class="insertbox"  maxlength="12" > <br> <span id="clientFax_msg"></span>
 
 
 		<!-- 거래처 이메일 -->
@@ -175,6 +197,7 @@
      <!-- 등록 버튼 -->
 		<div class="footbtn">
 			<input type="submit" id="btn" value="등록" class="subbtn">
+			<button type="button" id="closebtn"> 닫기 </button>
 		</div>
 	</form>
 
@@ -339,7 +362,162 @@ $(document).ready(function() {
     
     
     
+    
+    
 }); //$(document).ready(function() 끝
+		
+var koreanRegex = /^[가-힣]+$/; // 한글만 허용하는 정규식
+
+var koreanEnglishRegex = /^[가-힣a-zA-Z]*$/;
+
+// 이메일 정규식
+var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+//지역번호 정규식
+var localAreaCodes = /^(02|031|032|033|041|043|042|044|051|052|053|054|055|061|062|063|064|070)$/;
+
+// 휴대폰 번호 정규식 (숫자만 허용하는 가정)
+    var phoneNumberRegex = /^(010|011|016|017|019)-\d{4}-\d{4}$/;
+
+var businessNumberRegex = /^[\d-]+$/;
+
+document.getElementById("clientNumber").addEventListener("input", function() {
+    var clientNumber = this.value;
+    clientNumber = clientNumber.replace(/[^\d-]/g, ''); // 숫자와 하이픈 이외의 문자 제거
+    
+    if (!businessNumberRegex.test(clientNumber)) {
+        document.getElementById("clientNumber_msg").textContent = "올바른 사업자 번호를 입력하세요.";
+    } else {
+        document.getElementById("clientNumber_msg").textContent = "";
+    }
+    
+    this.value = clientNumber;
+});
+
+document.getElementById("clientDetail").addEventListener("input", function(event) {
+    var clientDetail = this.value;
+    
+    if (!koreanRegex.test(clientDetail)) {
+        document.getElementById("clientDetail_msg").textContent = "한글만 입력하세요.";
+        this.value = clientDetail.slice(0, -1); // 마지막 입력을 제거하여 올바른 입력 상태로 복원
+        event.preventDefault(); // 입력 막기
+    } else {
+        document.getElementById("clientDetail_msg").textContent = "";
+    }
+});
+
+document.getElementById("clientCeo").addEventListener("input", function(event) {
+    var clientCeo = this.value;
+    
+    if (!koreanEnglishRegex.test(clientCeo)) {
+        document.getElementById("clientCeo_msg").textContent = "한글 또는 영어만 입력하세요.";
+        this.value = clientCeo.slice(0, -1); // 마지막 입력을 제거하여 올바른 입력 상태로 복원
+        event.preventDefault(); // 입력 막기
+    } else {
+        document.getElementById("clientCeo_msg").textContent = "";
+    }
+});
+
+document.getElementById("clientName").addEventListener("input", function(event) {
+    var clientName = this.value;
+    
+    if (!koreanEnglishRegex.test(clientName)) {
+        document.getElementById("clientName_msg").textContent = "한글 또는 영어만 입력하세요.";
+        this.value = clientName.slice(0, -1); // 마지막 입력을 제거하여 올바른 입력 상태로 복원
+        event.preventDefault(); // 입력 막기
+    } else {
+        document.getElementById("clientName_msg").textContent = "";
+    }
+});
+
+
+
+document.getElementById("clientTel").addEventListener("input", function() {
+    var clientTel = this.value;
+    // 숫자만 남기기
+    clientTel = clientTel.replace(/[^\d]/g, '');
+
+    if (clientTel === "") {
+        document.getElementById("clientTel_msg").textContent = ""; // 메시지 초기화
+    } else if (!localAreaCodes.test(clientTel.substring(0, 3))) {
+        document.getElementById("clientTel_msg").textContent = "올바른 지역번호를 입력하세요.";
+    } else if (!/^(\d{2,3})(\d{3,4})(\d{4})$/.test(clientTel)) {
+        document.getElementById("clientTel_msg").textContent = "올바른 거래처 번호를 입력하세요.";
+    } else {
+        document.getElementById("clientTel_msg").textContent = ""; // 메시지 초기화
+    }
+    
+    // 하이픈 추가
+    clientTel = clientTel.replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+
+    this.value = clientTel;
+});
+
+document.getElementById("clientPhone").addEventListener("input", function() {
+    var clientPhone = this.value;
+
+    // 숫자와 하이픈 이외의 문자 제거
+    clientPhone = clientPhone.replace(/[^\d-]/g, '');
+
+    // 하이픈이 연속으로 나오는 경우 하나로 변경
+    clientPhone = clientPhone.replace(/-{2,}/g, '-');
+
+    // 하이픈이 끝이나서 시작하는 경우 제거
+    clientPhone = clientPhone.replace(/^-|-$/g, '');
+
+    // 숫자가 3자리 이상이면서 11자리 이하일 때 하이픈 추가
+    if (clientPhone.length >= 3 && clientPhone.length <= 11) {
+    	   clientPhone = clientPhone.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    }
+
+    this.value = clientPhone;
+
+    if (!phoneNumberRegex.test(clientPhone)) {
+        document.getElementById("clientPhone_msg").textContent = "올바른 담당자번호를 입력하세요.";
+    } else {
+        document.getElementById("clientPhone_msg").textContent = "";
+    }
+});
+
+
+//팩스번호 입력 필드에 이벤트 리스너 추가
+document.getElementById("clientFax").addEventListener("input", function() {
+    var clientFax = this.value;
+    // 숫자와 하이픈 이외의 문자 제거
+    clientFax = clientFax.replace(/[^\d-]/g, '');
+
+    if (!localAreaCodes.test(clientFax.substring(0, 3))) {
+        document.getElementById("clientFax_msg").textContent = "올바른 지역번호를 입력하세요.";
+    } else if (!/^(\d{2,3})(\d{3,4})(\d{4})$/.test(clientFax)) {
+        document.getElementById("clientFax_msg").textContent = "올바른 팩스번호를 입력하세요.";
+    } else {
+        document.getElementById("clientFax_msg").textContent = "";
+    }
+
+    // 하이픈 추가
+    if (clientFax.length > 3 && clientFax.charAt(3) !== '-') {
+        clientFax = clientFax.slice(0, 3) + '-' + clientFax.slice(3);
+    }
+    if (clientFax.length > 8 && clientFax.charAt(8) !== '-') {
+        clientFax = clientFax.slice(0, 8) + '-' + clientFax.slice(8);
+    }
+
+    this.value = clientFax;
+});
+
+
+var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+document.getElementById("clientEmail").addEventListener("input", function() {
+    var clientEmail = this.value;
+    
+    if (!emailRegex.test(clientEmail)) {
+        document.getElementById("clientEmail_msg").textContent = "올바른 이메일 주소를 입력하세요.";
+    } else {
+        document.getElementById("clientEmail_msg").textContent = "";
+    }
+});
+
 
 </script>
 
@@ -406,7 +584,15 @@ function sample4_execDaumPostcode() {
     
     // 다시 여기서부터 시작 
     
-}   
+}
+	
+//"닫기" 버튼 클릭 이벤트 처리
+document.getElementById("closebtn").addEventListener("click", function() {
+	console.log("닫기");
+    // 창을 닫는 동작을 수행할 수 있습니다.
+    window.close();
+});
+
 </script>
 
 	<script
