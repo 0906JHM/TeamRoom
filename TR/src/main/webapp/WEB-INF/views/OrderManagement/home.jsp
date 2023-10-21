@@ -236,6 +236,7 @@ ${ordermanagementDTO.buyInstate}
 </c:forEach>
 </div>
 </div>
+</div>
 
 <!-- javascript -->
 <script type="text/javascript">

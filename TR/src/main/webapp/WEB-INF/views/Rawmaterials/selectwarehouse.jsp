@@ -15,7 +15,6 @@
 <body>
 <div id="content">
 <h2>창고</h2>
-<hr>
 
 <input id="cInput" type="hidden">
 
@@ -31,19 +30,19 @@ function setParentText(){
 </script>
 
 <!-- form(검색) -->
-<div id="searchForm">
-<form action="${pageContext.request.contextPath}/Rawmaterials/selectwarehouse" method="get">
-창고코드	<input type="text" name="search1" placeholder="창고코드">
-창고이름	<input type="text" name="search2" placeholder="창고이름">
-창고주소	<input type="text" name="search3" placeholder="창고주소">
-원자재코드	<input type="text" name="search4" placeholder="창고주소">
-<input type="submit" value="검색">
-</form>
+<form action="${pageContext.request.contextPath}/Rawmaterials/selectwarehouse" method="get" id="searchBox">
+<div id="searchForm" style="border-radius: 5px;">
+<label>창고코드</label>	<input type="text" name="search1" placeholder="창고코드">
+<label>창고이름</label>	<input type="text" name="search2" placeholder="창고이름">
+<label>창고주소</label>	<input type="text" name="search3" placeholder="창고주소">
+<label>원자재코드</label>	<input type="text" name="search4" placeholder="창고주소">
+<input type="submit" value="조회" id="searchButton">
 </div>
-<hr>
+</form>
+<br>
 
 <!-- table -->
-<table id="rawmaterialsList">
+<table class="tg" id="rawmaterialsList" style="border-radius: 5px;">
 <thead>
 <tr>
 <td>창고코드</td>
@@ -76,12 +75,16 @@ function setParentText(){
 </c:forEach>
 </tbody>
 </table>
-</div>
 
 <!-- 페이징처리 -->
+<div id="pagination" class="page_wrap">
+<div class="page_nation">
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/Rawmaterials/selectwarehouse?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
+</div>
+</div>
+</div>
 
 </body>
 </html>

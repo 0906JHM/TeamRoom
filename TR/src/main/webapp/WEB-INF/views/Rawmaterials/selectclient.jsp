@@ -46,7 +46,7 @@ function openPopup4(clientCode) {
 <label>거래처코드</label>	<input type="text" name="search1" placeholder="거래처코드">
 <label>거래처명</label>	<input type="text" name="search2" placeholder="거래처명">
 <label>담당자</label> 	<input type="text" name="search3" placeholder="담당자">
-<input type="submit" value="검색" id="searchButton">
+<input type="submit" value="조회" id="searchButton">
 </div>
 </form>
 <br>

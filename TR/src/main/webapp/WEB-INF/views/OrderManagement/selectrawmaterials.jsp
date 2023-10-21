@@ -9,11 +9,13 @@
 
 <meta charset="UTF-8"> 
 <title>Insert title here</title>
+<link href="${pageContext.request.contextPath}/resources/css/Rawmaterials.css" rel="stylesheet" type="text/css">
 </head>
 
 <!-- body -->
 <body>
-<h1>원자재</h1>
+<div class="content">
+<h2>원자재</h2>
 
 <input id="rCInput" type="hidden">
 <input id="rNInput" type="hidden">
@@ -65,10 +67,11 @@ function openPopup4(rawCode) {
 </script>
 
 <!-- form(검색) -->
-<form action="${pageContext.request.contextPath}/OrderManagement/selectrawmaterials" method="get">
-원자재코드	<input type="text" name="search1" placeholder="원자재코드">
-원자재명	<input type="text" name="search2" placeholder="원자재명">
-종류		<select name="search3">
+<form action="${pageContext.request.contextPath}/OrderManagement/selectrawmaterials" method="get" id="searchBox">
+<div id="searchForm" style="border-radius: 5px;">
+<label>원자재코드</label>	<input type="text" name="search1" placeholder="원자재코드">
+<label>원자재명</label>	<input type="text" name="search2" placeholder="원자재명">
+<label>종류</label>		<select name="search3">
 		<option value="">전체</option>
 		<option value="향기">향기</option>
 		<option value="용기">용기</option>
@@ -76,12 +79,15 @@ function openPopup4(rawCode) {
 		<option value="라벨">라벨</option>
 		<option value="포장재">포장재</option>
 		</select>
-거래처	<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()">
-<input type="submit" value="검색">
+<label>거래처</label>	<input type="text" name="search4" placeholder="거래처" onclick="openPopup3()">
+<input type="submit" value="조회" id="searchButton">
+</div>
 </form>
+<br>
 
 <!-- table -->
-<table border="1">
+<table class="tg" id="rawmaterialsList" style="border-radius: 5px;">
+<thead>
 <tr>
 <td>번호</td>
 <td>원자재코드</td>
@@ -95,7 +101,9 @@ function openPopup4(rawCode) {
 <td>재고수량</td>
 <td>비고</td>
 </tr>
+</thead>
 
+<tbody>
 <c:forEach var="rawmaterialsDTO" items="${rawmaterialsList}">
 <tr onclick="if(event.target.tagName!='A')
 {document.getElementById('rCInput').value = '${rawmaterialsDTO.rawCode}';
@@ -129,12 +137,18 @@ setParentText();}">
 
 </tr>
 </c:forEach>
+</tbody>
 </table>
 
 <!-- 페이징처리 -->
+<div id="pagination" class="page_wrap">
+<div class="page_nation">
 <c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
 <a href="${pageContext.request.contextPath}/OrderManagement/selectrawmaterials?pageNum=${i}&search1=${pageDTO.search1}">${i}</a> 
 </c:forEach>
+</div>
+</div>
+</div>
 
 </body>
 </html>
