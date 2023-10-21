@@ -153,9 +153,9 @@
     }
 	
 	   $(document).ready(function () {
+	            var bodyHeight = $("body").height();
 		   setTimeout(function() {
 			    // 이 부분에 0.01초 후에 실행할 코드를 작성하세요.
-	            var bodyHeight = $("body").height();
 	            var sidebody = $('.sidebody');
 	            var sidebar = $('.sidebar');
 	            var scrollLimit = bodyHeight - sidebody.height(); 
