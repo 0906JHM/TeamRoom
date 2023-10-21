@@ -33,7 +33,7 @@ function searchItem(type, inputId, type2) {
 <form action="${pageContext.request.contextPath}/OrderManagement/updatePro" method="post">
 
 <!-- table -->
-<table border="1">
+<table>
 <tr><td id="td1">발주코드</td>
 	<td id="tdup"><input type="text" name="buyNum" value="${ordermanagementDTO.buyNum}" readonly></td></tr>
 <tr><td id="td1">품번</td>
