@@ -182,11 +182,11 @@ $(document).ready(function() {
 <td>${ordermanagementDTO.clientCode}</td>
 <td>${ordermanagementDTO.whseCode}</td>
 <td><c:choose>
-<c:when test="${ordermanagementDTO.whseCount < 10}">
-<span style="color:red;">${ordermanagementDTO.whseCount}</span>
+<c:when test="${ordermanagementDTO.stockCount < 10}">
+<span style="color:red;">${ordermanagementDTO.stockCount}</span>
 </c:when>
 <c:otherwise>
-${ordermanagementDTO.whseCount}
+${ordermanagementDTO.stockCount}
 </c:otherwise>
 </c:choose></td>
 <td>${ordermanagementDTO.buyCount}</td>

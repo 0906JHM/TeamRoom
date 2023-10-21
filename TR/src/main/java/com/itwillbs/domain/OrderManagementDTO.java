@@ -17,7 +17,8 @@ public class OrderManagementDTO {
 	private String rawType;
 	private String clientCode;
 	private String whseCode;
-	private int whseCount;
+	private String whseName;
+	private int stockCount;
 	private int buyCount;
 	private float rawPrice;
 	// 단가총계 생략됨

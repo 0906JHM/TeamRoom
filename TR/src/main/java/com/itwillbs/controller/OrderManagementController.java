@@ -314,9 +314,6 @@ public class OrderManagementController {
   	    List<OrderManagementDTO> orders = ordermanagementService.getOrderManagementList2();
   	    for (int i = 0; i < orders.size(); i++) {
   	    	OrderManagementDTO order = orders.get(i);
-  	    	Date date = order.getBuyDate();
-  	    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-  	    	String buyDate = format.format(date);
   	    	int rawPrice = (int) order.getRawPrice();
   	    	int buyCount = order.getBuyCount();
   	    	int total = rawPrice * buyCount;
@@ -326,14 +323,13 @@ public class OrderManagementController {
   	        row.createCell(2).setCellValue(order.getRawName());
   	        row.createCell(3).setCellValue(order.getRawType());
   	        row.createCell(4).setCellValue(order.getClientCode());
-  	        row.createCell(5).setCellValue(order.getWhseCount());
+  	        row.createCell(5).setCellValue(order.getStockCount());
   	        row.createCell(6).setCellValue(order.getBuyCount());
   	        row.createCell(7).setCellValue(order.getRawPrice());
   	        row.createCell(8).setCellValue(total);
-  	        row.createCell(9).setCellValue(buyDate);
+  	        row.createCell(9).setCellValue(order.getBuyDate());
   	        row.createCell(10).setCellValue(order.getBuyEmpId());
   	        row.createCell(11).setCellValue(order.getBuyInstate());
-  	        System.out.println(order.getBuyDate());
   	    }
   	    response.setContentType("application/vnd.ms-excel");
   	    response.setHeader("Content-Disposition", "attachment; filename=rawmaterialsList.xlsx");

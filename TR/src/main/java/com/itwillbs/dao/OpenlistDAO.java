@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.controller.RequirementController;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.LineDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
@@ -23,7 +24,6 @@ import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
 import com.itwillbs.domain.WarehouseDTO;
-import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.RequirementService;
 
 
@@ -292,50 +292,6 @@ public class OpenlistDAO {
 					    	return sqlSession.selectList(NAMESPACE + ".readline", pdto); 
 
 						}
-						
-						///////////////////////////////////////////////
-						
-						// 총작업지시카운트
-						public int countwork() {
-
-							return sqlSession.selectOne(NAMESPACE+ ".countwork");
-						}
-						
-						//작업지시 총 리스트
-						public List<WorkOrderDTO> getworklist(RequirementPageDTO pdto) {
-
-							return sqlSession.selectList(NAMESPACE + ".getworklist", pdto);
-							
-						}
-						
-						//  작업지시 검색 갯수 
-						public int countwork(WorkOrderDTO dto) {
-							
-							HashMap<String, Object> data = new HashMap<String, Object>();
-							  
-							  data.put("lineCode", dto.getLineCode());
-							  data.put("prodName", dto.getProdCode()); 					
-							return sqlSession.selectOne(NAMESPACE + ".searchworkcount",dto);
-						}	
-						
-						//작업지시 검색
-						public List<WorkOrderDTO> getwroklist(WorkOrderDTO dto, RequirementPageDTO pdto) {
-							HashMap<String, Object> data = new HashMap<String, Object>();
-						 	  data.put("start", pdto.getStart());
-						   	  data.put("cntPerPage",pdto.getCntPerPage()); 
-						   	  
-							  data.put("lineCode", dto.getLineCode());
-							  data.put("prodName", dto.getProdCode());
-							  
-						
-							return sqlSession.selectList(NAMESPACE+ ".getsearchworklist" , data );
-						}
-
-
-						
-
-						
-						
 
 
 					  
@@ -343,7 +299,39 @@ public class OpenlistDAO {
 					//////////////////////////////////////////////////////////////////////////////////
 					
 	
+						// 직원관리 리스트 총 갯수
+						 
+						public int countEmp() {
+							logger.debug(" 직원관리 리스트 갯수 확인 ");
+							return sqlSession.selectOne(NAMESPACE + ".countEmp");
+						}
 
+						
+						  // 직원 리스트 불러오기
+						  
+						    public List<EmployeesDTO> readEmpList(RequirementPageDTO pdto) throws
+						  Exception { logger.debug(" 직원관리 전체리스트 DAO "); return
+						  sqlSession.selectList(NAMESPACE + ".readEmp", pdto); }
+						  
+						  // 직원관리 검색 리스트 총 갯수
+						  
+						    public int countEmp(EmployeesDTO dto) { return
+						  sqlSession.selectOne(NAMESPACE + ".countSearchEmp", dto); }
+						  
+						
+						  // 직원 검색리스트 불러오기
+						  
+						  public List<EmployeesDTO> readEmpList(EmployeesDTO dto, RequirementPageDTO pdto)
+						  throws Exception {
+						  HashMap<String,Object> data = new HashMap<String, Object>();
+						  data.put("start", pdto.getStart()); data.put("cntPerPage",
+						  pdto.getCntPerPage());
+						  data.put("empId", dto.getEmpId());
+						  data.put("empName", dto.getEmpName()); 
+						  data.put("empDepartment", dto.getEmpDepartment());
+						  return sqlSession.selectList(NAMESPACE + ".readSearchEmp", data); }
+						
+						
 
 				    
 				

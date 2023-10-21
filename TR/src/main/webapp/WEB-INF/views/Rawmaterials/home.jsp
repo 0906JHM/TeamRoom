@@ -163,7 +163,7 @@ $(document).ready(function() {
 <td>단위</td>
 <td>매입단가</td>
 <td>창고명</td>
-<td>창고수량</td>
+<td>재고수량</td>
 <td>비고</td>
 <td></td>
 </tr>
@@ -179,7 +179,7 @@ $(document).ready(function() {
 <td>${rawmaterialsDTO.rawUnit}</td>
 <td>${rawmaterialsDTO.rawPrice}</td>
 <td>${rawmaterialsDTO.whseCode}</td>
-<td>${rawmaterialsDTO.whseCount}</td>
+<td>${rawmaterialsDTO.stockCount}</td>
 
 <!-- 비고기능 -->
 <td><c:choose>
