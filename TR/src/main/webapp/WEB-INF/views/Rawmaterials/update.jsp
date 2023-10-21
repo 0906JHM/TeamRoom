@@ -34,13 +34,13 @@ function openPopup2() {
 <tr><td id="td1">원자재명</td>
     <td id="tdup"><input type="text" name="rawName" value="${rawmaterialsDTO.rawName}"></td></tr>
 <tr><td id="td1">종류</td>
-    <td id="tdup"><input type="text" name="rawType" value="${rawmaterialsDTO.rawType}"></td></tr>
+    <td id="tdup"><input type="text" name="rawType" value="${rawmaterialsDTO.rawType}" readonly></td></tr>
 <tr><td id="td1">단위</td>
     <td id="tdup"><input type="text" name="rawUnit" value="${rawmaterialsDTO.rawUnit}"></td></tr>
 <tr><td id="td1">매입단가</td>
     <td id="tdup"><input type="text" name="rawPrice" value="${rawmaterialsDTO.rawPrice}"></td></tr>
 <tr><td id="td1">창고코드</td>
-    <td id="tdup"><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}"> <input type="button" value="목록" onclick="openPopup2()"></td></tr>
+    <td id="tdup"><input type="text" name="whseCode" id="pInput2" value="${rawmaterialsDTO.whseCode}" readonly> <input type="button" value="목록" onclick="openPopup2()"></td></tr>
 <tr><td id="td1">비고</td>
 	<td id="tdup"><textarea name="rawMemo" rows="10" cols="15">${rawmaterialsDTO.rawMemo}</textarea></td></tr>
 </table>
