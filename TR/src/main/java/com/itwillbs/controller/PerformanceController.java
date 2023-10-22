@@ -46,18 +46,26 @@ public class PerformanceController {
 	
 	
 	@GetMapping("/perf")
-	public String perf(Model model,HttpServletRequest request, PerformanceDTO perfDTO) {
+	public String perf(Model model,HttpServletRequest request, PerformanceDTO perfDTO, PageDTO pageDTO) {
 		
 		          //검색어 가져오기
 				String search = request.getParameter("search");
 
 				
 				
-				
+				String cntPerPageParam = request.getParameter("cntPerPage");
 				// <----------------------------------->
 				// 한 화면에 보여줄 글 개수 
 				int pageSize = 10;
-				
+				if (cntPerPageParam != null && !cntPerPageParam.isEmpty()) {
+				    try {
+				        int cntPerPage = Integer.parseInt(cntPerPageParam);
+				        pageSize = cntPerPage;
+				    } catch (NumberFormatException e) {
+				        // Handle the case where the parameter is not a valid integer
+				        // You might want to set a default value or show an error message to the user
+				    }
+				}
 				// 현 페이지 번호 가져오기
 				String pageNum=request.getParameter("pageNum");
 				//페이지 번호가 없을 경우에는 1로 설정
@@ -67,48 +75,50 @@ public class PerformanceController {
 				
 				// 페이지 번호 => 정수형 변경
 				int currentPage = Integer.parseInt(pageNum);
-				
-				PageDTO pageDTO = new PageDTO();
 				pageDTO.setPageSize(pageSize);
 				pageDTO.setPageNum(pageNum);
 				pageDTO.setCurrentPage(currentPage);
 				
                    int count;
+                   int pageBlock = 5;
+   				// 시작하는 페이지 번호
+   				int startPage = (currentPage -1)/pageBlock*pageBlock+1;
+   				// 끝나는 페이지 번호
+   				int endPage = startPage + pageBlock -1;
+   				
+   			
 				
 				List<PerformanceDTO> perflist;
 				
 			//	if (perfDTO.getLineCode() != null || perfDTO.getProdCode() != null || perfDTO.getPerfDate() != null)
 				if (perfDTO.getLineCode() != null || perfDTO.getProdCode() != null ) {
-				perflist = perfService.getSearch(perfDTO, pageDTO);
+				
 				count = perfService.getSearchcount(perfDTO);
+				
+   				// 끝나는 페이지 번호 전체 페이지 개수 비교 
+   				
+   				
+   				perflist = perfService.getSearch(perfDTO, pageDTO);
 				
 				System.out.println(" IF문 perfList: +++++++++++++ " + perflist);
 				System.out.println(" IF문 perfcount: +++++++++++++ " + count);
 				}
 				else {
-					perflist = perfService.getperflist(pageDTO);
 					count = perfService.getperfCount(pageDTO);
+					perflist = perfService.getperflist(pageDTO);
+					
 					System.out.println("else문 perfList++++++++++++++++" + perflist);
 					System.out.println("else문 perfcount+++++++++++++++"+ count);
 				}
 			
-
-				
-				int pageBlock = 5;
-				// 시작하는 페이지 번호
-				int startPage = (currentPage -1)/pageBlock*pageBlock+1;
-				// 끝나는 페이지 번호
-				int endPage = startPage + pageBlock -1;
-				
 				//전체페이지 개수 
-				int pageCount = count/pageSize+(count%pageSize==0?0:1);
-				// 끝나는 페이지 번호 전체 페이지 개수 비교 
+   				int pageCount = count/pageSize+(count%pageSize==0?0:1);
+if(endPage > pageCount ) {
+   					
+   					endPage= pageCount;
+   					
+   				}
 				
-				if(endPage > pageCount ) {
-					
-					endPage= pageCount;
-					
-				}
 				
 				pageDTO.setCount(count);
 				pageDTO.setPageBlock(pageBlock);
@@ -126,6 +136,7 @@ public class PerformanceController {
 
 		  model.addAttribute("perflist",perflist); 
 		  model.addAttribute("pageDTO", pageDTO);
+		  model.addAttribute("perfDTO", perfDTO);
 
 		return "perf/perf";
 		

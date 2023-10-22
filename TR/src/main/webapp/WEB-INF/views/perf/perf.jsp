@@ -28,10 +28,61 @@
 	 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/datepicker.css"> 
 
+<style>
+/* 모달 스타일 */
+.modal {
+  display: none;
+  position: absolute; /* position 속성을 absolute로 변경 */
+  z-index: 1;
+  background-color: transparent; /* 배경색을 투명으로 변경 */
+}
 
+.modal-content {
+	    font-size: 15px;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #888;
+    position: fixed;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    width: 96%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-right: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+</style>
 	
 </head>
 <body>
+<body>
+<!-- 모달 대화상자 -->
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <span class="close" id="closeModal">&times;</span>
+	    </div>
+	    <div class="modal-body">
+	      <p>모달 내용을 여기에 넣으세요</p>
+	    </div>
+	  </div>
+	</div>
 <jsp:include page="../inc/side.jsp"></jsp:include>
 
 <!--  여기서부터 시작  -->
@@ -64,6 +115,20 @@
 			 <h2> 총 ${pageDTO.count} 건 </h2>
 			
 			</div>   <!--  생산실적 총:x건 라인-->
+			<div class="total-items">
+		 <div>
+			 <label>총 ${sellDTO.count}건</label>
+		 </div>
+		 <div class="PageSelect">
+ 			<label for="perPageSelect" style ="bottom:2px;">항목 수 </label>
+			<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${pageDTO.pageSize}">
+			    <option value="10" ${pageDTO.pageSize == 10 ? 'selected' : ''}>10개씩</option>
+			    <option value="50" ${pageDTO.pageSize == 50 ? 'selected' : ''}>50개씩</option>
+			    <option value="100" ${pageDTO.pageSize == 100 ? 'selected' : ''}>100개씩</option>
+			    <option value="9999" ${pageDTO.pageSize == 9999 ? 'selected' : ''}>전체</option>
+			</select>
+		</div>
+	</div>
 
 		 <table class="ct" id="ct" class="ctcl">	
 			<thead>
@@ -84,8 +149,12 @@
 				<c:forEach var="perfDTO" items="${perflist}">
 					<tr class="ctcontents">	    
 						<td class="cttg">${perfDTO.perfCode} <i class="fa-solid fa-magnifying-glass magnifier" data-perfcode="${perfDTO.perfCode}"></i></td>
-						<td class="cttg">${perfDTO.workCode}</td>
-						<td class="cttg">${perfDTO.prodCode}</td>
+						<%-- <td class="cttg">${perfDTO.workCode}</td> --%>
+						<td style='cursor: pointer;' onclick="openModal(event)" id="${perfDTO.workCode }" name="sellCode" value="${perfDTO.workCode }">${perfDTO.workCode }</td>
+						
+						<%-- <td class="cttg">${perfDTO.prodCode}</td> --%>
+						<td style='cursor: pointer;' onclick="openModal(event)" id="${perfDTO.prodCode }" name="sellCode" value="${perfDTO.prodCode }">${perfDTO.prodCode }</td>
+						
 						<td class="cttg">${perfDTO.perfDate}</td>
 						<td class="cttg">${perfDTO.perfAmount}</td>
 						<td class="cttg">${perfDTO.perfFair}</td>
@@ -167,7 +236,24 @@
 
 </body>
 <script> 
+function applyFilters() {
+    var perPageValue = document.getElementById("perPageSelect").value;
+   
+    var lineCode = "${perfDTO.lineCode}";
+    var prodCode = "${perfDTO.prodCode}";
+
+    var url = '${pageContext.request.contextPath}/perf/perf?pageNum=1&cntPerPage=' + perPageValue +
+        '&lineCode=' + lineCode + '&prodCode=' + prodCode;
+
+    // Redirect to the generated URL
+    window.location.href = url;
+}
 $(document).ready(function() {
+	
+
+	
+	
+	
     // addButton 클릭 이벤트 처리
     $('#addButton').click(function() {
         window.open(
@@ -407,7 +493,6 @@ $(document).ready(function() {
 				for(var i=0; i<s.length; i++) {
 					view[i] = s.charCodeAt(i) & 0xFF;
 				}
-				alert("이까지 옴");
 				return buf;
 			}
 	
@@ -458,5 +543,318 @@ $(document).ready(function() {
    
 });
 </script>	
-			
+	</script>
+
+
+
+	<script>
+      //modal창에 열기 위한 이벤트 헨들러
+        function openModal(event) {
+        	  const clickedElementId = event.target.id;
+            if(clickedElementId.startsWith("PR")){
+            	//modal_ajax 
+            	$.ajax({
+            	  url : '${pageContext.request.contextPath}/KDMajax/modalprod',
+            	  data: {prodCode:clickedElementId},
+            	  type : 'GET',
+            	  dataType:'json',
+            	  success: function (json) {
+                      if (json && typeof json === 'object') {
+                    	  
+                    	  var dataformat = {
+					               
+					            	"제품 이름:": json.prodName,
+                      "제품 단위": json.prodUnit,
+                      "용량": json.prodSize,
+                      	"향기 종류": json.prodPerfume,
+                      	"거래처 코드":json.clientCode,
+                         "창고 코드": json.whseCode,
+                         "매출 단가": json.prodPrice,
+                          "제품 비고": json.prodMemo
+					            };
+					    	openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+                    	} else {
+                    	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                    	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                    	}
+
+                  }
+              });	
+            	
+
+      	  }  else if(clickedElementId.startsWith("SL")){
+              	//modal_ajax 
+              	$.ajax({
+              	  url : '${pageContext.request.contextPath}/KDMajax/modalsell',
+              	  data: {sellCode:clickedElementId},
+              	  type : 'GET',
+              	  dataType:'json',
+              	  success: function (json) {
+                        if (json && typeof json === 'object') {
+                        	// 값 할당
+                        	 var dataformat = {
+                        			
+                        			 "수주 일자" :json.sellDate,
+                                   	"납기 일자" :json.sellDuedate,
+                                   	"관리 사원" :json.sellEmpId,
+                                   	"수주 수량" :json.sellCount,
+                                       "수주 단가" :json.sellPrice,
+                                       "제품 코드" :json.prodCode,
+                                       "제품 이름" :json.prodName,
+                                       "수주 비고" :json.sellMemo,
+                                       "출고 상태" :json.sellState,
+                                       "거래처 이름" :json.clientCompany,
+                                       "거래처 코드" :json.clientCode
+					            };
+					    	openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+                    	} else {
+                      	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                      	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                      	}
+                        }
+                });	//기존 닫기 창 함수
+               
+        }   else if(clickedElementId.startsWith("WI")){
+        	var result = clickedElementId.substring(clickedElementId.indexOf("WI") + 2);
+          	var elementsStartingWithL = [];
+// 문자열을 "L"로 분할하여 배열로 만들기
+          	var elementss = result.split("L");
+// 배열을 순회하며 "L"로 시작하는 부분을 찾아내어 새로운 배열에 저장
+          	for (var i = 1; i < elementss.length; i++) {
+          	    elementsStartingWithL.push("L" + elementss[i]);
+          	}
+          	var dataformat = {}; // 빈 객체 생성
+
+          	for (var i = 0; i < elementsStartingWithL.length; i++) {
+          	    var key = (i + 1) + "차 라인"; // 키 생성 (1차 라인, 2차 라인, ...)
+          	    dataformat[key] = elementsStartingWithL[i]; // 객체에 속성 추가
+          	} 
+          	openModalWithData(event, dataformat, 200);
+         
+       
+          	}
+   
+        else if(clickedElementId.startsWith("GL")||clickedElementId.startsWith("LB")||clickedElementId.startsWith("PC")||clickedElementId.startsWith("PE")||clickedElementId.startsWith("ST")){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalraw',
+          	  data: {rawCode:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	var dataformat = {			            	
+"원자재 이름" :json.rawName,
+	"원자재 종류" :json.rawType,
+  	"원자재 단위" :json.rawUnit,
+  	"원자재 가격" :json.rawPrice,
+      "거래처 코드" :json.clientCode,
+      "창고 코드" :json.whseCode,
+      "원자재 비고" :json.rawMemo};
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+                  	
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    }
+        else if(clickedElementId.startsWith("CL")||clickedElementId.startsWith("OR")){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalclient',
+          	  data: {clientCode:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	var dataformat = {			            	
+"이름" :json.clientCompany,
+	"분류" :json.clientType,
+  	"사업자번호" :json.clientNumber,
+  	"상세분류" :json.clientDetail,
+      "대표이름" :json.clientCeo,
+      "담당자" :json.clientName,
+      "주소" :json.clientAddr1,
+      "상세주소" :json.clientAddr2,
+      "대표 번호" :json.clientTel,
+      "담당자 번호" :json.clientPhone,
+      "팩스" :json.clientFax,
+      "이메일" :json.clientEmail,
+      "비고" :json.clientMemo
+      };
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+
+                  	
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    }
+            
+        else if(clickedElementId.startsWith("WH")){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalwhse',
+          	  data: {whseCode:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	var dataformat = {			            	
+
+                    			"이름" :json.whseName,
+                              	"타입" :json.whseType,
+                              	"사용 상태" :json.whseState,
+                              	"주소" :json.whseAddr,
+                                  "연락처" :json.whseTel,
+                                  "비고" :json.whseMemo,
+                                  "제품 코드" :json.prodCode,
+                                  "원자재 코드" :json.rawCode,
+                                  "담당자" :json.whseEmpId
+                                  };
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+
+                  	
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    }
+        else if(!isNaN(clickedElementId.charAt(0))){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalemp',
+          	  data: {empId:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	
+                    	var dataformat = {			            	
+                    			"이름" :json.empName,
+                              	"부서" :json.empDepartment,
+                              	"직급" :json.empPosition,
+                              	"이메일" :json.empEmail,
+                                  "연락처" :json.empTel,
+                                  "재직상태" :json.empState,
+                                  "입사일" :json.empHiredate};
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+
+                  	
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    }  else if(clickedElementId.startsWith("WO")){
+      	 
+      	$.ajax({
+      	  url : '${pageContext.request.contextPath}/KDMajax/modalworkorder',
+      	  data: {workCode:clickedElementId},
+      	  type : 'GET',
+      	  dataType:'json',
+      	  success: function (json) {
+                if (json && typeof json === 'object') {               	// 값 할당
+                	var dataformat = {	
+                			"제품코드" :json.prodCode,
+                	      	"수주코드" :json.sellCode,
+                	      	"지시일" :json.workDate,
+                	      	"라인코드" :json.lineCode,
+                	          "지시수량" :json.workAmount,
+                	          "작업지시자" :json.workEmpId,
+                	          "추가지시일" :json.workDatechange,
+                	          "라인내역" :json.workInfo};
+                	openModalWithData(event, dataformat, 400);
+	 	} else {
+              	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+              	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+              	
+              	}
+                }
+      	  });
+    }//기존 닫기 창 함수
+       
+       
+      } 
+      
+      function openModalWithData(event, data, width) {
+    		    var modal = document.getElementById('myModal');
+    		    var close1 = document.getElementById('closeModal');
+    		    var modalContent = document.querySelector('.modal-body');
+    		    
+    		    modalContent.style.width = width + 'px';
+    		    modal.style.width = (width + 20) + 'px'; // 20px는 여유 여백이라고 가정
+    		    modalContent.innerHTML = ''; // 기존 내용 제거
+
+    		    // 데이터를 HTML 표로 구성
+    		    var tableHTML = '<table class="table">';
+    		    for (var key in data) {
+    		        if (data.hasOwnProperty(key)) {
+    		            tableHTML += '<tr>';
+    		            tableHTML += '<td>' + key + '</td>';
+    		            tableHTML += '<td>' + data[key] + '</td>';
+    		            tableHTML += '</tr>';
+    		        }
+    		    }
+    		    tableHTML += '</table>';
+
+    		    // 모달 내용에 HTML 표 추가
+    		    modalContent.innerHTML = tableHTML;
+
+    		 // 바디의 너비
+    		    var bodyWidth = document.body.clientWidth;
+  	          
+  	          // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+  	        
+  	          modal.style.setProperty('display', 'block', 'important');
+  	          if (event.clientX + window.scrollX + width >= bodyWidth) {
+  	              modal.style.left = (event.clientX + window.scrollX - width) + 'px';
+  	              close1.style.float = 'right';
+  	  	            
+  	           
+  	            
+  	          } else {
+  	              modal.style.left = (event.clientX + window.scrollX) + 'px';
+  	             
+  	              close1.style.float = 'left';
+  	  	            
+  	            
+  	          }
+  	          modal.style.top = (event.clientY + window.scrollY) + 'px';
+    		}
+
+
+    		// 모달과 닫기 버튼 가져오기
+    		var modal = document.getElementById('myModal');
+    		var closeModal = document.getElementById('closeModal');
+
+    		console.log(modal);
+    	    // 닫기 버튼을 클릭하면 모달을 숨김
+    		closeModal.addEventListener('click', function() {
+    		    modal.style.display = 'none';
+    		});
+    		
+    	    	
+    		
+    		/* window.addEventListener('click', function(event) {
+    		    if (event.target != modal && !modal.contains(event.target)) {
+    		        modal.style.display = 'none';
+    		    }
+    		}); */ 
+     </script>		
 </html>

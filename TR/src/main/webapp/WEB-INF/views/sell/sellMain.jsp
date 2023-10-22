@@ -539,13 +539,20 @@ function openSellDetail(sellCode) {
 			  window.location.href = "${pageContext.request.contextPath}/login/logout";
 		  }
     	
-		  var form = document.querySelector('form'); // 폼 요소 선택
+		  var myButton = document.getElementById('delete');
 
-		    // 폼 제출 이벤트 핸들러 등록
-		    form.addEventListener('submit', function(event) {
-		        event.preventDefault(); // 폼 제출을 막음
-		        // 원하는 동작 수행
-		    });
+		  myButton.addEventListener('click', function(event) {
+		      event.preventDefault(); // 기본 동작인 폼 제출을 막음
+		      // 원하는 동작 수행
+		  });
+		  
+		  var myButton1 = document.getElementById('add');
+
+		  myButton1.addEventListener('click', function(event) {
+		      event.preventDefault(); // 기본 동작인 폼 제출을 막음
+		      // 원하는 동작 수행
+		  });
+		    
 		  <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
 // 		document.addEventListener('DOMContentLoaded', ()=> {
 //            	exportButton.addEventListener('click', exportExcel);
@@ -962,7 +969,7 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
                                   "연락처" :json.empTel,
                                   "재직상태" :json.empState,
                                   "입사일" :json.empHiredate};
-openModalWithData(event, dataformat, -200); // 데이터를 모달로 표시
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
 
                   	
                   	} else {
@@ -1025,16 +1032,23 @@ openModalWithData(event, dataformat, -200); // 데이터를 모달로 표시
 
             // 모달 내용에 HTML 표 추가
             modalContent.innerHTML = tableHTML;
+         // 바디의 너비
+	          var bodyWidth = document.body.clientWidth;
+	          
+	          // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+	        
+	          modal.style.setProperty('display', 'block', 'important');
+	          if (event.clientX + window.scrollX + width >= bodyWidth) {
+	              modal.style.left = (event.clientX + window.scrollX - width) + 'px';
+	           
+	            
+	          } else {
+	              modal.style.left = (event.clientX + window.scrollX) + 'px';
+	            close1.style.float = 'left';
+	            
+	             }
+	          modal.style.top = (event.clientY + window.scrollY) + 'px';
 
-            // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
-          
-            modal.style.setProperty('display', 'block', 'important');
-            if (width >= 0) {
-                modal.style.left = (event.clientX + window.scrollX) + 'px';
-            } else {
-                modal.style.left = (event.clientX + window.scrollX + width) + 'px';
-            }
-            modal.style.top = (event.clientY + window.scrollY) + 'px';
         }
 
 
