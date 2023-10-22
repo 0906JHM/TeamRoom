@@ -356,7 +356,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							<th>용량</th>
 							<th>향기 종류</th>
 							<th>거래처 코드</th>
-							<th>창고명</th>
+							<th>창고 코드</th>
 							<th>매출 단가</th>
 							<th>비고</th>
 						</tr>
