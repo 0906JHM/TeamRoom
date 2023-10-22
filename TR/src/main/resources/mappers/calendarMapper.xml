@@ -58,13 +58,13 @@
 	<select id="getStockList"
 		resultType="com.itwillbs.domain.ChartDTO">
 		SELECT r.rawName label, s.stockCount data
-		FROM stock s JOIN
+		FROM stock s LEFT JOIN
 		rawMaterial r
 		ON s.rawCode = r.rawCode
 		WHERE s.rawCode IS NOT NULL
 		UNION
 		SELECT p.prodName label, s.stockCount data
-		FROM stock s JOIN product p
+		FROM stock s LEFT JOIN product p
 		ON s.prodCode = p.prodCode
 		WHERE s.prodCode IS NOT NULL
 	</select>
@@ -77,7 +77,7 @@
 <!-- 		ORDER BY workDate desc -->
 <!-- 		LIMIT 5; -->
 		SELECT w.workDate label, SUM(p.perfFair) data
-		FROM workOrder w left join performance p
+		FROM workOrder w LEFT JOIN performance p
         ON p.workCode = w.workCode
 		GROUP BY w.workDate
 		ORDER BY w.workDate DESC

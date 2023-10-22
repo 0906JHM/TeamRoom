@@ -168,8 +168,8 @@ public String sellDetail(HttpServletRequest request, Model model) {
 	public void sellUpdatePro(SellDTO sellDTO, HttpServletResponse response) {
 		System.out.println("SellController sellUpdatePro()");
 		// 수정
-		outProductService.updateList(sellDTO);
 		sellService.sellUpdate(sellDTO);
+		outProductService.updateList(sellDTO);
 
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out;

@@ -21,7 +21,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b ON i.buyNum = b.buyNum
+		left JOIN buy b ON i.buyNum = b.buyNum
 		order by i.inNum desc
 		limit #{startRow}, #{pageSize}
 	</select>
@@ -43,7 +43,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b ON i.buyNum = b.buyNum
+		left JOIN buy b ON i.buyNum = b.buyNum
 		) AS subquery
 	</select>
 
@@ -63,7 +63,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b ON i.buyNum = b.buyNum
+		left JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inState == '검색'">
 				<if test="inNum != ''">
@@ -121,7 +121,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b ON i.buyNum = b.buyNum
+		left JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inState == '검색'">
 				<if test="inNum != ''">
@@ -175,7 +175,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b ON i.buyNum = b.buyNum
+		left JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inNum != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
@@ -213,7 +213,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b ON i.buyNum = b.buyNum
+		left JOIN buy b ON i.buyNum = b.buyNum
 		<where>
 			<if test="inNum != ''">
 				i.inNum LIKE CONCAT('%', #{inNum}, '%')
@@ -253,7 +253,7 @@
 		resultType="com.itwillbs.domain.InMaterialDTO">
 		SELECT i.inNum, i.buyNum, i.clientCode, c.clientCompany,
 		i.rawCode, r.rawName, i.inEmpId, i.inState, i.inDate,
-		i.inRedate,  i.inCount, b.buyCount, i.inCount, s.stockCount,
+		i.inRedate,  i.inCount, b.buyCount, s.stockCount,
 		r.rawPrice, i.inPrice, i.inMemo
 		FROM inMaterial i
 		left join rawMaterial r
@@ -265,7 +265,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b ON i.buyNum = b.buyNum
+		left JOIN buy b ON i.buyNum = b.buyNum
 		where inNum = #{inNum}
 	</select>
 
@@ -337,7 +337,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b 
+		left JOIN buy b 
 		ON i.buyNum = b.buyNum
 		order by i.inNum desc
 
@@ -359,7 +359,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b 
+		left JOIN buy b 
 		ON i.buyNum = b.buyNum
 		<where>
 			<if test="inNum != ''">
@@ -394,7 +394,7 @@
 		left
 		join clients c
 		on i.clientCode = c.clientCode
-		JOIN buy b 
+		left JOIN buy b 
 		ON i.buyNum = b.buyNum
 		<where>
 			<if test="inState == '검색'">

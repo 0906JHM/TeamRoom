@@ -42,7 +42,7 @@ LEFT JOIN rawMaterial r ON b.rawCode = r.rawCode
 	<!-- home 페이징처리, 검색기능 -->
  	<select id="getOrderManagementCount" resultType="java.lang.Integer">
 		SELECT count(*)
-FROM buy b JOIN stock s 
+FROM buy b LEFT JOIN stock s 
 ON b.rawCode = s.rawCode
 LEFT JOIN rawMaterial r ON b.rawCode = r.rawCode
      	<where>
