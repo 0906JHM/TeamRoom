@@ -481,7 +481,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							        '입고창고': item.whseCode,
 							        '거래처코드': item.clientCode,
 							        '원자재코드': item.rawCode,
-// 							        '원자재명': item.rawName,
+							        '원자재명': item.rawName,
 							        '발주수량':item.buyCount,
 							        '입고수량': item.inCount,
 							        '재고수량': item.stockCount,
@@ -618,33 +618,40 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				}
 				
 				function openModalWithData(event, data, width) {
-				    var modal = document.getElementById('myModal');
-				    var modalContent = document.querySelector('.modal-body');
-				    
-				    modalContent.style.width = width + 'px';
-				    modal.style.width = (width + 20) + 'px'; // 20px는 여유 여백이라고 가정
-				    modalContent.innerHTML = ''; // 기존 내용 제거
+	    		    var modal = document.getElementById('myModal');
+	    		    var modalContent = document.querySelector('.modal-body');
+	    		    
+	    		    modalContent.style.width = Math.abs(width) + 'px'; // 절대값
+	    		    modal.style.width = (Math.abs(width) + 20) + 'px'; // 20px는 여유 여백이라고 가정
+	    		    modalContent.innerHTML = ''; // 기존 내용 제거
 
-				    // 데이터를 HTML 표로 구성
-				    var tableHTML = '<table class="table">';
-				    for (var key in data) {
-				        if (data.hasOwnProperty(key)) {
-				            tableHTML += '<tr>';
-				            tableHTML += '<td>' + key + '</td>';
-				            tableHTML += '<td>' + data[key] + '</td>';
-				            tableHTML += '</tr>';
-				        }
-				    }
-				    tableHTML += '</table';
+	    		    // 데이터를 HTML 표로 구성
+	    		    var tableHTML = '<table class="table">';
+	    		    for (var key in data) {
+	    		        if (data.hasOwnProperty(key)) {
+	    		            tableHTML += '<tr>';
+	    		            tableHTML += '<td>' + key + '</td>';
+	    		            tableHTML += '<td>' + data[key] + '</td>';
+	    		            tableHTML += '</tr>';
+	    		        }
+	    		    }
+	    		    tableHTML += '</table>';
 
-				    // 모달 내용에 HTML 표 추가
-				    modalContent.innerHTML = tableHTML;
-
-				    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
-				    modal.style.display = 'block';
-				    modal.style.left = (event.clientX + window.scrollX) + 'px';
-				    modal.style.top = (event.clientY + window.scrollY) + 'px';
-				}
+	    		    // 모달 내용에 HTML 표 추가
+	    		    modalContent.innerHTML = tableHTML;
+	    		    // 바디의 너비
+	    		    var bodyWidth = document.body.clientWidth;
+	    		    
+	    		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+	    		  
+	    		    modal.style.setProperty('display', 'block', 'important');
+	    		    if (event.clientX + window.scrollX + width >= bodyWidth) {
+	    		        modal.style.left = (event.clientX + window.scrollX - width) + 'px';
+	    		    } else {
+	    		        modal.style.left = (event.clientX + window.scrollX) + 'px';
+	    		    }
+	    		    modal.style.top = (event.clientY + window.scrollY) + 'px';
+	    		}
 
 
 				// 모달과 닫기 버튼 가져오기

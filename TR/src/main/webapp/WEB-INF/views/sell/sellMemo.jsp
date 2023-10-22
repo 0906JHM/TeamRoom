@@ -16,7 +16,7 @@ $(document).ready(function () {
          
 /*--------------------------------- 페이지 권한 ----------------------------------------  */
     var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
-    if (team === "생산팀" || team === "관리자") {
+    if (team === "영업팀" || team === "관리자") {
 		  
 			$('#modify').show();
 	   }

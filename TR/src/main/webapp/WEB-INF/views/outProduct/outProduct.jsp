@@ -588,8 +588,8 @@ if (session.getAttribute("empId") != null) {
 		    var modal = document.getElementById('myModal');
 		    var modalContent = document.querySelector('.modal-body');
 		    
-		    modalContent.style.width = width + 'px';
-		    modal.style.width = (width + 20) + 'px'; // 20px는 여유 여백이라고 가정
+		    modalContent.style.width = Math.abs(width) + 'px'; // 절대값
+		    modal.style.width = (Math.abs(width) + 20) + 'px'; // 20px는 여유 여백이라고 가정
 		    modalContent.innerHTML = ''; // 기존 내용 제거
 
 		    // 데이터를 HTML 표로 구성
@@ -606,10 +606,17 @@ if (session.getAttribute("empId") != null) {
 
 		    // 모달 내용에 HTML 표 추가
 		    modalContent.innerHTML = tableHTML;
-
+		    // 바디의 너비
+		    var bodyWidth = document.body.clientWidth;
+		    
 		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
-		    modal.style.display = 'block';
-		    modal.style.left = (event.clientX + window.scrollX) + 'px';
+		  
+		    modal.style.setProperty('display', 'block', 'important');
+		    if (event.clientX + window.scrollX + width >= bodyWidth) {
+		        modal.style.left = (event.clientX + window.scrollX - width) + 'px';
+		    } else {
+		        modal.style.left = (event.clientX + window.scrollX) + 'px';
+		    }
 		    modal.style.top = (event.clientY + window.scrollY) + 'px';
 		}
 

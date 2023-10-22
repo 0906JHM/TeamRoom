@@ -50,7 +50,8 @@
 		<input type="text" id="sellPrice" min="0"  placeholder="수주 단가" value="${formattedSellPrice}" readonly="readonly" >원<br>    
      	
      	<label class="popupLabel">수주 일자</label>
-        <input type="text" id="sellDate" name="sellDate" readonly><br>
+        <input type="text" id="sellDate" name="sellDate"><br>
+<!--         <input type="text" id="sellDate" name="sellDate" readonly><br> -->
 
         <label class="popupLabel">납기 일자</label>
         <input type="text" id="sellDuedate" name="sellDuedate"  placeholder="선택하세요" required><br>

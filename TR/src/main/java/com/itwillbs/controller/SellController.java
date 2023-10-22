@@ -409,6 +409,8 @@ List<SellDTO>sellList= sellService.getSellListSearch(sellDTO);
 	// 페이지
 	sellDTO.setSellDate(daterange1);
 	sellDTO.setSellDuedate(daterange2);
+	System.out.println(sellDTO.getSellState()+"셀스테이트");
+	
 	model.addAttribute("sellDTO", sellDTO);
 	
 	return "sell/sellMain";
