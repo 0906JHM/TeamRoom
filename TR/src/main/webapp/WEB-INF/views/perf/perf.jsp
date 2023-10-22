@@ -204,20 +204,20 @@ table {
 		 <div class="chartbody">
 		 
 		 <div class="chart1head">
-		 <h2 class="labelhead"> 실적수</h2>
+		 <h2 class="labelhead"> 실적수: ${perfDTO.totalAmount}</h2>
 		 <div class="chart1">
 		 <canvas id="donutChart" width="400px" height="400px"></canvas><!-- totalamount --> 
 		 </div> <!--  chart1 -->
 		 </div> <!-- chart1head -->
 		 <div class="chart2">
-		 <h2 class="labelhead"> 양품수 </h2>
+		 <h2 class="labelhead"> 양품수: ${perfDTO.totalFair} </h2>
 		 <div class="chart2head">
 		 <canvas id="donutChart2" width="400px" height="400px"></canvas> <!-- - totalfair -->
 		 </div>
 		 </div>
 		 
 		 <div class="chart3">
-		 <h2 class="labelhaed"> 불량수</h2>
+		 <h2 class="labelhaed"> 불량수: ${perfDTO.totalDefect}</h2>
 		 <div class="chart3haed">
 		  <canvas id="donutChart3" width="400px" height="400px"></canvas> <!--  totaldefect -->
 		 </div>

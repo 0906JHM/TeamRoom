@@ -63,7 +63,7 @@ LEFT JOIN workOrder w ON p.workCode = w.workCode
 	
 	<!--  도넛차트 DB값 가져오기  -->
 	<select id="getdonut" resultType="PerformanceDTO" parameterType="java.util.List">
-SELECT 
+SELECT
     p.prodCode AS prodCode,
     SUM(p.perfFair) AS totalFair,
     SUM(p.perfDefect) AS totalDefect,
@@ -78,7 +78,7 @@ WHERE
         #{item}
     </foreach>
 GROUP BY 
-    p.prodCode, wo.workAmount
+    p.prodCode
 </select>
  
  <select id="getlinelist" resultType="com.itwillbs.domain.LineDTO">

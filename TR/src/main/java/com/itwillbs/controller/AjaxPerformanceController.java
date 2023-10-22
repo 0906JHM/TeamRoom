@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,10 +61,13 @@ public class AjaxPerformanceController {
 	 */
 	
 	@PostMapping("/perfdonut")
-	public ResponseEntity<List<PerformanceDTO>> getdonut(@RequestBody List<String> prodCode) {
+	public ResponseEntity<List<PerformanceDTO>> getdonut(@RequestBody List<String> prodCode, Model model) {
 		 System.out.println("prodName: " + prodCode);
 	    List<PerformanceDTO> getdonutdata = perfService.getdonut(prodCode);
 	    log.debug("가져오는값:"+ prodCode);
+	    
+	    PerformanceDTO perfDTO = new PerformanceDTO();
+	    model.addAttribute("perfDTO", perfDTO);
 	    return ResponseEntity.ok(getdonutdata);
 	    
 
