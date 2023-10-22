@@ -10,6 +10,25 @@
 </head>
 <script type="text/javascript">
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.lineProcess').addEventListener('change', function() {
+        var lineCode = document.querySelector('.lineCode');
+        switch(this.value) {
+            case '1차공정':
+                lineCode.value = 'L10';
+                break;
+            case '2차공정':
+                lineCode.value = 'L20';
+                break;
+            case '3차공정':
+                lineCode.value = 'L30';
+                break;
+            default:
+                lineCode.value = '';
+        }
+    });
+});
+
 window.onload = function(){
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -39,7 +58,7 @@ $.ajax({
 <h2>라인등록</h2>
 <form action="${pageContext.request.contextPath}/line/insertPro" id="join" method="post">
 
-<div class="form-group"><p>라인코드:</p><input type="text" name="lineCode" class="lineCode"></div>
+<div class="form-group"><p>라인코드:</p><input type="text" name="lineCode" class="lineCode" value="L10"></div>
 <div class="form-group"><p>라인명:</p><input type="text" name="lineName" class="lineName"></div>
 <div class="form-group"><p>사용여부:</p>
 <select name="lineUse" class="lineUse select">
