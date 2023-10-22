@@ -53,26 +53,31 @@ width: 200px;
 }
 
 .footbtn{
-background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
-    color: #FFFFFF;
+color: white;
+    background-color: #9AC5F4;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
     border: 0;
     text-align: center;
-    font: 500 24px/24px "Inter", sans-serif;
-    margin-right: 15px;
+    font: 500 15px/20px "Inter", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+      margin-right: 10px;
 
 }
 .deletebtn{
-background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
-    color: #FFFFFF;
+color: white;
+    background-color: #9AC5F4;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
     border: 0;
     text-align: center;
-    font: 500 24px/24px "Inter", sans-serif;
+    font: 500 15px/20px "Inter", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+  
 }
 
 span {
@@ -95,10 +100,10 @@ color : red;
 <tr><td>사업자번호</td><td><input type="text" id="clientNumber" name="clientNumber" value="${clientDTO.clientNumber}" class="upform"><br><span id="clientNumber_msg"></span></td></tr>
 <tr><td>업태</td><td><input type="text"  id="clientDetail" name="clientDetail" value="${clientDTO.clientDetail}" class="upform"><br><span id="clientDetail_msg"></span></td></tr>
 <tr><td>대표자</td><td><input type="text" id ="clientCeo" name="clientCeo" value="${clientDTO.clientCeo}" class="upform"><br><span id="clientCeo_msg"></span></td></tr>
-<tr><td>담당자</td><td><input type="text" id ="clientName" name="clientName" value="${clientDTO.clientName}" class="upform"><br><span id="clientName_msg"></span></td></tr>  
+<tr><td>담당자</td><td><input type="text" id ="clientName" name="clientName" value="${clientDTO.clientName}" class="upform" ><br><span id="clientName_msg"></span></td></tr>  
 <tr><td>거래처주소</td><td><input  type="text" id="sample4_roadAddress" placeholder="도로명주소"
-			name="clientAddr1" value="${clientDTO.clientAddr1}" class="upform" readonly required>  
-			<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"  class="addres" required>
+			name="clientAddr1" value="${clientDTO.clientAddr1}" class="upform" readonly required onclick="sample4_execDaumPostcode()"   >  
+	
 			
 			
           </td></tr>  
@@ -127,6 +132,7 @@ color : red;
 </table>
 
 <div class="btngroup">
+<button type="button" value="닫기" id="closebtn" class="footbtn">닫기</button>
         <button type="button" value="수정" class="footbtn" id="updatesubmit"> 수정</button>
  <button type="button" class="deletebtn" onclick="clientdelete('${clientDTO.clientCompany}')">삭제</button>
 </div>
@@ -404,6 +410,12 @@ document.getElementById("clientEmail").addEventListener("input", function() {
     } else {
         document.getElementById("clientEmail_msg").textContent = "";
     }
+});
+
+var closeButton = document.getElementById("closebtn");
+
+closeButton.addEventListener("click", function() {
+    window.close(); // 현재 창을 닫음
 });
 
 
