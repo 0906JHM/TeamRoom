@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
+import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.ModalService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,10 @@ return modalservice.modalraw(rawCode);
 public SellDTO modalsell(@RequestParam("sellCode") String sellCode) throws Exception {
 return modalservice.modalsell(sellCode);
 	}
-
+///////////////////////////////////////////////// modalworkinfo////////////////////////////////////
+@GetMapping("modalworkinfo")
+public WorkOrderDTO modalinfo(@RequestParam("workCode") String workCode) throws Exception {
+return modalservice.modalworkinfo(workCode);
+}
 
 }

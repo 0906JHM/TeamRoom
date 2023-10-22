@@ -75,7 +75,7 @@
                       if (json && typeof json === 'object') {
                     	  
                     	// 값 할당
-                    	addInput("제품 코드:", elements[0],json.prodCode);
+                    	addInput("제품 이름:", elements[0],json.prodName);
             	addInput("제품 단위:", elements[1],json.prodUnit);
             	addInput("용량:", elements[2],json.prodSize);
             	addInput("향기 종류:", elements[3],json.prodPerfume);
@@ -92,7 +92,7 @@
               });	
             	
 
-      	  } else if(clickedElementId.startsWith("SL")){
+      	  }  else if(clickedElementId.startsWith("CL")){
               	//modal_ajax 
               	$.ajax({
               	  url : '${pageContext.request.contextPath}/KDMajax/modalsell',
@@ -122,7 +122,32 @@
                         }
                 });	//기존 닫기 창 함수
                
-        } //ajax
+        }  else if(clickedElementId.startsWith("WI")){
+        	
+        	var result = clickedElementId.substring(clickedElementId.indexOf("WI") + 2);
+          	 	
+          	
+          	var elementsStartingWithL = [];
+
+          	// 문자열을 "L"로 분할하여 배열로 만들기
+          	var elementss = result.split("L");
+
+          	// 배열을 순회하며 "L"로 시작하는 부분을 찾아내어 새로운 배열에 저장
+          	for (var i = 1; i < elementss.length; i++) {
+          	    elementsStartingWithL.push("L" + elementss[i]);
+          	}
+          
+          	for (var i = 0; i < elementsStartingWithL.length; i++) {
+          	    var label = (i + 1) + "차";
+          	    addInput(label, elements[i], elementsStartingWithL[i]);
+          	}
+                  
+            
+           
+    }
+            
+            
+            //ajax
             closeModalButton.addEventListener("click", function (e) {
           	    if (e.target === closeModalButton) {
           	        myModal.style.display = "none";
@@ -138,7 +163,7 @@
                 input.type = "text";
                 input.id = id;
                 input.value = value; // 값을 설정
-                input.size = 8;
+                input.size = 9;
                 input.readOnly = true;
                 div.appendChild(document.createTextNode(label));
                 div.appendChild(input);
@@ -199,13 +224,13 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	
 	//jQuery
 	$(function() {
+		const shortagemessage = ""
 		
 		
 
 		/////////////// 추가 /////////////////////////////////////
 		$('#add').click(function() {
 
-			/* $('#modify').attr("disabled", true); */
 			$('#modify').hide();
 			$('#add').hide();
 			$('#delete').hide();
@@ -300,86 +325,85 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				var sellCode = $('#sellCode8888').val();
 				var workAmount = $('#workAmount8888').val();
 				
-				$.ajax({
-				    type: "GET",
-				    url: "${pageContext.request.contextPath}/workorder/checkStock", // 서버의 컨트롤러 매핑 경로
-				    data: {
-				        prodCode: prodCode, // 완제품 코드
-				        workAmount: workAmount // 지시수량
-				    },
-				    success: function(response) {
-				        // 서버에서 받은 응답 처리
-				        if (response.status === "success") {
-				            // 성공적인 응답을 받은 경우
-				            var shortages = response.data.shortages;
-				            for (var i = 0; i < shortages.length; i++) {
-				                var shortage = shortages[i];
-				                alert("부족한 원자재명: " + shortage.rawMaterialName);
-				                alert("부족한 수량: " + shortage.shortageAmount);
-				            }
-				        } else {
-				            // 실패한 경우
-				             alert("부족한 원자재 정보를 가져오는데 실패했습니다.");
-				        }
-				    },
-				    error: function() {
-				        // Ajax 요청 실패 시 처리
-				         alert("Ajax 요청에 실패했습니다.");
-				    }
-				});
+				
 			
-					/*  if (sellCode == "" || workAmount == "") {
+					if (sellCode == "" || workAmount == "") {
 							Swal.fire({
 								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
 								icon: 'info',
 								confirmButtonColor: '#9AC5F4',
 								width: '400px',
 							})
-						} else { 
-							$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
-							$('#fr').attr("method", "post");
-							$('#fr').submit();
-						 }  */
+						} else {
+							$.ajax({
+							    type: "GET",
+							    url: "${pageContext.request.contextPath}/workorder/checkStock", // 서버의 컨트롤러 매핑 경로
+							    data: {
+							        prodCode: prodCode, // 완제품 코드
+							        workAmount: workAmount // 지시수량
+							    },
+							    contentType : "application/json; charset=UTF-8",
+								dataType : "json",
+							    success: function(response) {
+							        // 서버에서 받은 응답 처리
+							        if (response.status === "success") {
+							            // 성공적인 응답을 받은 경우
+							            var shortages = response.data;
+							            var shortagemessage = ""
+							            for (var i = 0; i < shortages.length; i++) {
+							                var shortage = shortages[i];
+							                
+							                shortagemessage += "부족한 원자재코드: " + shortage.rawCode + "\nㄴ부족한 수량: " + shortage.shortageAmount + "개\n";
+							                
+							            }
+							            if(shortages == ""){
+							            	$('#fr').attr("action", "${pageContext.request.contextPath}/workorder/add");
+											$('#fr').attr("method", "post");
+											$('#fr').submit();
+							            	
+							            }
+							            else{
+							            Swal.fire({
+							                title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ shortagemessage + "재고가 부족합니다.\n발주등록 페이지로\n이동하시겠습니까?</div>",
+							                icon: 'info',
+							                showDenyButton: true,
+							                confirmButtonColor: '#9AC5F4',
+							                cancelButtonColor: '#73879C',
+							                confirmButtonText: 'Yes',
+							                width: '400px'
+							            }).then((result) => {
+							                // confirm => 예를 눌렀을 때
+							                if (result.isConfirmed) {
+							                    location.href = "${pageContext.request.contextPath}/OrderManagement/home";
+							                } else {
+							                    var url = new URL(window.location.href);
+							                    var searchParams = new URLSearchParams(url.search);
+							                    searchParams.delete("woInsert");
+							                    var newUrl = url.origin + url.pathname;
+
+							                    window.location.href = newUrl;
+							                }
+							            });
+							            }
+							           							            	
+
+							        } else {
+							            // 실패한 경우
+							             alert("부족한 원자재 정보를 가져오는데 실패했습니다.");
+							             
+							        }
+							    },
+							    error: function() {
+							        // Ajax 요청 실패 시 처리
+							         alert("Ajax 요청에 실패했습니다.");
+							    }
+							});
+						 }
+					
 				}); 
 				//save
 		}); //add click
 
-		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
-		let queryString = window.location.search;
-		let urlParams = new URLSearchParams(queryString);
-		var fromController = urlParams.get("woInsert");
-		
-		if(fromController==0) {
-			
-			
-			
-			Swal.fire({
-				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" +"재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?"+ "</div>",
-				  icon: 'info', 
-				  showDenyButton: true,
-				  confirmButtonColor: '#17A2B8', 
-				  cancelButtonColor: '#73879C', 
-				  confirmButtonText: 'Yes', 
-				  width : '400px',
-				
-				}).then((result) => {
-					
-					// confirm => 예를 눌렀을 때
-					if(result.isConfirmed){
-						location.href = "${pageContext.request.contextPath}/OrderManagement/home";
-					}//if
-					//취소 눌렀을 때
-					else {
-						var url = new URL(window.location.href);
-						var searchParams = new URLSearchParams(url.search);
-						searchParams.delete("woInsert");
-						var newUrl = url.origin + url.pathname;
-						
-						window.location.href = newUrl;
-					}
-				});//then
-		}
-		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
 		
 		var isExecuted = false;
@@ -480,6 +504,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 	
 					//저장버튼 -> form 제출
 					$('#save').click(function() {
+
+						var prodCode = $('#prodCode8888').val();
 						var workAmount = $('#workAmount8888').val();
 						if(workAmount <= 0){
 							Swal.fire({
@@ -490,9 +516,70 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 							})
 							}
 						else{
-							$('#fr').attr("action","${pageContext.request.contextPath}/workorder/modify");
-						$('#fr').attr("method","post");
-						$('#fr').submit();
+							$.ajax({
+							    type: "GET",
+							    url: "${pageContext.request.contextPath}/workorder/checkStock", // 서버의 컨트롤러 매핑 경로
+							    data: {
+							        prodCode: prodCode, // 완제품 코드
+							        workAmount: workAmount // 지시수량
+							    },
+							    contentType : "application/json; charset=UTF-8",
+								dataType : "json",
+							    success: function(response) {
+							        // 서버에서 받은 응답 처리
+							        if (response.status === "success") {
+							            // 성공적인 응답을 받은 경우
+							            var shortages = response.data;
+							            var shortagemessage = ""
+							            for (var i = 0; i < shortages.length; i++) {
+							                var shortage = shortages[i];
+							                
+							                shortagemessage += "부족한 원자재코드: " + shortage.rawCode + "\nㄴ부족한 수량: " + shortage.shortageAmount + "개\n";
+							                
+							            }
+							            if(shortages == ""){
+							            	$('#fr').attr("action","${pageContext.request.contextPath}/workorder/modify");
+											$('#fr').attr("method","post");
+											$('#fr').submit();
+							            	
+							            }
+							            else{
+							            Swal.fire({
+							                title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ shortagemessage + "재고가 부족합니다.\n발주등록 페이지로\n이동하시겠습니까?</div>",
+							                icon: 'info',
+							                showDenyButton: true,
+							                confirmButtonColor: '#9AC5F4',
+							                cancelButtonColor: '#73879C',
+							                confirmButtonText: 'Yes',
+							                width: '400px'
+							            }).then((result) => {
+							                // confirm => 예를 눌렀을 때
+							                if (result.isConfirmed) {
+							                    location.href = "${pageContext.request.contextPath}/OrderManagement/home";
+							                } else {
+							                    var url = new URL(window.location.href);
+							                    var searchParams = new URLSearchParams(url.search);
+							                    searchParams.delete("woInsert");
+							                    var newUrl = url.origin + url.pathname;
+
+							                    window.location.href = newUrl;
+							                }
+							            });
+							            }
+							           							            	
+
+							        } else {
+							            // 실패한 경우
+							             alert("부족한 원자재 정보를 가져오는데 실패했습니다.");
+							             
+							        }
+							    },
+							    error: function() {
+							        // Ajax 요청 실패 시 처리
+							         alert("Ajax 요청에 실패했습니다.");
+							    }
+							});
+							
 						}
 	 
 						
@@ -506,42 +593,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 		}); //modify click
 
-		 //재고 부족시 등록 방지, 발주페이지 이동 confirm창
-		queryString = window.location.search;
-		urlParams = new URLSearchParams(queryString);
-		var fromController = urlParams.get("woModify");
 		
-// 		console.log(fromController);
-		
-		if(fromController==0) {
-			
-			Swal.fire({
-				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" +"재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?"+ "</div>",
-				  icon: 'info', 
-				  showDenyButton: true,
-				  confirmButtonColor: '#17A2B8', 
-				  cancelButtonColor: '#73879C', 
-				  confirmButtonText: 'Yes', 
-				  width : '400px',
-				
-				}).then((result) => {
-					
-					// confirm => 예를 눌렀을 때
-					if(result.isConfirmed){
-						location.href = "${pageContext.request.contextPath}/OrderManagement/home";
-					}
-					//취소 눌렀을 때
-					else {
-						var url = new URL(window.location.href);
-						var searchParams = new URLSearchParams(url.search);
-						searchParams.delete("woInsert");
-						var newUrl = url.origin + url.pathname;
-						
-						window.location.href = newUrl;
-					}
-				});//then
-		} 
-		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
 		/////////////// 삭제 //////////////////////////////
 		$('#delete').click(function() {
@@ -814,13 +866,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<th>작업지시코드</th>
 						<th>라인코드</th>
 						<th>수주코드</th>
-						<th>제품</th>
+						<th>제품코드</th>
 						<th>지시일</th>
 						<th>지시수량</th>
 						<th>공정</th>
-						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
+						<th>라인내역</th>
+						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
 							<th>마감</th>
-						<%-- </c:if> --%>
+						 </c:if>
 					</tr>
 				</thead>
 				<tr style='display: none;'></tr>
@@ -829,9 +882,9 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<td></td>
 						<td id="workCode">${w.workCode }</td>
 						<td id="lineCode">${w.lineCode }</td>
-						<td style='cursor: pointer;' onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</td>
-						<td style='display: none;' id="prodCode">${w.prodCode }</td>
-						<td style='cursor: pointer;' onclick="openModal(this)" id="${w.prodCode }" name="prodName" value="${w.prodName }">${w.prodName }</td>
+						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</label></td>
+						<td style='display: none;' id="${w.prodName }">${w.prodName }</td>
+						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.prodCode }" name="prodCode" value="${w.prodCode }">${w.prodCode }</label></td>
 								
 						<c:choose>
     <c:when test="${not empty w.workDatechange}">
@@ -843,14 +896,15 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </c:choose>
 						
 						<td id="workAmount" >${w.workAmount }</td>
-						<td id="workProcess">${w.workProcess }<input type="text" name="workInfo" value="${w.workInfo }"></td>						
-						<%-- <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}"> --%>
+						<td id="workProcess">${w.workProcess }</td>
+						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.workInfo }" name="workInfo" value="${w.workInfo }">보기</label></td>						
+						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
 							<td>
 								<c:if test="${w.workProcess != '마감'}">
 									<a name="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}&workInfo=${w.workInfo}&prodCode=${w.prodCode}">공정마감</a>
 								</c:if>
 							</td>
-						<%-- </c:if> --%>						
+						</c:if>						
 					</tr>
 				</c:forEach>
 			</table>

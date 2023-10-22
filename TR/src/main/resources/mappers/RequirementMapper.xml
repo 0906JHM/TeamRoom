@@ -35,7 +35,7 @@
 
 	 <select id="readReq" resultMap="requirements"
 		resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.* , p.prodName ,rm.*
+		SELECT r.* , p.* ,rm.*
 		FROM requirement r
 		LEFT JOIN product p on p.prodCode = r.prodCode
 		LEFT JOIN rawMaterial rm on r.rawCode = rm.rawCode
@@ -69,7 +69,7 @@
 	소요량관리 검색리스트 불러오기 -->
 	 <select id="readSearchReq" parameterType="hashMap"
 		resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*,p.prodName ,rm.*
+		SELECT r.*,p.* ,rm.*
 		FROM requirement r
 		LEFT join product p on
 		p.prodCode = r.prodCode
@@ -124,7 +124,7 @@
 	소요량관리 수정 시 조회 -->
 	
 	 <select id="readReqOne" resultMap="requirements" resultType="com.itwillbs.domain.RequirementDTO">
-		SELECT r.*,p.prodName ,rm.*
+		SELECT r.*,p.* ,rm.*
 		FROM requirement r
 		LEFT join
 		product p on p.prodCode = r.prodCode

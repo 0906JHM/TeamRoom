@@ -15,6 +15,7 @@ public class LineDTO {
 	private String lineName;
 	private String lineUse;
 	private String lineEmpId;
+	private String empName;
 	private String lineInsertDate;
 	private String lineProcess;
 	

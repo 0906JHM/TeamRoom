@@ -44,29 +44,34 @@ public class WorkOrderDAO{
 	public List<RawmaterialsDTO> checkStock(WorkOrderDTO dto) throws Exception{
 		String prodCode = dto.getProdCode();
 		List<RequirementDTO> reqList = sqlSession.selectList(NAMESPACE + ".consumption", prodCode);
-		System.out.println(prodCode+"뭔값일까");
+		/* System.out.println(prodCode+"뭔값일까"); */
 		List<StockDTO> stockList = new ArrayList<>();
-		System.out.println(stockList);
 
         List<RawmaterialsDTO> shortages = new ArrayList<>();
         stockList = sqlSession.selectList(NAMESPACE + ".reqRaw", prodCode);
+        System.out.println(stockList);
 
         for (int i = 0; i < reqList.size(); i++) {
             RequirementDTO reqDTO = reqList.get(i);
-            System.out.println(reqDTO);
+            System.out.println(reqDTO+"reqDTO값뭔데");
             StockDTO stockDTO = stockList.get(i);
-            System.out.println(stockDTO);
+            System.out.println(stockDTO+"stockDTO값뭔데");
             int workAmount = dto.getWorkAmount();
+            System.out.println(dto.getWorkAmount() +"wrokAmount값은");
+            System.out.println(reqDTO.getReqAmount() +"reqAmount값은");
+            int reqAmount =Integer.parseInt(reqDTO.getReqAmount());
 
-            int requiredAmount = workAmount * Integer.parseInt(reqDTO.getReqAmount());
+            int requiredAmount = workAmount * reqAmount;
             int availableStock = stockDTO.getStockCount();
-
+            System.out.println(stockDTO.getStockCount() +"getStockCount()값은");
+            System.out.println(availableStock +"availableStock값은");
             if (availableStock < requiredAmount) {
                 int shortageAmount = requiredAmount - availableStock;
                 RawmaterialsDTO shortageDTO = new RawmaterialsDTO();
                 shortageDTO.setRawCode(reqDTO.getRawCode());
                 shortageDTO.setShortageAmount(shortageAmount);
                 shortages.add(shortageDTO);
+                System.out.println(shortages +"shortages값은");
             }
         }
 
@@ -153,7 +158,7 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 				System.out.println(dto.getLineCode());
 
 				// 작업 정보와 현재 시간을 연결하여 최종 문자열을 만듭니다.
-				String workInfo = dto.getLineCode() + currentTime;
+				String workInfo = "WI" + dto.getLineCode() + currentTime;
 				System.out.println(workInfo);
 				dto.setWorkInfo(workInfo);
 				//작업지시 등록

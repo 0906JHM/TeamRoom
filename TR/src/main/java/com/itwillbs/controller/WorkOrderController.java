@@ -177,7 +177,7 @@ HttpSession session = request.getSession();
 		dto.setWorkEmpId(empId);
 		
 		//서비스 - 작업지시 등록
-		model.addAttribute("woInsert", wService.regWorkOrder(dto));
+		wService.regWorkOrder(dto);
 		
 		return "redirect:/workorder/workOrderList";
 	} //addWorkOrder()
@@ -240,9 +240,11 @@ HttpSession session = request.getSession();
 			Map<String, Object> response = new HashMap<>();
 			try {
 	            List<RawmaterialsDTO> shortages = wService.checkStock(dto);
-	            System.out.println(shortages+"뭔값일까");
+	            System.out.println(shortages+"shortages뭔값일까");
 	            response.put("status", "success");
 	            response.put("data", shortages);
+	            System.out.println(response);
+	            
 	        } catch (Exception e) {
 	            response.put("status", "error");
 	            response.put("message", "부족한 원자재 정보를 가져오는데 실패했습니다.");

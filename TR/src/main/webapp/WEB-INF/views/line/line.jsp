@@ -160,7 +160,7 @@ function deleteValue(){
     <td>${lineDTO.lineCode}</td>
     <td>${lineDTO.lineName}</td>
     <td>${lineDTO.lineUse}</td>
-    <td>${lineDTO.lineEmpId}</td>
+    <td>${lineDTO.lineEmpId} ${lineDTO.empName}</td>
     <td>${lineDTO.lineInsertDate}</td>
     <td>${lineDTO.lineProcess}</td>
 </tr>

@@ -6,7 +6,9 @@
   
 <!--   검색,페이징처리 -->
   <select id="getlineList" resultType="com.itwillbs.domain.LineDTO">
-  	select * from line 
+  	select *
+  	from line l
+  	left join employees e on e.empId = l.lineEmpId
   	where 1=1
   	<if test="search != null and search != ''">
             and (lineCode like concat('%', #{search}, '%') or lineName like concat('%', #{search}, '%') or lineUse like concat('%', #{search}, '%') or lineEmpId like concat('%', #{search}, '%') or lineInsertDate like concat('%', #{search}, '%') or lineProcess like concat('%', #{search}, '%'))

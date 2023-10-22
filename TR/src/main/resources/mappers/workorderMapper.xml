@@ -203,7 +203,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 			SET workProcess='3차공정', lineCode=<include refid="selectLine3"/>  
 		</if>
 		<if test="workProcess.equals('3차공정')">
-			SET workProcess='마감', lineCode='없음'
+			SET workProcess='마감', lineCode=''
 		</if>
 		WHERE workCode=#{workCode}
 	</update>

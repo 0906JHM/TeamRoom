@@ -70,7 +70,7 @@
                       if (json && typeof json === 'object') {
                     	  
                     	// 값 할당
-                    	addInput("제품 코드:", elements[0],json.prodCode);
+                    	addInput("제품 이름:", elements[0],json.prodName);
             	addInput("제품 단위:", elements[1],json.prodUnit);
             	addInput("용량:", elements[2],json.prodSize);
             	addInput("향기 종류:", elements[3],json.prodPerfume);
@@ -87,7 +87,7 @@
               });	
             	
 
-      	  } else if(clickedElementId.startsWith("PE")){
+      	  } else if(clickedElementId.startsWith("GL")||clickedElementId.startsWith("LB")||clickedElementId.startsWith("PC")||clickedElementId.startsWith("PE")||clickedElementId.startsWith("ST")){
               	//modal_ajax 
               	$.ajax({
               	  url : '${pageContext.request.contextPath}/KDMajax/modalraw',
@@ -97,7 +97,7 @@
               	  success: function (json) {
                         if (json && typeof json === 'object') {
                         	// 값 할당
-                      	addInput("원자재 코드:", elements[0],json.rawCode);
+                      	addInput("원자재 이름:", elements[0],json.rawName);
               	addInput("원자재 종류:", elements[1],json.rawType);
               	addInput("원자재 단위:", elements[2],json.rawUnit);
               	addInput("원자재 가격:", elements[3],json.rawPrice);
@@ -725,8 +725,8 @@ $(document).ready(function() {
 								<th>번호</th>
 								<th>소요코드</th>
 								<th style='display: none;'>품번</th>
-								<th>제품</th>
-								<th>원자재</th>
+								<th>제품코드</th>
+								<th>원자재코드</th>
 								<th>소요량</th>
 								<th>비고</th>
 								<th style='display: none;'></th>
@@ -737,12 +737,12 @@ $(document).ready(function() {
 							<tr class="contents">
 								<td></td>
 								<td id="reqCode">${dto.reqCode }</td>
-								<td style='display: none;'>${dto.prodCode }</td>
-								<td><label style='cursor: pointer;' onclick="openModal(this)" id="${dto.prodCode }" name="prodName" value="${dto.prod.prodName }">${dto.prod.prodName }</label></td>
-								<td><label style='cursor: pointer;' onclick="openModal(this)" id="${dto.rawCode }" name="rawName" value="${dto.raw.rawName }">${dto.raw.rawName }</label></td>
+								<td style='display: none;'>${dto.prod.prodName }</td>
+								<td><label style='cursor: pointer;' onclick="openModal(this)" id="${dto.prodCode }" name="prodCode" value="${dto.prodCode }">${dto.prodCode }</label></td>
+								<td><label style='cursor: pointer;' onclick="openModal(this)" id="${dto.rawCode }" name="rawCode" value="${dto.rawCode }">${dto.rawCode }</label></td>
 								<td>${dto.reqAmount }</td>
 								<td>${dto.reqMemo }</td>
-								<td id="rawCode" style='display: none;'>${dto.rawCode }</td>
+								<td id="rawCode" style='display: none;'>${dto.raw.rawName }</td>
 							</tr>
 						</c:forEach>
 					</table>
