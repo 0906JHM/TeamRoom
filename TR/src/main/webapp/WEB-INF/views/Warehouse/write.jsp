@@ -17,6 +17,7 @@
 
 <div class="container">
 	<h2>창고 등록</h2>
+	<hr>
 
 	<form action="${pageContext.request.contextPath}/Warehouse/writePro "
 		method="post">
@@ -64,7 +65,8 @@
 		<input type="text" name="whseMemo">  
 		</div>
 		 <div id="button">
-		 <input type="submit" value="창고등록">
+		 <input type="submit" value="등록">
+		  <input type="button" value="닫기" onclick="closeWindow()">
 		 </div>
 	</form>
 	</div>
@@ -126,7 +128,11 @@
 	          
 	        }
 	    }).open();
-	}
+	}  
+	//닫기버튼 누르면 창 닫힘
+	  function closeWindow() {
+  window.close();
+}
 	    
 	// 휴대폰 번호 정규식 (숫자만 허용하는 가정)
     var phoneNumberRegex = /^(010|011|016|017|019)-\d{4}-\d{4}$/;

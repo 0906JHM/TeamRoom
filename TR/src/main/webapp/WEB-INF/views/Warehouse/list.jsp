@@ -20,7 +20,7 @@
 
 // 추가
 function newTabInsert() {
-    window.open("${pageContext.request.contextPath}/Warehouse/write", "추가",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=600,height=900");
+    window.open("${pageContext.request.contextPath}/Warehouse/write", "추가",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=530,height=530");
 }
 
 // 수정
@@ -32,7 +32,7 @@ function newTabUpdate() {
 		ch = list[i].value;
 		}
 	}
-	window.open("${pageContext.request.contextPath}/Warehouse/update?whseCode="+ch, "수정",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=600,height=900");
+	window.open("${pageContext.request.contextPath}/Warehouse/update?whseCode="+ch, "수정",  "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=530,height=530");
 }
 
 $(document).ready(function() {
@@ -107,7 +107,6 @@ function deleteValue(){
 
 <div class="container">
 <h2>창고 관리</h2>
-<hr>
 <div id="searchform">
     <form action="${pageContext.request.contextPath}/Warehouse/list" method="get" id="selected">
     <label>창고코드</label> <input type="text" name="search1" placeholder="창고코드">
@@ -117,10 +116,9 @@ function deleteValue(){
                     <option value="원자재">원자재</option>
 		            <option value="완제품">완제품</option>
                 </select>
-    <button class="aaa" type="submit" >조회</button>      
+    <button  class="aaa" type="submit" >조회</button>      
     </form>
     </div>
-    <hr>
     
 <div class="x_title">
 
@@ -130,7 +128,7 @@ function deleteValue(){
      <div>
    <button onclick="newTabInsert()">추가</button>
    <button onclick="newTabUpdate()">수정</button>
-   <button onclick="deleteValue();">삭제</button>
+   <button id="delete" onclick="deleteValue();">삭제</button>
 </div>    
 </div>
    

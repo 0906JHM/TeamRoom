@@ -9,7 +9,11 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/warehousewrite.css"
 	rel="stylesheet" type="text/css">
-
+<script type="text/javascript">
+function closeWindow() {
+    window.close();
+}
+</script>
 </head>
 <body>
 
@@ -69,6 +73,7 @@
 
 			<div id="button">
 				<input type="submit" value="수정">
+				<input type="button" value="닫기" onclick="closeWindow()">
 			</div>
 
 		</form>
