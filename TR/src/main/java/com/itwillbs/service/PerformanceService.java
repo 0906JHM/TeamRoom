@@ -112,6 +112,14 @@ public class PerformanceService {
 		return perfDAO.updateStock(perfDTO);
 	}
 
+	public int updateperfSub(PerformanceDTO perfDTO) {
+		return perfDAO.updateperfSub(perfDTO);
+	}
+
+	public int updateStockSub(PerformanceDTO perfDTO) {
+		return perfDAO.updateStockSub(perfDTO);
+	}
+
 	
 
 

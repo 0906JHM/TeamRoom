@@ -160,4 +160,18 @@ public class PerformanceDAO {
 		return sqlsession.update(namespace+".updateStock",perfDTO);
 	}
 
+
+
+
+	public int updateperfSub(PerformanceDTO perfDTO) {
+		return sqlsession.update(namespace+".updateperfSub",perfDTO);
+	}
+
+
+
+
+	public int updateStockSub(PerformanceDTO perfDTO) {
+		return sqlsession.update(namespace+".updateStockSub",perfDTO);
+	}
+
 }

@@ -140,4 +140,23 @@ WHERE p.perfCode=#{perfCode} AND p.perfFair IS NOT NULL;
 	SET stockCount = stockCount + #{perfFair}
 	WHERE prodCode = #{prodCode}
  </update>
+ 
+ <update id="updateperfSub">
+ 	UPDATE performance 
+	SET perfEmpId=#{perfEmpId}, 
+	    perfFair = perfFair - #{perfFair},
+	    perfDefect=#{perfDefect},
+	    perfDefectreason=#{perfDefectreason},
+	    perfDefectmemo=#{perfDefectmemo},
+	    perfMemo=#{perfMemo}
+	WHERE perfCode=#{perfCode}
+ </update>
+ 
+ <update id="updateStockSub">
+	UPDATE stock 
+	SET stockCount = stockCount - #{perfFair}
+	WHERE prodCode = #{prodCode}
+ </update>
+ 
+ 
  </mapper>

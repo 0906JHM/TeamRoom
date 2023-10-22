@@ -90,7 +90,18 @@ public class AjaxPerformanceController {
 				return "false";
 			}
 		}else {
-			return "false";
+			// 양품수가 줄었을 경우
+			int realFair = perfDTO2.getPerfFair() - perfDTO.getPerfFair(); // 디비 50 - 받아온거 40 나머지 10 
+			System.out.println("실제 양품수 " + realFair);
+			perfDTO.setPerfFair(realFair); // 실제 양품수 세팅 
+			int result1 = perfService.updateperfSub(perfDTO); // 실적 테이블 세팅
+			int result2 = perfService.updateStockSub(perfDTO); // 스톡 테이블 세팅
+			if(result1 > 0 && result2 > 0) {
+				return "true";
+			}else {
+				return "false";
+			}
+			
 		}
 			
 	
