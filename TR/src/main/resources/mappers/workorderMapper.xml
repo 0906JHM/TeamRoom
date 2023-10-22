@@ -43,7 +43,7 @@
 	<select id="reqRaw" resultMap="StockDTO">
 		SELECT s.rawCode, stockCount 
 		FROM stock s 
-		JOIN requirement r ON s.rawCode = r.rawCode 
+		left JOIN requirement r ON s.rawCode = r.rawCode 
 		WHERE r.prodCode = #{prodCode} 
 		ORDER BY s.rawCode;
 	</select>
@@ -106,7 +106,7 @@
 	</delete>
 	<update id="lineUseDY">
     UPDATE line l
-    INNER JOIN workOrder w ON l.lineCode = w.lineCode
+    LEFT JOIN workOrder w ON l.lineCode = w.lineCode
     SET l.lineUse = '미사용'
     WHERE w.workCode = #{workCode}
 </update>
@@ -239,7 +239,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<select id="getWorkOrderSearchExcel" resultType="java.util.HashMap">
 		SELECT w.workCode workCode, w.prodCode prodCode, p.prodName prodName,w.sellCode sellCode, DATE_FORMAT(w.workDate, '%Y-%m-%d') workDate, w.lineCode lineCode, w.workAmount workAmount, w.workEmpId workEmpId, w.workProcess workProcess, 
         DATE_FORMAT(w.workDatechange, '%Y-%m-%d') workDatechange, w.wrokInfo, workInfo
-        FROM workOrder w JOIN product p
+        FROM workOrder w LEFT JOIN product p
         ON w.prodCode = p.prodCode
         <where>
 			<if test="searchLine != null and searchLine != ''">
@@ -263,7 +263,7 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<select id="getWorkOrderAllExcel" resultType="java.util.HashMap">
 		SELECT w.workCode workCode, w.prodCode prodCode, p.prodName prodName,w.sellCode sellCode, DATE_FORMAT(w.workDate, '%Y-%m-%d') workDate, w.lineCode lineCode, w.workAmount workAmount, w.workEmpId workEmpId, w.workProcess workProcess, 
         DATE_FORMAT(w.workDatechange, '%Y-%m-%d') workDatechange, w.wrokInfo, workInfo
-        FROM workOrder w JOIN product p
+        FROM workOrder w LEFT JOIN product p
         ON w.prodCode = p.prodCode
 	</select>
 	

@@ -452,13 +452,13 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " <td>";
 				tbl += "  <input type='text'  placeholder='수주코드를 선택하세요.' class='input-row' name='sellCode' id='sellCode8888' required readonly >";
 				tbl += " </td>";
-				// 제품코드
-				tbl += " <td style='display: none;'>";
-				tbl += "  <input type='hidden' name='prodCode' id='prodCode8888'>";
-				tbl += " </td>";
 				// 제품명
+				tbl += " <td style='display: none;'>";
+				tbl += "  <input type='hidden' name='prodName' id='prodName8888'>";
+				tbl += " </td>";
+				// 제품코드
 				tbl += " <td>";
-				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='prodName' id='prodName8888' readonly>";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' name='prodCode' id='prodCode8888' readonly>";
 				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
@@ -470,7 +470,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " <td>";
 				tbl += "  <input type='number' class='input-row' value='1' min='1' name='workAmount' id='workAmount8888' required >";
 				tbl += " </td>";
-				// 지담당자
+				// 담당자
 				tbl += " <td>";
 				tbl += "  <input type='text' class='input-row' value='1' min='1' name='workEmpId' id='workEmpId8888' required value='<%= empId %>' >";
 				tbl += " </td>";
@@ -478,6 +478,15 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				tbl += " <td>";
 				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' value='1차공정' readonly >";
 				tbl += " </td>";
+				//라인내역
+				tbl += " <td>";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' value='' readonly >";
+				tbl += " </td>";
+				//마감
+				tbl += " <td>";
+				tbl += "  <input type='text' style='background-color:rgba(0, 0, 0, 0);' class='input-row' value='' readonly >";
+				tbl += " </td>";
+			
 				$('table').append(tbl);
 				var lineCode
 				//1차공정공정 라인 중 사용 가능한 라인 입력
@@ -655,7 +664,9 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 									data.prodName,
 									data.workDate,
 									data.workAmount,
+									data.workEmpId,
 									data.workProcess,
+									"",
 									""
 								];
 	
@@ -667,7 +678,9 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 									"prodName",
 									"workDate",
 									"workAmount",
+									"workEmpId",
 									"workProcess",
+									"workInfo",
 									"magam"
 								];
 	
