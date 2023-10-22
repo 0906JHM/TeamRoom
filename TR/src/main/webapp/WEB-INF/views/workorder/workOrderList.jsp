@@ -358,7 +358,16 @@ button.style.backgroundColor = "#4D4D4D";
 	
 	
 </div>
+ <%
+        // 세션에서 'empId' 속성을 가져와서 JavaScript 변수에 할당
+        String empId = (String) session.getAttribute("empId");
+    %>
 
+    <!-- JavaScript 변수에 세션 'empId' 속성 값 할당 -->
+    <script>
+        var workEmpId = '<%= empId %>';
+        // 이제 workEmpId 변수를 JavaScript 코드에서 사용할 수 있습니다.
+    </script>
 <script type="text/javascript">
 	//========================= 함수, 상수 ==================================//
 	// 팝업 옵션
@@ -460,6 +469,10 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 				// 지시수량
 				tbl += " <td>";
 				tbl += "  <input type='number' class='input-row' value='1' min='1' name='workAmount' id='workAmount8888' required >";
+				tbl += " </td>";
+				// 지담당자
+				tbl += " <td>";
+				tbl += "  <input type='text' class='input-row' value='1' min='1' name='workEmpId' id='workEmpId8888' required value='<%= empId %>' >";
 				tbl += " </td>";
 				//공정
 				tbl += " <td>";
