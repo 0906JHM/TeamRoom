@@ -72,7 +72,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<c:if test="${inMaterialDTO.inEmpId != null  }">
 						<td>
 							<input type="hidden" name="inEmpId" value="${sessionScope.empId}" id="inEmpId" readonly="readonly">
-							<input type="text" name="inEmpId_2" value="${inMaterialDTO.inEmpId}" id="inEmpId_1" readonly="readonly">
+							<input type="text" name="inEmpId_2" value="${inMaterialDTO.inEmpId}" id="inEmpId_1" readonly="readonly" style="cursor:pointer;">
 						</td>
 					</c:if>
 				</tr>
