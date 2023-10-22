@@ -935,7 +935,7 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
                                   "연락처" :json.empTel,
                                   "재직상태" :json.empState,
                                   "입사일" :json.empHiredate};
-openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+openModalWithData(event, dataformat, -200); // 데이터를 모달로 표시
 
                   	
                   	} else {
@@ -980,8 +980,8 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
     		    var modal = document.getElementById('myModal');
     		    var modalContent = document.querySelector('.modal-body');
     		    
-    		    modalContent.style.width = width + 'px';
-    		    modal.style.width = (width + 20) + 'px'; // 20px는 여유 여백이라고 가정
+    		    modalContent.style.width = Math.abs(width) + 'px'; // 절대값
+    		    modal.style.width = (Math.abs(width) + 20) + 'px'; // 20px는 여유 여백이라고 가정
     		    modalContent.innerHTML = ''; // 기존 내용 제거
 
     		    // 데이터를 HTML 표로 구성
@@ -1002,7 +1002,11 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
     		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
     		  
     		    modal.style.setProperty('display', 'block', 'important');
-    		    modal.style.left = (event.clientX + window.scrollX) + 'px';
+    		    if (width >= 0) {
+    		        modal.style.left = (event.clientX + window.scrollX) + 'px';
+    		    } else {
+    		        modal.style.left = (event.clientX + window.scrollX + width) + 'px';
+    		    }
     		    modal.style.top = (event.clientY + window.scrollY) + 'px';
     		}
 
