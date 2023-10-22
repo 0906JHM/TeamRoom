@@ -95,7 +95,7 @@ public void sellAddPro(SellDTO sellDTO, HttpServletResponse response) {
 	Date now = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
     String formattedDate = dateFormat.format(now);
-    String sellCode = "CL" + formattedDate;
+    String sellCode = "SL" + formattedDate;
     System.out.println("수주 코드 만드는거 : " + sellCode);
     sellDTO.setSellCode(sellCode);
 	
