@@ -160,5 +160,18 @@ WHERE p.perfCode=#{perfCode} AND p.perfFair IS NOT NULL;
 	WHERE prodCode = #{prodCode}
  </update>
  
+ <select id="gettotal" resultType="PerformanceDTO">
+   SELECT
+        SUM(w.workAmount) AS totalAmount,
+        SUM(p.perfDefect) AS totalDefect,
+        SUM(p.perfFair) AS totalFair
+    FROM
+        workOrder w
+    LEFT JOIN
+        performance p ON w.prodCode = p.prodCode;
+ 
+ 
+ </select>
+ 
  
  </mapper>

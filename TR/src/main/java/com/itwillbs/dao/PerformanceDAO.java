@@ -174,4 +174,12 @@ public class PerformanceDAO {
 		return sqlsession.update(namespace+".updateStockSub",perfDTO);
 	}
 
+
+
+
+	public List<PerformanceDTO> gettotal(PerformanceDTO perfDTO) {
+	
+		return sqlsession.selectList(namespace+".gettotal", perfDTO);
+	}
+
 }

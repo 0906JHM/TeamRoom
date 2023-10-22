@@ -120,6 +120,11 @@ public class PerformanceService {
 		return perfDAO.updateStockSub(perfDTO);
 	}
 
+	public List<PerformanceDTO> gettotal(PerformanceDTO perfDTO) {
+		
+		return perfDAO.gettotal(perfDTO);
+	}
+
 	
 
 

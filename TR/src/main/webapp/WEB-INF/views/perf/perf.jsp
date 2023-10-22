@@ -67,6 +67,11 @@ table {
     margin-right: auto;
     margin-top: 10px;
 }
+
+.labelhead{
+
+
+}
 </style>
 	
 </head>
@@ -112,13 +117,21 @@ table {
 	<div class="clientbody1">
 	<div class="tableform"> 
 			<div class="clienttotal">
-			 <h2> 총 ${pageDTO.count} 건 </h2>
+			 <h2> 총 ${pageDTO.count} 건 </h2> &nbsp;&nbsp;
+			 	<div class="total-items">
+		 <div class="PageSelect">
+ 			&nbsp;&nbsp;<label for="perPageSelect" style ="bottom:2px;">항목 수 </label>
+			<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${pageDTO.pageSize}">
+			    <option value="10" ${pageDTO.pageSize == 10 ? 'selected' : ''}>10개씩</option>
+			    <option value="50" ${pageDTO.pageSize == 50 ? 'selected' : ''}>50개씩</option>
+			    <option value="100" ${pageDTO.pageSize == 100 ? 'selected' : ''}>100개씩</option>
+			    <option value="9999" ${pageDTO.pageSize == 9999 ? 'selected' : ''}>전체</option>
+			</select>
+		</div>
+	</div>
 			
 			</div>   <!--  생산실적 총:x건 라인-->
-			<div class="total-items">
-		 <div>
-			 <label>총 ${sellDTO.count}건</label>
-		 </div>
+<%-- 			<div class="total-items">
 		 <div class="PageSelect">
  			<label for="perPageSelect" style ="bottom:2px;">항목 수 </label>
 			<select id="perPageSelect" class="input_box" style ="width:100px; bottom:2px;" onchange="applyFilters()" value="${pageDTO.pageSize}">
@@ -128,7 +141,7 @@ table {
 			    <option value="9999" ${pageDTO.pageSize == 9999 ? 'selected' : ''}>전체</option>
 			</select>
 		</div>
-	</div>
+	</div> --%>
 
 		 <table class="ct" id="ct" class="ctcl">	
 			<thead>
@@ -202,7 +215,7 @@ table {
 		 <div class="chart">
 		 <h2> 생산실적 현황 </h2>
 		 <div class="chartbody">
-		 
+		 <c:forEach var="perfDTO" items="${totallist}">
 		 <div class="chart1head">
 		 <h2 class="labelhead"> 실적수: ${perfDTO.totalAmount}</h2>
 		 <div class="chart1">
@@ -217,12 +230,12 @@ table {
 		 </div>
 		 
 		 <div class="chart3">
-		 <h2 class="labelhaed"> 불량수: ${perfDTO.totalDefect}</h2>
+		 <h2 class="labelhaed"> 불량수: ${perfDTO.totalDefect}</p></h2>
 		 <div class="chart3haed">
 		  <canvas id="donutChart3" width="400px" height="400px"></canvas> <!--  totaldefect -->
 		 </div>
 		</div>
-		 
+		 </c:forEach>
 
 
 	

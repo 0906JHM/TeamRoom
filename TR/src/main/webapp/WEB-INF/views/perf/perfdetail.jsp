@@ -178,7 +178,7 @@ input[type="button"], input[type="submit"] {
 
 <div class="footerbtn">
 <div class="ftbtn">
-<input type="button" class="okbtn" id="okbtn" value="확인">
+<input type="button" class="okbtn" id="okbtn" value="닫기">
 	<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
 <input type="button" class="update2" id="update2" value="수정">
 </c:if>

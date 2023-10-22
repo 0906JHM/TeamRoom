@@ -131,9 +131,9 @@ if(endPage > pageCount ) {
 				  log.debug("메인페이지  실적코드 요청"); 
 				log.debug("실적코드 가지온값들: +++++++"+ perflist);
 				log.debug("실적코드 카운트값 출력:++++++++++" + count);
-	
-		  
-		  
+								
+				List<PerformanceDTO> totallist = perfService.gettotal(perfDTO);
+				model.addAttribute("totallist", totallist);
 
 		  model.addAttribute("perflist",perflist); 
 		  model.addAttribute("pageDTO", pageDTO);

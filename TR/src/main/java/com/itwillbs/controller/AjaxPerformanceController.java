@@ -66,8 +66,15 @@ public class AjaxPerformanceController {
 	    List<PerformanceDTO> getdonutdata = perfService.getdonut(prodCode);
 	    log.debug("가져오는값:"+ prodCode);
 	    
-	    PerformanceDTO perfDTO = new PerformanceDTO();
-	    model.addAttribute("perfDTO", perfDTO);
+	
+	    
+	    // 첫 번째 PerformanceDTO 객체를 가져와서 모델에 추가
+	    if (!getdonutdata.isEmpty()) {
+	        PerformanceDTO perfDTO = getdonutdata.get(1);
+	        model.addAttribute("perfDTO", perfDTO);
+	    }
+
+	    
 	    return ResponseEntity.ok(getdonutdata);
 	    
 
