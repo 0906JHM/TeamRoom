@@ -1270,12 +1270,7 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
     		        modal.style.display = 'none';
     		    }
     		}); */
-    	 
-
-    		
-        
-               
-    </script>
+     </script>
 </body>
 </html>
 
