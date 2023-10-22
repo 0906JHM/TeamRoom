@@ -16,8 +16,8 @@
 	<select id="getProdList"
 		resultType="com.itwillbs.domain.ProdDTO">
 		select p.prodCode,
-		p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
-		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,c.clientCode,
+		c.clientCompany,w.whseName,w.whseCode, p.prodPrice,p.prodMemo
 		from product p
 		left
 		join clients c
@@ -31,8 +31,8 @@
 
 
 	<select id="getSearch" resultType="com.itwillbs.domain.ProdDTO">
-		select p.prodCode, p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
-		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		select p.prodCode, p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,c.clientCode,
+		c.clientCompany,w.whseName,w.whseCode, p.prodPrice,p.prodMemo
 		FROM product p
 		left
 		join clients c
@@ -146,8 +146,8 @@
 	
 	<select id="getExcelList" resultType="com.itwillbs.domain.ProdDTO">
 		select p.prodCode,
-		p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
-		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+		p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,c.clientCode,
+		c.clientCompany,w.whseName,w.whseCode, p.prodPrice,p.prodMemo
 		from product p
 		left
 		join clients c
@@ -160,8 +160,8 @@
 	</select>
 	
 	<select id="getExcelProdSearch" resultType="com.itwillbs.domain.ProdDTO">
-	select p.prodCode, p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,
-		c.clientCompany,w.whseName,p.prodPrice,p.prodMemo
+	select p.prodCode, p.prodName,p.prodUnit,p.prodSize,p.prodPerfume,c.clientCode,
+		c.clientCompany,w.whseName,w.whseCode, p.prodPrice,p.prodMemo
 		FROM product p
 		left
 		join clients c

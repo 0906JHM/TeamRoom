@@ -63,4 +63,78 @@
 		from sell
 		where sellCode = #{sellCode}
 	</select>
+	
+	 <resultMap id="client" type="com.itwillbs.domain.ClientDTO">
+		<result property="clientCode" column="clientCode" />
+		<result property="clientCompany" column="clientCompany" />
+		<result property="clientNumber" column="clientNumber" />
+		<result property="clientDetail" column="clientDetail" />
+		<result property="clientCeo" column="clientCeo" />
+		<result property="clientName" column="clientName" />
+		<result property="clientAddr1" column="clientAddr1" />
+		<result property="clientAddr2" column="clientAddr2" />	
+		<result property="clientTel" column="clientTel" />	
+		<result property="clientPhone" column="clientPhone" />	
+		<result property="clientFax" column="clientFax" />	
+		<result property="clientEmail" column="clientEmail" />
+		<result property="clientMemo" column="clientMemo" />
+		<result property="clientSale" column="clientSale" />			
+	</resultMap>
+	<select id="modalclient" resultType="ClientDTO" resultMap="client"> 
+		select *
+		from clients
+		where clientCode = #{clientCode}
+	</select>
+	
+	 <resultMap id="whse" type="com.itwillbs.domain.WarehouseDTO">
+		<result property="whseCode" column="whseCode" />
+		<result property="whseName" column="whseName" />
+		<result property="whseType" column="whseType" />
+		<result property="whseState" column="whseState" />
+		<result property="whseAddr" column="whseAddr" />
+		<result property="whseTel" column="whseTel" />
+		<result property="whseMemo" column="whseMemo" />
+		<result property="prodCode" column="prodCode" />	
+		<result property="rawCode" column="rawCode" />	
+		<result property="whseEmpId" column="whseEmpId" />			
+	</resultMap>
+	<select id="modalwhse" resultType="WarehouseDTO" resultMap="whse"> 
+		select *
+		from warehouse
+		where whseCode = #{whseCode}
+	</select>
+	
+	 <resultMap id="emp" type="com.itwillbs.domain.EmployeesDTO">
+		<result property="empName" column="empCName" />
+		<result property="empDepartment" column="empDepartment" />
+		<result property="empPosition" column="empPosition" />
+		<result property="empEmail" column="empEmail" />
+		<result property="empTel" column="empTel" />
+		<result property="empState" column="empState" />
+		<result property="empHiredate" column="empHiredate" />		
+	</resultMap>
+	<select id="modalemp" resultType="EmployeesDTO" resultMap="emp"> 
+		select *
+		from employees
+		where empId = #{empId}
+	</select>
+	
+	 <resultMap id="work" type="com.itwillbs.domain.WorkOrderDTO">
+		<result property="prodCode" column="prodCode" />
+		<result property="sellCode" column="sellCode" />
+		<result property="workDate" column="workDate" />
+		<result property="lineCode" column="lineCode" />
+		<result property="workAmount" column="workAmount" />
+		<result property="workEmpId" column="workEmpId" />
+		<result property="workDatechange" column="workDatechange" />	
+		<result property="workInfo" column="workInfo" />	
+	</resultMap>
+	<select id="modalwork" resultType="WorkOrderDTO" resultMap="work"> 
+		select *
+		from workOrder
+		where workCode = #{workCode}
+	</select>
+		
+	
+	
   </mapper>
