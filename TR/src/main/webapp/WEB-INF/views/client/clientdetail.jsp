@@ -17,6 +17,13 @@ background-color: #F5F6FA;
 
 }
 
+#clientDetail2{
+display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
 .headh{
 text-align: center;
 }
@@ -25,7 +32,9 @@ td {
 margin-left : 50px;
 margin-right : 15px;
 font-size : 18px;
-width: 150px;
+    text-align: center;
+    font-weight: bold;
+
 }
 
 
@@ -97,8 +106,8 @@ color : red;
 <tr><td>구분</td><td><input type="text" id="clientType"  name="clientType" class="upform" value="${clientDTO.clientType}"></td></tr>
 <tr><td>거래처코드</td><td><input type="text" id="clientCode" name="clientCode" value="${clientDTO.clientCode}" class="upform"></td></tr>
 <tr><td>거래처명</td><td><input type="text" id="clientCompany" name="clientCompany" value="${clientDTO.clientCompany}" class="upform"><br><span id="clientCompany_msg"></span></td></tr>
-<tr><td>사업자번호</td><td><input type="text" id="clientNumber" name="clientNumber" value="${clientDTO.clientNumber}" class="upform"><br><span id="clientNumber_msg"></span></td></tr>
-<tr><td>업태</td><td><input type="text"  id="clientDetail" name="clientDetail" value="${clientDTO.clientDetail}" class="upform"><br><span id="clientDetail_msg"></span></td></tr>
+<tr><td>사업자번호</td><td><input type="text" id="clientNumber" name="clientNumber" value="${clientDTO.clientNumber}" class="upform" maxlength="12"><br><span id="clientNumber_msg"></span></td></tr>
+<tr><td>업태</td><td><input type="text"  id="clientDetail" name="clientDetail" value="${clientDTO.clientDetail}" class="upform" maxlength="10"><br><span id="clientDetail_msg"></span></td></tr>
 <tr><td>대표자</td><td><input type="text" id ="clientCeo" name="clientCeo" value="${clientDTO.clientCeo}" class="upform"><br><span id="clientCeo_msg"></span></td></tr>
 <tr><td>담당자</td><td><input type="text" id ="clientName" name="clientName" value="${clientDTO.clientName}" class="upform" ><br><span id="clientName_msg"></span></td></tr>  
 <tr><td>거래처주소</td><td><input  type="text" id="sample4_roadAddress" placeholder="도로명주소"
@@ -109,9 +118,9 @@ color : red;
           </td></tr>  
 <tr><td>상세주소</td><td><input type="text" id="sample4_extraAddress" placeholder="상세주소"
 			name="clientAddr2" size="60" value="${clientDTO.clientAddr2}" class="upform" required></td></tr>  
-<tr><td>거래처번호</td><td><input type="text" id="clientTel" name="clientTel" value="${clientDTO.clientTel}" class="upform"><br><span id="clientTel_msg"></span></td></tr>  
-<tr><td>휴대폰번호</td><td><input type="tel" id="clientPhone" name="clientPhone" value="${clientDTO.clientPhone}" class="upform"><br><span id="clientPhone_msg"></span></td></tr>  
-<tr><td>팩스번호</td><td><input type="tel" id="clientFax" name="clientFax" value="${clientDTO.clientFax}" class="upform"><br><span id="clientFax_msg"></span></td></tr>  
+<tr><td>거래처번호</td><td><input type="text" id="clientTel" name="clientTel" value="${clientDTO.clientTel}" class="upform" maxlength="12"><br><span id="clientTel_msg"></span></td></tr>  
+<tr><td>휴대폰번호</td><td><input type="tel" id="clientPhone" name="clientPhone" value="${clientDTO.clientPhone}" class="upform" maxlength="13"><br><span id="clientPhone_msg"></span></td></tr>  
+<tr><td>팩스번호</td><td><input type="tel" id="clientFax" name="clientFax" value="${clientDTO.clientFax}" class="upform" maxlength="12"><br><span id="clientFax_msg"></span></td></tr>  
 <tr><td>이메일</td><td><input type="email" id ="clientEmail" name="clientEmail" value="${clientDTO.clientEmail}" class="upform"><br><span id="clientEmail_msg"></span></td></tr>  
 <tr><td>비고</td><td><input type="text"  id="clientMemo "name="clientMemo" value="${clientDTO.clientMemo}" class="upform"><br><span id="clientMemo_msg"></span></td></tr>  
 <c:if test="${clientDTO.clientType eq '수주처'}">
