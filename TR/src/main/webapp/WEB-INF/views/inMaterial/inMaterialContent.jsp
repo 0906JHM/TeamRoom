@@ -255,12 +255,12 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		     var currentInPrice = document.querySelector('input[name="currentInPrice"]');
 		   
 		    // 현재 출력해야되는 재고값 계산
-		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10);
-		    var initialInCount = parseInt(document.getElementById('initialInCount').value, 10);
-		    var inCount = parseInt(inCountInput.value, 10);
+		    var initialstockCount = parseInt(document.getElementById('initialstockCount').value, 10); //초기 재고값
+		    var initialInCount = parseInt(document.getElementById('initialInCount').value, 10); // 초기 입고값
+		    var inCount = parseInt(inCountInput.value, 10); // 현재값
 		    
 		    // 재고 입력란 업데이트
-		    stockCountInput.value = initialstockCount + initialInCount + inCount;
+		    stockCountInput.value = initialstockCount - initialInCount + inCount;
 		    currentInPrice.value = formatCurrency(inCount * rawPrice) + '원';
 		    remainder.value = buyCount.value - inCount;
 		}

@@ -253,7 +253,7 @@
 		resultType="com.itwillbs.domain.InMaterialDTO">
 		SELECT i.inNum, i.buyNum, i.clientCode, c.clientCompany,
 		i.rawCode, r.rawName, i.inEmpId, i.inState, i.inDate,
-		i.inRedate,  i.inCount, b.buyCount, i.inCount, s.stockCount,
+		i.inRedate,  i.inCount, b.buyCount, s.stockCount,
 		r.rawPrice, i.inPrice, i.inMemo
 		FROM inMaterial i
 		left join rawMaterial r
