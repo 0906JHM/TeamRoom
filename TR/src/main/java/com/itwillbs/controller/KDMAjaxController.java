@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
+import com.itwillbs.domain.WarehouseDTO;
 import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.ModalService;
 
@@ -42,9 +44,19 @@ public SellDTO modalsell(@RequestParam("sellCode") String sellCode) throws Excep
 return modalservice.modalsell(sellCode);
 	}
 ///////////////////////////////////////////////// modalworkinfo////////////////////////////////////
-@GetMapping("modalworkinfo")
+@GetMapping("modalworkorder")
 public WorkOrderDTO modalinfo(@RequestParam("workCode") String workCode) throws Exception {
 return modalservice.modalworkinfo(workCode);
+}
+
+@GetMapping("modalclient")
+public ClientDTO modalclient(@RequestParam("clientCode") String clientCode) throws Exception {
+return modalservice.modalclient(clientCode);
+}
+
+@GetMapping("modalwhse")
+public WarehouseDTO modalwhse(@RequestParam("whseCode") String whseCode) throws Exception {
+return modalservice.modalwhse(whseCode);
 }
 
 }

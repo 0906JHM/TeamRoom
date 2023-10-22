@@ -63,4 +63,47 @@
 		from sell
 		where sellCode = #{sellCode}
 	</select>
+	
+	 <resultMap id="client" type="com.itwillbs.domain.ClientDTO">
+		<result property="clientCode" column="clientCode" />
+		<result property="clientCompany" column="clientCompany" />
+		<result property="clientNumber" column="clientNumber" />
+		<result property="clientDetail" column="clientDetail" />
+		<result property="clientCeo" column="clientCeo" />
+		<result property="clientName" column="clientName" />
+		<result property="clientAddr1" column="clientAddr1" />
+		<result property="clientAddr2" column="clientAddr2" />	
+		<result property="clientTel" column="clientTel" />	
+		<result property="clientPhone" column="clientPhone" />	
+		<result property="clientFax" column="clientFax" />	
+		<result property="clientEmail" column="clientEmail" />
+		<result property="clientMemo" column="clientMemo" />
+		<result property="clientSale" column="clientSale" />			
+	</resultMap>
+	<select id="modalclient" resultType="ClientDTO" resultMap="client"> 
+		select *
+		from clients
+		where clientCode = #{clientCode}
+	</select>
+	
+	 <resultMap id="whse" type="com.itwillbs.domain.WarehouseDTO">
+		<result property="whseCode" column="whseCode" />
+		<result property="whseName" column="whseName" />
+		<result property="whseType" column="whseType" />
+		<result property="whseState" column="whseState" />
+		<result property="whseAddr" column="whseAddr" />
+		<result property="whseTel" column="whseTel" />
+		<result property="whseMemo" column="whseMemo" />
+		<result property="prodCode" column="prodCode" />	
+		<result property="rawCode" column="rawCode" />	
+		<result property="whseEmpId" column="whseEmpId" />			
+	</resultMap>
+	<select id="modalwhse" resultType="WarehouseDTO" resultMap="whse"> 
+		select *
+		from warehouse
+		where whseCode = #{whseCode}
+	</select>
+		
+	
+	
   </mapper>

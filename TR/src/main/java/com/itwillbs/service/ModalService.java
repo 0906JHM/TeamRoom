@@ -21,6 +21,7 @@ import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
+import com.itwillbs.domain.WarehouseDTO;
 import com.itwillbs.domain.WorkOrderDTO;
 
 
@@ -42,6 +43,11 @@ public class ModalService {
 	    public WorkOrderDTO modalworkinfo(String workCode) throws Exception {
 		   	 return modaldao.modalworkinfo(workCode); }
 	
+	    public ClientDTO modalclient(String clientCode) throws Exception {
+		   	 return modaldao.modalclient(clientCode); }
+	    
+	    public WarehouseDTO modalwhse(String whseCode) throws Exception {
+		   	 return modaldao.modalwhse(whseCode); }
 
 
 

@@ -21,6 +21,7 @@ import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
 import com.itwillbs.domain.RequirementPageDTO;
 import com.itwillbs.domain.SellDTO;
+import com.itwillbs.domain.WarehouseDTO;
 import com.itwillbs.domain.WorkOrderDTO;
 import com.itwillbs.service.RequirementService;
 
@@ -53,6 +54,14 @@ public class ModalDAO {
 	 public WorkOrderDTO modalworkinfo(String workCode) throws Exception {
 		 logger.debug("@@ D :  modalsell(String sellCode) 호출 @@");
 		 return sqlSession.selectOne(NAMESPACE+".modalinfo", workCode); }
+	 
+	 public ClientDTO modalclient(String clientCode) throws Exception {
+		 logger.debug("@@ D :  modalclient(String clientCode) 호출 @@");
+		 return sqlSession.selectOne(NAMESPACE+".modalclient", clientCode); }
+	 
+	 public WarehouseDTO modalwhse(String whseCode) throws Exception {
+		 logger.debug("@@ D :  modalwhse(String whseCode) 호출 @@");
+		 return sqlSession.selectOne(NAMESPACE+".modalwhse", whseCode); }
 
 
 
