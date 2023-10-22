@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -208,13 +209,20 @@ if(endPage > pageCount ) {
 	
 
 @GetMapping("/detail")
-public String perfdetail ( HttpServletRequest req , Model model ) {
+public String perfdetail ( HttpServletRequest req , Model model, HttpSession session, PerformanceDTO perfDTO) {
 	        
 	String perfCode=req.getParameter("perfCode");
 	log.debug(perfCode);
-	System.out.println("@@@@@@@@@@@@@@:"+perfCode);
-	PerformanceDTO perfDTO = perfService.getdetail(perfCode);
-	model.addAttribute("perfDTO",perfDTO);
+
+	PerformanceDTO perfDTO1 = perfService.getdetail(perfCode);
+	model.addAttribute("perfDTO", perfDTO1);
+	
+	// 세션에서 아이디 값을 가져옵니다. (예시: "userId"는 세션에 저장된 사용자 아이디 키)
+
+    
+    session.setAttribute("EmpId", perfDTO.getPerfEmpId());
+      
+
 
 	return "perf/perfdetail";
 }

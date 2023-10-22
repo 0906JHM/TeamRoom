@@ -190,7 +190,7 @@
 		
 		<!--  비고 -->
 		<tr><td><label for="clientMemo_label"><b>비고</b></label>  </td>
-		<td> <input type="text" name="clientMemo" id="clientMemo" class="insertbox" required> <span id="clientMemo_msg"></span>
+		<td> <input type="text" name="clientMemo" id="clientMemo" class="insertbox" > <span id="clientMemo_msg"></span>
 
 		
      </table>

@@ -137,7 +137,7 @@ input[type="button"], input[type="submit"] {
     
     <tr>
     <th> 담당자 </th>
-    <td><input type="text" name="perfEmpId" value="${perfDTO.perfEmpId}"></td>
+    <td><input type="text" name="perfEmpId" value="${perfDTO.perfEmpId}" value="${SessionScope.EmpId}"readonly></td>
     </tr>
     </tbody>
     </table>
@@ -151,7 +151,7 @@ input[type="button"], input[type="submit"] {
 
   </tr>
   <tr>
-    <td colspan=2> <input type="number" id="workAmount" class="inputnum"  name="workAmount" value="${perfDTO.workAmount}"> </td>
+    <td colspan=2> <input type="number" id="workAmount" class="inputnum"  name="workAmount" value="${perfDTO.workAmount}" readonly> </td>
     <td  colspan=2> <input type="number" id="perfFair" class="inputnum"  name="perfFair" value="${perfDTO.perfFair}"> </td>
    <td  colspan=2> <input type="number" id="perfDefect"   class="inputnum"  name="perfDefect" value="${perfDTO.perfDefect}"></td>
   </tr>
