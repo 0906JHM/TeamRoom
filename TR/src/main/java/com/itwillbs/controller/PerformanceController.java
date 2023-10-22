@@ -209,7 +209,7 @@ if(endPage > pageCount ) {
 	
 
 @GetMapping("/detail")
-public String perfdetail ( HttpServletRequest req , Model model, HttpSession session, PerformanceDTO perfDTO) {
+public String perfdetail ( HttpServletRequest req , Model model,  PerformanceDTO perfDTO, HttpSession session ) {
 	        
 	String perfCode=req.getParameter("perfCode");
 	log.debug(perfCode);
@@ -218,9 +218,11 @@ public String perfdetail ( HttpServletRequest req , Model model, HttpSession ses
 	model.addAttribute("perfDTO", perfDTO1);
 	
 	// 세션에서 아이디 값을 가져옵니다. (예시: "userId"는 세션에 저장된 사용자 아이디 키)
+	HttpSession session1 = req.getSession();
+	
+	session.setAttribute("EmpId", perfDTO.getPerfEmpId());
+	
 
-    
-    session.setAttribute("EmpId", perfDTO.getPerfEmpId());
       
 
 

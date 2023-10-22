@@ -106,12 +106,16 @@ WHERE p.perfCode = #{perfCode};
  </select>
  
 <update id="perfupdate">
-UPDATE  performance SET
-perfEmpId=#{perfEmpId}, perfFair = #{perfFair},perfDefect=#{perfDefect},
-perfDefectreason=#{perfDefectreason},perfDefectmemo=#{perfDefectmemo},perfMemo=#{perfMemo}
-where perfCode=#{perfCode}
 
-
+UPDATE performance p , stock s
+SET p.perfEmpId=#{perfEmpId}, 
+    p.perfFair = #{perfFair},
+    p.perfDefect=#{perfDefect},
+    p.perfDefectreason=#{perfDefectreason},
+    p.perfDefectmemo=#{perfDefectmemo},
+    p.perfMemo=#{perfMemo},
+    s.stockCount = s.stockCount + #{perfFair}
+WHERE p.perfCode=#{perfCode} AND p.perfFair IS NOT NULL;
 
 </update>
  

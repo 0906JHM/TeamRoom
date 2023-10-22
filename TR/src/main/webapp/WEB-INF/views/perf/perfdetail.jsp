@@ -123,21 +123,21 @@ input[type="button"], input[type="submit"] {
     </tr>
     <tr>
     <th> 라인정보 </th>
-    <td><input type="text" name="lineCode" value="${perfDTO.workInfo}"> </td>
+    <td><input type="text" name="lineCode" value="${perfDTO.workInfo}"readonly> </td>
     </tr>
     <tr>
     <th> 제품코드</th>
-    <td><input type="text" name="prodCode" value="${perfDTO.prodCode}"></td>
+    <td><input type="text" name="prodCode" value="${perfDTO.prodCode}"readonly></td>
     </tr>
     
     <tr>
     <th> 지시일자 </th>
-    <td> <input type="text" name="perfDate" value="${perfDTO.perfDate}"> </td> 
+    <td> <input type="text" name="perfDate" value="${perfDTO.perfDate}"readonly> </td> 
     </tr>
     
     <tr>
     <th> 담당자 </th>
-    <td><input type="text" name="perfEmpId" value="${perfDTO.perfEmpId}" value="${SessionScope.EmpId}"readonly></td>
+    <td><input type="text" name="perfEmpId" value="${sessionScope.empId}"></td>
     </tr>
     </tbody>
     </table>
@@ -153,7 +153,7 @@ input[type="button"], input[type="submit"] {
   <tr>
     <td colspan=2> <input type="number" id="workAmount" class="inputnum"  name="workAmount" value="${perfDTO.workAmount}" readonly> </td>
     <td  colspan=2> <input type="number" id="perfFair" class="inputnum"  name="perfFair" value="${perfDTO.perfFair}"> </td>
-   <td  colspan=2> <input type="number" id="perfDefect"   class="inputnum"  name="perfDefect" value="${perfDTO.perfDefect}"></td>
+   <td  colspan=2> <input type="number" id="perfDefect"   class="inputnum"  name="perfDefect" value="${perfDTO.perfDefect}" readonly></td>
   </tr>
   
   <tr>

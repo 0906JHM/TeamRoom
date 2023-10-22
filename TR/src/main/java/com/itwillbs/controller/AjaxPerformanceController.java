@@ -72,9 +72,6 @@ public class AjaxPerformanceController {
 	@PostMapping("/updatePro")
 	public String perfupdate(PerformanceDTO perfDTO) {
 		System.out.println("실적 업데이트 데이터 "+perfDTO);
-		System.out.println("실적 업데이트 데이터 "+perfDTO);
-		System.out.println("실적 업데이트 데이터 "+perfDTO);
-		System.out.println("실적 업데이트 데이터 "+perfDTO);
 	
 			
 			perfService.updateperf(perfDTO);
