@@ -96,7 +96,6 @@ if (session.getAttribute("empId") != null) {
 			
 			var linePerfChartVisible = true; // 초기에 라인별 생산량 차트가 보이도록 설정
 			var intervalPerfId = null; // 인터벌 ID를 저장하는 변수
-			var intervalLineId = null; // 인터벌 ID를 저장하는 변수
 			// '라인별 생산량' h3를 클릭할 때 실행되는 함수
 							
 			$('#linePerfList').show(); // 초기에 라인별 생산량 숨기기
@@ -104,18 +103,18 @@ if (session.getAttribute("empId") != null) {
 
 			$('#linePerfChartHeader').click(function() {
 			
-				console.log("라인별 생산량 클릭");
 			
 				if (!linePerfChartVisible) {
+				console.log("라인별 생산량 클릭");
+					clearInterval(intervalPerfId);
 					// 라인별 생산량 차트가 아직 보이지 않는 경우
 					$('#linePerfList').show(); // 라인별 생산량 표시
 					$('#perfList').hide(); // 최근 생산량 숨기기
 					
 					// 라인별 생산량 차트로 데이터 요청
 					loadLinePerfChart();
-					intervalPerfId = setInterval(loadPerfChart, 4000);
+					intervalPerfId = setInterval(loadLinePerfChart, 4000);
 					linePerfChartVisible = true;
-					clearInterval(intervalLineId);
 				}
 			});
 
@@ -124,9 +123,10 @@ if (session.getAttribute("empId") != null) {
 			
 			$('#perfChartHeader').click(function() {
 						
-				console.log("최근 생산량 클릭");
 
 				if (linePerfChartVisible) {
+				console.log("최근 생산량 클릭");
+					clearInterval(intervalPerfId);
 					// 최근 생산량 차트가 아직 보이지 않는 경우
 					$('#linePerfList').hide(); // 라인별 생산량 숨기기
 					$('#perfList').show(); // 최근 생산량 표시
@@ -135,7 +135,6 @@ if (session.getAttribute("empId") != null) {
 					loadPerfChart();
 					intervalPerfId = setInterval(loadPerfChart, 4000);
 					linePerfChartVisible = false;
-					clearInterval(intervalPerfId);
 				}
 			});
 
@@ -235,10 +234,10 @@ if (session.getAttribute("empId") != null) {
 			}
 
 				// 실적 차트 초기 로드
-				loadPerfChart();
+// 				loadPerfChart();
 
 				// 페이지가 처음 로드된 후, 4초마다 업데이트를 요청하는 함수를 호출
-				intervalPerfId = setInterval(loadPerfChart, 4000);
+// 				intervalPerfId = setInterval(loadPerfChart, 4000);
 
 				function loadPerfChart() {
 					$.ajax({
@@ -260,7 +259,7 @@ if (session.getAttribute("empId") != null) {
 				loadLinePerfChart();
 
 				// 페이지가 처음 로드된 후, 4초마다 업데이트를 요청하는 함수를 호출
-				intervalLineId = setInterval(loadLinePerfChart,
+				intervalPerfId = setInterval(loadLinePerfChart,
 						4000);
 
 				function loadLinePerfChart() {
