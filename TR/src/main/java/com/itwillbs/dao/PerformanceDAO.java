@@ -145,13 +145,19 @@ public class PerformanceDAO {
 
 
 
-	public void updateperf(PerformanceDTO perfDTO) {
+	public int updateperf(PerformanceDTO perfDTO) {
 		
 		System.out.println(perfDTO + "DAO에서도 받아지나 ??????????????????????????????????" );
-		sqlsession.update(namespace+".perfupdate",perfDTO);
+		return sqlsession.update(namespace+".updateperf",perfDTO);
 		
-		
-		
+	}
+
+
+
+
+	public int updateStock(PerformanceDTO perfDTO) {
+		// TODO Auto-generated method stub
+		return sqlsession.update(namespace+".updateStock",perfDTO);
 	}
 
 }

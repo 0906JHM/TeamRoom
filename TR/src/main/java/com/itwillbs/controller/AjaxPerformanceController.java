@@ -72,12 +72,28 @@ public class AjaxPerformanceController {
 	@PostMapping("/updatePro")
 	public String perfupdate(PerformanceDTO perfDTO) {
 		System.out.println("실적 업데이트 데이터 "+perfDTO);
-	
+		// 서버에서 받아오는 값 
+		PerformanceDTO perfDTO2 = perfService.getdetail(perfDTO.getPerfCode());
+		
+		System.out.println("받아온 데이터" + perfDTO2);
+		// 같아도 해주는 이유는 다른 정보를 업뎃할수있어서 
+		if(perfDTO2.getPerfFair() <= perfDTO.getPerfFair()) {
+			int realFair = perfDTO.getPerfFair() - perfDTO2.getPerfFair();
 			
-			perfService.updateperf(perfDTO);
+			System.out.println("실제 양품수 " + realFair);
+			perfDTO.setPerfFair(realFair); // 실제 양품수 세팅 
+			int result1 = perfService.updateperf(perfDTO); // 실적 테이블 세팅
+			int result2 = perfService.updateStock(perfDTO); // 스톡 테이블 세팅
+			if(result1 > 0 && result2 > 0) {
+				return "true";
+			}else {
+				return "false";
+			}
+		}else {
+			return "false";
+		}
 			
 	
-		return "true";
 	}
 }
 	

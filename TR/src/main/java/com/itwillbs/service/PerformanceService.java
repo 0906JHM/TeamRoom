@@ -100,12 +100,16 @@ public class PerformanceService {
 
      }
 
-	public void updateperf(PerformanceDTO perfDTO) {
+	public int updateperf(PerformanceDTO perfDTO) {
 		
 		System.out.println("PerfService ++++++++++++++++" + perfDTO);
 		
-		perfDAO.updateperf(perfDTO);
+		return perfDAO.updateperf(perfDTO);
 		
+	}
+
+	public int updateStock(PerformanceDTO perfDTO) {
+		return perfDAO.updateStock(perfDTO);
 	}
 
 	

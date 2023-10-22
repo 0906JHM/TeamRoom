@@ -124,5 +124,20 @@ WHERE p.perfCode=#{perfCode} AND p.perfFair IS NOT NULL;
  
  </delete>
  
+ <update id="updateperf">
+ 	UPDATE performance 
+	SET perfEmpId=#{perfEmpId}, 
+	    perfFair = perfFair + #{perfFair},
+	    perfDefect=#{perfDefect},
+	    perfDefectreason=#{perfDefectreason},
+	    perfDefectmemo=#{perfDefectmemo},
+	    perfMemo=#{perfMemo}
+	WHERE perfCode=#{perfCode}
+ </update>
  
+ <update id="updateStock">
+	UPDATE stock 
+	SET stockCount = stockCount + #{perfFair}
+	WHERE prodCode = #{prodCode}
+ </update>
  </mapper>
