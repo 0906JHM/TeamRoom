@@ -67,6 +67,8 @@ height: 30px;
 
 
 .ct {
+	    background-color: white;
+	
    border-collapse: collapse;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: center;
