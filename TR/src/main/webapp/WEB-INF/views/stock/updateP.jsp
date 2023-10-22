@@ -12,12 +12,17 @@
 <link href="${pageContext.request.contextPath }/resources/css/stockupdate.css"
 	rel="stylesheet" type="text/css">
 </head>
+<script type="text/javascript">
+function closeWindow() {
+    window.close();
+}
+</script>
 	
 <body>
 
 <div class="container">
 	<h2>재고 수정</h2>
-	
+	<hr>
 <form  action="${pageContext.request.contextPath}/stock/updatePro" method="post">
    
             <div class="form-group">
@@ -47,6 +52,7 @@
 			
 <div id="button">
 <input type="submit" value="수정" >
+<input type="button" value="닫기" onclick="closeWindow()">
 </div>
 
 </form>

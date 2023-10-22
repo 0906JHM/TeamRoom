@@ -29,7 +29,7 @@
 						"${pageContext.request.contextPath}/stock/updateP?stockNum="
 								+ ch,
 						"수정",
-						"location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=600,height=500");
+						"location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=530,height=400");
 	}
 
 	$(document).ready(function() {
@@ -64,10 +64,18 @@
 <jsp:include page="../inc/side.jsp"></jsp:include>
 </head>
 <body>
+
+<!-- 모달창 -->
+	<div id="myModal" style="display: none;
+	position: absolute;
+	background-color: #fff;
+	border: 1px solid #000;
+	padding: 10px;
+	z-index: 1;">
+	</div>
+	
 	<div class="container">
 		<h2>재고 관리</h2>
-		
-		<hr>
 		<div id="searchform">
 			<form action="${pageContext.request.contextPath}/stock/listpro"
 				method="get" id="selected">
@@ -78,7 +86,7 @@
 				<button  class="aaa" type="submit">조회</button>
 			</form>
 		</div>
-		<hr>
+		<br>
 		<div style="margin-left: 1%; margin-bottom: 1%">
 			<a href="${pageContext.request.contextPath}/stock/listraw"><input
 				type="button" value="원자재" class="ab1"></input></a> <a
