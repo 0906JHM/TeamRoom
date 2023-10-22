@@ -191,7 +191,7 @@ public String sellDetail(HttpServletRequest request, Model model) {
 		System.out.println("넘어온 데이터 "+checked);
 		
 		int result = sellService.sellDelete(checked);
-		outProductService.deleteSell(checked);
+//		outProductService.deleteSell(checked);
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
 	    } else {

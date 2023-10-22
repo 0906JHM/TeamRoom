@@ -144,7 +144,7 @@ public class OrderManagementController {
         int size = ajaxMsg.length;
         for(int i=0; i<size; i++) {
         	ordermanagementService.delete(ajaxMsg[i]);
-        	inMaterialService.deleteSell(ajaxMsg[i]);
+//        	inMaterialService.deleteSell(ajaxMsg[i]);
         }
         return "redirect:/OrderManagement/home";
     }
