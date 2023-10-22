@@ -7,7 +7,7 @@
 
 	<select id="getInMaterialList"
 		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState
@@ -29,7 +29,7 @@
 	<select id="getInMaterialListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM (
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState
@@ -49,7 +49,7 @@
 
 	<select id="getInMaterialListSearch"
 		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState
@@ -107,7 +107,7 @@
 	<select id="getInMaterialListSearchCount" resultType="int">
 		SELECT count(*)
 		FROM (
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState
@@ -161,7 +161,7 @@
 
 	<select id="getInMaterialListAllSearch"
 		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState
@@ -199,7 +199,7 @@
 	<select id="getInMaterialListAllSearchCount" resultType="int">
 		SELECT count(*)
 		FROM (
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount, i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState
@@ -323,7 +323,7 @@
 	<select id="getExcelList"
 		resultType="com.itwillbs.domain.InMaterialDTO">
 
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount,i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState, i.inMemo
@@ -345,7 +345,7 @@
 	
 <select id="getExcelListAllSearch"
 		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount,i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState, i.inMemo
@@ -380,7 +380,7 @@
 	
 	<select id="getExcelListSearch"
 		resultType="com.itwillbs.domain.InMaterialDTO">
-		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCompany,
+		SELECT i.inNum, i.buyNum, r.whseCode, c.clientCode,
 		i.rawCode, r.rawName, b.buyCount,i.inCount, s.stockCount,
 		r.rawPrice, i.inPrice,
 		i.inDate, i.inRedate, i.inEmpId, i.inState, i.inMemo
