@@ -81,7 +81,7 @@
         ON p.workCode = w.workCode
 		GROUP BY w.workDate
 		ORDER BY w.workDate DESC
-		LIMIT 5;
+		LIMIT 5
 	</select>
 	<!-- 라인 실적 차트 -->
 	<select id="getLinePerfList"
@@ -93,8 +93,8 @@
  		SELECT p.lineCode label, SUM(p.perfFair) data
 	    FROM performance p LEFT JOIN workOrder w
 	    ON p.workCode = w.workCode
-	    WHERE w.workDate = curDate()
-		GROUP BY p.lineCode;
+	    WHERE w.workDate = curDate() AND p.lineCode IS NOT NULL
+		GROUP BY p.lineCode
 	</select>
 
 	<insert id="insertSellCalendar">
