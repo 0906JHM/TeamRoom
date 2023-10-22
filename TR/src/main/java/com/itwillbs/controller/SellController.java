@@ -102,8 +102,8 @@ public void sellAddPro(SellDTO sellDTO, HttpServletResponse response) {
 //  sellState 수정 처음엔 무조건 미출고 
     sellDTO.setSellState("미출고");
     
-	outProductService.insertList(sellDTO);		
 	sellService.insertSell(sellDTO);			
+	outProductService.insertList(sellDTO);		
 
 //	String sellCode 수주코드
 //	String sellDate 수주일자
@@ -191,7 +191,7 @@ public String sellDetail(HttpServletRequest request, Model model) {
 		System.out.println("넘어온 데이터 "+checked);
 		
 		int result = sellService.sellDelete(checked);
-		outProductService.deleteSell(checked);
+//		outProductService.deleteSell(checked);
 		if (result > 0) {
 	        return new ResponseEntity<String>("success", HttpStatus.OK);
 	    } else {

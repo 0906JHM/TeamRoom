@@ -173,11 +173,12 @@ public class WorkOrderController {
 		logger.debug("@@@@@ CONTROLLER: dto = " + dto);
 HttpSession session = request.getSession();
         
-        // 세션에서 아이디 값을 가져옵니다. (예시: "userId"는 세션에 저장된 사용자 아이디 키)
-        String empId = (String) session.getAttribute("empId");
-		
-		dto.setWorkEmpId(empId);
-		
+/*
+ * // 세션에서 아이디 값을 가져옵니다. (예시: "userId"는 세션에 저장된 사용자 아이디 키) String empId =
+ * (String) session.getAttribute("empId");
+ * 
+ * dto.setWorkEmpId(empId);
+ */
 		//서비스 - 작업지시 등록
 		wService.regWorkOrder(dto);
 		
