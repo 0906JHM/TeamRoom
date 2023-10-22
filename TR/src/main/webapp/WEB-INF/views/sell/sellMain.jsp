@@ -434,7 +434,7 @@
 								<td	onclick="openSellDetail('${sellDTO.sellCode}')" class="sellDetailLink">${sellDTO.sellCode}</td><!-- 수주코드 -->
 								
 								<td>${sellDTO.clientCode}</td><!-- 거래처코드 -->
-								<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</label></td>
+								<td style='cursor: pointer;' onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</td>
 						
 								
 								<td>${sellDTO.prodCode}</td><!-- 제품코드 -->
