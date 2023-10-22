@@ -119,12 +119,8 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			<tr>
 				<td colspan="3">
 					<input type="hidden" id="initialInCount" value="${inMaterialDTO.inCount}">
-					<c:if test="${inMaterialDTO.stockCount == null }">
-   						<input type="number" name="inCount" value="${inMaterialDTO.inCount}" id="inputNum" readonly="readonly">
-					</c:if>
-					<c:if test="${inMaterialDTO.stockCount != null ">
-    						<input type="number" name="inCount" value="${inMaterialDTO.inCount }" id="inputNum" autofocus="autofocus" min="${inMaterialDTO.inCount }" onchange="updateInventory()">
-					</c:if>
+    				<input type="number" name="inCount" value="${inMaterialDTO.inCount }" id="inputNum" autofocus="autofocus" min="${inMaterialDTO.inCount }"  onchange="updateInventory()">
+					
 				</td>
 				<td colspan="3">
 					<input type="hidden" id="initialstockCount" value="${inMaterialDTO.stockCount}">
