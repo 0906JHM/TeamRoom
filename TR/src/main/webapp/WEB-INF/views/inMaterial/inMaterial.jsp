@@ -68,12 +68,11 @@ final String ADMIN_DEPARTMENT = "자재팀";
 			<table id="inMaterialTable">
 				<thead>
 					<tr>
-						<th>입고 번호</th>
-						<th>발주 번호</th>
+						<th>입고 코드</th>
+						<th>발주 코드</th>
 						<th>입고 창고</th>
-						<th>거래처명</th>
+						<th>거래처 코드</th>
 						<th>원자재 코드</th>
-						<th>원자재명</th>
 						<th>발주 수량</th>
 						<th>입고 수량</th>
 						<th>재고 수량</th>
@@ -305,14 +304,14 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							+ (data[i].whseCode ? data[i].whseCode : '-')
 							+ "</td>");
 					row.append("<td>"
-							+ (data[i].clientCompany ? data[i].clientCompany
+							+ (data[i].clientCode ? data[i].clientCode
 									: '-') + "</td>");
 					row.append("<td>"
 							+ (data[i].rawCode ? data[i].rawCode : '-')
 							+ "</td>");
-					row.append("<td>"
-							+ (data[i].rawName ? data[i].rawName : '-')
-							+ "</td>");
+// 					row.append("<td>"
+// 							+ (data[i].rawName ? data[i].rawName : '-')
+// 							+ "</td>");
 					row.append("<td>"
 							+ (data[i].buyCount ? data[i].buyCount : '-')
 							+ "</td>");
@@ -466,12 +465,12 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				            // 데이터 가공
 							var modifiedData = data.map(function (item) {
 							    return {
-							        '입고번호': item.inNum,
-							        '발주번호': item.buyNum,
+							        '입고코드': item.inNum,
+							        '발주코드': item.buyNum,
 							        '입고창고': item.whseCode,
-							        '거래처명': item.clientCompany,
+							        '거래처코드': item.clientCode,
 							        '원자재코드': item.rawCode,
-							        '원자재명': item.rawName,
+// 							        '원자재명': item.rawName,
 							        '발주수량':item.buyCount,
 							        '입고수량': item.inCount,
 							        '재고수량': item.stockCount,

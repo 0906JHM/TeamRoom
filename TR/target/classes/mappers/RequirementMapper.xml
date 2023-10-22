@@ -144,4 +144,33 @@
 	</update>
 	<!--  소요량관리 수정 -->
   
+<!--   	검색엑셀 다운 -->
+  	<select id="getSearchExcelReqList" resultType="java.util.Map">
+  		SELECT rq.reqCode reqCode, p.prodCode prodCode, p.prodName prodName, r.rawCode rawCode, r.rawName rawName, rq.reqAmount reqAmount, rq.reqMemo reqMemo
+        FROM requirement rq JOIN product p
+        ON rq.prodCode = p.prodCode
+        JOIN rawMaterial r
+        ON rq.rawCode = r.rawCode
+        <where>
+			<if test="reqCode != ''">
+				rq.reqCode like concat ('%', #{reqCode}, '%')
+			</if>
+			<if test="prodCode != ''">
+				and p.prodCode like concat ('%', #{prodCode}, '%')
+			</if>
+			<if test="rawCode != ''">
+				and r.rawCode like concat ('%', #{rawCode}, '%')
+			</if>
+		</where>
+		ORDER BY 1 desc
+  	</select>
+<!--   	엑셀 다운 -->
+  	<select id="getExcelReqList" resultType="java.util.Map">
+  		SELECT rq.reqCode reqCode, p.prodCode prodCode, p.prodName prodName, r.rawCode rawCode, r.rawName rawName, rq.reqAmount reqAmount, rq.reqMemo reqMemo
+        FROM requirement rq JOIN product p
+        ON rq.prodCode = p.prodCode
+        JOIN rawMaterial r
+        ON rq.rawCode = r.rawCode
+		ORDER BY 1 desc
+  	</select>
   </mapper>

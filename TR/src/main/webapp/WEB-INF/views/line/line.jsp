@@ -30,18 +30,18 @@ function openCenteredWindow(url) {
 
 //체크박스 선택/해제
 $(function(){
-   var chkObj = document.getElementsByName("RowCheck");
+   var chkObj = document.getElementsByName("rowCheck");
    var rowCnt = chkObj.length;
          
    $("input[name='allCheck']").click(function(){
-      var chk_listArr = $("input[name='RowCheck']");
+      var chk_listArr = $("input[name='rowCheck']");
       for (var i=0; i<chk_listArr.length; i++){
          chk_listArr[i].checked = this.checked;
       }
    });
       
-   $("input[name='RowCheck']").click(function(){
-      if($("input[name='RowCheck']:checked").length == rowCnt){
+   $("input[name='rowCheck']").click(function(){
+      if($("input[name='rowCheck']:checked").length == rowCnt){
          $("input[name='allCheck']")[0].checked = true;
       }
       else{
@@ -54,7 +54,7 @@ $(function(){
 function deleteValue(){
     var url = "delete"; // Controller로 보내고자 하는 URL
     var valueArr = new Array();
-    var list = $("input[name='RowCheck']");
+    var list = $("input[name='rowCheck']");
 
     for(var i = 0; i < list.length; i++){
         if(list[i].checked){ // 선택되어 있으면 배열에 값을 저장함
