@@ -32,7 +32,7 @@
 <tr><td id="td1">발주수량</td><td id="tdup"> 		<input type="number" name="buyCount"></td></tr>
 <tr><td id="td1">발주신청일</td><td id="tdup"> 	<input type="date" name="buyDate"></td></tr>
 <tr><td id="td1">담당자</td><td id="tdup">		<input readonly type="text" name="buyEmpId" value="${sessionScope.empId}" id="empName9999"></td></tr>
-
+<input hidden name="buyInstate" value="신청완료">
 			
 </table>
 <!-- button -->
