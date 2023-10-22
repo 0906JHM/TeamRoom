@@ -13,6 +13,7 @@ import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
 
 @Repository
 public class OutProductDAO {
@@ -129,6 +130,10 @@ public class OutProductDAO {
 
 	public ClientDTO getClientInfo(String data) {
 		return sqlSession.selectOne(namespace + "getClientInfo", data); 
+	}
+
+	public RawmaterialsDTO getRawMaterialInfo(String data) {
+		return sqlSession.selectOne(namespace + "getRawMaterialInfo", data); 
 	}
 
 }

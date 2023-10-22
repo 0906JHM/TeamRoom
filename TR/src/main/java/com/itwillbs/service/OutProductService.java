@@ -14,6 +14,7 @@ import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
 
 @Service
@@ -156,6 +157,10 @@ public class OutProductService {
 
 	public ClientDTO getClientInfo(String data) {
 		return outProductDAO.getClientInfo(data);
+	}
+
+	public RawmaterialsDTO getRawMaterialInfo(String data) {
+		return outProductDAO.getRawMaterialInfo(data);
 	}
 
 

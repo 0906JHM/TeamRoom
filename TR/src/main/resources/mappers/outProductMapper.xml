@@ -575,4 +575,9 @@
 		FROM clients
 		WHERE clientCode = #{data}
 	</select>
+	<select id="getRawMaterialInfo" resultType="com.itwillbs.domain.RawmaterialsDTO">
+		SELECT rawCode, rawName, rawType, rawUnit, rawPrice
+        FROM rawMaterial
+        WHERE rawCode = #{data}
+	</select>
 </mapper>

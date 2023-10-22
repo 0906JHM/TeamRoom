@@ -602,7 +602,7 @@ if (session.getAttribute("empId") != null) {
 		            tableHTML += '</tr>';
 		        }
 		    }
-		    tableHTML += '</table';
+		    tableHTML += '</table>';
 
 		    // 모달 내용에 HTML 표 추가
 		    modalContent.innerHTML = tableHTML;
