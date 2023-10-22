@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.SellDTO;
@@ -58,5 +59,10 @@ return modalservice.modalclient(clientCode);
 public WarehouseDTO modalwhse(@RequestParam("whseCode") String whseCode) throws Exception {
 return modalservice.modalwhse(whseCode);
 }
+
+@GetMapping("modalemp")
+public EmployeesDTO modalemp(@RequestParam("empId") String empId) throws Exception {
+return modalservice.modalemp(empId);
+	}
 
 }

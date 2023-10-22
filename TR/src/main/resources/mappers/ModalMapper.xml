@@ -103,6 +103,37 @@
 		from warehouse
 		where whseCode = #{whseCode}
 	</select>
+	
+	 <resultMap id="emp" type="com.itwillbs.domain.EmployeesDTO">
+		<result property="empName" column="empCName" />
+		<result property="empDepartment" column="empDepartment" />
+		<result property="empPosition" column="empPosition" />
+		<result property="empEmail" column="empEmail" />
+		<result property="empTel" column="empTel" />
+		<result property="empState" column="empState" />
+		<result property="empHiredate" column="empHiredate" />		
+	</resultMap>
+	<select id="modalemp" resultType="EmployeesDTO" resultMap="emp"> 
+		select *
+		from employees
+		where empId = #{empId}
+	</select>
+	
+	 <resultMap id="work" type="com.itwillbs.domain.WorkOrderDTO">
+		<result property="prodCode" column="prodCode" />
+		<result property="sellCode" column="sellCode" />
+		<result property="workDate" column="workDate" />
+		<result property="lineCode" column="lineCode" />
+		<result property="workAmount" column="workAmount" />
+		<result property="workEmpId" column="workEmpId" />
+		<result property="workDatechange" column="workDatechange" />	
+		<result property="workInfo" column="workInfo" />	
+	</resultMap>
+	<select id="modalwork" resultType="WorkOrderDTO" resultMap="work"> 
+		select *
+		from workOrder
+		where workCode = #{workCode}
+	</select>
 		
 	
 	

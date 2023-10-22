@@ -16,6 +16,7 @@ import com.itwillbs.dao.ModalDAO;
 import com.itwillbs.dao.OpenlistDAO;
 import com.itwillbs.dao.RequirementDAO;
 import com.itwillbs.domain.ClientDTO;
+import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.RawmaterialsDTO;
 import com.itwillbs.domain.RequirementDTO;
@@ -48,6 +49,9 @@ public class ModalService {
 	    
 	    public WarehouseDTO modalwhse(String whseCode) throws Exception {
 		   	 return modaldao.modalwhse(whseCode); }
+	    
+	    public EmployeesDTO modalemp(String empId) throws Exception {
+		   	 return modaldao.modalemp(empId); }
 
 
 

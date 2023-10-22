@@ -233,11 +233,11 @@
             });	//기존 닫기 창 함수
            
     }
-        else if(clickedElementId.startsWith("SL")){
+        else if(!isNaN(clickedElementId.charAt(0))){
           	//modal_ajax 
           	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalsell',
-          	  data: {sellCode:clickedElementId},
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalemp',
+          	  data: {empId:clickedElementId},
           	  type : 'GET',
           	  dataType:'json',
           	  success: function (json) {
@@ -245,17 +245,13 @@
                     	// 값 할당
                     	
 
-                  	addInput("수주 일자:", elements[0],json.sellDate);
-          	addInput("납기 일자:", elements[1],json.sellDuedate);
-          	addInput("관리 사원:", elements[2],json.sellEmpId);
-          	addInput("수주 수량:", elements[3],json.sellCount);
-              addInput("수주 단가:", elements[4],json.sellPrice);
-              addInput("제품 코드:", elements[5],json.prodCode);
-              addInput("제품 이름:", elements[6],json.prodName);
-              addInput("수주 비고:", elements[7],json.sellMemo);
-              addInput("출고 상태:", elements[8],json.sellState);
-              addInput("거래처 이름:", elements[9],json.clientCompany);
-              addInput("거래처 코드:", elements[10],json.clientCode);
+                  	addInput("이름:", elements[0],json.empName);
+          	addInput("부서:", elements[1],json.empDepartment);
+          	addInput("직급:", elements[2],json.empPosition);
+          	addInput("이메일:", elements[3],json.empEmail);
+              addInput("연락처:", elements[4],json.empTel);
+              addInput("재직상태:", elements[5],json.empState);
+              addInput("입사일:", elements[6],json.empHiredate);
                   	} else {
                   	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
                   	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
@@ -263,7 +259,34 @@
                     }
             });	//기존 닫기 창 함수
            
-    }
+    } else if(clickedElementId.startsWith("WO")){
+      	//modal_ajax 
+      	$.ajax({
+      	  url : '${pageContext.request.contextPath}/KDMajax/modalworkorder',
+      	  data: {workCode:clickedElementId},
+      	  type : 'GET',
+      	  dataType:'json',
+      	  success: function (json) {
+                if (json && typeof json === 'object') {
+                	// 값 할당
+                	
+
+              	addInput("제품코드:", elements[0],json.prodCode);
+      	addInput("수주코드:", elements[1],json.sellCode);
+      	addInput("지시일", elements[2],json.workDate);
+      	addInput("라인코드:", elements[3],json.lineCode);
+          addInput("지시수량:", elements[4],json.workAmount);
+          addInput("작업지시자:", elements[5],json.workEmpId);
+          addInput("추가지시일:", elements[6],json.workDatechange);
+          addInput("라인내역:", elements[7],json.workInfo);
+              	} else {
+              	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+              	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+              	}
+                }
+        });	//기존 닫기 창 함수
+       
+}
             
             
             
@@ -994,6 +1017,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 						<th>제품코드</th>
 						<th>지시일</th>
 						<th>지시수량</th>
+						<th>담당자</th>
 						<th>공정</th>
 						<th>라인내역</th>
 						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
@@ -1021,6 +1045,8 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </c:choose>
 						
 						<td id="workAmount" >${w.workAmount }</td>
+						<%-- <td>${w.workEmpId }</td> --%>
+						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.workEmpId }" name="workEmpId" value="${w.workEmpId }">${w.workEmpId}</label></td>	
 						<td id="workProcess">${w.workProcess }</td>
 						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.workInfo }" name="workInfo" value="${w.workInfo }">보기</label></td>						
 						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
