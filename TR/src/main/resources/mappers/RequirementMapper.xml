@@ -147,9 +147,9 @@
 <!--   	검색엑셀 다운 -->
   	<select id="getSearchExcelReqList" resultType="java.util.Map">
   		SELECT rq.reqCode reqCode, p.prodCode prodCode, p.prodName prodName, r.rawCode rawCode, r.rawName rawName, rq.reqAmount reqAmount, rq.reqMemo reqMemo
-        FROM requirement rq JOIN product p
+        FROM requirement rq LEFT JOIN product p
         ON rq.prodCode = p.prodCode
-        JOIN rawMaterial r
+        LEFT JOIN rawMaterial r
         ON rq.rawCode = r.rawCode
         <where>
 			<if test="reqCode != ''">
@@ -167,9 +167,9 @@
 <!--   	엑셀 다운 -->
   	<select id="getExcelReqList" resultType="java.util.Map">
   		SELECT rq.reqCode reqCode, p.prodCode prodCode, p.prodName prodName, r.rawCode rawCode, r.rawName rawName, rq.reqAmount reqAmount, rq.reqMemo reqMemo
-        FROM requirement rq JOIN product p
+        FROM requirement rq LEFT JOIN product p
         ON rq.prodCode = p.prodCode
-        JOIN rawMaterial r
+        LEFT JOIN rawMaterial r
         ON rq.rawCode = r.rawCode
 		ORDER BY 1 desc
   	</select>

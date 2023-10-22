@@ -16,7 +16,7 @@
  <select id="getperflist" resultType="PerformanceDTO">
 SELECT p.*, w.prodCode, w.lineCode, w.workAmount, w.workProcess
 FROM performance p
-JOIN workOrder w ON p.workCode = w.workCode
+LEFT JOIN workOrder w ON p.workCode = w.workCode
 ORDER BY p.perfCode DESC
 LIMIT #{startRow}, #{pageSize};
  </select>
@@ -24,7 +24,7 @@ LIMIT #{startRow}, #{pageSize};
  <select id="getSearch" resultType="PerformanceDTO">
 		SELECT p.*, w.prodCode, w.lineCode, w.workAmount, w.workProcess
         FROM performance p
-        JOIN workOrder w ON p.workCode = w.workCode
+        LEFT JOIN workOrder w ON p.workCode = w.workCode
 		<where>
 			<if test=" lineCode != null and lineCode !=''">
 				 and w.lineCode like concat ('%', #{lineCode}, '%')
@@ -41,7 +41,7 @@ LIMIT #{startRow}, #{pageSize};
 	<select id="getSearchcount" resultType="java.lang.Integer">
 		SELECT count(*)
 		FROM performance p
-    JOIN workOrder w ON p.workCode = w.workCode
+    LEFT JOIN workOrder w ON p.workCode = w.workCode
 		<where>
 			<if test="lineCode != null and lineCode !=''">
 				w.lineCode like concat ('%', #{lineCode}, '%')
@@ -57,7 +57,7 @@ LIMIT #{startRow}, #{pageSize};
 	<select id="getperfCount" resultType="java.lang.Integer">
 	select count(*)
 	FROM performance p
-JOIN workOrder w ON p.workCode = w.workCode
+LEFT JOIN workOrder w ON p.workCode = w.workCode
 
 	</select>
 	
@@ -99,7 +99,7 @@ SELECT p.perfCode, w.workCode, w.prodCode, p.perfDate, p.perfEmpId, w.workAmount
        p.perfFair, p.perfDefect, p.perfDefectreason, p.perfDefectmemo, p.perfmemo,
        w.workProcess, w.workInfo
 FROM performance p
-JOIN workOrder w ON p.workCode = w.workCode
+LEFT JOIN workOrder w ON p.workCode = w.workCode
 WHERE p.perfCode = #{perfCode};
 
  
