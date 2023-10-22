@@ -963,6 +963,7 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
       
       function openModalWithData(event, data, width) {
     		    var modal = document.getElementById('myModal');
+    		    var close1 = document.getElementById('closeModal');
     		    var modalContent = document.querySelector('.modal-body');
     		    
     		    modalContent.style.width = width + 'px';
@@ -986,9 +987,23 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
 
     		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
     		  
-    		    modal.style.setProperty('display', 'block', 'important');
-    		    modal.style.left = (event.clientX + window.scrollX) + 'px';
-    		    modal.style.top = (event.clientY + window.scrollY) + 'px';
+    		 // 바디의 너비
+  	          var bodyWidth = document.body.clientWidth;
+  	          
+  	          // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+  	        
+  	          modal.style.setProperty('display', 'block', 'important');
+  	          if (event.clientX + window.scrollX + width >= bodyWidth) {
+  	              modal.style.left = (event.clientX + window.scrollX - width) + 'px';
+  	           
+  	            
+  	          } else {
+  	              modal.style.left = (event.clientX + window.scrollX) + 'px';
+  	            close1.style.float = 'left';
+  	            
+  	             }
+  	          modal.style.top = (event.clientY + window.scrollY) + 'px';
+
     		}
 
 
