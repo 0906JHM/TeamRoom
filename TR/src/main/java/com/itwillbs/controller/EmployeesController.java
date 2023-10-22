@@ -34,9 +34,7 @@ public class EmployeesController {
 	@Inject
 	private EmployeesService employeesService;
 	
-//	파일 업로드
-	@Autowired
-	private String uploadPath;
+
 
 //	인사관리 홈
 	@GetMapping("/employees")
@@ -90,8 +88,10 @@ public class EmployeesController {
 	
 //	인사등록
 	@PostMapping("/insertPro")
-	public String insertPro(HttpServletRequest request,EmployeesDTO employeesDTO, MultipartFile file) throws Exception{
+	public String insertPro(HttpServletRequest request,EmployeesDTO employeesDTO, MultipartFile file, HttpSession session) throws Exception{
 		// 업로드 파일 있는지 없는지 파악
+//		파일 업로드
+		String uploadPath=session.getServletContext().getRealPath("/resources/img");
 				if(file.isEmpty()) {
 				    // 첨부파일 없는 경우
 				    String oldfile = request.getParameter("oldfile");
@@ -152,6 +152,8 @@ public class EmployeesController {
 	@PostMapping("/updatePro")
 	public String updatePro(HttpServletRequest request,EmployeesDTO employeesDTO, MultipartFile file, HttpSession session) throws Exception{
 	 // 첨부파일이 비어있으면
+		String uploadPath=session.getServletContext().getRealPath("/resources/img");
+		System.out.println(uploadPath);
 		if(file.isEmpty()) {
 		    String oldfile = request.getParameter("oldfile");
 		 // oldfile이 비어있는 경우 => EmpFile에 null 저장
