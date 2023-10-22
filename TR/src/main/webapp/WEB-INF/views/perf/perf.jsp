@@ -93,7 +93,7 @@ table {
 <div class="perfcd">
 <form method ="get">
 <div class="perfcd1">
-<label> 라인코드:</label>  <input type="text" id="lineCode2" name="lineCode" onclick="" class="cdbox" value="라인코드" readonly> <label>제품코드:</label> <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
+<label>제품코드:</label> <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
 
 
 
@@ -156,7 +156,7 @@ table {
 						<td style='cursor: pointer;' onclick="openModal(event)" id="${perfDTO.prodCode }" name="sellCode" value="${perfDTO.prodCode }">${perfDTO.prodCode }</td>
 						
 						<td class="cttg">${perfDTO.perfDate}</td>
-						<td class="cttg">${perfDTO.perfAmount}</td>
+						<td class="cttg">${perfDTO.workAmount}</td>
 						<td class="cttg">${perfDTO.perfFair}</td>
 						<td class="cttg">${perfDTO.perfDefect}</td>
 						<td class="cttg">${perfDTO.perfDefectreason}</td>
@@ -212,7 +212,7 @@ table {
 		 <div class="chart2">
 		 <h2 class="labelhead"> 양품수 </h2>
 		 <div class="chart2head">
-		 <canvas id="donutChart2" width="600px" height="400px"></canvas> <!-- - totalfair -->
+		 <canvas id="donutChart2" width="400px" height="400px"></canvas> <!-- - totalfair -->
 		 </div>
 		 </div>
 		 
@@ -334,13 +334,13 @@ $(document).ready(function() {
     
 
     // 라인 코드 리스트
-    var lineCode = ["L101", "L102", "L103"];
+    var prodCode = ["PR0001", "PR0002", "PR0003", "PR0004", "PR0005", "PR0006"];
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/perfajax/perfdonut",
         dataType: "json",
         contentType: "application/json", // 데이터 형식을 JSON으로 지정
-        data: JSON.stringify(lineCode), // 라인 코드 리스트를 JSON 문자열로 변환하여 전송
+        data: JSON.stringify(prodCode), // 라인 코드 리스트를 JSON 문자열로 변환하여 전송
         success: function(data) {
             console.log(data);
             console.log("데이터 받음: ", data); // 데이터를 로그에 출력
@@ -348,14 +348,10 @@ $(document).ready(function() {
             // 파이차트 그리는 함수 호출 등으로 처리 가능
             // 도넛 차트 생성 및 표시
             var donutChartLabels = data.map(function(item) {
-                return item.lineCode;
+                return item.prodCode;
             });
 
-            // 각 차트에 대한 라벨과 데이터 분리
-            var donutChartLabels = data.map(function(item) {
-                return item.lineCode;
-            });
-
+         
             var totalAmountData = data.map(function(item) {
                 return item.totalAmount;
             });
@@ -397,7 +393,7 @@ $(document).ready(function() {
                 labels: labels, // 라벨 배열을 설정합니다.
                 datasets: [{
                     data: data, // 차트 데이터 배열을 설정합니다.
-                    backgroundColor: ['#36a2eb', '#ffb8c6', '#fbceb1'], // 차트 데이터에 대한 배경색을 설정합니다.
+                    backgroundColor: ['#36a2eb', '#ffb8c6', '#fbceb1','#FED46E','#97C1A9','#F2ED9D'], // 차트 데이터에 대한 배경색을 설정합니다.
                 }]
             },
             options: {

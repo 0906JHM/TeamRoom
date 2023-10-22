@@ -60,10 +60,10 @@ public class AjaxPerformanceController {
 	 */
 	
 	@PostMapping("/perfdonut")
-	public ResponseEntity<List<PerformanceDTO>> getdonut(@RequestBody List<String> lineCode) {
-		 System.out.println("Line Codes: " + lineCode);
-	    List<PerformanceDTO> getdonutdata = perfService.getdonut(lineCode);
-	    log.debug("가져오는값:"+ lineCode);
+	public ResponseEntity<List<PerformanceDTO>> getdonut(@RequestBody List<String> prodCode) {
+		 System.out.println("prodName: " + prodCode);
+	    List<PerformanceDTO> getdonutdata = perfService.getdonut(prodCode);
+	    log.debug("가져오는값:"+ prodCode);
 	    return ResponseEntity.ok(getdonutdata);
 	    
 

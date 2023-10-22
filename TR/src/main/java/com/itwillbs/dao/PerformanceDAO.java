@@ -134,10 +134,10 @@ public class PerformanceDAO {
 	}
 	
 	//차트JS 도넛차트 
-	public List<PerformanceDTO> getdonut(List<String> lineCode) {
-		System.out.println("PerformanceDAO getDonut Service에서 가져온 값:"+lineCode);
-		List<PerformanceDTO>  result =  sqlsession.selectList(namespace+".getdonut", lineCode);
-		System.out.println("DB에서 가져온값 ++++++++++++++++++++:"+result);
+	public List<PerformanceDTO> getdonut(List<String> prodCode) {
+		System.out.println("PerformanceDAO getDonut Service에서 가져온 값:"+prodCode);
+		List<PerformanceDTO>  result =  sqlsession.selectList(namespace+".getdonut", prodCode);
+		System.out.println("DB에서 가져온값 ++++++++++++++++++++:" + result);
         return result;
 	
 }

@@ -63,20 +63,22 @@ LEFT JOIN workOrder w ON p.workCode = w.workCode
 	
 	<!--  도넛차트 DB값 가져오기  -->
 	<select id="getdonut" resultType="PerformanceDTO" parameterType="java.util.List">
-    SELECT 
-        lineCode AS lineCode,
-        SUM(perfAmount) AS totalAmount,
-        SUM(perfFair) AS totalFair,
-        SUM(perfDefect) AS totalDefect
-    FROM 
-        performance
-    Where
-        lineCode IN 
-        <foreach collection="list" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    GROUP BY 
-        lineCode;
+SELECT 
+    p.prodCode AS prodCode,
+    SUM(p.perfFair) AS totalFair,
+    SUM(p.perfDefect) AS totalDefect,
+    SUM(wo.workAmount) AS totalAmount
+FROM 
+    performance p
+LEFT JOIN 
+    workOrder wo ON p.prodCode = wo.prodCode
+WHERE
+    p.prodCode IN 
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+GROUP BY 
+    p.prodCode, wo.workAmount
 </select>
  
  <select id="getlinelist" resultType="com.itwillbs.domain.LineDTO">

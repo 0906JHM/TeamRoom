@@ -93,10 +93,10 @@ public class PerformanceService {
 	}
      
      // 도넛차트 값 가져오기
-     public List<PerformanceDTO> getdonut(List<String> lineCode) {
+     public List<PerformanceDTO> getdonut(List<String> prodCode) {
     	 
-    	 System.out.println("ajaxPerformance getdount() 컨트롤러에서 가져온 값:" +lineCode);
-         return perfDAO.getdonut(lineCode);
+    	 System.out.println("ajaxPerformance getdount() 컨트롤러에서 가져온 값:" +prodCode);
+         return perfDAO.getdonut(prodCode);
 
      }
 
