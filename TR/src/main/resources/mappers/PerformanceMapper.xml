@@ -27,11 +27,11 @@ LIMIT #{startRow}, #{pageSize};
         JOIN workOrder w ON p.workCode = w.workCode
 		<where>
 			<if test=" lineCode != null and lineCode !=''">
-				 and lineCode like concat ('%', #{lineCode}, '%')
+				 and w.lineCode like concat ('%', #{lineCode}, '%')
 			</if>
 
 			<if test="prodCode != null and prodCode !=''">
-				and prodCode like concat ('%', #{prodCode}, '%')
+				and w.prodCode like concat ('%', #{prodCode}, '%')
 			</if>			 
 		</where>
 		order by perfCode desc
@@ -44,11 +44,11 @@ LIMIT #{startRow}, #{pageSize};
     JOIN workOrder w ON p.workCode = w.workCode
 		<where>
 			<if test="lineCode != null and lineCode !=''">
-				lineCode like concat ('%', #{lineCode}, '%')
+				w.lineCode like concat ('%', #{lineCode}, '%')
 			</if>
 
 			<if test="lineCode != null and prodCode !=''">
-				and prodCode like concat ('%', #{prodCode}, '%')
+				and w.prodCode like concat ('%', #{prodCode}, '%')
 			</if>
 		</where>
 		order by perfCode desc
