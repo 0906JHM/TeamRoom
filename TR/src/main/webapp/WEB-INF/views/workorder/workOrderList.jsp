@@ -283,45 +283,83 @@ button.style.backgroundColor = "#4D4D4D";
 		});
 		
 		function exportExcel() {
-			//1. workbook 생성
-			var wb = XLSX.utils.book_new();
-			
-			//2. 시트 만들기
-			var newWorksheet = excelHandler.getWorksheet();
-			
-			//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
-			XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-			
-			//4. 엑셀 파일 만들기
-			var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-			
-			//5. 엑셀 파일 내보내기
-			saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
-			
-		} //exportExcel()
-		
-		var excelHandler = {
-			getExcelFileName : function() {
-				return 'workOrderList'+getToday()+'.xlsx'; //파일명
-			},
-			getSheetName : function() {
-				return 'Work Order Sheet'; //시트명
-			},
-			getExcelData : function() {
-				return document.getElementById('data-table'); //table id
-			},
-			getWorksheet : function() {
-				return XLSX.utils.table_to_sheet(this.getExcelData());
-			}
-		} //excelHandler
+			var searchLine = "${search.search_line}";
+	        var fromDate = "${search.search_fromDate}";
+	        var toDate = "${search.search_toDate}";
+	        var place = "${search.search_place}";
+	        var prod = "${search.search_prod}";
+	     // 엑셀로 내보낼 데이터
+		    var searchParams = {
+		    		searchLine: searchLine,
+		    		fromDate: fromDate,
+		    		toDate: toDate,
+		    		place: place, 
+		    		prod: prod
+		    };
+		    console.log(searchParams);
+	     	
+		    $.ajax({
+		        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+		        url: "${pageContext.request.contextPath}/workorder/workOrderExcel", // 데이터를 가져올 URL 설정
+		        data: JSON.stringify(searchParams), // 데이터를 JSON 문자열로 변환,
+		        dataType: "json",
+		        contentType: "application/json", // JSON 형식으로 요청을 전송
+		        success: function (data) {
+		        	// 데이터 가공
+					var modifiedData = data.map(function (item) {
+					    return {
+					        '작업지시 코드': item.workCode,
+					        '라인 코드': item.lineCode,
+					        '수주 코드': item.sellCode,
+					        '제품 코드': item.prodCode,
+					        '지시일': item.workDate,
+					        '지시 수정일': item.workDatechange,
+					        '지시 수량':item.workAmount,
+					        '담당자': item.workEmpId,
+					        '공정': item.workProcess,
+					        '마감': item.workProcess,
+					        '라인내역': item.workInfo,
+					    };
+					});
+		            
+					// 열의 너비 설정
+		            var colWidths = [
+		            	{ wch: 15 }, // 작업지시 코드
+		                { wch: 10 }, // 라인 코드
+		                { wch: 15 }, // 수주 코드
+		                { wch: 10 }, // 제품 코드
+		                { wch: 10 }, // 지시일
+		                { wch: 10 }, // 지시 수정일
+		                { wch: 10 }, // 지시 수량
+		                { wch: 10 }, // 담당자
+		                { wch: 10 }, // 공정
+		                { wch: 10 }, // 마감
+		                { wch: 30 } // 라인내역
+		            ];
+		         	// 새 워크북을 생성
+		            var wb = XLSX.utils.book_new();
+		            // JSON 데이터를 워크시트로 변환
+		            var ws = XLSX.utils.json_to_sheet(modifiedData);
+		            // 열 너비 지정
+		            ws['!cols'] = colWidths;
+		            // 워크북에 워크시트 추가
+		            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
+		            // Blob 형태로 워크북 생성
+		            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+		            // 파일 이름 설정 (원하는 파일 이름으로 변경)
+		            var fileName = 'workOrderList'+getToday()+'.xlsx';;
+		            // Blob 파일을 다운로드
+		            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
+		        }
+		    });
+		}
+		// ArrayBuffer 만들어주는 함수
 		
 		function s2ab(s) {
-			var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-			var view = new Uint8Array(buf);  
-			for(var i=0; i<s.length; i++) {
-				view[i] = s.charCodeAt(i) & 0xFF;
-			}
-			return buf;
+			var buf = new ArrayBuffer(s.length); // convert s to arrayBuffer
+		    var view = new Uint8Array(buf); // create uint8array as viewer
+		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
+		    return buf;
 		} //s2ab(s)
 	</script>
 	
