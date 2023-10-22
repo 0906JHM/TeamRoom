@@ -630,6 +630,10 @@ if (session.getAttribute("empId") != null) {
 				modal.style.display = 'none';
 			}
 		});
+		// 모달 내부 클릭시 닫기 x
+		modal.addEventListener('click', function(event) {
+		    event.stopPropagation(); // 모달 내부 클릭 이벤트 중지
+		});
 	</script>
 	
 

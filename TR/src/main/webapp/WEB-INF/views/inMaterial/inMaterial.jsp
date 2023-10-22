@@ -97,7 +97,17 @@ final String ADMIN_DEPARTMENT = "자재팀";
 	</div>
 
 	
-	
+	<!-- 모달 대화상자 -->
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <span class="close" id="closeModal">&times;</span>
+	    </div>
+	    <div class="modal-body">
+	      <p>모달 내용을 여기에 넣으세요</p>
+	    </div>
+	  </div>
+	</div>
 
         
 	        
@@ -303,10 +313,11 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					row.append("<td>"
 							+ (data[i].whseCode ? data[i].whseCode : '-')
 							+ "</td>");
-					row.append("<td>"
+					row.append("<td onclick='getInfo(event, \"" + (data[i].clientCode ? data[i].clientCode : '-') + "\")' style='cursor:pointer;'>"
+							
 							+ (data[i].clientCode ? data[i].clientCode
 									: '-') + "</td>");
-					row.append("<td>"
+					row.append("<td onclick='getInfo(event, \"" + (data[i].rawCode ? data[i].rawCode : '-') + "\")' style='cursor:pointer;'>"
 							+ (data[i].rawCode ? data[i].rawCode : '-')
 							+ "</td>");
 // 					row.append("<td>"
@@ -536,7 +547,126 @@ final String ADMIN_DEPARTMENT = "자재팀";
 				    var view = new Uint8Array(buf); // create uint8array as viewer
 				    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
 				    return buf;
-				}		
+				}	
+				
+				function getInfo(event, data) {
+				    // 만약 data가 "-"로 시작하지 않으면 Ajax 호출 수행
+				    if (data.charAt(0) !== '-') {
+				        if (data.startsWith("OR")) {
+				            // clientCode로 시작하는 경우의 처리
+				            // Ajax 호출 등을 수행
+				            console.log("Ajax 호출: " + data);
+				            $.ajax({
+					           	type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+							    url: "${pageContext.request.contextPath}/outProduct/clientInfo", // 데이터를 가져올 URL 설정
+							    data: {data : data}, // 검색 조건 데이터 전달
+							    dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+							    success: function (response) {
+							    	console.log(response);
+							    	var dataformat = {
+							                '거래처 코드': response.clientCode,
+							                '거래처명': response.clientCompany,
+							                '대표명': response.clientCeo,
+							                '담당자명': response.clientName,
+							                '전화번호': response.clientTel,
+							                '폰번호': response.clientPhone,
+							                '팩스번호': response.clientFax,
+							                '이메일': response.clientEmail,
+							            };
+							    	openModalWithData(event, dataformat, 300); // 데이터를 모달로 표시
+							    }
+				            });
+				        } else{
+				            // 원자재 코드 나머지
+				            // Ajax 호출 등을 수행
+				            console.log("Ajax 호출: " + data);
+				            $.ajax({
+					           	type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+							    url: "${pageContext.request.contextPath}/outProduct/rawMaterialInfo", // 데이터를 가져올 URL 설정
+							    data: {data : data}, // 검색 조건 데이터 전달
+							    dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+							    success: function (response) {
+							    	console.log(response);
+							    	var dataformat = {
+							                '원자재 코드': response.rawCode,
+							                '원자재명': response.rawName,
+							                '원자재 종류': response.rawType,
+							                '단위': response.rawUnit,
+							                '단가': response.rawPrice,
+							            };
+							    	openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+							    },
+							    error: function (xhr, status, error) {
+							        console.log("오류 발생: " + error);
+							        // 오류 처리 코드를 추가하세요.
+							        Swal.fire({
+							            icon: 'error',
+							            title: '오류 발생',
+							            text: '서버 요청 중 오류가 발생했습니다. 나중에 다시 시도해 주세요.'
+							        });
+							    }
+				            });
+				        }
+				    } else {
+				    	Swal.fire({
+		                    text: '없는 데이터 입니다.',
+		                    icon: 'warning',
+		                    confirmButtonText: '확인',
+		                });
+				    }
+
+				}
+				
+				function openModalWithData(event, data, width) {
+				    var modal = document.getElementById('myModal');
+				    var modalContent = document.querySelector('.modal-body');
+				    
+				    modalContent.style.width = width + 'px';
+				    modal.style.width = (width + 20) + 'px'; // 20px는 여유 여백이라고 가정
+				    modalContent.innerHTML = ''; // 기존 내용 제거
+
+				    // 데이터를 HTML 표로 구성
+				    var tableHTML = '<table class="table">';
+				    for (var key in data) {
+				        if (data.hasOwnProperty(key)) {
+				            tableHTML += '<tr>';
+				            tableHTML += '<td>' + key + '</td>';
+				            tableHTML += '<td>' + data[key] + '</td>';
+				            tableHTML += '</tr>';
+				        }
+				    }
+				    tableHTML += '</table';
+
+				    // 모달 내용에 HTML 표 추가
+				    modalContent.innerHTML = tableHTML;
+
+				    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+				    modal.style.display = 'block';
+				    modal.style.left = (event.clientX + window.scrollX) + 'px';
+				    modal.style.top = (event.clientY + window.scrollY) + 'px';
+				}
+
+
+				// 모달과 닫기 버튼 가져오기
+				var modal = document.getElementById('myModal');
+				var closeModal = document.getElementById('closeModal');
+
+				console.log(modal);
+			    // 닫기 버튼을 클릭하면 모달을 숨김
+				closeModal.addEventListener('click', function() {
+				    modal.style.display = 'none';
+				});
+				
+				// 모달 외부를 클릭하면 모달을 숨김
+				window.addEventListener('click', function(event) {
+					if (event.target != modal) {
+						modal.style.display = 'none';
+					}
+				});
+				// 모달 내부 클릭시 닫기 x 
+				modal.addEventListener('click', function(event) {
+	    		    event.stopPropagation(); // 모달 내부 클릭 이벤트 중지
+	    		});
 		
 	</script>
 </body>
