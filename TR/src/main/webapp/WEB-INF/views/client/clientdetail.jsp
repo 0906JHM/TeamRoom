@@ -75,20 +75,27 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
     font: 500 24px/24px "Inter", sans-serif;
 }
 
+span {
+
+font-size : 14px;
+font-weight: bold;
+color : red;
+}
+
 </style>
 </head>
 <body>
 
 <h2 class="headh">거래처 정보</h2>
 <form id="clientsub">
-<table id="clientDetail">
-<tr><td>구분</td><td><input type="text" name="clientType" class="upform" value="${clientDTO.clientType}"></td></tr>
-<tr><td>거래처코드</td><td><input type="text" name="clientCode" value="${clientDTO.clientCode}" class="upform"></td></tr>
-<tr><td>거래처명</td><td><input type="text" name="clientCompany" value="${clientDTO.clientCompany}" class="upform"></td></tr>
-<tr><td>사업자번호</td><td><input type="text" name="clientNumber" value="${clientDTO.clientNumber}" class="upform"></td></tr>
-<tr><td>업태</td><td><input type="text" name="clientDetail" value="${clientDTO.clientDetail}" class="upform"></td></tr>
-<tr><td>대표자</td><td><input type="text" name="clientCeo" value="${clientDTO.clientCeo}" class="upform"></td></tr>
-<tr><td>담당자</td><td><input type="text" name="clientName" value="${clientDTO.clientName}" class="upform"></td></tr>  
+<table id="clientDetail2">
+<tr><td>구분</td><td><input type="text" id="clientType"  name="clientType" class="upform" value="${clientDTO.clientType}"></td></tr>
+<tr><td>거래처코드</td><td><input type="text" id="clientCode" name="clientCode" value="${clientDTO.clientCode}" class="upform"></td></tr>
+<tr><td>거래처명</td><td><input type="text" id="clientCompany" name="clientCompany" value="${clientDTO.clientCompany}" class="upform"><br><span id="clientCompany_msg"></span></td></tr>
+<tr><td>사업자번호</td><td><input type="text" id="clientNumber" name="clientNumber" value="${clientDTO.clientNumber}" class="upform"><br><span id="clientNumber_msg"></span></td></tr>
+<tr><td>업태</td><td><input type="text"  id="clientDetail" name="clientDetail" value="${clientDTO.clientDetail}" class="upform"><br><span id="clientDetail_msg"></span></td></tr>
+<tr><td>대표자</td><td><input type="text" id ="clientCeo" name="clientCeo" value="${clientDTO.clientCeo}" class="upform"><br><span id="clientCeo_msg"></span></td></tr>
+<tr><td>담당자</td><td><input type="text" id ="clientName" name="clientName" value="${clientDTO.clientName}" class="upform"><br><span id="clientName_msg"></span></td></tr>  
 <tr><td>거래처주소</td><td><input  type="text" id="sample4_roadAddress" placeholder="도로명주소"
 			name="clientAddr1" value="${clientDTO.clientAddr1}" class="upform" readonly required>  
 			<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"  class="addres" required>
@@ -97,11 +104,11 @@ background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 
           </td></tr>  
 <tr><td>상세주소</td><td><input type="text" id="sample4_extraAddress" placeholder="상세주소"
 			name="clientAddr2" size="60" value="${clientDTO.clientAddr2}" class="upform" required></td></tr>  
-<tr><td>거래처번호</td><td><input type="text" name="clientTel" value="${clientDTO.clientTel}" class="upform"></td></tr>  
-<tr><td>휴대폰번호</td><td><input type="tel" name="clientPhone" value="${clientDTO.clientPhone}" class="upform"> </td></tr>  
-<tr><td>팩스번호</td><td><input type="tel" name="clientFax" value="${clientDTO.clientFax}" class="upform"> </td></tr>  
-<tr><td>이메일</td><td><input type="email" name="clientEmail" value="${clientDTO.clientEmail}" class="upform"></td></tr>  
-<tr><td>비고</td><td><input type="text" name="clientMemo" value="${clientDTO.clientMemo}" class="upform"> </td></tr>  
+<tr><td>거래처번호</td><td><input type="text" id="clientTel" name="clientTel" value="${clientDTO.clientTel}" class="upform"><br><span id="clientTel_msg"></span></td></tr>  
+<tr><td>휴대폰번호</td><td><input type="tel" id="clientPhone" name="clientPhone" value="${clientDTO.clientPhone}" class="upform"><br><span id="clientPhone_msg"></span></td></tr>  
+<tr><td>팩스번호</td><td><input type="tel" id="clientFax" name="clientFax" value="${clientDTO.clientFax}" class="upform"><br><span id="clientFax_msg"></span></td></tr>  
+<tr><td>이메일</td><td><input type="email" id ="clientEmail" name="clientEmail" value="${clientDTO.clientEmail}" class="upform"><br><span id="clientEmail_msg"></span></td></tr>  
+<tr><td>비고</td><td><input type="text"  id="clientMemo "name="clientMemo" value="${clientDTO.clientMemo}" class="upform"><br><span id="clientMemo_msg"></span></td></tr>  
 <c:if test="${clientDTO.clientType eq '수주처'}">
     <tr>
         <td>매출액</td>
@@ -249,6 +256,156 @@ $(document).ready(function() {
         });
     });
 });
+
+var koreanRegex = /^[가-힣]+$/; // 한글만 허용하는 정규식
+
+var koreanEnglishRegex = /^[가-힣a-zA-Z]*$/;
+
+// 이메일 정규식
+var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+//지역번호 정규식
+var localAreaCodes = /^(02|0[3-7]{1}[1-9]{1}|\d{3})$/;
+
+// 휴대폰 번호 정규식 (숫자만 허용하는 가정)
+    var phoneNumberRegex = /^(010|011|016|017|019)-\d{4}-\d{4}$/;
+
+var businessNumberRegex = /^[\d-]+$/;
+
+var clientNumberInput = document.getElementById("clientNumber");
+
+clientNumberInput.addEventListener("input", function() {
+    var clientNumber = this.value;
+    // 숫자와 하이픈 이외의 문자 제거
+    clientNumber = clientNumber.replace(/[^\d-]/g, '');
+
+    // 하이픈 추가
+    clientNumber = clientNumber.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+
+    this.value = clientNumber;
+});
+
+document.getElementById("clientDetail").addEventListener("input", function(event) {
+    var clientDetail = this.value;
+    
+    if (!koreanRegex.test(clientDetail)) {
+        document.getElementById("clientDetail_msg").textContent = "한글만 입력하세요.";
+        this.value = clientDetail.slice(0, -1); // 마지막 입력을 제거하여 올바른 입력 상태로 복원
+        event.preventDefault(); // 입력 막기
+    } else {
+        document.getElementById("clientDetail_msg").textContent = "";
+    }
+});
+
+document.getElementById("clientCeo").addEventListener("input", function(event) {
+    var clientCeo = this.value;
+    
+    if (!koreanEnglishRegex.test(clientCeo)) {
+        document.getElementById("clientCeo_msg").textContent = "한글 또는 영어만 입력하세요.";
+        this.value = clientCeo.slice(0, -1); // 마지막 입력을 제거하여 올바른 입력 상태로 복원
+        event.preventDefault(); // 입력 막기
+    } else {
+        document.getElementById("clientCeo_msg").textContent = "";
+    }
+});
+
+document.getElementById("clientName").addEventListener("input", function(event) {
+    var clientName = this.value;
+    
+    if (!koreanEnglishRegex.test(clientName)) {
+        document.getElementById("clientName_msg").textContent = "한글 또는 영어만 입력하세요.";
+        this.value = clientName.slice(0, -1); // 마지막 입력을 제거하여 올바른 입력 상태로 복원
+        event.preventDefault(); // 입력 막기
+    } else {
+        document.getElementById("clientName_msg").textContent = "";
+    }
+});
+
+
+
+document.getElementById("clientTel").addEventListener("input", function() {
+    var clientTel = this.value;
+    // 숫자만 남기기
+    clientTel = clientTel.replace(/[^\d]/g, '');
+
+    if (clientTel === "") {
+        document.getElementById("clientTel_msg").textContent = ""; // 메시지 초기화
+    } else if (!localAreaCodes.test(clientTel.substring(0, 3))) {
+        document.getElementById("clientTel_msg").textContent = "올바른 지역번호를 입력하세요.";
+    } else if (!/^(\d{2,3})(\d{3,4})(\d{4})$/.test(clientTel)) {
+        document.getElementById("clientTel_msg").textContent = "올바른 거래처 번호를 입력하세요.";
+    } else {
+        document.getElementById("clientTel_msg").textContent = ""; // 메시지 초기화
+    }
+    
+    // 하이픈 추가
+    clientTel = clientTel.replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+
+    this.value = clientTel;
+});
+document.getElementById("clientPhone").addEventListener("input", function() {
+    var clientPhone = this.value;
+
+    // 숫자와 하이픈 이외의 문자 제거
+    clientPhone = clientPhone.replace(/[^\d-]/g, '');
+
+    // 하이픈이 연속으로 나오는 경우 하나로 변경
+    clientPhone = clientPhone.replace(/-{2,}/g, '-');
+
+    // 하이픈이 끝이나서 시작하는 경우 제거
+    clientPhone = clientPhone.replace(/^-|-$/g, '');
+
+    // 숫자가 3자리 이상이면서 11자리 이하일 때 하이픈 추가
+    if (clientPhone.length >= 3 && clientPhone.length <= 11) {
+    	   clientPhone = clientPhone.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    }
+
+    this.value = clientPhone;
+
+    if (!phoneNumberRegex.test(clientPhone)) {
+        document.getElementById("clientPhone_msg").textContent = "올바른 담당자번호를 입력하세요.";
+    } else {
+        document.getElementById("clientPhone_msg").textContent = "";
+    }
+});
+
+
+document.getElementById("clientFax").addEventListener("input", function() {
+    var clientFax = this.value;
+    // 숫자만 남기기
+    clientFax = clientFax.replace(/[^\d]/g, '');
+
+    if (clientFax === "") {
+        document.getElementById("clientFax_msg").textContent = ""; // 메시지 초기화
+    } else if (!localAreaCodes.test(clientFax.substring(0, 3))) {
+        document.getElementById("clientFax_msg").textContent = "올바른 지역번호를 입력하세요.";
+    } else if (!/^(\d{2,3})(\d{3,4})(\d{4})$/.test(clientFax)) {
+        document.getElementById("clientFax_msg").textContent = "올바른 거래처 번호를 입력하세요.";
+    } else {
+        document.getElementById("clientFax_msg").textContent = ""; // 메시지 초기화
+    }
+    
+    // 하이픈 추가
+    clientFax = clientFax.replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+
+    this.value = clientFax;
+});
+
+
+
+
+var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+document.getElementById("clientEmail").addEventListener("input", function() {
+    var clientEmail = this.value;
+    
+    if (!emailRegex.test(clientEmail)) {
+        document.getElementById("clientEmail_msg").textContent = "올바른 이메일 주소를 입력하세요.";
+    } else {
+        document.getElementById("clientEmail_msg").textContent = "";
+    }
+});
+
 
 
 

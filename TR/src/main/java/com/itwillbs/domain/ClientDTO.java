@@ -24,6 +24,8 @@ private String clientFax;
 private String clientEmail;
 private String clientMemo;
 
+private String aliasAddr1;
+private String aliasMemo;
 private int clientSale;
 
 

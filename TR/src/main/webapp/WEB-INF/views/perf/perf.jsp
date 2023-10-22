@@ -1,773 +1,358 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
-    <script src="https://kit.fontawesome.com/25ef23e806.js" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/perf.css">
-	<link href="${pageContext.request.contextPath }/resources/css/side.css" rel="stylesheet" type="text/css">
-	
-	 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/datepicker.css"> 
+<style>
 
-<!-- 모달창 script -->
-	<script>
-      //modal창에 열기 위한 이벤트 헨들러
-        function openModal(e) {
-        	//modal창의 id 값 할당
-            const myModal = document.getElementById("myModal");
-           const elements = [];
-            for (let i = 1; i <= 10; i++) {
-                elements[i] ='element' + i;
-            }
-        	//클릭한 요소의 name의 속성 값을 가져와서 clickedElementName변수에 저장한다
-        	//즉 이 부분은 클릭한 요소의 name속성을 추출하는 역할
-        	// "getBoundingClientRect()" 메서드를 사용하여 클릭한 요소의 화면 좌표 정보를 가져옵니다.
-        	// 이 정보는 모달 창의 위치를 설정하는 데 사용됩니다.           
-            /* const clickedElementValue = e.getAttribute("name"); */
-        	
-        	//클릭한 요소의 좌표정보 
-            const rect = e.getBoundingClientRect();
-           
-            
-        	// 클릭한 요소의 오른쪽 아래 모서리의 화면 좌표를 "x"와 "y" 변수에 저장합니다.
-        	// 이것은 모달 창을 클릭한 요소의 위치에 배치하는 데 사용됩니다.
-            var xr = rect.right;
-            var xl = rect.left;
-            var yt = rect.top;
-            var yb = rect.bottom; 
-            var xg = (xr-xl)/2;
-            var yg = (yt-yb)/2;
-            var x =  xl+xg;
-            var y = yb+yg;
-           
-            //클릭후에 모달창을 생성하는 위치를 조정
-            myModal.style.left = x + "px";
-            myModal.style.top = y + "px";
-            myModal.style.display = "block";
-            
-            // modalContent를 초기화 (이전 내용 지우기)
-            myModal.innerHTML = "";
-           
-            //닫기
-            myModal.innerHTML = `<span id="closeModalButton" style="cursor: pointer;">닫기</span><br>`;
-            const clickedElementId = e.getAttribute("id");
-            if(clickedElementId.startsWith("PR")){
-            	//modal_ajax 
-            	$.ajax({
-            	  url : '${pageContext.request.contextPath}/KDMajax/modalprod',
-            	  data: {prodCode:clickedElementId},
-            	  type : 'GET',
-            	  dataType:'json',
-            	  success: function (json) {
-                      if (json && typeof json === 'object') {
-                    	  
-                    	// 값 할당
-                    	addInput("제품 이름:", elements[0],json.prodName);
-            	addInput("제품 단위:", elements[1],json.prodUnit);
-            	addInput("용량:", elements[2],json.prodSize);
-            	addInput("향기 종류:", elements[3],json.prodPerfume);
-            	addInput("거래처 코드:", elements[4],json.clientCode);
-                addInput("창고 코드:", elements[5],json.whseCode);
-                addInput("매출 단가:", elements[6],json.prodPrice);
-                addInput("제품 비고:", elements[7],json.prodMemo);
-                    	} else {
-                    	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                    	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                    	}
+table{
+border: 1px solid rgba(221, 221, 221, 0.78);
+    border-collapse: collapse;
+    margin: 0 auto;
+    color: #000000;
+    width: 450px;
+    max-width: 450px;
+    font: 300 16px/16px "Inter", sans-serif;
+    text-align: center;
+    border-radius: 10px;
 
-                  }
-              });	
-            	
-
-      	  }  else if(clickedElementId.startsWith("SL")){
-              	//modal_ajax 
-              	$.ajax({
-              	  url : '${pageContext.request.contextPath}/KDMajax/modalsell',
-              	  data: {sellCode:clickedElementId},
-              	  type : 'GET',
-              	  dataType:'json',
-              	  success: function (json) {
-                        if (json && typeof json === 'object') {
-                        	// 값 할당
-                        	
-
-                      	addInput("수주 일자:", elements[0],json.sellDate);
-              	addInput("납기 일자:", elements[1],json.sellDuedate);
-              	addInput("관리 사원:", elements[2],json.sellEmpId);
-              	addInput("수주 수량:", elements[3],json.sellCount);
-                  addInput("수주 단가:", elements[4],json.sellPrice);
-                  addInput("제품 코드:", elements[5],json.prodCode);
-                  addInput("제품 이름:", elements[6],json.prodName);
-                  addInput("수주 비고:", elements[7],json.sellMemo);
-                  addInput("출고 상태:", elements[8],json.sellState);
-                  addInput("거래처 이름:", elements[9],json.clientCompany);
-                  addInput("거래처 코드:", elements[10],json.clientCode);
-                      	} else {
-                      	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                      	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                      	}
-                        }
-                });	//기존 닫기 창 함수
-               
-        }  else if(clickedElementId.startsWith("WI")){
-        	
-        	var result = clickedElementId.substring(clickedElementId.indexOf("WI") + 2);
-          	 	
-          	
-          	var elementsStartingWithL = [];
-
-          	// 문자열을 "L"로 분할하여 배열로 만들기
-          	var elementss = result.split("L");
-
-          	// 배열을 순회하며 "L"로 시작하는 부분을 찾아내어 새로운 배열에 저장
-          	for (var i = 1; i < elementss.length; i++) {
-          	    elementsStartingWithL.push("L" + elementss[i]);
-          	}
-          
-          	for (var i = 0; i < elementsStartingWithL.length; i++) {
-          	    var label = (i + 1) + "차";
-          	    addInput(label, elements[i], elementsStartingWithL[i]);
-          	}
-                  
-            
-           
-    }
-        else if(clickedElementId.startsWith("GL")||clickedElementId.startsWith("LB")||clickedElementId.startsWith("PC")||clickedElementId.startsWith("PE")||clickedElementId.startsWith("ST")){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalraw',
-          	  data: {rawCode:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                  	addInput("원자재 이름:", elements[0],json.rawName);
-          	addInput("원자재 종류:", elements[1],json.rawType);
-          	addInput("원자재 단위:", elements[2],json.rawUnit);
-          	addInput("원자재 가격:", elements[3],json.rawPrice);
-              addInput("거래처 코드:", elements[4],json.clientCode);
-              addInput("창고 코드:", elements[5],json.whseCode);
-              addInput("원자재 비고:", elements[6],json.rawMemo);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    }
-        else if(clickedElementId.startsWith("CL")||clickedElementId.startsWith("OR")){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalclient',
-          	  data: {clientCode:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                    	
-
-                  	addInput("이름:", elements[0],json.clientCompany);
-          	addInput("분류:", elements[1],json.clientType);
-          	addInput("사업자번호:", elements[2],json.clientNumber);
-          	addInput("상세분류:", elements[3],json.clientDetail);
-              addInput("대표이름:", elements[4],json.clientCeo);
-              addInput("담당자:", elements[5],json.clientName);
-              addInput("주소:", elements[6],json.clientAddr1);
-              addInput("상세주소:", elements[7],json.clientAddr2);
-              addInput("대표 번호:", elements[8],json.clientTel);
-              addInput("담당자 번호:", elements[9],json.clientPhone);
-              addInput("팩스:", elements[10],json.clientFax);
-              addInput("이메일:", elements[11],json.clientEmail);
-              addInput("비고:", elements[12],json.clientMemo);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    }
-            
-        else if(clickedElementId.startsWith("WH")){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalwhse',
-          	  data: {whseCode:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                    	
-
-                  	addInput("이름:", elements[0],json.whseName);
-          	addInput("타입:", elements[1],json.whseType);
-          	addInput("사용 상태", elements[2],json.whseState);
-          	addInput("주소:", elements[3],json.whseAddr);
-              addInput("연락처:", elements[4],json.whseTel);
-              addInput("비고:", elements[5],json.whseMemo);
-              addInput("제품 코드:", elements[6],json.prodCode);
-              addInput("원자재 코드:", elements[7],json.rawCode);
-              addInput("담당자:", elements[8],json.whseEmpId);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    }
-        else if(!isNaN(clickedElementId.charAt(0))){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalemp',
-          	  data: {empId:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                    	
-
-                  	addInput("이름:", elements[0],json.empName);
-          	addInput("부서:", elements[1],json.empDepartment);
-          	addInput("직급:", elements[2],json.empPosition);
-          	addInput("이메일:", elements[3],json.empEmail);
-              addInput("연락처:", elements[4],json.empTel);
-              addInput("재직상태:", elements[5],json.empState);
-              addInput("입사일:", elements[6],json.empHiredate);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    } else if(clickedElementId.startsWith("WO")){
-      	//modal_ajax 
-      	$.ajax({
-      	  url : '${pageContext.request.contextPath}/KDMajax/modalworkorder',
-      	  data: {workCode:clickedElementId},
-      	  type : 'GET',
-      	  dataType:'json',
-      	  success: function (json) {
-                if (json && typeof json === 'object') {
-                	// 값 할당
-                	
-
-              	addInput("제품코드:", elements[0],json.prodCode);
-      	addInput("수주코드:", elements[1],json.sellCode);
-      	addInput("지시일", elements[2],json.workDate);
-      	addInput("라인코드:", elements[3],json.lineCode);
-          addInput("지시수량:", elements[4],json.workAmount);
-          addInput("작업지시자:", elements[5],json.workEmpId);
-          addInput("추가지시일:", elements[6],json.workDatechange);
-          addInput("라인내역:", elements[7],json.workInfo);
-              	} else {
-              	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-              	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-              	}
-                }
-        });	//기존 닫기 창 함수
-       
 }
-            
-            
-            
-            //ajax
-            closeModalButton.addEventListener("click", function (e) {
-          	    if (e.target === closeModalButton) {
-          	        myModal.style.display = "none";
-          	    }
-          	});
-      }    
-            //input시 동적으로 생성하기 위한 함수
-            function addInput(label, id, value) {
-                const div = document.createElement("div");
-                const input = document.createElement("input");
-                div.style.display = "flex";
-                div.style.justifyContent = "flex-end";
-                input.type = "text";
-                input.id = id;
-                input.value = value; // 값을 설정
-                input.size = 9;
-                input.readOnly = true;
-                div.appendChild(document.createTextNode(label));
-                div.appendChild(input);
-                myModal.appendChild(div);
-            }
-          	
-        
-               
-    </script>
-	
+
+table th, table td {
+	min-width: 100px;
+	white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+	padding: 0 15px;
+	border: none;
+}
+
+
+table th{
+   background-color: #9AC5F4;
+    height: 30px;
+    border: 1px solid rgba(221, 221, 221, 0.78);
+
+}
+
+table td{
+min-width: 100px;
+    white-space: nowrap;
+    padding: 0 15px;
+    height: 30px;
+    border: 1px solid rgba(221, 221, 221, 0.78);
+}
+
+input[type="text"] {
+    /* border: 1px solid #adb5bb; */
+    /* border-radius: 5px; */
+    border: none;
+    width: 95%;
+    height: 25px;
+    font: 300 15px/15px "Inter", sans-serif;
+    text-align: center;
+    background-color: inherit;
+    }
+    
+ .inputnum {
+        border: 1px solid rgba(94, 195, 151, 1);
+    border-radius: 5px;
+    text-align: center;
+    }
+    
+    
+    
+    input[type="number"]{
+	border:none;
+	width: 90%;
+	height: 20px;
+	font: 300 15px/15px "Inter", sans-serif;
+	text-align: center;
+	background-color: inherit;
+}
+
+.footerbtn{
+
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    
+}
+.h2head {
+ text-align: center;
+
+}
+
+input[type="button"], input[type="submit"] {
+    color: white;
+    background-color: #9AC5F4;
+    width: 50px;
+    height: 30px;
+    border-radius: 3px;
+    border: 0;
+    text-align: center;
+    font: 500 15px/20px "Inter", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+</style>
+
 </head>
 <body>
-<!-- 모달창 -->
-	<div id="myModal" style="display: none;
-	position: absolute;
-	background-color: #fff;
-	border: 1px solid #000;
-	padding: 10px;
-	z-index: 1;">
-	</div>
-	<!-- 모달창 -->
-<jsp:include page="../inc/side.jsp"></jsp:include>
+<h2 class="h2head"> 생산실적 내역 </h2>
+<form id="detailform" >
+<table>
+<tbody>
+  <tr>
+    <th> 실적코드 </th> 
+    <td class="tg-0lax" id="perfCodeDisplay" ><input type="text" name="perfCode" value="${perfDTO.perfCode}" readonly> </td>
+    </tr>
+    
+    <tr>
+    <th> 지시코드 </th> 
+    <td><input type="text" name="workCode" value="${perfDTO.workCode}" readonly></td>
+    </tr>
+    <tr>
+    <th> 라인정보 </th>
+    <td><input type="text" name="lineCode" value="${perfDTO.workInfo}"> </td>
+    </tr>
+    <tr>
+    <th> 제품코드</th>
+    <td><input type="text" name="prodCode" value="${perfDTO.prodCode}"></td>
+    </tr>
+    
+    <tr>
+    <th> 지시일자 </th>
+    <td> <input type="text" name="perfDate" value="${perfDTO.perfDate}"> </td> 
+    </tr>
+    
+    <tr>
+    <th> 담당자 </th>
+    <td><input type="text" name="perfEmpId" value="${perfDTO.perfEmpId}"></td>
+    </tr>
+    </tbody>
+    </table>
+    <br>
+    
+   <table id="tg">
+  <tr>
+    <th colspan=2>지시수량</th>
+    <th colspan=2>양품수</th>
+    <th colspan=2 >불량수</th>
 
-<!--  여기서부터 시작  -->
-<div class="clientBody">
-		<h1 class="toptitle">생산실적 관리</h1>
+  </tr>
+  <tr>
+    <td colspan=2> <input type="number" id="workAmount" class="inputnum"  name="workAmount" value="${perfDTO.workAmount}"> </td>
+    <td  colspan=2> <input type="number" id="perfFair" class="inputnum"  name="perfFair" value="${perfDTO.perfFair}"> </td>
+   <td  colspan=2> <input type="number" id="perfDefect"   class="inputnum"  name="perfDefect" value="${perfDTO.perfDefect}"></td>
+  </tr>
+  
+  <tr>
+  <th colspan=2> 불량사유 </th>
+  <th colspan=2> 불량내역 </th>	
+    <th colspan=2> 비고 </th>
+  
+  </tr>
+  
+  <tr>
+    <td  colspan=2><select id="perfDefectreason" name="perfDefectreason">
+	                    	    <option value="무결함">무결함</option>
+		                      	<option value="파손">파손</option> <!-- 병깨짐 , 포장박스 꾸겨진거 등 -->
+								<option value="누락">누락</option> <!--  포장 박스에 물건이 없다던가 포장이 안된다던가 -->
+								<option value="기타">기타</option>
+						       </select>        </td>
+  <td colspan=2>   <input type="text" name="perfDefectreasonmemo" value="${perfDTO.perfDefectmemo}"></td>
+  <td colspan=2><input type="text" name="perfmemo" value="${perfDTO.perfMemo}"></td>
+  </tr>
+</table>
 
 
-<div class="perfcd">
-<form method ="get">
-<div class="perfcd1">
-<label> 라인코드:</label>  <input type="text" id="lineCode2" name="lineCode" onclick="" class="cdbox" readonly> <label>제품코드:</label> <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
-
-
-
+<div class="footerbtn">
+<div class="ftbtn">
+<input type="button" class="okbtn" id="okbtn" value="확인">
+<input type="button" class="update2" id="update2" value="수정">
+<input type="button" class="deletebtn" id="deletebtn" value="삭제">
 </div>
-<!-- <div class="perfcd1">
- 실적일: <input type="text" id="workdate1" name="perfDate1" class="form-control" placeholder="날짜 선택" readonly> ~ <input type="text" id="workdate2" name="perfDate2" class="form-control" placeholder="날짜 선택" readonly>
-</div>  -->
+</div>
+
+
+
+
+
 
 </form>
-</div> <!--  perfcd -->
+<script>
+window.onload = function() {
+    var defectReasonSelect = document.getElementById("perfDefectreason");
+    var defectMemoInput = document.querySelector('input[name="perfDefectreasonmemo"]');
+    var workAmountInput = document.getElementById("workAmount");
+    var perfFairInput = document.getElementById("perfFair");
+    var perfDefectInput = document.getElementById("perfDefect");
+    var updateProUrl = "${pageContext.request.contextPath}/perfajax/updatePro";
+    var updateButton = document.getElementById("update2");
 
-	
+    $('#deletebtn').click(function() {
+        var perfCode = $('#perfCodeDisplay').text();
+        // 서버로 perfCode 값을 전송하여 해당 행을 삭제
+        $.post("${pageContext.request.contextPath}/perfajax/delete", {
+            perfCode: perfCode
+        })
+        .done(function(response) {
+            // 성공 응답을 받은 경우
+            Swal.fire({
+                title: '삭제 성공',
+                text: '성공적으로 삭제되었습니다.',
+                icon: 'success'
+            }).then(function() {
+                location.reload(); // 페이지 새로고침
+                window.opener.location.reload(); // 부모 창 새로고침
+            });
+        })
+        .fail(function(response) {
+            // 실패 응답을 받은 경우
+            Swal.fire({
+                title: '삭제 실패',
+                text: '삭제에 실패하였습니다.',
+                icon: 'error'
+            });
+        });
+    });
 
-	
-<!--  본문 내용  -->
-	<div class="clientbody1">
-	<div class="tableform"> 
-			<div class="clienttotal">
-			 <h2> 총 ${pageDTO.count} 건 </h2>
-			
-			<div style="float: right;">
-				<input type="button" value="추가" id="addButton" class="addbutton"
-					onclick="perfInsert()">
-			</div>	 <!-- 검색칸 -->	
-			</div>   <!--  생산실적 총:x건 라인-->
+ // 서버에서 받아온 불량사유 값을 자바스크립트 변수에 할당한 예시
+    var selectedValueFromServer = "${perfDTO.perfDefectreason}"; // 서버에서 받아온 불량사유 값
 
-		 <table class="ct" id="ct" class="ctcl">	
-			<thead>
-				<tr class="cthead">
-				    <th class="ctth">생산실적코드</th>
-					<th class="ctth">작업지시코드</th>
-					<th class="ctth">라인코드</th>
-					<th class="ctth">제품코드</th>
-					<th class="ctth">실적일</th>
-					<th class="ctth">실적수량</th>
-					<th class="ctth">양품수</th>
-					<th class="ctth">불량수</th>
-					<th class="ctth">불량사유</th>
-			        <th class="ctth">비고</th>
-					<th class="ctth">현황</th> 
-					
-				</tr>
-			</thead> 
-		 <tbody>
-				<c:forEach var="perfDTO" items="${perflist}">
-					<tr class="ctcontents">	    
-						<td class="cttg">${perfDTO.perfCode} <i class="fa-solid fa-magnifying-glass magnifier" data-perfcode="${perfDTO.perfCode}"></i></td>
-						<%-- <td class="cttg">${perfDTO.workCode}</td> --%>
-						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${perfDTO.workCode }" name="sellCode" value="${perfDTO.workCode}">${perfDTO.workCode}</label></td>
-						<td class="cttg">${perfDTO.lineCode}</td>
-						<td class="cttg">${perfDTO.prodCode}</td>
-						<td class="cttg">${perfDTO.perfDate}</td>
-						<td class="cttg">${perfDTO.perfAmount}</td>
-						<td class="cttg">${perfDTO.perfFair}</td>
-						<td class="cttg">${perfDTO.perfDefect}</td>
-						<td class="cttg">${perfDTO.perfDefectreason}</td>
-						<td class="cttg">${perfDTO.perfMemo}</td>
-						<td class="cttg">${perfDTO.perfStatus}</td>				
-					</tr>
-					</c:forEach>
-			</tbody> 
+    // 불량사유 select 요소에 대한 change 이벤트 핸들러
+    defectReasonSelect.addEventListener('change', handleChangeEvent);
 
-		</table>
-		
-		<div class="footlo">
-		<div class="excel">
+    // 초기화 시 서버에서 받아온 불량사유 값으로 select 요소를 설정합니다
+    defectReasonSelect.value = selectedValueFromServer;
 
-		 <button type="button" id="entrytable" class="entrytable" onclick="window.location.href='${pageContext.request.contextPath}/perf/perf?pageNum=1&endPage=100&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}'">전체 보기</button>
-		  <button type="button" id="exceldownload" class="exceldown" >액셀 다운 </button>
-		  </div>
-		  <div class="page"> <!--  페이징 영역 -->
-				<c:if test="${pageDTO.startPage > pageDTO.pageBlock}">
-					<a class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage - pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${clientDTO.prodCode}">Prev</a>
-				</c:if>
-				
+    //change 이벤트 핸들러 함수
+    function handleChangeEvent() {
+        if (defectReasonSelect.value === "무결함") {
+            defectMemoInput.disabled = true;
+            defectMemoInput.style.backgroundColor = "#eeeeee"; // 회색 배경색 설정
+            defectMemoInput.value = ""; // 불량기타입력칸 내용 초기화
+            
+            // 불량수 값을 0으로 설정
+            perfDefectInput.value = 0;
+            
+        } else {
+            defectMemoInput.disabled = false;
+            defectMemoInput.style.backgroundColor = ""; // 기본 배경색으로 설정 (비활성화 해제)
+        }
+    }
+    
+    //////////////////////////////////////// 양품수 불량수 입력 제어 
+    
+    perfFairInput.addEventListener("input", calculateDefect);
 
-				<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
-					<a  class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${i}&lineCode=${perfDTO.perfCode}&prodCode=${perfDTO.prodCode}">${i}</a>
-				</c:forEach>
+    function calculateDefect() {
+        var workAmount = parseInt(workAmountInput.value) || 0;
+        var perfFair = parseInt(perfFairInput.value) || 0;
+        var perfDefect = Math.max(0, workAmount - perfFair); // 음수인 경우 0으로 처리
+        
+     // 양품수가 지시수량을 초과하는 경우 지시수량으로 설정하고 불량수 계산
+        if (perfFair > workAmount) {
+            perfFairInput.value = workAmount;
+            var perfDefect = 0; // 양품수가 지시수량을 초과하면 불량수는 0
+        } else {
+            var perfDefect = workAmount - perfFair; // 불량수 계산
+        }
+        
+        
+        
+     // 불량수 업데이트
+        perfDefectInput.value = perfDefect;
 
+        // 불량수가 0 이상이면 불량사유 입력을 활성화하고, 0일 경우 무결함으로 설정하고 불량내역을 비활성화합니다.
+        if (perfDefect > 0) {
+            defectReasonSelect.disabled = false;
+            defectMemoInput.disabled = false;
+            defectMemoInput.style.backgroundColor = "";
+        } else {
+            defectReasonSelect.value = '무결함';
+            defectMemoInput.disabled = true;
+            defectMemoInput.style.backgroundColor = "#eeeeee";
+            defectMemoInput.value = "";
+            defectReasonSelect.disabled = true;
+        }
+        
+     // 불량수가 0 이상이면서 1 이상이면 무결함 옵션을 숨깁니다.
+        if (perfDefect >= 1) {
+            var option = defectReasonSelect.querySelector('option[value="무결함"]');
+            if (option) {
+                option.style.display = 'none';
+            }
+        } else {
+            // 불량수가 0이면 무결함 옵션을 다시 보이게 합니다.
+            var option = defectReasonSelect.querySelector('option[value="무결함"]');
+            if (option) {
+                option.style.display = 'block';
+            }
+        }
+     
+     
 
-				<c:if test="${pageDTO.endPage < pageDTO.pageCount}">
-					<a class="a" href="${pageContext.request.contextPath}/perf/perf?pageNum=${pageDTO.startPage + pageDTO.pageBlock}&lineCode=${perfDTO.lineCode}&prodCode=${perfDTO.prodCode}">Next</a>
-				</c:if>
-				
-			</div> <!--  페이징영역 -->
-		 </div>
-		 </div>
-		 
-		 	
-		
-		
-		
-		
-		</div> <!--  TABLE FORM -->
-		 
-		 <div class="chart">
-		 <h2> 생산실적 현황 </h2>
-		 <div class="chartbody">
-		 
-		 <div class="chart1head">
-		 <h2 class="labelhead"> 실적수</h2>
-		 <div class="chart1">
-		 <canvas id="donutChart" width="400px" height="400px"></canvas><!-- totalamount --> 
-		 </div> <!--  chart1 -->
-		 </div> <!-- chart1head -->
-		 <div class="chart2">
-		 <h2 class="labelhead"> 양품수 </h2>
-		 <div class="chart2head">
-		 <canvas id="donutChart2" width="600px" height="400px"></canvas> <!-- - totalfair -->
-		 </div>
-		 </div>
-		 
-		 <div class="chart3">
-		 <h2 class="labelhaed"> 불량수</h2>
-		 <div class="chart3haed">
-		  <canvas id="donutChart3" width="400px" height="400px"></canvas> <!--  totaldefect -->
-		 </div>
-		</div>
-		 
+        // 에러 메시지를 표시합니다. (양품수와 불량품수의 합이 0 이상, 지시수량 이하이어야 합니다.)
+        if (perfFair < 0 || perfFair > workAmount) {
+            Swal.fire({
+                title: '입력 오류',
+                text: '양품수와 불량품수의 합은 0 이상, 지시수량 이하이어야 합니다.',
+                icon: 'error'
+            });
+        }
+    }
+    
+ // 초기화 시 계산을 위해 한 번 호출합니다.
+    calculateDefect();
 
+ //////////////////////////////////////////////////
+    updateButton.addEventListener("click", function(event) {
+        // 폼 데이터를 가져오는 코드 (예: FormData 객체 사용)
+        var formData = $("#detailform").serialize();
+        console.log(formData);
 
-	
-		 </div> <!--  chartbody -->
-		 </div> <!--  chart -->
-
-			
-			</div> <!--  CLIENTBODY -->
-			
-
+        // 서버로 데이터를 전송하고 응답을 받는 코드 (jQuery AJAX 사용)
+        $.ajax({
+            type: "POST", // 또는 "GET" 등 HTTP 요청 메서드 선택
+            url: updateProUrl, // 서버 엔드포인트 URL 설정
+            data: formData, // 폼 데이터 전송
+            success: function(response) {
+                console.log("ajax 왔다감");
+                // 서버 응답이 성공인 경우
+                if (response === 'true') {
+                    Swal.fire({
+                        title: '수정 성공',
+                        text: '성공적으로 수정되었습니다.',
+                        icon: 'success'
+                    }).then(function() {
+                        // 성공 메시지를 표시한 후 추가적인 동작을 수행하려면 이 부분에 코드를 작성합니다.
+                        // 예: 페이지 리로드, 다른 동작 수행 등
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                // 서버 응답이 실패인 경우
+                Swal.fire({
+                    title: '수정 실패',
+                    text: '수정에 실패하였습니다.',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+};
+</script>
 
 </body>
-<script> 
-$(document).ready(function() {
-    // addButton 클릭 이벤트 처리
-    $('#addButton').click(function() {
-        window.open(
-            '${pageContext.request.contextPath}/perf/perfinsert',
-            '_blank',
-            'width=600px, height=800px, left=200px, top=100px'
-        );
-    });
-
-    // 돋보기 아이콘에 대한 클릭 이벤트 리스너 추가
-    document.querySelectorAll('.magnifier').forEach(function(magnifier) {
-        magnifier.addEventListener('click', function() {
-            console.log("에러 발생!");
-            // 선택한 실적 코드 가져오기
-            var perfCode = this.getAttribute('data-perfcode');
-        
-            // 새 창을 열고 선택한 실적 코드를 URL 파라미터로 전달
-            window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=600px,height=400px');
-        });
-    });
-    
-    $(document).ready(function() {
-   	 // lineCode2 input box 클릭 이벤트 처리
-       $('#lineCode2').click(function() {
-       	console.log("라인코드 클릭");
-           openLinePopup(); // 라인 팝업 열기
-       });
-
-       // prodCode2 input box 클릭 이벤트 처리
-       $('#prodCode2').click(function() {
-       	console.log("제품코드 클릭");
-           openProductPopup(); // 제품 팝업 열기
-       });
-       
-    // prodCode2 input box 클릭 이벤트 처리
-       $('#workCode2').click(function() {
-       	console.log("제품코드 클릭");
-           openProductPopup(); // 제품 팝업 열기
-       });
-       
-       function openLinePopup() {
-           var popupUrl = '${pageContext.request.contextPath}/search/line?input=lineCode2';
-           window.open(
-               popupUrl,
-               '_blank',
-               'width=800px, height=800px, left=900px, top=100px'
-           );
-       }
-       
-    function openProductPopup() {
-    	
-        var popupUrl = '${pageContext.request.contextPath}/search/product?input=prodCode2';
-        window.open(
-            popupUrl,
-            '_blank',
-            'width=800px, height=800px, left=900px, top=100px'
-        );
-    }
-    
-    function openWorkOrderPopup() {
-        var popupUrl = '${pageContext.request.contextPath}/search/openworklisti?input=workCode2';
-        window.open(
-            popupUrl,
-            '_blank',
-            'width=800px, height=800px, left=900px, top=100px'
-        );
-    }
-    
-    function selectLineCode(lineCode) {
-        window.opener.setLineCodeAndClosePopup(lineCode2);
-    }
-
-    function selectProdCode(prodCode) {
-        window.opener.setProdCodeAndClosePopup(prodCode2);
-    }
-    
-    });
-    
-
-    // 라인 코드 리스트
-    var lineCode = ["L101", "L102", "L103"];
-    $.ajax({
-        type: "POST",
-        url: "${pageContext.request.contextPath}/perfajax/perfdonut",
-        dataType: "json",
-        contentType: "application/json", // 데이터 형식을 JSON으로 지정
-        data: JSON.stringify(lineCode), // 라인 코드 리스트를 JSON 문자열로 변환하여 전송
-        success: function(data) {
-            console.log(data);
-            console.log("데이터 받음: ", data); // 데이터를 로그에 출력
-
-            // 파이차트 그리는 함수 호출 등으로 처리 가능
-            // 도넛 차트 생성 및 표시
-            var donutChartLabels = data.map(function(item) {
-                return item.lineCode;
-            });
-
-            // 각 차트에 대한 라벨과 데이터 분리
-            var donutChartLabels = data.map(function(item) {
-                return item.lineCode;
-            });
-
-            var totalAmountData = data.map(function(item) {
-                return item.totalAmount;
-            });
-
-            var totalFairData = data.map(function(item) {
-                return item.totalFair;
-            });
-
-            var totalDefectData = data.map(function(item) {
-                return item.totalDefect;
-            });
-
-            // 각 차트에 대한 도넛 차트 생성
-            createDonutChart(totalAmountData, donutChartLabels, 'donutChart');
-            createDonutChart(totalFairData, donutChartLabels, 'donutChart2');
-            createDonutChart(totalDefectData, donutChartLabels, 'donutChart3');
-        },
-        error: function(error) {
-            console.log("Error fetching data: " + error);
-        }
-    });
-    
-
-
-    // Chart.js를 사용하여 도넛 차트를 생성합니다.
-    function createDonutChart(data, labels, chartId) {
-        console.log("도넛 차트 데이터: ", data);
-        console.log("도넛 차트 라벨: ", labels);
-        console.log("도넛 차트 ID: ", chartId); // 이 줄을 추가하여 chartId 출력
-          
-        Chart.register(ChartDataLabels);
-        var ctx = document.getElementById(chartId).getContext('2d');
-        var totalValue = data.reduce((total, value) => total + value, 0);
-        console.log("총합: ", totalValue.toFixed(2)); // totalValue를 로그로 출력합니다.
-
-        var donutChart = new Chart(ctx, {
-            type: 'doughnut', // 도넛 차트 유형을 설정합니다.
-            data: {
-                labels: labels, // 라벨 배열을 설정합니다.
-                datasets: [{
-                    data: data, // 차트 데이터 배열을 설정합니다.
-                    backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56'], // 차트 데이터에 대한 배경색을 설정합니다.
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: 120,
-                chartArea: {
-                    // 차트 영역 크기 조절
-                    left: 50,
-                    right: 50,
-                    top: 50,
-                    bottom: 50
-                },
-                animation: {
-                    animateRotate: false,
-                    animateScale: true
-                },
-                plugins: {
-                    datalabels: {
-                        color: 'white', // 데이터 레이블 텍스트 색상
-                        font: {
-                            size: 18, // 데이터 레이블 폰트 크기
-                            weight: 'bold' // 데이터 레이블 폰트 굵기
-                        }
-                    }
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(context) {
-                            var label = context.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += context.formattedValue;
-                            return label;
-                        }
-                    },
-                    position: 'top'
-                },
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
-            }
-        });
-    }
-      
-		//엑셀
-			 const excelDownload = document.querySelector('#exceldownload');
-					excelDownload.addEventListener('click', exportExcel);
-					function exportExcel() {
-					    // 1. 워크북 생성
-					    var wb = XLSX.utils.book_new();
-					    // 2. 워크시트 생성
-					    var newWorksheet = excelHandler.getWorksheet();
-					    // 3. 워크시트를 워크북에 추가
-					    XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-					    // 4. 엑셀 파일 생성
-					    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-					    // 5. 엑셀 파일 내보내기
-					    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), excelHandler.getExcelFileName());
-					}
-
-					// 현재 날짜를 가져오는 함수
-					function getToday() {
-						
-					    var date = new Date();
-					    var year = date.getFullYear();
-					    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춥니다.
-					    var day = date.getDate().toString().padStart(2, '0'); // 일을 두 자리로 맞춥니다.
-					    return year + month + day;
-					}
-
-			var excelHandler = {
-			getExcelFileName : function() {
-				return 'PerformanceList'+getToday()+'.xlsx'; //파일명
-			},
-			getSheetName : function() {
-				return 'Performance Sheet'; //시트명
-			},
-			getExcelData : function() {
-				return document.getElementById('ct'); //table id
-			},
-			getWorksheet : function() {
-				return XLSX.utils.table_to_sheet(this.getExcelData());
-			}
-		} //excelHandler
-			
-			function s2ab(s) {
-				
-				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-				var view = new Uint8Array(buf);  
-				for(var i=0; i<s.length; i++) {
-					view[i] = s.charCodeAt(i) & 0xFF;
-				}
-				alert("이까지 옴");
-				return buf;
-			}
-	
-    
-    
-   /*  $(function() {
-        $("#workdate1").datepicker({
-            dateFormat: 'yy-mm-dd',
-            prevText: '이전 달',
-            nextText: '다음 달',
-            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            dayNames: ['일','월','화','수','목','금','토'],
-            dayNamesShort: ['일','월','화','수','목','금','토'],
-            dayNamesMin: ['일','월','화','수','목','금','토'],
-            showMonthAfterYear: true,
-            yearSuffix: '년',
-
-            // 여기에 데이트피커에서 날짜를 선택했을 때 실행할 코드 작성
-            onSelect: function(selectedDate) {
-                console.log("선택한 날짜: " + selectedDate);
-            }
-     
-    }); // datekpicker1 끝
-          
-          
-          $(function() {
-              $("#workdate2").datepicker({
-                  dateFormat: 'yy-mm-dd',
-                  prevText: '이전 달',
-                  nextText: '다음 달',
-                  monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-                  monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-                  dayNames: ['일','월','화','수','목','금','토'],
-                  dayNamesShort: ['일','월','화','수','목','금','토'],
-                  dayNamesMin: ['일','월','화','수','목','금','토'],
-                  showMonthAfterYear: true,
-                  yearSuffix: '년',
-
-                  // 데이트피커의 onSelect 이벤트 핸들러 설정
-                  onSelect: function(selectedDate) {
-                      // 여기에 데이트피커에서 날짜를 선택했을 때 실행할 코드 작성
-                      console.log("선택한 날짜: " + selectedDate);
-                  }
-              });
-          }); // datepicker2 끝  */
-   
-   
-});
-</script>	
-			
 </html>

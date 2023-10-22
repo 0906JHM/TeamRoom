@@ -78,12 +78,12 @@
 						<td class="cttg">${clientDTO.clientDetail}</td>
 						<td class="cttg">${clientDTO.clientCeo}</td>
 						<td class="cttg">${clientDTO.clientName}</td>
-						<td class="cttg">${clientDTO.clientAddr1}</td>
+						<td class="cttg">${clientDTO.aliasAddr1}</td>
 						<td class="cttg">${clientDTO.clientTel}</td>
 						<td class="cttg">${clientDTO.clientPhone}</td>
 						<td class="cttg">${clientDTO.clientFax}</td>
 						<td class="cttg">${clientDTO.clientEmail}</td>
-						<td class="cttg">${clientDTO.clientMemo}</td>
+						<td class="cttg">${clientDTO.aliasMemo}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -122,7 +122,7 @@
 						.open(
 								'${pageContext.request.contextPath}/client/clientinsert',
 								'_blank',
-								'width=450px, height=700px, left=400px, top=200px');
+								'width=520px, height=700px, left=400px, top=200px');
 			}
 			
 			// 클라이언트 회사 이름을 클릭했을 때 실행될 함수

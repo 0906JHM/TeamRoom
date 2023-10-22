@@ -100,7 +100,7 @@
 	span{
 	font-size:13px;
 	font-weight: bold;
-	
+	color:red;
 	}
 	
 	
@@ -125,72 +125,72 @@
 	
 		<!-- 거래처 코드 -->
 		<tr><td> <label for="clientCode_label"><b>거래처코드</b></label>  </td>
-		<td> <input type="text" name="clientCode" id="clientCode" readonly class="insertbox"> <br> 
+		<td> <input type="text" name="clientCode" id="clientCode" readonly class="insertbox" required> 
 		<span id="clientCode_msg"></span> </td> </tr>
 	
 			
 			<!-- 거래처명 -->
 			<tr><td> <label for="clientCompany_label"><b>거래처명</b> </label></td>
-			<td><input type="text" name="clientCompany" id="clientCompany" class="insertbox" > <br>
+			<td><input type="text" name="clientCompany" id="clientCompany" class="insertbox"  required> 
 	       	<span id="clientCompany_msg"></span></td></tr>
 	
 
 		<!-- 사업자번호 -->
 		<tr><td> <label for="clientNumber_label"><b>사업자번호</b> </label> </td>
-		 <td> <input type="text" name="clientNumber" id="clientNumber" class="insertbox"> <br>
-		<span id="clientNumber_msg"></span></td></tr> 
+		 <td> <input type="text" name="clientNumber" id="clientNumber" class="insertbox" maxlength=12 required> 
+		 <span id="clientNumber_msg"></span></td></tr> 
 	
 
 		<!-- 업태 -->
 		<tr><td><label for="clientDetail_label"><b>업태</b> </label></td>
-		<td> <input type="text" name="clientDetail" id="clientDetail" class="insertbox" maxlength="10" > <br> <span id="clientDetail_msg"></span> </td></tr>
+		<td> <input type="text" name="clientDetail" id="clientDetail" class="insertbox" maxlength="10" required >  <span id="clientDetail_msg"></span> </td></tr>
 		 
 
 
 		<!-- 거래처 대표자명 -->
 		<tr><td> <label for="clientCeo_label"><b>대표자</b></label></td>
-		 <td> <input type="text" name="clientCeo" id="clientCeo" class="insertbox"  maxlength="10" > <br> <span id="clientCeo_msg"></span></td></tr>
+		 <td> <input type="text" name="clientCeo" id="clientCeo" class="insertbox"  maxlength="10" required> <span id="clientCeo_msg"></span></td></tr>
 	
 
 		<!-- 거래처담당자이름-->
 		<tr><td> <label for="clientName_label"><b>거래담당자</b></label> </td>
-		<td><input type="text" name="clientName" id="clientName" class="insertbox"  maxlength="10" > <br> <span id="clientName_msg"></span> </td></tr>
+		<td><input type="text" name="clientName" id="clientName" class="insertbox"  maxlength="10" required>  <span id="clientName_msg"></span> </td></tr>
 
 
 		<!-- 주소 -->
 		<tr><td><label for="clientAddress_label"><b>도로명주소</b></label></td>
 		<td> <input type="text" id="sample4_roadAddress" placeholder="도로명주소"
-			name="clientAddr1" readonly required class="insertbox" onclick="sample4_execDaumPostcode()"></td></tr>
+			name="clientAddr1" readonly required class="insertbox" onclick="sample4_execDaumPostcode()" required></td></tr>
 			<br>
 		<tr><td><label for="clientAddress_label"><b>상세주소</b></label></td>
-		<td> <input type="text" id="sample4_extraAddress" placeholder="상세주소" name="clientAddr2" size="60" required class="longbox">
-		<span id="clientName_msg"></span>
+		<td> <input type="text" id="sample4_extraAddress" placeholder="상세주소" name="clientAddr2" size="60" required class="longbox" required>
+	<span id="clientName_msg"></span>
 		</td></tr>
 		
 	
 
 		<!-- 거래처 번호 -->
 		<tr><td><label for="clientTel"><b>거래처번호</b></label></td>
-		<td> <input type="text" name="clientTel" id="clientTel" class="insertbox" maxlength="12" > <br> <span id="clientTel_msg"></span> </td></tr>
+		<td> <input type="text" name="clientTel" id="clientTel" class="insertbox" maxlength="12" required > <span id="clientTel_msg"></span> </td></tr>
 	
 
 		<!-- 거래담당자 번호 -->
 		<tr><td> <label for="clientPhone"><b>담당자번호</b></label></td>
-		 <td> <input type="text" name="clientPhone" id="clientPhone" class="insertbox" maxlength="13" > <br> <span id="clientPhone_msg"></span>   </td></tr>
+		 <td> <input type="text" name="clientPhone" id="clientPhone" class="insertbox" maxlength="13" required> <span id="clientPhone_msg"></span>   </td></tr>
 		  
 
 		<!--  팩스번호 -->
-		<tr><td> <label for="clientFax"><b>팩스자번호</b></label> </td>
-		<td><input type="text" name="clientFax" id="clientFax" class="insertbox"  maxlength="12" > <br> <span id="clientFax_msg"></span>
+		<tr><td> <label for="clientFax"><b>팩스번호</b></label> </td>
+		<td><input type="text" name="clientFax" id="clientFax" class="insertbox"  maxlength="12"  required> <span id="clientFax_msg"></span>
 
 
 		<!-- 거래처 이메일 -->
 		<tr><td><label for="clientEmail"><b>이메일</b></label> </td>
-		<td> <input type="text" name="clientEmail" id="clientEmail" class="insertbox"> <br> <span id="clientEmail_msg"></span> </td></tr>
+		<td> <input type="text" name="clientEmail" id="clientEmail" class="insertbox" required>  <span id="clientEmail_msg"></span> </td></tr>
 		
 		<!--  비고 -->
 		<tr><td><label for="clientMemo_label"><b>비고</b></label>  </td>
-		<td> <input type="text" name="clientMemo" id="clientMemo" class="insertbox"> <br> <span id="clientMemo_msg"></span>
+		<td> <input type="text" name="clientMemo" id="clientMemo" class="insertbox" required> <span id="clientMemo_msg"></span>
 
 		
      </table>
@@ -374,23 +374,23 @@ var koreanEnglishRegex = /^[가-힣a-zA-Z]*$/;
 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //지역번호 정규식
-var localAreaCodes = /^(02|031|032|033|041|043|042|044|051|052|053|054|055|061|062|063|064|070)$/;
+var localAreaCodes = /^(02|0[3-7]{1}[1-9]{1}|\d{3})$/;
 
 // 휴대폰 번호 정규식 (숫자만 허용하는 가정)
     var phoneNumberRegex = /^(010|011|016|017|019)-\d{4}-\d{4}$/;
 
 var businessNumberRegex = /^[\d-]+$/;
 
-document.getElementById("clientNumber").addEventListener("input", function() {
+var clientNumberInput = document.getElementById("clientNumber");
+
+clientNumberInput.addEventListener("input", function() {
     var clientNumber = this.value;
-    clientNumber = clientNumber.replace(/[^\d-]/g, ''); // 숫자와 하이픈 이외의 문자 제거
-    
-    if (!businessNumberRegex.test(clientNumber)) {
-        document.getElementById("clientNumber_msg").textContent = "올바른 사업자 번호를 입력하세요.";
-    } else {
-        document.getElementById("clientNumber_msg").textContent = "";
-    }
-    
+    // 숫자와 하이픈 이외의 문자 제거
+    clientNumber = clientNumber.replace(/[^\d-]/g, '');
+
+    // 하이픈 추가
+    clientNumber = clientNumber.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+
     this.value = clientNumber;
 });
 
@@ -452,7 +452,6 @@ document.getElementById("clientTel").addEventListener("input", function() {
 
     this.value = clientTel;
 });
-
 document.getElementById("clientPhone").addEventListener("input", function() {
     var clientPhone = this.value;
 
@@ -480,30 +479,28 @@ document.getElementById("clientPhone").addEventListener("input", function() {
 });
 
 
-//팩스번호 입력 필드에 이벤트 리스너 추가
 document.getElementById("clientFax").addEventListener("input", function() {
     var clientFax = this.value;
-    // 숫자와 하이픈 이외의 문자 제거
-    clientFax = clientFax.replace(/[^\d-]/g, '');
+    // 숫자만 남기기
+    clientFax = clientFax.replace(/[^\d]/g, '');
 
-    if (!localAreaCodes.test(clientFax.substring(0, 3))) {
+    if (clientFax === "") {
+        document.getElementById("clientFax_msg").textContent = ""; // 메시지 초기화
+    } else if (!localAreaCodes.test(clientFax.substring(0, 3))) {
         document.getElementById("clientFax_msg").textContent = "올바른 지역번호를 입력하세요.";
     } else if (!/^(\d{2,3})(\d{3,4})(\d{4})$/.test(clientFax)) {
-        document.getElementById("clientFax_msg").textContent = "올바른 팩스번호를 입력하세요.";
+        document.getElementById("clientFax_msg").textContent = "올바른 거래처 번호를 입력하세요.";
     } else {
-        document.getElementById("clientFax_msg").textContent = "";
+        document.getElementById("clientFax_msg").textContent = ""; // 메시지 초기화
     }
-
+    
     // 하이픈 추가
-    if (clientFax.length > 3 && clientFax.charAt(3) !== '-') {
-        clientFax = clientFax.slice(0, 3) + '-' + clientFax.slice(3);
-    }
-    if (clientFax.length > 8 && clientFax.charAt(8) !== '-') {
-        clientFax = clientFax.slice(0, 8) + '-' + clientFax.slice(8);
-    }
+    clientFax = clientFax.replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 
     this.value = clientFax;
 });
+
+
 
 
 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

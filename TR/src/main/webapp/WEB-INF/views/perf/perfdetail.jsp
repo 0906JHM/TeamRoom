@@ -36,7 +36,7 @@ table th, table td {
 
 
 table th{
-    background-color: rgba(94, 195, 151, 0.6);
+   background-color: #9AC5F4;
     height: 30px;
     border: 1px solid rgba(221, 221, 221, 0.78);
 
@@ -91,14 +91,17 @@ input[type="text"] {
 }
 
 input[type="button"], input[type="submit"] {
-    background-color: rgba(94.0000019967556, 195.0000035762787, 151.00000619888306, 1);
-    width: 100px;
+    color: white;
+    background-color: #9AC5F4;
+    width: 50px;
     height: 30px;
-    border-radius: 5px;
-    color: #FFFFFF;
+    border-radius: 3px;
     border: 0;
     text-align: center;
-    font: 300 18px/18px "Inter", sans-serif;
+    font: 500 15px/20px "Inter", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 5px;
 }
 
 </style>
@@ -155,13 +158,13 @@ input[type="button"], input[type="submit"] {
   
   <tr>
   <th colspan=2> 불량사유 </th>
-  <th colspan=2> 불량내역 </th>
+  <th colspan=2> 불량내역 </th>	
     <th colspan=2> 비고 </th>
   
   </tr>
   
   <tr>
-    <td  colspan=2><select id="perfDefectreason" name="perfDefectreason" >
+    <td  colspan=2><select id="perfDefectreason" name="perfDefectreason">
 	                    	    <option value="무결함">무결함</option>
 		                      	<option value="파손">파손</option> <!-- 병깨짐 , 포장박스 꾸겨진거 등 -->
 								<option value="누락">누락</option> <!--  포장 박스에 물건이 없다던가 포장이 안된다던가 -->
@@ -189,7 +192,15 @@ input[type="button"], input[type="submit"] {
 </form>
 <script>
 window.onload = function() {
-/*     $('#deletebtn').click(function() {
+    var defectReasonSelect = document.getElementById("perfDefectreason");
+    var defectMemoInput = document.querySelector('input[name="perfDefectreasonmemo"]');
+    var workAmountInput = document.getElementById("workAmount");
+    var perfFairInput = document.getElementById("perfFair");
+    var perfDefectInput = document.getElementById("perfDefect");
+    var updateProUrl = "${pageContext.request.contextPath}/perfajax/updatePro";
+    var updateButton = document.getElementById("update2");
+
+    $('#deletebtn').click(function() {
         var perfCode = $('#perfCodeDisplay').text();
         // 서버로 perfCode 값을 전송하여 해당 행을 삭제
         $.post("${pageContext.request.contextPath}/perfajax/delete", {
@@ -214,108 +225,133 @@ window.onload = function() {
                 icon: 'error'
             });
         });
-    }); */
+    });
 
+ // 서버에서 받아온 불량사유 값을 자바스크립트 변수에 할당한 예시
+    var selectedValueFromServer = "${perfDTO.perfDefectreason}"; // 서버에서 받아온 불량사유 값
 
-}
+    // 불량사유 select 요소에 대한 change 이벤트 핸들러
+    defectReasonSelect.addEventListener('change', handleChangeEvent);
 
-var defectReasonSelect = document.getElementById("perfDefectreason");
-var defectMemoInput = document.querySelector('input[name="perfDefectreasonmemo"]');
+    // 초기화 시 서버에서 받아온 불량사유 값으로 select 요소를 설정합니다
+    defectReasonSelect.value = selectedValueFromServer;
 
-//초기 로딩 시에 change 이벤트 핸들러를 호출하여 필드 상태 설정
-handleChangeEvent();
-
-//불량사유 select 요소에 대한 change 이벤트 핸들러
-defectReasonSelect.addEventListener('change', handleChangeEvent);
-
-// change 이벤트 핸들러 함수
-function handleChangeEvent() {
-    var selectedValue = defectReasonSelect.value;
-    if (selectedValue === "무결함") {
-        defectMemoInput.disabled = true;
-        defectMemoInput.style.backgroundColor = "#eeeeee"; // 회색 배경색 설정
-        defectMemoInput.value = ""; // 불량기타입력칸 내용 초기화
-    } else {
-        defectMemoInput.disabled = false;
-        defectMemoInput.style.backgroundColor = ""; // 기본 배경색으로 설정 (비활성화 해제)
+    //change 이벤트 핸들러 함수
+    function handleChangeEvent() {
+        if (defectReasonSelect.value === "무결함") {
+            defectMemoInput.disabled = true;
+            defectMemoInput.style.backgroundColor = "#eeeeee"; // 회색 배경색 설정
+            defectMemoInput.value = ""; // 불량기타입력칸 내용 초기화
+            
+            // 불량수 값을 0으로 설정
+            perfDefectInput.value = 0;
+            
+        } else {
+            defectMemoInput.disabled = false;
+            defectMemoInput.style.backgroundColor = ""; // 기본 배경색으로 설정 (비활성화 해제)
+        }
     }
-}
+    
+    //////////////////////////////////////// 양품수 불량수 입력 제어 
+    
+    perfFairInput.addEventListener("input", calculateDefect);
 
-
-
-//각 입력 필드의 DOM 요소를 가져옵니다.
-var workAmountInput = document.getElementById("workAmount");
-var perfFairInput = document.getElementById("perfFair");
-var perfDefectInput = document.getElementById("perfDefect");
-
-// 양품수 입력 필드에 대한 input 이벤트 리스너를 추가합니다.
-perfFairInput.addEventListener("input", calculateDefect);
-
-
-function calculateDefect() {
-    var workAmount = parseInt(workAmountInput.value) || 0;
-    var perfFair = parseInt(perfFairInput.value) || 0;
-    var perfDefect = workAmount - perfFair;
-
-    if (perfDefect < 0 || perfDefect > workAmount) {
-        Swal.fire({
-            title: '입력 오류',
-            text: '양품수와 불량품수의 합은 0 이상, 지시수량 이하이어야 합니다.',
-            icon: 'error'
-        });
-
-        // 불량수를 0으로 설정하고 입력 필드를 초기화합니다.
-        perfFairInput.value = '';
+    function calculateDefect() {
+        var workAmount = parseInt(workAmountInput.value) || 0;
+        var perfFair = parseInt(perfFairInput.value) || 0;
+        var perfDefect = Math.max(0, workAmount - perfFair); // 음수인 경우 0으로 처리
         
-    } else {
-    	perfDefectInput.value = perfDefect;
-    }
-}
+     // 양품수가 지시수량을 초과하는 경우 지시수량으로 설정하고 불량수 계산
+        if (perfFair > workAmount) {
+            perfFairInput.value = workAmount;
+            var perfDefect = 0; // 양품수가 지시수량을 초과하면 불량수는 0
+        } else {
+            var perfDefect = workAmount - perfFair; // 불량수 계산
+        }
+        
+        
+        
+     // 불량수 업데이트
+        perfDefectInput.value = perfDefect;
 
-var updateProUrl = "${pageContext.request.contextPath}/perfajax/updatePro";
-var updateButton = document.getElementById("update2");
-
-updateButton.addEventListener("click", function(event){
-
-    
-    // 폼 데이터를 가져오는 코드 (예: FormData 객체 사용)
-    var formData = $("#detailform").serialize();
-    console.log(formData);
-    
-    // 서버로 데이터를 전송하고 응답을 받는 코드 (jQuery AJAX 사용)
-    $.ajax({
-        type: "POST", // 또는 "GET" 등 HTTP 요청 메서드 선택
-        url: updateProUrl, // 서버 엔드포인트 URL 설정
-        data: formData, // 폼 데이터 전송
-//         processData: false, // 폼 데이터를 문자열로 변환하지 않도록 설정 (FormData 사용 시 필요)
-//         contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 자동으로 설정하지 않도록 함
-        success: function(response) {
-        	console.log("ajax 왔다감");
-            // 서버 응답이 성공인 경우
-            if(response === 'true'){
-            	
-	            Swal.fire({
-	                title: '수정 성공',
-	                text: '성공적으로 수정되었습니다.',
-	                icon: 'success'
-	            }).then(function() {
-	                // 성공 메시지를 표시한 후 추가적인 동작을 수행하려면 이 부분에 코드를 작성합니다.
-	                // 예: 페이지 리로드, 다른 동작 수행 등
-	            });
+        // 불량수가 0 이상이면 불량사유 입력을 활성화하고, 0일 경우 무결함으로 설정하고 불량내역을 비활성화합니다.
+        if (perfDefect > 0) {
+            defectReasonSelect.disabled = false;
+            defectMemoInput.disabled = false;
+            defectMemoInput.style.backgroundColor = "";
+        } else {
+            defectReasonSelect.value = '무결함';
+            defectMemoInput.disabled = true;
+            defectMemoInput.style.backgroundColor = "#eeeeee";
+            defectMemoInput.value = "";
+            defectReasonSelect.disabled = true;
+        }
+        
+     // 불량수가 0 이상이면서 1 이상이면 무결함 옵션을 숨깁니다.
+        if (perfDefect >= 1) {
+            var option = defectReasonSelect.querySelector('option[value="무결함"]');
+            if (option) {
+                option.style.display = 'none';
             }
-        },
-        error: function(xhr, status, error) {
-            // 서버 응답이 실패인 경우
+        } else {
+            // 불량수가 0이면 무결함 옵션을 다시 보이게 합니다.
+            var option = defectReasonSelect.querySelector('option[value="무결함"]');
+            if (option) {
+                option.style.display = 'block';
+            }
+        }
+     
+     
+
+        // 에러 메시지를 표시합니다. (양품수와 불량품수의 합이 0 이상, 지시수량 이하이어야 합니다.)
+        if (perfFair < 0 || perfFair > workAmount) {
             Swal.fire({
-                title: '수정 실패',
-                text: '수정에 실패하였습니다.',
+                title: '입력 오류',
+                text: '양품수와 불량품수의 합은 0 이상, 지시수량 이하이어야 합니다.',
                 icon: 'error'
             });
         }
+    }
+    
+ // 초기화 시 계산을 위해 한 번 호출합니다.
+    calculateDefect();
+
+ //////////////////////////////////////////////////
+    updateButton.addEventListener("click", function(event) {
+        // 폼 데이터를 가져오는 코드 (예: FormData 객체 사용)
+        var formData = $("#detailform").serialize();
+        console.log(formData);
+
+        // 서버로 데이터를 전송하고 응답을 받는 코드 (jQuery AJAX 사용)
+        $.ajax({
+            type: "POST", // 또는 "GET" 등 HTTP 요청 메서드 선택
+            url: updateProUrl, // 서버 엔드포인트 URL 설정
+            data: formData, // 폼 데이터 전송
+            success: function(response) {
+                console.log("ajax 왔다감");
+                // 서버 응답이 성공인 경우
+                if (response === 'true') {
+                    Swal.fire({
+                        title: '수정 성공',
+                        text: '성공적으로 수정되었습니다.',
+                        icon: 'success'
+                    }).then(function() {
+                        // 성공 메시지를 표시한 후 추가적인 동작을 수행하려면 이 부분에 코드를 작성합니다.
+                        // 예: 페이지 리로드, 다른 동작 수행 등
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                // 서버 응답이 실패인 경우
+                Swal.fire({
+                    title: '수정 실패',
+                    text: '수정에 실패하였습니다.',
+                    icon: 'error'
+                });
+            }
+        });
     });
-});
-
-
+};
 </script>
 
 </body>
