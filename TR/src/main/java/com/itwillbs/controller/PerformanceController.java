@@ -56,7 +56,7 @@ public class PerformanceController {
 				
 				// <----------------------------------->
 				// 한 화면에 보여줄 글 개수 
-				int pageSize = 5;
+				int pageSize = 10;
 				
 				// 현 페이지 번호 가져오기
 				String pageNum=request.getParameter("pageNum");

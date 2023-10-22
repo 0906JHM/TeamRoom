@@ -16,13 +16,13 @@
 	</insert>
 
 	<select id="getclientList" resultType="com.itwillbs.domain.ClientDTO">
-    SELECT * FROM clients
+    SELECT * , LEFT(clientAddr1, 2) AS aliasAddr1 , LEFT(clientMemo, 5) as aliasMemo   FROM clients
     order by clientCode desc
     limit #{startRow}, #{pageSize}
 </select>
 
 <select id="getSearch" resultType="ClientDTO">
-		select * FROM clients	
+		select * ,  LEFT(clientAddr1, 2) AS aliasAddr1 , LEFT(clientMemo, 5) as aliasMemo FROM clients	
 		<where>
  			<if test="clientCompany != null and clientCompany !=''">
 				and clientCompany like concat ('%' ,#{clientCompany}, '%')

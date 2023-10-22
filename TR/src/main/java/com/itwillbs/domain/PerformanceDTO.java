@@ -36,7 +36,9 @@ public class PerformanceDTO {
 	// perfAmount대신 workAmount로 할거임
 	private int workAmount;
 	
-	private String workInfo; // 라인코드 대신 사용 
+	private String workInfo; // 라인코드 대신 사용
+	private String workProcess;
+	
 	//도넛차트 변수 추가 
 	private int totalAmount;
 	private int totalFair;
