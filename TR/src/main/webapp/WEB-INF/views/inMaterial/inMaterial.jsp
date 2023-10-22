@@ -481,7 +481,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 							        '입고창고': item.whseCode,
 							        '거래처코드': item.clientCode,
 							        '원자재코드': item.rawCode,
-// 							        '원자재명': item.rawName,
+							        '원자재명': item.rawName,
 							        '발주수량':item.buyCount,
 							        '입고수량': item.inCount,
 							        '재고수량': item.stockCount,
