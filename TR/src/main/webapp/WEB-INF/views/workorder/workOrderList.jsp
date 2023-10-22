@@ -23,300 +23,350 @@
 <!-- /page content -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- 모달창 script -->
-	<script>
-      //modal창에 열기 위한 이벤트 헨들러
-        function openModal(e) {
-        	//modal창의 id 값 할당
-            const myModal = document.getElementById("myModal");
-           const elements = [];
-            for (let i = 1; i <= 10; i++) {
-                elements[i] ='element' + i;
-            }
-        	//클릭한 요소의 name의 속성 값을 가져와서 clickedElementName변수에 저장한다
-        	//즉 이 부분은 클릭한 요소의 name속성을 추출하는 역할
-        	// "getBoundingClientRect()" 메서드를 사용하여 클릭한 요소의 화면 좌표 정보를 가져옵니다.
-        	// 이 정보는 모달 창의 위치를 설정하는 데 사용됩니다.           
-            /* const clickedElementValue = e.getAttribute("name"); */
-        	
-        	//클릭한 요소의 좌표정보 
-            const rect = e.getBoundingClientRect();
-           
-            
-        	// 클릭한 요소의 오른쪽 아래 모서리의 화면 좌표를 "x"와 "y" 변수에 저장합니다.
-        	// 이것은 모달 창을 클릭한 요소의 위치에 배치하는 데 사용됩니다.
-            var xr = rect.right;
-            var xl = rect.left;
-            var yt = rect.top;
-            var yb = rect.bottom; 
-            var xg = (xr-xl)/2;
-            var yg = (yt-yb)/2;
-            var x =  xl+xg;
-            var y = yb+yg;
-           
-            //클릭후에 모달창을 생성하는 위치를 조정
-            myModal.style.left = x + "px";
-            myModal.style.top = y + "px";
-            myModal.style.display = "block";
-            
-            // modalContent를 초기화 (이전 내용 지우기)
-            myModal.innerHTML = "";
-           
-            //닫기
-            myModal.innerHTML = `<span id="closeModalButton" style="cursor: pointer;">닫기</span><br>`;
-            const clickedElementId = e.getAttribute("id");
-            if(clickedElementId.startsWith("PR")){
-            	//modal_ajax 
-            	$.ajax({
-            	  url : '${pageContext.request.contextPath}/KDMajax/modalprod',
-            	  data: {prodCode:clickedElementId},
-            	  type : 'GET',
-            	  dataType:'json',
-            	  success: function (json) {
-                      if (json && typeof json === 'object') {
-                    	  
-                    	// 값 할당
-                    	addInput("제품 이름:", elements[0],json.prodName);
-            	addInput("제품 단위:", elements[1],json.prodUnit);
-            	addInput("용량:", elements[2],json.prodSize);
-            	addInput("향기 종류:", elements[3],json.prodPerfume);
-            	addInput("거래처 코드:", elements[4],json.clientCode);
-                addInput("창고 코드:", elements[5],json.whseCode);
-                addInput("매출 단가:", elements[6],json.prodPrice);
-                addInput("제품 비고:", elements[7],json.prodMemo);
-                    	} else {
-                    	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                    	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                    	}
+<style>
 
-                  }
-              });	
-            	
+</style>
 
-      	  }  else if(clickedElementId.startsWith("SL")){
-              	//modal_ajax 
-              	$.ajax({
-              	  url : '${pageContext.request.contextPath}/KDMajax/modalsell',
-              	  data: {sellCode:clickedElementId},
-              	  type : 'GET',
-              	  dataType:'json',
-              	  success: function (json) {
-                        if (json && typeof json === 'object') {
-                        	// 값 할당
-                        	
-
-                      	addInput("수주 일자:", elements[0],json.sellDate);
-              	addInput("납기 일자:", elements[1],json.sellDuedate);
-              	addInput("관리 사원:", elements[2],json.sellEmpId);
-              	addInput("수주 수량:", elements[3],json.sellCount);
-                  addInput("수주 단가:", elements[4],json.sellPrice);
-                  addInput("제품 코드:", elements[5],json.prodCode);
-                  addInput("제품 이름:", elements[6],json.prodName);
-                  addInput("수주 비고:", elements[7],json.sellMemo);
-                  addInput("출고 상태:", elements[8],json.sellState);
-                  addInput("거래처 이름:", elements[9],json.clientCompany);
-                  addInput("거래처 코드:", elements[10],json.clientCode);
-                      	} else {
-                      	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                      	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                      	}
-                        }
-                });	//기존 닫기 창 함수
-               
-        }  else if(clickedElementId.startsWith("WI")){
-        	
-        	var result = clickedElementId.substring(clickedElementId.indexOf("WI") + 2);
-          	 	
-          	
-          	var elementsStartingWithL = [];
-
-          	// 문자열을 "L"로 분할하여 배열로 만들기
-          	var elementss = result.split("L");
-
-          	// 배열을 순회하며 "L"로 시작하는 부분을 찾아내어 새로운 배열에 저장
-          	for (var i = 1; i < elementss.length; i++) {
-          	    elementsStartingWithL.push("L" + elementss[i]);
-          	}
-          
-          	for (var i = 0; i < elementsStartingWithL.length; i++) {
-          	    var label = (i + 1) + "차";
-          	    addInput(label, elements[i], elementsStartingWithL[i]);
-          	}
-                  
-            
-           
-    }
-        else if(clickedElementId.startsWith("GL")||clickedElementId.startsWith("LB")||clickedElementId.startsWith("PC")||clickedElementId.startsWith("PE")||clickedElementId.startsWith("ST")){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalraw',
-          	  data: {rawCode:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                  	addInput("원자재 이름:", elements[0],json.rawName);
-          	addInput("원자재 종류:", elements[1],json.rawType);
-          	addInput("원자재 단위:", elements[2],json.rawUnit);
-          	addInput("원자재 가격:", elements[3],json.rawPrice);
-              addInput("거래처 코드:", elements[4],json.clientCode);
-              addInput("창고 코드:", elements[5],json.whseCode);
-              addInput("원자재 비고:", elements[6],json.rawMemo);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    }
-        else if(clickedElementId.startsWith("CL")||clickedElementId.startsWith("OR")){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalclient',
-          	  data: {clientCode:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                    	
-
-                  	addInput("이름:", elements[0],json.clientCompany);
-          	addInput("분류:", elements[1],json.clientType);
-          	addInput("사업자번호:", elements[2],json.clientNumber);
-          	addInput("상세분류:", elements[3],json.clientDetail);
-              addInput("대표이름:", elements[4],json.clientCeo);
-              addInput("담당자:", elements[5],json.clientName);
-              addInput("주소:", elements[6],json.clientAddr1);
-              addInput("상세주소:", elements[7],json.clientAddr2);
-              addInput("대표 번호:", elements[8],json.clientTel);
-              addInput("담당자 번호:", elements[9],json.clientPhone);
-              addInput("팩스:", elements[10],json.clientFax);
-              addInput("이메일:", elements[11],json.clientEmail);
-              addInput("비고:", elements[12],json.clientMemo);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    }
-            
-        else if(clickedElementId.startsWith("WH")){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalwhse',
-          	  data: {whseCode:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                    	
-
-                  	addInput("이름:", elements[0],json.whseName);
-          	addInput("타입:", elements[1],json.whseType);
-          	addInput("사용 상태", elements[2],json.whseState);
-          	addInput("주소:", elements[3],json.whseAddr);
-              addInput("연락처:", elements[4],json.whseTel);
-              addInput("비고:", elements[5],json.whseMemo);
-              addInput("제품 코드:", elements[6],json.prodCode);
-              addInput("원자재 코드:", elements[7],json.rawCode);
-              addInput("담당자:", elements[8],json.whseEmpId);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    }
-        else if(!isNaN(clickedElementId.charAt(0))){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalemp',
-          	  data: {empId:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
-                    	
-
-                  	addInput("이름:", elements[0],json.empName);
-          	addInput("부서:", elements[1],json.empDepartment);
-          	addInput("직급:", elements[2],json.empPosition);
-          	addInput("이메일:", elements[3],json.empEmail);
-              addInput("연락처:", elements[4],json.empTel);
-              addInput("재직상태:", elements[5],json.empState);
-              addInput("입사일:", elements[6],json.empHiredate);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    } else if(clickedElementId.startsWith("WO")){
-      	//modal_ajax 
-      	$.ajax({
-      	  url : '${pageContext.request.contextPath}/KDMajax/modalworkorder',
-      	  data: {workCode:clickedElementId},
-      	  type : 'GET',
-      	  dataType:'json',
-      	  success: function (json) {
-                if (json && typeof json === 'object') {
-                	// 값 할당
-                	
-
-              	addInput("제품코드:", elements[0],json.prodCode);
-      	addInput("수주코드:", elements[1],json.sellCode);
-      	addInput("지시일", elements[2],json.workDate);
-      	addInput("라인코드:", elements[3],json.lineCode);
-          addInput("지시수량:", elements[4],json.workAmount);
-          addInput("작업지시자:", elements[5],json.workEmpId);
-          addInput("추가지시일:", elements[6],json.workDatechange);
-          addInput("라인내역:", elements[7],json.workInfo);
-              	} else {
-              	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-              	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-              	}
-                }
-        });	//기존 닫기 창 함수
-       
-}
-            
-            
-            
-            //ajax
-            closeModalButton.addEventListener("click", function (e) {
-          	    if (e.target === closeModalButton) {
-          	        myModal.style.display = "none";
-          	    }
-          	});
-      }    
-            //input시 동적으로 생성하기 위한 함수
-            function addInput(label, id, value) {
-                const div = document.createElement("div");
-                const input = document.createElement("input");
-                div.style.display = "flex";
-                div.style.justifyContent = "flex-end";
-                input.type = "text";
-                input.id = id;
-                input.value = value; // 값을 설정
-                input.size = 9;
-                input.readOnly = true;
-                div.appendChild(document.createTextNode(label));
-                div.appendChild(input);
-                myModal.appendChild(div);
-            }
-          	
-        
-               
-    </script>
+	
 <!-- 폰트 -->
+
+
+
+
+</head>
+
+<body>
+	<!-- 모달 대화상자 -->
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <span class="close" id="closeModal">&times;</span>
+	    </div>
+	    <div class="modal-body">
+	      <p>모달 내용을 여기에 넣으세요</p>
+	    </div>
+	  </div>
+	</div>
+<jsp:include page="../inc/side.jsp"></jsp:include>
+<!-- page content -->
+<div class="right_col">
+
+	<h2 style="cursor: pointer; " onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'">작업지시 관리</h2>
+
+		
+		<form method="get">
+			<div class="searchform">
+				<input type="hidden" name="input" id="input" value="${input }">
+				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 입력하세요." style="cursor: pointer;">
+				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요." onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
+				<label>지시일자</label> 
+						<input type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
+						<label style="margin:0px"> ~ </label> 
+						<input style="margin-left:" type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
+				<label><input style="width:70px" type="submit"  class="button" name="search_place" id="allButton" value="전체">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="oneButton" value="1차공정">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="twoButton" value="2차공정">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="threeButton" value="3차공정">
+    		<input style="width:70px" type="submit"  name="search_place" class="button" id="finishButton" value="마감" ></label> 
+				<div id="button">
+			
+				
+			
+		</div>
+		</div>	
+		</form>
+
+
+
+	<div class="col-md-12">	
+	<div style ="margin: 2% 0 0 0;"	>
+	<div style="float:right;">
+				    <!-- 버튼 제어 -->
+						<button style="display: none;" id="add" class="button">추가</button>
+						<button style="display: none;" id="modify" class="button">수정</button>
+						<button style="display: none;" id="delete" class="button">삭제</button>
+						<button style="display: none;" id="cancle" onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'" id="cancle" class="button">취소</button>
+						<button style="display: none;" type="submit" id="save" class="button">저장</button>
+						</div>
+						</div>
+		<div class="x_panel">
+		
+				<div class="x_title">
+				
+					<label style="margin:0px">총 ${paging.total } 건</label>
+					<div>
+					<label for="perPageSelect" >항목 수:</label>
+<select id="perPageSelect" class="input_box" style ="top:1.8px; width:100px; height:22px;" onchange="applyFilters()" value="${paging.cntPerPage}">
+    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
+    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
+    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
+    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
+</select>
+					</div>
+					
+					
+						</div>
+					
+				
+					<script>
+					
+					</script>
+					<!-- 버튼 제어 -->
+					
+
+				
+				
+<div class="x_content">
+	<div class="table-responsive">
+		<div class="table-wrapper" >
+
+		<form id="fr">
+			<input type="hidden" name="empId" value="${sessionScope.id.empId }">
+			<table class="table table-striped jambo_table bulk_action" style="text-align-last:center;" id="data-table">
+				<thead>
+					<tr class="headings">
+						<th>번호</th>
+						<th>작업지시코드</th>
+						<th>라인코드</th>
+						<th>수주코드</th>
+						<th>제품코드</th>
+						<th>지시일</th>
+						<th>지시수량</th>
+						<th>담당자</th>
+						<th>공정</th>
+						<th>라인내역</th>
+						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
+							<th>마감</th>
+						 </c:if>
+					</tr>
+				</thead>
+				<tr style='display: none;'></tr>
+				<c:forEach var="w" items="${workList }">
+					<tr class="contents">
+						<td></td>
+						<td id="workCode">${w.workCode }</td>
+						<td id="lineCode">${w.lineCode }</td>
+						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</label></td>
+						<td style='display: none;' id="${w.prodName }">${w.prodName }</td>
+						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.prodCode }" name="prodCode" value="${w.prodCode }">${w.prodCode }</label></td>
+								
+						<c:choose>
+    <c:when test="${not empty w.workDatechange}">
+        <td style="color: red;">${w.workDatechange}</td>
+    </c:when>
+    <c:otherwise>
+        <td>${w.workDate}</td>
+    </c:otherwise>
+</c:choose>
+						
+						<td id="workAmount" >${w.workAmount }</td>
+						<%-- <td>${w.workEmpId }</td> --%>
+						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.workEmpId }" name="workEmpId" value="${w.workEmpId }">${w.workEmpId}</label></td>	
+						<td id="workProcess">${w.workProcess }</td>
+						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.workInfo }" name="workInfo" value="${w.workInfo }">보기</label></td>						
+						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
+							<td>
+								<c:if test="${w.workProcess != '마감'}">
+									<a name="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}&workInfo=${w.workInfo}&prodCode=${w.prodCode}">공정마감</a>
+								</c:if>
+							</td>
+						</c:if>						
+					</tr>
+				</c:forEach>
+			</table>
+		</form>
+		</div>
+	</div>
+</div>
+
+	<div style="float:left;">
+ 
+	<button id="excelDownload" class="button">엑셀</button>
+	</div>	
+	<script type="text/javascript">
+	function applyFilters() {
+        var perPageValue = document.getElementById("perPageSelect").value;
+        var searchLine = "${search.search_line}";
+        var fromDate = "${search.search_fromDate}";
+        var toDate = "${search.search_toDate}";
+        var place = "${search.search_place}";
+        var prod = "${search.search_prod}";
+
+        var url = '${pageContext.request.contextPath}/workorder/workOrderList?nowPage=1&cntPerPage=' + perPageValue +
+            '&search_line=' + searchLine + '&search_fromDate=' + fromDate +
+            '&search_toDate=' + toDate + '&search_place=' + place + '&search_prod=' + prod;
+
+        // Redirect to the generated URL
+        window.location.href = url;
+    }
+    
+
+    // 페이지 로드 시 실행되는 함수
+    
+    $.noConflict();
+jQuery(document).ready(function($){
+    	
+    	 var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
+ 		
+		  if (team === "자재팀" || team === "관리자") {
+			  $('#add').show();
+				$('#modify').show();
+				$('#delete').show();
+		   }
+		  else if (team ===""){
+			  window.location.href = "${pageContext.request.contextPath}/login/logout";
+		  }
+    	 
+		 
+        
+    	 $("[name='magamBtn']").on("click", function(event) {
+    	        event.preventDefault(); // 기존 링크 동작을 막음
+
+    	        // 링크의 href 속성값을 가져옴
+    	        var url = $(this).attr("href");
+
+    	        // AJAX 요청
+    	        $.ajax({
+    	            type: "GET", // 또는 "POST" - HTTP 요청 방식 선택
+    	            url: url,
+    	            dataType: "text",
+    	            success: function(response) {
+    	            	 if(response === "")
+    	            		 {
+    	            			Swal.fire({
+    								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
+    								icon: 'info',
+    								confirmButtonColor: '#9AC5F4',
+    								width: '400px',
+    							}).then((result) => {
+    							    if (result.isConfirmed) {
+    							        // 확인 버튼을 눌렀을 때 특정 주소로 이동
+    							    	window.location.href = window.location.href;
+    							    }
+    							});
+    	            		 
+    	            		 }
+    	            	 else{
+    	            	 window.location.href = window.location.href;
+    	            	 }
+    	             },
+    	             error: function(error) {
+    	                 console.error("AJAX 요청 실패:", error);
+    	                 // 실패에 대한 처리를 추가하세요.
+    	             }
+    	        });
+    	    });
+    	 
+    	$('table tr').each(function(index){
+    		var num = "<c:out value='${paging.nowPage}'/>";
+    		var num2 = "<c:out value='${paging.cntPerPage}'/>";
+    		$(this).find('td:first').text(((num-1)*num2) + index-1);
+    		num3 = ((num-1)*num2) + index;
+    	});
+    	
+		
+    	var button = document.getElementById("allButton");
+    	    <c:if test="${search.search_place == '1차공정'}">
+    var button = document.getElementById("oneButton");
+</c:if>
+<c:if test="${search.search_place == '2차공정'}">
+var button = document.getElementById("twoButton");
+</c:if>
+<c:if test="${search.search_place == '3차공정'}">
+var button = document.getElementById("threeButton");
+</c:if>
+<c:if test="${search.search_place == '마감'}">
+var button = document.getElementById("finishButton");
+</c:if>
+button.style.backgroundColor = "#4D4D4D";
+});
+    
+  
+
+		
+		//엑셀
+		const excelDownload = document.querySelector('#excelDownload');
+		
+		document.addEventListener('DOMContentLoaded', ()=> {
+			excelDownload.addEventListener('click', exportExcel);
+		});
+		
+		function exportExcel() {
+			//1. workbook 생성
+			var wb = XLSX.utils.book_new();
+			
+			//2. 시트 만들기
+			var newWorksheet = excelHandler.getWorksheet();
+			
+			//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+			XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+			
+			//4. 엑셀 파일 만들기
+			var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+			
+			//5. 엑셀 파일 내보내기
+			saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+			
+		} //exportExcel()
+		
+		var excelHandler = {
+			getExcelFileName : function() {
+				return 'workOrderList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'Work Order Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('data-table'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+		
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+			var view = new Uint8Array(buf);  
+			for(var i=0; i<s.length; i++) {
+				view[i] = s.charCodeAt(i) & 0xFF;
+			}
+			return buf;
+		} //s2ab(s)
+	</script>
+	
+	
+	<div id="pagination" class="page_wrap">
+			<div class="page_nation">
+						<c:if test="${paging.startPage != 1 }">
+							<a class="arrow prev" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">◀️</a>
+						</c:if>
+						
+						
+						<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="p">
+    <c:choose>
+        <c:when test="${p eq paging.nowPage}">
+            <a class="a active" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
+        </c:when>
+        <c:otherwise>
+            <a class="a" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+						<c:if test="${paging.endPage != paging.lastPage}">
+							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.endPage + 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
+						</c:if>
+					</div>
+			</div>
+	
+	
+	
+</div>
+
+</div>
+
+	
+	
+</div>
 
 <script type="text/javascript">
 	//========================= 함수, 상수 ==================================//
@@ -920,376 +970,290 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 </script>
 
 
-</head>
 
-<body>
-<!-- 모달창 -->
-	<div id="myModal" style="display: none;
-	position: absolute;
-	background-color: #fff;
-	border: 1px solid #000;
-	padding: 10px;
-	z-index: 1;">
-	</div>
-	<!-- 모달창 -->
-<jsp:include page="../inc/side.jsp"></jsp:include>
-<!-- page content -->
-<div class="right_col">
+<script>
+      //modal창에 열기 위한 이벤트 헨들러
+        function openModal(event) {
+        	  const clickedElementId = event.target.id;
+            if(clickedElementId.startsWith("PR")){
+            	//modal_ajax 
+            	$.ajax({
+            	  url : '${pageContext.request.contextPath}/KDMajax/modalprod',
+            	  data: {prodCode:clickedElementId},
+            	  type : 'GET',
+            	  dataType:'json',
+            	  success: function (json) {
+                      if (json && typeof json === 'object') {
+                    	  
+                    	  var dataformat = {
+					               
+					            	"제품 이름:": json.prodName,
+                      "제품 단위": json.prodUnit,
+                      "용량": json.prodSize,
+                      	"향기 종류": json.prodPerfume,
+                      	"거래처 코드":json.clientCode,
+                         "창고 코드": json.whseCode,
+                         "매출 단가": json.prodPrice,
+                          "제품 비고": json.prodMemo
+					            };
+					    	openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+                    	} else {
+                    	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                    	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                    	}
 
-	<h2 style="cursor: pointer; " onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'">작업지시 관리</h2>
+                  }
+              });	
+            	
 
-		
-		<form method="get">
-			<div class="searchform">
-				<input type="hidden" name="input" id="input" value="${input }">
-				<label>라인</label> <input type="text" name="search_line" id="search_line" class="input_box" placeholder="라인을 입력하세요." style="cursor: pointer;">
-				<label>제품</label> <input type="text" name="search_prod" id="search_prod" class="input_box" placeholder="제품을 선택하세요." onclick="searchItem('prod','search_prod')" style="cursor: pointer;">
-				<label>지시일자</label> 
-						<input type="text" name="search_fromDate" id="search_fromDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;">
-						<label style="margin:0px"> ~ </label> 
-						<input style="margin-left:" type="text" name="search_toDate" id="search_toDate" class="input_box" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"><br><br>
-				<label><input style="width:70px" type="submit"  class="button" name="search_place" id="allButton" value="전체">
-    		<input style="width:70px" type="submit"  name="search_place" class="button" id="oneButton" value="1차공정">
-    		<input style="width:70px" type="submit"  name="search_place" class="button" id="twoButton" value="2차공정">
-    		<input style="width:70px" type="submit"  name="search_place" class="button" id="threeButton" value="3차공정">
-    		<input style="width:70px" type="submit"  name="search_place" class="button" id="finishButton" value="마감" ></label> 
-				<div id="button">
-			
-				
-			
-		</div>
-		</div>	
-		</form>
+      	  }  else if(clickedElementId.startsWith("SL")){
+              	//modal_ajax 
+              	$.ajax({
+              	  url : '${pageContext.request.contextPath}/KDMajax/modalsell',
+              	  data: {sellCode:clickedElementId},
+              	  type : 'GET',
+              	  dataType:'json',
+              	  success: function (json) {
+                        if (json && typeof json === 'object') {
+                        	// 값 할당
+                        	 var dataformat = {
+                        			
+                        			 "수주 일자" :json.sellDate,
+                                   	"납기 일자" :json.sellDuedate,
+                                   	"관리 사원" :json.sellEmpId,
+                                   	"수주 수량" :json.sellCount,
+                                       "수주 단가" :json.sellPrice,
+                                       "제품 코드" :json.prodCode,
+                                       "제품 이름" :json.prodName,
+                                       "수주 비고" :json.sellMemo,
+                                       "출고 상태" :json.sellState,
+                                       "거래처 이름" :json.clientCompany,
+                                       "거래처 코드" :json.clientCode
+					            };
+					    	openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+                    	
 
+                      	
+                      	} else {
+                      	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                      	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                      	}
+                        }
+                });	//기존 닫기 창 함수
+               
+        }  else if(clickedElementId.startsWith("WI")){
+        	var result = clickedElementId.substring(clickedElementId.indexOf("WI") + 2);
+          	var elementsStartingWithL = [];
+// 문자열을 "L"로 분할하여 배열로 만들기
+          	var elementss = result.split("L");
+// 배열을 순회하며 "L"로 시작하는 부분을 찾아내어 새로운 배열에 저장
+          	for (var i = 1; i < elementss.length; i++) {
+          	    elementsStartingWithL.push("L" + elementss[i]);
+          	}
+          	var dataformat = {}; // 빈 객체 생성
 
-
-	<div class="col-md-12">	
-	<div style ="margin: 2% 0 0 0;"	>
-	<div style="float:right;">
-				    <!-- 버튼 제어 -->
-						<button style="display: none;" id="add" class="button">추가</button>
-						<button style="display: none;" id="modify" class="button">수정</button>
-						<button style="display: none;" id="delete" class="button">삭제</button>
-						<button style="display: none;" id="cancle" onclick="location.href='${pageContext.request.contextPath}/workorder/workOrderList'" id="cancle" class="button">취소</button>
-						<button style="display: none;" type="submit" id="save" class="button">저장</button>
-						</div>
-						</div>
-		<div class="x_panel">
-		
-				<div class="x_title">
-				
-					<label style="margin:0px">총 ${paging.total } 건</label>
-					<div>
-					<label for="perPageSelect" >항목 수:</label>
-<select id="perPageSelect" class="input_box" style ="top:1.8px; width:100px; height:22px;" onchange="applyFilters()" value="${paging.cntPerPage}">
-    <option value="10" ${paging.cntPerPage == 10 ? 'selected' : ''}>10개</option>
-    <option value="50" ${paging.cntPerPage == 50 ? 'selected' : ''}>50개</option>
-    <option value="100" ${paging.cntPerPage == 100 ? 'selected' : ''}>100개</option>
-    <option value="9999" ${paging.cntPerPage == 9999 ? 'selected' : ''}>전체 보기</option>
-</select>
-					</div>
-					
-					
-						</div>
-					
-				
-					<script>
-					
-					</script>
-					<!-- 버튼 제어 -->
-					
-
-				
-				
-<div class="x_content">
-	<div class="table-responsive">
-		<div class="table-wrapper" >
-
-		<form id="fr">
-			<input type="hidden" name="empId" value="${sessionScope.id.empId }">
-			<table class="table table-striped jambo_table bulk_action" style="text-align-last:center;" id="data-table">
-				<thead>
-					<tr class="headings">
-						<th>번호</th>
-						<th>작업지시코드</th>
-						<th>라인코드</th>
-						<th>수주코드</th>
-						<th>제품코드</th>
-						<th>지시일</th>
-						<th>지시수량</th>
-						<th>담당자</th>
-						<th>공정</th>
-						<th>라인내역</th>
-						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
-							<th>마감</th>
-						 </c:if>
-					</tr>
-				</thead>
-				<tr style='display: none;'></tr>
-				<c:forEach var="w" items="${workList }">
-					<tr class="contents">
-						<td></td>
-						<td id="workCode">${w.workCode }</td>
-						<td id="lineCode">${w.lineCode }</td>
-						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</label></td>
-						<td style='display: none;' id="${w.prodName }">${w.prodName }</td>
-						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.prodCode }" name="prodCode" value="${w.prodCode }">${w.prodCode }</label></td>
-								
-						<c:choose>
-    <c:when test="${not empty w.workDatechange}">
-        <td style="color: red;">${w.workDatechange}</td>
-    </c:when>
-    <c:otherwise>
-        <td>${w.workDate}</td>
-    </c:otherwise>
-</c:choose>
-						
-						<td id="workAmount" >${w.workAmount }</td>
-						<%-- <td>${w.workEmpId }</td> --%>
-						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.workEmpId }" name="workEmpId" value="${w.workEmpId }">${w.workEmpId}</label></td>	
-						<td id="workProcess">${w.workProcess }</td>
-						<td> <label style='cursor: pointer;' onclick="openModal(this)" id="${w.workInfo }" name="workInfo" value="${w.workInfo }">보기</label></td>						
-						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
-							<td>
-								<c:if test="${w.workProcess != '마감'}">
-									<a name="magamBtn" class="magambutton" href="${pageContext.request.contextPath}/workorder/updateStatus?workCode=${w.workCode }&lineCode=${w.lineCode }&workProcess=${w.workProcess}&workInfo=${w.workInfo}&prodCode=${w.prodCode}">공정마감</a>
-								</c:if>
-							</td>
-						</c:if>						
-					</tr>
-				</c:forEach>
-			</table>
-		</form>
-		</div>
-	</div>
-</div>
-
-	<div style="float:left;">
- 
-	<button id="excelDownload" class="button">엑셀</button>
-	</div>	
-	<script type="text/javascript">
-	function applyFilters() {
-        var perPageValue = document.getElementById("perPageSelect").value;
-        var searchLine = "${search.search_line}";
-        var fromDate = "${search.search_fromDate}";
-        var toDate = "${search.search_toDate}";
-        var place = "${search.search_place}";
-        var prod = "${search.search_prod}";
-
-        var url = '${pageContext.request.contextPath}/workorder/workOrderList?nowPage=1&cntPerPage=' + perPageValue +
-            '&search_line=' + searchLine + '&search_fromDate=' + fromDate +
-            '&search_toDate=' + toDate + '&search_place=' + place + '&search_prod=' + prod;
-
-        // Redirect to the generated URL
-        window.location.href = url;
+          	for (var i = 0; i < elementsStartingWithL.length; i++) {
+          	    var key = (i + 1) + "차 라인"; // 키 생성 (1차 라인, 2차 라인, ...)
+          	    dataformat[key] = elementsStartingWithL[i]; // 객체에 속성 추가
+          	}
+          	openModalWithData(event, dataformat, 200);
+       
+          	}
+    /* 
+        else if(clickedElementId.startsWith("GL")||clickedElementId.startsWith("LB")||clickedElementId.startsWith("PC")||clickedElementId.startsWith("PE")||clickedElementId.startsWith("ST")){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalraw',
+          	  data: {rawCode:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                  	"원자재 이름" :json.rawName);
+          	"원자재 종류" :json.rawType);
+          	"원자재 단위" :json.rawUnit);
+          	"원자재 가격" :json.rawPrice);
+              "거래처 코드" :json.clientCode);
+              "창고 코드" :json.whseCode);
+              "원자재 비고" :json.rawMemo);
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
     }
-    
+        else if(clickedElementId.startsWith("CL")||clickedElementId.startsWith("OR")){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalclient',
+          	  data: {clientCode:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	
 
-    // 페이지 로드 시 실행되는 함수
-    
-    $.noConflict();
-jQuery(document).ready(function($){
-    	
-    	 var team = "${sessionScope.empDepartment }"; // 팀 조건에 따라 변수 설정
- 		
-		  if (team === "자재팀" || team === "관리자") {
-			  $('#add').show();
-				$('#modify').show();
-				$('#delete').show();
-		   }
-		  else if (team ===""){
-			  window.location.href = "${pageContext.request.contextPath}/login/logout";
-		  }
-    	 
-		 
+                  	"이름" :json.clientCompany);
+          	"분류" :json.clientType);
+          	"사업자번호" :json.clientNumber);
+          	"상세분류" :json.clientDetail);
+              "대표이름" :json.clientCeo);
+              "담당자" :json.clientName);
+              "주소" :json.clientAddr1);
+              "상세주소" :json.clientAddr2);
+              "대표 번호" :json.clientTel);
+              "담당자 번호" :json.clientPhone);
+              "팩스" :json.clientFax);
+              "이메일" :json.clientEmail);
+              "비고" :json.clientMemo);
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    }
+            
+        else if(clickedElementId.startsWith("WH")){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalwhse',
+          	  data: {whseCode:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	
+
+                  	"이름" :json.whseName);
+          	"타입" :json.whseType);
+          	"사용 상태", :json.whseState);
+          	"주소" :json.whseAddr);
+              "연락처" :json.whseTel);
+              "비고" :json.whseMemo);
+              "제품 코드" :json.prodCode);
+              "원자재 코드" :json.rawCode);
+              "담당자" :json.whseEmpId);
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    }*/
+        else if(!isNaN(clickedElementId.charAt(0))){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalemp',
+          	  data: {empId:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	var dataformat = {			            	
+                    			"이름" :json.empName,
+                              	"부서" :json.empDepartment,
+                              	"직급" :json.empPosition,
+                              	"이메일" :json.empEmail,
+                                  "연락처" :json.empTel,
+                                  "재직상태" :json.empState,
+                                  "입사일" :json.empHiredate,};
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+
+                  	
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    } /*else if(clickedElementId.startsWith("WO")){
+      	//modal_ajax 
+      	$.ajax({
+      	  url : '${pageContext.request.contextPath}/KDMajax/modalworkorder',
+      	  data: {workCode:clickedElementId},
+      	  type : 'GET',
+      	  dataType:'json',
+      	  success: function (json) {
+                if (json && typeof json === 'object') {
+                	// 값 할당
+                	
+
+              	"제품코드" :json.prodCode);
+      	"수주코드" :json.sellCode);
+      	"지시일", :json.workDate);
+      	"라인코드" :json.lineCode);
+          "지시수량" :json.workAmount);
+          "작업지시자" :json.workEmpId);
+          "추가지시일" :json.workDatechange);
+          "라인내역" :json.workInfo);
+              	} else {
+              	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+              	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+              	}
+                }
+        });	//기존 닫기 창 함수
+       
+}*/
+            
+         }   function openModalWithData(event, data, width) {
+    		    var modal = document.getElementById('myModal');
+    		    var modalContent = document.querySelector('.modal-body');
+    		    
+    		    modalContent.style.width = width + 'px';
+    		    modal.style.width = (width + 20) + 'px'; // 20px는 여유 여백이라고 가정
+    		    modalContent.innerHTML = ''; // 기존 내용 제거
+
+    		    // 데이터를 HTML 표로 구성
+    		    var tableHTML = '<table class="table">';
+    		    for (var key in data) {
+    		        if (data.hasOwnProperty(key)) {
+    		            tableHTML += '<tr>';
+    		            tableHTML += '<td>' + key + '</td>';
+    		            tableHTML += '<td>' + data[key] + '</td>';
+    		            tableHTML += '</tr>';
+    		        }
+    		    }
+    		    tableHTML += '</table';
+
+    		    // 모달 내용에 HTML 표 추가
+    		    modalContent.innerHTML = tableHTML;
+
+    		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+    		    modal.style.display = 'block';
+    		    modal.style.left = (event.clientX + window.scrollX) + 'px';
+    		    modal.style.top = (event.clientY + window.scrollY) + 'px';
+    		}
+
+
+    		// 모달과 닫기 버튼 가져오기
+    		var modal = document.getElementById('myModal');
+    		var closeModal = document.getElementById('closeModal');
+
+    		console.log(modal);
+    	    // 닫기 버튼을 클릭하면 모달을 숨김
+    		closeModal.addEventListener('click', function() {
+    		    modal.style.display = 'none';
+    		});
+    		
+    		// 모달 외부를 클릭하면 모달을 숨김
+    		window.addEventListener('click', function(event) {
+    			if (event.target != modal) {
+    				modal.style.display = 'none';
+    			}
+    		});
         
-    	 $("[name='magamBtn']").on("click", function(event) {
-    	        event.preventDefault(); // 기존 링크 동작을 막음
-
-    	        // 링크의 href 속성값을 가져옴
-    	        var url = $(this).attr("href");
-
-    	        // AJAX 요청
-    	        $.ajax({
-    	            type: "GET", // 또는 "POST" - HTTP 요청 방식 선택
-    	            url: url,
-    	            dataType: "text",
-    	            success: function(response) {
-    	            	 if(response === "")
-    	            		 {
-    	            			Swal.fire({
-    								title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "사용가능한 라인이 없습니다"+ "</div>",
-    								icon: 'info',
-    								confirmButtonColor: '#9AC5F4',
-    								width: '400px',
-    							}).then((result) => {
-    							    if (result.isConfirmed) {
-    							        // 확인 버튼을 눌렀을 때 특정 주소로 이동
-    							    	window.location.href = window.location.href;
-    							    }
-    							});
-    	            		 
-    	            		 }
-    	            	 else{
-    	            	 window.location.href = window.location.href;
-    	            	 }
-    	             },
-    	             error: function(error) {
-    	                 console.error("AJAX 요청 실패:", error);
-    	                 // 실패에 대한 처리를 추가하세요.
-    	             }
-    	        });
-    	    });
-    	 
-    	$('table tr').each(function(index){
-    		var num = "<c:out value='${paging.nowPage}'/>";
-    		var num2 = "<c:out value='${paging.cntPerPage}'/>";
-    		$(this).find('td:first').text(((num-1)*num2) + index-1);
-    		num3 = ((num-1)*num2) + index;
-    	});
-    	
-		
-    	var button = document.getElementById("allButton");
-    	    <c:if test="${search.search_place == '1차공정'}">
-    var button = document.getElementById("oneButton");
-</c:if>
-<c:if test="${search.search_place == '2차공정'}">
-var button = document.getElementById("twoButton");
-</c:if>
-<c:if test="${search.search_place == '3차공정'}">
-var button = document.getElementById("threeButton");
-</c:if>
-<c:if test="${search.search_place == '마감'}">
-var button = document.getElementById("finishButton");
-</c:if>
-button.style.backgroundColor = "#4D4D4D";
-});
-    
-  
-
-		
-		//엑셀
-		const excelDownload = document.querySelector('#excelDownload');
-		
-		document.addEventListener('DOMContentLoaded', ()=> {
-			excelDownload.addEventListener('click', exportExcel);
-		});
-		
-		function exportExcel() {
-			var searchLine = "${search.search_line}";
-	        var fromDate = "${search.search_fromDate}";
-	        var toDate = "${search.search_toDate}";
-	        var place = "${search.search_place}";
-	        var prod = "${search.search_prod}";
-	     // 엑셀로 내보낼 데이터
-		    var searchParams = {
-		    		searchLine: searchLine,
-		    		fromDate: fromDate,
-		    		toDate: toDate,
-		    		place: place, 
-		    		prod: prod
-		    };
-		    console.log(searchParams);
-	     	
-		    $.ajax({
-		        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
-		        url: "${pageContext.request.contextPath}/workorder/workOrderExcel", // 데이터를 가져올 URL 설정
-		        data: JSON.stringify(searchParams), // 데이터를 JSON 문자열로 변환,
-		        dataType: "json",
-		        contentType: "application/json", // JSON 형식으로 요청을 전송
-		        success: function (data) {
-		        	// 데이터 가공
-					var modifiedData = data.map(function (item) {
-					    return {
-					        '작업지시 코드': item.workCode,
-					        '라인 코드': item.lineCode,
-					        '수주 코드': item.sellCode,
-					        '제품 코드': item.prodCode,
-					        '지시일': item.workDate,
-					        '지시 수정일': item.workDatechange,
-					        '지시 수량':item.workAmount,
-					        '담당자': item.workEmpId,
-					        '공정': item.workProcess,
-					        '마감': item.workProcess,
-					        '라인내역': item.workInfo,
-					    };
-					});
-		            
-					// 열의 너비 설정
-		            var colWidths = [
-		            	{ wch: 15 }, // 작업지시 코드
-		                { wch: 10 }, // 라인 코드
-		                { wch: 15 }, // 수주 코드
-		                { wch: 10 }, // 제품 코드
-		                { wch: 10 }, // 지시일
-		                { wch: 10 }, // 지시 수정일
-		                { wch: 10 }, // 지시 수량
-		                { wch: 10 }, // 담당자
-		                { wch: 10 }, // 공정
-		                { wch: 10 }, // 마감
-		                { wch: 30 } // 라인내역
-		            ];
-		         	// 새 워크북을 생성
-		            var wb = XLSX.utils.book_new();
-		            // JSON 데이터를 워크시트로 변환
-		            var ws = XLSX.utils.json_to_sheet(modifiedData);
-		            // 열 너비 지정
-		            ws['!cols'] = colWidths;
-		            // 워크북에 워크시트 추가
-		            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
-		            // Blob 형태로 워크북 생성
-		            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-		            // 파일 이름 설정 (원하는 파일 이름으로 변경)
-		            var fileName = 'workOrderList'+getToday()+'.xlsx';;
-		            // Blob 파일을 다운로드
-		            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
-		        }
-		    });
-		}
-		// ArrayBuffer 만들어주는 함수
-		function s2ab(s) {
-		    var buf = new ArrayBuffer(s.length); // convert s to arrayBuffer
-		    var view = new Uint8Array(buf); // create uint8array as viewer
-		    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
-		    return buf;
-		}
-			
-	</script>
-	
-	
-	<div id="pagination" class="page_wrap">
-			<div class="page_nation">
-						<c:if test="${paging.startPage != 1 }">
-							<a class="arrow prev" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">◀️</a>
-						</c:if>
-						
-						
-						<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="p">
-    <c:choose>
-        <c:when test="${p eq paging.nowPage}">
-            <a class="a active" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
-        </c:when>
-        <c:otherwise>
-            <a class="a" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${p}&cntPerPage=${paging.cntPerPage}&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${p}</a>
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
-						<c:if test="${paging.endPage != paging.lastPage}">
-							<a class="arrow next" href="${pageContext.request.contextPath}/workorder/workOrderList?nowPage=${paging.endPage + 1 }&cntPerPage=${paging.cntPerPage }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">▶️</a>
-						</c:if>
-					</div>
-			</div>
-	
-	
-	
-</div>
-
-</div>
-
-	
-	
-</div>
+               
+    </script>
 </body>
 </html>
 
