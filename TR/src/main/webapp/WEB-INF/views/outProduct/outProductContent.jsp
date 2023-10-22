@@ -62,7 +62,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 					<c:if test="${outProductDTO.outEmpId == null}">
 						<td>
 							<input type="hidden" name="outEmpId" value="${sessionScope.empId}" id="outEmpId" readonly="readonly">
-							<input type="text" name="outEmpId_1" value="${sessionScope.empId}" id="outEmpId_1" readonly="readonly">
+							<input type="text" name="outEmpId_1" value="${sessionScope.empId}" id="outEmpId_1" readonly="readonly" style="cursor:pointer;">
 						</td>
 					</c:if>
 					<c:if test="${outProductDTO.outEmpId != null  }">
