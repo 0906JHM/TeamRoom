@@ -22,15 +22,6 @@
 
 <!-- /page content -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- 모달창 script -->
-<style>
-
-</style>
-
-	
-<!-- 폰트 -->
-
-
 
 
 </head>
@@ -146,9 +137,9 @@
 						<td></td>
 						<td id="workCode">${w.workCode }</td>
 						<td id="lineCode">${w.lineCode }</td>
-						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</label></td>
+						<td style='cursor: pointer;' onclick="openModal(event)" id="${w.sellCode }" name="sellCode" value="${w.sellCode}">${w.sellCode}</td>
 						<td style='display: none;' id="${w.prodName }">${w.prodName }</td>
-						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.prodCode }" name="prodCode" value="${w.prodCode }">${w.prodCode }</label></td>
+						<td style='cursor: pointer;' onclick="openModal(event)" id="${w.prodCode }" name="prodCode" value="${w.prodCode }">${w.prodCode }</td>
 								
 						<c:choose>
     <c:when test="${not empty w.workDatechange}">
@@ -161,9 +152,9 @@
 						
 						<td id="workAmount" >${w.workAmount }</td>
 						<%-- <td>${w.workEmpId }</td> --%>
-						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.workEmpId }" name="workEmpId" value="${w.workEmpId }">${w.workEmpId}</label></td>	
+						<td style='cursor: pointer;' onclick="openModal(event)" id="${w.workEmpId }" name="workEmpId" value="${w.workEmpId }">${w.workEmpId}</td>	
 						<td id="workProcess">${w.workProcess }</td>
-						<td> <label style='cursor: pointer;' onclick="openModal(event)" id="${w.workInfo }" name="workInfo" value="${w.workInfo }">보기</label></td>						
+						<td style='cursor: pointer; z-index: 10;' onclick="openModal(event)" id="${w.workInfo }" name="workInfo" value="${w.workInfo }">보기</td>
 						<c:if test="${sessionScope.empDepartment eq '생산팀' || sessionScope.empDepartment eq '관리자'}">
 							<td>
 								<c:if test="${w.workProcess != '마감'}">
@@ -971,7 +962,7 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 
 
-<script>
+	<script>
       //modal창에 열기 위한 이벤트 헨들러
         function openModal(event) {
         	  const clickedElementId = event.target.id;
@@ -1031,17 +1022,14 @@ const popupOpt = "top=60,left=140,width=720,height=600";
                                        "거래처 코드" :json.clientCode
 					            };
 					    	openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
-                    	
-
-                      	
-                      	} else {
+                    	} else {
                       	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
                       	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
                       	}
                         }
                 });	//기존 닫기 창 함수
                
-        }  else if(clickedElementId.startsWith("WI")){
+        }   else if(clickedElementId.startsWith("WI")){
         	var result = clickedElementId.substring(clickedElementId.indexOf("WI") + 2);
           	var elementsStartingWithL = [];
 // 문자열을 "L"로 분할하여 배열로 만들기
@@ -1055,11 +1043,12 @@ const popupOpt = "top=60,left=140,width=720,height=600";
           	for (var i = 0; i < elementsStartingWithL.length; i++) {
           	    var key = (i + 1) + "차 라인"; // 키 생성 (1차 라인, 2차 라인, ...)
           	    dataformat[key] = elementsStartingWithL[i]; // 객체에 속성 추가
-          	}
+          	} 
           	openModalWithData(event, dataformat, 200);
+         
        
           	}
-    /* 
+   
         else if(clickedElementId.startsWith("GL")||clickedElementId.startsWith("LB")||clickedElementId.startsWith("PC")||clickedElementId.startsWith("PE")||clickedElementId.startsWith("ST")){
           	//modal_ajax 
           	$.ajax({
@@ -1070,13 +1059,16 @@ const popupOpt = "top=60,left=140,width=720,height=600";
           	  success: function (json) {
                     if (json && typeof json === 'object') {
                     	// 값 할당
-                  	"원자재 이름" :json.rawName);
-          	"원자재 종류" :json.rawType);
-          	"원자재 단위" :json.rawUnit);
-          	"원자재 가격" :json.rawPrice);
-              "거래처 코드" :json.clientCode);
-              "창고 코드" :json.whseCode);
-              "원자재 비고" :json.rawMemo);
+                    	var dataformat = {			            	
+"원자재 이름" :json.rawName,
+	"원자재 종류" :json.rawType,
+  	"원자재 단위" :json.rawUnit,
+  	"원자재 가격" :json.rawPrice,
+      "거래처 코드" :json.clientCode,
+      "창고 코드" :json.whseCode,
+      "원자재 비고" :json.rawMemo};
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+                  	
                   	} else {
                   	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
                   	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
@@ -1095,21 +1087,24 @@ const popupOpt = "top=60,left=140,width=720,height=600";
           	  success: function (json) {
                     if (json && typeof json === 'object') {
                     	// 값 할당
-                    	
+                    	var dataformat = {			            	
+"이름" :json.clientCompany,
+	"분류" :json.clientType,
+  	"사업자번호" :json.clientNumber,
+  	"상세분류" :json.clientDetail,
+      "대표이름" :json.clientCeo,
+      "담당자" :json.clientName,
+      "주소" :json.clientAddr1,
+      "상세주소" :json.clientAddr2,
+      "대표 번호" :json.clientTel,
+      "담당자 번호" :json.clientPhone,
+      "팩스" :json.clientFax,
+      "이메일" :json.clientEmail,
+      "비고" :json.clientMemo
+      };
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
 
-                  	"이름" :json.clientCompany);
-          	"분류" :json.clientType);
-          	"사업자번호" :json.clientNumber);
-          	"상세분류" :json.clientDetail);
-              "대표이름" :json.clientCeo);
-              "담당자" :json.clientName);
-              "주소" :json.clientAddr1);
-              "상세주소" :json.clientAddr2);
-              "대표 번호" :json.clientTel);
-              "담당자 번호" :json.clientPhone);
-              "팩스" :json.clientFax);
-              "이메일" :json.clientEmail);
-              "비고" :json.clientMemo);
+                  	
                   	} else {
                   	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
                   	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
@@ -1129,43 +1124,18 @@ const popupOpt = "top=60,left=140,width=720,height=600";
           	  success: function (json) {
                     if (json && typeof json === 'object') {
                     	// 값 할당
-                    	
-
-                  	"이름" :json.whseName);
-          	"타입" :json.whseType);
-          	"사용 상태", :json.whseState);
-          	"주소" :json.whseAddr);
-              "연락처" :json.whseTel);
-              "비고" :json.whseMemo);
-              "제품 코드" :json.prodCode);
-              "원자재 코드" :json.rawCode);
-              "담당자" :json.whseEmpId);
-                  	} else {
-                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
-                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
-                  	}
-                    }
-            });	//기존 닫기 창 함수
-           
-    }*/
-        else if(!isNaN(clickedElementId.charAt(0))){
-          	//modal_ajax 
-          	$.ajax({
-          	  url : '${pageContext.request.contextPath}/KDMajax/modalemp',
-          	  data: {empId:clickedElementId},
-          	  type : 'GET',
-          	  dataType:'json',
-          	  success: function (json) {
-                    if (json && typeof json === 'object') {
-                    	// 값 할당
                     	var dataformat = {			            	
-                    			"이름" :json.empName,
-                              	"부서" :json.empDepartment,
-                              	"직급" :json.empPosition,
-                              	"이메일" :json.empEmail,
-                                  "연락처" :json.empTel,
-                                  "재직상태" :json.empState,
-                                  "입사일" :json.empHiredate,};
+
+                    			"이름" :json.whseName,
+                              	"타입" :json.whseType,
+                              	"사용 상태" :json.whseState,
+                              	"주소" :json.whseAddr,
+                                  "연락처" :json.whseTel,
+                                  "비고" :json.whseMemo,
+                                  "제품 코드" :json.prodCode,
+                                  "원자재 코드" :json.rawCode,
+                                  "담당자" :json.whseEmpId
+                                  };
 openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
 
                   	
@@ -1176,36 +1146,68 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
                     }
             });	//기존 닫기 창 함수
            
-    } /*else if(clickedElementId.startsWith("WO")){
-      	//modal_ajax 
+    }
+        else if(!isNaN(clickedElementId.charAt(0))){
+          	//modal_ajax 
+          	$.ajax({
+          	  url : '${pageContext.request.contextPath}/KDMajax/modalemp',
+          	  data: {empId:clickedElementId},
+          	  type : 'GET',
+          	  dataType:'json',
+          	  success: function (json) {
+                    if (json && typeof json === 'object') {
+                    	// 값 할당
+                    	
+                    	var dataformat = {			            	
+                    			"이름" :json.empName,
+                              	"부서" :json.empDepartment,
+                              	"직급" :json.empPosition,
+                              	"이메일" :json.empEmail,
+                                  "연락처" :json.empTel,
+                                  "재직상태" :json.empState,
+                                  "입사일" :json.empHiredate};
+openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+
+                  	
+                  	} else {
+                  	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
+                  	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+                  	}
+                    }
+            });	//기존 닫기 창 함수
+           
+    }  else if(clickedElementId.startsWith("WO")){
+      	 
       	$.ajax({
       	  url : '${pageContext.request.contextPath}/KDMajax/modalworkorder',
       	  data: {workCode:clickedElementId},
       	  type : 'GET',
       	  dataType:'json',
       	  success: function (json) {
-                if (json && typeof json === 'object') {
-                	// 값 할당
-                	
-
-              	"제품코드" :json.prodCode);
-      	"수주코드" :json.sellCode);
-      	"지시일", :json.workDate);
-      	"라인코드" :json.lineCode);
-          "지시수량" :json.workAmount);
-          "작업지시자" :json.workEmpId);
-          "추가지시일" :json.workDatechange);
-          "라인내역" :json.workInfo);
-              	} else {
+                if (json && typeof json === 'object') {               	// 값 할당
+                	var dataformat = {	
+                			"제품코드" :json.prodCode,
+                	      	"수주코드" :json.sellCode,
+                	      	"지시일" :json.workDate,
+                	      	"라인코드" :json.lineCode,
+                	          "지시수량" :json.workAmount,
+                	          "작업지시자" :json.workEmpId,
+                	          "추가지시일" :json.workDatechange,
+                	          "라인내역" :json.workInfo};
+                	openModalWithData(event, dataformat, 200);
+	 	} else {
               	    // JSON 데이터가 없거나 빈 경우에 대한 처리를 추가
               	    console.error("JSON 데이터가 비어 있거나 유효하지 않습니다. json: " + JSON.stringify(json));
+              	
               	}
                 }
-        });	//기존 닫기 창 함수
+      	  });
+    }//기존 닫기 창 함수
        
-}*/
-            
-         }   function openModalWithData(event, data, width) {
+       
+      } 
+      
+      function openModalWithData(event, data, width) {
     		    var modal = document.getElementById('myModal');
     		    var modalContent = document.querySelector('.modal-body');
     		    
@@ -1223,13 +1225,14 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
     		            tableHTML += '</tr>';
     		        }
     		    }
-    		    tableHTML += '</table';
+    		    tableHTML += '</table>';
 
     		    // 모달 내용에 HTML 표 추가
     		    modalContent.innerHTML = tableHTML;
 
     		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
-    		    modal.style.display = 'block';
+    		  
+    		    modal.style.setProperty('display', 'block', 'important');
     		    modal.style.left = (event.clientX + window.scrollX) + 'px';
     		    modal.style.top = (event.clientY + window.scrollY) + 'px';
     		}
@@ -1244,13 +1247,16 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
     		closeModal.addEventListener('click', function() {
     		    modal.style.display = 'none';
     		});
+    	    
     		
-    		// 모달 외부를 클릭하면 모달을 숨김
-    		window.addEventListener('click', function(event) {
-    			if (event.target != modal) {
-    				modal.style.display = 'none';
-    			}
-    		});
+    		/* window.addEventListener('click', function(event) {
+    		    if (event.target != modal && !modal.contains(event.target)) {
+    		        modal.style.display = 'none';
+    		    }
+    		}); */
+    	 
+
+    		
         
                
     </script>
