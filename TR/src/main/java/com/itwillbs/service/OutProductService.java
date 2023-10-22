@@ -13,6 +13,7 @@ import com.itwillbs.dao.OutProductDAO;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.domain.SellDTO;
 
 @Service
@@ -147,6 +148,14 @@ public class OutProductService {
 
 	public EmployeesDTO outProductEmpInfo(EmployeesDTO employeesDTO) {
 		return outProductDAO.outProductEmpInfo(employeesDTO);
+	}
+
+	public ProdDTO getProdInfo(String data) {
+		return outProductDAO.getProdInfo(data);
+	}
+
+	public ClientDTO getClientInfo(String data) {
+		return outProductDAO.getClientInfo(data);
 	}
 
 

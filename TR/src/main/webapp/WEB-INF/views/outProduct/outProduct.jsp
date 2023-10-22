@@ -84,6 +84,20 @@ if (session.getAttribute("empId") != null) {
     		</ul>
 		</div>
 	</div>
+	
+	
+	<!-- 모달 대화상자 -->
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <span class="close" id="closeModal">&times;</span>
+	    </div>
+	    <div class="modal-body">
+	      <p>모달 내용을 여기에 넣으세요</p>
+	    </div>
+	  </div>
+	</div>
+	
 		<script type="text/javascript">
 			var empId = "<%= empId %>";
 		    if (empId == '') {
@@ -278,9 +292,13 @@ if (session.getAttribute("empId") != null) {
 			            var row = $("<tr>");
 			            row.append("<td>" + (data[i].outCode ? data[i].outCode : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellCode ? data[i].sellCode : '-') + "</td>");
-			            row.append("<td>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
+			            row.append("<td onclick='getInfo(event, \"" + (data[i].clientCode ? data[i].clientCode : '-') + "\")'>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
+// 			            row.append("<td onclick='getInfo(\"" + (data[i].clientCode ? data[i].clientCode : '-') + "\")'>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
+// 			            row.append("<td onclick="getInfo(data[i].clientCode ? data[i].clientCode : '-')">" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
 // 			            row.append("<td>" + (data[i].clientCompany ? data[i].clientCompany : '-') + "</td>");
-			            row.append("<td>" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
+			         	row.append("<td onclick='getInfo(event, \"" + (data[i].prodCode ? data[i].prodCode : '-') + "\")'>" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
+// 			         	row.append("<td onclick='getInfo(\"" + (data[i].prodCode ? data[i].prodCode : '-') + "\")'>" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
+// 			            row.append("<td onclick="getInfo(data[i].prodCode ? data[i].prodCode : '-')">" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
 // 			            row.append("<td>" + (data[i].prodName ? data[i].prodName : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellCount ? data[i].sellCount : '-') + "</td>");
 			            row.append("<td>" + (data[i].outCount ? data[i].outCount : '-') + "</td>");
@@ -291,7 +309,7 @@ if (session.getAttribute("empId") != null) {
 			            row.append("<td>" + (data[i].outEmpId ? data[i].outEmpId : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellState ? data[i].sellState : '-') + "</td>");
 		
-			            
+
 			            
 			            // 상세정보 버튼 추가 
 			            var contextPath = "${pageContext.request.contextPath}";
@@ -497,6 +515,120 @@ if (session.getAttribute("empId") != null) {
 		    return buf;
 		}
 		
+		function getInfo(event, data) {
+		    // 만약 data가 "-"로 시작하지 않으면 Ajax 호출 수행
+		    if (data.charAt(0) !== '-') {
+		        if (data.startsWith("PR")) {
+		            // prodCode로 시작하는 경우의 처리
+		            // Ajax 호출 등을 수행
+		            console.log("Ajax 호출: " + data);
+		            $.ajax({
+			           	type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+					    url: "${pageContext.request.contextPath}/outProduct/productInfo", // 데이터를 가져올 URL 설정
+					    data: {data : data}, // 검색 조건 데이터 전달
+					    dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+					    success: function (response) {
+					    	console.log(response);
+					    	var dataformat = {
+					                '제품 코드': response.prodCode,
+					                '제품 이름': response.prodName,
+					                '단위': response.prodUnit,
+					                '용량': response.prodSize,
+					                '향 종류': response.prodPerfume,
+					                '단가': response.prodPrice,
+					            };
+					    	openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+					    }
+		            });
+		        } else if (data.startsWith("CL")) {
+		            // clientCode로 시작하는 경우의 처리
+		            // Ajax 호출 등을 수행
+		            console.log("Ajax 호출: " + data);
+		            $.ajax({
+			           	type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+					    url: "${pageContext.request.contextPath}/outProduct/clientInfo", // 데이터를 가져올 URL 설정
+					    data: {data : data}, // 검색 조건 데이터 전달
+					    dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+					    success: function (response) {
+					    	console.log(response);
+					    	var dataformat = {
+					                '거래처 코드': response.clientCode,
+					                '거래처명': response.clientCompany,
+					                '대표명': response.clientCeo,
+					                '담당자명': response.clientName,
+					                '전화번호': response.clientTel,
+					                '폰번호': response.clientPhone,
+					                '팩스번호': response.clientFax,
+					                '이메일': response.clientEmail,
+					            };
+					    	openModalWithData(event, dataformat, 300); // 데이터를 모달로 표시
+					    }
+		            });
+		        } else {
+		            // 다른 경우의 처리
+		            console.log("다른 경우의 처리");
+		            Swal.fire({
+	                    text: '잘못된 데이터 입니다.',
+	                    icon: 'warning',
+	                    confirmButtonText: '확인',
+	                });
+		        }
+		    } else {
+		    	Swal.fire({
+                    text: '없는 데이터 입니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                });
+		    }
+
+		}
+		
+		function openModalWithData(event, data, width) {
+		    var modal = document.getElementById('myModal');
+		    var modalContent = document.querySelector('.modal-body');
+		    
+		    modalContent.style.width = width + 'px';
+		    modal.style.width = (width + 20) + 'px'; // 20px는 여유 여백이라고 가정
+		    modalContent.innerHTML = ''; // 기존 내용 제거
+
+		    // 데이터를 HTML 표로 구성
+		    var tableHTML = '<table class="table">';
+		    for (var key in data) {
+		        if (data.hasOwnProperty(key)) {
+		            tableHTML += '<tr>';
+		            tableHTML += '<td>' + key + '</td>';
+		            tableHTML += '<td>' + data[key] + '</td>';
+		            tableHTML += '</tr>';
+		        }
+		    }
+		    tableHTML += '</table';
+
+		    // 모달 내용에 HTML 표 추가
+		    modalContent.innerHTML = tableHTML;
+
+		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+		    modal.style.display = 'block';
+		    modal.style.left = (event.clientX + window.scrollX) + 'px';
+		    modal.style.top = (event.clientY + window.scrollY) + 'px';
+		}
+
+
+		// 모달과 닫기 버튼 가져오기
+		var modal = document.getElementById('myModal');
+		var closeModal = document.getElementById('closeModal');
+
+		console.log(modal);
+	    // 닫기 버튼을 클릭하면 모달을 숨김
+		closeModal.addEventListener('click', function() {
+		    modal.style.display = 'none';
+		});
+		
+		// 모달 외부를 클릭하면 모달을 숨김
+		window.addEventListener('click', function(event) {
+			if (event.target != modal) {
+				modal.style.display = 'none';
+			}
+		});
 	</script>
 	
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
+import com.itwillbs.domain.ProdDTO;
 
 @Repository
 public class OutProductDAO {
@@ -120,6 +121,14 @@ public class OutProductDAO {
 
 	public EmployeesDTO outProductEmpInfo(EmployeesDTO employeesDTO) {
 		return sqlSession.selectOne(namespace + "outProductEmpInfo", employeesDTO); 
+	}
+
+	public ProdDTO getProdInfo(String data) {
+		return sqlSession.selectOne(namespace + "getProdInfo", data); 
+	}
+
+	public ClientDTO getClientInfo(String data) {
+		return sqlSession.selectOne(namespace + "getClientInfo", data); 
 	}
 
 }

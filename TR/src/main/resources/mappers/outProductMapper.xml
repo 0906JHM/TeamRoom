@@ -564,4 +564,15 @@
         FROM employees
         WHERE empId = #{empId}
 	</select>
+	<select id="getProdInfo" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT prodCode, prodName, prodUnit, prodSize, prodPerfume, clientCode, whseCode, prodPrice
+		FROM product
+		WHERE prodCode = #{data}
+	</select>
+	
+	<select id="getClientInfo" resultType="com.itwillbs.domain.ClientDTO">
+		SELECT clientCode, clientCompany, clientCeo, clientName, clientTel, clientPhone, clientFax, clientEmail
+		FROM clients
+		WHERE clientCode = #{data}
+	</select>
 </mapper>

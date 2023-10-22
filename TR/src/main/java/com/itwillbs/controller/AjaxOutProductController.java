@@ -15,11 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwillbs.domain.ClientDTO;
 import com.itwillbs.domain.EmployeesDTO;
 import com.itwillbs.domain.OutProductDTO;
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.OutProductService;
 
 @RestController
@@ -227,6 +229,29 @@ public class AjaxOutProductController {
 		EmployeesDTO employeesDTO2 = outProductService.outProductEmpInfo(employeesDTO);
 		
 		return employeesDTO2;
+	}
+	
+	@RequestMapping(value = "/productInfo", method = RequestMethod.POST)
+	public ResponseEntity<ProdDTO> getProductInfo(@RequestParam String data) {
+	    // data 변수에 클라이언트로부터 전달된 데이터가 들어옵니다.
+	    // 여기에서 data를 사용하여 필요한 서비스 호출 및 데이터 처리를 수행합니다.
+
+	    // 예시로, 받은 데이터를 그대로 응답으로 보내는 코드:
+		ProdDTO prodDTO = outProductService.getProdInfo(data);
+		
+	    ResponseEntity<ProdDTO> entity = new ResponseEntity<>(prodDTO,HttpStatus.OK);
+	    return entity;
+	}
+	@RequestMapping(value = "/clientInfo", method = RequestMethod.POST)
+	public ResponseEntity<ClientDTO> getClientInfo(@RequestParam String data) {
+		// data 변수에 클라이언트로부터 전달된 데이터가 들어옵니다.
+		// 여기에서 data를 사용하여 필요한 서비스 호출 및 데이터 처리를 수행합니다.
+		
+		// 예시로, 받은 데이터를 그대로 응답으로 보내는 코드:
+		ClientDTO clientDTO = outProductService.getClientInfo(data);
+		
+		ResponseEntity<ClientDTO> entity = new ResponseEntity<>(clientDTO,HttpStatus.OK);
+		return entity;
 	}
 	
 }

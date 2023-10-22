@@ -228,7 +228,7 @@ final String ADMIN_DEPARTMENT = "자재팀";
 		
 		  // 모달 외부를 클릭하면 모달을 숨김
 		  window.addEventListener('click', function(event) {
-		    if (event.target == modal) {
+		    if (event.target != modal) {
 		      modal.style.display = 'none';
 		    }
 		  });
