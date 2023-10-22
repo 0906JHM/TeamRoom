@@ -18,7 +18,7 @@
 
 <!--  여기서부터 시작  -->
 <div class="clientBody">
-		<h1 class="toptitle">거래처 관리</h1>
+		<h1 class="toptitle"> <a href="${pageContext.request.contextPath}/client/client" style=" text-decoration: none; color:black; font-weight: bold;" >거래처 관리</a></h1>
 
 
 <form method ="GET">
@@ -73,7 +73,7 @@
 						<td class="cttg">${clientDTO.clientType}</td>
 						<td class="cttg">${clientDTO.clientCode}</td>
 						<td class="cttg"
-							 onclick="openClientDetail('${clientDTO.clientCompany}')">${clientDTO.clientCompany}</td>
+							 onclick="openClientDetail('${clientDTO.clientCompany}')" id="click">${clientDTO.clientCompany}</td>
 						<td class="cttg">${clientDTO.clientNumber}</td>
 						<td class="cttg">${clientDTO.clientDetail}</td>
 						<td class="cttg">${clientDTO.clientCeo}</td>
