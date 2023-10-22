@@ -42,7 +42,7 @@
 <div class="perfcd">
 <form method ="get">
 <div class="perfcd1">
-<label> 라인코드:</label>  <input type="text" id="lineCode2" name="lineCode" onclick="" class="cdbox" readonly> <label>제품코드:</label> <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
+<label> 라인코드:</label>  <input type="text" id="lineCode2" name="lineCode" onclick="" class="cdbox" value="라인코드" readonly> <label>제품코드:</label> <input type="text" id="prodCode2" name="prodCode" onclick="" placeholder="제품코드" class="cdbox" onclick="" readonly> <input type="submit" value="조회" class="subbtn">
 
 
 
@@ -63,10 +63,6 @@
 			<div class="clienttotal">
 			 <h2> 총 ${pageDTO.count} 건 </h2>
 			
-			<div style="float: right;">
-				<input type="button" value="추가" id="addButton" class="addbutton"
-					onclick="perfInsert()">
-			</div>	 <!-- 검색칸 -->	
 			</div>   <!--  생산실적 총:x건 라인-->
 
 		 <table class="ct" id="ct" class="ctcl">	
@@ -315,7 +311,7 @@ $(document).ready(function() {
                 labels: labels, // 라벨 배열을 설정합니다.
                 datasets: [{
                     data: data, // 차트 데이터 배열을 설정합니다.
-                    backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56'], // 차트 데이터에 대한 배경색을 설정합니다.
+                    backgroundColor: ['#36a2eb', '#ffb8c6', '#fbceb1'], // 차트 데이터에 대한 배경색을 설정합니다.
                 }]
             },
             options: {

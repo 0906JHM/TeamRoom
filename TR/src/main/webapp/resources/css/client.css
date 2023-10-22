@@ -2,8 +2,9 @@
 
 body{
 	
-	background-color: #f5f6fa;
-	margin-left:1%;
+	    background-color: #F5F6FA;
+    height: auto;
+    margin: 0;
 	
 }
 
@@ -225,6 +226,17 @@ hr{
     border: 1px solid #D9D9D9;
     font-weight: bold;
     cursor: pointer;
+}
+
+#click {
+	
+	cursor: pointer;
+	
+}
+
+h1{
+	font-weight: bold;
+	
 }
 
 	
