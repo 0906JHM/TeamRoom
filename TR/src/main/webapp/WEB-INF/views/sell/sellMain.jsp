@@ -123,13 +123,14 @@ table {
 		<!------------------------------------------------------- 추가, 수정, 삭제 버튼 ---------------------------------------------------->
 		<div id="sample">
 			<div id="buttons">
-			<input type="submit" class="buttons highlighted" value="전체" id="allButton">
-    		<input type="submit" class="buttons " value="미출고" id="non_deliveryButton">
-    		<input type="submit" class="buttons " value="중간납품" id="interim_deliveryButton">
-    		<input type="submit" class="buttons " value="출고완료" id="deliveryButton">
+			<input type="submit" class="buttons"  value="전체" id="allButton">
+    		<input type="submit" class="buttons"  value="미출고" id="non_deliveryButton">
+    		<input type="submit" class="buttons"   value="중간납품" id="interim_deliveryButton">
+    		<input type="submit" class="buttons"  value="출고완료" id="deliveryButton">
 			</div>
 			
 			<div class="buttons">
+			
 			
 			<button  style="display: none;" id="add" onclick="openSellAdd()" class="btn">추가</button>
 			<button  style="display: none;" id="delete" class="btn">삭제</button>
@@ -332,6 +333,21 @@ const popupOpt = "top=60,left=140,width=720,height=600";
 
 //팝업창에서 작업 완료후 닫고 새로고침
 $(document).ready(function() {
+	
+	
+	var button = document.getElementById("allButton");
+    <c:if test="${sellDTO.sellState == '미출고'}">
+var button = document.getElementById("non_deliveryButton");
+</c:if>
+<c:if test="${sellDTO.sellState == '중간납품'}">
+var button = document.getElementById("interim_deliveryButton");
+</c:if>
+<c:if test="${sellDTO.sellState == '출고완료'}">
+var button = document.getElementById("deliveryButton");
+</c:if>
+
+button.style.backgroundColor = "#4D4D4D";
+
 	/* var refreshAndClose = true; // refreshAndClose 값을 변수로 설정
     if (refreshAndClose) {
         window.opener.location.reload(); // 부모창 새로고침
@@ -374,7 +390,7 @@ $('#delete').click(function(event){
 				}).then((result) => {
 			
 			 /* confirm => 예 눌렀을 때  */
-			  if (result.isConfirmed) {
+			   if (result.isConfirmed) {
 				  $.ajax({
 					    url: "${pageContext.request.contextPath}/sell/delete",
 					    type: "POST",
@@ -410,7 +426,7 @@ $('#delete').click(function(event){
 						icon : 'error',
 						width: '300px',
 						});
-			}// if(confirm)
+			} // if(confirm)
 		});		
 			
 		}// 체크 null
@@ -422,6 +438,9 @@ $('#delete').click(function(event){
 				});
 		}
 }); 
+
+
+
 });// end function
  
 <!--------------------------------------------------- 수주 추가 ----------------------------------------->
@@ -519,6 +538,14 @@ function openSellDetail(sellCode) {
 		  else if (team ===""){
 			  window.location.href = "${pageContext.request.contextPath}/login/logout";
 		  }
+    	
+		  var form = document.querySelector('form'); // 폼 요소 선택
+
+		    // 폼 제출 이벤트 핸들러 등록
+		    form.addEventListener('submit', function(event) {
+		        event.preventDefault(); // 폼 제출을 막음
+		        // 원하는 동작 수행
+		    });
 		  <!--------------------------------------------------- 엑셀 다운로드 ----------------------------------------->
 // 		document.addEventListener('DOMContentLoaded', ()=> {
 //            	exportButton.addEventListener('click', exportExcel);
@@ -935,7 +962,7 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
                                   "연락처" :json.empTel,
                                   "재직상태" :json.empState,
                                   "입사일" :json.empHiredate};
-openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
+openModalWithData(event, dataformat, -200); // 데이터를 모달로 표시
 
                   	
                   	} else {
@@ -976,41 +1003,39 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
        
       } 
       
-      function openModalWithData(event, data, width) {
-    		    var modal = document.getElementById('myModal');
-    		    var modalContent = document.querySelector('.modal-body');
-    		    
-    		    modalContent.style.width = Math.abs(width) + 'px'; // 절대값
-    		    modal.style.width = (Math.abs(width) + 20) + 'px'; // 20px는 여유 여백이라고 가정
-    		    modalContent.innerHTML = ''; // 기존 내용 제거
+        function openModalWithData(event, data, width) {
+            var modal = document.getElementById('myModal');
+            var modalContent = document.querySelector('.modal-body');
+            
+            modalContent.style.width = Math.abs(width) + 'px';
+            modal.style.width = (Math.abs(width) + 20) + 'px'; // 20px는 여유 여백이라고 가정
+            modalContent.innerHTML = ''; // 기존 내용 제거
 
-    		    // 데이터를 HTML 표로 구성
-    		    var tableHTML = '<table class="table">';
-    		    for (var key in data) {
-    		        if (data.hasOwnProperty(key)) {
-    		            tableHTML += '<tr>';
-    		            tableHTML += '<td>' + key + '</td>';
-    		            tableHTML += '<td>' + data[key] + '</td>';
-    		            tableHTML += '</tr>';
-    		        }
-    		    }
-    		    tableHTML += '</table>';
+            // 데이터를 HTML 표로 구성
+            var tableHTML = '<table class="table">';
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    tableHTML += '<tr>';
+                    tableHTML += '<td>' + key + '</td>';
+                    tableHTML += '<td>' + data[key] + '</td>';
+                    tableHTML += '</tr>';
+                }
+            }
+            tableHTML += '</table>';
 
-    		    // 모달 내용에 HTML 표 추가
-    		    modalContent.innerHTML = tableHTML;
-    		    // 바디의 너비
-    		    var bodyWidth = document.body.clientWidth;
-    		    
-    		    // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
-    		  
-    		    modal.style.setProperty('display', 'block', 'important');
-    		    if (event.clientX + window.scrollX + width >= bodyWidth) {
-    		        modal.style.left = (event.clientX + window.scrollX - width) + 'px';
-    		    } else {
-    		        modal.style.left = (event.clientX + window.scrollX) + 'px';
-    		    }
-    		    modal.style.top = (event.clientY + window.scrollY) + 'px';
-    		}
+            // 모달 내용에 HTML 표 추가
+            modalContent.innerHTML = tableHTML;
+
+            // 클릭 이벤트의 위치를 기반으로 모달 창 위치 설정
+          
+            modal.style.setProperty('display', 'block', 'important');
+            if (width >= 0) {
+                modal.style.left = (event.clientX + window.scrollX) + 'px';
+            } else {
+                modal.style.left = (event.clientX + window.scrollX + width) + 'px';
+            }
+            modal.style.top = (event.clientY + window.scrollY) + 'px';
+        }
 
 
     		// 모달과 닫기 버튼 가져오기

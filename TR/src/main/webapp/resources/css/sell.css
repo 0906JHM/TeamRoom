@@ -151,7 +151,7 @@ input[type="text"] {
     background-color:  #1D5D9B;
 }
 /*-------------------------------- 전체, 출고, 미출고, 중간납품 버튼 --------------------------------------------*/
-#allButton{
+/* #allButton{
 	color: white;
     background-color:  #4D4D4D;
 	width: 70px;
@@ -161,13 +161,13 @@ input[type="text"] {
 	text-align: center;
 	font: 500 15px/20px "Inter", sans-serif;
 	cursor: pointer;
-/* 	margin-top:30px; */
-/* 	margin-left : 50px; */
-/* 	margin-right: 5px; */
-/* 	margin-bottom : 10px; */
+	margin-top:30px;
+	margin-left : 50px;
+	margin-right: 5px;
+	margin-bottom : 10px;
 	font-weight: bold;
-} 
-#non_deliveryButton, #interim_deliveryButton, #deliveryButton{
+}  */
+ #allButton, #non_deliveryButton, #interim_deliveryButton, #deliveryButton{
 	color: white;
     background-color: #9AC5F4;
 	width: 70px;
