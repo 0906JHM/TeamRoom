@@ -174,4 +174,34 @@ public class RequirementController {
 		return "redirect:/requirement/reDetail";
 	}
 	
+	// 엑셀 다운
+	@RequestMapping(value = "/reqExcel", method = RequestMethod.POST)
+	public ResponseEntity<List<Map<String, Object>>> getReqExcel(RequirementDTO dto) throws Exception {
+
+		logger.debug("getReqExcel() 호출");
+		
+		List<Map<String, Object>> list = null; // 리스트 초기화
+
+		if (dto.getReqCode() != null || dto.getProdCode() != null || dto.getRawCode() != null) {
+
+			logger.debug("if문 호출");
+			logger.debug("DTO : " + dto);
+			System.out.println(dto);
+
+			list = service.getSearchExcelReqList(dto);
+
+			logger.debug("검색 리스트 가져감");
+
+		} else {
+			logger.debug("else문 호출");
+			list = service.getExcelReqList();
+			logger.debug(" 모든 리스트 가져감");
+		}
+		
+		ResponseEntity<List<Map<String, Object>>> entity = new ResponseEntity<>(list, HttpStatus.OK);
+		
+		return entity;
+
+	}
+	
 }// RequirementController

@@ -157,46 +157,70 @@ function getToday() {
     	});
    
 		//엑셀
-			 const excelDownload = document.querySelector('#excelDownload');
-					excelDownload.addEventListener('click', exportExcel);
+			const excelDownload = document.querySelector('#excelDownload');
+			excelDownload.addEventListener('click', exportExcel);
 				function exportExcel() {
-				//1. workbook 생성
-				var wb = XLSX.utils.book_new();
-				//2. 시트 만들기
-				var newWorksheet = excelHandler.getWorksheet();
-				//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
-				XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-				//4. 엑셀 파일 만들기
-				var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-				//5. 엑셀 파일 내보내기
-				saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
-			} //exportExcel()
-			
-			var excelHandler = {
-			getExcelFileName : function() {
-				return 'requirementList'+getToday()+'.xlsx'; //파일명
-			},
-			getSheetName : function() {
-				return 'requirement Sheet'; //시트명
-			},
-			getExcelData : function() {
-				return document.getElementById('reqTable'); //table id
-			},
-			getWorksheet : function() {
-				return XLSX.utils.table_to_sheet(this.getExcelData());
-			}
-		} //excelHandler
-			
-			function s2ab(s) {
-				
-				var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-				var view = new Uint8Array(buf);  
-				for(var i=0; i<s.length; i++) {
-					view[i] = s.charCodeAt(i) & 0xFF;
+					// 엑셀로 내보낼 데이터
+				    var searchParams = {
+				        reqCode: $("#reqCode9999").val(),
+				        prodCode: $("#prodCode9999").val(),
+				        rawCode: $("#rawCode9999").val(),
+				    };
+					
+				    $.ajax({
+				        type: "POST", // GET 또는 POST 등 HTTP 요청 메서드 선택
+				        url: "${pageContext.request.contextPath}/requirement/reqExcel", // 데이터를 가져올 URL 설정
+				        data: searchParams, // 검색 조건 데이터 전달
+				        dataType: "json", // 가져올 데이터 유형 (JSON으로 설정)
+				        success: function (data) {
+				        	console.log("ajax 성공 : " + data);
+				        	var modifiedData = data.map(function (item) {
+							    return {
+							        '소요 코드': item.reqCode,
+							        '제품 코드': item.prodCode,
+							        '제품명': item.prodName,
+							        '원자재 코드': item.rawCode,
+							        '원자재명': item.rawName,
+							        '소요량': item.reqAmount,
+							        '비고': item.reqMemo
+							    };
+							});
+							// 열의 너비 설정
+				            var colWidths = [
+				            	{ wch: 10 }, // 소요 코드
+				                { wch: 10 }, // 제품 코드
+				                { wch: 10 }, // 제품명
+				                { wch: 10 }, // 원자재 코드
+				                { wch: 10 }, // 원자재명
+				                { wch: 10 }, // 소요량
+				                { wch: 20 } // 비고
+				            ];
+				         	// 새 워크북을 생성
+				            var wb = XLSX.utils.book_new();
+				            // JSON 데이터를 워크시트로 변환
+				            var ws = XLSX.utils.json_to_sheet(modifiedData);
+				            // 열 너비 지정
+				            ws['!cols'] = colWidths;
+				            // 워크북에 워크시트 추가
+				            XLSX.utils.book_append_sheet(wb, ws, "데이터 시트");
+				            // Blob 형태로 워크북 생성
+				            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+				            // 파일 이름 설정 (원하는 파일 이름으로 변경)
+				            var fileName = 'requirementList'+getToday()+'.xlsx';;
+				            // Blob 파일을 다운로드
+				            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), fileName);
+				        }
+					
+					});
 				}
-				return buf;
-			}
-    });
+				// ArrayBuffer 만들어주는 함수
+				function s2ab(s) {
+				    var buf = new ArrayBuffer(s.length); // convert s to arrayBuffer
+				    var view = new Uint8Array(buf); // create uint8array as viewer
+				    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; // convert to octet
+				    return buf;
+				}
+	});
 			</script>
 
 <script type="text/javascript">
@@ -661,6 +685,11 @@ $(document).ready(function() {
 	
 <!-- 사이드바 -->
 <title>requirement</title>
+<%
+String prodName = request.getParameter("prodName")!= null ? request.getParameter("prodName") : "";
+String rawName = request.getParameter("rawName")!= null ? request.getParameter("rawName") : "";
+
+%>
 </head>
 <body>
 <!-- 모달창 -->
@@ -677,13 +706,13 @@ $(document).ready(function() {
 		<form method="get">
 			<div class="searchform">
 				<label>소요코드</label> 
-				<input class="input_box" type="text" name="reqCode" onfocus="this.value='RQ'" placeholder="소요량코드를 입력하세요.">
+				<input class="input_box" type="text" name="reqCode" id="reqCode9999" onfocus="this.value='RQ'" placeholder="소요량코드를 입력하세요." value="${dto.reqCode }">
 				<label>제품</label> 
-				<input type="hidden"name="prodCode" id="prodCode9999">
-				<input class="input_box" type="text" name="prodName" id="prodName9999" placeholder="제품을 선택하세요." readonly onclick="searchItem('prod','prodCode9999')">
+				<input type="hidden"name="prodCode" id="prodCode9999" value="${dto.prodCode }">
+				<input class="input_box" type="text" name="prodName" id="prodName9999" placeholder="제품을 선택하세요." value="<%=prodName %>" readonly onclick="searchItem('prod','prodCode9999')">
 				<label>원자재</label>
-				<input type="hidden" name="rawCode" id="rawCode9999">
-				<input class="input_box" type="text" name="rawName" id="rawName9999"  placeholder="원자재를 선택하세요." readonly onclick="searchItem('raw','rawCode9999')">
+				<input type="hidden" name="rawCode" id="rawCode9999"  value="${dto.rawCode }">
+				<input class="input_box" type="text" name="rawName" id="rawName9999" placeholder="원자재를 선택하세요." value="<%=rawName %>" readonly onclick="searchItem('raw','rawCode9999')">
 				<input style ="margin: 0 0 0 20px;" class="button" type="submit" value="조회">
 			</div>
 		</form>

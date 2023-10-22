@@ -125,4 +125,12 @@ public class RequirementDAO {
 		sqlSession.update(NAMESPACE + ".updateReq", udto);
 	}
 
+	public List<Map<String, Object>> getSearchExcelReqList(RequirementDTO dto) {
+		return sqlSession.selectList(NAMESPACE + ".getSearchExcelReqList", dto);
+	}
+
+	public List<Map<String, Object>> getExcelReqList() {
+		return sqlSession.selectList(NAMESPACE + ".getExcelReqList");
+	}
+
 }

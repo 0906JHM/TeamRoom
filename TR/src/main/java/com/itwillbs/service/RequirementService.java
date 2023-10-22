@@ -95,4 +95,12 @@ public int findCode(List<RequirementDTO> req) throws Exception {
 		pdao.updateReq(udto);
 	}
 
+	public List<Map<String, Object>> getSearchExcelReqList(RequirementDTO dto) {
+		return pdao.getSearchExcelReqList(dto);
+	}
+
+	public List<Map<String, Object>> getExcelReqList() {
+		return pdao.getExcelReqList();
+	}
+
 }
