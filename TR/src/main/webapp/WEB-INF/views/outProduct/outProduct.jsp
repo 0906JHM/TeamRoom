@@ -292,11 +292,12 @@ if (session.getAttribute("empId") != null) {
 			            var row = $("<tr>");
 			            row.append("<td>" + (data[i].outCode ? data[i].outCode : '-') + "</td>");
 			            row.append("<td>" + (data[i].sellCode ? data[i].sellCode : '-') + "</td>");
-			            row.append("<td onclick='getInfo(event, \"" + (data[i].clientCode ? data[i].clientCode : '-') + "\")'>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
+			            row.append("<td onclick='getInfo(event, \"" + (data[i].clientCode ? data[i].clientCode : '-') + "\")' style='cursor:pointer;'>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
+// 			            row.append("<td onclick='getInfo(event, \"" + (data[i].clientCode ? data[i].clientCode : '-') + "\")'>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
 // 			            row.append("<td onclick='getInfo(\"" + (data[i].clientCode ? data[i].clientCode : '-') + "\")'>" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
 // 			            row.append("<td onclick="getInfo(data[i].clientCode ? data[i].clientCode : '-')">" + (data[i].clientCode ? data[i].clientCode : '-') + "</td>");
 // 			            row.append("<td>" + (data[i].clientCompany ? data[i].clientCompany : '-') + "</td>");
-			         	row.append("<td onclick='getInfo(event, \"" + (data[i].prodCode ? data[i].prodCode : '-') + "\")'>" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
+			         	row.append("<td onclick='getInfo(event, \"" + (data[i].prodCode ? data[i].prodCode : '-') + "\")' style='cursor:pointer;'>" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
 // 			         	row.append("<td onclick='getInfo(\"" + (data[i].prodCode ? data[i].prodCode : '-') + "\")'>" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
 // 			            row.append("<td onclick="getInfo(data[i].prodCode ? data[i].prodCode : '-')">" + (data[i].prodCode ? data[i].prodCode : '-') + "</td>");
 // 			            row.append("<td>" + (data[i].prodName ? data[i].prodName : '-') + "</td>");

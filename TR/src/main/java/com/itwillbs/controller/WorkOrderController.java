@@ -12,10 +12,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -253,5 +255,32 @@ HttpSession session = request.getSession();
 			return ResponseEntity.ok(response);
 		} //addWorkOrder()
 		
-	
+	@PostMapping("/workOrderExcel")
+	public ResponseEntity<List<Map<String,Object>>> getWorkOrderExcel(@RequestBody HashMap<String, Object> searchParams) {
+		System.out.println(searchParams);
+		System.out.println(searchParams);
+		System.out.println(searchParams);
+		List<Map<String,Object>> list = null;
+		System.out.println("엑셀 다운 ");
+		System.out.println("엑셀 다운 ");
+	   //검색 있을 때
+		if((searchParams.get("searchLine")!=null && !searchParams.get("searchLine").equals("")) || (searchParams.get("fromDate")!=null && !searchParams.get("fromDate").equals("")) || (searchParams.get("toDate")!=null && !searchParams.get("toDate").equals("")) 
+				|| (searchParams.get("place")!=null && !searchParams.get("place").equals("")) || (searchParams.get("prod")!=null && !searchParams.get("prod").equals(""))) {
+			
+			System.out.println("엑셀 다운 1");
+			
+			list = wService.getWorkOrderSearchExcel(searchParams);
+			//서비스 - 작업지시 검색
+			
+		} //if(검색)
+		//검색 없을 때
+		else {
+			System.out.println("엑셀 다운 2");
+			list = wService.getWorkOrderAllExcel();
+			
+		} //else(모든)
+		ResponseEntity<List<Map<String,Object>>> entity = new ResponseEntity<>(list,HttpStatus.OK);
+			
+		return entity;
+	}
 } //WorkOrderController

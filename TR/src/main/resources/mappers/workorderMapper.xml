@@ -236,4 +236,33 @@ LEFT JOIN product p on w.prodCode = p.prodCode
 	<!-- 라인 사용여부 다시 사용가능으로 -->
 	
 	
+	<select id="getWorkOrderSearchExcel" resultType="java.util.HashMap">
+		SELECT workCode, prodCode, sellCode, DATE_FORMAT(workDate, '%Y-%m-%d') workDate, lineCode, workAmount, workEmpId, workProcess, 
+        DATE_FORMAT(workDatechange, '%Y-%m-%d') workDatechange, wrokInfo, workInfo
+        FROM workOrder
+        <where>
+			<if test="searchLine != null and searchLine != ''">
+				AND lineCode = #{searchLine}
+			</if>
+			<if test="fromDate != null and fromDate != ''">
+			    AND workDate &gt;= #{fromDate}
+			</if>
+			<if test="toDate != null and toDate != ''">
+			    AND workDate &lt;= #{toDate}
+			</if>
+			<if test="place != null and place != '' and !place.equals('전체')">
+			    AND workProcess = #{place}
+			</if>
+			<if test="prod != null and prod != ''">
+			    AND prodCode = #{prod}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getWorkOrderAllExcel" resultType="java.util.HashMap">
+		SELECT workCode, prodCode, sellCode, DATE_FORMAT(workDate, '%Y-%m-%d') workDate, lineCode, workAmount, workEmpId, workProcess, 
+        DATE_FORMAT(workDatechange, '%Y-%m-%d') workDatechange, wrokInfo, workInfo
+        FROM workOrder
+	</select>
+	
 </mapper>

@@ -2,6 +2,7 @@ package com.itwillbs.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,14 @@ public class WorkOrderService {
 	public List<RawmaterialsDTO> checkStock(WorkOrderDTO dto) throws Exception {
 		// DAO - 작업지시 등록
 		return wdao.checkStock(dto);
+	}
+
+	public List<Map<String, Object>> getWorkOrderSearchExcel(HashMap<String, Object> searchParams) {
+		return wdao.getWorkOrderSearchExcel(searchParams);
+	}
+
+	public List<Map<String, Object>> getWorkOrderAllExcel() {
+		return wdao.getWorkOrderAllExcel();
 	}
 
 } //WorkOrderServiceImpl

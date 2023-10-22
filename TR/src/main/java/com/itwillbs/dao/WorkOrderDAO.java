@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -435,6 +436,16 @@ logger.debug("##### DAO: insertWorkOrder() 호출");
 		}
 		return lineCode;
 	} //updateStatus()
+
+
+	public List<Map<String, Object>> getWorkOrderSearchExcel(HashMap<String, Object> searchParams) {
+		return sqlSession.selectList(NAMESPACE + ".getWorkOrderSearchExcel", searchParams);
+	}
+
+
+	public List<Map<String, Object>> getWorkOrderAllExcel() {
+		return sqlSession.selectList(NAMESPACE + ".getWorkOrderAllExcel");
+	}
 
 
 } //WorkOrderDAO
