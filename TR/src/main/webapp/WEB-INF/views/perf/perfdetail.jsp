@@ -353,6 +353,14 @@ window.onload = function() {
         });
     });
 };
+
+// okbtn을 클릭했을 때 실행할 함수를 정의
+document.getElementById("okbtn").addEventListener("click", function() {
+    // 창을 닫기
+    window.close();
+});
+
+
 </script>
 
 </body>
