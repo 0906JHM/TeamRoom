@@ -170,7 +170,7 @@ input[type="button"], input[type="submit"] {
 								<option value="누락">누락</option> <!--  포장 박스에 물건이 없다던가 포장이 안된다던가 -->
 								<option value="기타">기타</option>
 						       </select>        </td>
-  <td colspan=2>   <input type="text" name="perfDefectreasonmemo" value="${perfDTO.perfDefectmemo}"></td>
+  <td colspan=2>   <input type="text" name="perfDefectmemo" value="${perfDTO.perfDefectmemo}"></td>
   <td colspan=2><input type="text" name="perfmemo" value="${perfDTO.perfMemo}"></td>
   </tr>
 </table>
@@ -194,7 +194,7 @@ input[type="button"], input[type="submit"] {
 <script>
 window.onload = function() {
     var defectReasonSelect = document.getElementById("perfDefectreason");
-    var defectMemoInput = document.querySelector('input[name="perfDefectreasonmemo"]');
+    var defectMemoInput = document.querySelector('input[name="perfDefectmemo"]');
     var workAmountInput = document.getElementById("workAmount");
     var perfFairInput = document.getElementById("perfFair");
     var perfDefectInput = document.getElementById("perfDefect");
@@ -317,48 +317,61 @@ window.onload = function() {
  // 초기화 시 계산을 위해 한 번 호출합니다.
     calculateDefect();
 
- //////////////////////////////////////////////////
     updateButton.addEventListener("click", function(event) {
-        // 폼 데이터를 가져오는 코드 (예: FormData 객체 사용)
-        var formData = $("#detailform").serialize();
-        console.log(formData);
+    	 // 불량수 값 가져오기
+        var defectCount = $("#perfDefect").val();
+    	 
+        var defectDescription = defectMemoInput.value.trim();
 
-        // 서버로 데이터를 전송하고 응답을 받는 코드 (jQuery AJAX 사용)
-        $.ajax({
-            type: "POST", // 또는 "GET" 등 HTTP 요청 메서드 선택
-            url: updateProUrl, // 서버 엔드포인트 URL 설정
-            data: formData, // 폼 데이터 전송
-            success: function(response) {
-                console.log("ajax 왔다감");
-                // 서버 응답이 성공인 경우
-                if (response === 'true') {
+        // 불량수가 있지만 불량내역이 비어있는 경우 SweetAlert로 메시지 표시
+        if (defectCount >= 1 && defectDescription.trim() === '') {
+            Swal.fire({
+                title: '불량내역 입력',
+                text: '불량내역을 입력해주세요.',
+                icon: 'warning'
+            });
+        } else {
+            // 불량내역이 비어있지 않은 경우 또는 불량수가 비어있는 경우 서버에 데이터 전송
+            var formData = $("#detailform").serialize();
+            console.log(formData);
+
+            $.ajax({
+                type: "POST",
+                url: updateProUrl,
+                data: formData,
+                success: function(response) {
+                    console.log("ajax 왔다감");
+                    if (response === 'true') {
+                        Swal.fire({
+                            title: '수정 성공',
+                            text: '성공적으로 수정되었습니다.',
+                            icon: 'success'
+                        }).then(function() {
+                        	  window.close();
+                              // 부모 창을 새로 고침
+                              window.opener.location.reload();
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // 서버 응답이 실패인 경우
                     Swal.fire({
-                        title: '수정 성공',
-                        text: '성공적으로 수정되었습니다.',
-                        icon: 'success'
-                    }).then(function() {
-                        // 성공 메시지를 표시한 후 추가적인 동작을 수행하려면 이 부분에 코드를 작성합니다.
-                        // 예: 페이지 리로드, 다른 동작 수행 등
+                        title: '수정 실패',
+                        text: '수정에 실패하였습니다.',
+                        icon: 'error'
                     });
                 }
-            },
-            error: function(xhr, status, error) {
-                // 서버 응답이 실패인 경우
-                Swal.fire({
-                    title: '수정 실패',
-                    text: '수정에 실패하였습니다.',
-                    icon: 'error'
-                });
-            }
-        });
+            });
+        }
     });
-};
 
 // okbtn을 클릭했을 때 실행할 함수를 정의
 document.getElementById("okbtn").addEventListener("click", function() {
     // 창을 닫기
     window.close();
 });
+
+}
 
 
 </script>

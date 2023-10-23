@@ -276,15 +276,21 @@ $(document).ready(function() {
         );
     });
 
-    // 돋보기 아이콘에 대한 클릭 이벤트 리스너 추가
+ // 돋보기 아이콘에 대한 클릭 이벤트 리스너 추가
     document.querySelectorAll('.magnifier').forEach(function(magnifier) {
         magnifier.addEventListener('click', function() {
             console.log("에러 발생!");
             // 선택한 실적 코드 가져오기
             var perfCode = this.getAttribute('data-perfcode');
-        
+
             // 새 창을 열고 선택한 실적 코드를 URL 파라미터로 전달
-            window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=700px,height=600px');
+            var newWindow = window.open('${pageContext.request.contextPath}/perf/detail?perfCode=' + perfCode, '_blank', 'width=700px,height=600px');
+
+            // 새 창이 로드되고 나서 실행될 함수
+            newWindow.onload = function() {
+                // 새 창의 DOM이 로드된 후에 부모 창을 새로고침
+                newWindow.opener.location.reload();
+            };
         });
     });
     
