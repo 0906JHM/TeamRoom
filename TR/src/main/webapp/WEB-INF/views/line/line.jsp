@@ -132,7 +132,7 @@ function deleteValue(){
 </div>
 </div>
 
-<label>총 ${pageDTO.count}건</label>
+<label style="margin-left:2%;">총 ${pageDTO.count}건</label>
 
 <form id="selltList">
 <div id="sellList">
