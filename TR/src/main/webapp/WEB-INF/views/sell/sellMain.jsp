@@ -1040,13 +1040,11 @@ openModalWithData(event, dataformat, 200); // 데이터를 모달로 표시
 	          modal.style.setProperty('display', 'block', 'important');
 	          if (event.clientX + window.scrollX + width >= bodyWidth) {
 	              modal.style.left = (event.clientX + window.scrollX - width) + 'px';
-	           
 	            
 	          } else {
 	              modal.style.left = (event.clientX + window.scrollX) + 'px';
-	            close1.style.float = 'left';
-	            
 	             }
+// 	            	close1.style.float = 'left';
 	          modal.style.top = (event.clientY + window.scrollY) + 'px';
 
         }
