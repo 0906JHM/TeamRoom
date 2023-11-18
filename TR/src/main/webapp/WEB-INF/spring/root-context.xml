@@ -9,9 +9,9 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:mysql://itwillbs-rds-class1-team2.cwyqfeylunq5.ap-northeast-2.rds.amazonaws.com:3306/team2?serverTimezone=Asia/Seoul"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="class10420"></property>
+			value="jdbc:log4jdbc:mysql://itwillbs.com:3306/c1d2304t22?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Asia/Seoul"></property>
+		<property name="username" value="c1d2304t22"></property>
+		<property name="password" value="1234"></property>
 	</bean>
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
